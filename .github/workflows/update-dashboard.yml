@@ -38,6 +38,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: site
+          overwrite: true
   publish:
     needs: build
     runs-on: ubuntu-latest

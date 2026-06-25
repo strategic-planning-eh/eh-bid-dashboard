@@ -1,7 +1,5 @@
 """
 Downloads the live Google Sheet(s) as .xlsx using their PUBLIC share links.
-No Google account, robot, or key needed — the sheets just have to be set to
-"Anyone with the link can view".
 """
 import os, sys, urllib.request
 
@@ -14,10 +12,7 @@ def download(sheet_id, out_name):
     with urllib.request.urlopen(req) as resp:
         data = resp.read()
     if data[:2] != b'PK':
-        sys.exit(
-            f"ERROR: '{out_name}' did not download as a spreadsheet.\n"
-            f"The sheet ({sheet_id}) is probably NOT set to 'Anyone with the link can view', or the ID is wrong."
-        )
+        sys.exit(f"ERROR: '{out_name}' did not download as a spreadsheet. Check the sheet is 'Anyone with the link can view' and the ID is correct.")
     with open(out_name, 'wb') as f:
         f.write(data)
     print(f"  downloaded {out_name}  ({len(data)//1024} KB)")

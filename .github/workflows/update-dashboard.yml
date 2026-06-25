@@ -1,0 +1,62 @@
+# Rebuilds the EH Bid dashboard every hour from the live Google Sheets and publishes it.
+name: Update Bid Dashboard
+
+on:
+  schedule:
+    - cron: '0 * * * *'        # every hour, on the hour (UTC)
+  workflow_dispatch: {}         # also lets you run it manually from the Actions tab
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install requirements
+        run: pip install -r requirements.txt
+
+      - name: Write the Google key from the secret
+        run: echo '${{ secrets.GOOGLE_CREDENTIALS }}' > pipeline/service_account.json
+
+      - name: Rebuild the dashboard
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: service_account.json
+          SHEET_ID_2025: ${{ vars.SHEET_ID_2025 }}
+          SHEET_ID_2026: ${{ vars.SHEET_ID_2026 }}
+        run: python pipeline/run_pipeline.py
+
+      - name: Prepare the published page
+        run: |
+          mkdir -p site
+          cp pipeline/EH_Bid_Analysis.html site/index.html
+
+      - name: Package the page
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

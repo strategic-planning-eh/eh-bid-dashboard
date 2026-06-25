@@ -4,7 +4,7 @@ name: Update Bid Dashboard
 on:
   schedule:
     - cron: '0 * * * *'        # every hour, on the hour (UTC)
-  workflow_dispatch: {}         # also lets you run it manually from the Actions tab
+  workflow_dispatch: {}
 
 permissions:
   contents: read
@@ -30,12 +30,8 @@ jobs:
       - name: Install requirements
         run: pip install -r requirements.txt
 
-      - name: Write the Google key from the secret
-        run: echo '${{ secrets.GOOGLE_CREDENTIALS }}' > pipeline/service_account.json
-
       - name: Rebuild the dashboard
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: service_account.json
           SHEET_ID_2025: ${{ vars.SHEET_ID_2025 }}
           SHEET_ID_2026: ${{ vars.SHEET_ID_2026 }}
         run: python pipeline/run_pipeline.py

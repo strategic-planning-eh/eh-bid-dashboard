@@ -47,7 +47,15 @@ def colmap(ws,hr):
 
 EH=['افاق البيئة','آفاق البيئة','افاق البيئه','آفاق البيئه','environmental horizon']
 def is_eh(s): s=str(s or '').lower(); return any(t in s for t in EH)
-STAT={'تمت الترسية':'Awarded','لم تتم الترسية':'Not awarded','تم الإلغاء':'Cancelled','جاري':'In progress'}
+def map_status(raw):
+    s=str(raw or '').strip()
+    if not s: return None
+    n=s.replace('ة','ه').replace('أ','ا').replace('إ','ا').replace('آ','ا').replace('ى','ي')
+    if 'لم تتم' in n or 'لم يتم' in n: return 'Not awarded'   # لم تتم الترسية = EH lost
+    if 'تمت الترسيه' in n or 'تم الترسيه' in n or 'ترسيت' in n or 'ترسيه علينا' in n or 'فزنا' in n or 'awarded' in n.lower(): return 'Awarded'  # تمت الترسية = EH won
+    if 'الغاء' in n or 'ملغ' in n or 'cancel' in n.lower(): return 'Cancelled'
+    if 'جاري' in n or 'قيد' in n or 'progress' in n.lower(): return 'In progress'
+    return s
 def acc(v): 
     s=str(v or '').strip().lower()
     return 'accept' in s or 'موافق' in s or s=='yes'
@@ -65,7 +73,7 @@ for f,yr in [('bids2025.xlsx',2025),('bids2026.xlsx',2026)]:
         try: sn=int(float(sn))
         except: continue
         g=lambda key: ws.cell(ri,m[key]).value if key in m else None
-        st=str(g('status') or '').strip(); st=STAT.get(st, st or None)
+        st=map_status(g('status'))
         winner=g('winner')
         # skip empty pre-numbered placeholder rows (SN present but no real content)
         _content=[g('title'),g('client'),g('launch'),g('platform'),g('offer'),winner,g('nbid'),g('committee'),g('dur'),g('svcdept'),g('bankval')]
@@ -86,7 +94,8 @@ for f,yr in [('bids2025.xlsx',2025),('bids2026.xlsx',2026)]:
             nbid=num(g('nbid')),
             winner=str(winner or '').strip(),
             winval=num(g('winval')),
-            eh_won=is_eh(winner) if winner else None,
+            eh_won=(True if st=='Awarded' else False if st=='Not awarded' else (is_eh(winner) if winner else None)),
+            decided=(st in ('Awarded','Not awarded')) or bool(winner and str(winner).strip()),
             status=st,
             appr=dict(ceo=acc(g('ceo')),fin=acc(g('fin')),tech=acc(g('tech')),bd=acc(g('bd')),pm=acc(g('pm')),admin=acc(g('admin')),legal=acc(g('legal'))),
         )

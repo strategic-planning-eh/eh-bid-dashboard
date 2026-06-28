@@ -19,9 +19,10 @@ def match_winner(winner, bidders):
 winner_canon={}   # key -> canon of winning bidder (or 'EH')
 for key,bidders in rosters.items():
     yr,sn=key.split('-'); b=bidx.get((int(yr),int(sn)))
-    if not b or not b['winner']: continue
-    if b['eh_won']: winner_canon[key]='__EH__'
-    else:
+    if not b: continue
+    if b['eh_won'] is True:        # status تمت الترسية OR winner column = EH
+        winner_canon[key]='__EH__'
+    elif b['winner']:              # a competitor's name recorded
         wc=match_winner(b['winner'], bidders)
         if wc: winner_canon[key]=wc
 json.dump(winner_canon, open('winner_canon.json','w'), ensure_ascii=False)

@@ -1,4 +1,4 @@
-"""Downloads the live bid Google Sheets via the robot (service account)."""
+"""Downloads the live bid files from Google Drive as .xlsx (handles uploaded Excel files and native Sheets)."""
 import os, io, sys
 from google.oauth2 import service_account
 from googleapiclient.discovery import build

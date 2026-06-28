@@ -5,7 +5,7 @@ def is_eh(s): s=str(s or '').lower(); return any(t in s for t in EH)
 def wr(won,aw): return round(100*won/aw) if aw else None
 
 # ---------- KPIs ----------
-awarded=[b for b in bids if b['winner']]
+awarded=[b for b in bids if b['decided']]
 val=lambda B:[b['offer'] for b in B if b['offer']]
 kpi=dict(
  total=len(bids), with_value=len(val(bids)), pipeline=round(sum(val(bids))),
@@ -29,7 +29,7 @@ months=sorted(set(b['month'] for b in bids if b['month']))
 tl=[]
 for mo in months:
     mb=[b for b in bids if b['month']==mo]
-    maw=[b for b in mb if b['winner']]
+    maw=[b for b in mb if b['decided']]
     tl.append(dict(month=mo, launched=len(mb), value=round(sum(val(mb))),
         awarded=len(maw), won=sum(1 for b in maw if b['eh_won'])))
 # submission months
@@ -49,7 +49,7 @@ winloss=dict(
 # ---------- TRAJECTORY 2025 vs 2026 ----------
 traj={}
 for y in (2025,2026):
-    yb=[b for b in bids if b['year']==y]; ya=[b for b in yb if b['winner']]
+    yb=[b for b in bids if b['year']==y]; ya=[b for b in yb if b['decided']]
     traj[y]=dict(bids=len(yb), pipeline=round(sum(val(yb))),
         awarded=len(ya), eh_won=sum(1 for b in ya if b['eh_won']),
         win_rate=wr(sum(1 for b in ya if b['eh_won']),len(ya)),
@@ -65,7 +65,7 @@ for b in bids:
     key=SVCN.get(b['svcdept'], b['svcdept'] or 'Unclassified')
     s=svc[key]; s['count']+=1
     if b['offer']: s['value']+=b['offer']
-    if b['winner']: s['awarded']+=1; s['won']+=1 if b['eh_won'] else 0
+    if b['decided']: s['awarded']+=1; s['won']+=1 if b['eh_won'] else 0
 service_mix=sorted([dict(name=k,count=v['count'],value=round(v['value']),won=v['won'],awarded=v['awarded'],win_rate=wr(v['won'],v['awarded'])) for k,v in svc.items()], key=lambda x:-x['count'])
 
 # ---------- PLATFORM MIX ----------
@@ -82,7 +82,7 @@ for b in bids:
     if not b['platform']: continue
     p=plat[platnorm(b['platform'])]; p['count']+=1
     if b['offer']: p['value']+=b['offer']
-    if b['winner']: p['awarded']+=1; p['won']+=1 if b['eh_won'] else 0
+    if b['decided']: p['awarded']+=1; p['won']+=1 if b['eh_won'] else 0
 platform_mix=sorted([dict(name=k,count=v['count'],value=round(v['value']),won=v['won'],awarded=v['awarded'],win_rate=wr(v['won'],v['awarded'])) for k,v in plat.items()], key=lambda x:-x['count'])
 
 # ---------- DURATION ----------
@@ -110,7 +110,7 @@ vbands=[('< 1M',0,1e6),('1–5M',1e6,5e6),('5–20M',5e6,20e6),('20–50M',20e6,
 value_bands=[]
 for lbl,lo,hi in vbands:
     bb=[b for b in bids if b['offer'] and lo<=b['offer']<hi]
-    aw=[b for b in bb if b['winner']]
+    aw=[b for b in bb if b['decided']]
     value_bands.append(dict(band=lbl,count=len(bb),value=round(sum(val(bb))),awarded=len(aw),won=sum(1 for b in aw if b['eh_won'])))
 
 # ---------- BIDDER CONCENTRATION ----------
@@ -119,7 +119,7 @@ for b in bids:
     if not b['nbid']: continue
     n=int(b['nbid']); key=n if n<=10 else 11
     d=bd_dist[key]; d['count']+=1
-    if b['winner']: d['awarded']+=1; d['won']+=1 if b['eh_won'] else 0
+    if b['decided']: d['awarded']+=1; d['won']+=1 if b['eh_won'] else 0
 bidder_dist=[dict(n=('10+' if k==11 else str(k)), count=v['count'], won=v['won'], awarded=v['awarded']) for k,v in sorted(bd_dist.items())]
 
 # ---------- PRICING POSITIONING (full bidder breakdown, robust parser) ----------
@@ -183,7 +183,7 @@ for b in bids:
     c=cacc[cl_name(b['client'])]
     if b['year']==2025: c['b25']+=1; c['v25']+=b['offer'] or 0
     else: c['b26']+=1; c['v26']+=b['offer'] or 0
-    if b['winner']:
+    if b['decided']:
         c['aw']+=1
         if b['eh_won']: c['won']+=1
 clients=[]
@@ -231,7 +231,7 @@ wd_bands=[('≤7 days',0,7),('8–14 days',8,14),('15–30 days',15,30),('31–4
 turnaround_bands=[]
 for lbl,lo,hi in wd_bands:
     bb=[b for d,b in windows if lo<=d<=hi]
-    aw=[b for b in bb if b['winner']]
+    aw=[b for b in bb if b['decided']]
     turnaround_bands.append(dict(band=lbl,count=len(bb),awarded=len(aw),won=sum(1 for b in aw if b['eh_won'])))
 dvals=[d for d,b in windows]
 turnaround=dict(bands=turnaround_bands, n=len(windows),
@@ -243,7 +243,7 @@ turnaround=dict(bands=turnaround_bands, n=len(windows),
 SVCN2={'Env. Study Dep.':'Env. Studies / EIA','Env. Service Dep.':'Env. Services','Training Center':'Training'}
 def outcome(b):
     if b['eh_won']: return 'Won'
-    if b['winner'] and not b['eh_won']: return 'Lost'
+    if b['decided'] and not b['eh_won']: return 'Lost'
     if b['status']=='Not awarded': return 'Not awarded'
     if b['status']=='Cancelled': return 'Cancelled'
     return 'Pending'
@@ -265,7 +265,7 @@ def reason_cat(txt):
     t=txt.lower()
     if any(k in t for k in ['مشع','radioactive','ترخيص','license','licence','لم تحصل','تأهيل','qualif','رخصة']): return 'Missing licence / qualification'
     if any(k in t for k in ['brand','tailored','specific brand','مواصفات','علامة تجارية','sepcified','specified']): return 'Brand-locked specification'
-    if any(k in t for k in ['دورات','تدريب','training']): return 'Service not offered (e.g. training)'
+    if any(k in t for k in ['دورات','تدريب','training']): return 'Service not offered / out of scope of company'
     if any(k in t for k in ['يفتقر','النضج','maturity','الميدانية']): return 'Vendor / partner risk'
     if any(k in t for k in ['نطاق','خارج','تخصص','specialization','scope','لا تتوافق','لا يعد','لا يُعد','عضوية','عامه','توظيف']): return 'Outside EH scope'
     return 'Other / not specified'

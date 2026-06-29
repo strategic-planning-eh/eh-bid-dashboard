@@ -53,6 +53,8 @@ def parse(rs):
     # price column = header/spread heuristic (optional)
     cands=[]
     for c in range(maxc):
+        hdr=' '.join(norm_ar(grid[r][c]) for r in range(min(12,maxr)))
+        if any(k in hdr for k in ['رقم العرض','رقم العطاء','رقم المرجع']): continue  # offer ID — never a price
         vals=[row[c] for row in grid if is_amt(row[c])]
         if len(vals)>=2:
             cands.append((c,len(vals),max(vals)/max(min(vals),1)))

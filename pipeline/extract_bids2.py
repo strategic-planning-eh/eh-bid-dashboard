@@ -99,6 +99,9 @@ for f,yr in [('bids2025.xlsx',2025),('bids2026.xlsx',2026)]:
             status=st,
             appr=dict(ceo=acc(g('ceo')),fin=acc(g('fin')),tech=acc(g('tech')),bd=acc(g('bd')),pm=acc(g('pm')),admin=acc(g('admin')),legal=acc(g('legal'))),
         )
+        if b['offer'] is not None and b['offer']<100: b['offer']=None   # sub-100 SAR = data-entry error, not a real bid
+        if b['winval'] is not None and b['winval']<100: b['winval']=None
+        b['value']=b['winval'] if b['winval'] else b['offer']
         allbids.append(b)
     # rosters from Bid# sheets
     for sh in wb.sheetnames:
@@ -115,7 +118,7 @@ for f,yr in [('bids2025.xlsx',2025),('bids2026.xlsx',2026)]:
         for c in range(1,maxc+1):
             h=str(rs.cell(hri,c).value or '')
             if 'اسم المورد' in h or 'Bidder Name' in h: namec=c
-            if 'قيمة العرض' in h or 'Total Amount' in h or 'قيمة الترسية' in h: valc=c
+            if ('قيمة العرض' in h and 'فائز' not in h and 'رقم' not in h) or 'Total Amount' in h: valc=c
         if not namec: continue
         out=[]
         for r in range(hri+1, rs.max_row+1):

@@ -2,7 +2,7 @@ const BA=JSON.parse(document.getElementById('BA').textContent);
 const $=id=>document.getElementById(id);
 const pct=v=>v==null?'—':v+'%';
 const wrCol=v=>v==null?C.soft:(v>=50?C.green:v>=30?C.orange:C.red);
-const RCAT={'Outside EH scope':'#E8862E','Service not offered (e.g. training)':'#7B6BA8','Brand-locked specification':'#C0504D','Missing licence / qualification':'#2A9D8F','Vendor / partner risk':'#D4A92E','Other / not specified':'#9AABB5'};
+const RCAT={'Outside EH scope':'#E8862E','Service not offered / out of scope of company':'#7B6BA8','Brand-locked specification':'#C0504D','Missing licence / qualification':'#2A9D8F','Vendor / partner risk':'#D4A92E','Other / not specified':'#9AABB5'};
 
 // ---------- NAV ----------
 const TABS=[['overview','Overview'],['pipeline','Pipeline & Timeline'],['winloss','Win / Loss'],['pricing','Pricing Intelligence'],['competitors','Competitors'],['clients','Clients'],['service','Service & Platform'],['funnel','Bid Turnaround'],['tenders','All Tenders'],['watchlist','Watchlist'],['limitations','Notes & Limits']];
@@ -30,7 +30,7 @@ $('kstrip').innerHTML=
  $('s-overview').innerHTML=
  `<div class="sech">Executive overview</div><div class="secsub">Headline performance across the tender pipeline, win/loss outcome, and the year-on-year trajectory.</div>
  <div style="background:#FFF8EC;border:1px solid #F0DDB0;border-left:4px solid #E8862E;border-radius:9px;padding:11px 14px;margin-bottom:16px;font-size:12.5px;color:#5A4A2E">
- <b>Read this dashboard as directional, not definitive.</b> Win-rate and pricing figures rest on a small recorded sample (only a fraction of the 144 tenders have a recorded outcome; 10 have full pricing), and 2026 is a partial year. See the <a onclick="go('limitations')" style="color:#1A5FAB;cursor:pointer;font-weight:600;text-decoration:underline">Notes &amp; Limits</a> tab for the full caveats.</div>
+ <b>Read this dashboard as directional, not definitive.</b> Win-rate and pricing figures rest on a small recorded sample (only a fraction of the ${k.total} tenders have a recorded outcome; ${BA.pricing.summary.tenders} have bidder pricing), and 2026 is a partial year. See the <a onclick="go('limitations')" style="color:#1A5FAB;cursor:pointer;font-weight:600;text-decoration:underline">Notes &amp; Limits</a> tab for the full caveats.</div>
  <div class="grid g2">
    <div class="card"><h3>Outcome of tracked tenders</h3><div class="note">Of ${k.total} tenders, ${k.awarded} have a recorded award decision. The rest are in progress or pending in the tracker.</div>
      <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:center">${donut(segs,{center:pct(k.win_rate),csub:'WIN RATE'})}<div>${legend(segs)}</div></div></div>
@@ -71,18 +71,16 @@ function cardRow(items){return '<div class="cardrow">'+items.map(([l,v,f])=>`<di
  $('s-winloss').innerHTML=
  `<div class="sech">Win / loss performance</div><div class="secsub">Where EH converts and where it doesn't. Win rates are over tenders with a recorded outcome — a small but telling sample (${k.awarded} awarded).</div>
  <div class="grid g2">
-  <div class="card"><h3>Head-to-head outcome</h3><div class="note">Among awarded tenders, EH vs the field.</div>
+  <div class="card"><h3>Head-to-head outcome</h3><div class="note">Among decided tenders, EH vs the field.</div>
    <div style="display:flex;align-items:center;gap:18px;justify-content:center;flex-wrap:wrap">${donut(segs,{center:pct(k.win_rate),csub:'WIN RATE'})}<div>${legend(segs)}</div></div>
    <div style="margin-top:12px;font-size:12px;color:#6B7C86;text-align:center">EH won <b style="color:#2E7D46">${wl.awarded_eh}</b> · lost <b style="color:#C0504D">${wl.awarded_other}</b> of ${k.awarded} decided tenders.</div></div>
-  <div class="card"><h3>Win rate by service line</h3><div class="note">Which capabilities convert best.</div>
-   ${hbar(svc,{val:d=>d.v,lab:d=>d.l,fmt:v=>v+'%',sub:d=>'('+d.aw+' awarded)',color:d=>wrCol(d.v),maxlab:34,rh:44})}</div>
- </div>
- <div class="grid g2">
   <div class="card"><h3>Win rate vs competition intensity</h3><div class="note">Does EH win more when fewer rivals bid? Each bar = win rate at that bidder count.</div>
-   ${bdr.length?hbar(bdr,{val:d=>d.v,lab:d=>d.l,fmt:v=>v+'%',sub:d=>'('+d.aw+')',color:d=>wrCol(d.v),rh:40}):'<div class="note">Not enough awarded tenders with bidder counts.</div>'}</div>
-  <div class="card"><h3>Win rate by platform</h3><div class="note">Conversion by procurement channel.</div>
-   ${plat.length?hbar(plat,{val:d=>d.v,lab:d=>d.l,fmt:v=>v+'%',sub:d=>'('+d.aw+')',color:d=>wrCol(d.v),rh:44}):'<div class="note">Insufficient data.</div>'}</div>
- </div>`;
+   ${bdr.length?hbar(bdr,{val:d=>d.v,lab:d=>d.l,fmt:v=>v+'%',sub:d=>'('+d.aw+')',color:d=>wrCol(d.v),rh:42}):'<div class="note">Not enough decided tenders with bidder counts.</div>'}</div>
+ </div>
+ <div class="card"><h3>Win rate by service line</h3><div class="note">Which capabilities convert best.</div>
+   ${hbar(svc,{val:d=>d.v,lab:d=>d.l,fmt:v=>v+'%',sub:d=>'('+d.aw+' decided)',color:d=>wrCol(d.v),maxlab:38,rh:54})}</div>
+ <div class="card"><h3>Win rate by platform</h3><div class="note">Conversion by procurement channel.</div>
+   ${plat.length?hbar(plat,{val:d=>d.v,lab:d=>d.l,fmt:v=>v+'%',sub:d=>'('+d.aw+' decided)',color:d=>wrCol(d.v),maxlab:30,rh:54}):'<div class="note">Insufficient data.</div>'}</div>`;
 })();
 
 // ===================== PRICING =====================
@@ -95,10 +93,11 @@ function renderPricing(){
    const open=!!pxExpand[i];
    const maxp=Math.max(...r.bidders.filter(b=>b.price).map(b=>b.price),1);
    const gapcol=r.gap>50?'#C0504D':r.gap>5?'#E8862E':'#2E7D46';
-   const oc=r.won==null?'<span style="color:#9AA8B0;font-weight:700">PENDING</span>':(r.won?'<span class="tag" style="background:#2E7D46">EH WON</span>':'<span class="tag" style="background:#C0504D">LOST</span>');
+   const oc=r.status=='Cancelled'?'<span class="tag" style="background:#8A99A3">CANCELLED</span>':(r.won==null?'<span style="color:#9AA8B0;font-weight:700">PENDING</span>':(r.won?'<span class="tag" style="background:#2E7D46">EH WON</span>':'<span class="tag" style="background:#C0504D">LOST</span>'));
    // full bidder bars (shown when open)
    const bars=r.bidders.map(b=>{
      if(b.dq){return `<div style="display:flex;align-items:center;gap:8px;margin:3px 0;opacity:.6"><div style="width:230px;font-size:10.5px;color:#8A99A3;text-align:right" dir="auto">${esc(b.name)}</div><div style="flex:1;height:15px;background:repeating-linear-gradient(45deg,#EEE,#EEE 4px,#E0E0E0 4px,#E0E0E0 8px);border-radius:3px;max-width:60px"></div><div style="font-size:10px;color:#B23A3A;font-weight:700">DQ — non-compliant</div></div>`;}
+     if(b.undisclosed){return `<div style="display:flex;align-items:center;gap:8px;margin:3px 0;opacity:.85"><div style="width:230px;font-size:10.5px;color:${b.eh?'#1A5FAB':'#5A6A72'};font-weight:${b.eh?'700':'500'};text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" dir="auto">${esc(b.name)}</div><div style="flex:1;height:15px;background:repeating-linear-gradient(90deg,#EFF2F4,#EFF2F4 6px,#E4E8EB 6px,#E4E8EB 12px);border-radius:3px;max-width:80px"></div><div style="font-size:10px;color:#9AA8B0;font-style:italic;white-space:nowrap">undisclosed value${b.won?' <span style="color:#2E7D46;font-weight:700;font-style:normal">\u2605 won</span>':''}</div></div>`;}
      const w=Math.max(b.price/maxp*100,2);
      const col=b.eh?'#1A5FAB':(b.won?'#2E7D46':'#9AABB5');
      const isWin=b.won;
@@ -109,30 +108,30 @@ function renderPricing(){
    }).join('');
    return `<div class="card" style="margin-bottom:10px;padding:0;overflow:hidden">
      <div onclick="togglePx(${i})" style="cursor:pointer;padding:12px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:${open?'#F7FAFC':'#fff'}">
-       <div style="min-width:70px"><b style="font-size:13px">#${r.sn}/${String(r.year).slice(2)}</b><div style="font-size:9px;color:#9AA8B0">${r.n} bidders${r.dq_count?' · '+r.dq_count+' DQ':''}</div></div>
+       <div style="min-width:70px"><b style="font-size:13px">#${r.sn}/${String(r.year).slice(2)}</b><div style="font-size:9px;color:#9AA8B0">${r.n} bidders${r.undisc_count?' · '+r.undisc_count+' undisclosed':''}${r.dq_count?' · '+r.dq_count+' DQ':''}</div></div>
        <div style="flex:1;min-width:200px"><div dir="auto" style="font-size:11.5px;color:#1C2B33;font-weight:600;line-height:1.3">${esc(r.title)||'<span style=\'color:#aaa\'>(untitled tender)</span>'}</div><div dir="auto" style="font-size:10px;color:#9AA8B0;margin-top:1px">${esc(r.client)}</div></div>
-       <div style="text-align:right"><div style="font-size:9px;color:#9AA8B0;text-transform:uppercase;letter-spacing:.3px">EH bid</div><div style="font-weight:700;font-size:12.5px;color:#1A5FAB">${fmtSAR(r.eh)}</div></div>
-       <div style="text-align:center"><div style="font-size:9px;color:#9AA8B0;text-transform:uppercase">Rank</div><div style="font-weight:700;font-size:12.5px">${r.rank}/${r.n}</div></div>
-       <div style="text-align:center"><div style="font-size:9px;color:#9AA8B0;text-transform:uppercase">vs Low</div><div style="font-weight:700;font-size:12.5px;color:${gapcol}">${r.gap>0?'+'+r.gap+'%':r.gap+'%'}</div></div>
+       <div style="text-align:right"><div style="font-size:9px;color:#9AA8B0;text-transform:uppercase;letter-spacing:.3px">EH bid</div><div style="font-weight:700;font-size:12.5px;color:#1A5FAB">${r.eh!=null?fmtSAR(r.eh):'<span style="color:#B0B8BD;font-weight:600;font-size:10px">no EH bid</span>'}</div></div>
+       <div style="text-align:center"><div style="font-size:9px;color:#9AA8B0;text-transform:uppercase">Rank</div><div style="font-weight:700;font-size:12.5px">${r.rank!=null?r.rank+'/'+r.n_priced:'\u2014'}</div></div>
+       <div style="text-align:center"><div style="font-size:9px;color:#9AA8B0;text-transform:uppercase">vs Low</div><div style="font-weight:700;font-size:12.5px;color:${gapcol}">${r.gap!=null?(r.gap>0?'+'+r.gap+'%':r.gap+'%'):'\u2014'}</div></div>
        <div style="min-width:78px;text-align:center">${oc}</div>
        <div style="font-size:13px;color:#9AA8B0;transform:rotate(${open?'90':'0'}deg);transition:.15s">\u25b8</div>
      </div>
      ${open?`<div style="padding:10px 16px 14px;border-top:1px solid #EEF2F0;background:#FBFCFD">
-       <div style="font-size:10.5px;color:#8A99A3;margin-bottom:8px">All ${r.bidders.length} bids, lowest first \u2014 <span style="color:#1A5FAB;font-weight:700">EH in blue</span>, <span style="color:#2E7D46;font-weight:700">\u25bc lowest</span>${r.win_price?', \u2605 = winning bid':''}.</div>
+       <div style="font-size:10.5px;color:#8A99A3;margin-bottom:8px">${r.undisc_count?'<span style="color:#B07A2E;font-weight:600">'+r.undisc_count+' of '+r.n+' bidders had no disclosed value (shown as undisclosed).</span><br>':''}${r.n_priced} priced bid${r.n_priced==1?'':'s'} shown, lowest first \u2014 <span style="color:#1A5FAB;font-weight:700">EH in blue</span>${r.n_priced>1?', <span style="color:#2E7D46;font-weight:700">\u25bc lowest</span>':''}${r.win_price?', \u2605 = winning bid':''}.</div>
        ${bars}</div>`:''}</div>`;
  }).join('');
  $('s-pricing').innerHTML=
- `<div class="sech">Pricing intelligence</div><div class="secsub">How EH's bid sits against every competitor, drawn from the ${s.tenders} tenders whose detailed bidder-pricing sheets are filled in (${s.total_bidders} individual bids). Click any tender to see all bids and prices.</div>
+ `<div class="sech">Pricing intelligence</div><div class="secsub">Every tender with a recorded bidder list \u2014 ${s.tenders} in all. ${s.full} show EH's price against the full field (the ranking stats below are drawn from these); the rest list the bidders with prices where disclosed and \u201cundisclosed value\u201d otherwise. ${s.total_bidders} disclosed bids across ${s.total_names} bidder entries. Click any tender for the full list.</div>
  <div class="kstrip">
-   ${kc(s.cheapest_pct+'%','Tenders EH was cheapest',s.cheapest+' of '+s.tenders,s.cheapest_pct>=40?'g':'r')}
+   ${kc(s.cheapest_pct+'%','Tenders EH was cheapest',s.cheapest+' of '+s.full+' full',s.cheapest_pct>=40?'g':'r')}
    ${kc(s.avg_percentile+'th','Avg price percentile','1st=cheapest',s.avg_percentile<=40?'g':'r')}
    ${kc((s.median_gap>0?'+':'')+s.median_gap+'%','Median gap to lowest','typical EH vs cheapest',s.median_gap>20?'r':'g')}
-   ${kc(s.tenders,'Tenders priced',s.total_bidders+' total bids')}
+   ${kc(s.tenders,'Tenders with bidders',s.full+' with full pricing')}
  </div>
  <div style="display:flex;gap:8px;margin-bottom:12px"><button onclick="pxAll(true)" style="padding:6px 13px;border:1px solid #1A5FAB;background:#1A5FAB;color:#fff;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer">Expand all</button><button onclick="pxAll(false)" style="padding:6px 13px;border:1px solid #D5DEE2;background:#fff;color:#6B7C86;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer">Collapse all</button></div>
  ${cards}
  <div style="margin-top:14px;font-size:12px;color:#6B7C86;background:#FCF5F4;border:1px solid #F0D9D6;border-radius:8px;padding:11px 13px">
- <b>Read-out:</b> Across ${s.tenders} priced tenders EH was the outright lowest bidder ${s.cheapest_pct}% of the time and sat at the ${s.avg_percentile}th price percentile on average. The median gap to the cheapest bid is ${s.median_gap}% \u2014 EH is often within a hair of the lowest, but a handful of tenders sit far above it, dragging the average up. Price is clearly one lever, but <b>price is not the whole story</b>: Saudi tenders are scored on technical merit, compliance, delivery capability and incumbency too, and the tracker doesn't capture those factors or the stated reason for each loss \u2014 so we can see where EH priced high, but cannot prove price caused a loss. Capturing the technical score and loss reason per tender is what would close that gap.</div>`;
+ <b>Read-out:</b> Across ${s.full} tenders with full bidder pricing, EH was the outright lowest bidder ${s.cheapest_pct}% of the time and sat at the ${s.avg_percentile}th price percentile on average. The median gap to the cheapest bid is ${s.median_gap}% \u2014 on these tenders EH frequently sits well above the lowest bid, sometimes several times higher, so pricing looks like a genuine competitive exposure worth investigating. Price is clearly one lever, but <b>price is not the whole story</b>: Saudi tenders are scored on technical merit, compliance, delivery capability and incumbency too, and the tracker doesn't capture those factors or the stated reason for each loss \u2014 so we can see where EH priced high, but cannot prove price caused a loss. Capturing the technical score and loss reason per tender is what would close that gap.</div>`;
 }
 renderPricing();
 
@@ -191,14 +190,12 @@ renderCompetitors();
  const smSeg=sm.map((x,i)=>({l:x.name,v:x.count,c:C.pal[i%C.pal.length]}));
  $('s-service').innerHTML=
  `<div class="sech">Service mix &amp; channels</div><div class="secsub">What kind of work EH bids for, through which platforms, and at what project scale.</div>
- <div class="grid g2">
-  <div class="card"><h3>Tenders by service line</h3><div class="note">From the assigned technical department (where recorded).</div>
+ <div class="card"><h3>Tenders by service line</h3><div class="note">From the assigned technical department (where recorded).</div>
    <div style="display:flex;align-items:center;gap:16px;justify-content:center;flex-wrap:wrap">${donut(smSeg,{center:sm.reduce((a,x)=>a+x.count,0),csub:'TENDERS'})}<div>${legend(smSeg)}</div></div>
    <table class="t" style="margin-top:12px"><thead><tr><th>Service line</th><th>Tenders</th><th>Value</th><th>Win rate</th></tr></thead><tbody>
    ${sm.map(x=>`<tr><td><b>${esc(x.name)}</b></td><td>${x.count}</td><td>${fmtSAR(x.value)}</td><td style="color:${wrCol(x.win_rate)};font-weight:700">${x.win_rate==null?'—':x.win_rate+'%'}</td></tr>`).join('')}</tbody></table></div>
-  <div class="card"><h3>Tenders by platform</h3><div class="note">Procurement channels — Etimad (government) dominates.</div>
-   ${hbar(pm,{val:d=>d.count,lab:d=>d.name,fmt:v=>v+' tenders',sub:d=>d.win_rate!=null?'· win '+d.win_rate+'%':'',color:d=>C.pal[pm.indexOf(d)%C.pal.length],maxlab:26,rh:46})}</div>
- </div>
+ <div class="card"><h3>Tenders by platform</h3><div class="note">Procurement channels — Etimad (government) dominates.</div>
+   ${hbar(pm,{val:d=>d.count,lab:d=>d.name,fmt:v=>v+' tenders',sub:d=>d.win_rate!=null?'· win '+d.win_rate+'%':'',color:d=>C.pal[pm.indexOf(d)%C.pal.length],maxlab:30,rh:56})}</div>
  <div class="card"><h3>Project duration distribution</h3><div class="note">Contract length of tenders (months), where recorded. Median ${ds.median} months · mean ${ds.mean} · longest ${ds.max}.</div>
    ${barChart(du,{val:d=>d.count,lab:d=>d.band,fmt:v=>v,color:C.purple,h:200})}</div>`;
 })();

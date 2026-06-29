@@ -6,7 +6,7 @@ def wr(won,aw): return round(100*won/aw) if aw else None
 
 # ---------- KPIs ----------
 awarded=[b for b in bids if b['decided']]
-val=lambda B:[b['offer'] for b in B if b['offer']]
+val=lambda B:[b['value'] for b in B if b['value']]
 kpi=dict(
  total=len(bids), with_value=len(val(bids)), pipeline=round(sum(val(bids))),
  awarded=len(awarded), eh_won=sum(1 for b in awarded if b['eh_won']),
@@ -64,7 +64,7 @@ svc=collections.defaultdict(lambda:{'count':0,'value':0.0,'won':0,'awarded':0})
 for b in bids:
     key=SVCN.get(b['svcdept'], b['svcdept'] or 'Unclassified')
     s=svc[key]; s['count']+=1
-    if b['offer']: s['value']+=b['offer']
+    if b['value']: s['value']+=b['value']
     if b['decided']: s['awarded']+=1; s['won']+=1 if b['eh_won'] else 0
 service_mix=sorted([dict(name=k,count=v['count'],value=round(v['value']),won=v['won'],awarded=v['awarded'],win_rate=wr(v['won'],v['awarded'])) for k,v in svc.items()], key=lambda x:-x['count'])
 
@@ -81,7 +81,7 @@ plat=collections.defaultdict(lambda:{'count':0,'value':0.0,'won':0,'awarded':0})
 for b in bids:
     if not b['platform']: continue
     p=plat[platnorm(b['platform'])]; p['count']+=1
-    if b['offer']: p['value']+=b['offer']
+    if b['value']: p['value']+=b['value']
     if b['decided']: p['awarded']+=1; p['won']+=1 if b['eh_won'] else 0
 platform_mix=sorted([dict(name=k,count=v['count'],value=round(v['value']),won=v['won'],awarded=v['awarded'],win_rate=wr(v['won'],v['awarded'])) for k,v in plat.items()], key=lambda x:-x['count'])
 
@@ -109,7 +109,7 @@ discount=dict(requested=sum(1 for b in bids if b['discount'].lower() in ('yes','
 vbands=[('< 1M',0,1e6),('1–5M',1e6,5e6),('5–20M',5e6,20e6),('20–50M',20e6,50e6),('50M+',50e6,1e12)]
 value_bands=[]
 for lbl,lo,hi in vbands:
-    bb=[b for b in bids if b['offer'] and lo<=b['offer']<hi]
+    bb=[b for b in bids if b['value'] and lo<=b['value']<hi]
     aw=[b for b in bb if b['decided']]
     value_bands.append(dict(band=lbl,count=len(bb),value=round(sum(val(bb))),awarded=len(aw),won=sum(1 for b in aw if b['eh_won'])))
 
@@ -126,52 +126,95 @@ bidder_dist=[dict(n=('10+' if k==11 else str(k)), count=v['count'], won=v['won']
 rfull=json.load(open('rosters_all.json'))
 winner_canon=json.load(open('winner_canon.json'))
 competitors_rebuilt=json.load(open('competitors_rebuilt.json'))
-from parse_rosters import canon as _canon
+from parse_rosters import canon as _canon, is_eh as _is_eh_name
 import unicodedata as _u
 def _na(x):
     t=_u.normalize('NFKC',str(x or '')).lower()
     for a,b in [('أ','ا'),('إ','ا'),('آ','ا'),('ة','ه'),('ى','ي'),('ـ','')]: t=t.replace(a,b)
     return t
-price_rows=[]; ranks=[]; gaps=[]; cheapest_cnt=0; eh_priced=0
+price_rows=[]; ranks=[]; gaps=[]; cheapest_cnt=0
+bidx={(b['year'],b['sn']):b for b in bids}
 for key,bidders in rfull.items():
     yr,sn=key.split('-'); yr=int(yr); sn=int(sn)
-    # bidders = [name, amt, dq, eh]
-    valid=[(n,a,dq,e) for n,a,dq,e in bidders if a is not None and not dq]
-    ehrow=next(((n,a) for n,a,dq,e in bidders if e and a is not None and not dq), None)
-    if not ehrow or len(valid)<2: continue
-    ehp=ehrow[1]; eh_priced+=1
-    prices=sorted(a for n,a,dq,e in valid)
-    rank=prices.index(ehp)+1; n=len(prices)
-    lo=min(prices); hi=max(prices); avg=st.mean(prices)
-    gap=round(100*(ehp-lo)/lo,1) if lo else 0
-    if rank==1: cheapest_cnt+=1
-    ranks.append(rank/n); gaps.append(gap)
-    bb=next((b for b in bids if b['year']==yr and b['sn']==sn), None)
-    # winner of THIS tender (actual recorded winner, not lowest)
-    wc=winner_canon.get(key)   # '__EH__', a canon string, or None (pending)
-    def _is_winner(nm,e):
+    bb=bidx.get((yr,sn))
+    eh_offer=(bb['offer'] if bb else None)     # قيمة العرض
+    award=(bb['winval'] if bb else None)        # قيمة الترسية
+    winner=(bb['winner'] if bb else None)
+    wc=winner_canon.get(key)                    # '__EH__', canon string, or None
+    def _is_w(nm,e,wc=wc):
         if wc=='__EH__': return bool(e)
         if wc: return _canon(nm)==wc
         return False
-    has_winner = wc is not None
-    # build full ranked bidder list (compliant by price asc, then DQ'd)
-    comp=sorted(valid, key=lambda x:x[1])
+    work=[[n,a,dq,e] for n,a,dq,e in bidders]
+    # fill EH's price from the main table if EH is on the roster but unpriced
+    for row in work:
+        if row[3] and row[1] is None and not row[2] and eh_offer: row[1]=eh_offer
+    # assign the award value to the winner if present & unpriced; note if winner is on the roster
+    winner_present=False
+    for row in work:
+        if _is_w(row[0],row[3]):
+            winner_present=True
+            if row[1] is None and not row[2] and award: row[1]=award
+    # winner named in main table but not on the roster -> add them with the award value
+    if winner and award and not winner_present and not _is_eh_name(winner):
+        work.append([winner, award, False, False])
+    if len(work)<2: continue                    # need >=2 bidders (names) to show a card
+    priced=[r for r in work if r[1] is not None and r[1]>=100 and not r[2]]
+    undisc=[r for r in work if (r[1] is None or r[1]<100) and not r[2]]
+    dqd=[r for r in work if r[2]]
+    prices=sorted(r[1] for r in priced)
+    ehrow=next((r for r in priced if r[3]), None)
+    ehp=ehrow[1] if ehrow else None
+    n_priced=len(prices)
+    rank=(prices.index(ehp)+1) if ehp is not None else None
+    lo=min(prices) if prices else None; hi=max(prices) if prices else None
+    avg=st.mean(prices) if prices else None
+    gap=round(100*(ehp-lo)/lo,1) if (ehp is not None and lo) else None
     blist=[]
-    for i,(nm,a,dq,e) in enumerate(comp):
-        blist.append(dict(name=('Environmental Horizons (EH)' if e else nm), price=round(a), dq=False, eh=bool(e), rank=i+1, lowest=(i==0), won=_is_winner(nm,e)))
-    for nm,a,dq,e in [x for x in bidders if x[2]]:  # DQ'd bidders (no price)
-        blist.append(dict(name=('Environmental Horizons (EH)' if e else nm), price=None, dq=True, eh=bool(e), rank=None, lowest=False, won=_is_winner(nm,e)))
-    price_rows.append(dict(sn=sn,year=yr,eh=round(ehp),low=round(lo),high=round(hi),avg=round(avg),
-        rank=rank,n=n,gap=gap,won=(bb['eh_won'] if bb else None), has_winner=has_winner,
-        win_price=(round(bb['winval']) if (bb and bb.get('winval')) else None),
+    for i2,(n,a,dq,e) in enumerate(sorted(priced,key=lambda x:x[1])):
+        blist.append(dict(name=('Environmental Horizons (EH)' if e else n),price=round(a),dq=False,undisclosed=False,eh=bool(e),rank=i2+1,lowest=(i2==0 and n_priced>1),won=_is_w(n,e)))
+    for n,a,dq,e in undisc:
+        blist.append(dict(name=('Environmental Horizons (EH)' if e else n),price=None,dq=False,undisclosed=True,eh=bool(e),rank=None,lowest=False,won=_is_w(n,e)))
+    for n,a,dq,e in dqd:
+        blist.append(dict(name=('Environmental Horizons (EH)' if e else n),price=None,dq=True,undisclosed=False,eh=bool(e),rank=None,lowest=False,won=_is_w(n,e)))
+    has_full=(ehp is not None and n_priced>=2)
+    price_rows.append(dict(sn=sn,year=yr,
+        eh=(round(ehp) if ehp is not None else None),
+        low=(round(lo) if lo else None),high=(round(hi) if hi else None),avg=(round(avg) if avg else None),
+        rank=rank,n=len(work),n_priced=n_priced,gap=gap,
+        won=(bb['eh_won'] if bb else None),has_winner=(wc is not None),status=(bb['status'] if bb else None),
+        win_price=(round(award) if award else None),
         title=(bb['title'] if bb else ''),client=(bb['client'] if bb else ''),
-        bidders=blist, dq_count=sum(1 for x in bidders if x[2])))
+        bidders=blist,dq_count=len(dqd),undisc_count=len(undisc),level=('full' if has_full else 'partial')))
+    if has_full:
+        ranks.append(rank/n_priced); gaps.append(gap)
+        if rank==1: cheapest_cnt+=1
+# tenders with NO roster tab but main-table EH offer + winner + award -> 2-point card
+roster_keys=set((int(k.split('-')[0]),int(k.split('-')[1])) for k in rfull)
+shown=set((r['year'],r['sn']) for r in price_rows)
+for bb in bids:
+    yr2,sn2=bb['year'],bb['sn']
+    if (yr2,sn2) in shown or (yr2,sn2) in roster_keys: continue
+    offer=bb['offer']; wv=bb['winval']; wn=bb['winner']
+    if not (offer and wv and wn) or bb['eh_won'] is True: continue
+    ehp=round(offer); wvr=round(wv)
+    pts=[('Environmental Horizons (EH)',ehp,True,False),(wn,wvr,False,True)]
+    comp=sorted(pts,key=lambda x:x[1]); prices=sorted(p[1] for p in pts)
+    rank=prices.index(ehp)+1; lo=min(prices); hi=max(prices); avg=st.mean(prices)
+    gap=round(100*(ehp-lo)/lo,1) if lo else 0
+    blist=[dict(name=nm,price=pr,dq=False,undisclosed=False,eh=e,rank=i3+1,lowest=(i3==0),won=w) for i3,(nm,pr,e,w) in enumerate(comp)]
+    price_rows.append(dict(sn=sn2,year=yr2,eh=ehp,low=round(lo),high=round(hi),avg=round(avg),
+        rank=rank,n=2,n_priced=2,gap=gap,won=False,has_winner=True,win_price=wvr,status=bb['status'],
+        title=bb['title'],client=bb['client'],bidders=blist,dq_count=0,undisc_count=0,level='partial'))
 price_rows.sort(key=lambda x:(x['year'],x['sn']))
+_nfull=sum(1 for r in price_rows if r.get('level')=='full'); _npart=len(price_rows)-_nfull
 pricing=dict(rows=price_rows, summary=dict(
-    tenders=eh_priced, cheapest=cheapest_cnt, cheapest_pct=round(100*cheapest_cnt/eh_priced) if eh_priced else 0,
+    tenders=len(price_rows), full=_nfull, partial=_npart,
+    cheapest=cheapest_cnt, cheapest_pct=round(100*cheapest_cnt/_nfull) if _nfull else 0,
     avg_percentile=round(100*st.mean(ranks)) if ranks else 0, avg_gap=round(st.mean(gaps),1) if gaps else 0,
     median_gap=round(st.median(gaps),1) if gaps else 0,
-    total_bidders=sum(len(r['bidders']) for r in price_rows)))
+    total_bidders=sum(r['n_priced'] for r in price_rows),
+    total_names=sum(len(r['bidders']) for r in price_rows)))
 
 # ---------- CLIENTS (self-contained, with English aliases) ----------
 import os as _os
@@ -181,8 +224,8 @@ cacc=collections.defaultdict(lambda:{'b25':0,'v25':0.0,'b26':0,'v26':0.0,'won':0
 for b in bids:
     if not b['client']: continue
     c=cacc[cl_name(b['client'])]
-    if b['year']==2025: c['b25']+=1; c['v25']+=b['offer'] or 0
-    else: c['b26']+=1; c['v26']+=b['offer'] or 0
+    if b['year']==2025: c['b25']+=1; c['v25']+=b['value'] or 0
+    else: c['b26']+=1; c['v26']+=b['value'] or 0
     if b['decided']:
         c['aw']+=1
         if b['eh_won']: c['won']+=1
@@ -252,7 +295,7 @@ for b in sorted(bids, key=lambda x:(x['year'], x['sn'])):
     win='EH' if b['eh_won'] else (b['winner'] if b['winner'] else '')
     bidlist.append(dict(year=b['year'], sn=b['sn'], date=b['launch'] or '',
         title=b['title'], client=b['client'], platform=b['platform'],
-        value=round(b['offer']) if b['offer'] else None, nbid=int(b['nbid']) if b['nbid'] else None,
+        value=round(b['value']) if b['value'] else None, nbid=int(b['nbid']) if b['nbid'] else None,
         svc=SVCN2.get(b['svcdept'],''), dur=int(b['dur']) if b['dur'] else None,
         winner=win, outcome=outcome(b),
         window=_days(b['launch'],b['submit']) if (b['launch'] and b['submit']) else None))

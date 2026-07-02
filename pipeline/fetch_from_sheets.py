@@ -1,4 +1,14 @@
-"""Downloads the live bid files from Google Drive as .xlsx (handles uploaded Excel files and native Sheets)."""
+"""
+Downloads the live bid files from Google Drive as .xlsx.
+
+These files are EXCEL files uploaded to Drive (not native Google Sheets), so we download
+the raw file directly. Access is granted by sharing each file with the robot (service
+account) email as Viewer.
+
+Configuration:
+  Repository VARIABLES:  SHEET_ID_2025, SHEET_ID_2026  (the code between /d/ and /edit in each link)
+  Repository SECRET:     GOOGLE_CREDENTIALS             (the robot's JSON key, pasted in full)
+"""
 import os, io, sys
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -14,12 +24,16 @@ def get_drive():
     return build('drive', 'v3', credentials=creds)
 
 def download(drive, file_id, out_name):
+    # find out what kind of file this is
     meta = drive.files().get(fileId=file_id, fields='name,mimeType', supportsAllDrives=True).execute()
     mime = meta.get('mimeType', '')
     if mime == 'application/vnd.google-apps.spreadsheet':
-        req = drive.files().export_media(fileId=file_id,
+        # native Google Sheet -> export as xlsx
+        req = drive.files().export_media(
+            fileId=file_id,
             mimeType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     else:
+        # uploaded Excel (.xlsx) file -> download the file itself
         req = drive.files().get_media(fileId=file_id, supportsAllDrives=True)
     buf = io.BytesIO()
     dl = MediaIoBaseDownload(buf, req)

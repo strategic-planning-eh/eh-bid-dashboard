@@ -1,6 +1,6 @@
 import json, collections, statistics as st
 raw=json.load(open('bidraw2.json')); bids=raw['bids']; rosters=raw['rosters']
-EH=['افاق البيئة','آفاق البيئة','افاق البيئه','آفاق البيئه','environmental horizon']
+EH=['افاق البيئة','آفاق البيئة','افاق البيئه','آفاق البيئه','environmental horizon','environmental horizons']
 def is_eh(s): s=str(s or '').lower(); return any(t in s for t in EH)
 def wr(won,aw): return round(100*won/aw) if aw else None
 
@@ -241,15 +241,15 @@ clients.sort(key=lambda x:-x['value'])
 watchlist=[]
 for c in sorted(competitors_rebuilt, key=lambda x:-x['wins']):
     if c['wins']>0:
-        watchlist.append(dict(sev='high', kind='Competitor beating EH', text=f"{c['name']} has won {c['wins']} tender(s) competing against EH across {c['encounters']} encounters."))
+        watchlist.append(dict(sev='high', kind='Competitor beating EH', kind_ar='منافس يتغلّب على EH', text=f"{c['name']} has won {c['wins']} tender(s) competing against EH across {c['encounters']} encounters.", text_ar=f"{c['name']} فاز بـ {c['wins']} منافسة بمواجهة EH عبر {c['encounters']} مواجهة."))
 if traj[2025]['win_rate'] and traj[2026]['win_rate'] is not None and traj[2026]['win_rate']<traj[2025]['win_rate']:
-    watchlist.append(dict(sev='high', kind='Win-rate decline', text=f"EH win rate fell from {traj[2025]['win_rate']}% (2025) to {traj[2026]['win_rate']}% (2026) — investigate pricing/technical scoring."))
+    watchlist.append(dict(sev='high', kind='Win-rate decline', kind_ar='تراجع نسبة الفوز', text=f"EH win rate fell from {traj[2025]['win_rate']}% (2025) to {traj[2026]['win_rate']}% (2026) — investigate pricing/technical scoring.", text_ar=f"تراجعت نسبة فوز EH من {traj[2025]['win_rate']}% (2025) إلى {traj[2026]['win_rate']}% (2026) — راجع التسعير/التقييم الفني."))
 for c in sorted(competitors_rebuilt, key=lambda x:-x['priced_vs']):
     if c['undercut_pct']==100 and c['priced_vs']>=3:
-        watchlist.append(dict(sev='med', kind='Consistent undercutter', text=f"{c['name']} priced below EH in every shared priced tender ({c['priced_vs']} bids) — persistent price pressure."))
+        watchlist.append(dict(sev='med', kind='Consistent undercutter', kind_ar='مُخفِّض أسعار مستمر', text=f"{c['name']} priced below EH in every shared priced tender ({c['priced_vs']} bids) — persistent price pressure.", text_ar=f"{c['name']} سعّر أقل من EH في كل منافسة مشتركة مُسعّرة ({c['priced_vs']} عرض) — ضغط سعري مستمر."))
 for c in clients:
     if c['lapsed'] and c['value25']>=1000000:
-        watchlist.append(dict(sev='med', kind='Lapsed high-value client', text=f"{c['name']} sent tenders in 2025 (SAR {c['value25']:,}) but none in 2026 — re-engage."))
+        watchlist.append(dict(sev='med', kind='Lapsed high-value client', kind_ar='عميل متوقّف عالي القيمة', text=f"{c['name']} sent tenders in 2025 (SAR {c['value25']:,}) but none in 2026 — re-engage.", text_ar=f"{c['name']} طرح منافسات في 2025 (SAR {c['value25']:,}) ولا شيء في 2026 — أعد التفعيل."))
 _sev={'high':0,'med':1,'low':2}
 watchlist.sort(key=lambda x:_sev.get(x['sev'],3))
 watchlist=watchlist[:18]
@@ -297,7 +297,8 @@ for b in sorted(bids, key=lambda x:(x['year'], x['sn'])):
         title=b['title'], client=b['client'], platform=b['platform'],
         value=round(b['value']) if b['value'] else None, nbid=int(b['nbid']) if b['nbid'] else None,
         svc=SVCN2.get(b['svcdept'],''), dur=int(b['dur']) if b['dur'] else None,
-        winner=win, outcome=outcome(b),
+        winner=win, outcome=outcome(b), status=(b['status'] or ''),
+        committee=b['committee'], reason=b['comments'],
         window=_days(b['launch'],b['submit']) if (b['launch'] and b['submit']) else None))
 
 out['turnaround']=turnaround
@@ -307,10 +308,10 @@ out['bidlist']=bidlist
 def reason_cat(txt):
     t=txt.lower()
     if any(k in t for k in ['مشع','radioactive','ترخيص','license','licence','لم تحصل','تأهيل','qualif','رخصة']): return 'Missing licence / qualification'
-    if any(k in t for k in ['brand','tailored','specific brand','مواصفات','علامة تجارية','sepcified','specified']): return 'Brand-locked specification'
-    if any(k in t for k in ['دورات','تدريب','training']): return 'Service not offered / out of scope of company'
+    if any(k in t for k in ['brand','tailored','specific brand','مواصفات','علامة تجارية','sepcified','specified']): return 'Out of scope of EH'
+    if any(k in t for k in ['دورات','تدريب','training']): return 'Service not offered'
     if any(k in t for k in ['يفتقر','النضج','maturity','الميدانية']): return 'Vendor / partner risk'
-    if any(k in t for k in ['نطاق','خارج','تخصص','specialization','scope','لا تتوافق','لا يعد','لا يُعد','عضوية','عامه','توظيف']): return 'Outside EH scope'
+    if any(k in t for k in ['نطاق','خارج','تخصص','specialization','scope','لا تتوافق','لا يعد','لا يُعد','عضوية','عامه','توظيف']): return 'Out of scope of EH'
     return 'Other / not specified'
 refused=[]
 for b in bids:

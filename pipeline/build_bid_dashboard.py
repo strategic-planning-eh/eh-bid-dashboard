@@ -13,7 +13,18 @@ header{background:linear-gradient(120deg,#0F3D2E,#1A5FAB);color:#fff;padding:18p
 .hd img{height:48px;background:#fff;border-radius:10px;padding:6px 8px;box-shadow:0 1px 4px rgba(0,0,0,.10)}
 .hd h1{font-size:21px;font-weight:800;letter-spacing:.2px}
 .hd .sub{font-size:12.5px;opacity:.9;margin-top:2px}
-.hd .pill{margin-left:auto;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:7px 15px;font-size:12px;font-weight:600;text-align:right}
+.hd .pill{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:7px 15px;font-size:12px;font-weight:600;text-align:center;line-height:1.35}
+.hd-right{margin-inline-start:auto;display:flex;align-items:center;gap:13px;flex-wrap:wrap;justify-content:flex-end}
+.langtog{display:flex;border:1px solid rgba(255,255,255,.45);border-radius:8px;overflow:hidden;flex:none}
+.langbtn{background:transparent;color:rgba(255,255,255,.9);border:none;padding:6px 14px;font-size:12.5px;font-weight:800;cursor:pointer;font-family:inherit;transition:.12s}
+.langbtn.on{background:#fff;color:#1A5FAB}
+html[dir=rtl] body,html[dir=rtl] .note,html[dir=rtl] .secsub,html[dir=rtl] .sech,html[dir=rtl] h3,html[dir=rtl] .foot{text-align:right}
+html[dir=rtl] .foot{text-align:center}
+html[dir=rtl] .kc,html[dir=rtl] .metric{text-align:center}
+html[dir=rtl] #ehcp{right:auto;left:22px}
+html[dir=rtl] #ehcbtn{right:auto;left:22px}
+html[dir=rtl] .ehu{align-self:flex-start}
+html[dir=rtl] .ehchip{text-align:right}
 nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid #DCE5DF;box-shadow:0 2px 8px rgba(0,0,0,.04);overflow-x:auto;white-space:nowrap}
 .navin{max-width:1340px;margin:0 auto;padding:0 10px;display:flex}
 nav a{display:inline-block;padding:13px 16px;font-size:13px;font-weight:600;color:#6B7C86;cursor:pointer;border-bottom:3px solid transparent;text-decoration:none}
@@ -21,6 +32,13 @@ nav a.on{color:#1A5FAB;border-bottom-color:#3FA34D}
 nav a:hover{color:#1C2B33}
 section{display:none;padding-top:20px}
 section.on{display:block}
+.askbtn{text-align:left;background:#fff;border:1px solid #E3EAE6;border-radius:10px;padding:12px 14px;cursor:pointer;transition:.15s}
+.askbtn:hover{border-color:#1A5FAB;box-shadow:0 2px 8px rgba(26,95,171,.12);transform:translateY(-1px)}
+.ansbox{background:#F7FAFC;border:1px solid #E3EAE6;border-left:3px solid #1A5FAB;border-radius:8px;padding:14px 16px}
+.anst{font-weight:700;font-size:14px;color:#1C2B33}
+.anst-ar{font-size:12.5px;color:#6B7C86;margin-top:2px}
+.ansbody{font-size:12.5px;color:#3A4A52;line-height:1.65;margin-top:8px}
+.ansrow{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #EEF2F0;font-size:12.5px;color:#3A4A52}
 .kstrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:18px 0}
 .kc{background:#fff;border:1px solid #E3EAE5;border-radius:12px;padding:13px 15px;box-shadow:0 1px 3px rgba(0,0,0,.03)}
 .kc .v{font-size:25px;font-weight:800;color:#1A5FAB;line-height:1.05}
@@ -36,7 +54,7 @@ section.on{display:block}
 .sech{font-size:18px;font-weight:800;color:#0F3D2E;margin:6px 0 4px;display:flex;align-items:center;gap:9px}
 .sech:before{content:'';width:5px;height:20px;background:#3FA34D;border-radius:3px}
 .secsub{font-size:12.5px;color:#6B7C86;margin-bottom:16px}
-.ch{width:100%;height:auto;display:block;overflow:visible}
+.ch{width:100%;height:auto;display:block;overflow:visible;direction:ltr}
 .cax{font:600 10px Segoe UI;fill:#9AA8B0}.cax2{font:600 10px Segoe UI;fill:#7B8A92}.caxt{font:700 11px Segoe UI;fill:#6B7C86}
 .chl{font:600 11.5px Segoe UI;fill:#3A4A52}.chv{font:700 11.5px Segoe UI;fill:#1C2B33}.chs{font:600 10.5px Segoe UI;fill:#9AA8B0}
 .cln{font:700 10px Segoe UI}
@@ -90,8 +108,9 @@ nav a.on{background:linear-gradient(180deg,#fff,#F1FBF4)}
 HTML=f'''<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>EH Bid & Tender Intelligence</title><style>{CSS}</style></head>
 <body>
-<header><div class="hd"><img src="{LOGO}" alt="EH"><div><h1>Bid &amp; Tender Intelligence</h1><div class="sub">Environmental Horizons (Afaq Al Beeah) — competitive bid analytics, 2024–2026</div></div>
-<div class="pill">{BA['kpi']['total']} tenders tracked<br>SAR {round(BA['kpi']['pipeline']/1e6)}M pipeline</div></div></header>
+<header><div class="hd"><img src="{LOGO}" alt="EH"><div><h1 id="h-title">Bid &amp; Tender Intelligence</h1><div class="sub" id="h-sub">Environmental Horizons (Afaq Al Beeah) — competitive bid analytics, 2024–2026</div></div>
+<div class="hd-right"><div class="langtog"><button class="langbtn on" data-l="en" onclick="setLang('en')">EN</button><button class="langbtn" data-l="ar" onclick="setLang('ar')">عربي</button></div>
+<div class="pill" id="h-pill">{BA['kpi']['total']} tenders tracked<br>SAR {round(BA['kpi']['pipeline']/1e6)}M pipeline</div></div></div></header>
 <nav><div class="navin" id="nav"></div></nav>
 <div class="wrap">
 <div id="kstrip" class="kstrip"></div>
@@ -106,7 +125,7 @@ HTML=f'''<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="
 <section id="s-tenders"></section>
 <section id="s-watchlist"></section>
 <section id="s-limitations"></section>
-<div class="foot">Generated for Environmental Horizons · figures reflect the bid-tracking workbooks and are partial where the live trackers are still being filled · self-contained dashboard.</div>
+<div class="foot" id="h-foot">Generated for Environmental Horizons · figures reflect the bid-tracking workbooks and are partial where the live trackers are still being filled · self-contained dashboard.</div>
 </div>
 <script id="BA" type="application/json">{json.dumps(BA, ensure_ascii=False).replace('</','<\\/')}</script>
 <script>{CHARTS}</script>

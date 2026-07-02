@@ -1,44 +1,55 @@
+# Rebuilds the EH Bid dashboard every hour from the live bid files and publishes it.
 name: Update Bid Dashboard
+
 on:
-  workflow_dispatch: {}
   schedule:
-    - cron: '7,22,37,52 5,6,7,8,9,10,11,12,13,14 * * 0-4'
+    - cron: '0 * * * *'        # every hour, on the hour (UTC)
+  workflow_dispatch: {}
+
 permissions:
   contents: read
   pages: write
   id-token: write
+
 concurrency:
   group: pages
   cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Get the code
         uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
       - name: Install requirements
         run: pip install -r requirements.txt
+
       - name: Write the robot key from the secret
         run: echo '${{ secrets.GOOGLE_CREDENTIALS }}' > pipeline/service_account.json
+
       - name: Rebuild the dashboard
         env:
           GOOGLE_APPLICATION_CREDENTIALS: service_account.json
           SHEET_ID_2025: ${{ vars.SHEET_ID_2025 }}
           SHEET_ID_2026: ${{ vars.SHEET_ID_2026 }}
         run: python pipeline/run_pipeline.py
+
       - name: Prepare the published page
         run: |
           mkdir -p site
           cp pipeline/EH_Bid_Analysis.html site/index.html
+
       - name: Package the page
         uses: actions/upload-pages-artifact@v3
         with:
           path: site
-          overwrite: true
+
   publish:
     needs: build
     runs-on: ubuntu-latest

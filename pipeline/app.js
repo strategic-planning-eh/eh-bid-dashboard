@@ -1,4 +1,6 @@
-const BA=JSON.parse(document.getElementById('BA').textContent);
+const BAD=JSON.parse(document.getElementById('BA').textContent);
+let BA=BAD.both, SCOPE='both';
+function setScope(s){SCOPE=s;BA=BAD[s]||BAD.both;['y2025','y2026','both'].forEach(function(x){var b=document.getElementById('sc-'+x);if(b)b.classList.toggle('on',x===s)});renderAll();}
 const $=id=>document.getElementById(id);
 const pct=v=>v==null?'—':v+'%';
 const wrCol=v=>v==null?C.soft:(v>=50?C.green:v>=30?C.orange:C.red);
@@ -9,7 +11,7 @@ const t=(en,ar)=>L==='ar'?ar:en;
 const DOUT={'Won':'فوز','Lost':'خسارة','Not awarded':'لم تتم الترسية','Cancelled':'ملغاة','Pending':'قيد الدراسة'};
 const DCAT={'Out of scope of EH':'خارج نطاق عمل EH','Service not offered':'خدمة غير مقدَّمة','Missing licence / qualification':'نقص ترخيص / تأهيل','Vendor / partner risk':'مخاطر مورّد / شريك','Other / not specified':'أخرى / غير محددة'};
 const DSVC={'Environmental Studies / EIA':'دراسات بيئية / تقييم الأثر','Unclassified':'غير مصنّف','Environmental Services':'خدمات بيئية','Training':'تدريب','Env. Services':'خدمات بيئية','Env. Studies / EIA':'دراسات بيئية / تقييم الأثر'};
-const DPLAT={'Etimad':'اعتماد','SAP Ariba':'ساب أريبا','SEC-SAP':'SEC-SAP','Email / direct':'بريد / مباشر','Other / client portal':'أخرى / بوابة العميل','Email':'بريد','Other':'أخرى'};
+const DPLAT={'Etimad':'اعتماد','SEC-SAP / SAP Ariba':'SEC-SAP / ساب أريبا','SAP Ariba':'ساب أريبا','SEC-SAP':'SEC-SAP','Email / direct':'بريد / مباشر','Other / client portal':'أخرى / بوابة العميل','Email':'بريد','Other':'أخرى'};
 const DDUR={'≤3 mo':'≤3 أشهر','4–6 mo':'4–6 أشهر','7–12 mo':'7–12 شهر','13–24 mo':'13–24 شهر','25+ mo':'+25 شهر'};
 const dv=(m,v)=>L==='ar'?(m[v]||v):v;
 
@@ -19,7 +21,7 @@ function rNav(){$('nav').innerHTML=TABS.map(([id,en,ar])=>`<a id="t-${id}" class
 function go(id){curTab=id;TABS.forEach(([tt])=>{$('t-'+tt).classList.toggle('on',tt==id);$('s-'+tt).classList.toggle('on',tt==id);});window.scrollTo(0,0);}
 
 // ---------- KPI STRIP ----------
-const k=BA.kpi;
+let k=BA.kpi;
 function kc(v,l,d,cls){return `<div class="kc"><div class="v ${cls||''}">${v}</div><div class="l">${l}</div>${d?`<div class="d">${d}</div>`:''}</div>`;}
 function rKPI(){$('kstrip').innerHTML=
  kc(k.total,t('Tenders tracked','المنافسات المتتبَّعة'),'2024–2026')+
@@ -33,7 +35,7 @@ function rKPI(){$('kstrip').innerHTML=
 // ===================== OVERVIEW =====================
 function rOverview(){
  const wl=BA.winloss;
- const t2=BA.trajectory;
+ const t2=BAD.both.trajectory; // year-on-year comparison always uses full data, independent of the scope filter
  const segs=[{l:t('EH won','فاز EH'),v:wl.awarded_eh,c:C.green},{l:t('Lost (other won)','خسارة (فاز غيره)'),v:wl.awarded_other,c:C.red},{l:t('Not awarded','لم تتم الترسية'),v:wl.not_awarded,c:C.orange},{l:t('Cancelled','ملغاة'),v:wl.cancelled,c:C.soft}];
  $('s-overview').innerHTML=
  `<div class="sech">${t('Executive overview','ملخّص تنفيذي')}</div><div class="secsub">${t('Headline performance across the tender pipeline, win/loss outcome, and the year-on-year trajectory.','الأداء العام عبر محفظة المنافسات، ونتائج الفوز/الخسارة، والمسار السنوي.')}</div>
@@ -73,7 +75,7 @@ function rWinloss(){
  const svc=byDim(BA.service_mix,x=>dv(DSVC,x.name));
  const plat=byDim(BA.platform_mix,x=>dv(DPLAT,x.name));
  const vb=byDim(BA.value_bands,x=>x.band);
- const bdr=BA.bidder_dist.filter(x=>x.awarded>0).map(x=>({l:x.n+t(' bidders',' متقدمين'),v:Math.round(100*x.won/x.awarded),aw:x.awarded}));
+ const bdr=BA.bidder_dist.filter(x=>x.awarded>0).map(x=>({l:(x.n==='0'?t('No rivals','بدون منافسين'):x.n+t(' rivals',' منافسًا')),v:Math.round(100*x.won/x.awarded),aw:x.awarded}));
  const wl=BA.winloss;
  const segs=[{l:t('EH won','فاز EH'),v:wl.awarded_eh,c:C.green},{l:t('Competitor won','فاز منافس'),v:wl.awarded_other,c:C.red}];
  $('s-winloss').innerHTML=
@@ -82,7 +84,7 @@ function rWinloss(){
   <div class="card"><h3>${t('Head-to-head outcome','النتيجة المباشرة')}</h3><div class="note">${t('Among decided tenders, EH vs the field.','بين المنافسات المحسومة، EH مقابل المنافسين.')}</div>
    <div style="display:flex;align-items:center;gap:18px;justify-content:center;flex-wrap:wrap">${donut(segs,{center:pct(k.win_rate),csub:t('WIN RATE','نسبة الفوز')})}<div>${legend(segs)}</div></div>
    <div style="margin-top:12px;font-size:12px;color:#6B7C86;text-align:center">${t('EH won ','فاز EH بـ ')}<b style="color:#2E7D46">${wl.awarded_eh}</b>${t(' · lost ',' · وخسر ')}<b style="color:#C0504D">${wl.awarded_other}</b>${t(' of '+k.awarded+' decided tenders.',' من '+k.awarded+' منافسة محسومة.')}</div></div>
-  <div class="card"><h3>${t('Win rate vs competition intensity','نسبة الفوز مقابل حدّة المنافسة')}</h3><div class="note">${t('Does EH win more when fewer rivals bid? Each bar = win rate at that bidder count.','هل يفوز EH أكثر عند تقدّم منافسين أقل؟ كل عمود = نسبة الفوز عند ذلك العدد من المتقدمين.')}</div>
+  <div class="card"><h3>${t('Win rate vs competition intensity','نسبة الفوز مقابل حدّة المنافسة')}</h3><div class="note">${t('Rival counts exclude EH itself — the tracker\'s bidder count includes EH, so intensity = bidders − 1, grouped into bands. Each bar = win rate among decided tenders in that band.','عدد المنافسين لا يشمل EH — عدد الشركات في الجدول يشمل EH، لذا حدّة المنافسة = عدد المتقدمين − 1، مجمّعة في نطاقات. كل عمود = نسبة الفوز بين المنافسات المحسومة في ذلك النطاق.')}</div>
    ${bdr.length?hbar(bdr,{val:d=>d.v,lab:d=>d.l,fmt:v=>v+'%',sub:d=>'('+d.aw+')',color:d=>wrCol(d.v),rh:42}):'<div class="note">'+t('Not enough decided tenders with bidder counts.','لا توجد منافسات محسومة كافية بأعداد المتقدمين.')+'</div>'}</div>
  </div>
  <div class="card"><h3>${t('Win rate by service line','نسبة الفوز حسب مجال الخدمة')}</h3><div class="note">${t('Which capabilities convert best.','أي القدرات تحقّق أعلى معدّل فوز.')}</div>
@@ -134,6 +136,7 @@ function renderPricing(){
    ${kc(s.cheapest_pct+'%',t('Tenders EH was cheapest','منافسات كان EH الأرخص فيها'),s.cheapest+t(' of ',' من ')+s.full+t(' full',' كاملة'),s.cheapest_pct>=40?'g':'r')}
    ${kc(s.avg_percentile+t('th',''),t('Avg price percentile','متوسط المئوي السعري'),t('1st=cheapest','1 = الأرخص'),s.avg_percentile<=40?'g':'r')}
    ${kc((s.median_gap>0?'+':'')+s.median_gap+'%',t('Median gap to lowest','وسيط الفارق عن الأدنى'),t('typical EH vs cheapest','EH نموذجياً مقابل الأرخص'),s.median_gap>20?'r':'g')}
+   ${kc(s.median_win_gap==null?'\u2014':(s.median_win_gap>0?'+':'')+s.median_win_gap+'%',t('Median gap to winning bid','وسيط الفارق عن العرض الفائز'),s.median_win_gap==null?t('no competitor-won tenders with both prices','لا منافسات فاز بها منافس مع توفّر السعرين'):t('typical EH vs the bid that beat it \u00b7 '+s.win_gap_n+' tenders','EH نموذجياً مقابل العرض الذي تغلّب عليه \u00b7 '+s.win_gap_n+' منافسة'),s.median_win_gap!=null&&s.median_win_gap>20?'r':'g')}
    ${kc(s.tenders,t('Tenders with bidders','منافسات بها متقدمون'),s.full+t(' with full pricing',' بتسعير كامل'))}
  </div>
  <div style="display:flex;gap:8px;margin-bottom:12px"><button onclick="pxAll(true)" style="padding:6px 13px;border:1px solid #1A5FAB;background:#1A5FAB;color:#fff;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer">${t('Expand all','توسيع الكل')}</button><button onclick="pxAll(false)" style="padding:6px 13px;border:1px solid #D5DEE2;background:#fff;color:#6B7C86;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer">${t('Collapse all','طيّ الكل')}</button></div>
@@ -246,7 +249,7 @@ function rFunnel(){
 // ===================== ALL TENDERS (list view) =====================
 const TF={year:'all',outcome:'all',platform:'all',svc:'all',q:''};
 function setTF(kk,v){TF[kk]=v;renderTenders();}
-function platN(p){p=(p||'').toLowerCase();if(p.includes('etimad'))return 'Etimad';if(p.includes('ariba'))return 'SAP Ariba';if(p.includes('sec'))return 'SEC-SAP';if(p.includes('mail'))return 'Email';return p?'Other':'\u2014';}
+function platN(p){p=(p||'').toLowerCase();if(p.includes('etimad'))return 'Etimad';if(p.includes('ariba')||p.includes('sec')||p.includes('sap'))return 'SEC-SAP / SAP Ariba';if(p.includes('mail'))return 'Email';return p?'Other':'\u2014';}
 function uniqVals(fn){return [...new Set(BA.bidlist.map(fn).filter(x=>x&&x!=='\u2014'))].sort();}
 function renderTenders(){
  const OC={'Won':'#2E7D46','Lost':'#C0504D','Not awarded':'#E8862E','Cancelled':'#9AA8B0','Pending':'#3E86C8'};
@@ -290,7 +293,7 @@ function renderTenders(){
 // ===================== NOTES & LIMITATIONS =====================
 function rLimitations(){
  const lim=[
-  [t('Small outcome sample','عيّنة نتائج صغيرة'),t('Only 16 of 144 tenders have a recorded winner and 10 have full competitor pricing. Every win-rate figure — overall and especially the slices by service line, platform, value band and bidder count — is computed off those 16, so most breakdowns rest on one to three tenders. Read them as anecdotes, not statistics.','16 فقط من 144 منافسة لها فائز مُسجّل و10 لها تسعير منافسين كامل. كل رقم لنسبة الفوز — إجمالاً وخاصة التقسيمات حسب مجال الخدمة والمنصة وشريحة القيمة وعدد المتقدمين — محسوب من تلك الـ16، فمعظم التفصيلات تستند إلى منافسة أو ثلاث. اقرأها كحكايات لا كإحصاءات.')],
+  [t('Small outcome sample','عيّنة نتائج صغيرة'),t('Only '+BA.kpi.awarded+' of '+BA.kpi.total+' tenders in this view have a recorded decision and '+BA.pricing.summary.full+' have full competitor pricing. Every win-rate figure — overall and especially the slices by service line, platform, value band and rival count — is computed off those '+BA.kpi.awarded+', so most breakdowns rest on a handful of tenders. Read them as anecdotes, not statistics.',BA.kpi.awarded+' فقط من '+BA.kpi.total+' منافسة في هذا النطاق لها قرار مُسجّل و'+BA.pricing.summary.full+' لها تسعير منافسين كامل. كل رقم لنسبة الفوز — إجمالاً وخاصة التقسيمات حسب مجال الخدمة والمنصة وشريحة القيمة وعدد المنافسين — محسوب من تلك الـ'+BA.kpi.awarded+'، فمعظم التفصيلات تستند إلى عدد قليل من المنافسات. اقرأها كحكايات لا كإحصاءات.')],
   [t('Pricing ≠ full picture','التسعير ≠ الصورة الكاملة'),t('The pricing analysis shows EH\'s losing bids were priced high, but Saudi tenders are scored on technical merit, compliance, delivery capability and incumbency alongside price. Without the technical scores and the stated loss reason, we cannot prove price caused the losses or rule out that EH was competing on larger scope or quality.','يُظهر تحليل الأسعار أن عروض EH الخاسرة كانت مرتفعة، لكن المنافسات السعودية تُقيَّم على الجدارة الفنية والامتثال وقدرة التنفيذ وأسبقية التعاقد إلى جانب السعر. وبلا الدرجات الفنية وسبب الخسارة المُعلن، يتعذّر إثبات أن السعر سبّب الخسائر أو استبعاد أن EH كان ينافس على نطاق أو جودة أكبر.')],
   [t('2025 vs 2026 not comparable','2025 مقابل 2026 غير قابلة للمقارنة'),t('2026 is a partial, in-progress year — many tenders are still pending and outcomes lag launch by months. A near-complete 2025 is being compared against a half-finished 2026 where wins may simply not be recorded yet. The same depresses the most recent months of any time view.','2026 سنة جزئية جارية — كثير من المنافسات ما زالت معلّقة والنتائج تتأخّر أشهراً عن الطرح. تُقارَن 2025 شبه المكتملة بـ2026 نصف المنجزة حيث قد لا تكون الانتصارات مُسجّلة بعد. والأمر ذاته يخفض أحدث الأشهر في أي عرض زمني.')],
   [t('Recording is not random','التسجيل ليس عشوائياً'),t('Tenders with a logged outcome or pricing are likely those that progressed furthest or that someone chose to complete. If wins or painful losses get logged more diligently, the recorded win rate is biased in an unknown direction. "Win rate among tenders with an outcome" is not the same as the true win rate.','المنافسات ذات النتيجة أو التسعير المُسجّل غالباً هي التي تقدّمت أكثر أو اختار أحدهم إكمالها. وإذا سُجّلت الانتصارات أو الخسائر المؤلمة بعناية أكبر، فنسبة الفوز المُسجّلة منحازة باتجاه مجهول. «نسبة الفوز بين المنافسات ذات النتيجة» ليست كنسبة الفوز الحقيقية.')],
@@ -317,8 +320,9 @@ function rChrome(){var el;
  if(el=$('h-title'))el.textContent=t('Bid & Tender Intelligence','تحليلات المنافسات والعطاءات');
  if(el=$('h-sub'))el.textContent=t('Environmental Horizons (Afaq Al Beeah) — competitive bid analytics, 2024–2026','آفاق البيئة (Afaq Al Beeah) — تحليلات تنافسية للمنافسات، 2024–2026');
  if(el=$('h-pill'))el.innerHTML=t(k.total+' tenders tracked<br>SAR '+Math.round(k.pipeline/1e6)+'M pipeline',k.total+' منافسة متتبَّعة<br>محفظة بقيمة '+Math.round(k.pipeline/1e6)+' مليون ريال');
+ if(el=$('sc-both'))el.textContent=t('Both','الكل');
  if(el=$('h-foot'))el.textContent=t('Generated for Environmental Horizons · figures reflect the bid-tracking workbooks and are partial where the live trackers are still being filled · self-contained dashboard.','أُعدّت لصالح آفاق البيئة · تعكس الأرقام جداول تتبّع المنافسات وهي جزئية حيثما لا تزال قيد التعبئة · لوحة مستقلة.');}
-function renderAll(){rKPI();rOverview();rPipeline();rWinloss();renderPricing();renderCompetitors();rClients();rService();rFunnel();renderTenders();rLimitations();rWatchlist();rChrome();}
+function renderAll(){k=BA.kpi;rKPI();rOverview();rPipeline();rWinloss();renderPricing();renderCompetitors();rClients();rService();rFunnel();renderTenders();rLimitations();rWatchlist();rChrome();}
 function setLang(l){L=l;document.documentElement.setAttribute('dir',l==='ar'?'rtl':'ltr');document.documentElement.lang=l;document.body.classList.toggle('ar',l==='ar');document.querySelectorAll('.langbtn').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l);});rNav();renderAll();go(curTab);}
 rNav();renderAll();go('overview');
 

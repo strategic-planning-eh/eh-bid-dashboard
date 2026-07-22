@@ -1,5 +1,6 @@
 import json
-BA=json.load(open('bidanalytics2.json'))
+BAALL=json.load(open('bidanalytics2.json'))
+BA=BAALL['both']   # static header bits use the all-years view
 CHARTS=open('charts.js').read()
 LOGO=open('logo_b64.txt').read().strip()
 LIC=json.load(open('licenses.json'))
@@ -109,7 +110,7 @@ HTML=f'''<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="
 <title>EH Bid & Tender Intelligence</title><style>{CSS}</style></head>
 <body>
 <header><div class="hd"><img src="{LOGO}" alt="EH"><div><h1 id="h-title">Bid &amp; Tender Intelligence</h1><div class="sub" id="h-sub">Environmental Horizons (Afaq Al Beeah) — competitive bid analytics, 2024–2026</div></div>
-<div class="hd-right"><div class="langtog"><button class="langbtn on" data-l="en" onclick="setLang('en')">EN</button><button class="langbtn" data-l="ar" onclick="setLang('ar')">عربي</button></div>
+<div class="hd-right"><div class="langtog" style="margin-inline-end:8px"><button class="langbtn" id="sc-y2025" onclick="setScope('y2025')">2025</button><button class="langbtn" id="sc-y2026" onclick="setScope('y2026')">2026</button><button class="langbtn on" id="sc-both" onclick="setScope('both')">Both</button></div><div class="langtog"><button class="langbtn on" data-l="en" onclick="setLang('en')">EN</button><button class="langbtn" data-l="ar" onclick="setLang('ar')">عربي</button></div>
 <div class="pill" id="h-pill">{BA['kpi']['total']} tenders tracked<br>SAR {round(BA['kpi']['pipeline']/1e6)}M pipeline</div></div></div></header>
 <nav><div class="navin" id="nav"></div></nav>
 <div class="wrap">
@@ -127,7 +128,7 @@ HTML=f'''<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="
 <section id="s-limitations"></section>
 <div class="foot" id="h-foot">Generated for Environmental Horizons · figures reflect the bid-tracking workbooks and are partial where the live trackers are still being filled · self-contained dashboard.</div>
 </div>
-<script id="BA" type="application/json">{json.dumps(BA, ensure_ascii=False).replace('</','<\\/')}</script>
+<script id="BA" type="application/json">{json.dumps(BAALL, ensure_ascii=False).replace('</','<\\/')}</script>
 <script>{CHARTS}</script>
 <script>__APP__</script>
 </body></html>'''

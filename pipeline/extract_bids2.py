@@ -129,6 +129,12 @@ for f,yr in [('bids2025.xlsx',2025),('bids2026.xlsx',2026)]:
             out.append([str(nm).strip(), None if dq else num(val), dq])
         if out: rosters[f'{yr}-{sn}']=out
 
+# ---- manual corrections confirmed by EH bid team (values missing/incorrect in the sheet) ----
+OVERRIDES={(2026,16): dict(value=20000000, offer=20000000, winval=20000000)}  # ZATCA framework agreement won by EH at SAR 20M
+for _b in allbids:
+    _o=OVERRIDES.get((_b['year'],_b['sn']))
+    if _o: _b.update(_o)
+
 json.dump({'bids':allbids,'rosters':rosters}, open('bidraw2.json','w'), ensure_ascii=False)
 print('bids:',len(allbids),'| with launch date:',sum(1 for b in allbids if b['month']))
 print('with platform:',sum(1 for b in allbids if b['platform']),'| with duration:',sum(1 for b in allbids if b['dur']))

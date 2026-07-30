@@ -1,4 +1,5 @@
-# Rebuilds the EH Bid dashboard every hour from the live bid files and publishes it.
+# Rebuilds the EH Bid dashboard every hour from the live bid files and publishes
+# the full Strategic Intelligence Hub (bids + stakeholder map + client bubbles).
 name: Update Bid Dashboard
 
 on:
@@ -40,10 +41,13 @@ jobs:
           SHEET_ID_2026: ${{ vars.SHEET_ID_2026 }}
         run: python pipeline/run_pipeline.py
 
-      - name: Prepare the published page
+      - name: Prepare the published site (hub + all three apps)
         run: |
           mkdir -p site
-          cp pipeline/EH_Bid_Analysis.html site/index.html
+          cp hub/EH_Hub.html site/index.html
+          cp pipeline/EH_Bid_Analysis.html site/EH_Bid_Analysis_CURRENT.html
+          cp hub/EH_Stakeholder_Map_CURRENT.html site/
+          cp hub/EH_Client_Bubble_Map_CURRENT.html site/
 
       - name: Package the page
         uses: actions/upload-pages-artifact@v3

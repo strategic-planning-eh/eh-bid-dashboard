@@ -43,6 +43,7 @@ def colmap(ws,hr):
         elif 'الشركة الفائزة' in h: m['winner']=c
         elif 'قيمة العرض  الفائز' in h or ('قيمة العرض' in h and 'فائز' in h): m['winval']=c
         elif h.startswith('حالة') and 'ترسية' in h: m['status']=c
+        elif 'سبب عدم الترسية' in h or ('سبب' in h and 'لغاء' in h): m['reason']=c
     return m
 
 EH=['افاق البيئة','آفاق البيئة','افاق البيئه','آفاق البيئه','environmental horizon']
@@ -97,6 +98,7 @@ for f,yr in [('bids2025.xlsx',2025),('bids2026.xlsx',2026)]:
             eh_won=(True if st=='Awarded' else False if st=='Not awarded' else (is_eh(winner) if winner else None)),
             decided=(st in ('Awarded','Not awarded')) or bool(winner and str(winner).strip()),
             status=st,
+            reason=str(g('reason') or '').strip(),
             appr=dict(ceo=acc(g('ceo')),fin=acc(g('fin')),tech=acc(g('tech')),bd=acc(g('bd')),pm=acc(g('pm')),admin=acc(g('admin')),legal=acc(g('legal'))),
         )
         if b['offer'] is not None and b['offer']<100: b['offer']=None   # sub-100 SAR = data-entry error, not a real bid

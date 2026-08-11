@@ -191,6 +191,7 @@ def compute(bids, rfull, comp):
             low=(round(lo) if lo else None),high=(round(hi) if hi else None),avg=(round(avg) if avg else None),
             rank=rank,n=len(work),n_priced=n_priced,gap=gap,
             won=(bb['eh_won'] if bb else None),has_winner=(wc is not None),status=(bb['status'] if bb else None),
+        reason=((bb.get('reason') or None) if bb else None),
             win_price=(round(award) if award else None),
             title=(bb['title'] if bb else ''),client=(bb['client'] if bb else ''),
             bidders=blist,dq_count=len(dqd),undisc_count=len(undisc),level=('full' if has_full else 'partial')))
@@ -215,7 +216,7 @@ def compute(bids, rfull, comp):
         gap=round(100*(ehp-lo)/lo,1) if lo else 0
         blist=[dict(name=nm,price=pr,dq=False,undisclosed=False,eh=e,rank=i3+1,lowest=(i3==0),won=w) for i3,(nm,pr,e,w) in enumerate(comp)]
         price_rows.append(dict(sn=sn2,year=yr2,eh=ehp,low=round(lo),high=round(hi),avg=round(avg),
-            rank=rank,n=2,n_priced=2,gap=gap,won=False,has_winner=True,win_price=wvr,status=bb['status'],
+            rank=rank,n=2,n_priced=2,gap=gap,won=False,has_winner=True,win_price=wvr,status=bb['status'],reason=(bb.get('reason') or None),
             title=bb['title'],client=bb['client'],bidders=blist,dq_count=0,undisc_count=0,level='partial'))
     price_rows.sort(key=lambda x:(x['year'],x['sn']))
     _nfull=sum(1 for r in price_rows if r.get('level')=='full'); _npart=len(price_rows)-_nfull

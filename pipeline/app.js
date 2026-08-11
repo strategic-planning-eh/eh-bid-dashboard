@@ -113,8 +113,8 @@ function renderPricing(){
      const isWin=b.won;
      return `<div style="display:flex;align-items:center;gap:8px;margin:3px 0">
        <div style="width:230px;font-size:10.5px;color:${b.eh?'#1A5FAB':'#3A4A52'};font-weight:${b.eh?'700':'500'};text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" dir="auto">${b.lowest?'\u25bc ':''}${esc(b.name)}</div>
-       <div style="flex:1;max-width:${w}%;height:15px;background:${col};border-radius:3px;min-width:3px"></div>
-       <div style="font-size:10.5px;color:#1C2B33;font-weight:${b.eh?'700':'500'};white-space:nowrap">${fmtSAR(b.price)}${isWin?' <span style="color:#2E7D46;font-weight:700">★ '+t('won','فائز')+'</span>':''}</div></div>`;
+       <div style="flex:1"><div style="width:${w}%;height:15px;background:${col};border-radius:3px;min-width:3px"></div></div>
+       <div style="font-size:10.5px;color:#1C2B33;font-weight:${b.eh?'700':'500'};white-space:nowrap;min-width:150px;text-align:left">${fmtSAR(b.price)}${isWin?' <span style="color:#2E7D46;font-weight:700">★ '+t('won','فائز')+'</span>':''}</div></div>`;
    }).join('');
    return `<div class="card" style="margin-bottom:10px;padding:0;overflow:hidden">
      <div onclick="togglePx(${i})" style="cursor:pointer;padding:12px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:${open?'#F7FAFC':'#fff'}">
@@ -128,7 +128,7 @@ function renderPricing(){
      </div>
      ${open?`<div style="padding:10px 16px 14px;border-top:1px solid #EEF2F0;background:#FBFCFD">
        <div style="font-size:10.5px;color:#8A99A3;margin-bottom:8px">${r.undisc_count?'<span style="color:#B07A2E;font-weight:600">'+t(r.undisc_count+' of '+r.n+' bidders had no disclosed value (shown as undisclosed).',r.undisc_count+' من '+r.n+' متقدمين بلا قيمة معلنة (تظهر كغير معلنة).')+'</span><br>':''}${t(r.n_priced+' priced bid'+(r.n_priced==1?'':'s')+' shown, lowest first — ',r.n_priced+' عرض مُسعّر مرتّبة من الأدنى — ')}<span style="color:#1A5FAB;font-weight:700">${t('EH in blue','EH بالأزرق')}</span>${r.n_priced>1?', <span style="color:#2E7D46;font-weight:700">▼ '+t('lowest','الأدنى')+'</span>':''}${r.win_price?', ★ = '+t('winning bid','العرض الفائز'):''}.</div>
-       ${bars}</div>`:''}</div>`;
+       ${bars}${r.reason&&r.won!==true?`<div dir="auto" style="margin-top:9px;padding:7px 11px;border-inline-start:3px solid ${/Cancel/i.test(r.status||'')?'#8A99A3':'#C0504D'};background:${/Cancel/i.test(r.status||'')?'#F4F6F7':'#FBF3F2'};border-radius:4px;font-size:11px;color:#4A3836;line-height:1.55"><b style="color:${/Cancel/i.test(r.status||'')?'#5A6A72':'#A03A36'}">${t('Reason — not awarded / cancelled','\u0633\u0628\u0628 \u0639\u062f\u0645 \u0627\u0644\u062a\u0631\u0633\u064a\u0629 / \u0627\u0644\u0625\u0644\u063a\u0627\u0621')}:</b> ${esc(r.reason)}</div>`:''}</div>`:''}</div>`;
  }).join('');
  $('s-pricing').innerHTML=
  `<div class="sech">${t('Pricing intelligence','تحليل الأسعار')}</div><div class="secsub">${t('Every tender with a recorded bidder list — '+s.tenders+' in all. '+s.full+' show EH\'s price against the full field (the ranking stats below are drawn from these); the rest list the bidders with prices where disclosed and “undisclosed value” otherwise. '+s.total_bidders+' disclosed bids across '+s.total_names+' bidder entries. Click any tender for the full list.','كل منافسة لها قائمة متقدمين مُسجّلة — '+s.tenders+' إجمالاً. '+s.full+' منها تُظهر سعر EH مقابل كامل المنافسين (وتُشتق إحصاءات الترتيب أدناه منها)؛ والباقي يسرد المتقدمين بالأسعار حيث أُعلنت وبـ«قيمة غير معلنة» فيما عدا ذلك. '+s.total_bidders+' عرضاً مُعلناً عبر '+s.total_names+' مُدخل متقدم. انقر أي منافسة لعرض القائمة الكاملة.')}</div>

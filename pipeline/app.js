@@ -279,7 +279,7 @@ function renderTenders(){
    <td style="font-size:10.5px;color:#6B7C86">${b.svc?dv(DSVC,b.svc):'\u2014'}</td>
    <td style="text-align:right;font-size:11px;white-space:nowrap">${b.value?fmtSAR(b.value):'\u2014'}</td>
    <td style="text-align:center">${b.nbid!=null?b.nbid:'\u2014'}</td>
-   <td><span class="tag" style="background:${OC[b.outcome]}">${t(b.outcome.toUpperCase(),DOUT[b.outcome]||b.outcome)}</span></td>
+   <td><span class="tag" style="background:${OC[b.outcome]}">${t(b.outcome.toUpperCase(),DOUT[b.outcome]||b.outcome)}</span>${b.lossreason&&b.outcome!='Won'?`<div dir="auto" style="font-size:9.5px;color:${b.outcome=='Cancelled'?'#77868F':'#A03A36'};margin-top:3px;max-width:175px;line-height:1.35">${esc(b.lossreason)}</div>`:''}</td>
    <td style="max-width:130px"><div dir="auto" style="font-size:10.5px;color:#6B7C86">${b.winner=='EH'?'<b style="color:#2E7D46">EH</b>':(esc(b.winner)||'\u2014')}</div></td>
  </tr>`).join('');
  $('s-tenders').innerHTML=

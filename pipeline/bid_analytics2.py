@@ -311,7 +311,7 @@ def compute(bids, rfull, comp):
             value=round(b['value']) if b['value'] else None, nbid=int(b['nbid']) if b['nbid'] else None,
             svc=SVCN2.get(b['svcdept'],''), dur=int(b['dur']) if b['dur'] else None,
             winner=win, outcome=outcome(b), status=(b['status'] or ''),
-            committee=b['committee'], reason=b['comments'],
+            committee=b['committee'], reason=b['comments'], lossreason=(b.get('reason') or None),
             window=_days(b['launch'],b['submit']) if (b['launch'] and b['submit']) else None))
 
     out['turnaround']=turnaround

@@ -107,7 +107,8 @@ nav a.on{background:linear-gradient(180deg,#fff,#F1FBF4)}
 '''
 
 HTML=f'''<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EH Bid & Tender Intelligence</title><style>{CSS}</style></head>
+<title>EH Bid & Tender Intelligence</title><style>{CSS}:focus-visible{{outline:2px solid #027DC3;outline-offset:2px}}
+</style></head>
 <body>
 <header><div class="hd"><img src="{LOGO}" alt="EH"><div><h1 id="h-title">Bid &amp; Tender Intelligence</h1><div class="sub" id="h-sub">Environmental Horizons (Afaq Al Beeah) — competitive bid analytics, 2024–2026</div></div>
 <div class="hd-right"><div class="langtog" style="margin-inline-end:8px"><button class="langbtn" id="sc-y2025" onclick="setScope('y2025')">2025</button><button class="langbtn" id="sc-y2026" onclick="setScope('y2026')">2026</button><button class="langbtn on" id="sc-both" onclick="setScope('both')">Both</button></div><div class="langtog"><button class="langbtn on" data-l="en" onclick="setLang('en')">EN</button><button class="langbtn" data-l="ar" onclick="setLang('ar')">عربي</button></div>
@@ -131,6 +132,26 @@ HTML=f'''<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="
 <script id="BA" type="application/json">{json.dumps(BAALL, ensure_ascii=False).replace('</','<\\/')}</script>
 <script>{CHARTS}</script>
 <script>__APP__</script>
+<script>
+function _lblCharts(){{
+  document.querySelectorAll('canvas,svg').forEach(function(c){{
+    if(c.getAttribute('role'))return;
+    c.setAttribute('role','img');
+    var h=c.closest('.card'); var tt=h&&h.querySelector('h3');
+    c.setAttribute('aria-label',(tt?tt.textContent+' — ':'')+'chart; underlying figures are available in the All Tenders tab table.');
+  }});
+}}
+new MutationObserver(_lblCharts).observe(document.documentElement,{{childList:true,subtree:true}});
+window.addEventListener('load',function(){{ _lblCharts();
+  document.querySelectorAll('canvas').forEach(function(c){{
+    c.setAttribute('role','img');
+    if(!c.getAttribute('aria-label')){{
+      var h=c.closest('.card'); var tt=h&&h.querySelector('h3');
+      c.setAttribute('aria-label',(tt?tt.textContent+' — ':'')+'chart; underlying figures are available in the All Tenders tab table.');
+    }}
+  }});
+}});
+</script>
 </body></html>'''
 
 APP=open('app.js').read()

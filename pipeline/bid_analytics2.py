@@ -12,6 +12,8 @@ def compute(bids, rfull, comp):
     val=lambda B:[b['value'] for b in B if b['value']]
     kpi=dict(
      total=len(bids), with_value=len(val(bids)), pipeline=round(sum(val(bids))),
+     open_pipeline=round(sum(val([b for b in bids if not b.get('decided') and (b.get('status') or '')!='Cancelled']))),
+     open_count=len([b for b in bids if not b.get('decided') and (b.get('status') or '')!='Cancelled']),
      awarded=len(awarded), eh_won=sum(1 for b in awarded if b['eh_won']),
      win_rate=wr(sum(1 for b in awarded if b['eh_won']), len(awarded)),
      submitted=sum(1 for b in bids if b['offer']),
@@ -218,6 +220,25 @@ def compute(bids, rfull, comp):
         price_rows.append(dict(sn=sn2,year=yr2,eh=ehp,low=round(lo),high=round(hi),avg=round(avg),
             rank=rank,n=2,n_priced=2,gap=gap,won=False,has_winner=True,win_price=wvr,status=bb['status'],reason=(bb.get('reason') or None),
             title=bb['title'],client=bb['client'],bidders=blist,dq_count=0,undisc_count=0,level='partial'))
+    # ---------- decided bids invisible to both builders -> single-point cards ----------
+    shown2=set((r['year'],r['sn']) for r in price_rows)
+    for bb in bids:
+        yr3,sn3=bb['year'],bb['sn']
+        if (yr3,sn3) in shown2 or (yr3,sn3) in roster_keys: continue
+        if not bb.get('decided') or (bb.get('status') or '')=='Cancelled': continue
+        nb=int(bb['nbid']) if bb.get('nbid') else None
+        if bb.get('eh_won') is True and (bb.get('winval') or bb.get('offer')):
+            ehp=round(bb.get('winval') or bb.get('offer'))
+            blist=[dict(name='Environmental Horizons (EH)',price=ehp,dq=False,undisclosed=False,eh=True,rank=1,lowest=True,won=True)]
+            price_rows.append(dict(sn=sn3,year=yr3,eh=ehp,low=ehp,high=ehp,avg=ehp,
+                rank=1,n=(nb or 1),n_priced=1,gap=0,won=True,has_winner=True,win_price=ehp,status=bb['status'],reason=None,
+                title=bb['title'],client=bb['client'],bidders=blist,dq_count=0,undisc_count=0,level='partial',ehin=True))
+        elif bb.get('eh_won') is False and bb.get('winval') and not bb.get('offer') and bb.get('winner'):
+            wvr=round(bb['winval'])
+            blist=[dict(name=bb['winner'],price=wvr,dq=False,undisclosed=False,eh=False,rank=1,lowest=True,won=True)]
+            price_rows.append(dict(sn=sn3,year=yr3,eh=None,low=wvr,high=wvr,avg=wvr,
+                rank=None,n=(nb or 1),n_priced=1,gap=None,won=False,has_winner=True,win_price=wvr,status=bb['status'],reason=(bb.get('reason') or None),
+                title=bb['title'],client=bb['client'],bidders=blist,dq_count=0,undisc_count=0,level='partial',ehin=True))
     price_rows.sort(key=lambda x:(x['year'],x['sn']))
     _nfull=sum(1 for r in price_rows if r.get('level')=='full'); _npart=len(price_rows)-_nfull
     pricing=dict(rows=price_rows, summary=dict(

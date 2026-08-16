@@ -388,18 +388,27 @@ function svgBase(id){
 function dlPNG(id){
   const svg = document.getElementById(id);
   const vb = svg.viewBox.baseVal;
-  const xml = new XMLSerializer().serializeToString(svg);
+  // clone with explicit pixel dimensions so the rasterizer sizes it by the viewBox, not the page layout
+  const cl = svg.cloneNode(true);
+  cl.setAttribute("width", vb.width);
+  cl.setAttribute("height", vb.height);
+  cl.setAttribute("font-family", "'Segoe UI', system-ui, Arial, sans-serif");
+  cl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+  const xml = new XMLSerializer().serializeToString(cl);
   const img = new Image();
   img.onload = () => {
+    const S = 2.5;
     const c = document.createElement("canvas");
-    c.width = vb.width*2.5; c.height = vb.height*2.5;
+    c.width = Math.round(vb.width*S); c.height = Math.round(vb.height*S);
     const x = c.getContext("2d");
     x.fillStyle = "#fff"; x.fillRect(0,0,c.width,c.height);
-    x.scale(2.5,2.5); x.drawImage(img,0,0);
+    // explicit destination rect: draw the full viewBox regardless of intrinsic size
+    x.drawImage(img, 0, 0, c.width, c.height);
     const a = document.createElement("a");
     a.download = "EH_" + id.replace("svg","") + ".png";
     a.href = c.toDataURL("image/png"); a.click();
   };
+  img.onerror = () => alert("PNG export failed — please report this.");
   img.src = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(xml)));
 }
 document.querySelectorAll(".ecard .png").forEach(b =>

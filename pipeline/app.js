@@ -1,4 +1,5 @@
 const BAD=JSON.parse(document.getElementById('BA').textContent);
+window.EHXB={get K(){return BAD.both.kpi},get lang(){return L}};
 let BA=BAD.both, SCOPE='both';
 function setScope(s){SCOPE=s;BA=BAD[s]||BAD.both;['y2025','y2026','both'].forEach(function(x){var b=document.getElementById('sc-'+x);if(b)b.classList.toggle('on',x===s)});renderAll();}
 const $=id=>document.getElementById(id);
@@ -324,6 +325,10 @@ function rChrome(){var el;
  if(el=$('sc-both'))el.textContent=t('Both','الكل');
  if(el=$('h-foot'))el.textContent=t('Generated for Environmental Horizons · figures reflect the bid-tracking workbooks and are partial where the live trackers are still being filled · self-contained dashboard.','أُعدّت لصالح آفاق البيئة · تعكس الأرقام جداول تتبّع المنافسات وهي جزئية حيثما لا تزال قيد التعبئة · لوحة مستقلة.');}
 function renderAll(){k=BA.kpi;rKPI();rOverview();rPipeline();rWinloss();renderPricing();renderCompetitors();rClients();rService();rFunnel();renderTenders();rLimitations();rWatchlist();rChrome();}
+window.addEventListener('message',function(e){
+  var d=e.data||{};
+  if(d.ehhub==='lang'&&(d.lang==='ar'||d.lang==='en')&&typeof L!=='undefined'&&L!==d.lang){setLang(d.lang);}
+});
 function setLang(l){L=l;document.documentElement.setAttribute('dir',l==='ar'?'rtl':'ltr');document.documentElement.lang=l;document.body.classList.toggle('ar',l==='ar');document.querySelectorAll('.langbtn').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l);});rNav();renderAll();go(curTab);}
 rNav();renderAll();go('overview');
 

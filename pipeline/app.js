@@ -54,7 +54,7 @@ function ntfTab(id){
 }
 function ntfChip(k){
  if(NTF.nw.has(k))return ' <span class="ntf" style="background:#2BAE68">'+t('NEW','جديد')+'</span>';
- if(NTF.dec.has(k)||NTF.upd.has(k)||NTF.px.has(k))return ' <span class="ntf">'+t('UPD','تحديث')+'</span>';
+ if(NTF.dec.has(k)||NTF.upd.has(k)||NTF.px.has(k))return ' <span class="ntf">'+t('UPDATE','تحديث')+'</span>';
  return '';
 }
 function rNtf(){
@@ -384,7 +384,7 @@ function rWatchlist(){
 function rChrome(){var el;
  if(el=$('h-title'))el.textContent=t('Bid & Tender Intelligence','تحليلات المنافسات والعطاءات');
  if(el=$('h-sub'))el.textContent=t('Environmental Horizons (Afaq Al Beeah) — competitive bid analytics, 2024–2026','آفاق البيئة (Afaq Al Beeah) — تحليلات تنافسية للمنافسات، 2024–2026');
- if(el=$('h-pill'))el.innerHTML=t(k.total+' tenders tracked<br>SAR '+Math.round(k.pipeline/1e6)+'M tracked · '+Math.round(k.open_pipeline/1e6)+'M open',k.total+' منافسة متتبَّعة<br>'+Math.round(k.pipeline/1e6)+'م متتبَّعة · '+Math.round(k.open_pipeline/1e6)+'م مفتوحة')+(window.BUILT?'<br><span style="display:inline-block;margin-top:4px;font-size:9.5px;font-weight:700;color:#7A5B14;background:#FFF3CD;border:1px solid #EAD9B0;border-radius:6px;padding:2px 8px">'+t('Data as of ','البيانات حتى ')+window.BUILT+'</span>':'');
+ if(el=$('h-pill'))el.innerHTML=t(k.total+' tenders tracked<br>SAR '+Math.round(k.pipeline/1e6)+'M tracked · '+Math.round(k.open_pipeline/1e6)+'M open',k.total+' منافسة متتبَّعة<br>'+Math.round(k.pipeline/1e6)+'م متتبَّعة · '+Math.round(k.open_pipeline/1e6)+'م مفتوحة');
  if(el=$('sc-both'))el.textContent=t('Both','الكل');
  if(el=$('h-foot'))el.textContent=t('Generated for Environmental Horizons · figures reflect the bid-tracking workbooks and are partial where the live trackers are still being filled · self-contained dashboard.','أُعدّت لصالح آفاق البيئة · تعكس الأرقام جداول تتبّع المنافسات وهي جزئية حيثما لا تزال قيد التعبئة · لوحة مستقلة.');}
 function renderAll(){k=BA.kpi;rNtf();rKPI();rOverview();rPipeline();rWinloss();renderPricing();renderCompetitors();rClients();rService();rFunnel();renderTenders();rLimitations();rWatchlist();rChrome();}

@@ -1,4 +1,17 @@
 import openpyxl, re, json, datetime
+
+def bidflag(v):
+    """True when the offer cell contains text meaning 'we bid' rather than a number.
+    Case/space/tatweel-insensitive; guarded against negations (no bid / لم نتقدم)."""
+    if v is None or isinstance(v,(int,float)): return False
+    t=str(v).strip().lower()
+    t=re.sub(r'[\u0640\u200b-\u200f\u064b-\u065f]','',t)
+    t=re.sub(r'\s+',' ',t)
+    if not t: return False
+    NEG=['no bid','not submit','did not','didn','without bid','لم','لا يوجد','لم نتقدم','اعتذار','اعتذرنا','withdraw','declined','cancel']
+    if any(n in t for n in NEG): return False
+    POS=['bid','submitted','submission','offered','قدمنا','تم التقديم','تقديم','مقدم','قدم','عرض مقدم']
+    return any(p in t for p in POS)
 def num(v):
     if v is None: return None
     if isinstance(v,(int,float)): return float(v) if not (isinstance(v,float) and v!=v) else None
@@ -90,6 +103,7 @@ for f,yr in [('bids2025.xlsx',2025),('bids2026.xlsx',2026)]:
             committee=str(g('committee') or '').strip(),
             comments=str(g('comments') or '').strip(),
             offer=num(g('offer')),
+            ehsub=bidflag(g('offer')),
             discount=str(g('disc') or '').strip(),
             bankval=num(g('bankval')),
             nbid=num(g('nbid')),

@@ -239,6 +239,19 @@ def compute(bids, rfull, comp):
             price_rows.append(dict(sn=sn3,year=yr3,eh=None,low=wvr,high=wvr,avg=wvr,
                 rank=None,n=(nb or 1),n_priced=1,gap=None,won=False,has_winner=True,win_price=wvr,status=bb['status'],reason=(bb.get('reason') or None),
                 title=bb['title'],client=bb['client'],bidders=blist,dq_count=0,undisc_count=0,level='partial',ehin=True))
+    # ---------- text-flagged submissions (offer cell says BID/submitted) with no other pricing presence ----------
+    shown3=set((r['year'],r['sn']) for r in price_rows)
+    for bb in bids:
+        yr4,sn4=bb['year'],bb['sn']
+        if (yr4,sn4) in shown3 or (yr4,sn4) in roster_keys: continue
+        if not bb.get('ehsub'): continue
+        if (bb.get('status') or '')=='Cancelled': continue
+        nb4=int(bb['nbid']) if bb.get('nbid') else None
+        blist=[dict(name='Environmental Horizons (EH)',price=None,dq=False,undisclosed=True,eh=True,rank=None,lowest=False,won=bool(bb.get('eh_won')))]
+        price_rows.append(dict(sn=sn4,year=yr4,eh=None,low=None,high=None,avg=None,
+            rank=None,n=(nb4 or 1),n_priced=0,gap=None,won=bool(bb.get('eh_won')),has_winner=bool(bb.get('winner')),win_price=None,
+            status=bb['status'],reason=(bb.get('reason') or None),
+            title=bb['title'],client=bb['client'],bidders=blist,dq_count=0,undisc_count=1,level='partial',ehin=True))
     price_rows.sort(key=lambda x:(x['year'],x['sn']))
     _nfull=sum(1 for r in price_rows if r.get('level')=='full'); _npart=len(price_rows)-_nfull
     pricing=dict(rows=price_rows, summary=dict(

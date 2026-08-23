@@ -1,4 +1,5 @@
 const BAD=JSON.parse(document.getElementById('BA').textContent);
+window.EHXB={get K(){return BAD.both.kpi},get lang(){return L},get ntf(){return NTF.nw.size+NTF.dec.size+NTF.upd.size+NTF.px.size}};
 let BA=BAD.both, SCOPE='both';
 function setScope(s){SCOPE=s;BA=BAD[s]||BAD.both;['y2025','y2026','both'].forEach(function(x){var b=document.getElementById('sc-'+x);if(b)b.classList.toggle('on',x===s)});renderAll();}
 const $=id=>document.getElementById(id);
@@ -17,8 +18,69 @@ const dv=(m,v)=>L==='ar'?(m[v]||v):v;
 
 // ---------- NAV ----------
 const TABS=[['overview','Overview','نظرة عامة'],['pipeline','Pipeline & Timeline','المنافسات والجدول الزمني'],['winloss','Win / Loss','الفوز / الخسارة'],['pricing','Pricing Intelligence','تحليل الأسعار'],['competitors','Competitors','المنافسون'],['clients','Clients','العملاء'],['service','Service & Platform','الخدمات والمنصات'],['funnel','Bid Turnaround','مدة اتخاذ القرار'],['tenders','All Tenders','جميع المنافسات'],['watchlist','Watchlist','قائمة المتابعة'],['limitations','Notes & Limits','ملاحظات وحدود']];
-function rNav(){$('nav').innerHTML=TABS.map(([id,en,ar])=>`<a id="t-${id}" class="${curTab==id?'on':''}" onclick="go('${id}')">${t(en,ar)}</a>`).join('');}
-function go(id){curTab=id;TABS.forEach(([tt])=>{$('t-'+tt).classList.toggle('on',tt==id);$('s-'+tt).classList.toggle('on',tt==id);});window.scrollTo(0,0);}
+
+// ---- "new since your last visit" engine (per-browser, localStorage) ----
+const NTF={nw:new Set(),dec:new Set(),upd:new Set(),px:new Set(),seen:new Set(),when:null};
+(function(){
+ try{
+  const key=b=>b.year+'-'+b.sn;
+  const th={},ph={};
+  BA.bidlist.forEach(b=>{th[key(b)]=[b.outcome,b.status||'',b.value||0,b.nbid||0,b.winner||'',b.lossreason||''].join('|');});
+  BA.pricing.rows.forEach(r=>{ph[r.year+'-'+r.sn]=[r.n_priced,r.rank,r.won,r.undisc_count].join('|');});
+  const raw=localStorage.getItem('ehb.snap');
+  if(raw){
+    const old=JSON.parse(raw);
+    NTF.when=old.when||null;
+    Object.keys(th).forEach(k=>{
+      if(!((old.t||{}).hasOwnProperty(k))){NTF.nw.add(k);}
+      else if(old.t[k]!==th[k]){
+        const was=(old.t[k]||'').split('|')[0], now=th[k].split('|')[0];
+        if(was!==now&&['Won','Lost','Not awarded','Cancelled'].indexOf(now)>-1) NTF.dec.add(k); else NTF.upd.add(k);
+      }});
+    Object.keys(ph).forEach(k=>{
+      if(!((old.p||{}).hasOwnProperty(k))){ if(!NTF.nw.has(k)) NTF.px.add(k); }
+      else if(old.p[k]!==ph[k]) NTF.px.add(k);
+    });
+  }
+  localStorage.setItem('ehb.snap',JSON.stringify({t:th,p:ph,when:new Date().toISOString().slice(0,10)}));
+ }catch(e){}
+})();
+function ntfTab(id){
+ if(NTF.seen.has(id))return 0;
+ if(id==='tenders')return NTF.nw.size+NTF.upd.size;
+ if(id==='winloss')return NTF.dec.size;
+ if(id==='pricing')return NTF.px.size;
+ return 0;
+}
+function ntfChip(k){
+ if(NTF.nw.has(k))return ' <span class="ntf" style="background:#2BAE68">'+t('NEW','جديد')+'</span>';
+ if(NTF.dec.has(k)||NTF.upd.has(k)||NTF.px.has(k))return ' <span class="ntf">'+t('UPD','تحديث')+'</span>';
+ return '';
+}
+function rNtf(){
+ var el=document.getElementById('ntfbar');
+ if(!el){el=document.createElement('div');el.id='ntfbar';var nv=document.getElementById('nav');nv.parentNode.insertBefore(el,nv.nextSibling);}
+ var tot=NTF.nw.size+NTF.dec.size+NTF.upd.size+NTF.px.size;
+ if(!tot||!NTF.when){el.style.display='none';return;}
+ const lbl=k=>{const p=k.split('-');return '#'+p[1]+'/'+String(p[0]).slice(2);};
+ const lk='color:#1A5FAB;cursor:pointer;font-weight:700;text-decoration:underline';
+ var parts=[];
+ if(NTF.nw.size){
+   const val=BA.bidlist.filter(b=>NTF.nw.has(b.year+'-'+b.sn)).reduce((a,b)=>a+(b.value||0),0);
+   parts.push('<a style="'+lk+'" onclick="go(\'tenders\')">'+NTF.nw.size+t(' new tender(s)',' منافسة/منافسات جديدة')+(val?' ('+fmtSAR(val)+')':'')+'</a>');
+ }
+ NTF.dec.forEach(k=>{
+   const b=BA.bidlist.find(x=>x.year+'-'+x.sn===k);
+   if(b) parts.push('<a style="'+lk+'" onclick="go(\'winloss\')">'+lbl(k)+' \u2192 '+t(b.outcome,(typeof DOUT!=='undefined'&&DOUT[b.outcome])||b.outcome)+'</a>');
+ });
+ if(NTF.px.size) parts.push('<a style="'+lk+'" onclick="go(\'pricing\')">'+NTF.px.size+t(' pricing update(s)',' تحديث/تحديثات تسعير')+'</a>');
+ if(NTF.upd.size) parts.push('<a style="'+lk+'" onclick="go(\'tenders\')">'+NTF.upd.size+t(' row update(s)',' تحديث/تحديثات صفوف')+'</a>');
+ el.style.cssText='margin:10px 0 2px;background:#FFF8EC;border:1px solid #EAD9B0;border-radius:10px;padding:9px 14px;font-size:12px;color:#5C4A14;display:flex;gap:14px;flex-wrap:wrap;align-items:center';
+ el.innerHTML='<b>'+t('Since ','منذ ')+NTF.when+':</b> '+parts.join(' <span style="color:#C9B98A">\u00b7</span> ')+
+  '<button onclick="this.parentElement.style.display=\'none\'" style="border:0;background:none;cursor:pointer;font-weight:800;color:#8A7A44;margin-inline-start:auto">\u2715</button>';
+}
+function rNav(){$('nav').innerHTML=TABS.map(([id,en,ar])=>`<a id="t-${id}" class="${curTab==id?'on':''}" onclick="go('${id}')">${t(en,ar)}${ntfTab(id)?`<span class="ntf">${ntfTab(id)}</span>`:''}</a>`).join('');}
+function go(id){if(ntfTab(id)){NTF.seen.add(id);setTimeout(rNav,50);}curTab=id;TABS.forEach(([tt])=>{$('t-'+tt).classList.toggle('on',tt==id);$('s-'+tt).classList.toggle('on',tt==id);});window.scrollTo(0,0);}
 
 // ---------- KPI STRIP ----------
 let k=BA.kpi;
@@ -119,7 +181,7 @@ function renderPricing(){
    }).join('');
    return `<div class="card" style="margin-bottom:10px;padding:0;overflow:hidden">
      <div tabindex="0" role="button" onkeydown="if(event.keyCode===13){this.click()}" onclick="togglePx(${i})" style="cursor:pointer;padding:12px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:${open?'#F7FAFC':'#fff'}">
-       <div style="min-width:70px"><b style="font-size:13px">#${r.sn}/${String(r.year).slice(2)}</b><div style="font-size:9px;color:#5F7078">${r.n} ${t('bidders','متقدمين')}${r.undisc_count?' · '+r.undisc_count+' '+t('undisclosed','غير معلنة'):''}${r.dq_count?' · '+r.dq_count+' '+t('DQ','مستبعد'):''}</div></div>
+       <div style="min-width:70px"><b style="font-size:13px">#${r.sn}/${String(r.year).slice(2)}</b>${ntfChip(r.year+"-"+r.sn)}<div style="font-size:9px;color:#5F7078">${r.n} ${t('bidders','متقدمين')}${r.undisc_count?' · '+r.undisc_count+' '+t('undisclosed','غير معلنة'):''}${r.dq_count?' · '+r.dq_count+' '+t('DQ','مستبعد'):''}</div></div>
        <div style="flex:1;min-width:200px"><div dir="auto" style="font-size:11.5px;color:#1C2B33;font-weight:600;line-height:1.3">${esc(r.title)||'<span style=\'color:#aaa\'>'+t('(untitled tender)','(منافسة بلا عنوان)')+'</span>'}</div><div dir="auto" style="font-size:10px;color:#5F7078;margin-top:1px">${esc(r.client)}</div></div>
        <div style="text-align:right"><div style="font-size:9px;color:#5F7078;text-transform:uppercase;letter-spacing:.3px">${t('EH bid','عرض EH')}</div><div style="font-weight:700;font-size:12.5px;color:#1A5FAB">${r.eh!=null?fmtSAR(r.eh):((r.bidders&&r.bidders.some(b=>b.eh))||r.ehin?'<span style="color:#7A93B5;font-weight:600;font-size:10px;font-style:italic">'+t('bid submitted — undisclosed','عرض مقدَّم — غير معلن')+'</span>':'<span style="color:#6E7A82;font-weight:600;font-size:10px">'+t('no EH bid','لا عرض من EH')+'</span>')}</div></div>
        <div style="text-align:center"><div style="font-size:9px;color:#5F7078;text-transform:uppercase">${t('Rank','الترتيب')}</div><div style="font-weight:700;font-size:12.5px">${r.rank!=null?r.rank+'/'+r.n_priced:'\u2014'}</div></div>
@@ -243,7 +305,7 @@ function rFunnel(){
    ${BA.refusal_cats.map(rc=>{const cc=RCAT[rc.cat]||'#9AABB5';return `<div style="display:flex;align-items:center;gap:8px;background:${cc}14;border:1px solid ${cc}55;border-radius:9px;padding:8px 13px"><span style="font-size:17px;font-weight:800;color:${cc}">${rc.n}</span><span style="font-size:11.5px;color:#3A4A52;font-weight:600">${dv(DCAT,rc.cat)}</span></div>`;}).join('')}
    </div>
    <table class="t"><thead><tr><th>${t('Tender','المنافسة')}</th><th>${t('Project','المشروع')}</th><th>${t('Client','العميل')}</th><th>${t('Reason category','فئة السبب')}</th><th>${t('Recorded reason','السبب المُسجّل')}</th></tr></thead><tbody>
-   ${BA.refused.map(r=>{const cc=RCAT[r.cat]||'#9AABB5';return `<tr><td><b>#${r.sn}/${String(r.year).slice(2)}</b></td><td dir="auto" style="max-width:180px;font-size:11px;line-height:1.35">${esc(r.title)||'\u2014'}</td><td dir="auto" style="max-width:120px;font-size:10.5px;color:#7B8A92">${esc(r.client)||'\u2014'}</td><td><span class="tag" style="background:${cc};white-space:nowrap">${dv(DCAT,r.cat)}</span></td><td dir="auto" style="max-width:330px;font-size:11px;color:#5A6A72;line-height:1.4">${esc(r.reason)}</td></tr>`;}).join('')}
+   ${BA.refused.map(r=>{const cc=RCAT[r.cat]||'#9AABB5';return `<tr><td><b>#${r.sn}/${String(r.year).slice(2)}</b>${ntfChip(r.year+"-"+r.sn)}</td><td dir="auto" style="max-width:180px;font-size:11px;line-height:1.35">${esc(r.title)||'\u2014'}</td><td dir="auto" style="max-width:120px;font-size:10.5px;color:#7B8A92">${esc(r.client)||'\u2014'}</td><td><span class="tag" style="background:${cc};white-space:nowrap">${dv(DCAT,r.cat)}</span></td><td dir="auto" style="max-width:330px;font-size:11px;color:#5A6A72;line-height:1.4">${esc(r.reason)}</td></tr>`;}).join('')}
    </tbody></table></div>`;
 }
 
@@ -272,7 +334,7 @@ function renderTenders(){
      <input oninput="setTF('q',this.value)" value="${esc(TF.q)}" placeholder="${t('Type to filter…','للتصفية اكتب…')}" style="${ss};width:100%;cursor:text"></div>
    <button onclick="TF.year='all';TF.outcome='all';TF.platform='all';TF.svc='all';TF.q='';renderTenders()" style="padding:8px 14px;border:1px solid #D5DEE2;background:#F4F8F5;color:#6B7C86;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer">${t('Reset','إعادة تعيين')}</button></div>`;
  const rows=list.map(b=>`<tr>
-   <td><b>#${b.sn}</b><div style="font-size:9.5px;color:#5F7078">${b.year}</div></td>
+   <td><b>#${b.sn}</b>${ntfChip(b.year+"-"+b.sn)}<div style="font-size:9.5px;color:#5F7078">${b.year}</div></td>
    <td style="font-size:10.5px;color:#7B8A92;white-space:nowrap">${b.date||'\u2014'}</td>
    <td style="max-width:280px"><div dir="auto" style="font-size:11.5px;line-height:1.35">${esc(b.title)||'<span style="color:#bbb">\u2014</span>'}</div></td>
    <td style="max-width:150px"><div dir="auto" style="font-size:11px;color:#3A4A52">${esc(b.client)||'\u2014'}</div></td>
@@ -294,6 +356,8 @@ function renderTenders(){
 // ===================== NOTES & LIMITATIONS =====================
 function rLimitations(){
  const lim=[
+  [t('Activity flags are per-browser','إشعارات النشاط خاصة بكل متصفح'),t('The NEW/UPD chips, tab badges and the \"since your last visit\" strip compare the current data against a snapshot saved in this browser the last time you opened the dashboard. They are personal to this device and browser: a colleague sees their own flags, clearing browser data resets them, and the first visit shows none. Visiting a tab marks its items as seen.','رقائق جديد/تحديث وشارات التبويبات وشريط «منذ آخر زيارة» تقارن البيانات الحالية بلقطة محفوظة في هذا المتصفح منذ آخر فتح للوحة. وهي خاصة بهذا الجهاز والمتصفح: يرى الزميل إشعاراته الخاصة، ومسح بيانات المتصفح يعيد ضبطها، والزيارة الأولى لا تُظهر شيئاً. وزيارة التبويب تُعلّم عناصره كمقروءة.')],
+  [t('Open pipeline is an upper bound','قيمة المنافسات المفتوحة حدّ أعلى'),t('\"Open pipeline\" counts every tender not yet recorded as decided or cancelled. Some older pending rows may in reality be concluded but never updated in the tracker, so the open figure should be read as at-most. Keeping outcomes current in the workbook directly tightens this number.','«المنافسات المفتوحة» تحسب كل منافسة لم تُسجَّل بعد كمحسومة أو ملغاة. بعض الصفوف المعلّقة القديمة قد تكون انتهت فعلياً دون تحديث في الملف، لذا يُقرأ الرقم كحدّ أقصى. وتحديث النتائج أولاً بأول في الملف يشدّ هذا الرقم مباشرة.')],
   [t('Small outcome sample','عيّنة نتائج صغيرة'),t('Only '+BA.kpi.awarded+' of '+BA.kpi.total+' tenders in this view have a recorded decision and '+BA.pricing.summary.full+' have full competitor pricing. Every win-rate figure — overall and especially the slices by service line, platform, value band and rival count — is computed off those '+BA.kpi.awarded+', so most breakdowns rest on a handful of tenders. Read them as anecdotes, not statistics.',BA.kpi.awarded+' فقط من '+BA.kpi.total+' منافسة في هذا النطاق لها قرار مُسجّل و'+BA.pricing.summary.full+' لها تسعير منافسين كامل. كل رقم لنسبة الفوز — إجمالاً وخاصة التقسيمات حسب مجال الخدمة والمنصة وشريحة القيمة وعدد المنافسين — محسوب من تلك الـ'+BA.kpi.awarded+'، فمعظم التفصيلات تستند إلى عدد قليل من المنافسات. اقرأها كحكايات لا كإحصاءات.')],
   [t('Pricing ≠ full picture','التسعير ≠ الصورة الكاملة'),t('The pricing analysis shows EH\'s losing bids were priced high, but Saudi tenders are scored on technical merit, compliance, delivery capability and incumbency alongside price. Without the technical scores and the stated loss reason, we cannot prove price caused the losses or rule out that EH was competing on larger scope or quality.','يُظهر تحليل الأسعار أن عروض EH الخاسرة كانت مرتفعة، لكن المنافسات السعودية تُقيَّم على الجدارة الفنية والامتثال وقدرة التنفيذ وأسبقية التعاقد إلى جانب السعر. وبلا الدرجات الفنية وسبب الخسارة المُعلن، يتعذّر إثبات أن السعر سبّب الخسائر أو استبعاد أن EH كان ينافس على نطاق أو جودة أكبر.')],
   [t('2025 vs 2026 not comparable','2025 مقابل 2026 غير قابلة للمقارنة'),t('2026 is a partial, in-progress year — many tenders are still pending and outcomes lag launch by months. A near-complete 2025 is being compared against a half-finished 2026 where wins may simply not be recorded yet. The same depresses the most recent months of any time view.','2026 سنة جزئية جارية — كثير من المنافسات ما زالت معلّقة والنتائج تتأخّر أشهراً عن الطرح. تُقارَن 2025 شبه المكتملة بـ2026 نصف المنجزة حيث قد لا تكون الانتصارات مُسجّلة بعد. والأمر ذاته يخفض أحدث الأشهر في أي عرض زمني.')],
@@ -301,7 +365,7 @@ function rLimitations(){
   [t('Competitor / client counts undercount','أعداد المنافسين / العملاء أقل من الحقيقة'),t('The Arabic↔English name reconciliation matches the major recurring rivals and big clients well, but ~130 one-off Arabic-named SMEs go unmatched. "Competitors faced" counts matched competitors only; the real field is larger, and some small clients may be split across name variants.','مطابقة الأسماء عربي↔إنجليزي تُطابق المنافسين المتكررين الكبار والعملاء الكبار جيداً، لكن ~130 منشأة صغيرة بأسماء عربية لمرة واحدة تبقى دون مطابقة. «المنافسون المواجَهون» يعدّ المطابقين فقط؛ فالميدان الحقيقي أكبر، وقد ينقسم بعض العملاء الصغار عبر تنويعات الاسم.')],
   [t('No market denominator','لا مقام سوقي'),t('The dashboard only sees tenders EH tracked — not the tenders EH never bid on or never saw. It therefore cannot measure true market share or bid/no-bid quality. Win rate here is conditional on having bid.','ترى اللوحة فقط المنافسات التي تتبّعها EH — لا التي لم يتقدّم لها EH أو لم يرها قط. لذا يتعذّر قياس الحصة السوقية الحقيقية أو جودة قرار التقديم. ونسبة الفوز هنا مشروطة بالتقديم.')],
   [t('Turnaround is a proxy','مدة القرار مؤشر تقريبي'),t('The workbook records department sign-off as accept/reject but not the date of each review, so true per-department cycle time cannot be measured. The launch-to-deadline window is the closest available stand-in.','يسجّل الملف اعتماد الإدارة كقبول/رفض دون تاريخ كل مراجعة، فيتعذّر قياس زمن الدورة الحقيقي لكل إدارة. ونافذة الطرح-إلى-الموعد النهائي أقرب بديل متاح.')],
-  [t('Single self-reported source','مصدر واحد ذاتي التقرير'),t('All figures come from EH\'s own tracking workbooks, a static snapshot with no cross-check against official Etimad award records. Value fields also mix offered and awarded bases and should be read as proxies.','كل الأرقام من ملفات تتبّع EH الخاصة، وهي لقطة ثابتة دون مطابقة مع سجلات ترسية اعتماد الرسمية. كما تخلط حقول القيمة بين أسس العرض والترسية وينبغي قراءتها كمؤشرات تقريبية.')],
+  [t('Single self-reported source','مصدر واحد ذاتي التقرير'),t('All figures come from EH\'s own tracking workbooks, a snapshot auto-refreshed hourly from the live tracker by the publishing workflow, yet still self-reported with no cross-check against official Etimad award records. Value fields also mix offered and awarded bases and should be read as proxies.','كل الأرقام من ملفات تتبّع EH الخاصة، وهي تُحدَّث تلقائياً كل ساعة من المتتبّع المباشر عبر منظومة النشر، لكنها تبقى ذاتية التقرير دون مطابقة مع سجلات ترسية اعتماد الرسمية. كما تخلط حقول القيمة بين أسس العرض والترسية وينبغي قراءتها كمؤشرات تقريبية.')],
  ];
  $('s-limitations').innerHTML=
  `<div class="sech">${t('Notes & limitations','ملاحظات وحدود')}</div><div class="secsub">${t('An honest analyst read on what this dashboard can and cannot tell you. The analytics are only ever as strong as the completeness of the tracking data behind them.','قراءة محلّل صادقة لما تستطيع هذه اللوحة إخبارك به وما لا تستطيع. فالتحليلات قوية بقدر اكتمال بيانات التتبّع خلفها فقط.')}</div>
@@ -323,7 +387,11 @@ function rChrome(){var el;
  if(el=$('h-pill'))el.innerHTML=t(k.total+' tenders tracked<br>SAR '+Math.round(k.pipeline/1e6)+'M tracked · '+Math.round(k.open_pipeline/1e6)+'M open',k.total+' منافسة متتبَّعة<br>'+Math.round(k.pipeline/1e6)+'م متتبَّعة · '+Math.round(k.open_pipeline/1e6)+'م مفتوحة');
  if(el=$('sc-both'))el.textContent=t('Both','الكل');
  if(el=$('h-foot'))el.textContent=t('Generated for Environmental Horizons · figures reflect the bid-tracking workbooks and are partial where the live trackers are still being filled · self-contained dashboard.','أُعدّت لصالح آفاق البيئة · تعكس الأرقام جداول تتبّع المنافسات وهي جزئية حيثما لا تزال قيد التعبئة · لوحة مستقلة.');}
-function renderAll(){k=BA.kpi;rKPI();rOverview();rPipeline();rWinloss();renderPricing();renderCompetitors();rClients();rService();rFunnel();renderTenders();rLimitations();rWatchlist();rChrome();}
+function renderAll(){k=BA.kpi;rNtf();rKPI();rOverview();rPipeline();rWinloss();renderPricing();renderCompetitors();rClients();rService();rFunnel();renderTenders();rLimitations();rWatchlist();rChrome();}
+window.addEventListener('message',function(e){
+  var d=e.data||{};
+  if(d.ehhub==='lang'&&(d.lang==='ar'||d.lang==='en')&&typeof L!=='undefined'&&L!==d.lang){setLang(d.lang);}
+});
 function setLang(l){L=l;document.documentElement.setAttribute('dir',l==='ar'?'rtl':'ltr');document.documentElement.lang=l;document.body.classList.toggle('ar',l==='ar');document.querySelectorAll('.langbtn').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l);});rNav();renderAll();go(curTab);}
 rNav();renderAll();go('overview');
 

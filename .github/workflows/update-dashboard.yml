@@ -49,7 +49,7 @@ jobs:
           cp hub/EH_Stakeholder_Map_CURRENT.html site/
           cp hub/EH_Client_Bubble_Map_CURRENT.html site/
           cp -r hub/vendor site/vendor 2>/dev/null || true
-          echo "{\"built\":\"$(date -u +'%d %b %Y, %H:%M UTC')\"}" > site/build_info.json
+          echo "{\"built\":\"$(TZ='Asia/Riyadh' date +'%d %b %Y, %H:%M (KSA)')\"}" > site/build_info.json
 
       - name: Package the page
         uses: actions/upload-pages-artifact@v3

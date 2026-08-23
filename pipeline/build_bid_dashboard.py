@@ -3,6 +3,8 @@ BAALL=json.load(open('bidanalytics2.json'))
 BA=BAALL['both']   # static header bits use the all-years view
 CHARTS=open('charts.js').read()
 LOGO=open('logo_b64.txt').read().strip()
+from datetime import datetime, timezone
+BUILT=datetime.now(timezone.utc).strftime('%d %b %Y, %H:%M UTC')
 LIC=json.load(open('licenses.json'))
 
 CSS=r'''
@@ -107,7 +109,7 @@ nav a.on{background:linear-gradient(180deg,#fff,#F1FBF4)}
 '''
 
 HTML=f'''<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EH Bid & Tender Intelligence</title><style>{CSS}:focus-visible{{outline:2px solid #027DC3;outline-offset:2px}}
+<title>EH Bid & Tender Intelligence</title><script>window.BUILT="{BUILT}";</script><style>{CSS}:focus-visible{{outline:2px solid #027DC3;outline-offset:2px}}
 .ntf{{display:inline-block;min-width:15px;padding:1px 6px;margin-inline-start:6px;border-radius:9px;background:#E8862E;color:#fff;font-size:9.5px;font-weight:800;text-align:center;vertical-align:1px}}
 </style></head>
 <body>

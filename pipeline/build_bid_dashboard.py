@@ -3,8 +3,8 @@ BAALL=json.load(open('bidanalytics2.json'))
 BA=BAALL['both']   # static header bits use the all-years view
 CHARTS=open('charts.js').read()
 LOGO=open('logo_b64.txt').read().strip()
-from datetime import datetime, timezone
-BUILT=datetime.now(timezone.utc).strftime('%d %b %Y, %H:%M UTC')
+from datetime import datetime, timezone, timedelta
+BUILT=datetime.now(timezone(timedelta(hours=3))).strftime('%d %b %Y, %H:%M')+' (KSA)'
 LIC=json.load(open('licenses.json'))
 
 CSS=r'''

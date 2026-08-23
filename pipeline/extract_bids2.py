@@ -121,8 +121,9 @@ for f,yr in [('bids2025.xlsx',2025),('bids2026.xlsx',2026)]:
         allbids.append(b)
     # rosters from Bid# sheets
     for sh in wb.sheetnames:
-        if not sh.startswith('Bid#'): continue
-        try: sn=int(sh.replace('Bid#',''))
+        _m=re.match(r'\s*bid\s*#\s*(\d+)\s*$', sh, re.I)   # Bid#72 / BID#72 / bid # 72 — all valid
+        if not _m: continue
+        try: sn=int(_m.group(1))
         except: continue
         rs=wb[sh]; maxc=rs.max_column
         hri=None

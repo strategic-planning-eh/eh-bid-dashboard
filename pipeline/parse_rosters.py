@@ -83,8 +83,8 @@ if __name__=='__main__':
     allr={}
     for f,yr in [('bids2025.xlsx',2025),('bids2026.xlsx',2026)]:
         wb=openpyxl.load_workbook(f, data_only=True)
-        for sh in [s for s in wb.sheetnames if s.startswith('Bid#')]:
-            sn=sh.replace('Bid#','')
+        for sh in [s for s in wb.sheetnames if __import__('re').match(r'\s*bid\s*#\s*\d+\s*$', s, __import__('re').I)]:
+            sn=__import__('re').match(r'\s*bid\s*#\s*(\d+)', sh, __import__('re').I).group(1)
             r=parse(wb[sh])
             if r: allr[f'{yr}-{sn}']=r
     json.dump(allr, open('rosters_all.json','w'), ensure_ascii=False)

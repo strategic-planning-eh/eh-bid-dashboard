@@ -58,7 +58,6 @@ iframe.on{display:block}
   This hub is best experienced on a desktop screen. <button onclick="this.parentElement.remove()" style="border:0;background:none;color:#7A5B14;font-weight:800;cursor:pointer;float:inline-end">✕</button>
 </div>
 <script>if(window.innerWidth<768)document.currentScript.previousElementSibling.style.display='block';</script>
-<div id="kpis"></div>
 <main>
   <div class="skel on" id="sk-stake"><div class="in"><div class="spin"></div>Loading the stakeholder map…</div></div>
   <div class="skel" id="sk-bids"><div class="in"><div class="spin"></div>Loading bid intelligence…</div></div>
@@ -107,31 +106,17 @@ fetch('build_info.json',{cache:'no-store'}).then(r=>r.json()).then(j=>{
   $('fresh').style.display='block';
 }).catch(function(){});
 // executive KPI strip — reads live numbers from the loaded apps (same-origin when hosted)
-function fmtM(v){return (v/1e6).toFixed(1).replace(/\.0$/,'')+'M'}
-function tryKpis(){
+function tryBadge(){
   try{
-    var mw=$('f-stake').contentWindow, bw=$('f-bids').contentWindow;
-    if(!mw||!mw.EHX||!bw||!bw.EHXB) return false;
-    var N=mw.EHX.N, k=bw.EHXB.K;
-    var t1=N.filter(function(n){return n.cat==='EH Clients'&&n.tier==='Tier 1'}).length;
-    var exp=N.filter(function(n){return n.mw&&n.mw.exp&&((new Date(n.mw.exp)-new Date())/86400000)<180&&n.cat!=='EH (Reference)'}).length;
-    $('kpis').innerHTML=
-      '<span><b>'+N.length.toLocaleString()+'</b> organizations mapped</span>'+
-      '<span><b>SAR '+fmtM(k.pipeline)+'</b> tendered ('+k.total+' tenders)</span>'+
-      '<span><b>SAR '+fmtM(k.open_pipeline)+'</b> open pipeline ('+k.open_count+' pending)</span>'+
-      '<span><b>'+k.win_rate+'%</b> win rate ('+k.eh_won+'/'+k.awarded+')</span>'+
-      '<span><b>'+t1+'</b> Tier-1 client accounts</span>'+
-      '<span class="warn"><b>'+exp+'</b> competitor licences expire &lt;180 days</span>';
-    $('kpis').classList.add('show');
-    try{
-      var nn=bw.EHXB.ntf, tb=document.querySelector('.tab[data-f="bids"]');
-      if(nn>0&&tb&&!tb.querySelector('.tbadge'))
-        tb.insertAdjacentHTML('beforeend',' <span class="tbadge" style="display:inline-block;min-width:15px;padding:1px 6px;border-radius:9px;background:#E8862E;color:#fff;font-size:10px;font-weight:800;text-align:center">'+nn+'</span>');
-    }catch(e){}
+    var bw=$('f-bids').contentWindow;
+    if(!bw||!bw.EHXB) return false;
+    var nn=bw.EHXB.ntf, tb=document.querySelector('.tab[data-f="bids"]');
+    if(nn>0&&tb&&!tb.querySelector('.tbadge'))
+      tb.insertAdjacentHTML('beforeend',' <span class="tbadge" style="display:inline-block;min-width:15px;padding:1px 6px;border-radius:9px;background:#E8862E;color:#fff;font-size:10px;font-weight:800;text-align:center">'+nn+'</span>');
     return true;
   }catch(e){ return false; }
 }
-var kTries=0,kT=setInterval(function(){ if(tryKpis()||++kTries>40) clearInterval(kT); },700);
+var kTries=0,kT=setInterval(function(){ if(tryBadge()||++kTries>40) clearInterval(kT); },700);
 
 // ---- unified language ----
 var hubL='en';

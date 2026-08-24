@@ -161,6 +161,21 @@
       <div class="esub">Hollow dot = 2025 share · filled dot = 2026 share · green/red = share gained or lost</div>
       <svg id="svgSlope" viewBox="0 0 960 480"></svg>
     </div>
+    <div class="ecard">
+      <div class="eh2">Client Depth vs Value <button class="png" data-svg="svgQuad">Export PNG</button></div>
+      <div class="esub">Each dot is a client · x = total projects (depth) · y = total contract value · lines at portfolio medians</div>
+      <svg id="svgQuad" viewBox="0 0 960 460"></svg>
+    </div>
+    <div class="ecard">
+      <div class="eh2">Deal-Size Distribution <button class="png" data-svg="svgDeal">Export PNG</button></div>
+      <div class="esub">Clients bucketed by average deal size (total value ÷ total projects)</div>
+      <svg id="svgDeal" viewBox="0 0 960 340"></svg>
+    </div>
+    <div class="ecard" style="grid-column:1/-1">
+      <div class="eh2">Whitespace Shortlist · cross-sell targets</div>
+      <div class="esub">Top clients by value vs the 14 EH service lines they have <b>not</b> bought (keyword-classified from project descriptions) — the bigger the client and the fewer lines they use, the higher they rank</div>
+      <div id="wsList"></div>
+    </div>
   </div>
   <div class="enote">Data coverage: priced ledger lines only. Rows without a SAR amount (services delivered or scoped without captured pricing) are excluded from all figures on this page.</div>
 </div>
@@ -388,18 +403,27 @@ function svgBase(id){
 function dlPNG(id){
   const svg = document.getElementById(id);
   const vb = svg.viewBox.baseVal;
-  const xml = new XMLSerializer().serializeToString(svg);
+  // clone with explicit pixel dimensions so the rasterizer sizes it by the viewBox, not the page layout
+  const cl = svg.cloneNode(true);
+  cl.setAttribute("width", vb.width);
+  cl.setAttribute("height", vb.height);
+  cl.setAttribute("font-family", "'Segoe UI', system-ui, Arial, sans-serif");
+  cl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+  const xml = new XMLSerializer().serializeToString(cl);
   const img = new Image();
   img.onload = () => {
+    const S = 2.5;
     const c = document.createElement("canvas");
-    c.width = vb.width*2.5; c.height = vb.height*2.5;
+    c.width = Math.round(vb.width*S); c.height = Math.round(vb.height*S);
     const x = c.getContext("2d");
     x.fillStyle = "#fff"; x.fillRect(0,0,c.width,c.height);
-    x.scale(2.5,2.5); x.drawImage(img,0,0);
+    // explicit destination rect: draw the full viewBox regardless of intrinsic size
+    x.drawImage(img, 0, 0, c.width, c.height);
     const a = document.createElement("a");
     a.download = "EH_" + id.replace("svg","") + ".png";
     a.href = c.toDataURL("image/png"); a.click();
   };
+  img.onerror = () => alert("PNG export failed — please report this.");
   img.src = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(xml)));
 }
 document.querySelectorAll(".ecard .png").forEach(b =>
@@ -424,6 +448,7 @@ function renderExec(){
     ["Active clients 2026", c26.length, (c26.length>=c25.length?"▲ ":"▼ ") + Math.abs(c26.length-c25.length) + " vs 2025", c26.length>=c25.length],
     ["Client retention", Math.round(100*ret.length/c25.length) + "%", ret.length + " of " + c25.length + " kept", true],
     ["Top-5 client share", Math.round(top5*100) + "%", "top 1 = " + Math.round(top1*100) + "%", false],
+    ["Net revenue retention", Math.round(100*d3.sum(ret, d=>d.v2026)/t25) + "%", "2026 SAR from 2025 clients ÷ 2025 book", d3.sum(ret,d=>d.v2026)>=t25],
     ["Whitespace cells", ws, "cross-sell targets", true],
   ].map(([l,v,d,up]) => `<div class="kcard"><div class="kv">${v}</div><div class="kl">${l}</div>` +
       (d ? `<div class="kd ${up?"up":"dn"}">${d}</div>` : "") + `</div>`).join("");
@@ -432,6 +457,94 @@ function renderExec(){
   drawPareto(sorted, tAll, top1, top5, top10);
   drawRetention(ret, neu, los, c25.length);
   drawSlope(t25, t26);
+  drawQuad(sorted);
+  drawDeal();
+  renderWhitespace();
+}
+function drawQuad(sorted){
+  const svg=d3.select("#svgQuad"); svg.selectAll("*").remove();
+  const W=960,H=460,M={t:24,r:30,b:52,l:86};
+  const pts=DATA.filter(d=>EB(d)>0).map(d=>({n:d.name,p:(d.p2025||0)+(d.p2026||0),v:EB(d)})).filter(d=>d.p>0);
+  const px=d3.scaleLog().domain([0.8,d3.max(pts,d=>d.p)*1.3]).range([M.l,W-M.r]);
+  const py=d3.scaleLog().domain([d3.min(pts,d=>d.v)*0.7,d3.max(pts,d=>d.v)*1.5]).range([H-M.b,M.t]);
+  const medP=d3.median(pts,d=>d.p), medV=d3.median(pts,d=>d.v);
+  svg.append("g").attr("transform",`translate(0,${H-M.b})`).call(d3.axisBottom(px).ticks(6,"~s")).selectAll("text").style("font-size","11px");
+  svg.append("g").attr("transform",`translate(${M.l},0)`).call(d3.axisLeft(py).ticks(6,"~s")).selectAll("text").style("font-size","11px");
+  svg.append("line").attr("x1",px(medP)).attr("x2",px(medP)).attr("y1",M.t).attr("y2",H-M.b).attr("stroke","#B9C6CE").attr("stroke-dasharray","4 4");
+  svg.append("line").attr("x1",M.l).attr("x2",W-M.r).attr("y1",py(medV)).attr("y2",py(medV)).attr("stroke","#B9C6CE").attr("stroke-dasharray","4 4");
+  const QL=[["Strategic accounts",W-M.r-8,M.t+16,"end","#1F7A4C"],["Concentrated bets",M.l+8,M.t+16,"start","#8A6D00"],["Transactional volume",W-M.r-8,H-M.b-10,"end","#1A5FAB"],["Tail",M.l+8,H-M.b-10,"start","#5F7078"]];
+  QL.forEach(q=>svg.append("text").attr("x",q[1]).attr("y",q[2]).attr("text-anchor",q[3]).attr("fill",q[4]).style("font-size","12px").style("font-weight","700").text(q[0]));
+  svg.selectAll("circle.qd").data(pts).enter().append("circle").attr("class","qd")
+    .attr("cx",d=>px(d.p)).attr("cy",d=>py(d.v)).attr("r",d=>Math.max(3.5,Math.min(13,Math.sqrt(d.v)/450)))
+    .attr("fill","#2BAE68").attr("fill-opacity",.45).attr("stroke","#1F7A4C").attr("stroke-width",.8)
+    .append("title").text(d=>d.n+"\n"+d.p+" projects · "+fmt(d.v));
+  sorted.slice(0,8).forEach(s=>{
+    const d=pts.find(x=>x.n===s.name); if(!d)return;
+    svg.append("text").attr("x",px(d.p)+8).attr("y",py(d.v)-6).style("font-size","10px").attr("fill","#37474F")
+      .text(d.n.length>26?d.n.slice(0,25)+"…":d.n);
+  });
+  svg.append("text").attr("x",(M.l+W-M.r)/2).attr("y",H-12).attr("text-anchor","middle").style("font-size","11px").attr("fill","#5F7078").text("Total projects (log)");
+}
+function drawDeal(){
+  const svg=d3.select("#svgDeal"); svg.selectAll("*").remove();
+  const W=960,H=340,M={t:26,r:30,b:64,l:66};
+  const rows=DATA.filter(d=>EB(d)>0&&((d.p2025||0)+(d.p2026||0))>0)
+    .map(d=>({n:d.name,avg:EB(d)/((d.p2025||0)+(d.p2026||0)),v:EB(d)}));
+  const B=[["< 25K",0,25e3],["25–100K",25e3,1e5],["100–500K",1e5,5e5],["0.5–2M",5e5,2e6],["2–10M",2e6,1e7],["> 10M",1e7,Infinity]];
+  const agg=B.map(b=>({lbl:b[0],c:rows.filter(r=>r.avg>=b[1]&&r.avg<b[2]).length,val:d3.sum(rows.filter(r=>r.avg>=b[1]&&r.avg<b[2]),r=>r.v)}));
+  const tot=d3.sum(agg,a=>a.val);
+  const x=d3.scaleBand().domain(agg.map(a=>a.lbl)).range([M.l,W-M.r]).padding(0.28);
+  const y=d3.scaleLinear().domain([0,d3.max(agg,a=>a.c)*1.18]).range([H-M.b,M.t]);
+  svg.append("g").attr("transform",`translate(0,${H-M.b})`).call(d3.axisBottom(x)).selectAll("text").style("font-size","11.5px");
+  svg.append("g").attr("transform",`translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5)).selectAll("text").style("font-size","11px");
+  svg.selectAll("rect.db").data(agg).enter().append("rect")
+    .attr("x",a=>x(a.lbl)).attr("width",x.bandwidth()).attr("y",a=>y(a.c)).attr("height",a=>H-M.b-y(a.c))
+    .attr("rx",6).attr("fill","#027DC3").attr("fill-opacity",.75)
+    .append("title").text(a=>a.c+" clients · "+fmt(a.val)+" ("+Math.round(100*a.val/tot)+"% of book)");
+  svg.selectAll("text.dc").data(agg).enter().append("text")
+    .attr("x",a=>x(a.lbl)+x.bandwidth()/2).attr("y",a=>y(a.c)-8).attr("text-anchor","middle")
+    .style("font-size","12px").style("font-weight","700").attr("fill","#1C2B33")
+    .text(a=>a.c+" · "+Math.round(100*a.val/tot)+"%");
+  svg.append("text").attr("x",M.l).attr("y",16).style("font-size","11px").attr("fill","#5F7078").text("bars = client count · label % = share of total book value in that bucket");
+}
+const SVC_RULES=[
+ ["Chemical Waste",["chemical","كيميائ","كيماو","lab waste","مخبري"]],
+ ["Used Oils & Fuel Waste",["oil","زيوت","زيت","fuel","وقود","انسكابات زيتية"]],
+ ["Industrial Wastewater & Sludge",["wastewater","sludge","صرف","حمأة","مياه عادمة","رواسب"]],
+ ["Soil, Asbestos & Remediation",["asbestos","اسبست","أسبست","soil","تربة","معالجة تربة","remediat"]],
+ ["Monitoring, Sampling & Analysis",["monitor","sampling","analysis","تحاليل","تحليل","قياس","رصد","عينات","فحص"]],
+ ["Env. Studies, Permits & Consulting",["study","eia","تصريح","تصاريح","دراس","استشار","permit","رخصة","الأثر البيئي","تقييم"]],
+ ["Product & Goods Destruction",["destruction","اتلاف","إتلاف","اعدام","إعدام","بضاعة","بضائع"]],
+ ["Landfill & Final Disposal",["landfill","مرد","دفن","final disposal","التخلص النهائي","مطمر"]],
+ ["Transport, Handling & Containers",["transport","نقل","حاوي","container","مناول","شاحن","ترحيل"]],
+ ["Cleaning & Emergency Response",["clean","تنظيف","طوارئ","emergency","spill","انسكاب","استجابة"]],
+ ["Civil, Marine & EPC Works",["civil","انشاء","إنشاء","مدنية","marine","بحري","epc","تشييد"]],
+ ["Contract Fees & Retainers",["retainer","رسوم","عقد سنوي","اشتراك","fee"]],
+ ["Industrial & Solid Waste",["solid","صلبة","صناعية","نفايات عامة","بلدية","waste"]],
+];
+function svcCat(t){
+  const s=(t||"").toLowerCase();
+  for(const [cat,kws] of SVC_RULES){ if(kws.some(k=>s.includes(k))) return cat; }
+  return "Other";
+}
+function renderWhitespace(){
+  const per={};
+  Object.keys(DETAIL).forEach(cl=>{
+    const cats=new Set(); let val=0;
+    DETAIL[cl].forEach(it=>{ cats.add(svcCat(it.s)); val+=(it.v||0); });
+    per[cl]={cats,val};
+  });
+  const ALL=SVC_RULES.map(r=>r[0]);
+  const rows=Object.entries(per).map(([cl,o])=>({cl,val:o.val,used:o.cats.size,missing:ALL.filter(c=>!o.cats.has(c))}))
+    .filter(r=>r.val>0).sort((a,b)=>b.val-a.val).slice(0,15);
+  document.getElementById("wsList").innerHTML=
+   '<table style="width:100%;border-collapse:collapse;font-size:12.5px">'+
+   '<thead><tr style="text-align:left;color:#5F7078"><th style="padding:6px 8px">Client</th><th style="padding:6px 8px">Value</th><th style="padding:6px 8px">Lines used</th><th style="padding:6px 8px">Top whitespace (not yet bought)</th></tr></thead><tbody>'+
+   rows.map(r=>'<tr style="border-top:1px solid #EEF2F5"><td style="padding:7px 8px;font-weight:600">'+r.cl.slice(0,52)+'</td>'+
+     '<td style="padding:7px 8px;white-space:nowrap">'+fmt(r.val)+'</td>'+
+     '<td style="padding:7px 8px">'+r.used+' / '+(ALL.length+1)+'</td>'+
+     '<td style="padding:7px 8px">'+r.missing.slice(0,4).map(c=>'<span style="display:inline-block;background:#EFF6F1;border:1px solid #D5E6DA;border-radius:12px;padding:2px 9px;margin:1px 3px 1px 0;font-size:11px;color:#1F7A4C">'+c+'</span>').join('')+(r.missing.length>4?' <span style="color:#8A99A3">+'+(r.missing.length-4)+' more</span>':'')+'</td></tr>').join('')+
+   '</tbody></table>';
 }
 
 function drawBridge(t25, t26, ret, neu, los){

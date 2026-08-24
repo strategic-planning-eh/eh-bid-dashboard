@@ -136,6 +136,7 @@ body.dark #ntfbar{{background:#2A2416 !important;border-color:#4A4023 !important
 body.dark h3,body.dark h2{{color:#E6EDF1}}
 body.dark .sech{{color:#7FD4A3}}
 body.dark .secsub,body.dark .note{{color:#9FB3BE}}
+body.dark .lgi{{color:#C9D4DB}}
 </style></head>
 <body>
 <header><div class="hd"><img src="{LOGO}" alt="EH"><div><h1 id="h-title">Bid &amp; Tender Intelligence</h1><div class="sub" id="h-sub">Environmental Horizons (Afaq Al Beeah) — competitive bid analytics, 2024–2026</div></div>

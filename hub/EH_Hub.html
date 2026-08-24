@@ -45,6 +45,7 @@ iframe.on{display:block}
       style="width:230px;padding:7px 12px;border:1px solid var(--line);border-radius:8px;font-size:12.5px">
     <div id="qdrop" style="display:none;position:absolute;top:36px;left:0;width:320px;max-height:300px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(28,43,51,.12);z-index:50"></div>
   </div>
+  <button id="digestbtn" onclick="showDigest()" style="display:none;padding:7px 13px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:12.5px;font-weight:700">📋 This week</button>
   <button id="langbtn" onclick="hubLang()" title="Switch language across all views" style="padding:7px 13px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:12.5px;font-weight:700">عربي</button>
   <button onclick="hubFS()" title="Presentation mode (fullscreen)" aria-label="Fullscreen current view" style="padding:7px 11px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:14px">⛶</button>
   <div class="tabs" role="tablist">
@@ -193,6 +194,34 @@ function qGo(name){
 function hubFS(){
   var f=document.querySelector('iframe.on');
   if(f&&f.requestFullscreen) f.requestFullscreen();
+}
+
+// ---- weekly digest (shared changelog from the site build) ----
+var DIGEST=null;
+fetch('changelog.json',{cache:'no-store'}).then(r=>r.json()).then(j=>{
+  DIGEST=j;
+  if(j.entries&&j.entries.length) document.getElementById('digestbtn').style.display='inline-block';
+}).catch(function(){});
+function showDigest(){
+  if(!DIGEST)return;
+  var cut=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
+  var wk=DIGEST.entries.filter(e=>e.d>=cut);
+  var days={};
+  wk.forEach(e=>{(days[e.d]=days[e.d]||[]).push(e);});
+  var ic={new:'\ud83c\udd95',decision:'\u2696\ufe0f',pricing:'\ud83d\udcb0',update:'\u270f\ufe0f'};
+  var html=Object.keys(days).sort().reverse().map(d=>
+    '<div style="margin:10px 0 4px;font-weight:800;color:#1C2B33;font-size:12.5px">'+d+'</div>'+
+    days[d].map(e=>'<div style="padding:5px 0 5px 6px;border-left:3px solid '+(e.type==='decision'?'#2BAE68':e.type==='new'?'#E8862E':'#B9C6CE')+';margin:3px 0;font-size:12.5px;color:#37474F">'+(ic[e.type]||'')+' '+e.txt.replace(/</g,'&lt;')+'</div>').join('')
+  ).join('') || '<div style="color:#5F7078;font-size:13px">No changes recorded in the last 7 days.</div>';
+  var ov=document.createElement('div');
+  ov.id='digestov';
+  ov.style.cssText='position:fixed;inset:0;background:rgba(20,32,38,.45);z-index:100;display:grid;place-items:center';
+  ov.innerHTML='<div style="background:#fff;border-radius:14px;max-width:640px;width:92%;max-height:75vh;overflow:auto;padding:20px 24px;box-shadow:0 18px 50px rgba(0,0,0,.25)">'+
+    '<div style="display:flex;align-items:center;margin-bottom:6px"><b style="font-size:15px">This week in bids</b>'+
+    '<span style="margin-inline-start:10px;font-size:11px;color:#5F7078">'+wk.length+' change(s) · updated '+(DIGEST.updated||'')+'</span>'+
+    '<button onclick="document.getElementById(\'digestov\').remove()" style="margin-inline-start:auto;border:0;background:none;font-size:16px;font-weight:800;cursor:pointer;color:#5F7078">\u2715</button></div>'+html+'</div>';
+  ov.addEventListener('click',e=>{if(e.target===ov)ov.remove();});
+  document.body.appendChild(ov);
 }
 </script>
 </body>

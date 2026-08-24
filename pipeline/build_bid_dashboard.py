@@ -111,6 +111,29 @@ nav a.on{background:linear-gradient(180deg,#fff,#F1FBF4)}
 HTML=f'''<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>EH Bid & Tender Intelligence</title><script>window.BUILT="{BUILT}";</script><style>{CSS}:focus-visible{{outline:2px solid #027DC3;outline-offset:2px}}
 .ntf{{display:inline-block;min-width:15px;padding:1px 6px;margin-inline-start:6px;border-radius:9px;background:#E8862E;color:#fff;font-size:9.5px;font-weight:800;text-align:center;vertical-align:1px}}
+
+body.dark{{background:#0F1519;color:#E6EDF1}}
+body.dark .card,body.dark .kcard,body.dark .kc,body.dark .ansbox,body.dark .wli{{background:#151C21;border-color:#2C3A43;color:#E6EDF1}}
+body.dark .kc *,body.dark .card h3{{color:#E6EDF1}}
+body.dark .kc div{{color:inherit}}
+body.dark [style*="background:#fff"],body.dark [style*="background:#FFF"]{{background:#151C21 !important;color:#E6EDF1 !important;border-color:#2C3A43 !important}}
+body.dark nav{{background:#121A1F;border-color:#2C3A43}}
+body.dark .metric{{background:#1A242B !important;border-color:#2C3A43 !important}}
+body.dark .ml{{color:#9FB3BE}}
+body.dark #nav a.on{{background:#151C21}}
+body.dark #nav::after,body.dark #nav::before{{display:none}}
+body.dark [style*="background:#F"],body.dark [style*="background:#E"],body.dark [style*="background: #F"],body.dark [style*="background:#F7FAFC"],body.dark [style*="background:#FBFDFB"],body.dark [style*="background:#F5F8FA"],body.dark [style*="background:#EAF2FA"],body.dark [style*="background:#EFF6F1"],body.dark [style*="background:#FFF8EC"],body.dark [style*="background:#FFF6E5"],body.dark [style*="background:#FFF3CD"]{{background:#1A242B !important;color:#D5E0E6 !important;border-color:#2C3A43 !important}}
+body.dark #nav{{background:#121A1F;border-color:#2C3A43}}
+body.dark #nav a{{color:#9FB3BE}}
+body.dark #nav a.on{{color:#E6EDF1;border-color:#2BAE68}}
+body.dark table th{{background:#1A242B;color:#CBD8DF}}
+body.dark table td{{border-color:#2C3A43}}
+body.dark tr:hover td{{background:#1B252C}}
+body.dark input,body.dark select,body.dark button:not(.langbtn):not(.png){{background:#1A242B;border-color:#3A4B55;color:#E6EDF1}}
+body.dark svg text{{fill:#C9D4DB}}
+body.dark svg .domain,body.dark svg g.tick line{{stroke:#3A4B55}}
+body.dark #ntfbar{{background:#2A2416 !important;border-color:#4A4023 !important;color:#D8C68A !important}}
+body.dark h3,body.dark h2{{color:#E6EDF1}}
 </style></head>
 <body>
 <header><div class="hd"><img src="{LOGO}" alt="EH"><div><h1 id="h-title">Bid &amp; Tender Intelligence</h1><div class="sub" id="h-sub">Environmental Horizons (Afaq Al Beeah) — competitive bid analytics, 2024–2026</div></div>

@@ -137,6 +137,16 @@ body.dark h3,body.dark h2{{color:#E6EDF1}}
 body.dark .sech{{color:#7FD4A3}}
 body.dark .secsub,body.dark .note{{color:#9FB3BE}}
 body.dark .lgi{{color:#C9D4DB}}
+body.dark svg text,body.dark svg tspan{{fill:#C9D4DB !important}}
+body.dark a{{color:#7FB4E8}}
+body.dark .mv{{color:#7FB4E8 !important}}
+body.dark [style*="color:#1C2B33"]{{color:#E6EDF1 !important}}
+body.dark [style*="color:#3A4A52"],body.dark [style*="color:#3A4A54"]{{color:#C2D2DB !important}}
+body.dark [style*="color:#1A5FAB"]{{color:#7FB4E8 !important}}
+body.dark [style*="color:#A03A36"],body.dark [style*="color:#C0504D"]{{color:#E08A85 !important}}
+body.dark [style*="color:#5A4A2E"],body.dark [style*="color:#7A5B14"]{{color:#D8C68A !important}}
+body.dark [style*="color:#4A5A62"],body.dark [style*="color:#5A6B76"]{{color:#9FB3BE !important}}
+body.dark [style*="background:#8A99A3"],body.dark [style*="background:#D4A92E"],body.dark [style*="background:#9AABB5"]{{color:#10171C !important}}
 </style></head>
 <body>
 <header><div class="hd"><img src="{LOGO}" alt="EH"><div><h1 id="h-title">Bid &amp; Tender Intelligence</h1><div class="sub" id="h-sub">Environmental Horizons (Afaq Al Beeah) — competitive bid analytics, 2024–2026</div></div>

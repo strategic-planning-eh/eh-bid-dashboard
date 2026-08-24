@@ -173,7 +173,7 @@
     </div>
     <div class="ecard" style="grid-column:1/-1">
       <div class="eh2">Whitespace Shortlist · cross-sell targets</div>
-      <div class="esub">Top clients by value vs the 14 EH service lines they have <b>not</b> bought (keyword-classified from project descriptions) — the bigger the client and the fewer lines they use, the higher they rank</div>
+      <div class="esub">Each top client&#8217;s biggest services (blue, with share of their spend) next to the EH services they have <b>never</b> bought (green) &mdash; keyword-classified from project descriptions</div>
       <div id="wsList"></div>
     </div>
   </div>
@@ -548,20 +548,24 @@ function svcCat(t){
 function renderWhitespace(){
   const per={};
   Object.keys(DETAIL).forEach(cl=>{
-    const cats=new Set(); let val=0;
-    DETAIL[cl].forEach(it=>{ cats.add(svcCat(it.s)); val+=(it.v||0); });
-    per[cl]={cats,val};
+    const cv={}; let val=0;
+    DETAIL[cl].forEach(it=>{ const c=svcCat(it.s); cv[c]=(cv[c]||0)+(it.v||0); val+=(it.v||0); });
+    per[cl]={cv,val};
   });
   const ALL=SVC_RULES.map(r=>r[0]);
-  const rows=Object.entries(per).map(([cl,o])=>({cl,val:o.val,used:o.cats.size,missing:ALL.filter(c=>!o.cats.has(c))}))
-    .filter(r=>r.val>0).sort((a,b)=>b.val-a.val).slice(0,15);
+  const rows=Object.entries(per).map(([cl,o])=>({
+      cl,val:o.val,
+      top:Object.entries(o.cv).sort((a,b)=>b[1]-a[1]).filter(t=>t[1]>=o.val*0.01).slice(0,3),
+      missing:ALL.filter(c=>!(c in o.cv))
+    })).filter(r=>r.val>0).sort((a,b)=>b.val-a.val).slice(0,15);
+  const chip=(t,bg,bd,fg)=>'<span style="display:inline-block;background:'+bg+';border:1px solid '+bd+';border-radius:12px;padding:2px 9px;margin:1px 3px 1px 0;font-size:11px;color:'+fg+'">'+t+'</span>';
   document.getElementById("wsList").innerHTML=
    '<table style="width:100%;border-collapse:collapse;font-size:12.5px">'+
-   '<thead><tr style="text-align:left;color:#5F7078"><th style="padding:6px 8px">Client</th><th style="padding:6px 8px">Value</th><th style="padding:6px 8px">Lines used</th><th style="padding:6px 8px">Top whitespace (not yet bought)</th></tr></thead><tbody>'+
+   '<thead><tr style="text-align:left;color:#5F7078"><th style="padding:6px 8px">Client</th><th style="padding:6px 8px">Value</th><th style="padding:6px 8px">Top services (by value)</th><th style="padding:6px 8px">Not yet bought (whitespace)</th></tr></thead><tbody>'+
    rows.map(r=>'<tr style="border-top:1px solid #EEF2F5"><td style="padding:7px 8px;font-weight:600">'+r.cl.slice(0,52)+'</td>'+
      '<td style="padding:7px 8px;white-space:nowrap">'+fmt(r.val)+'</td>'+
-     '<td style="padding:7px 8px">'+r.used+' / '+(ALL.length+1)+'</td>'+
-     '<td style="padding:7px 8px">'+r.missing.slice(0,4).map(c=>'<span style="display:inline-block;background:#EFF6F1;border:1px solid #D5E6DA;border-radius:12px;padding:2px 9px;margin:1px 3px 1px 0;font-size:11px;color:#1F7A4C">'+c+'</span>').join('')+(r.missing.length>4?' <span style="color:#8A99A3">+'+(r.missing.length-4)+' more</span>':'')+'</td></tr>').join('')+
+     '<td style="padding:7px 8px">'+r.top.map(t=>chip(t[0]+' \u00b7 '+Math.round(100*t[1]/r.val)+'%','#EAF2FA','#CCE0F0','#1A5FAB')).join('')+'</td>'+
+     '<td style="padding:7px 8px">'+r.missing.slice(0,4).map(c=>chip(c,'#EFF6F1','#D5E6DA','#1F7A4C')).join('')+(r.missing.length>4?' <span style="color:#8A99A3">+'+(r.missing.length-4)+' more</span>':'')+'</td></tr>').join('')+
    '</tbody></table>';
 }
 

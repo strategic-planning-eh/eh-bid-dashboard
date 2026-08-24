@@ -33,6 +33,20 @@ iframe.on{display:block}
 @keyframes sp{to{transform:rotate(360deg)}}
 .foot{font-size:11px;color:var(--mut);padding:4px 20px;background:#fff;border-top:1px solid var(--line)}
 :focus-visible{outline:2px solid #027DC3;outline-offset:2px}
+body.dark{background:#0F1519}
+body.dark header,body.dark .foot{background:#121A1F;border-color:#2C3A43}
+body.dark .brand{color:#E6EDF1}
+body.dark .brand small,body.dark .foot{color:#9FB3BE}
+body.dark .tab{color:#9FB3BE}
+body.dark .tab.on{background:#121A1F;color:#E6EDF1}
+body.dark .tab:hover:not(.on){background:#1B252C;color:#E6EDF1}
+body.dark .fresh{background:#16211B;border-color:#2C4534;color:#9FB3BE}
+body.dark #langbtn,body.dark #digestbtn,body.dark button{background:#1E2830 !important;border-color:#3A4B55 !important;color:#CFE3F2 !important}
+body.dark #q{background:#1A242B;border-color:#3A4B55;color:#E6EDF1}
+body.dark #qdrop{background:#182126;border-color:#2C3A43}
+body.dark #qdrop .qh{border-color:#22303A !important;color:#D5E0E6}
+body.dark .skel{background:#0F1519}
+body.dark iframe{background:#0F1519}
 </style>
 </head>
 <body>
@@ -46,6 +60,7 @@ iframe.on{display:block}
     <div id="qdrop" style="display:none;position:absolute;top:36px;left:0;width:320px;max-height:300px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(28,43,51,.12);z-index:50"></div>
   </div>
   <button id="digestbtn" onclick="showDigest()" style="display:none;padding:7px 13px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:12.5px;font-weight:700">📋 This week</button>
+  <button id="themebtn" onclick="hubTheme()" title="Toggle dark theme across all views" style="padding:7px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:13px">🌙</button>
   <button id="langbtn" onclick="hubLang()" title="Switch language across all views" style="padding:7px 13px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:12.5px;font-weight:700">عربي</button>
   <button onclick="hubFS()" title="Presentation mode (fullscreen)" aria-label="Fullscreen current view" style="padding:7px 11px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:14px">⛶</button>
   <div class="tabs" role="tablist">
@@ -208,6 +223,27 @@ function showDigest(){
   ov.addEventListener('click',e=>{if(e.target===ov)ov.remove();});
   document.body.appendChild(ov);
 }
+
+// ---- unified dark theme ----
+var hubT='light';
+try{ hubT=localStorage.getItem('ehhub.theme')||'light'; }catch(e){}
+function applyHubTheme(){
+  document.body.classList.toggle('dark',hubT==='dark');
+  var b=document.getElementById('themebtn');
+  b.textContent=(hubT==='dark'?'\u2600\ufe0f':'\ud83c\udf19');
+  document.querySelectorAll('iframe').forEach(function(f){
+    try{ if(f.src) f.contentWindow.postMessage({ehhub:'theme',theme:hubT},'*'); }catch(e){}
+  });
+}
+function hubTheme(){
+  hubT=(hubT==='dark'?'light':'dark');
+  try{ localStorage.setItem('ehhub.theme',hubT); }catch(e){}
+  applyHubTheme();
+}
+document.querySelectorAll('iframe').forEach(function(f){
+  f.addEventListener('load',function(){ if(hubT==='dark') setTimeout(applyHubTheme,700); });
+});
+applyHubTheme();
 </script>
 </body>
 </html>

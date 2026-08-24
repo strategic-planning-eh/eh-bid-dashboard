@@ -163,7 +163,13 @@
     </div>
     <div class="ecard">
       <div class="eh2">Client Depth vs Value <button class="png" data-svg="svgQuad">Export PNG</button></div>
-      <div class="esub">Top 60 clients by value · x = projects (depth) · y = total value · colors = quadrant vs the shown-set medians · hover for details</div>
+      <div class="esub">Top 60 clients by value. Right = gives EH <b>many jobs</b>; up = worth <b>a lot of money</b>. The dashed lines are the middle of this group, splitting four kinds of client — hover any dot for the name and numbers.
+      <div style="margin-top:6px;font-size:11.5px;line-height:1.7">
+      <span style="color:#1F7A4C;font-weight:700">&#9679; Strategic accounts</span> — many jobs <i>and</i> big money: protect these relationships. &nbsp;
+      <span style="color:#B8860B;font-weight:700">&#9679; Concentrated bets</span> — big money from only a few jobs: one lost contract hurts, deepen the relationship. &nbsp;
+      <span style="color:#1A5FAB;font-weight:700">&#9679; Transactional volume</span> — many small jobs: efficient to serve, best cross-sell targets. &nbsp;
+      <span style="color:#8A99A3;font-weight:700">&#9679; Smaller accounts</span> — few small jobs.
+      </div></div>
       <svg id="svgQuad" viewBox="0 0 960 460"></svg>
     </div>
     <div class="ecard">
@@ -461,7 +467,10 @@ function renderExec(){
   drawDeal();
   renderWhitespace();
 }
+function t_axis(){return "How many jobs the client gives EH \u2192 (log scale)";}
 function drawQuad(sorted){
+  const DKQ=document.body.classList.contains("dark");
+  const HALO=DKQ?"#151C21":"#fff", TXT=DKQ?"#D5E0E6":"#37474F", MED=DKQ?"#4A5A64":"#B9C6CE", MEDT=DKQ?"#8FA3AE":"#8A99A3";
   const svg=d3.select("#svgQuad"); svg.selectAll("*").remove();
   const W=960,H=460,M={t:34,r:36,b:56,l:86};
   const TOP=DATA.filter(d=>EB(d)>0&&((d.p2025||0)+(d.p2026||0))>0)
@@ -472,11 +481,11 @@ function drawQuad(sorted){
   const medP=d3.median(TOP,d=>d.p), medV=d3.median(TOP,d=>d.v);
   svg.append("g").attr("transform",`translate(0,${H-M.b})`).call(d3.axisBottom(px).ticks(6,"~s")).selectAll("text").style("font-size","11px");
   svg.append("g").attr("transform",`translate(${M.l},0)`).call(d3.axisLeft(py).ticks(6,"~s")).selectAll("text").style("font-size","11px");
-  svg.append("line").attr("x1",px(medP)).attr("x2",px(medP)).attr("y1",M.t).attr("y2",H-M.b).attr("stroke","#B9C6CE").attr("stroke-dasharray","4 4");
+  svg.append("line").attr("x1",px(medP)).attr("x2",px(medP)).attr("y1",M.t).attr("y2",H-M.b).attr("stroke",MED).attr("stroke-dasharray","4 4");
   svg.append("line").attr("x1",M.l).attr("x2",W-M.r).attr("y1",py(medV)).attr("y2",py(medV)).attr("stroke","#B9C6CE").attr("stroke-dasharray","4 4");
-  svg.append("text").attr("x",px(medP)+5).attr("y",M.t+11).style("font-size","10px").attr("fill","#8A99A3").text("median "+medP+" projects");
-  svg.append("text").attr("x",M.l+64).attr("y",py(medV)-6).style("font-size","10px").attr("fill","#8A99A3").text("median "+fmt(medV));
-  const QCOL={S:"#1F7A4C",C:"#B8860B",T:"#1A5FAB",X:"#8A99A3"};
+  svg.append("text").attr("x",px(medP)+5).attr("y",M.t+11).style("font-size","10px").attr("fill",MEDT).text("median "+medP+" projects");
+  svg.append("text").attr("x",M.l+64).attr("y",py(medV)-6).style("font-size","10px").attr("fill",MEDT).text("median "+fmt(medV));
+  const QCOL=DKQ?{S:"#5FC98E",C:"#E3C36B",T:"#7FB4E8",X:"#93A4AF"}:{S:"#1F7A4C",C:"#B8860B",T:"#1A5FAB",X:"#8A99A3"};
   const quad=d=>d.p>=medP?(d.v>=medV?"S":"T"):(d.v>=medV?"C":"X");
   const QN={S:0,C:0,T:0,X:0}; TOP.forEach(d=>QN[quad(d)]++);
   const QL=[["Strategic accounts ("+QN.S+")",W-M.r-6,M.t+14,"end","S"],["Concentrated bets ("+QN.C+")",M.l+10,M.t+14,"start","C"],
@@ -497,11 +506,11 @@ function drawQuad(sorted){
     const tx=right?o.x-10:o.x+10;
     const ty=Math.max(M.t+10,Math.min(H-M.b-6,o.y+4));
     svg.append("text").attr("x",tx).attr("y",ty).attr("text-anchor",right?"end":"start")
-      .style("font-size","10.5px").style("font-weight","600").attr("fill","#37474F")
-      .attr("stroke","#fff").attr("stroke-width",3).attr("paint-order","stroke")
+      .style("font-size","10.5px").style("font-weight","600").attr("fill",TXT)
+      .attr("stroke",HALO).attr("stroke-width",3).attr("paint-order","stroke")
       .text(nm);
   });
-  svg.append("text").attr("x",(M.l+W-M.r)/2).attr("y",H-12).attr("text-anchor","middle").style("font-size","11px").attr("fill","#5F7078").text("Total projects (log)");
+  svg.append("text").attr("x",(M.l+W-M.r)/2).attr("y",H-12).attr("text-anchor","middle").style("font-size","11px").attr("fill",MEDT).text(t_axis());
 }
 function drawDeal(){
   const svg=d3.select("#svgDeal"); svg.selectAll("*").remove();
@@ -534,11 +543,11 @@ const SVC_RULES=[
  ["Env. Studies, Permits & Consulting",["study","eia","تصريح","تصاريح","دراس","استشار","permit","رخصة","الأثر البيئي","تقييم"]],
  ["Product & Goods Destruction",["destruction","اتلاف","إتلاف","اعدام","إعدام","بضاعة","بضائع"]],
  ["Landfill & Final Disposal",["landfill","مرد","دفن","final disposal","التخلص النهائي","مطمر"]],
- ["Transport, Handling & Containers",["transport","نقل","حاوي","container","مناول","شاحن","ترحيل"]],
- ["Cleaning & Emergency Response",["clean","تنظيف","طوارئ","emergency","spill","انسكاب","استجابة"]],
+ ["Transport, Handling & Containers",["transport","نقل","حاوي","container","مناول","شاحن","ترحيل","تاجير","تأجير"]],
+ ["Cleaning & Emergency Response",["clean","تنظيف","طوارئ","emergency","spill","انسكاب","استجابة","ازاله","ازالة","إزالة"]],
  ["Civil, Marine & EPC Works",["civil","انشاء","إنشاء","مدنية","marine","بحري","epc","تشييد"]],
  ["Contract Fees & Retainers",["retainer","رسوم","عقد سنوي","اشتراك","fee"]],
- ["Industrial & Solid Waste",["solid","صلبة","صناعية","نفايات عامة","بلدية","waste"]],
+ ["Industrial & Solid Waste",["solid","صلبة","صناعية","نفايات عامة","بلدية","waste","مخلفات","نفايات","انقاض","هدم","تدوير","disposal"]],
 ];
 function svcCat(t){
   const s=(t||"").toLowerCase();
@@ -555,7 +564,7 @@ function renderWhitespace(){
   const ALL=SVC_RULES.map(r=>r[0]);
   const rows=Object.entries(per).map(([cl,o])=>({
       cl,val:o.val,
-      top:Object.entries(o.cv).sort((a,b)=>b[1]-a[1]).filter(t=>t[1]>=o.val*0.01).slice(0,3),
+      top:Object.entries(o.cv).filter(t=>t[0]!=='Other').sort((a,b)=>b[1]-a[1]).filter(t=>t[1]>=o.val*0.01).slice(0,3),
       missing:ALL.filter(c=>!(c in o.cv))
     })).filter(r=>r.val>0).sort((a,b)=>b.val-a.val).slice(0,15);
   const chip=(t,bg,bd,fg)=>'<span style="display:inline-block;background:'+bg+';border:1px solid '+bd+';border-radius:12px;padding:2px 9px;margin:1px 3px 1px 0;font-size:11px;color:'+fg+'">'+t+'</span>';
@@ -564,7 +573,7 @@ function renderWhitespace(){
    '<thead><tr style="text-align:left;color:#5F7078"><th style="padding:6px 8px">Client</th><th style="padding:6px 8px">Value</th><th style="padding:6px 8px">Top services (by value)</th><th style="padding:6px 8px">Not yet bought (whitespace)</th></tr></thead><tbody>'+
    rows.map(r=>'<tr style="border-top:1px solid #EEF2F5"><td style="padding:7px 8px;font-weight:600">'+r.cl.slice(0,52)+'</td>'+
      '<td style="padding:7px 8px;white-space:nowrap">'+fmt(r.val)+'</td>'+
-     '<td style="padding:7px 8px">'+r.top.map(t=>chip(t[0]+' \u00b7 '+Math.round(100*t[1]/r.val)+'%','#EAF2FA','#CCE0F0','#1A5FAB')).join('')+'</td>'+
+     '<td style="padding:7px 8px">'+(r.top.length?'':'<span style="color:#8A99A3;font-size:11px;font-style:italic">project descriptions not classifiable</span>')+r.top.map(t=>chip(t[0]+' \u00b7 '+Math.round(100*t[1]/r.val)+'%','#EAF2FA','#CCE0F0','#1A5FAB')).join('')+'</td>'+
      '<td style="padding:7px 8px">'+r.missing.slice(0,4).map(c=>chip(c,'#EFF6F1','#D5E6DA','#1F7A4C')).join('')+(r.missing.length>4?' <span style="color:#8A99A3">+'+(r.missing.length-4)+' more</span>':'')+'</td></tr>').join('')+
    '</tbody></table>';
 }
@@ -871,6 +880,7 @@ body.dark .png{background:#1E2830;border-color:#3A4B55;color:#CFE3F2}
     if(d.ehhub==='theme'&&(d.theme==='dark'||d.theme==='light')){
       document.body.classList.toggle('dark',d.theme==='dark');
       try{localStorage.setItem('ehhub.theme',d.theme);}catch(err){}
+      try{ if(typeof viewMode!=='undefined'&&viewMode==='exec'&&typeof renderExec==='function') renderExec(); }catch(err){}
     }
   });
   try{ if(localStorage.getItem('ehhub.theme')==='dark') document.body.classList.add('dark'); }catch(e){}

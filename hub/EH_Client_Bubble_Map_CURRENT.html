@@ -162,7 +162,7 @@
       <svg id="svgSlope" viewBox="0 0 960 480"></svg>
     </div>
     <div class="ecard">
-      <div class="eh2">Client Depth vs Value <button class="png" data-svg="svgQuad">Export PNG</button></div>
+      <div class="eh2">Client Depth vs Value <button class="png" id="quadListBtn" onclick="qlToggle()" style="margin-inline-start:6px">Show all 60 names</button> <button class="png" data-svg="svgQuad">Export PNG</button></div>
       <div class="esub">Top 60 clients by value. Right = gives EH <b>many jobs</b>; up = worth <b>a lot of money</b>. The dashed lines are the middle of this group, splitting four kinds of client — hover any dot for the name and numbers.
       <div style="margin-top:6px;font-size:11.5px;line-height:1.7">
       <span style="color:#1F7A4C;font-weight:700">&#9679; Strategic accounts</span> — many jobs <i>and</i> big money: protect these relationships. &nbsp;
@@ -171,6 +171,7 @@
       <span style="color:#8A99A3;font-weight:700">&#9679; Smaller accounts</span> — few small jobs.
       </div></div>
       <svg id="svgQuad" viewBox="0 0 960 460"></svg>
+      <div id="quadList" style="display:none;margin-top:10px"></div>
     </div>
     <div class="ecard">
       <div class="eh2">Deal-Size Distribution <button class="png" data-svg="svgDeal">Export PNG</button></div>
@@ -511,6 +512,23 @@ function drawQuad(sorted){
       .text(nm);
   });
   svg.append("text").attr("x",(M.l+W-M.r)/2).attr("y",H-12).attr("text-anchor","middle").style("font-size","11px").attr("fill",MEDT).text(t_axis());
+  // full name list, grouped by quadrant
+  const QTITLE={S:"Strategic accounts",C:"Concentrated bets",T:"Transactional volume",X:"Smaller accounts"};
+  var ql="";
+  ["S","C","T","X"].forEach(q=>{
+    const grp=TOP.filter(d=>quad(d)===q).sort((a,b)=>b.v-a.v);
+    if(!grp.length)return;
+    ql+='<div style="margin:8px 0 4px;font-weight:800;font-size:12px;color:'+QCOL[q]+'">'+QTITLE[q]+' ('+grp.length+')</div>'+
+        '<div style="columns:3;column-gap:22px;font-size:11.5px;line-height:1.85">'+
+        grp.map(d=>'<div style="break-inside:avoid">'+d.n.slice(0,44)+' <span style="opacity:.65">\u2014 '+d.p+' jobs \u00b7 '+fmt(d.v)+'</span></div>').join('')+'</div>';
+  });
+  document.getElementById("quadList").innerHTML=ql;
+}
+function qlToggle(){
+  var el=document.getElementById("quadList"), b=document.getElementById("quadListBtn");
+  var show=el.style.display==="none";
+  el.style.display=show?"block":"none";
+  b.textContent=show?"Hide names":"Show all 60 names";
 }
 function drawDeal(){
   const svg=d3.select("#svgDeal"); svg.selectAll("*").remove();
@@ -872,6 +890,9 @@ body.dark table th{color:#CBD8DF}
 body.dark table td,body.dark table tr{border-color:#2C3A43 !important}
 body.dark input,body.dark select,body.dark button:not(.png){background:#1A242B;border-color:#3A4B55;color:#E6EDF1}
 body.dark .png{background:#1E2830;border-color:#3A4B55;color:#CFE3F2}
+body.dark .seg button.on{background:var(--eh-blue) !important;color:#fff !important}
+body.dark .vw.on{background:var(--eh-green,#2BAE68) !important;color:#fff !important}
+body.dark .seg{background:#151C21}
 </style>
 <script>
 (function(){

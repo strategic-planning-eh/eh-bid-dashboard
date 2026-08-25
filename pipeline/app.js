@@ -409,7 +409,27 @@ const OUT_AR={Won:'فوز لصالح EH',Lost:'خسارة',"Not awarded":'لم �
 function ansBox(tEN,tAR,body){return `<div class="ansbox"><div class="anst">${tEN}</div><div class="anst-ar" dir="rtl">${tAR}</div><div class="ansbody">${body}</div></div>`;}
 function listAns(tEN,tAR,items){return `<div class="ansbox"><div class="anst">${tEN}</div><div class="anst-ar" dir="rtl">${tAR}</div><div style="margin-top:8px">${items.map((it,i)=>`<div class="ansrow"><div dir="auto" style="flex:1;min-width:0">${i+1}. ${esc(it.name)}${it.sub?` <span style="color:#5F7078;font-size:11px">— ${esc(it.sub)}</span>`:''}</div><div style="font-weight:700;color:#1A5FAB;white-space:nowrap">${esc(it.val)}</div></div>`).join('')}</div></div>`;}
 function _tender(){var S=document.querySelectorAll('.ehc-sn'),Y=document.querySelectorAll('.ehc-yr');var s=S[S.length-1],y=Y[Y.length-1];var yr=+((y||{}).value),sn=+((s||{}).value);return {yr,sn,t:BA.bidlist.find(x=>x.year==yr&&x.sn==sn)};}
+function fmtM2(v){return (v/1e6).toFixed(1).replace(/\.0$/,'')+'M';}
 const ANSF={
+  open(){
+    const P=BA.bidlist.filter(x=>!x.decided&&(x.status||'')!=='Cancelled');
+    const top=P.filter(x=>x.value).sort((a,b)=>b.value-a.value).slice(0,5);
+    return listAns('Open pipeline — SAR '+fmtM2(BA.kpi.open_pipeline)+' across '+BA.kpi.open_count+' open tenders (largest below; older pending rows may be stale — read as an upper bound)',
+      'المنافسات المفتوحة — '+fmtM2(BA.kpi.open_pipeline)+' ريال عبر '+BA.kpi.open_count+' منافسة؛ الأكبر أدناه (بعض المعلّق القديم قد يكون انتهى دون تحديث)',
+      top.map(x=>({name:'#'+x.sn+'/'+String(x.year).slice(2),sub:(x.title||'').slice(0,52),val:fmtSAR(x.value)})));
+  },
+  undercut(){
+    const c=BA.competitors.filter(x=>x.priced_vs>=2).sort((a,b)=>(b.undercut_pct||0)-(a.undercut_pct||0)).slice(0,6);
+    return listAns('Who prices below EH most often — share of priced head-to-heads where their offer came in under EH\u2019s (price-aggressive rivals to watch)',
+      'من يقدّم أسعاراً أقل من EH — نسبة المواجهات المسعّرة التي جاء عرضهم فيها أقل (منافسون عدوانيون سعرياً)',
+      c.map(x=>({name:x.name.slice(0,44),val:(x.undercut||0)+'/'+x.priced_vs+' ('+(x.undercut_pct||0)+'%)'})));
+  },
+  recent(){
+    const d=BA.bidlist.filter(x=>x.decided).sort((a,b)=>(b.year-a.year)||(b.sn-a.sn)).slice(0,6);
+    return listAns('Latest recorded award decisions, newest first (the tab badges and the since-your-last-visit strip track these automatically per device)',
+      'أحدث قرارات الترسية المسجّلة، الأحدث أولاً (شارات التبويبات وشريط «منذ آخر زيارة» يتتبعانها تلقائياً)',
+      d.map(x=>({name:'#'+x.sn+'/'+String(x.year).slice(2),sub:(x.title||'').slice(0,44),val:(x.eh_won?'EH WON':x.outcome)})));
+  },
  freq(){const c=[...BA.competitors].sort((a,b)=>b.encounters-a.encounters).slice(0,7);return listAns('Who competes against EH the most — by tenders faced','من ينافس EH أكثر — حسب عدد المنافسات',c.map(x=>({name:x.name,val:x.encounters+' tenders',sub:x.wins?x.wins+' beat EH':''})));},
  beatEH(){const c=[...BA.competitors].filter(x=>x.wins>0).sort((a,b)=>b.wins-a.wins).slice(0,7);if(!c.length)return ansBox('No single competitor has a recorded win over EH','لا يوجد منافس بعينه تغلّب على EH','In the tracked outcomes, EH losses are not concentrated on one named competitor.');return listAns('Who beats EH the most — recorded wins over EH','من يتغلب على EH أكثر',c.map(x=>({name:x.name,val:x.wins+(x.wins>1?' wins':' win'),sub:'faced '+x.encounters+'x'})));},
  losing(){const s=[...BA.service_mix].filter(x=>x.awarded>0).sort((a,b)=>a.win_rate-b.win_rate);return listAns('Where EH loses most — service lines by win rate (decided tenders)','أين تخسر EH أكثر — حسب مجال الخدمة',s.map(x=>({name:x.name,val:x.win_rate+'% win rate',sub:x.won+' of '+x.awarded+' won'})));},
@@ -420,7 +440,7 @@ const ANSF={
  why(){const {yr,sn,t}=_tender();if(!yr||!sn)return ansBox('Enter a tender number and year first','أدخل رقم المنافسة والسنة أولاً','Use the two boxes at the top of this tab, then tap the question again.');if(!t)return ansBox('Tender not found','المنافسة غير موجودة',`No tender #${sn} for ${yr} is in the tracker.`);let b=`<b dir="auto">${esc(t.title)||'(untitled)'}</b><br>`;if(t.committee)b+=`Bid-committee decision: <b dir="auto">${esc(t.committee)}</b><br>`;if(t.reason)b+=`Recorded note / reason: <span dir="auto">${esc(t.reason)}</span><br>`;if(!t.committee&&!t.reason)b+='No committee decision or reason is recorded for this tender in the tracker.';return ansBox(`Why tender #${sn}/${yr}?`,`لماذا المنافسة ${sn}/${yr}؟`,b);},
  service(){const s=[...BA.service_mix].sort((a,b)=>b.count-a.count);return listAns('Most-requested service lines — by tender count','الخدمات الأكثر طلباً — حسب عدد المنافسات',s.map(x=>({name:x.name,val:x.count+' tenders',sub:fmtSAR(x.value)+' total'})));},
 };
-const ASKQS=[['freq','Who competes against EH the most?','من ينافس EH أكثر؟'],['beatEH','Who beats EH the most?','من يتغلب على EH أكثر؟'],['losing','Where is EH losing in the competition?','أين تخسر EH في المنافسة؟'],['biggest',"Who are EH's biggest competitors?",'من أبرز منافسي EH؟'],['pricing',"Is EH's pricing competitive?",'هل أسعار EH تنافسية؟'],['time','Does the committee allow enough time to bid?','هل تمنح لجنة EH وقتاً كافياً للتقديم؟'],['status','What is the status of a specific tender?','ما حالة منافسة محددة؟'],['why','Why was a specific tender approved / rejected?','لماذا تمت الموافقة/الرفض على منافسة؟'],['service','Which service is requested the most?','ما الخدمة الأكثر طلباً؟']];
+const ASKQS=[['freq','Who competes against EH the most?','من ينافس EH أكثر؟'],['beatEH','Who beats EH the most?','من يتغلب على EH أكثر؟'],['losing','Where is EH losing in the competition?','أين تخسر EH في المنافسة؟'],['biggest',"Who are EH's biggest competitors?",'من أبرز منافسي EH؟'],['pricing',"Is EH's pricing competitive?",'هل أسعار EH تنافسية؟'],['time','Does the committee allow enough time to bid?','هل تمنح لجنة EH وقتاً كافياً للتقديم؟'],['status','What is the status of a specific tender?','ما حالة منافسة محددة؟'],['why','Why was a specific tender approved / rejected?','لماذا تمت الموافقة/الرفض على منافسة؟'],['service','Which service is requested the most?','ما الخدمة الأكثر طلباً؟'],['open','What is in the open pipeline right now?','ما المنافسات المفتوحة حالياً؟'],['undercut','Who undercuts EH on price the most?','من يقدّم أسعاراً أقل من EH غالباً؟'],['recent','What were the latest decisions?','ما آخر القرارات المسجّلة؟']];
 const QKW={
  freq:['compete','competes','competitor','competitors','bids against','bid against','against eh','against us','who bids','who else bids','faced','face','often','frequent','ينافس','منافسين','ضد','مواجهه','يتقدم','يقدمون'],
  beatEH:['beat','beats','win against','wins against','who wins','who beats','defeat','defeats','lose to','losing to','beating us','يفوز','يتغلب','يغلب','يهزم','يفوز علينا'],
@@ -429,7 +449,10 @@ const QKW={
  pricing:['pricing','price','prices','cost','costs','cheap','expensive','competitive','overbid','underbid','too high','رخيص','غالي','سعر','اسعار','تسعير','تكلفه','تنافسي','مرتفع'],
  time:['time','committee','decision','enough time','prepare','preparation','deadline','window','rush','rushed','turnaround','وقت','لجنه','قرار','كافي','تحضير','اعداد','موعد','مهله','ضيق الوقت'],
  status:['status','state','result','outcome','stage','what happened','حاله','وضع','نتيجه','مصير','ماذا حدث'],
- why:['why','reason','reasons','approved','approve','rejected','reject','declined','decline','refused','accepted','لماذا','سبب','موافقه','رفض','مرفوض','قبول'],
+ open:['open pipeline','pipeline','pending','open tenders','still open','in progress','مفتوح','معلق','معلقه','قائمه','جاري'],
+  undercut:['undercut','undercuts','cheaper','below us','lower price','lower prices','ارخص','أرخص','اقل منا','يخفض','اسعار اقل'],
+  recent:['latest','recent','last decisions','what changed','news','آخر','مؤخرا','احدث','ماذا تغير','اخر القرارات'],
+  why:['why','reason','reasons','approved','approve','rejected','reject','declined','decline','refused','accepted','لماذا','سبب','موافقه','رفض','مرفوض','قبول'],
  service:['service','services','requested','request','most requested','popular','demand','category','type of work','خدمه','خدمات','طلب','مطلوب','فئه','نوع العمل','الاكثر طلبا'],
 };
 function _norm(t){t=(t||'').toLowerCase();['أ','إ','آ'].forEach(a=>t=t.split(a).join('ا'));return t.split('ة').join('ه').split('ى').join('ي').replace(/[\u064B-\u0652]/g,'');}
@@ -445,7 +468,7 @@ function matchQ(text){const q=_norm(text);if(!q.trim())return[];return ASKQS.map
   open:false,
   toggle:function(){this.open=!this.open;document.getElementById('ehcp').classList.toggle('open',this.open);if(this.open&&!this._g){this._g=1;this.greet();document.getElementById('ehci').focus();}},
   add:function(h){var b=document.getElementById('ehcb');var d=document.createElement('div');d.style.display='contents';d.innerHTML=h;b.appendChild(d);b.scrollTop=b.scrollHeight;},
-  greet:function(){this.add('<div class="ehm">Hi \ud83d\udc4b Ask about EH\u2019s competitors, pricing, win rate, service mix, or a specific tender \u2014 type a question and press Enter.<br><span dir="rtl" style="color:#5A6B76">\u0645\u0631\u062d\u0628\u0627\u064b! \u0627\u0633\u0623\u0644\u0646\u064a \u0639\u0646 \u0645\u0646\u0627\u0641\u0633\u064a EH \u0623\u0648 \u0627\u0644\u0623\u0633\u0639\u0627\u0631 \u0623\u0648 \u0646\u0633\u0628\u0629 \u0627\u0644\u0641\u0648\u0632 \u0623\u0648 \u0645\u0646\u0627\u0641\u0633\u0629 \u0645\u062d\u062f\u062f\u0629.</span></div>');this.chips(['freq','pricing','service'],'Popular \u00b7 \u0623\u0633\u0626\u0644\u0629 \u0634\u0627\u0626\u0639\u0629:');},
+  greet:function(){this.add('<div class="ehm">Hi \ud83d\udc4b Ask about EH\u2019s competitors, pricing, win rate, service mix, or a specific tender \u2014 type a question and press Enter.<br><span dir="rtl" style="color:#5A6B76">\u0645\u0631\u062d\u0628\u0627\u064b! \u0627\u0633\u0623\u0644\u0646\u064a \u0639\u0646 \u0645\u0646\u0627\u0641\u0633\u064a EH \u0623\u0648 \u0627\u0644\u0623\u0633\u0639\u0627\u0631 \u0623\u0648 \u0646\u0633\u0628\u0629 \u0627\u0644\u0641\u0648\u0632 \u0623\u0648 \u0645\u0646\u0627\u0641\u0633\u0629 \u0645\u062d\u062f\u062f\u0629.</span></div>');this.chips(['freq','pricing','open','undercut','recent'],'Popular \u00b7 \u0623\u0633\u0626\u0644\u0629 \u0634\u0627\u0626\u0639\u0629:');},
   chips:function(ids,label){var h='<div class="ehm">'+label;ids.forEach(function(id){var q=ASKQS.find(function(x){return x[0]===id;});h+='<button class="ehchip" data-q="'+id+'">'+q[1]+'<span class="ar" dir="rtl">'+q[2]+'</span></button>';});h+='</div>';this.add(h);},
   submit:function(){var inp=document.getElementById('ehci');var t=inp.value.trim();if(!t)return;this.add('<div class="ehu">'+esc(t)+'</div>');inp.value='';var ids=matchQ(t);if(ids.length)this.chips(ids,'Closest to your question \u2014 tap one \u00b7 \u0627\u0644\u0623\u0642\u0631\u0628 \u0644\u0633\u0624\u0627\u0644\u0643:');else this.chips(ASKQS.map(function(x){return x[0];}).slice(0,6),'I couldn\u2019t match that \u2014 try one of these \u00b7 \u062c\u0631\u0651\u0628:');},
   answer:function(id){var q=ASKQS.find(function(x){return x[0]===id;});this.add('<div class="ehu">'+q[1]+'</div>');if(id==='status'||id==='why'){this.tform(id);return;}this.add(ANSF[id]());},

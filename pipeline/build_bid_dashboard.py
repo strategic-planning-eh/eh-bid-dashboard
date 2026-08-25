@@ -147,6 +147,15 @@ body.dark [style*="color:#A03A36"],body.dark [style*="color:#C0504D"]{{color:#E0
 body.dark [style*="color:#5A4A2E"],body.dark [style*="color:#7A5B14"]{{color:#D8C68A !important}}
 body.dark [style*="color:#4A5A62"],body.dark [style*="color:#5A6B76"]{{color:#9FB3BE !important}}
 body.dark [style*="color:#44525C"]{{color:#D6E0E6 !important}}
+body.dark #ehcp{{background:#151C21 !important;color:#E6EDF1}}
+body.dark .ehm{{background:#1A242B !important;border-color:#2C3A43 !important;color:#D5E0E6 !important}}
+body.dark .ehu{{background:#173049 !important;border-color:#22456A !important;color:#BBD8F2 !important}}
+body.dark .ehchip{{background:#1A242B !important;border-color:#3A4B55 !important;color:#8FC1EE !important}}
+body.dark .ehcf{{background:#121A1F !important;border-color:#2C3A43 !important}}
+body.dark #ehcp input{{background:#1A242B !important;border-color:#3A4B55 !important;color:#E6EDF1 !important}}
+body.dark .anst{{color:#E6EDF1 !important}}
+body.dark .anst-ar{{color:#9FB3BE !important}}
+body.dark .ansrow{{border-color:#2C3A43 !important;color:#D5E0E6}}
 body.dark [style*="background:#8A99A3"],body.dark [style*="background:#D4A92E"],body.dark [style*="background:#9AABB5"]{{color:#10171C !important}}
 </style></head>
 <body>

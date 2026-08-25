@@ -217,6 +217,8 @@ html.dark .zoomhint{background:rgba(21,28,33,.85) !important;color:#9FB3BE !impo
 html.dark .sat-lbl{color:#7FB4E8 !important}
 html.dark [style*="color:#1E6B38"],html.dark [style*="color:#2E7D3C"]{color:#5FC98E !important}
 html.dark [style*="color:#1A5FAB"]{color:#7FB4E8 !important}
+html.dark .ehm{background:#1A242B !important;color:#D5E0E6 !important;border-color:#2C3A43 !important}
+html.dark .ehchip{background:#1A242B !important;color:#8FC1EE !important;border-color:#3A4B55 !important}
 </style><style id="rtlFix">
 html[dir=rtl] body{direction:rtl}
 html[dir=rtl] #leafMap,html[dir=rtl] #geoSvg,html[dir=rtl] canvas,html[dir=rtl] .leaflet-container{direction:ltr}
@@ -1338,7 +1340,7 @@ const ASKQS=[
  ['region','Where are competitors concentrated?','أين يتركّز المنافسون؟'],
  ['tiers','Who are the Tier 1 key players?','من اللاعبون الرئيسيون؟'],
  ['collab','Who could EH partner with?','مع من يمكن أن يتعاون EH؟'],
- ['find','Tell me about a specific company','أخبرني عن شركة محددة']];
+ ['find','Tell me about a specific company','أخبرني عن شركة محددة'],  ['expiry','Which competitor licences expire soon?','أي تراخيص منافسين تنتهي قريباً؟'],  ['dual','Which companies are both client and bid rival?','أي شركات عميلة ومنافسة معاً؟'],  ['hithreat','Who are the high-threat bid rivals?','من المنافسون الأعلى خطراً في المناقصات؟']];
 const QKW={
  topdirect:['direct competitor','top competitor','biggest','main rival','rivals','strongest','who competes','bids against','منافس','منافسين','مباشر','ابرز','اكبر','اقوى'],
  topenv:['environmental companies','env companies','top environmental','best environmental','leading environmental','شركات بيئيه','بيئيه','افضل','رائده'],
@@ -1353,6 +1355,24 @@ function matchQ(text){var q=_cnorm(text);if(!q.trim())return[];return ASKQS.map(
 const _scf=function(v){return v==null?'—':String(Math.round(v*10)/10);};
 function _rk(list,extra){var hh='<ol style="margin:8px 0 2px 18px;padding:0;display:flex;flex-direction:column;gap:5px">';list.forEach(function(n){hh+='<li style="font-size:12.5px"><a data-sel="'+esc(n.n)+'" style="color:#1A5FAB;font-weight:700;cursor:pointer;text-decoration:underline" dir="auto">'+esc(n.n)+'</a> <span style="background:#EAF3EC;color:#1E6B38;border-radius:8px;padding:1px 7px;font-weight:700;font-size:11px">'+_scf(n.sc)+'</span> <span style="color:#5A6B76;font-size:11px">'+(n.tier||'—')+' · '+esc(n.rg)+(extra?extra(n):'')+'</span></li>';});return hh+'</ol>';}
 const ANSF={
+  expiry:function(){
+    var rows=NODES.filter(function(n){return n.mw&&n.mw.exp&&n.cat!=='EH (Reference)';})
+      .map(function(n){return {n:n.n,d:mwDaysLeft(n.mw)};})
+      .filter(function(x){return x.d!=null&&x.d>=0&&x.d<180;})
+      .sort(function(a,b){return a.d-b.d;});
+    var top=rows.slice(0,6).map(function(x){return '<li>'+x.n.slice(0,52)+' — <b>'+x.d+'</b> days</li>';}).join('');
+    return '<div class="ehm"><b>'+rows.length+'</b> competitor licences expire within 180 days. Soonest:<ul style="margin:6px 0 0 16px;padding:0">'+top+'</ul><span dir="rtl" style="display:block;margin-top:6px;opacity:.8">'+rows.length+' ترخيص منافس ينتهي خلال ١٨٠ يوماً — أعلاه الأقرب انتهاءً. فرصة تواصل تجاري.</span></div>';
+  },
+  dual:function(){
+    var rows=NODES.filter(function(n){return n.cat==='EH Clients'&&n.bid;}).sort(function(a,b){return (b.bc||0)-(a.bc||0);}).slice(0,8);
+    var lis=rows.map(function(n){return '<li>'+n.n.slice(0,50)+' — '+(n.bc||0)+' bid encounter(s)</li>';}).join('');
+    return '<div class="ehm">Companies that are EH clients <i>and</i> appear in tender rosters against EH:<ul style="margin:6px 0 0 16px;padding:0">'+lis+'</ul><span dir="rtl" style="display:block;margin-top:6px;opacity:.8">شركات عميلة لدى EH وتنافسها في المناقصات في آن — تتطلب إدارة علاقة دقيقة.</span></div>';
+  },
+  hithreat:function(){
+    var rows=NODES.filter(function(n){return n.bid&&n.threat==='High';}).sort(function(a,b){return (b.bc||0)-(a.bc||0);}).slice(0,8);
+    var lis=rows.map(function(n){return '<li>'+n.n.slice(0,50)+' — '+(n.bc||0)+' encounters</li>';}).join('');
+    return '<div class="ehm"><b>'+NODES.filter(function(n){return n.bid&&n.threat==='High';}).length+'</b> bid rivals carry a High threat rating (wins against EH and/or heavy presence). Top:<ul style="margin:6px 0 0 16px;padding:0">'+lis+'</ul><span dir="rtl" style="display:block;margin-top:6px;opacity:.8">منافسون بتصنيف خطر مرتفع — راقبهم في كل عطاء.</span></div>';
+  },
  topdirect:function(){var a=NODES.filter(function(n){return n.bid&&n.sc!=null;}).sort(function(x,y){return y.sc-x.sc;}).slice(0,10);
   return '<div class="ehm ansbox"><b>Top direct competitors</b> — companies that have actually bid against EH, ranked by Total Score ('+NODES.filter(function(n){return n.bid;}).length+' bid vs EH in total):'+_rk(a,function(n){return n.bc?' · '+n.bc+' bid'+(n.bc>1?'s':''):'';})+'<div style="color:#5A6B76;font-size:11px;margin-top:6px">Click a name to open its full profile. Score = capability score from the stakeholder database.</div></div>';},
  topenv:function(){var a=NODES.filter(function(n){return n.typ==='Environmental Services'&&n.sc!=null&&n.cat!=='EH (Reference)';}).sort(function(x,y){return y.sc-x.sc;}).slice(0,10);
@@ -1393,7 +1413,7 @@ const ANSF={
   open:false,
   toggle:function(){this.open=!this.open;document.getElementById('ehcp').classList.toggle('open',this.open);if(this.open&&!this._g){this._g=1;this.greet();document.getElementById('ehci').focus();}},
   add:function(hh){var b=document.getElementById('ehcb');var dd=document.createElement('div');dd.style.display='contents';dd.innerHTML=hh;b.appendChild(dd);b.scrollTop=b.scrollHeight;},
-  greet:function(){this.add('<div class="ehm">Hi 👋 Ask about EH’s competitors, top environmental companies, the Total Score, threats, regions, or a specific company — type a question and press Enter.<br><span dir="rtl" style="color:#5A6B76">مرحباً! اسألني عن المنافسين أو الشركات البيئية أو الدرجات أو شركة محددة.</span></div>');this.chips(['topdirect','topenv','score'],'Popular · أسئلة شائعة:');},
+  greet:function(){this.add('<div class="ehm">Hi 👋 Ask about EH’s competitors, top environmental companies, the Total Score, threats, regions, or a specific company — type a question and press Enter.<br><span dir="rtl" style="color:#5A6B76">مرحباً! اسألني عن المنافسين أو الشركات البيئية أو الدرجات أو شركة محددة.</span></div>');this.chips(['topdirect','topenv','score','expiry','dual','hithreat'],'Popular · أسئلة شائعة:');},
   chips:function(ids,label){var hh='<div class="ehm">'+label;ids.forEach(function(id){var q=ASKQS.find(function(x){return x[0]===id;});hh+='<button class="ehchip" data-q="'+id+'">'+q[1]+'<span class="ar" dir="rtl">'+q[2]+'</span></button>';});hh+='</div>';this.add(hh);},
   submit:function(){var inp=document.getElementById('ehci');var t=inp.value.trim();if(!t)return;this.add('<div class="ehu" dir="auto">'+esc(t)+'</div>');inp.value='';var ids=matchQ(t);if(ids.length){this.chips(ids,'Closest to your question — tap one · الأقرب لسؤالك:');return;}if(this.searchCo(t)){return;}this.chips(ASKQS.map(function(x){return x[0];}),'I couldn’t match that — try a question below, or type part of a company name · جرّب سؤالاً أو اسم شركة:');},
   answer:function(id){var q=ASKQS.find(function(x){return x[0]===id;});this.add('<div class="ehu">'+q[1]+'</div>');if(id==='find'){this.findForm();return;}this.add(ANSF[id]());},

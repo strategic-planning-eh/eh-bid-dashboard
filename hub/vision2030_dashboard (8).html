@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Saudi Mega Projects — Vision 2030 Strategic Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" onerror="document.write('<scr'+'ipt src=&quot;vendor/chart.umd.min.js&quot;><\/scr'+'ipt>')"></script>
+<style>
+  :root{
+    --bg:#f6f6f3;
+    --surface:#ffffff;
+    --ink:#1a2230;
+    --ink-soft:#4a5566;
+    --ink-faint:#8a93a3;
+    --line:#e7e7e1;
+    --line-strong:#d8d8d0;
+    --brand:#0070b8;        /* Environmental Horizons blue (H) — primary */
+    --brand-deep:#055a93;   /* deeper blue for masthead gradient */
+    --green:#4fa85a;        /* Environmental Horizons green (E / leaf) */
+    --accent:#4fa85a;       /* green accent */
+    --shadow:0 1px 2px rgba(8,55,90,.05),0 6px 24px rgba(8,55,90,.07);
+    --shadow-lg:0 8px 40px rgba(8,55,90,.18);
+
+    /* ownership */
+    --own-gov:#055a93;      /* deep blue */
+    --own-pif:#4fa85a;      /* green */
+    --own-jv:#0aa6a0;       /* teal */
+    --own-mixed:#6b7385;    /* slate grey */
+
+    /* status */
+    --st-announced:#5ba3d0;
+    --st-planning:#e08a3c;
+    --st-construction:#d9b42a;
+    --st-partial:#8db84a;
+    --st-operational:#3f9d57;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+    font-size:14px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  .num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum";}
+
+  /* ---------- Masthead ---------- */
+  header.masthead{
+    background:linear-gradient(135deg,#055a93 0%,#0070b8 60%,#0a83cf 100%);
+    color:#fff;
+    padding:26px clamp(20px,4vw,56px) 24px;
+    border-bottom:3px solid var(--green);
+  }
+  .masthead-row{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;max-width:1680px;margin:0 auto;}
+  .brand-block{display:flex;align-items:flex-start;gap:18px;}
+  .brand-logo{
+    width:66px;height:66px;flex:none;background:#fff;border-radius:14px;padding:7px;
+    box-shadow:0 4px 16px rgba(0,0,0,.18);object-fit:contain;
+  }
+  .masthead h1{
+    font-family:'Fraunces',Georgia,serif;
+    font-weight:500;
+    font-size:clamp(24px,3.2vw,38px);
+    letter-spacing:-.01em;
+    margin:0;
+    line-height:1.05;
+  }
+  .masthead .kicker{
+    font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:#bfe6c4;font-weight:700;margin:0 0 9px;
+  }
+  .masthead .sub{color:#cfe6f5;font-size:13px;margin-top:8px;max-width:560px;}
+  .masthead .asof{
+    text-align:right;font-size:11.5px;color:#bcd9ee;line-height:1.7;
+    border-left:1px solid rgba(255,255,255,.2);padding-left:18px;
+  }
+  .masthead .asof strong{color:#fff;font-weight:600;}
+
+  /* ---------- Shell ---------- */
+  .shell{max-width:1680px;margin:0 auto;padding:24px clamp(20px,4vw,56px) 64px;}
+
+  /* ---------- KPI bar ---------- */
+  .kpi-bar{
+    display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:26px;
+  }
+  .kpi{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:18px 20px;box-shadow:var(--shadow);
+  }
+  .kpi .label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;}
+  .kpi .value{font-family:'Fraunces',serif;font-size:clamp(26px,2.6vw,34px);font-weight:500;margin-top:6px;letter-spacing:-.01em;}
+  .kpi .value small{font-size:15px;color:var(--ink-soft);font-family:'Plus Jakarta Sans';font-weight:600;}
+  .kpi .split{display:flex;gap:14px;margin-top:12px;flex-wrap:wrap;}
+  .kpi .split .seg{font-size:11.5px;color:var(--ink-soft);display:flex;align-items:center;gap:6px;}
+  .kpi .dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none;}
+  .kpi .seg b{color:var(--ink);font-weight:700;}
+
+  /* ---------- Layout grid ---------- */
+  .grid{display:grid;grid-template-columns:300px minmax(0,1fr);gap:22px;align-items:start;}
+
+  /* ---------- Filter panel ---------- */
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);}
+  aside.filters{position:sticky;top:18px;padding:20px;}
+  aside.filters h2{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--brand);margin:0 0 4px;font-weight:700;}
+  .filters .group{margin-top:20px;}
+  .filters .group:first-of-type{margin-top:16px;}
+  .filters .group > .gl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;margin-bottom:9px;display:flex;justify-content:space-between;align-items:center;}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;}
+  .chip{
+    border:1px solid var(--line-strong);background:#fff;color:var(--ink-soft);
+    padding:5px 11px;border-radius:999px;font-size:12px;cursor:pointer;font-weight:500;
+    transition:all .18s ease;user-select:none;font-family:inherit;
+  }
+  .chip:hover{border-color:var(--brand);color:var(--brand);}
+  .chip.active{background:var(--brand);border-color:var(--brand);color:#fff;}
+  .chip.own.active{color:#fff;}
+  .search-wrap{position:relative;}
+  .search-wrap input{
+    width:100%;padding:10px 12px 10px 34px;border:1px solid var(--line-strong);border-radius:10px;
+    font-size:13px;font-family:inherit;color:var(--ink);outline:none;transition:border-color .18s;
+  }
+  .search-wrap input:focus{border-color:var(--brand);}
+  .search-wrap svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--ink-faint);}
+  .reset-btn{
+    background:none;border:none;color:var(--accent);font-size:11px;font-weight:700;cursor:pointer;
+    letter-spacing:.04em;text-transform:uppercase;font-family:inherit;padding:0;
+  }
+  .reset-btn:hover{text-decoration:underline;}
+
+  /* toggle */
+  .toggle-row{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;font-size:12px;color:var(--ink-soft);font-weight:500;}
+  .tg-switch{width:36px;height:20px;border-radius:999px;background:#d8d8d0;flex:none;position:relative;transition:background .2s;}
+  .tg-knob{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:transform .2s;}
+  .toggle-row.on .tg-switch{background:var(--green);}
+  .toggle-row.on .tg-knob{transform:translateX(16px);}
+  .toggle-row.on .tg-label{color:var(--ink);font-weight:600;}
+
+  /* confidence chip */
+  .conf-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line-strong);background:#fff;color:var(--ink-soft);
+    padding:5px 11px;border-radius:999px;font-size:12px;cursor:pointer;font-weight:500;transition:all .18s;font-family:inherit;}
+  .conf-chip .cdot{width:9px;height:9px;border-radius:50%;}
+  .conf-chip:hover{border-color:var(--brand);}
+  .conf-chip.active{background:var(--brand);border-color:var(--brand);color:#fff;}
+
+  /* downscaled pill + confidence dot */
+  .ds-pill{display:inline-flex;align-items:center;gap:4px;font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+    color:#b5675c;background:#f8ecea;border:1px solid #e7c9c4;border-radius:6px;padding:2px 7px;}
+  .vf-pill{display:inline-flex;align-items:center;gap:3px;font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+    color:#3f8a52;background:#ecf6ee;border:1px solid #cce6d2;border-radius:6px;padding:2px 7px;}
+  .conf-dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none;}
+  .conf-inline{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--ink-faint);font-weight:600;}
+
+  /* note callout in drawer */
+  .note-box{display:flex;gap:10px;background:#fbf6ec;border:1px solid #ecdcb8;border-radius:10px;padding:12px 14px;font-size:12.5px;color:#6b5a2e;line-height:1.55;}
+  .note-box.alert{background:#f9ecea;border-color:#e7c9c4;color:#7d4b43;}
+  .note-box svg{flex:none;margin-top:1px;}
+
+  /* ---------- Charts ---------- */
+  .charts{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:22px;}
+  .chart-card{padding:20px 22px;}
+  .chart-card .ch-title{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand);font-weight:700;margin-bottom:2px;}
+  .chart-card .ch-sub{font-size:11.5px;color:var(--ink-faint);margin-bottom:14px;}
+  .chart-holder{position:relative;height:230px;}
+
+  /* ---------- Toolbar ---------- */
+  .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:16px;flex-wrap:wrap;}
+  .results-count{font-size:13px;color:var(--ink-soft);}
+  .results-count b{color:var(--ink);font-weight:700;}
+  .view-toggle{display:inline-flex;background:#ececea;border-radius:10px;padding:3px;}
+  .view-toggle button{
+    border:none;background:none;padding:7px 16px;border-radius:8px;font-size:12.5px;font-weight:600;
+    color:var(--ink-soft);cursor:pointer;font-family:inherit;transition:all .18s;display:flex;align-items:center;gap:6px;
+  }
+  .view-toggle button.active{background:#fff;color:var(--brand);box-shadow:0 1px 3px rgba(0,0,0,.08);}
+
+  /* ---------- Cards ---------- */
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;}
+  .card{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;
+    box-shadow:var(--shadow);cursor:pointer;transition:transform .18s ease,box-shadow .18s ease,border-color .18s;
+    display:flex;flex-direction:column;
+  }
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--line-strong);}
+  .card .c-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+  .card .c-name{font-family:'Fraunces',serif;font-weight:500;font-size:18px;line-height:1.18;letter-spacing:-.01em;color:var(--ink);}
+  .badge{
+    font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    padding:3px 9px;border-radius:999px;white-space:nowrap;color:#fff;flex:none;
+  }
+  .badge.soft{background:transparent;border:1px solid currentColor;}
+  .tags{display:flex;flex-wrap:wrap;gap:5px;margin:11px 0 12px;}
+  .tag{font-size:10.5px;font-weight:600;color:var(--ink-soft);background:#f0f0ec;border-radius:6px;padding:3px 8px;}
+  .card .desc{font-size:12.5px;color:var(--ink-soft);line-height:1.55;flex:1;}
+  .card .c-meta{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--line);}
+  .status-pill{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:var(--ink-soft);}
+  .status-pill .dot{width:8px;height:8px;border-radius:50%;}
+  .card .figs{text-align:right;font-size:11px;color:var(--ink-faint);line-height:1.45;}
+  .card .figs b{display:block;font-size:14px;color:var(--ink);font-weight:700;font-family:'Plus Jakarta Sans';}
+
+  /* ---------- Table ---------- */
+  .table-wrap{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;}
+  thead th{
+    text-align:left;padding:13px 14px;background:#f3f3ef;color:var(--ink-soft);
+    font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;cursor:pointer;
+    white-space:nowrap;border-bottom:1px solid var(--line-strong);user-select:none;position:sticky;top:0;
+  }
+  thead th:hover{color:var(--brand);}
+  thead th .arr{opacity:.4;font-size:9px;margin-left:3px;}
+  thead th.sorted .arr{opacity:1;color:var(--accent);}
+  tbody td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:middle;}
+  tbody tr{cursor:pointer;transition:background .14s;}
+  tbody tr:hover{background:#fafaf7;}
+  tbody tr:last-child td{border-bottom:none;}
+  td .tname{font-weight:600;color:var(--ink);}
+  .mini-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;color:#fff;white-space:nowrap;text-transform:uppercase;letter-spacing:.03em;}
+  .mini-dot{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;}
+  .mini-dot .dot{width:7px;height:7px;border-radius:50%;}
+
+  .empty{padding:60px 20px;text-align:center;color:var(--ink-faint);}
+  .empty .big{font-family:'Fraunces',serif;font-size:20px;color:var(--ink-soft);margin-bottom:6px;}
+
+  /* ---------- Side panel ---------- */
+  .scrim{position:fixed;inset:0;background:rgba(18,35,63,.42);opacity:0;pointer-events:none;transition:opacity .28s ease;z-index:40;backdrop-filter:blur(2px);}
+  .scrim.open{opacity:1;pointer-events:auto;}
+  .drawer{
+    position:fixed;top:0;right:0;height:100%;width:min(480px,94vw);background:var(--surface);
+    box-shadow:-12px 0 48px rgba(18,35,63,.22);transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);
+    z-index:50;display:flex;flex-direction:column;
+  }
+  .drawer.open{transform:translateX(0);}
+  .drawer-head{padding:26px 28px 20px;border-bottom:1px solid var(--line);position:relative;}
+  .drawer-head .close{
+    position:absolute;top:20px;right:22px;border:none;background:#f0f0ec;width:32px;height:32px;border-radius:50%;
+    cursor:pointer;color:var(--ink-soft);font-size:16px;display:flex;align-items:center;justify-content:center;transition:background .15s;
+  }
+  .drawer-head .close:hover{background:#e2e2dc;}
+  .drawer-head .d-name{font-family:'Fraunces',serif;font-weight:500;font-size:25px;line-height:1.12;letter-spacing:-.01em;padding-right:40px;}
+  .drawer-head .d-lead{font-size:12px;color:var(--ink-faint);margin-top:6px;font-weight:600;letter-spacing:.02em;}
+  .drawer-body{padding:22px 28px 40px;overflow-y:auto;flex:1;}
+  .d-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;}
+  .d-section{margin-bottom:24px;}
+  .d-section h3{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;margin:0 0 10px;}
+  .d-desc{font-size:13.5px;line-height:1.6;color:var(--ink-soft);}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .fact{background:#f7f7f3;border:1px solid var(--line);border-radius:10px;padding:11px 13px;}
+  .fact .fl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;}
+  .fact .fv{font-size:15px;font-weight:700;color:var(--ink);margin-top:3px;}
+  .jv-wrap{display:flex;gap:22px;align-items:center;}
+  .jv-chart{position:relative;width:130px;height:130px;flex:none;}
+  .jv-legend{flex:1;display:flex;flex-direction:column;gap:9px;}
+  .jv-item{display:flex;align-items:center;gap:9px;font-size:12.5px;}
+  .jv-item .dot{width:11px;height:11px;border-radius:3px;flex:none;}
+  .jv-item .jn{color:var(--ink);font-weight:600;flex:1;}
+  .jv-item .js{color:var(--ink-soft);font-weight:700;font-variant-numeric:tabular-nums;}
+  .jv-none{font-size:12.5px;color:var(--ink-soft);background:#f7f7f3;border:1px solid var(--line);border-radius:10px;padding:13px 15px;line-height:1.55;}
+  .jv-bars{display:flex;flex-direction:column;gap:11px;}
+  .jv-bar-row{}
+  .jv-bar-top{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px;}
+  .jv-bar-top .jn{font-weight:600;color:var(--ink);}
+  .jv-bar-top .js{font-weight:700;color:var(--ink-soft);font-variant-numeric:tabular-nums;}
+  .jv-track{height:8px;border-radius:6px;background:#ececea;overflow:hidden;}
+  .jv-fill{height:100%;border-radius:6px;}
+
+  /* ---------- Footer ---------- */
+  .disclaimer{
+    margin-top:34px;padding:18px 22px;background:#f0f0ea;border:1px solid var(--line);border-radius:12px;
+    font-size:11.5px;color:var(--ink-faint);line-height:1.65;
+  }
+  .disclaimer strong{color:var(--ink-soft);font-weight:700;}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:1100px){
+    .grid{grid-template-columns:1fr;}
+    aside.filters{position:static;}
+    .charts{grid-template-columns:1fr;}
+    .kpi-bar{grid-template-columns:repeat(2,1fr);}
+  }
+
+  /* ─── Tab navigation ─── */
+  .tab-nav{background:#0a3d65;border-bottom:1px solid rgba(255,255,255,.1);padding:0 clamp(20px,4vw,56px);}
+  .tab-nav-inner{max-width:1680px;margin:0 auto;display:flex;gap:4px;}
+  .tab-btn{border:none;background:none;color:#9fb8d2;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;padding:14px 20px;cursor:pointer;border-bottom:3px solid transparent;transition:all .18s;display:flex;align-items:center;gap:8px;white-space:nowrap;}
+  .tab-btn:hover{color:#fff;background:rgba(255,255,255,.05);}
+  .tab-btn.active{color:#fff;border-bottom-color:var(--green);}
+  .tab-btn svg{flex:none;}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+
+  /* ─── Arabic report panel ─── */
+  .ar-panel{font-family:'Tajawal',sans-serif;direction:rtl;background:var(--bg);min-height:80vh;}
+  .ar-shell{max-width:1480px;margin:0 auto;padding:32px clamp(20px,4vw,56px) 64px;}
+  .ar-hero{background:linear-gradient(135deg,#055a93 0%,#0070b8 60%,#0a83cf 100%);border-radius:18px;padding:36px 40px;color:#fff;margin-bottom:28px;border-bottom:3px solid var(--green);}
+  .ar-hero h1{font-size:clamp(22px,2.8vw,34px);font-weight:800;margin:0 0 8px;line-height:1.2;}
+  .ar-hero p{color:#cfe6f5;font-size:14px;margin:0;}
+  .ar-kpi-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+  .ar-kpi{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow);}
+  .ar-kpi .al{font-size:11.5px;color:var(--ink-faint);font-weight:700;margin-bottom:6px;}
+  .ar-kpi .av{font-size:28px;font-weight:800;color:var(--ink);}
+  .ar-kpi .asub{font-size:11px;color:var(--ink-faint);margin-top:4px;}
+  .ar-kpi .split{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;}
+  .ar-kpi .seg{font-size:11.5px;color:var(--ink-soft);display:flex;align-items:center;gap:6px;}
+  .ar-kpi .seg .dot{width:9px;height:9px;border-radius:50%;flex:none;}
+  .ar-kpi .seg b{color:var(--ink);font-weight:700;}
+  .ar-section{margin-bottom:32px;}
+  .ar-section-title{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand);font-weight:800;margin:0 0 16px;display:flex;align-items:center;gap:10px;}
+  .ar-section-title::after{content:"";flex:1;height:1px;background:var(--line);}
+  .ar-findings{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
+  .ar-finding{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:var(--shadow);}
+  .ar-finding .afi{font-size:22px;margin-bottom:10px;}
+  .ar-finding h3{font-size:16px;font-weight:800;color:var(--ink);margin:0 0 8px;}
+  .ar-finding p{font-size:13.5px;color:var(--ink-soft);line-height:1.65;margin:0;}
+  .ar-finding.warn{border-color:#e7c9c4;background:#fdf6f5;}
+  .ar-finding.good{border-color:#cce6d2;background:#f5fbf6;}
+  .ar-finding.info{border-color:#d0e4f5;background:#f5f9fd;}
+  /* Arabic search/filter */
+  .ar-toolbar{display:flex;gap:12px;align-items:center;margin-bottom:16px;flex-wrap:wrap;}
+  .ar-search{flex:1;min-width:200px;padding:10px 14px;border:1px solid var(--line-strong);border-radius:10px;font-size:13.5px;font-family:'Tajawal',sans-serif;direction:rtl;}
+  .ar-search:focus{outline:none;border-color:var(--brand);}
+  .ar-filter-chips{display:flex;gap:7px;flex-wrap:wrap;}
+  .ar-chip{border:1px solid var(--line-strong);background:#fff;color:var(--ink-soft);padding:5px 13px;border-radius:999px;font-size:12px;cursor:pointer;font-weight:500;font-family:'Tajawal',sans-serif;transition:all .18s;}
+  .ar-chip:hover{border-color:var(--brand);color:var(--brand);}
+  .ar-chip.active{background:var(--brand);border-color:var(--brand);color:#fff;}
+  /* Arabic project cards */
+  .ar-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
+  .ar-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow);transition:transform .18s,box-shadow .18s;cursor:pointer;}
+  .ar-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+  .ar-card .ac-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px;}
+  .ar-card .ac-name{font-size:17px;font-weight:800;color:var(--ink);line-height:1.2;}
+  .ar-card .ac-desc{font-size:12.5px;color:var(--ink-soft);line-height:1.6;margin-bottom:12px;}
+  .ar-card .ac-meta{display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid var(--line);font-size:11.5px;}
+  .ar-card .ac-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
+  .ar-rec{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;}
+  .ar-rec-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:var(--shadow);}
+  .ar-rec-card .rnum{width:32px;height:32px;border-radius:50%;background:var(--brand);color:#fff;font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:12px;flex:none;}
+  .ar-rec-card h3{font-size:15px;font-weight:800;color:var(--ink);margin:0 0 8px;}
+  .ar-rec-card p{font-size:13px;color:var(--ink-soft);line-height:1.7;margin:0;}
+  .ar-missing{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+  .ar-miss-card{background:var(--surface);border:1px dashed var(--line-strong);border-radius:12px;padding:16px 18px;font-size:13px;color:var(--ink-soft);}
+  .ar-miss-card strong{display:block;color:var(--ink);font-size:14px;font-weight:800;margin-bottom:4px;}
+  .ar-corr{background:#fff8e6;border:1px solid #edd9a3;border-radius:12px;padding:16px 18px;margin-bottom:12px;font-size:13px;color:#5a4700;line-height:1.6;}
+  .ar-corr strong{font-weight:800;}
+  /* RTL dashboard adjustments */
+  .ar-panel .filters,.ar-panel .chart-card,.ar-panel .toolbar,.ar-panel .card,.ar-panel table,.ar-panel .drawer{font-family:'Tajawal',sans-serif;}
+  .ar-panel .search-wrap svg{left:auto;right:11px;}
+  .ar-panel .search-wrap input{padding:10px 34px 10px 12px;}
+  .ar-panel thead th,.ar-panel tbody td{text-align:right;}
+  .ar-panel .card .figs{text-align:left;}
+  .ar-drawer{right:auto;left:0;transform:translateX(-100%);box-shadow:12px 0 48px rgba(18,35,63,.22);font-family:'Tajawal',sans-serif;}
+  .ar-drawer.open{transform:translateX(0);}
+  .ar-drawer .drawer-head .close{right:auto;left:22px;}
+  .ar-drawer .drawer-head .d-name{padding-right:0;padding-left:40px;}
+  .ar-drawer .jv-item .js,.ar-drawer .jv-bar-top .js{direction:ltr;}
+  @media(max-width:900px){.ar-kpi-bar{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:540px){.ar-kpi-bar{grid-template-columns:1fr;}}
+
+  @media (max-width:640px){
+    .kpi-bar{grid-template-columns:1fr;}
+    .masthead .asof{text-align:left;border-left:none;padding-left:0;}
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-row">
+    <div class="brand-block">
+      <img class="brand-logo" src="data:image/jpeg;base64,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" alt="Environmental Horizons logo">
+      <div>
+        <p class="kicker">Environmental Horizons &middot; Vision 2030</p>
+        <h1>Saudi Mega Projects — Vision 2030 Strategic Overview</h1>
+        <p class="sub">Who owns each project, who their partners are, which sector they sit in, and how delivery is actually going — across Saudi Arabia's flagship mega-projects.</p>
+      </div>
+    </div>
+    <div class="asof">
+      Data as of <strong>Aug 2026</strong><br>
+      Last reviewed <strong>26/08/2026</strong><br>
+      Figures indicative &middot; see notes
+    </div>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" id="tabDash" onclick="switchTab('dashboard')">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Strategic Dashboard
+    </button>
+    <button class="tab-btn" id="tabAr" onclick="switchTab('arabic')">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      التقرير التحقق — عربي
+    </button>
+  </div>
+</nav>
+
+<div id="panel-dashboard" class="tab-panel active">
+<div class="shell">
+
+  <!-- KPI BAR -->
+  <section class="kpi-bar" id="kpiBar"></section>
+
+  <div class="grid">
+
+    <!-- FILTERS -->
+    <aside class="panel filters">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h2>Filters</h2>
+        <button class="reset-btn" id="resetBtn">Reset all</button>
+      </div>
+
+      <div class="group">
+        <div class="gl">Search</div>
+        <div class="search-wrap">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="searchInput" placeholder="Project name…" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="gl">Sector</div>
+        <div class="chips" id="sectorChips"></div>
+      </div>
+
+      <div class="group">
+        <div class="gl">Ownership</div>
+        <div class="chips" id="ownChips"></div>
+      </div>
+
+      <div class="group">
+        <div class="gl">Status</div>
+        <div class="chips" id="statusChips"></div>
+      </div>
+
+      <div class="group">
+        <div class="gl">Data Confidence</div>
+        <div class="chips" id="confChips"></div>
+      </div>
+
+      <div class="group">
+        <div class="gl">Flags</div>
+        <label class="toggle-row" id="downscaledToggle">
+          <span class="tg-switch"><span class="tg-knob"></span></span>
+          <span class="tg-label">Downscaled / scaled-back only</span>
+        </label>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main>
+      <div class="charts">
+        <div class="panel chart-card">
+          <div class="ch-title">Sector Distribution</div>
+          <div class="ch-sub">Project count by sector &middot; reflects active filters</div>
+          <div class="chart-holder"><canvas id="sectorChart"></canvas></div>
+        </div>
+        <div class="panel chart-card">
+          <div class="ch-title">Ownership Split</div>
+          <div class="ch-sub">Government &middot; PIF &middot; Joint Venture &middot; Mixed</div>
+          <div class="chart-holder"><canvas id="ownChart"></canvas></div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="results-count" id="resultsCount"></div>
+        <div class="view-toggle">
+          <button id="cardBtn" class="active">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            Cards
+          </button>
+          <button id="tableBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            Table
+          </button>
+        </div>
+      </div>
+
+      <div id="cardView" class="cards"></div>
+      <div id="tableView" class="table-wrap" style="display:none;"></div>
+    </main>
+  </div>
+
+  <div class="disclaimer">
+    <strong>Verification &amp; methodology.</strong> Each project carries a <em>data-confidence</em> rating — <span style="color:#3f9d57;font-weight:700">High</span> (confirmed / well-documented), <span style="color:#e0a23c;font-weight:700">Medium</span> (reported / evolving), <span style="color:#c2705c;font-weight:700">Low</span> (indicative estimate) — together with a <em>last-reviewed</em> date and, where relevant, a <em>review note</em> explaining recent changes. Projects materially reduced from their original scope are flagged <span style="color:#b5675c;font-weight:700">⚠ Downscaled</span>. This review (June 2026) reflects public reporting that NEOM is being significantly scaled back and reoriented toward data-centre and industrial use; The Line's 2030 build has been cut to a fraction of its planned length with work paused until after 2030; and Trojena will no longer host the 2029 Asian Winter Games and is delayed beyond 2030. Red Sea Global has been reclassified to Tourism &amp; Leisure only, as its sustainability positioning is a project attribute rather than an industry sector.<br><br>
+    <strong>Full research verification — June 2026; update pass 26/08/2026.</strong> August update: PIF's 2026-30 strategy omits The Line and Trojena, with NEOM budgets cut up to 60% on some projects; NEOM terminated over $6bn of Trojena contracts (Mar 2026); Mukaab foundation works resumed (Aug 2026) with the district phased to 2040; NGHC production slipped to 2027; the $5bn DataVolt AI campus at Oxagon nears groundbreaking. All 31 projects have now been source-verified against primary disclosures, SEC filings, official government budget statements, and high-reliability outlets (FT, Bloomberg, Reuters, AGBI, TotalEnergies, Hyundai, PIF). Key corrections applied: Ma'aden Aluminium reclassified from JV to Mixed (Alcoa exited July 2025, confirmed in Alcoa's official US stock-market filings); Lucid renamed AMP-2 (AMP-1 is Arizona); SWCC rebranded Saudi Water Authority (SWA) in 2024; King Salman Park reclassified to Government (not PIF); New Murabba Mukaab suspended Jan 2026; Trojena lost 2029 Asian Winter Games; The Line construction suspended Sept 2025; NGHC sector corrected to Energy only. Investment values are headline estimates: consultancy valuations (e.g. $63bn for Diriyah, $50bn for New Murabba) describe the full ambition of each programme, not money already spent. Stakes shown only where reliably disclosed; Ceer PIF/Foxconn split and King Abdullah Port PDC breakdown remain undisclosed. Figures should be verified against primary sources before external publication.
+  </div>
+
+</div>
+
+</div><!-- /panel-dashboard -->
+
+<div id="panel-arabic" class="tab-panel ar-panel">
+  <div class="ar-shell">
+
+    <!-- HERO -->
+    <div class="ar-hero">
+      <p style="font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#bfe6c4;font-weight:700;margin:0 0 10px">صندوق الاستثمارات العامة &middot; رؤية 2030</p>
+      <h1>تقرير التحقق الشامل — مشاريع رؤية 2030 الكبرى</h1>
+      <p>نتائج مراجعة مصادر 31 مشروعاً كبيراً &middot; آخر تحديث: 26/08/2026 &middot; مصادر: تقارير صندوق الاستثمارات العامة، الأرامكو، SEC، FT، رويترز، بلومبرغ</p>
+    </div>
+
+    <!-- KPIs (computed live from the same data as the English dashboard) -->
+    <div class="ar-kpi-bar" id="arKpiBar"></div>
+
+    <!-- KEY FINDINGS -->
+    <div class="ar-section">
+      <div class="ar-section-title">أبرز النتائج</div>
+      <div class="ar-findings">
+        <div class="ar-finding warn">
+          <div class="afi">⚠️</div>
+          <h3>خط نيوم: توقف البناء</h3>
+          <p>علّقت نيوم أعمال البناء رسمياً في 16 سبتمبر 2025. بدلاً من 170 كيلومتراً يستوعب 9 ملايين نسمة، لن يكتمل سوى نحو 2.4 كيلومتر بحلول 2030، مع تخفيض الهدف السكاني إلى أقل من 300,000 نسمة. صندوق الاستثمارات العامة سجّل شطباً بنحو 8 مليارات دولار.</p>
+        </div>
+        <div class="ar-finding warn">
+          <div class="afi">🏔️</div>
+          <h3>تروجينا: فقدان دورة الألعاب الشتوية</h3>
+          <p>أعلن المجلس الأولمبي الآسيوي في 24 يناير 2026 تأجيل دورة الألعاب الشتوية 2029، وأُسندت إلى ألماتي في كازاخستان. ألغت نيوم عقوداً بأكثر من 6 مليارات دولار في مارس 2026، وغاب المشروع عن استراتيجية الصندوق 2026–2030. مؤجل إلى ما بعد 2030.</p>
+        </div>
+        <div class="ar-finding warn">
+          <div class="afi">🧊</div>
+          <h3>المكعب (المربع الجديد): استئناف الأعمال</h3>
+          <p>بعد التعليق المؤقت في يناير 2026، استُؤنفت أعمال أساسات المكعب — الحفر مكتمل بنسبة ~86% وعطاءات الخرسانة تُستلم حتى 20 أكتوبر 2026 (ميد، 20 أغسطس 2026). التسليم على مراحل حتى 2040، والمرحلة الأولى بحلول 2030 تزامناً مع إكسبو الرياض.</p>
+        </div>
+        <div class="ar-finding good">
+          <div class="afi">⛽</div>
+          <h3>الجافورة: الإنتاج يبدأ في 2025</h3>
+          <p>أتمّت أرامكو المرحلة الأولى من مشروع الجافورة في ديسمبر 2025 بطاقة 450 مليون قدم مكعب يومياً، بحسب بيان الميزانية السعودية 2026. استثمار يفوق 100 مليار دولار على مدار دورة حياة المشروع.</p>
+        </div>
+        <div class="ar-finding good">
+          <div class="afi">🎢</div>
+          <h3>قدية: أول مرفق يفتتح (Six Flags)</h3>
+          <p>افتُتح "سيكس فلاغز قدية سيتي" في 31 ديسمبر 2025 بما في ذلك "فالكون فلايت"، أسرع وأطول أفعوانية في العالم. هذا هو أول من سلسلة تضم نحو 70 منشأة مخططة.</p>
+        </div>
+        <div class="ar-finding good">
+          <div class="afi">🌊</div>
+          <h3>البحر الأحمر العالمية: افتتاح أمالا</h3>
+          <p>أعلنت شركة البحر الأحمر العالمية في نوفمبر 2025 عن افتتاح وجهة "أمالا تريبل باي" — بعد بدء استقبال ضيوف "البحر الأحمر" عام 2023 ومنتجع ثول عام 2024.</p>
+        </div>
+        <div class="ar-finding info">
+          <div class="afi">🏭</div>
+          <h3>معادن للألومنيوم: خروج ألكوا</h3>
+          <p>باعت شركة ألكوا حصتها البالغة 25.1% لصالح معادن في 1 يوليو 2025 مقابل 1.35 مليار دولار (بحسب إيداع SEC). أصبحت معادن المالك الكامل — لم يعد هذا مشروعاً مشتركاً.</p>
+        </div>
+        <div class="ar-finding info">
+          <div class="afi">🚗</div>
+          <h3>قطاع صناعة السيارات ينضج</h3>
+          <p>ثلاثة مصانع للسيارات في مدينة الملك عبدالله الاقتصادية: لوسيد AMP-2 (افتُتح 2023)، مصنع هيونداي-صندوق الاستثمارات العامة (وُضع حجر الأساس مايو 2025)، وسير EV (إنتاج Q4 2026). القطاع يتحول إلى واقع.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CORRECTIONS BOX -->
+    <div class="ar-section">
+      <div class="ar-section-title">تصحيحات بيانية جوهرية</div>
+      <div class="ar-corr"><strong>معادن للألومنيوم:</strong> لم يعد مشروعاً مشتركاً — ألكوا خرجت في يوليو 2025. أُعيد تصنيفه من "مشروع مشترك" إلى "مختلط".</div>
+      <div class="ar-corr"><strong>لوسيد موتورز:</strong> المصنع السعودي هو AMP-2 وليس AMP-1 (الأخير في أريزونا بالولايات المتحدة).</div>
+      <div class="ar-corr"><strong>هيئة المياه السعودية:</strong> تمت إعادة تسمية SWCC إلى هيئة المياه السعودية (SWA) عام 2024.</div>
+      <div class="ar-corr"><strong>حديقة الملك سلمان:</strong> تتبع الهيئة الملكية لمدينة الرياض (جهة حكومية) — وليس صندوق الاستثمارات العامة كما كان مُدرجاً سابقاً.</div>
+      <div class="ar-corr"><strong>البحر الأحمر العالمية:</strong> أُزيل تصنيف "البيئة" — الاستدامة سمة تشغيلية لا تصنيف قطاعي. القطاع الوحيد: السياحة والترفيه.</div>
+      <div class="ar-corr"><strong>NGHC:</strong> تُصنَّف تحت "الطاقة" فقط (أُزيل تصنيف "البيئة" لنفس السبب).</div>
+    </div>
+
+    <!-- FULL INTERACTIVE DASHBOARD — RTL mirror of the English tab -->
+    <div class="ar-section">
+      <div class="ar-section-title">لوحة المعلومات التفاعلية</div>
+      <div class="grid">
+        <aside class="panel filters">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <h2>عوامل التصفية</h2>
+            <button class="reset-btn" id="arResetBtn">إعادة تعيين الكل</button>
+          </div>
+          <div class="group">
+            <div class="gl">بحث</div>
+            <div class="search-wrap">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+              <input type="text" id="arSearchInput" placeholder="اسم المشروع…" autocomplete="off">
+            </div>
+          </div>
+          <div class="group"><div class="gl">القطاع</div><div class="chips" id="arSectorChips"></div></div>
+          <div class="group"><div class="gl">الملكية</div><div class="chips" id="arOwnChips"></div></div>
+          <div class="group"><div class="gl">الحالة</div><div class="chips" id="arStatusChipsF"></div></div>
+          <div class="group"><div class="gl">موثوقية البيانات</div><div class="chips" id="arConfChips"></div></div>
+          <div class="group">
+            <div class="gl">مؤشرات</div>
+            <label class="toggle-row" id="arDownscaledToggle">
+              <span class="tg-switch"><span class="tg-knob"></span></span>
+              <span class="tg-label">المشاريع المُقلَّصة فقط</span>
+            </label>
+          </div>
+        </aside>
+        <main>
+          <div class="charts">
+            <div class="panel chart-card">
+              <div class="ch-title">توزيع القطاعات</div>
+              <div class="ch-sub">عدد المشاريع حسب القطاع &middot; يعكس عوامل التصفية</div>
+              <div class="chart-holder"><canvas id="arSectorChart"></canvas></div>
+            </div>
+            <div class="panel chart-card">
+              <div class="ch-title">توزيع الملكية</div>
+              <div class="ch-sub">حكومي &middot; صندوق الاستثمارات &middot; مشروع مشترك &middot; مختلط</div>
+              <div class="chart-holder"><canvas id="arOwnChart"></canvas></div>
+            </div>
+          </div>
+          <div class="toolbar">
+            <div class="results-count" id="arResultsCount"></div>
+            <div class="view-toggle">
+              <button id="arCardBtn" class="active">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                بطاقات
+              </button>
+              <button id="arTableBtn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                جدول
+              </button>
+            </div>
+          </div>
+          <div id="arCardView" class="cards"></div>
+          <div id="arTableView" class="table-wrap" style="display:none;"></div>
+        </main>
+      </div>
+      <div class="disclaimer" style="margin-top:24px">
+        <strong>التحقق والمنهجية.</strong> يحمل كل مشروع تقييماً لموثوقية البيانات — <span style="color:#3f9d57;font-weight:700">عالية</span> (مؤكدة وموثقة) و<span style="color:#e0a23c;font-weight:700">متوسطة</span> (تقارير متطورة) و<span style="color:#c2705c;font-weight:700">منخفضة</span> (تقدير إرشادي) — مع تاريخ آخر مراجعة وملاحظة توضح التغييرات الأخيرة. المشاريع التي قُلِّصت جوهرياً عن نطاقها الأصلي مُعلَّمة <span style="color:#b5675c;font-weight:700">⚠ مُقلَّص</span>، والمشاريع المؤكدة من المصادر مُعلَّمة <span style="color:#3f8a52;font-weight:700">✓ موثَّق</span>. القيم استثمارية إرشادية؛ المشاريع ضمن برنامج أكبر (مثل ذا لاين ضمن نيوم) لا تُقيَّم بشكل منفصل تفادياً للحساب المزدوج. تُعرض حصص الشركاء فقط عند الإفصاح الموثوق. اضغط على أي مشروع لعرض التفاصيل الكاملة.
+      </div>
+    </div>
+
+    <!-- MISSING PROJECTS -->
+    <div class="ar-section">
+      <div class="ar-section-title">مشاريع يُقترح إضافتها إلى المحفظة</div>
+      <div class="ar-missing">
+        <div class="ar-miss-card"><strong>العُلا (الهيئة الملكية)</strong>وجهة تراثية وسياحية كبرى — تُعدّ من أبرز مشاريع رؤية 2030</div>
+        <div class="ar-miss-card"><strong>قمم السودة (سودة)</strong>مشروع سياحي جبلي في عسير تابع لصندوق الاستثمارات العامة — اتفاقية طاقة SAR1.3 مليار يناير 2026</div>
+        <div class="ar-miss-card"><strong>وادي صفار</strong>مشروع درعية الفاخر (مشاركة مجموعة ترامب؛ مضمار خيول وفلل فاخرة)</div>
+        <div class="ar-miss-card"><strong>رواء المدينة / مسار مكة</strong>مشاريع صندوق الاستثمارات العامة في المدينتين المقدستين</div>
+        <div class="ar-miss-card"><strong>هيومين (HUMAIN)</strong>شركة الذكاء الاصطناعي التابعة لصندوق الاستثمارات العامة (~23 مليار $، 2025) — محورية في تحول نيوم نحو البنية التحتية الرقمية</div>
+        <div class="ar-miss-card"><strong>مترو الرياض</strong>أصبح تشغيلياً 2024–2025؛ 164 كيلومتراً و85 محطة — ركيزة بنية تحتية أساسية</div>
+        <div class="ar-miss-card"><strong>إكسبو الرياض 2030</strong>ميزانية ~7.8 مليار $ — يُحتضن من 1 أكتوبر 2030 إلى 31 مارس 2031</div>
+      </div>
+    </div>
+
+    <!-- RECOMMENDATIONS -->
+    <div class="ar-section">
+      <div class="ar-section-title">توصيات إستراتيجية</div>
+      <div class="ar-rec">
+        <div class="ar-rec-card">
+          <div class="rnum">1</div>
+          <h3>تصنيف المشاريع وفق مخاطر التنفيذ</h3>
+          <p>فصل المشاريع إلى "عالية المخاطر / مقلَّصة" (نيوم، خط نيوم، تروجينا، المربع الجديد، سندالة) و"على المسار الصحيح" (الجافورة، سابك، أميرال، ميناء الملك عبدالله، آي إم آي، سبارك، روشن، قدية، الدرعية، البحر الأحمر). هذا التمييز هو الأكثر قيمة لصانعي القرار.</p>
+        </div>
+        <div class="ar-rec-card">
+          <div class="rnum">2</div>
+          <h3>إعادة معايرة أرقام الاستثمار</h3>
+          <p>تقييمات نايت فرانك (63 مليار $ للدرعية، 50 مليار $ للمربع الجديد) تعكس الطموح البرنامجي لا الإنفاق الفعلي. الدرعية لديها ~14.5 مليار $ مُرسى فعلياً، والمربع الجديد ~100 مليون $ فقط. استخدم أرقام مدققة (عقد الأرامكو-سابك 69.1 مليار $؛ خروج ألكوا 1.35 مليار $؛ NGHC 8.4 مليار $) كمراسي موثوقة.</p>
+        </div>
+        <div class="ar-rec-card">
+          <div class="rnum">3</div>
+          <h3>تحديد معالم مراقبة واضحة</h3>
+          <p>رصد مؤشرات بعينها: حصة نيوم من أصول صندوق الاستثمارات العامة (6% حالياً؛ مراقبة الانخفاض)؛ بيان ميزانية 2027 (هل تُعاد نيوم والمربع الجديد بالاسم؟)؛ أول سيارة سير EV؛ تأكيد تمويل المكعب؛ نتيجة مراجعة جدوى تروجينا.</p>
+        </div>
+        <div class="ar-rec-card">
+          <div class="rnum">4</div>
+          <h3>تكييف التصنيف القطاعي مع الواقع</h3>
+          <p>الاستدامة سمة تشغيلية لا قطاع صناعي — إزالة "البيئة" من البحر الأحمر العالمية وشركة نيوم للهيدروجين الأخضر. الذكاء الاصطناعي / مراكز البيانات قطاع ناشئ يستوجب إضافته (نيوم، أوكساغون، هيومين). الموانئ ضمن "الخدمات اللوجستية" وليس البنية التحتية لوحدها.</p>
+        </div>
+        <div class="ar-rec-card">
+          <div class="rnum">5</div>
+          <h3>توسيع المحفظة لتشمل مشاريع غائبة</h3>
+          <p>العُلا وقمم السودة وإكسبو 2030 ومترو الرياض وهيومين — هذه المشاريع الكبرى غائبة عن القائمة الحالية. إضافتها تُكمل الصورة وتعكس المحفظة الفعلية لرؤية 2030 بشكل أدق.</p>
+        </div>
+        <div class="ar-rec-card">
+          <div class="rnum">6</div>
+          <h3>دورية المراجعة والتحقق</h3>
+          <p>وضع جدول ربع سنوي لمراجعة تقييمات الثقة بالبيانات وملاحظات المراجعة استناداً إلى إفصاحات صندوق الاستثمارات العامة والشركات المشاريع والبيانات الحكومية ووسائل الإعلام عالية الموثوقية. هذه اللوحة تحتوي الآن على طبقة التحقق اللازمة — الدورية هي ما يُبقيها دقيقة.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /ar-shell -->
+</div><!-- /panel-arabic -->
+
+
+<!-- ARABIC DRAWER -->
+<div class="scrim" id="arScrim"></div>
+<aside class="drawer panel ar-drawer" id="arDrawer" dir="rtl" aria-hidden="true">
+  <div class="drawer-head">
+    <button class="close" id="arDrawerClose" aria-label="إغلاق">&times;</button>
+    <div class="d-name" id="arDName"></div>
+    <div class="d-lead" id="arDLead"></div>
+    <div class="d-row" id="arDBadges" style="margin-top:14px;"></div>
+  </div>
+  <div class="drawer-body" id="arDrawerBody"></div>
+</aside>
+
+<!-- DRAWER -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer panel" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <button class="close" id="drawerClose" aria-label="Close">&times;</button>
+    <div class="d-name" id="dName"></div>
+    <div class="d-lead" id="dLead"></div>
+    <div class="d-row" id="dBadges" style="margin-top:14px;"></div>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+</aside>
+
+<script>
+/* ============================================================
+   DATA — Saudi Vision 2030 giga & mega projects (2024–2025)
+   Investment in USD billions (indicative). null = not disclosed.
+   ============================================================ */
+const PROJECTS = [
+  {name:"NEOM",sectors:["Technology","Urban Development","Energy"],ownership:"PIF",lead:"NEOM Company",partners:[],status:"Under Review",completion:"2030+ (revised)",investment:500,downscaled:true,confidence:"High",
+   note:"Verified (Aug 2026): PIF's new 2026-30 strategy (Aug 2026) emphasises private capital and returns; NEOM budgets cut by up to 60% on some projects and PIF's overall capital spending is expected to fall ~15% in 2026. Total NEOM spend through early 2026 estimated at $40-60bn vs the $500bn headline. PIF booked an ~$8bn loss in value on its giga-projects in its 2024 annual report; giga-projects now make up only 6% of PIF's total assets. Pivoting to AI/data-centre and industrial use.",
+   desc:"PIF's flagship region in Tabuk province — being fundamentally rethought — shifting from a futuristic city concept toward AI infrastructure, data centres and industrial use following cost overruns and fiscal pressure."},
+  {name:"The Line",sectors:["Urban Development","Technology"],ownership:"PIF",lead:"NEOM Company",partners:[],status:"On Hold",completion:"Post-2030",investment:null,downscaled:true,confidence:"High",
+   note:"Verified (Aug 2026): OMITTED entirely from PIF's 2026-30 strategy document (Aug 2026). Construction suspended 16 Sept 2025 and paused until at least after 2030 (Semafor, May 2026); workforce cut 35% since Apr 2025 and 1,000+ staff relocated to Riyadh. Only ~2.4km of 170km complete; resident target cut from 1.5M to under 300,000.",
+   desc:"Originally a 170km linear smart city for 9M residents. Construction suspended September 2025; only ~2.4km completed. Final delivery pushed well beyond 2030."},
+  {name:"Oxagon",sectors:["Advanced Manufacturing","Industrial","Logistics","Technology"],ownership:"PIF",lead:"NEOM Company / Oxagon",partners:[],status:"Under Construction",completion:"2030",investment:2,downscaled:false,confidence:"Medium",
+   note:"Verified (Aug 2026): NEOM pledged $3bn to Oxagon (Jun 2026) and the $5bn DataVolt AI data-centre campus is expected to break ground within months (Aug 2026). Strategic role elevated amid Strait of Hormuz disruption — Oxagon is expected to seed new Red Sea trade routes. Design simplified from the original floating-octagon concept toward a conventional coastal industrial zone. Port ~68% complete; targeting capacity for 1.5 million shipping containers a year by 2030.",
+   desc:"NEOM's floating industrial and port complex, now the programme's priority node with a focus on AI data centres, advanced manufacturing and Red Sea logistics. Port operations underway."},
+  {name:"Trojena",sectors:["Tourism & Leisure"],ownership:"PIF",lead:"NEOM Company",partners:[],status:"On Hold",completion:"Post-2030",investment:null,downscaled:true,confidence:"High",
+   note:"Verified (Aug 2026): NEOM terminated three major Trojena contracts worth over $6bn in March 2026, and Trojena is omitted from PIF's 2026-30 strategy (Aug 2026). Lost the 2029 Asian Winter Games — the Olympic Council of Asia postponed them on 24 Jan 2026; Almaty named host 2 Feb 2026. New timeline unclear, possibly ~2033.",
+   desc:"A planned mountain-tourism and ski destination within NEOM. Lost hosting rights for the 2029 Asian Winter Games (awarded to Almaty Feb 2026) and delayed well beyond 2030."},
+  {name:"Sindalah Island",sectors:["Tourism & Leisure"],ownership:"PIF",lead:"NEOM Company / Red Sea Global",partners:[],status:"Partially Operational",completion:"2028",investment:4,downscaled:true,confidence:"Medium",
+   note:"Verified (Jun 2026): Ceremonial opening Oct 2024 but marina/hotels largely unopened; cost reportedly ~3x initial estimate (~$4bn). Management reportedly shifting NEOM to Red Sea Global (FT, Sept 2025) — read as a loss-of-confidence signal. Four Seasons hotel now expected ~2028.",
+   desc:"NEOM's Red Sea island resort, opened ceremonially Oct 2024 but largely non-operational. Cost overruns (~3x budget) and management transfer to Red Sea Global signal delivery challenges."},
+  {name:"NEOM Green Hydrogen Company",sectors:["Energy"],ownership:"Joint Venture",lead:"NEOM Green Hydrogen Company (NGHC)",partners:[{n:"NEOM",s:33.3},{n:"ACWA Power",s:33.3},{n:"Air Products",s:33.3}],status:"Under Construction",completion:"2027",investment:8.4,confidence:"High",
+   note:"Verified (Aug 2026): Production target has slipped to 2027 (from end-2026) per mid-2026 reporting; it remains NEOM's most advanced component. Equal one-third stakes confirmed in Air Products' official US stock-market filing (May 2023); $6.1bn in project loans from 23 banks; Air Products has agreed to buy all output for 30 years (~600 tonnes of hydrogen a day, shipped as green ammonia).",
+   desc:"A US$8.4bn green hydrogen facility at Oxagon — world-scale, equally owned by NEOM, ACWA Power and Air Products, with Air Products committed to buying all output for 30 years. Production now targeted for 2027."},
+  {name:"NEOM Port (Oxagon Port)",sectors:["Logistics"],ownership:"PIF",lead:"Port of NEOM / Oxagon",partners:[],status:"Partially Operational",completion:"2030",investment:2,confidence:"Medium",
+   note:"Verified (Jun 2026): ~68% complete (Nov 2025); targeting full automated container terminal by 2026. Saudi Arabia's first fully automated remote-controlled cranes. Targeting capacity for 1.5 million shipping containers a year by 2030. Phase 1 cost ~SAR 7.5bn (~$2bn).",
+   desc:"An automated deep-water port at Oxagon; Saudi Arabia's first with fully automated remote-controlled cranes, targeting capacity for 1.5 million shipping containers a year by 2030."},
+  {name:"Diriyah",sectors:["Tourism & Leisure","Urban Development"],ownership:"PIF",lead:"Diriyah Company",partners:[],status:"Under Construction",completion:"2030",investment:63,confidence:"High",
+   note:"Verified (Jun 2026): One of the best-progressing giga-projects. At-Turaif, Bujairi Terrace and Bab Samhan hotel open; Diriyah Square under construction. Completion slipped 2027 to 2030. Property consultancy Knight Frank estimates the full programme at $63bn, of which ~$14.5bn is actually contracted so far. Over SAR 100bn (~$27bn) of contracts awarded since the project began.",
+   desc:"A cultural and lifestyle district around the historic At-Turaif UNESCO site near Riyadh — one of Vision 2030's best-progressing flagships, with multiple assets now open and programme valued at ~$63bn."},
+  {name:"Qiddiya",sectors:["Tourism & Leisure"],ownership:"PIF",lead:"Qiddiya Investment Company",partners:[],status:"Partially Operational",completion:"2030",investment:40,confidence:"High",
+   note:"Verified (Jun 2026): Six Flags Qiddiya City (world's fastest and tallest coaster, Falcon's Flight) opened 31 Dec 2025 — first of ~70 planned properties. the Prince Mohammed bin Salman Stadium (a 2034 World Cup venue), performing-arts centre and speed track still under construction. Programme valued ~$40bn.",
+   desc:"An entertainment, sports and culture city southwest of Riyadh. Six Flags Qiddiya City opened December 2025, beginning a phased rollout of ~70 properties including the FIFA 2034 stadium."},
+  {name:"Red Sea Global (The Red Sea & AMAALA)",sectors:["Tourism & Leisure"],ownership:"PIF",lead:"Red Sea Global",partners:[],status:"Partially Operational",completion:"2030",investment:16,confidence:"High",
+   note:"Verified (Jun 2026): The Red Sea welcoming guests since 2023 (~9 hotels); Thuwal Private Retreat opened 2024; AMAALA Triple Bay opening announced Nov 2025 (~$13.6bn invested in Phase 1; $1.73bn of new funding secured Oct 2025). Reclassified Tourism & Leisure only — regenerative positioning is an attribute, not a sector.",
+   desc:"A luxury tourism destination on Saudi Arabia's west coast. The Red Sea has been operating since 2023; AMAALA (ultra-luxury wellness component) announced its opening in November 2025."},
+  {name:"King Salman Park",sectors:["Urban Development","Environmental"],ownership:"Government",lead:"King Salman Park Foundation",partners:[{n:"Ajdan Real Estate",s:null},{n:"SEDCO Capital",s:null}],status:"Under Construction",completion:"2026",investment:9.4,confidence:"Medium",
+   note:"Verified (Jun 2026): OWNERSHIP CORRECTION — under the Royal Commission for Riyadh City / King Salman Park Foundation (government body, not PIF). Phase 1 opening targeted 2026 (slipped from 2025). A SAR 3.8bn (~$1bn) private investment fund was set up in Nov 2025 with Ajdan Real Estate and SEDCO Capital. It will be the world's largest urban park (16.6 km²).",
+   desc:"The world's largest urban park (16.6 km2) in Riyadh, under the Royal Commission for Riyadh City. Government-led (not PIF). Phase 1 targeted for 2026."},
+  {name:"New Murabba",sectors:["Urban Development"],ownership:"PIF",lead:"New Murabba Development Company",partners:[],status:"Under Construction",completion:"2040",investment:50,downscaled:true,confidence:"High",
+   note:"Verified (Aug 2026): Mukaab work has RESUMED — foundation works underway (HSSG Foundation Contracting) with excavation ~86% complete (over 10 million cubic metres of earth removed) and bids for the main concrete foundations due 20 Oct 2026 (MEED, 20 Aug 2026). Follows the Jan 2026 Reuters-reported suspension pending financing review. District phased to 2040: Phase 1 by 2030 for Expo, later phases tied to World Cup 2034, then 2035 and 2040.",
+   desc:"A new downtown for Riyadh centred on the Mukaab cube. After a Jan 2026 pause, Mukaab foundation works resumed by Aug 2026; delivery is phased to 2040, with Phase 1 targeted for Expo 2030."},
+  {name:"ROSHN",sectors:["Urban Development"],ownership:"PIF",lead:"ROSHN Group",partners:[],status:"Partially Operational",completion:"2030",investment:null,confidence:"High",
+   note:"Verified (Jun 2026): SEDRA (a 20 million m² community in Riyadh) was delivered ahead of schedule — first giga-project to deliver homes to customers. 400,000 homes targeted by 2030; holds over 200 million m² of land for future building. A SAR 10bn (~$2.7bn) credit line is arranged. CEO David Grover.",
+   desc:"PIF's national community developer. SEDRA in Riyadh was delivered ahead of schedule, making ROSHN one of the few giga-projects to achieve a major milestone early."},
+  {name:"Ma'aden Mining Expansion",sectors:["Mining"],ownership:"Mixed",lead:"Saudi Arabian Mining Company (Ma'aden)",partners:[],status:"Operational",completion:"Ongoing",investment:null,confidence:"High",
+   note:"Verified (Jun 2026): Expanding strongly — The Phosphate 3 expansion is ~50% complete and on schedule to start producing in 2027. Net profit up 91% in the first nine months of 2025. Positioned as the 'third pillar' of the Saudi economy. Strong outperformer in Vision 2030 portfolio.",
+   desc:"Saudi Arabia's national mining champion — one of Vision 2030's strongest performers with net profit up 91% in 2025. Phosphate 3 expansion on track for 2027."},
+  {name:"Ma'aden Aluminium",sectors:["Mining","Advanced Manufacturing"],ownership:"Mixed",lead:"Ma'aden (100% owner post-July 2025)",partners:[],status:"Operational",completion:"Ongoing",investment:null,confidence:"High",
+   note:"Verified (Jun 2026): MAJOR CORRECTION — Alcoa fully exited 1 July 2025, selling its 25.1% stake to Ma'aden for $1.35bn ($150m in cash plus Ma'aden shares), confirmed in Alcoa's official US stock-market filings. NO LONGER A JV. Reclassified from Joint Venture to Mixed (listed company). JV data removed.",
+   desc:"An integrated bauxite-to-aluminium complex at Ras Al-Khair. Formerly a Ma'aden/Alcoa joint venture; Alcoa fully exited in July 2025 — Ma'aden now owns 100%."},
+  {name:"SABIC",sectors:["Manufacturing","Energy"],ownership:"Mixed",lead:"Saudi Basic Industries Corporation",partners:[{n:"Saudi Aramco",s:70},{n:"Public float",s:30}],status:"Operational",completion:"Ongoing",investment:null,confidence:"High",
+   note:"Verified (Jun 2026): Aramco owns 70%; the other 30% is traded publicly on the Saudi stock exchange (Aramco acquired from PIF for SAR259.125bn/$69.1bn in 2020; Aramco is paying PIF in instalments through 2028). SABIC's fertiliser arm scaled back a planned low-carbon ammonia plant in early 2026.",
+   desc:"A global petrochemicals giant, 70% owned by Saudi Aramco. A cornerstone of Vision 2030's manufacturing pillar, generating significant non-oil revenue."},
+  {name:"SATORP / Amiral Expansion",sectors:["Energy","Manufacturing"],ownership:"Joint Venture",lead:"SATORP",partners:[{n:"Saudi Aramco",s:62.5},{n:"TotalEnergies",s:37.5}],status:"Under Construction",completion:"2027",investment:11,confidence:"High",
+   note:"Verified (Jun 2026): Main construction contracts awarded June 2023; commercial operations targeted 2027. $11bn confirmed (TotalEnergies primary disclosure). Will produce 1.65 million tonnes a year of ethylene (a basic building block for plastics) — the Gulf's largest such plant — plus two plastics units of 500,000 tonnes each. On track per joint Aramco/TotalEnergies reporting.",
+   desc:"The Amiral petrochemical complex integrated with the SATORP Jubail refinery — Aramco (62.5%) / TotalEnergies (37.5%). On track for 2027; will be the Gulf's largest producer of ethylene, a basic building block for plastics."},
+  {name:"Saudi Aramco Jafurah Gas Field",sectors:["Energy"],ownership:"Mixed",lead:"Saudi Aramco",partners:[{n:"GIP/BlackRock consortium (midstream financing)",s:null}],status:"Partially Operational",completion:"2030",investment:100,confidence:"High",
+   note:"Verified (Jun 2026): Phase 1 started producing in Dec 2025 at 450 million cubic feet of gas per day — confirmed by Saudi Ministry of Finance in the 2026 budget statement. Target: 2 billion cubic feet per day by 2030. Aramco raised $11bn in 2025 by leasing its gas-processing plants to a BlackRock-led investor group — a financing arrangement in which Aramco keeps ownership. $100bn+ lifecycle.",
+   desc:"Phase 1 of the world's largest shale gas project outside the US began producing December 2025. Targeting 2 billion cubic feet of gas per day by 2030, it is central to Aramco's gas growth strategy."},
+  {name:"King Salman Energy Park (SPARK)",sectors:["Energy","Industrial","Logistics"],ownership:"Mixed",lead:"Saudi Aramco (SPARK)",partners:[{n:"Hutchison Ports (inland cargo terminal)",s:null}],status:"Partially Operational",completion:"2035",investment:null,confidence:"High",
+   note:"Verified (Jun 2026): 7 factories operating, 14 under construction as of 2025. Phase 1 completed 2021 — first industrial city to earn the international LEED Silver green-building certification. 300+ facilities planned at maturity (~2035). An inland cargo terminal is run jointly with Hutchison Ports. Expected to add ~$6bn a year to the economy when complete.",
+   desc:"An energy-industrial city near Dammam, wholly owned by Saudi Aramco. Phase 1 complete and operational with 7 factories running; 300+ facilities targeted at full maturity (~2035)."},
+  {name:"Saudi Water Authority (SWA) Desalination",sectors:["Desalination","Environmental"],ownership:"Government",lead:"Saudi Water Authority (SWA) — formerly SWCC",partners:[],status:"Operational",completion:"Ongoing",investment:null,confidence:"High",
+   note:"Verified (Jun 2026): ENTITY NAME CORRECTION — SWCC was rebranded as the Saudi Water Authority (SWA) in 2024. Produces ~11.5 million cubic metres of drinking water a day — the most of any organisation in the world. New plants are built and run by private companies (such as ACWA Power) under long-term government contracts.",
+   desc:"The world's largest producer of desalinated water, operated by the Saudi Water Authority (SWA) — formally rebranded from SWCC in 2024. Capacity keeps growing through long-term contracts with private water companies."},
+  {name:"MODON Industrial Cities",sectors:["Industrial","Manufacturing"],ownership:"Government",lead:"Saudi Authority for Industrial Cities & Technology Zones (MODON)",partners:[],status:"Operational",completion:"Ongoing",investment:null,confidence:"High",
+   note:"Verified (Jun 2026): ~35-36 industrial cities (including 6 industrial oases) hosting ~6,500 factories and ~517,000 employees. SAR 266m of new contracts awarded in 2024. Operates under the Ministry of Industry and Mineral Resources.",
+   desc:"A national network of 35+ industrial cities providing serviced land to ~6,500 factories and 517,000 workers, underpinning Vision 2030's manufacturing localisation agenda."},
+  {name:"Ras Al-Khair Industrial City",sectors:["Industrial","Mining","Advanced Manufacturing"],ownership:"Government",lead:"Royal Commission for Jubail & Yanbu (RCJY)",partners:[],status:"Operational",completion:"Ongoing",investment:null,confidence:"High",
+   note:"Verified (Jun 2026): Total investment over SAR 165bn (~$44bn) by end-2025, more than 90% of it from private companies (SPA/Arab News, May 2026). Hosts IMI shipyard, Ma'aden aluminium smelter and SWA desalination. Its Special Economic Zone attracted ~SAR 27bn of investment (SAR 12bn from foreign investors) by end-2025. Managed by RCJY, not MODON.",
+   desc:"A mining, maritime and industrial hub on the Gulf coast managed by RCJY. Hosts the IMI shipyard, Ma'aden aluminium complex and SWA desalination. Total investment exceeds SAR 165bn (~$44bn)."},
+  {name:"International Maritime Industries (IMI)",sectors:["Advanced Manufacturing","Industrial"],ownership:"Joint Venture",lead:"International Maritime Industries",partners:[{n:"Saudi Aramco",s:50.1},{n:"Lamprell",s:20},{n:"Bahri",s:19.9},{n:"Hyundai Heavy Industries",s:10}],status:"Partially Operational",completion:"Ongoing",investment:5.2,confidence:"High",
+   note:"Verified (Jun 2026): Stakes per Bahri 2018 annual report and founding Reuters/Aramco release — Aramco 50.1%, Lamprell 20%, Bahri 19.9%, HHI 10% (some secondary sources cite Aramco 40%/HHI 20% — Bahri filing taken as primary source). First large Saudi shipbuilding order: six large cargo ships for Bahri (SAR 762m, delivery 2028-29). Aramco and Bahri have guaranteed ~$10bn of work over 10 years.",
+   desc:"The Gulf's largest full-service maritime yard at Ras Al-Khair. Producing and servicing offshore rigs and vessels; the first large Saudi shipbuilding contract covers six cargo ships for Bahri (delivery 2028-29)."},
+  {name:"King Abdullah Economic City (KAEC)",sectors:["Urban Development","Industrial","Logistics"],ownership:"Mixed",lead:"Emaar, The Economic City (EEC)",partners:[{n:"PIF (majority shareholder)",s:55.5}],status:"Partially Operational",completion:"Ongoing",investment:null,confidence:"Medium",
+   note:"Verified (Jun 2026): PIF now holds 55.5% majority stake (raised from ~25% by converting SAR 2.8bn of loans it was owed into shares). Revitalised as a Special Economic Zone and King Salman Automotive Cluster hosting Ceer, Lucid AMP-2 and Hyundai HMMME plants. EEC remains listed on the Saudi stock exchange.",
+   desc:"A Red Sea economic city now revitalised as an SEZ and automotive manufacturing hub. PIF holds a 55.5% majority stake in Emaar, The Economic City, which is listed on the Saudi stock exchange."},
+  {name:"King Abdullah Port",sectors:["Logistics"],ownership:"Joint Venture",lead:"Ports Development Company (PDC)",partners:[{n:"Emaar, The Economic City",s:null},{n:"Huta Marine (Binladin Group)",s:null}],status:"Operational",completion:"Ongoing",investment:null,confidence:"High",
+   note:"Verified (Jun 2026): Kingdom's first fully privately owned, developed and operated commercial port. Handled 2.93 million shipping containers in 2023. Ranked world's most efficient container port (World Bank port-efficiency ranking, 2024). Phase 2 targets ~6 million containers a year. Exact stake split between PDC partners not publicly disclosed.",
+   desc:"The Kingdom's first fully privately developed port — now the world's most efficient container port in the World Bank's ranking (2024). Phase 2 targets capacity of ~6 million containers a year."},
+  {name:"Jubail Industrial City II",sectors:["Industrial","Manufacturing"],ownership:"Government",lead:"Royal Commission for Jubail & Yanbu (RCJY)",partners:[],status:"Operational",completion:"Ongoing",investment:null,confidence:"High",
+   note:"Verified (Jun 2026): SAR 67.5bn (~$18bn) has been allocated to double Jubail's area by 2030. New chemical plants by UK firm INEOS (~SAR 7bn) were added in 2024. US engineering firm Bechtel manages the ~$6bn expansion programme. Hosts the Amiral complex (SATORP). University planned ~2026.",
+   desc:"The expansion of Saudi Arabia's flagship petrochemical industrial city on the Gulf coast. The Royal Commission is doubling Jubail's area by 2030 with SAR 67.5bn (~$18bn) committed."},
+  {name:"Ceer",sectors:["Advanced Manufacturing"],ownership:"Joint Venture",lead:"Ceer Motors",partners:[{n:"PIF",s:null},{n:"Foxconn (Hon Hai)",s:null}],status:"Under Construction",completion:"2026",investment:1.3,confidence:"High",
+   note:"Verified (Jun 2026): Production Q4 2026 (slipped from 2025). $1.3bn KAEC plant (240,000 vehicles/yr at full capacity). Uses licensed BMW technology; Hyundai Transys will supply the drive systems (SAR 8.2bn deal). PIF/Foxconn ownership split is not publicly disclosed. Targets making 45% of parts locally and adding $8bn to the economy by 2034.",
+   desc:"Saudi Arabia's first homegrown EV brand — a PIF/Foxconn JV using BMW technology. First vehicles targeted Q4 2026 from the $1.3bn KAEC plant; 240,000 vehicles/yr at full capacity."},
+  {name:"Lucid Manufacturing (AMP-2, KAEC)",sectors:["Advanced Manufacturing"],ownership:"Mixed",lead:"Lucid Group (PIF ~60% shareholder)",partners:[{n:"PIF (parent stake in Lucid Group)",s:60}],status:"Partially Operational",completion:"2026",investment:null,confidence:"High",
+   note:"Verified (Jun 2026): NAMING CORRECTION — this is Lucid's AMP-2; AMP-1 is Lucid's Arizona (USA) facility. AMP-2 opened Sept 2023 as Saudi Arabia's first car factory. Phase 1 assembles ~5,000 cars a year from kits shipped from the US; a complete factory is being built alongside it (155,000 cars a year when finished). PIF and related funds have committed ~$9.5bn to Lucid since 2018.",
+   desc:"Lucid's AMP-2 in KAEC — Saudi Arabia's first car factory, opened September 2023. PIF holds ~60% of Lucid Group. A complete car factory is now being built alongside the assembly plant."},
+  {name:"Hyundai-PIF Vehicle Plant (HMMME)",sectors:["Advanced Manufacturing"],ownership:"Joint Venture",lead:"Hyundai Motor Manufacturing Middle East (HMMME)",partners:[{n:"PIF",s:70},{n:"Hyundai Motor",s:30}],status:"Under Construction",completion:"2026",investment:0.5,confidence:"High",
+   note:"Verified (Jun 2026): PIF 70% / Hyundai 30% confirmed by PIF and Hyundai official releases. Groundbreaking 14 May 2025 at the King Salman Automotive Cluster, KAEC. First vehicle Q4 2026; Will build 50,000 vehicles a year (petrol and electric); investment over $500m.",
+   desc:"Hyundai's first Middle East plant — a JV between PIF (70%) and Hyundai Motor (30%). Groundbreaking May 2025 at KAEC; first vehicle targeted Q4 2026."},
+  {name:"Saudi Green Initiative (SGI)",sectors:["Environmental"],ownership:"Government",lead:"Supreme Committee for SGI / MEWA / NCVC",partners:[],status:"Operational",completion:"2060",investment:187,confidence:"High",
+   note:"Verified (Jun 2026): >$186-188bn (SAR705bn) announced investment per SGI.gov.sa. ~159M trees planted as of early 2026; 10bn-tree national target; Over 1 million hectares of land restored. Interim target 600M+ trees by 2030. Net-zero commitment by 2060.",
+   desc:"A national programme targeting net-zero by 2060 and 10 billion trees planted. Over $186bn announced, ~159M trees planted as of early 2026, and renewable energy targets accelerating."},
+  {name:"Special Integrated Logistics Zone (SILZ)",sectors:["Logistics"],ownership:"Government",lead:"SILZ Company (GACA-regulated)",partners:[],status:"Operational",completion:"Ongoing",investment:null,confidence:"High",
+   note:"Verified (Jun 2026): Launched Oct 2022; operational and expanding. Key tenants confirmed: Apple (first occupant), Lenovo (groundbreaking 2025, 200,000 m2 facility, production 2026), DHL (EUR130m regional hub, Nov 2025), Nokia, Chalhoub, Shein, Alat/Sapphire.",
+   desc:"A special customs zone at Riyadh airport — global companies store, process and re-export goods here with simplified customs — operating since 2022. Key tenants include Apple, Lenovo (200,000 m2 plant opening 2026) and DHL's regional hub."}
+];
+
+/* ============================================================
+   CONFIG
+   ============================================================ */
+const OWN_COLORS = {"Government":"var(--own-gov)","PIF":"var(--own-pif)","Joint Venture":"var(--own-jv)","Mixed":"var(--own-mixed)"};
+const OWN_HEX    = {"Government":"#055a93","PIF":"#4fa85a","Joint Venture":"#0aa6a0","Mixed":"#6b7385"};
+const STATUS_HEX = {"Announced":"#7cc0e8","Planning":"#e0a23c","Under Construction":"#d9c23a","Partially Operational":"#8fce6a","Operational":"#3f9d57","On Hold":"#b5675c","Under Review":"#9a6f9c"};
+const SECTOR_HEX = ["#0070b8","#4fa85a","#e08a3c","#0aa6a0","#8e6fc4","#d9b42a","#5b9bd5","#c0653a","#1d8f74","#d45d79","#6b7385"];
+
+const ALL_SECTORS = [...new Set(PROJECTS.flatMap(p=>p.sectors))].sort();
+const ALL_OWN = ["Government","PIF","Joint Venture","Mixed"];
+const ALL_STATUS = ["Announced","Planning","Under Construction","On Hold","Under Review","Partially Operational","Operational"];
+
+/* ---- Verification layer ---- */
+const LAST_REVIEWED = "August 2026";
+const CONF = {
+  High:  {label:"High",   hex:"#3f9d57", desc:"Confirmed / well-documented"},
+  Medium:{label:"Medium", hex:"#e0a23c", desc:"Reported / evolving"},
+  Low:   {label:"Low",    hex:"#c2705c", desc:"Indicative estimate"}
+};
+// Per-project data-confidence overrides (defaults to Medium).
+const CONF_OVERRIDE = {
+  // Most projects now carry inline confidence. These are legacy fallbacks only.
+  "SABIC":"High","MODON Industrial Cities":"High","Jubail Industrial City II":"High"
+};
+function confOf(p){ return CONF[p.confidence || CONF_OVERRIDE[p.name] || "Medium"]; }
+function isVerified(p){ return !!(p.note && p.note.indexOf("Verified")===0); }
+
+const state = {sectors:new Set(),own:new Set(),status:new Set(),conf:new Set(),downscaled:false,search:"",view:"card",sortKey:null,sortDir:1};
+
+/* ============================================================
+   RENDER: chips
+   ============================================================ */
+function makeChips(container, items, set, isOwn){
+  container.innerHTML="";
+  items.forEach(label=>{
+    const c=document.createElement("button");
+    c.className="chip"+(isOwn?" own":"");
+    c.textContent=label;
+    c.addEventListener("click",()=>{
+      if(set.has(label)){set.delete(label);c.classList.remove("active");c.style.background="";c.style.borderColor="";}
+      else{set.add(label);c.classList.add("active");
+        if(isOwn){c.style.background=OWN_HEX[label];c.style.borderColor=OWN_HEX[label];}}
+      apply();
+    });
+    container.appendChild(c);
+  });
+}
+makeChips(document.getElementById("sectorChips"),ALL_SECTORS,state.sectors,false);
+makeChips(document.getElementById("ownChips"),ALL_OWN,state.own,true);
+makeChips(document.getElementById("statusChips"),ALL_STATUS,state.status,false);
+
+// confidence chips (with colored dot)
+(function(){
+  const wrap=document.getElementById("confChips");
+  ["High","Medium","Low"].forEach(level=>{
+    const c=document.createElement("button");
+    c.className="conf-chip";
+    c.innerHTML=`<span class="cdot" style="background:${CONF[level].hex}"></span>${level}`;
+    c.addEventListener("click",()=>{
+      if(state.conf.has(level)){state.conf.delete(level);c.classList.remove("active");}
+      else{state.conf.add(level);c.classList.add("active");}
+      apply();
+    });
+    wrap.appendChild(c);
+  });
+})();
+
+// downscaled toggle
+document.getElementById("downscaledToggle").addEventListener("click",function(){
+  state.downscaled=!state.downscaled;
+  this.classList.toggle("on",state.downscaled);
+  apply();
+});
+
+/* ============================================================
+   FILTER LOGIC
+   ============================================================ */
+function filtered(){
+  return PROJECTS.filter(p=>{
+    if(state.search && !p.name.toLowerCase().includes(state.search.toLowerCase())) return false;
+    if(state.sectors.size && !p.sectors.some(s=>state.sectors.has(s))) return false;
+    if(state.own.size && !state.own.has(p.ownership)) return false;
+    if(state.status.size && !state.status.has(p.status)) return false;
+    if(state.conf.size && !state.conf.has(confOf(p).label)) return false;
+    if(state.downscaled && !p.downscaled) return false;
+    return true;
+  });
+}
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function fmtInv(v){ return v==null ? "—" : "$"+(Number.isInteger(v)?v:v.toFixed(1))+"B"; }
+function fmtTotalInv(v){ const r=Math.round(v); return r>=1000 ? "≈$"+(r/1000).toFixed(1)+"<small> trillion</small>" : "≈$"+r+"<small> billion</small>"; }
+function ownBadge(o,cls){ return `<span class="badge ${cls||''}" style="background:${OWN_HEX[o]}">${o}</span>`; }
+
+/* ============================================================
+   KPI
+   ============================================================ */
+function renderKPI(rows){
+  const total=rows.length;
+  const inv=rows.reduce((a,p)=>a+(p.investment||0),0);
+  const ownCount={};ALL_OWN.forEach(o=>ownCount[o]=0);
+  const stCount={};ALL_STATUS.forEach(s=>stCount[s]=0);
+  rows.forEach(p=>{ownCount[p.ownership]++;stCount[p.status]++;});
+
+  const ownSplit=ALL_OWN.map(o=>`<span class="seg"><span class="dot" style="background:${OWN_HEX[o]}"></span>${o.replace('Joint Venture','JV')} <b>${ownCount[o]}</b></span>`).join("");
+  const stAbbr={"Under Construction":"U/Constr.","Partially Operational":"Part. Op.","Under Review":"Review","On Hold":"On Hold"};
+  const stSplit=ALL_STATUS.filter(s=>stCount[s]>0).map(s=>`<span class="seg"><span class="dot" style="background:${STATUS_HEX[s]}"></span>${stAbbr[s]||s} <b>${stCount[s]}</b></span>`).join("");
+
+  document.getElementById("kpiBar").innerHTML=`
+    <div class="kpi"><div class="label">Projects in view</div><div class="value num">${total}</div>
+      <div class="split"><span class="seg" style="color:var(--ink-faint)">of ${PROJECTS.length} total in portfolio</span></div></div>
+    <div class="kpi"><div class="label">Estimated Total Investment</div><div class="value num">${fmtTotalInv(inv)}</div>
+      <div class="split"><span class="seg" style="color:var(--ink-faint)">rough total of publicly announced figures &middot; many projects publish no value</span></div></div>
+    <div class="kpi"><div class="label">By Ownership</div><div class="split" style="margin-top:10px">${ownSplit}</div></div>
+    <div class="kpi"><div class="label">By Status</div><div class="split" style="margin-top:10px">${stSplit}</div></div>`;
+}
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+function renderCards(rows){
+  const wrap=document.getElementById("cardView");
+  if(!rows.length){wrap.innerHTML=`<div class="empty" style="grid-column:1/-1"><div class="big">No projects match these filters</div><div>Adjust or reset the filters to broaden the view.</div></div>`;return;}
+  wrap.innerHTML=rows.map((p,i)=>{
+    const idx=PROJECTS.indexOf(p);
+    const c=confOf(p);
+    const tags=p.sectors.map(s=>`<span class="tag">${s}</span>`).join("")+
+      (p.downscaled?`<span class="ds-pill">⚠ Downscaled</span>`:"")+
+      (isVerified(p)?`<span class="vf-pill">✓ Verified</span>`:"");
+    return `<div class="card" data-idx="${idx}">
+      <div class="c-top">
+        <div class="c-name">${p.name}</div>
+        ${ownBadge(p.ownership)}
+      </div>
+      <div class="tags">${tags}</div>
+      <div class="desc">${p.desc}</div>
+      <div class="c-meta">
+        <span class="status-pill"><span class="dot" style="background:${STATUS_HEX[p.status]}"></span>${p.status}</span>
+        <div class="figs"><b>${fmtInv(p.investment)}</b>${p.completion}<span class="conf-inline" style="margin-top:4px;display:flex;justify-content:flex-end"><span class="conf-dot" style="background:${c.hex}"></span>${c.label} confidence</span></div>
+      </div>
+    </div>`;
+  }).join("");
+  wrap.querySelectorAll(".card").forEach(c=>c.addEventListener("click",()=>openDrawer(+c.dataset.idx)));
+}
+
+/* ============================================================
+   TABLE
+   ============================================================ */
+const COLS=[
+  {k:"name",label:"Project"},
+  {k:"sectors",label:"Sector"},
+  {k:"ownership",label:"Ownership"},
+  {k:"lead",label:"Lead Entity"},
+  {k:"status",label:"Status"},
+  {k:"completion",label:"Completion"},
+  {k:"investment",label:"Investment"},
+  {k:"confidence",label:"Confidence"}
+];
+function renderTable(rows){
+  const wrap=document.getElementById("tableView");
+  if(!rows.length){wrap.innerHTML=`<div class="empty"><div class="big">No projects match these filters</div></div>`;return;}
+  const head=COLS.map(c=>{
+    const sorted=state.sortKey===c.k;
+    const arr=sorted?(state.sortDir>0?"▲":"▼"):"▲";
+    return `<th data-k="${c.k}" class="${sorted?'sorted':''}">${c.label}<span class="arr">${arr}</span></th>`;
+  }).join("");
+  const body=rows.map(p=>{
+    const idx=PROJECTS.indexOf(p);
+    const c=confOf(p);
+    return `<tr data-idx="${idx}">
+      <td><span class="tname">${p.name}</span>${p.downscaled?`<div style="margin-top:3px"><span class="ds-pill">⚠ Downscaled</span></div>`:""}</td>
+      <td>${p.sectors.join(", ")}</td>
+      <td><span class="mini-badge" style="background:${OWN_HEX[p.ownership]}">${p.ownership.replace('Joint Venture','JV')}</span></td>
+      <td style="color:var(--ink-soft)">${p.lead}</td>
+      <td><span class="mini-dot"><span class="dot" style="background:${STATUS_HEX[p.status]}"></span>${p.status}</span></td>
+      <td class="num">${p.completion}</td>
+      <td class="num" style="font-weight:600">${fmtInv(p.investment)}</td>
+      <td><span class="mini-dot"><span class="dot" style="background:${c.hex}"></span>${c.label}</span></td>
+    </tr>`;
+  }).join("");
+  wrap.innerHTML=`<table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
+  wrap.querySelectorAll("th").forEach(th=>th.addEventListener("click",()=>{
+    const k=th.dataset.k;
+    if(state.sortKey===k)state.sortDir*=-1;else{state.sortKey=k;state.sortDir=1;}
+    apply();
+  }));
+  wrap.querySelectorAll("tbody tr").forEach(tr=>tr.addEventListener("click",()=>openDrawer(+tr.dataset.idx)));
+}
+function sortRows(rows){
+  if(!state.sortKey)return rows;
+  const k=state.sortKey,d=state.sortDir;
+  const confRank={High:3,Medium:2,Low:1};
+  return [...rows].sort((a,b)=>{
+    let va=a[k],vb=b[k];
+    if(k==="sectors"){va=a.sectors[0];vb=b.sectors[0];}
+    if(k==="confidence"){return (confRank[confOf(a).label]-confRank[confOf(b).label])*d;}
+    if(k==="investment"){va=va==null?-1:va;vb=vb==null?-1:vb;return (va-vb)*d;}
+    if(k==="completion"){
+      const na=parseInt(va),nb=parseInt(vb);
+      const aa=isNaN(na)?9999:na, bb=isNaN(nb)?9999:nb;
+      return (aa-bb)*d;
+    }
+    return String(va).localeCompare(String(vb))*d;
+  });
+}
+
+/* ============================================================
+   CHARTS
+   ============================================================ */
+let sectorChart,ownChart;
+function renderCharts(rows){
+  // sector counts
+  const secCount={};ALL_SECTORS.forEach(s=>secCount[s]=0);
+  rows.forEach(p=>p.sectors.forEach(s=>secCount[s]++));
+  const secEntries=Object.entries(secCount).sort((a,b)=>b[1]-a[1]);
+  const secLabels=secEntries.map(e=>e[0]),secData=secEntries.map(e=>e[1]);
+
+  // ownership counts
+  const ownCount={};ALL_OWN.forEach(o=>ownCount[o]=0);
+  rows.forEach(p=>ownCount[p.ownership]++);
+
+  const gridColor="#ececea";
+  Chart.defaults.font.family="'Plus Jakarta Sans', sans-serif";
+  Chart.defaults.color="#4a5566";
+
+  if(sectorChart)sectorChart.destroy();
+  sectorChart=new Chart(document.getElementById("sectorChart"),{
+    type:"bar",
+    data:{labels:secLabels,datasets:[{data:secData,backgroundColor:secLabels.map((_,i)=>SECTOR_HEX[i%SECTOR_HEX.length]),borderRadius:5,barThickness:14}]},
+    options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{backgroundColor:"#055a93",padding:10,cornerRadius:8,displayColors:false,
+        callbacks:{label:(c)=>` ${c.parsed.x} project${c.parsed.x!==1?"s":""}`}}},
+      scales:{x:{beginAtZero:true,ticks:{precision:0,font:{size:11}},grid:{color:gridColor,drawBorder:false}},
+              y:{ticks:{font:{size:11.5,weight:"600"}},grid:{display:false,drawBorder:false}}}}
+  });
+
+  if(ownChart)ownChart.destroy();
+  ownChart=new Chart(document.getElementById("ownChart"),{
+    type:"doughnut",
+    data:{labels:ALL_OWN,datasets:[{data:ALL_OWN.map(o=>ownCount[o]),backgroundColor:ALL_OWN.map(o=>OWN_HEX[o]),borderColor:"#fff",borderWidth:3,hoverOffset:6}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:"62%",
+      plugins:{legend:{position:"right",labels:{boxWidth:10,boxHeight:10,usePointStyle:true,pointStyle:"circle",font:{size:12,weight:"500"},padding:14,
+        generateLabels:(chart)=>{const d=chart.data;return d.labels.map((l,i)=>({text:`${l}  (${d.datasets[0].data[i]})`,fillStyle:d.datasets[0].backgroundColor[i],strokeStyle:d.datasets[0].backgroundColor[i],pointStyle:"circle",index:i}));}}},
+        tooltip:{backgroundColor:"#055a93",padding:10,cornerRadius:8,callbacks:{label:(c)=>` ${c.label}: ${c.parsed}`}}}}
+  });
+}
+
+/* ============================================================
+   DRAWER / OWNERSHIP PANEL
+   ============================================================ */
+let jvChart;
+function openDrawer(idx){
+  const p=PROJECTS[idx];
+  document.getElementById("dName").textContent=p.name;
+  document.getElementById("dLead").textContent=p.lead;
+  document.getElementById("dBadges").innerHTML=
+    ownBadge(p.ownership)+
+    `<span class="badge" style="background:${STATUS_HEX[p.status]}">${p.status}</span>`+
+    (p.downscaled?`<span class="badge" style="background:#b5675c">⚠ Downscaled</span>`:"")+
+    (isVerified(p)?`<span class="badge" style="background:#3f8a52">✓ Source-verified</span>`:"")+
+    p.sectors.map(s=>`<span class="badge soft" style="color:var(--ink-soft);background:#f0f0ec;border:1px solid var(--line-strong)">${s}</span>`).join("");
+
+  const hasStakes=p.partners.length && p.partners.every(pt=>pt.s!=null);
+  let ownerSection;
+  if(p.partners.length && hasStakes){
+    // donut + legend
+    ownerSection=`<div class="jv-wrap">
+        <div class="jv-chart"><canvas id="jvChart"></canvas></div>
+        <div class="jv-legend">${p.partners.map((pt,i)=>`
+          <div class="jv-item"><span class="dot" style="background:${SECTOR_HEX[i%SECTOR_HEX.length]}"></span>
+          <span class="jn">${pt.n}</span><span class="js">${pt.s}%</span></div>`).join("")}</div>
+      </div>`;
+  } else if(p.partners.length){
+    // partners without disclosed stakes
+    ownerSection=`<div class="jv-bars">${p.partners.map((pt,i)=>`
+        <div class="jv-bar-row">
+          <div class="jv-bar-top"><span class="jn">${pt.n}</span><span class="js">${pt.s!=null?pt.s+"%":"undisclosed"}</span></div>
+          <div class="jv-track"><div class="jv-fill" style="width:${pt.s!=null?pt.s:50}%;background:${SECTOR_HEX[i%SECTOR_HEX.length]};opacity:${pt.s!=null?1:.4}"></div></div>
+        </div>`).join("")}
+        <div class="jv-none" style="margin-top:4px">Exact stake percentages are not all publicly disclosed.</div></div>`;
+  } else {
+    const label=p.ownership==="PIF"?"Wholly owned by the Public Investment Fund (PIF)":
+                p.ownership==="Government"?"Government / state entity — no external joint-venture partners":
+                p.ownership==="Mixed"?"Owned by the state and also traded on the stock market; no project-level partners":
+                "Single-entity ownership";
+    ownerSection=`<div class="jv-none">${label}.</div>`;
+  }
+
+  const c=confOf(p);
+  const noteHtml = p.note ? `<div class="d-section"><div class="note-box ${p.downscaled?'alert':''}">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+      <div><strong>Review note.</strong> ${p.note}</div></div></div>` : "";
+
+  document.getElementById("drawerBody").innerHTML=`
+    <div class="d-section"><div class="d-desc">${p.desc}</div></div>
+    ${noteHtml}
+    <div class="d-section"><h3>Key Facts</h3>
+      <div class="facts">
+        <div class="fact"><div class="fl">Ownership</div><div class="fv">${p.ownership}</div></div>
+        <div class="fact"><div class="fl">Status</div><div class="fv" style="font-size:13px">${p.status}</div></div>
+        <div class="fact"><div class="fl">Expected Completion</div><div class="fv num">${p.completion}</div></div>
+        <div class="fact"><div class="fl">Investment</div><div class="fv num">${fmtInv(p.investment)}</div></div>
+        <div class="fact"><div class="fl">Data Confidence</div><div class="fv" style="font-size:13px;display:flex;align-items:center;gap:7px"><span class="conf-dot" style="background:${c.hex}"></span>${c.label}</div><div style="font-size:10.5px;color:var(--ink-faint);margin-top:2px">${c.desc}</div></div>
+        <div class="fact"><div class="fl">Last Reviewed</div><div class="fv" style="font-size:13px">${LAST_REVIEWED}</div></div>
+      </div></div>
+    <div class="d-section"><h3>Ownership &amp; Partners</h3>${ownerSection}</div>
+    <div class="d-section"><h3>Sectors</h3><div class="tags">${p.sectors.map(s=>`<span class="tag">${s}</span>`).join("")}</div></div>
+  `;
+
+  document.getElementById("scrim").classList.add("open");
+  document.getElementById("drawer").classList.add("open");
+  document.getElementById("drawer").setAttribute("aria-hidden","false");
+
+  if(jvChart){jvChart.destroy();jvChart=null;}
+  if(p.partners.length && hasStakes){
+    jvChart=new Chart(document.getElementById("jvChart"),{
+      type:"doughnut",
+      data:{labels:p.partners.map(pt=>pt.n),datasets:[{data:p.partners.map(pt=>pt.s),backgroundColor:p.partners.map((_,i)=>SECTOR_HEX[i%SECTOR_HEX.length]),borderColor:"#fff",borderWidth:3}]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:"60%",
+        plugins:{legend:{display:false},tooltip:{backgroundColor:"#055a93",padding:9,cornerRadius:8,callbacks:{label:(c)=>` ${c.label}: ${c.parsed}%`}}}}
+    });
+  }
+}
+function closeDrawer(){
+  document.getElementById("scrim").classList.remove("open");
+  document.getElementById("drawer").classList.remove("open");
+  document.getElementById("drawer").setAttribute("aria-hidden","true");
+}
+document.getElementById("drawerClose").addEventListener("click",closeDrawer);
+document.getElementById("scrim").addEventListener("click",closeDrawer);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawer();});
+
+/* ============================================================
+   APPLY / RENDER ALL
+   ============================================================ */
+function apply(){
+  let rows=filtered();
+  renderKPI(rows);
+  renderCharts(rows);
+  const dsCount=rows.filter(p=>p.downscaled).length;
+  const vfCount=rows.filter(p=>isVerified(p)).length;
+  document.getElementById("resultsCount").innerHTML=`Showing <b>${rows.length}</b> of ${PROJECTS.length} projects`+
+    (vfCount?` &middot; <span style="color:#3f8a52;font-weight:700">✓ ${vfCount} source-verified</span>`:"")+
+    (dsCount?` &middot; <span style="color:#b5675c;font-weight:700">⚠ ${dsCount} downscaled</span>`:"");
+  if(state.view==="card"){renderCards(rows);}
+  else{renderTable(sortRows(rows));}
+}
+
+/* view toggle */
+document.getElementById("cardBtn").addEventListener("click",()=>{
+  state.view="card";
+  document.getElementById("cardBtn").classList.add("active");
+  document.getElementById("tableBtn").classList.remove("active");
+  document.getElementById("cardView").style.display="grid";
+  document.getElementById("tableView").style.display="none";
+  apply();
+});
+document.getElementById("tableBtn").addEventListener("click",()=>{
+  state.view="table";
+  document.getElementById("tableBtn").classList.add("active");
+  document.getElementById("cardBtn").classList.remove("active");
+  document.getElementById("cardView").style.display="none";
+  document.getElementById("tableView").style.display="block";
+  apply();
+});
+
+/* search */
+document.getElementById("searchInput").addEventListener("input",e=>{state.search=e.target.value;apply();});
+
+/* reset */
+document.getElementById("resetBtn").addEventListener("click",()=>{
+  state.sectors.clear();state.own.clear();state.status.clear();state.conf.clear();state.downscaled=false;
+  state.search="";state.sortKey=null;state.sortDir=1;
+  document.getElementById("searchInput").value="";
+  document.querySelectorAll(".chip,.conf-chip").forEach(c=>{c.classList.remove("active");c.style.background="";c.style.borderColor="";});
+  document.getElementById("downscaledToggle").classList.remove("on");
+  apply();
+});
+
+/* init */
+apply();
+
+/* ─────────────────────── Tab switching ─────────────────────── */
+function switchTab(tab){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  if(tab==='dashboard'){
+    document.getElementById('panel-dashboard').classList.add('active');
+    document.getElementById('tabDash').classList.add('active');
+  } else {
+    document.getElementById('panel-arabic').classList.add('active');
+    document.getElementById('tabAr').classList.add('active');
+    arInit();
+    arApply();
+  }
+}
+
+/* ─────────────────────── Arabic i18n ─────────────────────── */
+const AR_STATUS = {"Announced":"مُعلَن عنه","Planning":"مرحلة التخطيط","Under Construction":"قيد الإنشاء",
+  "On Hold":"متوقف مؤقتاً","Under Review":"قيد المراجعة","Partially Operational":"يعمل جزئياً","Operational":"يعمل بالكامل"};
+const AR_OWN = {"Government":"حكومي","PIF":"صندوق الاستثمارات العامة","Joint Venture":"مشروع مشترك","Mixed":"مختلط"};
+const AR_CONF = {"High":"عالية","Medium":"متوسطة","Low":"منخفضة"};
+const AR_SECTOR = {
+  "Energy":"الطاقة","Logistics":"اللوجستيات","Manufacturing":"التصنيع","Technology":"التكنولوجيا",
+  "Advanced Manufacturing":"التصنيع المتقدم","Mining":"التعدين","Desalination":"تحلية المياه",
+  "Environmental":"البيئة","Industrial":"صناعي","Tourism & Leisure":"السياحة والترفيه",
+  "Urban Development":"التطوير العمراني"
+};
+const AR_NAMES = {
+  "NEOM":"نيوم","The Line":"ذا لاين","Oxagon":"أوكساغون","Trojena":"تروجينا",
+  "Sindalah Island":"سندالة","NEOM Green Hydrogen Company":"شركة نيوم للهيدروجين الأخضر",
+  "NEOM Port (Oxagon Port)":"ميناء نيوم (أوكساغون)","Diriyah":"الدرعية","Qiddiya":"قدية",
+  "Red Sea Global (The Red Sea & AMAALA)":"البحر الأحمر العالمية (البحر الأحمر وأمالا)",
+  "King Salman Park":"حديقة الملك سلمان","New Murabba":"المربع الجديد","ROSHN":"روشن",
+  "Ma'aden Mining Expansion":"توسعة التعدين (معادن)","Ma'aden Aluminium":"معادن للألومنيوم",
+  "SABIC":"سابك","SATORP / Amiral Expansion":"ساتورب / أميرال",
+  "Saudi Aramco Jafurah Gas Field":"حقل الجافورة للغاز","King Salman Energy Park (SPARK)":"حديقة الملك سلمان للطاقة (سبارك)",
+  "Saudi Water Authority (SWA) Desalination":"برنامج هيئة المياه السعودية للتحلية",
+  "MODON Industrial Cities":"مدن — المدن الصناعية","Ras Al-Khair Industrial City":"مدينة رأس الخير الصناعية",
+  "International Maritime Industries (IMI)":"الصناعات البحرية الدولية (آي إم آي)",
+  "King Abdullah Economic City (KAEC)":"مدينة الملك عبدالله الاقتصادية",
+  "King Abdullah Port":"ميناء الملك عبدالله","Jubail Industrial City II":"مدينة الجبيل الصناعية الثانية",
+  "Ceer":"سير","Lucid Manufacturing (AMP-2, KAEC)":"لوسيد موتورز — مصنع AMP-2",
+  "Hyundai-PIF Vehicle Plant (HMMME)":"مصنع هيونداي — صندوق الاستثمارات العامة (HMMME)",
+  "Saudi Green Initiative (SGI)":"مبادرة السعودية الخضراء","Special Integrated Logistics Zone (SILZ)":"المنطقة اللوجستية المتكاملة الخاصة"
+};
+function arName(p){ return AR_NAMES[p.name]||p.name; }
+
+/* ─────────────────────── Arabic dashboard state ─────────────────────── */
+const arState = {sectors:new Set(),own:new Set(),status:new Set(),conf:new Set(),downscaled:false,search:"",view:"card",sortKey:null,sortDir:1};
+let arInited=false;
+
+function arMakeChips(container, items, set, type){
+  if(!container) return;
+  container.innerHTML="";
+  items.forEach(label=>{
+    const c=document.createElement("button");
+    c.className="chip"+(type==='own'?" own":"");
+    let txt=label;
+    if(type==='sector') txt=AR_SECTOR[label]||label;
+    else if(type==='own') txt=AR_OWN[label]||label;
+    else if(type==='status') txt=AR_STATUS[label]||label;
+    c.textContent=txt;
+    c.addEventListener("click",()=>{
+      if(set.has(label)){set.delete(label);c.classList.remove("active");c.style.background="";c.style.borderColor="";}
+      else{set.add(label);c.classList.add("active"); if(type==='own'){c.style.background=OWN_HEX[label];c.style.borderColor=OWN_HEX[label];}}
+      arApply();
+    });
+    container.appendChild(c);
+  });
+}
+function arConfChipsInit(){
+  const wrap=document.getElementById("arConfChips");
+  if(!wrap) return;
+  wrap.innerHTML="";
+  ["High","Medium","Low"].forEach(level=>{
+    const c=document.createElement("button");
+    c.className="conf-chip";
+    c.innerHTML=`<span class="cdot" style="background:${CONF[level].hex}"></span>${AR_CONF[level]}`;
+    c.addEventListener("click",()=>{
+      if(arState.conf.has(level)){arState.conf.delete(level);c.classList.remove("active");}
+      else{arState.conf.add(level);c.classList.add("active");}
+      arApply();
+    });
+    wrap.appendChild(c);
+  });
+}
+function arFiltered(){
+  return PROJECTS.filter(p=>{
+    const q=arState.search.toLowerCase();
+    if(q && !(p.name.toLowerCase().includes(q) || arName(p).includes(q))) return false;
+    if(arState.sectors.size && !p.sectors.some(s=>arState.sectors.has(s))) return false;
+    if(arState.own.size && !arState.own.has(p.ownership)) return false;
+    if(arState.status.size && !arState.status.has(p.status)) return false;
+    if(arState.conf.size && !arState.conf.has(confOf(p).label)) return false;
+    if(arState.downscaled && !p.downscaled) return false;
+    return true;
+  });
+}
+function arFmtInv(v){ return v==null?"—":"$"+(Number.isInteger(v)?v:v.toFixed(1))+"B"; }
+function arFmtTotalInv(v){ const r=Math.round(v); return r>=1000 ? "≈ "+(r/1000).toFixed(1)+" تريليون $" : "≈ "+r+" مليار $"; }
+
+/* KPIs — computed from the SAME data and the SAME way as the English dashboard */
+function renderArKPIs(rows){
+  rows = rows || PROJECTS;
+  const total = rows.length;
+  const inv = rows.reduce((a,p)=>a+(p.investment||0),0);
+  const ownCount={}; ALL_OWN.forEach(o=>ownCount[o]=0);
+  const stCount={}; ALL_STATUS.forEach(s=>stCount[s]=0);
+  rows.forEach(p=>{ownCount[p.ownership]++; stCount[p.status]++;});
+  const ownSplit = ALL_OWN.map(o=>`<span class="seg"><span class="dot" style="background:${OWN_HEX[o]}"></span>${AR_OWN[o]} <b>${ownCount[o]}</b></span>`).join("");
+  const stSplit = ALL_STATUS.filter(s=>stCount[s]>0).map(s=>`<span class="seg"><span class="dot" style="background:${STATUS_HEX[s]}"></span>${AR_STATUS[s]} <b>${stCount[s]}</b></span>`).join("");
+  const bar = document.getElementById("arKpiBar");
+  if(!bar) return;
+  bar.innerHTML = `
+    <div class="ar-kpi"><div class="al">عدد المشاريع</div><div class="av">${total}</div><div class="asub">من ${PROJECTS.length} في المحفظة</div></div>
+    <div class="ar-kpi"><div class="al">إجمالي الاستثمارات (تقديري)</div><div class="av" style="font-size:23px">${arFmtTotalInv(inv)}</div><div class="asub">مجموع تقريبي للأرقام المعلنة &middot; كثير من المشاريع لا تنشر قيمة</div></div>
+    <div class="ar-kpi"><div class="al">حسب الملكية</div><div class="split">${ownSplit}</div></div>
+    <div class="ar-kpi"><div class="al">حسب الحالة</div><div class="split">${stSplit}</div></div>`;
+}
+
+/* Cards */
+function arRenderCards(rows){
+  const wrap=document.getElementById("arCardView");
+  if(!wrap) return;
+  if(!rows.length){wrap.innerHTML=`<div class="empty" style="grid-column:1/-1"><div class="big">لا توجد مشاريع مطابقة</div><div>عدّل عوامل التصفية أو أعد التعيين.</div></div>`;return;}
+  wrap.innerHTML=rows.map(p=>{
+    const idx=PROJECTS.indexOf(p);
+    const c=confOf(p);
+    const tags=p.sectors.map(s=>`<span class="tag">${AR_SECTOR[s]||s}</span>`).join("")
+      +(p.downscaled?`<span class="ds-pill">⚠ مُقلَّص</span>`:"")
+      +(isVerified(p)?`<span class="vf-pill">✓ موثَّق</span>`:"");
+    return `<div class="card" data-idx="${idx}">
+      <div class="c-top"><div class="c-name">${arName(p)}</div><span class="badge" style="background:${OWN_HEX[p.ownership]}">${AR_OWN[p.ownership]}</span></div>
+      <div class="tags">${tags}</div>
+      <div class="desc">${p.desc}</div>
+      <div class="c-meta">
+        <span class="status-pill"><span class="dot" style="background:${STATUS_HEX[p.status]}"></span>${AR_STATUS[p.status]}</span>
+        <div class="figs"><b>${arFmtInv(p.investment)}</b>${p.completion}<span class="conf-inline" style="margin-top:4px;display:flex;justify-content:flex-start"><span class="conf-dot" style="background:${c.hex}"></span>${AR_CONF[c.label]}</span></div>
+      </div>
+    </div>`;
+  }).join("");
+  wrap.querySelectorAll(".card").forEach(el=>el.addEventListener("click",()=>arOpenDrawer(+el.dataset.idx)));
+}
+
+/* Table */
+const AR_COLS=[
+  {k:"name",label:"المشروع"},{k:"sectors",label:"القطاع"},{k:"ownership",label:"الملكية"},
+  {k:"lead",label:"الجهة المنفذة"},{k:"status",label:"الحالة"},{k:"completion",label:"الاكتمال"},
+  {k:"investment",label:"الاستثمار"},{k:"confidence",label:"الموثوقية"}
+];
+function arRenderTable(rows){
+  const wrap=document.getElementById("arTableView");
+  if(!wrap) return;
+  if(!rows.length){wrap.innerHTML=`<div class="empty"><div class="big">لا توجد مشاريع مطابقة</div></div>`;return;}
+  const head=AR_COLS.map(col=>{
+    const sorted=arState.sortKey===col.k;
+    const arr=sorted?(arState.sortDir>0?"▲":"▼"):"▲";
+    return `<th data-k="${col.k}" class="${sorted?'sorted':''}">${col.label}<span class="arr">${arr}</span></th>`;
+  }).join("");
+  const body=rows.map(p=>{
+    const idx=PROJECTS.indexOf(p);const c=confOf(p);
+    return `<tr data-idx="${idx}">
+      <td><span class="tname">${arName(p)}</span>${p.downscaled?`<div style="margin-top:3px"><span class="ds-pill">⚠ مُقلَّص</span></div>`:""}</td>
+      <td>${p.sectors.map(s=>AR_SECTOR[s]||s).join("، ")}</td>
+      <td><span class="mini-badge" style="background:${OWN_HEX[p.ownership]}">${AR_OWN[p.ownership]}</span></td>
+      <td style="color:var(--ink-soft)">${p.lead}</td>
+      <td><span class="mini-dot"><span class="dot" style="background:${STATUS_HEX[p.status]}"></span>${AR_STATUS[p.status]}</span></td>
+      <td class="num">${p.completion}</td>
+      <td class="num" style="font-weight:600">${arFmtInv(p.investment)}</td>
+      <td><span class="mini-dot"><span class="dot" style="background:${c.hex}"></span>${AR_CONF[c.label]}</span></td>
+    </tr>`;
+  }).join("");
+  wrap.innerHTML=`<table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
+  wrap.querySelectorAll("th").forEach(th=>th.addEventListener("click",()=>{
+    const k=th.dataset.k;
+    if(arState.sortKey===k)arState.sortDir*=-1;else{arState.sortKey=k;arState.sortDir=1;}
+    arApply();
+  }));
+  wrap.querySelectorAll("tbody tr").forEach(tr=>tr.addEventListener("click",()=>arOpenDrawer(+tr.dataset.idx)));
+}
+function arSortRows(rows){
+  if(!arState.sortKey) return rows;
+  const k=arState.sortKey,d=arState.sortDir;const confRank={High:3,Medium:2,Low:1};
+  return [...rows].sort((a,b)=>{
+    let va=a[k],vb=b[k];
+    if(k==="sectors"){va=a.sectors[0];vb=b.sectors[0];}
+    if(k==="confidence"){return (confRank[confOf(a).label]-confRank[confOf(b).label])*d;}
+    if(k==="investment"){va=va==null?-1:va;vb=vb==null?-1:vb;return (va-vb)*d;}
+    if(k==="completion"){const na=parseInt(va),nb=parseInt(vb);return ((isNaN(na)?9999:na)-(isNaN(nb)?9999:nb))*d;}
+    if(k==="name"){return arName(a).localeCompare(arName(b),'ar')*d;}
+    return String(va).localeCompare(String(vb),'ar')*d;
+  });
+}
+
+/* Charts */
+let arSectorChart, arOwnChart;
+function arRenderCharts(rows){
+  const secCount={};ALL_SECTORS.forEach(s=>secCount[s]=0);
+  rows.forEach(p=>p.sectors.forEach(s=>secCount[s]++));
+  const secEntries=Object.entries(secCount).sort((a,b)=>b[1]-a[1]);
+  const secLabels=secEntries.map(e=>AR_SECTOR[e[0]]||e[0]),secData=secEntries.map(e=>e[1]);
+  const ownCount={};ALL_OWN.forEach(o=>ownCount[o]=0);rows.forEach(p=>ownCount[p.ownership]++);
+  const gridColor="#ececea";
+  const arFont="'Tajawal',sans-serif";
+  const sc=document.getElementById("arSectorChart"); if(!sc) return;
+  if(arSectorChart)arSectorChart.destroy();
+  arSectorChart=new Chart(sc,{type:"bar",
+    data:{labels:secLabels,datasets:[{data:secData,backgroundColor:secLabels.map((_,i)=>SECTOR_HEX[i%SECTOR_HEX.length]),borderRadius:5,barThickness:14}]},
+    options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{backgroundColor:"#055a93",padding:10,cornerRadius:8,displayColors:false,bodyFont:{family:arFont},callbacks:{label:(ctx)=>` ${ctx.parsed.x} مشروع`}}},
+      scales:{x:{beginAtZero:true,ticks:{precision:0,font:{size:11,family:arFont}},grid:{color:gridColor,drawBorder:false}},
+              y:{ticks:{font:{size:11.5,weight:"600",family:arFont}},grid:{display:false,drawBorder:false}}}}});
+  const oc=document.getElementById("arOwnChart"); if(!oc) return;
+  if(arOwnChart)arOwnChart.destroy();
+  arOwnChart=new Chart(oc,{type:"doughnut",
+    data:{labels:ALL_OWN.map(o=>AR_OWN[o]),datasets:[{data:ALL_OWN.map(o=>ownCount[o]),backgroundColor:ALL_OWN.map(o=>OWN_HEX[o]),borderColor:"#fff",borderWidth:3,hoverOffset:6}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:"62%",
+      plugins:{legend:{position:"left",labels:{boxWidth:10,boxHeight:10,usePointStyle:true,pointStyle:"circle",font:{size:12,weight:"500",family:arFont},padding:14,
+        generateLabels:(chart)=>{const dd=chart.data;return dd.labels.map((l,i)=>({text:`${l} (${dd.datasets[0].data[i]})`,fillStyle:dd.datasets[0].backgroundColor[i],strokeStyle:dd.datasets[0].backgroundColor[i],pointStyle:"circle",index:i}));}}},
+        tooltip:{backgroundColor:"#055a93",padding:10,cornerRadius:8,bodyFont:{family:arFont},callbacks:{label:(ctx)=>` ${ctx.label}: ${ctx.parsed}`}}}}});
+}
+
+/* Drawer (overlay) */
+let arJvChart;
+function arOpenDrawer(idx){
+  const p=PROJECTS[idx];const c=confOf(p);
+  document.getElementById("arDName").textContent=arName(p);
+  document.getElementById("arDLead").textContent=p.lead;
+  document.getElementById("arDBadges").innerHTML=
+    `<span class="badge" style="background:${OWN_HEX[p.ownership]}">${AR_OWN[p.ownership]}</span>`+
+    `<span class="badge" style="background:${STATUS_HEX[p.status]}">${AR_STATUS[p.status]}</span>`+
+    (p.downscaled?`<span class="badge" style="background:#b5675c">⚠ مُقلَّص</span>`:"")+
+    (isVerified(p)?`<span class="badge" style="background:#3f8a52">✓ موثَّق من المصادر</span>`:"")+
+    p.sectors.map(s=>`<span class="badge soft" style="color:var(--ink-soft);background:#f0f0ec;border:1px solid var(--line-strong)">${AR_SECTOR[s]||s}</span>`).join("");
+
+  const hasStakes=p.partners.length && p.partners.every(pt=>pt.s!=null);
+  let ownerSection;
+  if(p.partners.length && hasStakes){
+    ownerSection=`<div class="jv-wrap"><div class="jv-chart"><canvas id="arJvChart"></canvas></div>
+      <div class="jv-legend">${p.partners.map((pt,i)=>`<div class="jv-item"><span class="dot" style="background:${SECTOR_HEX[i%SECTOR_HEX.length]}"></span><span class="jn">${pt.n}</span><span class="js">${pt.s}%</span></div>`).join("")}</div></div>`;
+  } else if(p.partners.length){
+    ownerSection=`<div class="jv-bars">${p.partners.map((pt,i)=>`<div class="jv-bar-row"><div class="jv-bar-top"><span class="jn">${pt.n}</span><span class="js">${pt.s!=null?pt.s+"%":"غير معلن"}</span></div><div class="jv-track"><div class="jv-fill" style="width:${pt.s!=null?pt.s:50}%;background:${SECTOR_HEX[i%SECTOR_HEX.length]};opacity:${pt.s!=null?1:.4}"></div></div></div>`).join("")}<div class="jv-none" style="margin-top:4px">النسب الدقيقة غير معلنة بالكامل.</div></div>`;
+  } else {
+    const label=p.ownership==="PIF"?"مملوك بالكامل لصندوق الاستثمارات العامة":p.ownership==="Government"?"جهة حكومية — لا يوجد شركاء في مشروع مشترك":p.ownership==="Mixed"?"مملوك للدولة ومُدرَج في السوق المالية":"ملكية لجهة واحدة";
+    ownerSection=`<div class="jv-none">${label}.</div>`;
+  }
+  const noteHtml = p.note ? `<div class="d-section"><div class="note-box ${p.downscaled?'alert':''}"><div><strong>ملاحظة المراجعة:</strong> ${p.note}</div></div></div>` : "";
+
+  document.getElementById("arDrawerBody").innerHTML=`
+    <div class="d-section"><div class="d-desc">${p.desc}</div></div>
+    ${noteHtml}
+    <div class="d-section"><h3>الحقائق الأساسية</h3><div class="facts">
+      <div class="fact"><div class="fl">الملكية</div><div class="fv">${AR_OWN[p.ownership]}</div></div>
+      <div class="fact"><div class="fl">الحالة</div><div class="fv" style="font-size:13px">${AR_STATUS[p.status]}</div></div>
+      <div class="fact"><div class="fl">الاكتمال المتوقع</div><div class="fv num">${p.completion}</div></div>
+      <div class="fact"><div class="fl">الاستثمار</div><div class="fv num">${arFmtInv(p.investment)}</div></div>
+      <div class="fact"><div class="fl">موثوقية البيانات</div><div class="fv" style="font-size:13px;display:flex;align-items:center;gap:7px"><span class="conf-dot" style="background:${c.hex}"></span>${AR_CONF[c.label]}</div><div style="font-size:10.5px;color:var(--ink-faint);margin-top:2px">${c.label==='High'?'مؤكدة / موثقة':c.label==='Medium'?'تقارير متطورة':'تقدير إرشادي'}</div></div>
+      <div class="fact"><div class="fl">آخر مراجعة</div><div class="fv" style="font-size:13px">أغسطس 2026</div></div>
+    </div></div>
+    <div class="d-section"><h3>هيكل الملكية والشركاء</h3>${ownerSection}</div>
+    <div class="d-section"><h3>القطاعات</h3><div class="tags">${p.sectors.map(s=>`<span class="tag">${AR_SECTOR[s]||s}</span>`).join("")}</div></div>`;
+
+  document.getElementById("arScrim").classList.add("open");
+  document.getElementById("arDrawer").classList.add("open");
+  document.getElementById("arDrawer").setAttribute("aria-hidden","false");
+  if(arJvChart){arJvChart.destroy();arJvChart=null;}
+  if(p.partners.length && hasStakes){
+    arJvChart=new Chart(document.getElementById("arJvChart"),{type:"doughnut",
+      data:{labels:p.partners.map(pt=>pt.n),datasets:[{data:p.partners.map(pt=>pt.s),backgroundColor:p.partners.map((_,i)=>SECTOR_HEX[i%SECTOR_HEX.length]),borderColor:"#fff",borderWidth:3}]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:"60%",plugins:{legend:{display:false},tooltip:{backgroundColor:"#055a93",padding:9,cornerRadius:8,callbacks:{label:(ctx)=>` ${ctx.label}: ${ctx.parsed}%`}}}}});
+  }
+}
+function arCloseDrawer(){
+  document.getElementById("arScrim").classList.remove("open");
+  document.getElementById("arDrawer").classList.remove("open");
+  document.getElementById("arDrawer").setAttribute("aria-hidden","true");
+}
+
+/* Apply / render all */
+function arApply(){
+  let rows=arFiltered();
+  renderArKPIs(rows);
+  arRenderCharts(rows);
+  const dsCount=rows.filter(p=>p.downscaled).length;
+  const vfCount=rows.filter(p=>isVerified(p)).length;
+  const rc=document.getElementById("arResultsCount");
+  if(rc) rc.innerHTML=`عرض <b>${rows.length}</b> من ${PROJECTS.length} مشروعاً`+
+    (vfCount?` &middot; <span style="color:#3f8a52;font-weight:700">✓ ${vfCount} موثَّق</span>`:"")+
+    (dsCount?` &middot; <span style="color:#b5675c;font-weight:700">⚠ ${dsCount} مُقلَّص</span>`:"");
+  if(arState.view==="card"){arRenderCards(rows);}else{arRenderTable(arSortRows(rows));}
+}
+
+/* One-time init: build chips + wire controls */
+function arInit(){
+  if(arInited) return;
+  arInited=true;
+  arMakeChips(document.getElementById("arSectorChips"),ALL_SECTORS,arState.sectors,'sector');
+  arMakeChips(document.getElementById("arOwnChips"),ALL_OWN,arState.own,'own');
+  arMakeChips(document.getElementById("arStatusChipsF"),ALL_STATUS,arState.status,'status');
+  arConfChipsInit();
+  const as=document.getElementById("arSearchInput");
+  if(as) as.addEventListener("input",e=>{arState.search=e.target.value;arApply();});
+  const dt=document.getElementById("arDownscaledToggle");
+  if(dt) dt.addEventListener("click",function(){arState.downscaled=!arState.downscaled;this.classList.toggle("on",arState.downscaled);arApply();});
+  const cb=document.getElementById("arCardBtn"),tb=document.getElementById("arTableBtn");
+  if(cb) cb.addEventListener("click",()=>{arState.view="card";cb.classList.add("active");tb.classList.remove("active");document.getElementById("arCardView").style.display="grid";document.getElementById("arTableView").style.display="none";arApply();});
+  if(tb) tb.addEventListener("click",()=>{arState.view="table";tb.classList.add("active");cb.classList.remove("active");document.getElementById("arCardView").style.display="none";document.getElementById("arTableView").style.display="block";arApply();});
+  const rb=document.getElementById("arResetBtn");
+  if(rb) rb.addEventListener("click",()=>{
+    arState.sectors.clear();arState.own.clear();arState.status.clear();arState.conf.clear();arState.downscaled=false;
+    arState.search="";arState.sortKey=null;arState.sortDir=1;
+    document.getElementById("arSearchInput").value="";
+    document.querySelectorAll("#arSectorChips .chip,#arOwnChips .chip,#arStatusChipsF .chip,#arConfChips .conf-chip").forEach(c=>{c.classList.remove("active");c.style.background="";c.style.borderColor="";});
+    document.getElementById("arDownscaledToggle").classList.remove("on");
+    arApply();
+  });
+  document.getElementById("arDrawerClose").addEventListener("click",arCloseDrawer);
+  document.getElementById("arScrim").addEventListener("click",arCloseDrawer);
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")arCloseDrawer();});
+}
+
+</script>
+<style id="ehDark">
+body.dark{background:#0F1519 !important;color:#DDE6EB}
+body.dark .chip,body.dark .kpi,body.dark .own,body.dark .panel,body.dark .conf-chip,body.dark .chart-card,body.dark .brand-logo,body.dark .filters,body.dark .tg-switch,body.dark .tg-knob,body.dark .view-toggle,body.dark .disclaimer{background:#151C21 !important;border-color:#2C3A43 !important;color:#DDE6EB}
+body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#E6EDF1}
+body.dark table th{background:#1A242B !important;color:#CBD8DF}
+body.dark table td{border-color:#2C3A43 !important}
+body.dark svg text,body.dark svg tspan{fill:#C9D4DB !important}
+body.dark svg .domain,body.dark svg g.tick line{stroke:#3A4B55}
+body.dark a{color:#7FB4E8}
+body.dark [style*="background:#fff"],body.dark [style*="background: #fff"],body.dark [style*="background:#FFF"],body.dark [style*="background:#F"],body.dark [style*="background: #F"],body.dark [style*="background:#E"]{background:#1A242B !important;color:#D5E0E6 !important;border-color:#2C3A43 !important}
+body.dark [style*="color:#1"],body.dark [style*="color:#2"],body.dark [style*="color:#3"],body.dark [style*="color:#4"]{color:#C9D6DD !important}
+</style>
+<script>
+(function(){
+  window.addEventListener('message',function(e){
+    var d=e.data||{};
+    if(d.ehhub==='theme'&&(d.theme==='dark'||d.theme==='light')){
+      document.body.classList.toggle('dark',d.theme==='dark');
+      try{localStorage.setItem('ehhub.theme',d.theme);}catch(err){}
+    }
+  });
+  try{ if(localStorage.getItem('ehhub.theme')==='dark') document.body.classList.add('dark'); }catch(e){}
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Environmental Horizons — Saudi Arabia Intelligence Dashboard · Q2/Q3 2026 · 26 August Update</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js" onerror="document.write('<scr'+'ipt src=&quot;vendor/chart.umd.min.js&quot;><\/scr'+'ipt>')"></script>
+<style>
+:root{
+  --eh-green:#54AB5D; --eh-green-d:#3d8a46; --eh-green-l:#e9f5ec;
+  --eh-blue:#0572BC; --eh-blue-d:#045690; --eh-blue-l:#e7f1fa;
+  --ink:#10241d; --ink-soft:#34453f; --muted:#6c7b75;
+  --line:#e4ebe7; --line-2:#eef3f0; --bg:#f5f8f6; --card:#ffffff;
+  --flag:#c0392b; --flag-bg:#fbeceA; --flag-line:#f0c8c2;
+  --amber:#9a7407; --amber-bg:#fbf3df;
+  --shadow-sm:0 1px 2px rgba(16,36,29,.05);
+  --shadow:0 1px 2px rgba(16,36,29,.04), 0 10px 30px rgba(16,36,29,.07);
+  --radius:14px; --radius-sm:10px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Plus Jakarta Sans',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  color:var(--ink); background:var(--bg); line-height:1.55;
+  -webkit-font-smoothing:antialiased; font-size:15px;
+}
+h1,h2,h3,h4,.serif{font-family:'Fraunces',Georgia,serif; font-weight:600; letter-spacing:-.01em}
+a{color:var(--eh-blue); text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1280px; margin:0 auto; padding:0 28px}
+
+/* ---------- Header ---------- */
+.topbar{height:4px; background:linear-gradient(90deg,var(--eh-green) 0%,#2f9aa0 50%,var(--eh-blue) 100%)}
+header.masthead{background:var(--card); border-bottom:1px solid var(--line)}
+.mast-inner{display:flex; align-items:center; gap:20px; padding:22px 0}
+.logo{height:54px; width:auto; border-radius:8px; display:block}
+.mast-titles{flex:1; min-width:0}
+.eyebrow{font-size:11.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--eh-green-d)}
+.mast-titles h1{font-size:26px; margin:2px 0 3px; color:var(--ink); line-height:1.12}
+.mast-sub{font-size:13.5px; color:var(--muted)}
+.mast-meta{text-align:right; font-size:12px; color:var(--muted); white-space:nowrap}
+.mast-meta .period{font-weight:700; color:var(--ink); font-size:13px}
+.btn-print{margin-top:8px; font-size:11.5px; font-weight:600; color:var(--eh-blue);
+  border:1px solid var(--eh-blue-l); background:var(--eh-blue-l); padding:5px 11px; border-radius:999px; cursor:pointer}
+.btn-print:hover{background:#dbeaf7}
+
+/* ---------- KPI ---------- */
+.kpis{display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin:24px 0 8px}
+.kpi{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:16px 16px 14px; box-shadow:var(--shadow-sm); position:relative; overflow:hidden}
+.kpi::before{content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--kpi-accent,var(--eh-green))}
+.kpi .k-num{font-family:'Fraunces',serif; font-size:30px; font-weight:600; line-height:1; color:var(--ink)}
+.kpi .k-num small{font-size:15px; color:var(--muted); font-weight:500}
+.kpi .k-lab{font-size:12px; color:var(--ink-soft); margin-top:7px; font-weight:600}
+.kpi .k-note{font-size:11px; color:var(--muted); margin-top:3px; line-height:1.35}
+
+/* ---------- Section scaffolding ---------- */
+section{margin:34px 0}
+.sec-head{display:flex; align-items:baseline; gap:12px; margin-bottom:14px; padding-bottom:10px; border-bottom:2px solid var(--line)}
+.sec-head .num{font-family:'Fraunces',serif; font-size:13px; font-weight:700; color:#fff; background:var(--ink); width:26px; height:26px; border-radius:7px; display:flex; align-items:center; justify-content:center; flex:none}
+.sec-head h2{font-size:20px; margin:0; color:var(--ink)}
+.sec-head .sh-sub{font-size:12.5px; color:var(--muted); margin-left:auto; font-weight:500}
+
+/* ---------- Charts ---------- */
+.charts{display:grid; grid-template-columns:1.05fr 1.15fr 1.15fr; gap:16px}
+.chart-card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:16px 18px 18px; box-shadow:var(--shadow-sm)}
+.chart-card h3{font-size:14px; margin:0 0 2px; color:var(--ink)}
+.chart-card .c-sub{font-size:11.5px; color:var(--muted); margin-bottom:10px}
+.chart-box{position:relative; height:230px}
+.chart-foot{font-size:10.5px; color:var(--muted); margin-top:8px; line-height:1.4}
+
+/* ---------- Filter bar ---------- */
+.filters{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px; box-shadow:var(--shadow-sm);
+  display:flex; flex-wrap:wrap; gap:12px 14px; align-items:flex-end; position:sticky; top:0; z-index:20}
+.fgroup{display:flex; flex-direction:column; gap:4px}
+.fgroup label{font-size:10.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--muted)}
+.fgroup select, .fgroup input[type=text]{
+  font-family:inherit; font-size:13px; color:var(--ink); background:#fff;
+  border:1px solid var(--line); border-radius:9px; padding:7px 10px; min-width:150px; outline:none}
+.fgroup select:focus, .fgroup input:focus{border-color:var(--eh-blue); box-shadow:0 0 0 3px var(--eh-blue-l)}
+.fgroup.search input{min-width:210px}
+.toggle{display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600; color:var(--ink-soft); cursor:pointer; user-select:none; padding-bottom:7px}
+.toggle input{accent-color:var(--flag); width:15px; height:15px}
+.view-toggle{display:flex; border:1px solid var(--line); border-radius:9px; overflow:hidden; margin-left:auto}
+.view-toggle button{font-family:inherit; font-size:12.5px; font-weight:600; border:0; background:#fff; color:var(--muted); padding:7px 14px; cursor:pointer}
+.view-toggle button.active{background:var(--ink); color:#fff}
+.btn-reset{font-family:inherit; font-size:12px; font-weight:600; color:var(--muted); background:transparent; border:1px solid var(--line); border-radius:9px; padding:7px 12px; cursor:pointer; margin-bottom:0}
+.btn-reset:hover{color:var(--ink); border-color:var(--muted)}
+
+/* ---------- Cards list ---------- */
+.scope-block{margin-top:18px}
+.scope-bar{display:flex; align-items:center; gap:10px; margin:0 0 12px}
+.scope-bar .dot{width:10px; height:10px; border-radius:3px}
+.scope-bar.corp .dot{background:var(--eh-blue)}
+.scope-bar.gov .dot{background:var(--eh-green)}
+.scope-bar h3{font-size:16px; margin:0}
+.scope-bar .cnt{font-size:12px; color:var(--muted); font-weight:600; margin-left:4px}
+.scope-bar .legend{margin-left:auto; font-size:11px; color:var(--muted)}
+
+.cards{display:grid; grid-template-columns:repeat(2,1fr); gap:14px}
+.card{background:var(--card); border:1px solid var(--line); border-left:3px solid var(--eh-blue); border-radius:var(--radius-sm); padding:15px 16px; box-shadow:var(--shadow-sm); cursor:pointer; transition:box-shadow .15s, transform .15s, border-color .15s; position:relative}
+.card.gov{border-left-color:var(--eh-green)}
+.card:hover{box-shadow:var(--shadow); transform:translateY(-1px)}
+.card .c-top{display:flex; align-items:center; gap:8px; margin-bottom:7px; flex-wrap:wrap}
+.entity{font-weight:800; font-size:13.5px; color:var(--ink)}
+.chip{font-size:10.5px; font-weight:700; letter-spacing:.02em; padding:2px 8px; border-radius:999px; white-space:nowrap}
+.chip-cat{color:var(--eh-blue-d); background:var(--eh-blue-l)}
+.card.gov .chip-cat{color:var(--eh-green-d); background:var(--eh-green-l)}
+.chip-date{color:var(--muted); background:var(--line-2); font-weight:600}
+.chip-flag{color:#fff; background:var(--flag); font-weight:700}
+.chip-conf{font-weight:700; font-size:10px; padding:2px 7px; border-radius:999px}
+.conf-High{color:var(--eh-green-d); background:var(--eh-green-l)}
+.conf-Medium{color:var(--amber); background:var(--amber-bg)}
+.conf-Low{color:var(--muted); background:var(--line-2)}
+.card .c-group{font-size:11px; color:var(--muted); font-weight:600; margin-bottom:5px}
+.card .c-head{font-size:13.5px; color:var(--ink-soft); line-height:1.4; font-weight:500}
+.card .c-more{font-size:11px; color:var(--eh-blue); font-weight:700; margin-top:9px; display:inline-flex; align-items:center; gap:4px}
+.flag-strip{position:absolute; top:0; right:0; width:0; height:0; border-style:solid; border-width:0 22px 22px 0; border-color:transparent var(--flag) transparent transparent}
+.c-foot{display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; margin-top:11px}
+.c-svc{font-size:10.5px; font-weight:700; color:var(--eh-green-d); background:var(--eh-green-l); padding:3px 9px; border-radius:999px; white-space:nowrap}
+.c-svc.muted{color:var(--muted); background:var(--line-2)}
+.svc-wrap{display:flex; flex-wrap:wrap; gap:6px; margin-top:2px}
+.svc-chip{font-size:11px; font-weight:600; color:var(--eh-green-d); background:var(--eh-green-l); border:1px solid #cfe7d4; padding:4px 10px; border-radius:8px; line-height:1.3}
+.svc-note{font-size:12px; color:var(--ink-soft); background:#f6faf7; border-left:3px solid var(--eh-green); padding:8px 11px; border-radius:6px; margin-bottom:9px; line-height:1.45}
+.pf-lab.green::before{background:var(--eh-green)!important}
+
+/* ---------- Table ---------- */
+.tbl-wrap{overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius-sm); background:var(--card); box-shadow:var(--shadow-sm)}
+table.dt{width:100%; border-collapse:collapse; font-size:13px}
+table.dt thead th{text-align:left; font-size:10.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); font-weight:700;
+  padding:11px 12px; border-bottom:1px solid var(--line); background:#fbfdfc; cursor:pointer; white-space:nowrap; position:sticky; top:0}
+table.dt thead th .arr{opacity:.4; font-size:9px; margin-left:3px}
+table.dt thead th.sorted .arr{opacity:1; color:var(--ink)}
+table.dt tbody td{padding:11px 12px; border-bottom:1px solid var(--line-2); vertical-align:top}
+table.dt tbody tr{cursor:pointer}
+table.dt tbody tr:hover{background:#f4f9f6}
+table.dt .t-ent{font-weight:700; color:var(--ink)}
+table.dt .t-head{color:var(--ink-soft); max-width:430px}
+.scope-tag{font-size:10px; font-weight:700; padding:1px 7px; border-radius:999px}
+.scope-tag.c{color:var(--eh-blue-d); background:var(--eh-blue-l)}
+.scope-tag.g{color:var(--eh-green-d); background:var(--eh-green-l)}
+.empty{padding:26px; text-align:center; color:var(--muted); font-size:13px; background:var(--card); border:1px dashed var(--line); border-radius:var(--radius-sm)}
+
+/* ---------- Flagged summary ---------- */
+.flag-wrap{background:var(--card); border:1px solid var(--flag-line); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow-sm)}
+.flag-banner{background:var(--flag-bg); padding:12px 18px; border-bottom:1px solid var(--flag-line); font-size:12.5px; color:#7a2018; font-weight:600}
+.flag-row{display:grid; grid-template-columns:1.4fr 2.2fr 0.9fr 1.5fr; gap:14px; padding:13px 18px; border-bottom:1px solid var(--line-2); cursor:pointer; align-items:start}
+.flag-row:last-child{border-bottom:0}
+.flag-row:hover{background:#fdf6f5}
+.flag-row .fr-ent{font-weight:800; font-size:13px; color:var(--ink)}
+.flag-row .fr-ent .scope-mini{display:inline-block; font-size:9.5px; font-weight:700; padding:1px 6px; border-radius:999px; margin-left:6px; vertical-align:middle}
+.fr-ent .sm-c{color:var(--eh-blue-d); background:var(--eh-blue-l)}
+.fr-ent .sm-g{color:var(--eh-green-d); background:var(--eh-green-l)}
+.flag-row .fr-desc{font-size:12.5px; color:var(--ink-soft); line-height:1.4}
+.flag-row .fr-val{font-size:12.5px; font-weight:700; color:var(--flag)}
+.flag-row .fr-link{font-size:11.5px; color:var(--muted); line-height:1.4}
+.flag-head-row{display:grid; grid-template-columns:1.4fr 2.2fr 0.9fr 1.5fr; gap:14px; padding:9px 18px; background:#fff; border-bottom:1px solid var(--line);
+  font-size:10px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); font-weight:700}
+
+/* ---------- Strategic highlights ---------- */
+.highlights{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:26px 30px; box-shadow:var(--shadow-sm)}
+.highlights .lead{font-family:'Fraunces',serif; font-size:17px; line-height:1.5; color:var(--ink); font-weight:500; margin:0 0 16px; padding-bottom:16px; border-bottom:1px solid var(--line-2)}
+.hl-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px 34px}
+.hl-item h4{font-size:13px; margin:0 0 5px; color:var(--eh-green-d); letter-spacing:.01em; text-transform:uppercase; font-family:'Plus Jakarta Sans'; font-weight:800; font-size:11.5px}
+.hl-item h4.blue{color:var(--eh-blue-d)}
+.hl-item p{margin:0; font-size:13.5px; color:var(--ink-soft); line-height:1.6}
+.hl-full{grid-column:1 / -1}
+
+/* ---------- Detail panel ---------- */
+.overlay{position:fixed; inset:0; background:rgba(16,36,29,.42); opacity:0; pointer-events:none; transition:opacity .2s; z-index:50}
+.overlay.open{opacity:1; pointer-events:auto}
+.panel{position:fixed; top:0; right:0; height:100%; width:min(560px,94vw); background:var(--bg); box-shadow:-12px 0 40px rgba(16,36,29,.18);
+  transform:translateX(100%); transition:transform .26s cubic-bezier(.4,0,.2,1); z-index:60; display:flex; flex-direction:column}
+.panel.open{transform:translateX(0)}
+.panel-head{padding:20px 24px 16px; background:var(--card); border-bottom:1px solid var(--line)}
+.panel-head .ph-top{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:9px}
+.panel-head h3{font-size:18px; margin:6px 0 0; line-height:1.25; color:var(--ink)}
+.panel-id{font-size:11px; color:var(--muted); font-weight:600; margin-left:auto}
+.panel-close{position:absolute; top:16px; right:18px; width:30px; height:30px; border-radius:8px; border:1px solid var(--line); background:#fff; color:var(--ink-soft); font-size:17px; cursor:pointer; line-height:1; z-index:2}
+.panel-close:hover{background:var(--line-2)}
+.panel-body{padding:20px 24px 36px; overflow-y:auto; flex:1}
+.pf{margin-bottom:18px}
+.pf .pf-lab{font-size:10.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); font-weight:800; margin-bottom:5px; display:flex; align-items:center; gap:7px}
+.pf .pf-lab::before{content:""; width:14px; height:2px; background:var(--eh-green); border-radius:2px}
+.pf.blue .pf-lab::before{background:var(--eh-blue)}
+.pf .pf-val{font-size:13.5px; color:var(--ink-soft); line-height:1.6}
+.pf .pf-val.big{font-size:14px; color:var(--ink); font-weight:600}
+.giga-box{background:var(--flag-bg); border:1px solid var(--flag-line); border-radius:10px; padding:12px 14px; margin-bottom:18px}
+.giga-box .gb-lab{font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--flag); font-weight:800; margin-bottom:4px}
+.giga-box .gb-val{font-size:13px; color:#7a2018; font-weight:600}
+.src-list{list-style:none; padding:0; margin:0}
+.src-list li{margin-bottom:7px; font-size:12.5px; display:flex; gap:8px; align-items:baseline}
+.src-list li::before{content:"↗"; color:var(--eh-blue); font-weight:700; font-size:11px}
+.meta-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:4px}
+
+/* ---------- Footer ---------- */
+footer.foot{margin:44px 0 30px; padding-top:26px; border-top:2px solid var(--line)}
+.foot-grid{display:grid; grid-template-columns:1.5fr 1fr; gap:30px}
+.foot h3{font-size:15px; margin:0 0 10px; color:var(--ink)}
+.foot p, .foot li{font-size:12.5px; color:var(--ink-soft); line-height:1.6}
+.foot .small{font-size:11.5px; color:var(--muted)}
+.cov-meter{height:9px; background:var(--line); border-radius:999px; overflow:hidden; margin:10px 0 6px}
+.cov-fill{height:100%; background:linear-gradient(90deg,var(--eh-green),var(--eh-blue)); border-radius:999px}
+.tier-legend{display:flex; gap:16px; flex-wrap:wrap; margin:8px 0 0}
+.tier-legend span{font-size:11.5px; color:var(--ink-soft); display:flex; align-items:center; gap:6px}
+.tier-dot{width:9px; height:9px; border-radius:3px}
+.vlist{columns:2; column-gap:18px; margin:8px 0 0; padding:0; list-style:none}
+.vlist li{font-size:11.5px; color:var(--ink-soft); margin-bottom:3px; break-inside:avoid}
+.vlist li::before{content:"✓"; color:var(--eh-green-d); font-weight:700; margin-right:6px}
+.note-box{background:var(--eh-green-l); border:1px solid #cfe7d4; border-radius:10px; padding:13px 15px; margin-top:14px}
+.note-box strong{color:var(--eh-green-d)}
+.disclaimer{margin-top:22px; font-size:11px; color:var(--muted); line-height:1.6; border-top:1px solid var(--line-2); padding-top:14px}
+
+@media (max-width:1080px){
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .charts{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr}
+  .hl-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+  .flag-row,.flag-head-row{grid-template-columns:1fr 1fr; }
+  .flag-row .fr-link,.flag-head-row span:nth-child(4){display:none}
+}
+@media print{
+  .filters,.view-toggle,.btn-print,.btn-reset,.c-more{display:none!important}
+  body{background:#fff}
+  .card,.chart-card,.kpi{box-shadow:none; break-inside:avoid}
+  .overlay,.panel{display:none!important}
+}
+/* ---------- Audit ---------- */
+.audit-wrap{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-sm); overflow:hidden; margin-bottom:8px}
+.audit-banner{display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; padding:14px 18px;
+  background:linear-gradient(90deg,var(--eh-green-l),var(--eh-blue-l)); border-bottom:1px solid var(--line);
+  font-size:13px; font-weight:600; color:var(--ink-soft)}
+.audit-banner .big{font-family:'Fraunces',Georgia,serif; font-size:20px; font-weight:700; color:var(--ink)}
+.audit-row{display:grid; grid-template-columns:30px minmax(0,1fr) 122px; gap:4px 14px; padding:13px 18px;
+  border-top:1px solid var(--line-2); align-items:start}
+.audit-row:first-of-type{border-top:none}
+.a-num{font-family:'Fraunces',Georgia,serif; font-weight:700; color:var(--muted); font-size:13px; padding-top:2px}
+.a-claim{font-weight:700; font-size:13.5px; color:var(--ink)}
+.a-note{font-size:12.5px; color:var(--ink-soft); margin-top:3px; line-height:1.5}
+.verdict{justify-self:end; font-size:10.5px; font-weight:800; letter-spacing:.06em; padding:4px 10px; border-radius:999px; white-space:nowrap; margin-top:1px}
+.v-conf{color:#1d7a34; background:var(--eh-green-l); border:1px solid #cde8d3}
+.v-upd{color:var(--eh-blue-d); background:var(--eh-blue-l); border:1px solid #cfe3f4}
+.v-clar{color:var(--amber); background:var(--amber-bg); border:1px solid #ecd9a8}
+.v-corr{color:#b3261e; background:#fdecea; border:1px solid #f5c6c0}
+.v-open{color:#5b6a64; background:#eef2f0; border:1px solid #dde4e0}
+.audit-open{font-size:12.5px; color:var(--ink-soft); padding:12px 18px; border-top:1px dashed var(--line); background:#fbfcfb}
+.audit-open strong{color:var(--ink)}
+@media(max-width:720px){.audit-row{grid-template-columns:24px 1fr}.verdict{grid-column:2; justify-self:start; margin-top:5px}}
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+<header class="masthead">
+  <div class="wrap mast-inner">
+    <img class="logo" alt="Environmental Horizons" src="data:image/jpeg;base64,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">
+    <div class="mast-titles">
+      <div class="eyebrow">Environmental Horizons · Strategic Intelligence</div>
+      <h1>Saudi Arabia Cross-Sector Intelligence Dashboard</h1>
+      <div class="mast-sub">Corporate, government &amp; giga-project monitoring across the Vision 2030 economy · Confidential — internal strategy use</div>
+    </div>
+    <div class="mast-meta">
+      <div class="period" id="m-period">Reporting window</div>
+      <div id="m-gen">Generated</div>
+      <button class="btn-print" onclick="window.print()">⎙ Print / Save PDF</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- KPI -->
+  <div class="kpis" id="kpis"></div>
+
+  <!-- Charts -->
+  <section>
+    <div class="charts">
+      <div class="chart-card">
+        <h3>Verified items by sector</h3>
+        <div class="c-sub">Distribution of source-verified developments</div>
+        <div class="chart-box"><canvas id="chartSector"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>Verified items by news category</h3>
+        <div class="c-sub">Across corporate &amp; government</div>
+        <div class="chart-box"><canvas id="chartCat"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>New money announced, by theme</h3>
+        <div class="c-sub">In billions of US dollars · new deals announced this period</div>
+        <div class="chart-box"><canvas id="chartCap"></canvas></div>
+        <div class="chart-foot">Note: the $5.3bn HUMAIN figure comes from a single news report and is unconfirmed. This chart counts only new deals announced in the period — not cancelled contracts, long-running programmes or company results.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION A: AUDIT OF PRIOR ITERATION -->
+  <section id="sec-audit">
+    <div class="sec-head"><span class="num">✓</span><h2>Fact-Check: How Our Last Report Held Up</h2>
+      <span class="sh-sub">We re-checked every major claim from our 19 July report against sources — here are the verdicts, corrections and honest gaps</span></div>
+    <div class="audit-wrap">
+      <div class="audit-banner" id="audit-banner"></div>
+      <div id="audit-rows"></div>
+      <div class="audit-banner" id="corr-banner" style="border-top:1px solid var(--line)"></div>
+      <div id="corr-rows"></div>
+      <div class="audit-open"><strong>How to read this section:</strong> green means what we reported was right; blue means it was right and the story has since moved on; red means we corrected ourselves; grey means still unanswered. We fact-check our own reporting every issue. Twice now we have caught trade websites recycling old announcements as fresh news — so anything from a single trade source stays marked unconfirmed until an official source backs it up.</div>
+    </div>
+  </section>
+
+  <!-- Filters -->
+  <div class="filters" id="filterbar">
+    <div class="fgroup">
+      <label>Scope</label>
+      <select id="f-scope">
+        <option value="all">All scopes</option>
+        <option value="Corporate">Corporate only</option>
+        <option value="Government">Government only</option>
+      </select>
+    </div>
+    <div class="fgroup">
+      <label>Sector / Authority</label>
+      <select id="f-group"><option value="all">All sectors</option></select>
+    </div>
+    <div class="fgroup">
+      <label>News category</label>
+      <select id="f-cat"><option value="all">All categories</option></select>
+    </div>
+    <div class="fgroup">
+      <label>Confidence</label>
+      <select id="f-conf">
+        <option value="all">All</option><option value="High">High</option>
+        <option value="Medium">Medium</option><option value="Low">Low</option>
+      </select>
+    </div>
+    <div class="fgroup">
+      <label>Time period</label>
+      <select id="f-period">
+        <option value="all">All</option>
+        <option value="Q2-2026">April – early July</option>
+        <option value="Q3-2026">July – August (war restart)</option>
+        <option value="context">Ongoing programmes</option>
+        <option value="policy-frame">Policy frame</option>
+      </select>
+    </div>
+    <div class="fgroup search">
+      <label>Search</label>
+      <input type="text" id="f-q" placeholder="Entity, deal, partner, keyword…">
+    </div>
+    <label class="toggle"><input type="checkbox" id="f-flag"> 🔴 Flagged only</label>
+    <button class="btn-reset" id="btn-reset">Reset</button>
+    <div class="view-toggle">
+      <button id="v-card" class="active">Cards</button>
+      <button id="v-table">Table</button>
+    </div>
+  </div>
+
+  <!-- SECTION 1: CORPORATE -->
+  <section id="sec-corp">
+    <div class="sec-head"><span class="num">1</span><h2>Company News</h2>
+      <span class="sh-sub">What the big companies did · click any card for the full story in plain language</span></div>
+    <div class="scope-block">
+      <div class="scope-bar corp"><span class="dot"></span><h3>Corporate</h3><span class="cnt" id="corp-count"></span>
+        <span class="legend">Blue = company news · click any card to read more</span></div>
+      <div id="corp-cards" class="cards"></div>
+      <div id="corp-table" style="display:none"></div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: GOVERNMENT -->
+  <section id="sec-gov">
+    <div class="sec-head"><span class="num">2</span><h2>Government &amp; Mega-Project News</h2>
+      <span class="sh-sub">Ministries, regulators and the giant national projects</span></div>
+    <div class="scope-block">
+      <div class="scope-bar gov"><span class="dot"></span><h3>Government &amp; Regulatory</h3><span class="cnt" id="gov-count"></span>
+        <span class="legend">Green = government &amp; mega-project news · click any card to read more</span></div>
+      <div id="gov-cards" class="cards"></div>
+      <div id="gov-table" style="display:none"></div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: FLAGGED -->
+  <section id="sec-flag">
+    <div class="sec-head"><span class="num">3</span><h2>Items to Watch</h2>
+      <span class="sh-sub">The 🔴 flagged stories — big projects, big money, big risks — gathered in one table</span></div>
+    <div class="flag-wrap">
+      <div class="flag-banner" id="flag-banner"></div>
+      <div class="flag-head-row"><span>Who</span><span>What happened</span><span>Key number</span><span>Linked project</span></div>
+      <div id="flag-rows"></div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: HIGHLIGHTS -->
+  <section id="sec-hl">
+    <div class="sec-head"><span class="num">4</span><h2>The Big Picture</h2>
+      <span class="sh-sub">What it all adds up to — in six short reads</span></div>
+    <div class="highlights">
+      <p class="lead">Six weeks of stand-off. Two peace attempts collapsed, the Strait of Hormuz is carrying about a tenth of its normal traffic, and the fighting has turned the Red Sea — the Kingdom's back-up export route and EH's home coast — into an active front line: the Jazan refinery hit twice, the Abqaiq plant struck, tankers burning within sight of Yanbu. The half-year company results show a split economy: Aramco sold oil at $108 and made record profits while SABIC swung to a loss. And two answers arrived: Saudi Arabia is choosing to keep its customers rather than profit from the crisis, and the government's budget is being propped up by the very war that shut its factories.</p>
+      <div class="hl-grid">
+        <div class="hl-item">
+          <h4 class="blue">No quick end in sight</h4>
+          <p>The peace effort collapsed twice in six weeks — most recently in mid-August, when the president declared no talks were happening at all. The US Navy keeps blockading Iranian ports, and only about 73 ships passed through Hormuz in a whole week (before the war, that many passed in a single day). The clearest signal comes from companies, not politicians: Abu Dhabi's oil firm spent $1.3 billion buying its own supertankers, and Aramco is asking customers to plan for back-up ports. Business has stopped waiting for peace and started building around a long war. The oil price agrees — it fell to $80 when a deal looked close, then climbed back above $90 when it fell apart.</p>
+        </div>
+        <div class="hl-item">
+          <h4>The Red Sea is now our front yard — literally</h4>
+          <p>Almost every warning sign we set for Yanbu has come true, short of a direct hit on the port itself: tankers struck off the coast on 5 and 24 August, the Jazan refinery suspended and set on fire again, a declared blockade of Saudi-linked ships, and less oil visibly loading at Yanbu. Riyadh's answer — a mutual-defence pact with Turkey and Pakistan — says it expects a long fight. For EH the message is simple: oil-spill response, water monitoring around Yanbu and Jazan, and emergency planning are no longer future opportunities. They are needs that exist today, on our own coastline.</p>
+        </div>
+        <div class="hl-item">
+          <h4 class="blue">Saudi Arabia chose customers over war profits</h4>
+          <p>We asked last issue: would September's official oil price for Asia swing to a premium (cashing in on the crisis) or stay discounted (protecting customers)? Answer: discounted even deeper — $2 below the regional average, the cheapest in six years — even though Aramco was actually selling at $108. The Kingdom is protecting its customer base for the long term. The cost shows up at home: Aramco's huge dividend was only about half covered by spare cash last quarter, and it borrowed a little more to pay it in full. That dividend is the state's main artery, and right now it runs on war prices. October's price and next quarter's cash are the test.</p>
+        </div>
+        <div class="hl-item">
+          <h4>The budget's strange balancing act</h4>
+          <p>The deficit shrank dramatically in Q2 — because war-driven oil prices lifted the government's oil income by 22%. But six months in, about 97% of the whole year's planned deficit is already spent, debt keeps climbing, and spending keeps rising. In plain terms: expensive oil is papering over the cost of the war. If peace brings prices down before the factories and exports recover, the hole could grow to roughly double the plan — the scenario the big banks are modelling. Either way, money stays tight: the environmental work that gets funded will be the must-do kind — safety, compliance, water security — not optional studies.</p>
+        </div>
+        <div class="hl-item hl-full">
+          <h4>The shut factories are building up a mountain of restart work</h4>
+          <p>SABIC's results put numbers on the shutdown — a third of sales volumes gone, a quarterly loss, and its formal shutdown notice now in a sixth month with no return date. Sadara's silence is ten weeks past its loan deadline with no announcement in either direction. Every extra week adds to the eventual restart job: renewing permits, restarting wastewater systems, safety and environmental checks across five SABIC lines and all 26 Sadara units. That demand is coiling up like a spring — but the release date will be decided in peace talks, not in Jubail. Meanwhile, work continues where the war allows: the giant AI data-centre at NEOM's Oxagon port starts construction within months, and Acwa — despite a 36% profit dip caused mostly by paperwork delays — won the exclusive national right to export green fuels.</p>
+        </div>
+        <div class="hl-item hl-full">
+          <h4 class="blue">We fact-check ourselves — and caught another recycled story</h4>
+          <p>All ten major claims from our July report held up — six unchanged, four overtaken by events, none withdrawn. One correction: the Jubail 4 &amp; 6 desalination team selection we reported as fresh news was actually announced back in December 2024 — a trade website had recycled it. That is the second recycled-story catch in two issues, so anything from a single trade source now stays marked unconfirmed until an official source backs it. We also list openly what we could not find this time — Ma'aden, Veolia, Alujain, waste-sector news — and those go first on next issue's checklist.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Detail panel -->
+<div class="overlay" id="overlay"></div>
+<aside class="panel" id="panel" aria-hidden="true">
+  <button class="panel-close" id="panel-close">✕</button>
+  <div class="panel-head" id="panel-head"></div>
+  <div class="panel-body" id="panel-body"></div>
+</aside>
+
+<!-- Footer / methodology -->
+<div class="wrap">
+<footer class="foot">
+  <div class="foot-grid">
+    <div>
+      <h3>Methodology &amp; verification coverage</h3>
+      <p>This iteration pairs a <strong>full audit of the prior tranche</strong> (every material Q1 claim re-verified, with per-claim verdicts above) with a <strong>source-verified Q2 sweep</strong> of the highest-news-volume and highest-relevance entities on the monitored watchlist — each cross-checked against primary or reputable secondary sources (company filings, Tadawul disclosures, PIF newswire, ministry statements and established trade press). Every record carries a confidence tier, an explicit date basis and cited sources in its detail panel. Figures state currency and source; undisclosed values are marked "Not publicly disclosed." War-related granular figures resting on secondary or analytical outlets are capped at Medium confidence. Each item is mapped to the Environmental Horizons service lines it would plausibly require, drawn from EH's published service catalogue.</p>
+      <div id="cov-block"></div>
+      <div class="tier-legend">
+        <span><span class="tier-dot" style="background:var(--eh-green)"></span>High — primary / multiple corroborating sources</span>
+        <span><span class="tier-dot" style="background:#d8b53f"></span>Medium — single reputable source / partial detail</span>
+        <span><span class="tier-dot" style="background:#9aa8a2"></span>Low — directional, pending confirmation</span>
+      </div>
+      <div class="note-box">
+        <strong>Escalation triggers &amp; next iteration.</strong> Full response posture applies: the Red Sea corridor is an active theatre (Jazan struck twice; tankers hit off Yanbu 05/08 and 24/08) — any direct hit on Yanbu terminals, Yasref, or a Saudi desalination/co-generation plant is the remaining top-tier trigger. Hard dates: <strong>06/09</strong> OPEC+ meeting (Q4 pause is the base case); <strong>~early Sept</strong> October OSP (a swing back toward premium ends the volume-over-price phase); Q3 earnings from late Oct. Watch continuously: SABIC force-majeure lift; any Sadara filing; DataVolt's Oxagon groundbreaking ("within months"); resumption of Oman-mediated Hormuz talks. Declared gaps queued first: Ma'aden, Veolia, Alujain, waste sector (SIRC/MWAN), SPPC. For the long-tail entity sweep, run this brief through Claude's <strong>Research</strong> feature.
+      </div>
+    </div>
+    <div>
+      <h3>Entities source-verified this pass</h3>
+      <p class="small" id="vsub"></p>
+      <ul class="vlist" id="vlist"></ul>
+      <div class="disclaimer" id="disclaimer"></div>
+    </div>
+  </div>
+  <div class="disclaimer">
+    Environmental Horizons — Strategic Intelligence. Prepared for internal strategy, partnership-screening and investment-prioritisation use only; not for external distribution. Content is analytical and informational, not investment, legal or financial advice. Dates follow DD/MM/YYYY. All monetary figures are approximate and as reported by the cited source on the stated date. Maintain consistent structure across future refreshes to enable period-over-period comparison.
+  </div>
+</footer>
+</div>
+<script>
+const DATA = [
+{"id":"C01","scope":"Corporate","entity":"Saudi Aramco","group":"Energy","category":"Other","date":"04/08/2026 (H1 results)","dateISO":"2026-08-04","period":"Q3-2026","headline":"Aramco earned record profits in the first half of 2026 — and kept paying its huge dividend, even though cash only covered about half of it","detail":"Aramco, the state oil company, published its half-year results on 4 August. Profit for the six months was $67.2 billion, up 29% on last year — because the war pushed the price of its oil to around $108 a barrel in the second quarter. But there is a catch. After paying for operations and investments, the cash actually left over in Q2 was $12.3 billion, while the quarterly dividend it pays (mostly to the government) is $21.9 billion — so cash covered only about half, and the company borrowed a bit more to bridge the gap. It still paid the full dividend on 27 August, because that money funds the national budget. Operationally, the East–West pipeline kept running at full capacity to move oil to the Red Sea coast for export, and the big expansion projects (Zuluf oil, two gas plants) stay on schedule. The CEO called this one of the hardest periods in the company's history. In total, Aramco sent about $87.7 billion to the state in six months through taxes, royalties and dividends.","financials":"Half-year profit $67.2bn (up 29%). Q2 spare cash $12.3bn vs a $21.9bn dividend — about half covered.","partners":"The Saudi government (main shareholder); Sinopec of China (partner in the Yanbu refinery).","implications":"The government's main source of income is holding up — but only because war has made oil expensive. If prices fall before exports recover, the dividend and the budget come under pressure.","relevance":"Aramco sites being attacked and repaired (see the Red Sea attacks card) means ongoing work in emergency response, oil-waste clean-up and getting facilities environmentally compliant again — services EH provides.","flagged":false,"giga":"","confidence":"High","verified":true,"sources":[{"label":"Aramco — H1 2026 results (04/08/26)","url":"https://www.aramco.com/en/news-media/news/2026/aramco-announces-second-quarter-and-half-year-2026-results"},{"label":"Investing.com — H1 presentation detail","url":"https://www.investing.com/news/company-news/aramco-h1-2026-slides-profit-surges-29-amid-historic-supply-shock-93CH-4833062"},{"label":"Yahoo Finance — FCF/dividend gap analysis","url":"https://finance.yahoo.com/energy/articles/aramcos-record-profits-hide-growing-170000879.html"}],"ehServices":["Environmental Emergency Response","Oily Sludge & Hydrocarbon Recovery","Used Oil Management","Hazardous Waste Treatment & Disposal","Industrial Wastewater Treatment","Site Rehabilitation & Remediation"]},
+{"id":"C02","scope":"Corporate","entity":"Saudi Aramco","group":"Energy","category":"Other","date":"02–25/08/2026","dateISO":"2026-08-25","period":"Q3-2026","headline":"Aramco cut its oil price for Asian customers again — choosing to protect market share rather than cash in on the war","detail":"Each month Aramco sets an official price for the oil it sells to Asia, quoted as an amount above or below the average regional price. For September it set its main grade at $2 below that average — the cheapest in six years, after August was already a record cut. This answers the question we flagged last report: would Saudi Arabia use the war to charge more, or keep prices low to keep customers? The answer is now clear — keep customers, even though war conditions meant Aramco actually sold at around $108 a barrel in Q2. Aramco also asked customers to name back-up loading ports (Yanbu on the Red Sea, or Sidi Kerir in Egypt) in case the Strait of Hormuz — the narrow sea passage most Gulf oil must pass through — stays closed. Separately, the OPEC+ group of oil-producing countries agreed on 2 August to a final small increase in production targets; they meet again on 6 September. The world oil price (Brent) dipped to about $80 in early August when a peace deal looked close, then climbed back to about $90–91 by 25 August when the talks failed.","financials":"September price for Asia: $2 below the regional average (six-year low). World oil price about $90–91 on 25 August.","partners":"OPEC+, the group of oil-producing countries (next meeting 6 September).","implications":"Saudi Arabia is playing the long game: keep customers now, earn more later. Watch October's price — a swing back above the average would mean this phase is over.","relevance":"Keeping exports at maximum through the Red Sea concentrates tanker traffic — and spill risk — exactly where the attacks are happening, near EH's home region.","flagged":false,"giga":"","confidence":"High","verified":true,"sources":[{"label":"Reuters via Zawya — September OSP (06/08/26)","url":"https://www.zawya.com/en/business/oil-gas/saudi-arabia-sets-september-arab-light-price-to-asia-at-six-year-low-423317"},{"label":"OPEC — statement of 02/08/26","url":"https://www.opec.org/pr-detail/1854611-2-august-2026.html"},{"label":"CNBC — OPEC+ completes rollback (02/08/26)","url":"https://www.cnbc.com/2026/08/02/opec-agrees-september-oil-hike-completing-rollback-of-voluntary-cuts.html"}],"ehServices":[],"ehNote":"A market signal, not a project — it shapes budgets rather than creating site work directly."},
+{"id":"C03","scope":"Corporate","entity":"SABIC","group":"Petrochemicals","category":"Security/Disruption Impact","date":"Q2 results · FM ongoing (26/08)","dateISO":"2026-08-13","period":"Q3-2026","headline":"SABIC lost money in Q2 — a third of its sales volumes vanished, and five Jubail production lines are still shut","detail":"SABIC, the country's chemicals giant (70% owned by Aramco), reported a small loss for the second quarter: sales of SAR 24.8 billion (down 5% on the previous quarter) and a net loss of SAR 0.38 billion. The reason: the war cut the volumes it could ship by 34% — although prices for what it did sell rose 42%, which softened the blow. Since late March, five of its production lines at Jubail on the Gulf coast have been under force majeure — a formal legal notice telling customers it cannot fulfil its contracts because of events beyond its control. That notice has now been in place for more than five months, and SABIC has told the stock exchange it cannot estimate when production will return. Despite all this it kept paying its dividend (SAR 3.3 billion for the half-year), kept costs under control, and signed a partnership with CEER, the Saudi electric-car company. The new CEO, Faisal Al-Faqeer, described the performance as resilient given the circumstances.","financials":"Q2 sales SAR 24.8bn (down 5%); net loss SAR 0.38bn; volumes down 34% while prices rose 42%.","partners":"Aramco (owns 70%); CEER (new partnership); joint-venture partners at Jubail.","implications":"The numbers show what the shutdown costs. Once it is safe to restart, the pressure to move fast will be enormous.","relevance":"When those five lines restart they will need environmental permits renewed, wastewater systems recommissioned and emissions checks — a large package of exactly the work EH does. A restart announcement is the single most valuable signal on this board for us.","flagged":false,"giga":"","confidence":"High","verified":true,"sources":[{"label":"SABIC — Q2 2026 results","url":"https://www.sabic.com/en/news/51710-sabic-q2-2026"},{"label":"Gulf Industry — Q2 detail","url":"https://gulfindustryonline.com/ArticleTA/465785"},{"label":"Investing.com — Q2 presentation (volumes/prices)","url":"https://www.investing.com/news/company-news/sabic-q2-2026-presentation-logistics-shock-cuts-volumes-lifts-prices-93CH-4824781"}],"ehServices":["Environmental Emergency Response","Air Pollution Control & Filters","Industrial Wastewater Treatment","Hazardous Waste Treatment & Disposal","Oily Sludge & Hydrocarbon Recovery","EIA/ESIA & Permitting"]},
+{"id":"C04","scope":"Corporate","entity":"Sadara Chemical (Aramco / Dow)","group":"Petrochemicals","category":"Security/Disruption Impact","date":"31/03/2026 (unresolved as of 26/08)","dateISO":"2026-08-20","period":"Q2-2026","headline":"Sadara's giant chemicals complex is still completely shut — and its $3.7 billion loan problem remains unsolved","detail":"Sadara runs one of the world's largest chemical complexes at Jubail — 26 production units, owned by Aramco (65%) and America's Dow (35%). Everything has been switched off since late March because of the war, and the company has told the stock exchange it cannot say when production will return. On top of that, Sadara owes about $3.7 billion, and the agreed pause before loan repayments had to start ran out on 15 June. More than ten weeks later there is still no public announcement of a default, a rescue deal or a restart. Some analysts read the silence as the banks quietly agreeing to wait, but that is unconfirmed. Worth knowing: the government's investment fund (PIF) is itself reportedly one of the lenders, and the Jubail industrial zone as a whole contributes roughly 7% of the entire Saudi economy — its shutdown is a big part of why the country's non-oil exports fell 27% in the first quarter.","financials":"About $3.7bn of loans past their repayment pause with no announced solution; all 26 units offline since late March.","partners":"Aramco (65%); Dow (35%); a group of lending banks.","implications":"The most financially exposed site in the whole crisis. Whatever happens — rescue, restructuring or restart — will move the entire Jubail zone.","relevance":"A plant this size, shut this long, will need a major clean-up and environmental recommissioning programme before restart — hazardous-waste clearance, wastewater systems, site checks. Any news of a deal is our cue to re-engage.","flagged":false,"giga":"","confidence":"Medium","verified":true,"sources":[{"label":"Tadawul — Sadara production-halt filing (31/03/26)","url":""},{"label":"Analytical coverage — debt grace expiry (unconfirmed resolution)","url":""}],"ehServices":["Environmental Emergency Response","Oily Sludge & Hydrocarbon Recovery","Hazardous Waste Treatment & Disposal","Industrial Wastewater Treatment","Site Rehabilitation & Remediation"]},
+{"id":"C05","scope":"Corporate","entity":"Alujain Corporation (NATPET)","group":"Petrochemicals","category":"Other","date":"May 2026 (Q1 results)","dateISO":"2026-05-10","period":"Q2-2026","headline":"Alujain, a Yanbu plastics maker, is profitable again — helped, oddly, by the war","detail":"Alujain makes polypropylene (a common plastic) through its NATPET plant at Yanbu on the Red Sea coast. It returned to profit in the first quarter — SAR 12.2 million, versus a loss a year earlier. The war actually helped: with Gulf-coast producers shut down, plastic prices spiked, and Alujain's plant sits on the safer side of the country. The company also continues building a major new plastics plant, into which it has already put more than SAR 1.1 billion. Its financial cushion is thinner than before after a large one-off accounting loss last year, and its Q2 results had not been located by our reporting date.","financials":"Q1 profit SAR 12.2m — back from a loss; more than SAR 1.1bn already invested in the new plant.","partners":"NATPET (its plant); contractors building the new project.","implications":"A west-coast winner from an east-coast crisis — and a growing industrial neighbour in EH's home region.","relevance":"The new plant's construction and start-up at Yanbu needs environmental approvals, wastewater and air-quality work — on EH's doorstep.","flagged":false,"giga":"","confidence":"High","verified":true,"sources":[{"label":"Argaam — Alujain Q1 2026 (SAR 12.2m profit)","url":"https://www.argaam.com/en/financial-reports/company-report/63/2026/70"}],"ehServices":["EIA/ESIA & Permitting","Industrial Wastewater Treatment","Air Pollution Control & Filters","Hazardous Waste Treatment & Disposal"]},
+{"id":"C06","scope":"Corporate","entity":"Acwa Power","group":"Energy / Utilities (Water)","category":"Expansion/Capacity Increase","date":"06/08/2026 (H1 results)","dateISO":"2026-08-06","period":"Q3-2026","headline":"Acwa's profits dropped sharply — but it won a big prize: the exclusive right to export Saudi green fuels","detail":"Acwa (formerly ACWA Power) is the Saudi company that builds and runs many of the country's desalination and power plants. Its half-year results (6 August) show Q2 profit down 36% to SAR 308 million — its lowest since joining the stock market. The main reason is not broken plants: it is that the war slowed the paperwork. Acwa earns fees when new projects hit milestones like financial close — the moment all funding is signed and construction can start — and several of those moments slipped. Day-to-day operations actually grew: cash from running its plants rose 7%, and its portfolio passed 98 gigawatts of power capacity. Two big positives: the government granted Acwa the exclusive right to export Saudi-made green fuels (such as green hydrogen), and it set out a clearer dividend policy.","financials":"Q2 profit SAR 308m (down 36%); cash from operations up 7%; portfolio above 98 gigawatts.","partners":"The Saudi government (green-fuels mandate); SWPC, the state water buyer; various project partners.","implications":"Short-term profits dipped for timing reasons, but Acwa's long-term position — desalination leader plus green-fuels gatekeeper — got stronger.","relevance":"Acwa is the most important door-opener for EH: every desalination project it builds needs seawater studies, brine (salty discharge) modelling and environmental permits.","flagged":false,"giga":"","confidence":"High","verified":true,"sources":[{"label":"Acwa — H1 2026 results (06/08/26)","url":"https://acwapower.com/en/media-center/latest-news/acwa-announces-first-half-2026-financial-results/"},{"label":"Argaam — Q2 profit −36%","url":"https://www.argaam.com/en/article/articledetail/id/1929692"},{"label":"Investing.com — H1 presentation","url":"https://www.investing.com/news/company-news/acwa-power-h1-2026-slides-portfolio-hits-98-gw-amid-profit-decline-93CH-4843585"},{"label":"Global Water Awards, Madrid (03/06/26)","url":""},{"label":"Saurenergy — Jubail 4 & 6 preferred bidder","url":"https://www.saurenergy.me/saudi-arabia-awards-jubail-desalination-project/"}],"ehServices":["EIA/ESIA & Permitting","Marine Water & Sediment Sampling","Brine Dispersion / Hydrodynamic Modeling","Industrial Wastewater Treatment","Sustainability & ESG Consultancy","Environmental & Energy Mgmt Systems"]},
+{"id":"C07","scope":"Corporate","entity":"Saudi Arabian Mining Co. (Ma'aden)","group":"Mining & Minerals","category":"Expansion/Capacity Increase","date":"Q2 2026 (programme execution)","dateISO":"2026-05-20","period":"Q2-2026","headline":"Ma'aden pushes ahead with its $110 billion, ten-year mining expansion — with US government backing on rare earths","detail":"Ma'aden, the national mining company (67% owned by the government's investment fund), is running the biggest mining expansion in the country's history: about $110 billion over a decade, across eight mega-projects, to triple gold and fertiliser output and double aluminium. Recent progress: around 8 million ounces of new gold discovered; a rare-earths refinery deal with America's MP Materials and the US Department of Defense (rare earths are the metals needed for magnets in cars, phones and defence equipment); and first terms agreed for a big new aluminium complex on the Red Sea. Mining kept working through the war largely untouched. Note: Ma'aden's Q2 results were not located this pass — flagged as a gap to close in the next report.","financials":"$110bn planned over ten years; last full year revenue about SAR 37bn.","partners":"The state investment fund (PIF); MP Materials and the US Department of Defense; aluminium partners.","implications":"Mining is the steadiest long-term construction programme in the country right now — largely immune to the war.","relevance":"Eight mega-mines mean years of environmental studies, water management, waste handling and land restoration — the largest long-term pipeline of potential EH work in the Kingdom.","flagged":true,"giga":"Vision 2030 mining pillar (multi-site megaproject programme)","confidence":"High","verified":true,"sources":[{"label":"Mining.com — $110bn programme","url":"https://www.mining.com/maaden-invests-110b-in-saudi-bid-to-be-mining-powerhouse/"},{"label":"Ma'aden FY2025 results / Semafor / AGBI","url":""}],"ehServices":["EIA/ESIA & Permitting","Site Rehabilitation & Remediation","Hazardous Waste Treatment & Disposal","Industrial Wastewater Treatment","Air Pollution Control & Filters","Sustainability & ESG Consultancy"]},
+{"id":"C08","scope":"Corporate","entity":"HUMAIN (PIF)","group":"Technology / AI","category":"IPO/Funding Round","date":"May 2026 (reported)","dateISO":"2026-05-15","period":"Q2-2026","headline":"The reported $5.3 billion loan for HUMAIN's giant AI data centres is still unconfirmed","detail":"HUMAIN is the government's artificial-intelligence company. In May, the Reuters news agency — citing two unnamed insiders — reported that HUMAIN had hired the bank Goldman Sachs to arrange about $5.3 billion in loans to build data centres (the huge computer warehouses that power AI) totalling 2 gigawatts in the Riyadh area. Neither HUMAIN, Goldman nor the government has confirmed it, and no other outlet has independently verified it — so we treat it as reported but unconfirmed. We checked again on 26 August: still nothing new either way. What is confirmed: HUMAIN's software platform is now sold on Amazon's cloud marketplace.","financials":"About $5.3bn — reported by one news agency only, not confirmed.","partners":"Goldman Sachs (reported); Amazon Web Services; the state investment fund (owner).","implications":"If real, it would be one of the biggest technology loans in Saudi history — a sign of how serious the AI build-out is.","relevance":"Data centres this size use enormous amounts of power and water for cooling — meaning permits, water studies and energy-management work wherever they are built.","flagged":true,"giga":"Vision 2030 AI infrastructure (Riyadh-area build-out)","confidence":"Medium","verified":true,"sources":[{"label":"Reuters via US News (19/05/26) — two anonymous sources","url":"https://money.usnews.com/investing/news/articles/2026-05-19/saudi-arabias-humain-picks-goldman-sachs-to-advise-on-data-centre-financing-sources-say"},{"label":"AWS Marketplace — HUMAIN One listing","url":""}],"ehServices":["EIA/ESIA & Permitting","Marine Water & Sediment Sampling","Brine Dispersion / Hydrodynamic Modeling","Industrial Wastewater Treatment","Environmental & Energy Mgmt Systems","GHG Inventory & Carbon Footprint"]},
+{"id":"C09","scope":"Corporate","entity":"Veolia Middle East","group":"Environmental Services","category":"Contract Award","date":"Active (O&M from 2028)","dateISO":"2026-04-01","period":"context","headline":"Veolia's landmark water-recycling and hazardous-waste projects at Jubail keep moving — the benchmark for our industry","detail":"Veolia, the French environmental-services giant, is delivering two flagship projects at Jubail. The first is a $500 million plant that will clean and re-use the wastewater from the SATORP oil refinery instead of throwing it away — the largest project of its kind in the region, handling about 8.8 million cubic metres a year under a 30-year contract, running from 2028. The second, with the Royal Commission that runs the industrial cities, is a facility that safely burns dangerous industrial waste and turns it into energy — 121,000 tonnes a year. Both kept moving through the war — proof that funded industrial water and waste projects carry on even in a crisis.","financials":"$500m water-recycling contract over 30 years; a 121,000-tonnes-a-year hazardous-waste-to-energy plant.","partners":"Marafiq (the Jubail utility, 40%); Lamar (25%); SATORP (the Aramco/TotalEnergies refinery); the Royal Commission for Jubail & Yanbu.","implications":"This is what the top of our market looks like: long contracts, industrial clients, war-resistant demand.","relevance":"Veolia is both a competitor and a potential partner — EH can bid for supporting roles: testing, monitoring and operations support.","flagged":false,"giga":"","confidence":"Medium","verified":true,"sources":[{"label":"Veolia press release / Smart Water Magazine","url":"https://www.veolia.com/en/our-media/press-releases/saudi-arabia-veolia-supply-best-class-innovative-technologies-complex-industrial-water-middle-east"}],"ehServices":["Industrial Wastewater Treatment","Hazardous Waste Treatment & Disposal"],"ehNote":"Veolia is the established market leader here — EH's route in is supporting roles: testing, monitoring and operations support."},
+{"id":"G01","scope":"Government","entity":"Public Investment Fund (PIF)","group":"National Body","category":"Policy/Regulatory Change","date":"15/04/2026","dateISO":"2026-04-15","period":"Q2-2026","headline":"The government's investment fund has formally switched to saving mode — cutting its construction promises from $71 billion to $30 billion","detail":"The Public Investment Fund (PIF) — the government's giant investment arm that funds the mega-projects — approved its new five-year strategy in April. The headline: spend less, choose harder. Construction commitments were cut from $71 billion to $30 billion, on top of an earlier round of cuts. From now on PIF wants private investors to co-fund projects, putting in only 30–40% itself instead of nearly everything. It stopped funding the LIV golf tournament and paused the giant Mukaab building in Riyadh. The projects it will protect are the ones with fixed deadlines: the Expo 2030 world fair and the 2034 football World Cup. NEOM was separated into its own category so its problems do not drag everything else down.","financials":"Construction promises cut from $71bn to $30bn — the biggest pull-back in the fund's history.","partners":"All the mega-project companies (NEOM, Diriyah, Ma'aden, Acwa and others); future private co-investors.","implications":"Money now flows to projects that make commercial sense or are locked to deadlines — not to dreams.","relevance":"For EH this defines the market: chase work tied to must-do projects — water, waste, industry, compliance — rather than speculative mega-city plans.","flagged":true,"giga":"Vision 2030 capital programme — \"Value Realization\" phase","confidence":"High","verified":true,"sources":[{"label":"AGBI / Reuters — strategy approval (15/04/26)","url":""},{"label":"PIF newswire","url":"https://www.pif.gov.sa/en/"}],"ehServices":[],"ehNote":"A policy shift, not a project — it decides which kinds of work get funded."},
+{"id":"G02","scope":"Government","entity":"NEOM (giga-project authority)","group":"Giga-Project Authority","category":"Giga-Project Update","date":"22/05–05/08/2026","dateISO":"2026-08-05","period":"Q2-2026","headline":"NEOM's famous Line city is paused until after 2030 — the money now goes to Oxagon, its industrial port, where a huge AI data-centre is about to start construction","detail":"NEOM has officially paused The Line — the planned 170-km mirrored city — until after 2030, and cut its 2030 population target to at most 100,000 people. In July it even rewrote its website, dropping the old promises of nine million residents and no cars. The one part getting real money is Oxagon, the industrial port city on the Red Sea: about $3 billion in fresh funding, an $8.4 billion green-hydrogen plant already under construction, and — new this month — the company DataVolt says its huge 1.5-gigawatt AI data-centre campus there will start construction within months, with the first phase funded from an initial $5 billion. NEOM has also reportedly set aside up to SAR 60 billion to pay off cancelled contractors (one report, unconfirmed). A bonus for Oxagon: it sits on the Red Sea, safely outside the blocked Strait of Hormuz.","financials":"Oxagon: about $3bn fresh funding; an $8.4bn hydrogen plant under way; DataVolt's first phase inside an initial $5bn.","partners":"PIF (owner); DataVolt (data centres); Air Products and Acwa (hydrogen); Dutch and Belgian marine contractors.","implications":"NEOM is no longer a city project — it is an industrial and energy project. Oxagon is where the real work is.","relevance":"Oxagon's port, factories and data centres all need marine studies, cooling-water assessments and environmental permits — concentrated in one funded location.","flagged":true,"giga":"NEOM — The Line (paused) / Oxagon (prioritised)","confidence":"High","verified":true,"sources":[{"label":"Semafor (22/05/26; 07/06/26)","url":""},{"label":"House of Saud — NEOM strategy analysis","url":"https://houseofsaud.com/neom-pif-strategy-demotion/"},{"label":"AGBI — NEOM rebrands The Line (14/07/26)","url":"https://www.agbi.com/analysis/giga-projects/2026/07/neom-rebrands-the-line-as-costs-and-complexity-bite/"},{"label":"AGBI — Oxagon DC groundbreaking 'within months' (08/26)","url":"https://www.agbi.com/tech/2026/08/neom-to-start-constructing-oxagon-ai-data-centre-in-months/"}],"ehServices":["EIA/ESIA & Permitting","Marine Water & Sediment Sampling","Brine Dispersion / Hydrodynamic Modeling","Coral Reef Translocation","Industrial Wastewater Treatment","Site Rehabilitation & Remediation"]},
+{"id":"G03","scope":"Government","entity":"NEOM / Webuild","group":"Giga-Project Authority","category":"Giga-Project Update","date":"29/03 & 27/05/2026","dateISO":"2026-05-27","period":"Q2-2026","headline":"NEOM cancelled both contracts with Italy's Webuild — over $8 billion of planned construction gone","detail":"NEOM terminated its two big contracts with the Italian construction firm Webuild: the dams and lake for the Trojena mountain resort (cancelled in March, with the work only about 30% done) and the high-speed rail line meant to connect Oxagon to The Line (cancelled in May, about 20% done). Together with other cancellations, more than $8.4 billion of planned NEOM construction has now been called off, and the 2029 Asian Winter Games that Trojena was meant to host have moved to Kazakhstan.","financials":"Cancelled work: about €2.8bn at Trojena plus about €1bn on the rail line — over $8.4bn of NEOM construction stopped in total.","partners":"Webuild (Italy); NEOM.","implications":"The clean-out of paused mega-projects is complete. What is left at NEOM is what will actually get built.","relevance":"Little new work here — mostly site clean-up and land restoration where construction stopped.","flagged":true,"giga":"NEOM — Trojena / Connector rail (terminated)","confidence":"High","verified":true,"sources":[{"label":"Webuild press release — Trojena termination","url":"https://www.webuildgroup.com/en/media/press-releases/update-trojena-contract-saudi-arabia-neom/"},{"label":"AGBI — Connector cancellation (05/26)","url":""}],"ehServices":["Site Rehabilitation & Remediation"],"ehNote":"Little new work here — mostly cleaning up and restoring the sites where construction stopped."},
+{"id":"G04","scope":"Government","entity":"SWPC (Saudi Water Partnership Co.)","group":"National Body","category":"Contract Award","date":"Q2 2026 · corrected 26/08","dateISO":"2026-07-15","period":"Q2-2026","headline":"The state water company funded a big new Red Sea desalination plant — while Gulf-coast water plants face new security worries","detail":"SWPC — the government body that buys water from privately built plants — completed the funding for the Ras Mohaisen desalination plant on the Red Sea coast: about $686 million for a plant producing 300,000 cubic metres of drinking water a day, built by a team led by Acwa, with its own 30-megawatt solar farm. Another Red Sea plant, Rabigh-4, remains on track for this year. On the Gulf coast, the even bigger Jubail 4 & 6 plant (600,000 m³ a day) is still waiting: a winning team was chosen back in December 2024, but the construction funding has not been signed since. Meanwhile, after Iranian strikes damaged a Kuwaiti desalination plant on 17 July, Gulf-coast water plants now carry real security risk — which makes Red Sea plants like Ras Mohaisen more valuable.","financials":"Ras Mohaisen: about $686m, 300,000 m³ of drinking water a day, plus a 30 MW solar farm — funding signed.","partners":"Acwa (45%), Haji Abdullah Alireza, AlKifah; lending banks; a government guarantee.","implications":"Water projects kept getting funded right through the war — the most reliable construction market in the country. And location now matters: Red Sea good, Gulf coast risky.","relevance":"Every new desalination plant needs seawater and marine-life studies, modelling of the salty discharge, and environmental monitoring during construction — core EH services.","flagged":true,"giga":"National water programme (SWPC 2024–2030)","confidence":"High","verified":true,"sources":[{"label":"SWPC — Ras Mohaisen financial close","url":""},{"label":"Gulf Construction — Jubail 4 & 6 RFPs","url":"https://gulfconstructiononline.com/Article/1628056/RFPs_issued_for_Jubail_4_and_6_desalination_projects"},{"label":"SWPC — preferred bidder announcement (11/12/2024)","url":"https://smartwatermagazine.com/news/saudi-water-partnership-company/swpc-announces-preferred-bidder-jubail-4-and-jubail-6-iwp"}],"ehServices":["EIA/ESIA & Permitting","Marine Water & Sediment Sampling","Brine Dispersion / Hydrodynamic Modeling","Industrial Wastewater Treatment","Environmental & Energy Mgmt Systems"]},
+{"id":"G05","scope":"Government","entity":"SPPC (Saudi Power Procurement Co.)","group":"National Body","category":"New Tender/Procurement","date":"30/06/2026","dateISO":"2026-06-30","period":"Q2-2026","headline":"The clean-energy programme stayed on schedule: 5.3 gigawatts of new solar and wind moved forward, plus giant batteries","detail":"SPPC — the government body that buys electricity — kept its renewable-energy tenders on track despite the war. The qualified bidders for Round 7 (5.3 gigawatts of new solar and wind farms) were announced on schedule in January, and the shortlist for a second huge battery-storage programme (3 gigawatts of batteries that store solar power for night-time use) was reached on 30 June. No further award news was found in this window — flagged as a gap.","financials":"Round 7: 5.3 gigawatts of solar and wind; battery programme: 3 gigawatts of storage.","partners":"Acwa, international developers, and the PIF-backed renewables programme.","implications":"The energy transition is treated as must-do infrastructure — it did not stop for the war.","relevance":"Solar farms, wind farms and battery sites all need environmental studies and construction-phase monitoring, in multiple provinces.","flagged":false,"giga":"","confidence":"Medium","verified":true,"sources":[{"label":"SPPC — Round 7 qualified bidders (01/26)","url":""},{"label":"Trade press — BESS group 2 shortlist (30/06/26)","url":""}],"ehServices":["EIA/ESIA & Permitting","Sustainability & ESG Consultancy","Environmental & Energy Mgmt Systems"]},
+{"id":"G06","scope":"Government","entity":"MWAN (National Center for Waste Management)","group":"National Body","category":"Environmental Regulation","date":"Q2 2026","dateISO":"2026-05-01","period":"Q2-2026","headline":"The waste-management market keeps its momentum: IFAT returns 4–6 September 2027, and the $112 billion national plan stands","detail":"MWAN, the national waste-management regulator, is turning the opening of the Saudi waste market into a routine. The IFAT environmental trade fair — which debuted in Riyadh in January — will now run every year, with the next edition confirmed for 4–6 September 2027 at the Riyadh Front (the previously announced January date has been moved). Adding to the momentum, the Cabinet has designated 2027 as the Year of Water. The national master plan behind it is unchanged and huge: more than $112 billion of private-investment opportunity in waste and over $80 billion in water, with 848 new recycling and treatment facilities targeted by 2040 and a goal of keeping 90% of waste out of landfill. A long-term public-private partnership for a national digital waste-tracking platform is also in the works. No new tenders were spotted this window (declared as a coverage gap).","financials":"Over $112bn (waste) and over $80bn (water) of investment opportunity; 848 new facilities targeted by 2040.","partners":"Messe München (fair organiser); SIRC, the state recycling company; future partnership bidders.","implications":"This is the official, quantified opening of EH's core market — now on an annual drumbeat.","relevance":"This is EH's home market by definition: every target here — recycling plants, hazardous-waste facilities, landfill diversion — is potential EH work or partnership.","flagged":false,"giga":"","confidence":"Medium","verified":true,"sources":[{"label":"Zawya / IFAT — debut & annualisation","url":"https://www.zawya.com/en/press-release/events-and-conferences/ifat-saudi-arabia-gears-up-for-strong-debut-in-riyadh-q323ohgk"}],"ehServices":["Hazardous Waste Collection & Transport","Hazardous Waste Treatment & Disposal","Landfill Construction & Maintenance","Industrial Wastewater Treatment","Sustainability & ESG Consultancy"],"ehNote":"Not one project — this is the map of EH's whole future market."},
+{"id":"G07","scope":"Government","entity":"Diriyah Company (giga-project)","group":"Giga-Project Authority","category":"Giga-Project Update","date":"26/04/2026","dateISO":"2026-04-26","period":"Q2-2026","headline":"The Diriyah heritage mega-project keeps awarding contracts — a $490 million museum is the latest, built to green standards","detail":"Diriyah — the historic district outside Riyadh being turned into a major culture and tourism destination — awarded a $490 million contract in April to build SAMoCA, a contemporary-art museum, to an Egyptian-Saudi construction team. The building carries Mostadam Gold certification — the Saudi green-building standard — at both design and construction stage. More than $29 billion of Diriyah's $63 billion programme has now been awarded, and a roughly $1.4 billion opera house is next in the pipeline. The lesson: while dreamy mega-cities get paused, funded tourism projects with deadlines keep building.","financials":"$490m museum contract; over $29bn of the $63bn programme now awarded.","partners":"Hassan Allam of Egypt and Albawani of Saudi Arabia (construction); design consultants.","implications":"Culture and tourism with hard deadlines are protected spending — a dependable construction market.","relevance":"Green-building certification on every flagship means steady demand for sustainability consulting and environmental monitoring during construction.","flagged":true,"giga":"Diriyah Gate — SAMoCA","confidence":"High","verified":true,"sources":[{"label":"SPA — SAMoCA $490m award (26/04/26)","url":"https://www.spa.gov.sa/en/N2571620"}],"ehServices":["Sustainability & ESG Consultancy","EIA/ESIA & Permitting","Environmental & Energy Mgmt Systems"]},
+{"id":"G08","scope":"Government","entity":"AlUla Development Company (RCU)","group":"Giga-Project Authority","category":"Giga-Project Update","date":"04/05/2026","dateISO":"2026-05-04","period":"Q2-2026","headline":"A new eco-resort started construction at AlUla — aiming for top international green-building certification","detail":"The AlUla heritage region — home of the ancient Nabataean tombs — started construction in May on NUMAJ, a 250-room luxury resort designed to achieve LEED Gold, a leading international green-building certification. It is part of AlUla's regenerative-tourism approach: build tourism while restoring the landscape. The construction value was not disclosed.","financials":"Not publicly disclosed.","partners":"AlUla Development Company, under the Royal Commission for AlUla.","implications":"Western-region heritage tourism keeps building through the crisis, like Diriyah.","relevance":"Nature-sensitive sites need exactly EH's advisory work: environmental approvals, water management and ecological monitoring.","flagged":true,"giga":"AlUla — NUMAJ","confidence":"Medium","verified":true,"sources":[{"label":"PIF newswire / RCU (04/05/26)","url":"https://www.pif.gov.sa/en/"}],"ehServices":["EIA/ESIA & Permitting","Site Rehabilitation & Remediation","Sustainability & ESG Consultancy"]},
+{"id":"G09","scope":"Government","entity":"Regional security / oil market","group":"Macro & Security","category":"Security/Disruption Impact","date":"19/07–25/08/2026","dateISO":"2026-08-25","period":"Q3-2026","headline":"The war has settled into a grinding stand-off: peace talks collapsed, and the Strait of Hormuz is running at about a tenth of normal traffic","detail":"Quick recap: the Strait of Hormuz is the narrow sea passage through which about a fifth of the world's oil normally flows — and Iran has kept it effectively closed. In early August a peace effort brokered by Oman looked promising (President Trump even said the Strait could reopen as soon as tomorrow), but by 18 August he declared no talks were happening, and the UAE reported a missile threat the same day. The US Navy continues to blockade Iranian ports — it says it recently turned away 44 commercial ships, disabled two and boarded two. Ship-tracking firm Lloyd's List counted just 73 ships passing through in the entire week of 10–16 August; before the war, that many passed in a single day. Companies are adapting for the long haul — Abu Dhabi's oil company spent $1.3 billion buying its own supertankers to shuttle oil to safer transfer points outside the Strait. A sailor was killed when a cargo ship was struck in mid-August.","financials":"Oil price: about $85–88 (17 July) → about $80 (early August, on peace hopes) → about $90–91 (25 August, after talks failed).","partners":"Oman (mediator); Qatar (supporting diplomacy); the US Navy; international shipping bodies.","implications":"Businesses have stopped waiting for reopening and started building around a long closure. Everything on the Gulf coast is priced accordingly.","relevance":"A long closure keeps Jubail's restart on hold — while pushing exports, tanker traffic and spill risk to the Red Sea, where EH is based.","flagged":true,"giga":"Strait of Hormuz — closure & naval blockade","confidence":"High","verified":true,"sources":[{"label":"Lloyd's List Intelligence — Hormuz Brief (19/08/26)","url":"https://www.lloydslistintelligence.com/resources/blog/strait-of-hormuz-brief-19-august-2026"},{"label":"CNN live (18/08/26) — talks collapse, UAE missile threat","url":"https://www.cnn.com/2026/08/18/world/live-news/iran-war-trump"},{"label":"CNN live (04/08/26) — CENTCOM blockade figures","url":"https://www.cnn.com/2026/08/04/world/live-news/iran-war-trump"},{"label":"CRS — Strait of Hormuz security developments","url":"https://www.congress.gov/crs-product/R45281"}],"ehServices":["Environmental Emergency Response","Marine Water & Sediment Sampling","Oily Sludge & Hydrocarbon Recovery"],"ehNote":"A situation to watch — EH's work starts if there is a spill at sea, or when factories restart after peace."},
+{"id":"G10","scope":"Government","entity":"Coalition / Houthi front — Red Sea corridor","group":"Macro & Security","category":"Security/Disruption Impact","date":"23/07–24/08/2026","dateISO":"2026-08-24","period":"Q3-2026","headline":"The war reached Saudi soil: the Jazan refinery was hit twice, tankers were struck near Yanbu, and Aramco is rerouting oil through Egypt","detail":"Yemen's Houthi group — allied with Iran — spent the past month attacking Saudi targets, ending four years of relative calm. In late July, strikes on the Jazan refinery in the southwest (which processes 400,000 barrels a day) forced Aramco to suspend it, with satellite photos showing smoke over the complex. Days later, drones reportedly launched from Iraq struck facilities in the Eastern Province, including Abqaiq — the world's largest oil-processing plant — which was seen burning. In August the attacks moved to sea: missiles hit Saudi tankers on 5 August; the Houthis declared a blockade of Saudi-linked ships in the Red Sea; at least six sailors died when a cargo ship was hit twice near the Bab al-Mandeb strait; Jazan was set on fire again on 9 August (quickly extinguished); and on 24 August a missile hit the tanker Amzan just 63 nautical miles from Yanbu — the crew was safe, but the ship caught fire. Aramco's CEO says the attacks caused only brief interruptions. The practical effect is still real: less oil is visibly loading at Yanbu, and Aramco is offering customers cargoes from Sidi Kerir in Egypt instead — a longer, costlier route.","financials":"Jazan refinery — 400,000 barrels a day — suspended and hit again; Yanbu loadings down from their peak.","partners":"The Saudi-led military coalition; Bahri, the national shipping company; UK maritime monitors; Egypt (back-up port).","implications":"Saudi Arabia's back-up export route is itself now under fire. Every strike near Yanbu raises the odds of a serious oil spill on the Red Sea coast.","relevance":"This is EH's coastline. Oil-spill response readiness, water monitoring around Yanbu and Jazan, and emergency-response planning are now urgent, live needs — the most direct opportunity on this board.","flagged":true,"giga":"Red Sea export corridor (Yanbu / Jazan / Petroline)","confidence":"High","verified":true,"sources":[{"label":"FDD — Houthi escalation timeline (06/08/26)","url":"https://www.fdd.org/analysis/2026/08/06/houthis-escalate-attacks-in-red-sea-and-on-saudi-arabia-riyadh-evaluates-options/"},{"label":"Al Jazeera (09/08/26) — Jazan fire, Mocha attack","url":"https://www.aljazeera.com/news/2026/8/9/saudi-arabia-says-fire-extinguished-at-aramco-facility-in-jizan"},{"label":"Al Jazeera (24/08/26) — Amzan strike off Yanbu","url":"https://www.aljazeera.com/news/2026/8/24/yemens-houthis-report-attack-on-saudi-ship"},{"label":"Reuters via Zawya — Sidi Kerir rerouting","url":"https://www.zawya.com/en/business/oil-gas/saudi-arabia-sets-september-arab-light-price-to-asia-at-six-year-low-423317"}],"ehServices":["Environmental Emergency Response","Oily Sludge & Hydrocarbon Recovery","Marine Water & Sediment Sampling","Site Rehabilitation & Remediation"],"ehNote":"The risk we warned about is now real — time to actively offer spill-response and monitoring services around Yanbu and Jazan."},
+{"id":"G11","scope":"Government","entity":"Gulf water infrastructure (Kuwait strike)","group":"Environment & Marine","category":"Security/Disruption Impact","date":"17/07/2026","dateISO":"2026-07-17","period":"Q3-2026","headline":"A wake-up call for water security: missiles damaged a big desalination plant in Kuwait","detail":"On 17 July, Iranian missile and drone strikes damaged a combined power-and-water-desalination plant in Kuwait, starting a fire and knocking out several generating units. Kuwait activated emergency plans and asked residents to save water and power. Why this matters so much here: about 70% of Saudi Arabia's drinking water comes from desalination plants (in Kuwait it is about 90%), and many of those plants sit on the Gulf coast within range of these weapons. Water plants have now been damaged on both sides of the war — a US strike also knocked out an Iranian desalination plant in July, leaving 20 villages without water. The message for every Gulf water utility: protecting plants, monitoring water quality for contamination, and having emergency plans is no longer a paper exercise.","financials":"Damage costs not disclosed.","partners":"Kuwait's water ministry; Gulf utilities; Saudi water authorities (readiness planning).","implications":"Water infrastructure is now a wartime target. Gulf-coast plants carry real risk; Red Sea plants gain value.","relevance":"EH's most actionable new demand: helping water plants assess the security of their seawater intakes, monitor for contamination and build emergency-response plans.","flagged":true,"giga":"Gulf-coast desalination security","confidence":"High","verified":true,"sources":[{"label":"Gulf News (17/07/26)","url":"https://gulfnews.com/world/gulf/kuwait/kuwait-says-iran-strikes-damaged-power-and-water-desalination-plant-1.500611118"},{"label":"The Conversation (07/26) — Gulf desalination dependence","url":""},{"label":"Bloomberg / AP (17/07/26)","url":""}],"ehServices":["Marine Water & Sediment Sampling","Environmental Emergency Response","Industrial Wastewater Treatment","Environmental & Energy Mgmt Systems"],"ehNote":"Turns water-plant security from a talking point into a real service need — start with intake-security and contamination-response advice."},
+{"id":"G12","scope":"Government","entity":"Persian Gulf marine environment","group":"Environment & Marine","category":"Security/Disruption Impact","date":"Jul 2026 (study)","dateISO":"2026-07-10","period":"Q3-2026","headline":"Scientists measured a four-fold jump in oil spills across the Gulf — and cleanup crews cannot reach them because of the war","detail":"A University of South Florida marine-science study found that oil slicks in the Gulf covered roughly four times the area in March 2026 compared with a year earlier. The oil is leaking from tankers trapped, abandoned or sunk by the fighting, and from damaged coastal facilities near Iranian islands. The researchers called it a huge expansion of the oil footprint and warned that a major mangrove nature reserve lies in its path. The environmental group Greenpeace counts more than 85 tankers stuck in the Gulf holding over 21 billion litres of oil between them — a floating risk that grows the longer the war lasts. Cleanup is nearly impossible while the fighting continues, which means a multi-year, multi-country clean-up job is building up for whenever peace comes.","financials":"Not a financial item — more than 21 billion litres of oil sitting in trapped tankers, per Greenpeace.","partners":"University of South Florida (the study); Greenpeace; future regional cleanup bodies.","implications":"An environmental disaster is accumulating faster than anyone can respond. Post-war remediation will be one of the region's biggest environmental programmes ever.","relevance":"Marine monitoring, oil-spill response and coastal restoration are core EH services — this is the clearest long-term demand signal of the entire war.","flagged":true,"giga":"Gulf marine-pollution exposure","confidence":"High","verified":true,"sources":[{"label":"USF College of Marine Science (07/26)","url":"https://www.usf.edu/marine-science/news/2026/oil-spills-spiked-in-the-persian-gulf-during-the-iran-war-according-to-new-study.aspx"},{"label":"Greenpeace — trapped-tanker count (Medium)","url":""}],"ehServices":["Marine Water & Sediment Sampling","Oily Sludge & Hydrocarbon Recovery","Environmental Emergency Response","Site Rehabilitation & Remediation"],"ehNote":"The clearest long-term signal of the war: marine monitoring, spill response and coastal restoration work for years to come."},
+{"id":"G13","scope":"Government","entity":"Ministry of Finance","group":"National Body","category":"Policy/Regulatory Change","date":"H1 2026 (Q2 report 30/07)","dateISO":"2026-07-30","period":"Q3-2026","headline":"The government's budget got a strange gift: the same war that shut its factories pushed up oil prices and shrank the deficit","detail":"The Ministry of Finance's second-quarter report (30 July) shows the budget deficit — the gap between what the government spends and what it earns — shrinking dramatically: SAR 34.3 billion in Q2, versus a record SAR 125.7 billion in Q1. The reason: war-driven oil prices pushed oil income up 22%. But zoom out and the picture is tight. In just six months the government has already used about 97% of the deficit it planned for the whole year (SAR 160 billion of SAR 165 billion), total debt has climbed to SAR 1.685 trillion, and spending is still rising, with infrastructure up 21%. In plain terms: high oil prices are papering over the cost of the war. If peace brings prices down before factories and exports recover, the budget problem comes back bigger — banks like Goldman Sachs model that scenario at roughly double the planned deficit.","financials":"Q2 deficit SAR 34.3bn (much smaller); but the half-year total of SAR 160bn is ~97% of the full-year plan; debt SAR 1.685tn.","partners":"—","implications":"Money stays tight regardless: expect continued discipline on what gets funded, war or peace.","relevance":"Government environmental spending will favour must-do work — compliance, water security, emergency response — over nice-to-have studies. EH proposals should be framed accordingly.","flagged":false,"giga":"","confidence":"High","verified":true,"sources":[{"label":"Saudi Gazette — MoF Q1 outturn","url":"https://saudigazette.com.sa/article/661098"},{"label":"Al Jazeera (06/05/26) — Q1","url":"https://www.aljazeera.com/economy/2026/5/6/saudi-arabia-posts-33-5bn-budget-deficit-amid-drop-in-oil-sales"},{"label":"Arab News (30/07/26) — Q2 outturn","url":"https://www.arabnews.com/node/2652820/business-economy"},{"label":"Saudi Gazette (30/07/26) — debt detail","url":"https://saudigazette.com.sa/article/663370"}],"ehServices":[],"ehNote":"Budget context — frame EH proposals as must-do compliance and safety work, not optional studies."},
+{"id":"G14","scope":"Government","entity":"Ministry of Industry & Mineral Resources / Canada","group":"National Body","category":"Strategic MOU","date":"09/07/2026","dateISO":"2026-07-09","period":"Q3-2026","headline":"Canada's prime minister visited Jeddah and signed deals worth over C$1 billion — deepening the mining partnership","detail":"Canadian Prime Minister Mark Carney visited Jeddah on 9 July, where the two countries concluded 13 agreements worth more than C$1 billion and jointly condemned Iran's attacks on shipping. The visit builds on the critical-minerals cooperation agreement the two countries signed at the Future Minerals Forum in Riyadh on 13 January 2026. Critical minerals are the metals — like rare earths, copper and lithium — that modern technology and defence depend on, and Saudi Arabia wants to become a major supplier.","financials":"13 agreements worth over C$1 billion.","partners":"The Government of Canada; the Saudi industry and mining ministry; the Ma'aden ecosystem.","implications":"Western partners are lining up behind Saudi mining — more fuel for the $110bn expansion.","relevance":"More mining investment ultimately means more mine-site environmental work — studies, water, waste and land restoration.","flagged":false,"giga":"","confidence":"High","verified":true,"sources":[{"label":"PM of Canada (09/07/26)","url":"https://www.pm.gc.ca/en/news/news-releases/2026/07/09/prime-minister-carney-deepens-partnership-saudi-arabia-across-trade"},{"label":"NRCan — FMF minerals MOU (13/01/26)","url":"https://www.canada.ca/en/natural-resources-canada/news/2026/01/canada-strengthens-critical-minerals-and-energy-partnership-with-the-kingdom-of-saudi-arabia-at-the-2026-future-minerals-forum.html"}],"ehServices":["EIA/ESIA & Permitting","Site Rehabilitation & Remediation","Sustainability & ESG Consultancy"],"ehNote":"A diplomacy story — the work for EH comes later, at the individual mines."},
+{"id":"G15","scope":"Government","entity":"Saudi Arabia / Türkiye / Pakistan","group":"Macro & Security","category":"Strategic MOU","date":"~07/08/2026","dateISO":"2026-08-07","period":"Q3-2026","headline":"Saudi Arabia signed a mutual-defence pact with Turkey and Pakistan: an attack on one counts as an attack on all","detail":"In early August — two days before the Jazan refinery was struck — Saudi Arabia signed a three-way defence agreement with Turkey and Pakistan. The core promise: an armed attack on any of the three countries will be treated as an attack on all of them. It is a response to the escalating attacks on Saudi territory, and a signal that Riyadh is preparing for a long conflict by building security partnerships beyond its traditional reliance on the United States. How exactly Turkey or Pakistan would join a Saudi response remains unclear; analysts note that Pakistan brings a nuclear-armed ally into the picture.","financials":"Not a financial item.","partners":"Türkiye; Pakistan.","implications":"A major shift in the region's security map — and a sign the leadership expects the threat to persist.","relevance":"Indirect but important: stronger deterrence changes the likelihood of further attacks on the energy and water sites that drive EH's emergency-response planning.","flagged":true,"giga":"Regional deterrence architecture","confidence":"High","verified":true,"sources":[{"label":"NBC/Reuters (09/08/26) — pact disclosed with Jazan coverage","url":"https://www.nbcnews.com/world/middle-east/yemens-houthis-attack-saudi-aramco-jazan-refinery-rcna591561"}],"ehServices":[],"ehNote":"Security background — no direct work, but it shapes the risk levels our emergency plans prepare for."}
+];
+
+const AUDIT = [
+{n:1,claim:"Our July report said the war had restarted and the Strait of Hormuz was closed again",v:"CONFIRMED",note:"Still true. The US naval blockade is active (44 ships recently turned away), traffic through the Strait is about 90% below normal, and the Oman-brokered peace talks collapsed by 18 August."},
+{n:2,claim:"Our July report warned the Houthis had turned on Saudi Arabia, putting the Yanbu export route at risk",v:"UPDATED",note:"It got worse, exactly as warned: the Jazan refinery was struck twice, the Abqaiq processing plant was hit, and tankers were attacked near Yanbu on 5 and 24 August. Aramco is now rerouting some exports through Egypt."},
+{n:3,claim:"Our July report said a Kuwaiti desalination plant had been hit — making water plants wartime targets",v:"CONFIRMED",note:"Confirmed — and the pattern spread: a US strike also disabled an Iranian desalination plant in July, leaving 20 villages without water."},
+{n:4,claim:"Our July report cited a study showing Gulf oil spills had quadrupled, with 85+ loaded tankers trapped",v:"CONFIRMED",note:"Still stands. Nothing contradicts the study, the war still blocks cleanup crews, and new tanker strikes keep adding oil to the water."},
+{n:5,claim:"Our July report highlighted a record first-quarter budget deficit",v:"UPDATED",note:"The Q2 numbers (published 30 July) changed the picture: high war prices lifted oil income 22% and shrank the quarterly deficit to SAR 34.3bn — though six months in, about 97% of the full-year deficit plan is already used."},
+{n:6,claim:"Our July report flagged that Aramco's dividend was not fully covered by its spare cash",v:"UPDATED",note:"It got tighter: in Q2, cash covered only about half the dividend. Aramco paid it in full anyway on 27 August, borrowing a little more to do so."},
+{n:7,claim:"Our July question: would September's oil price for Asia swing back to a premium, or stay discounted?",v:"CONFIRMED",note:"Answered: discounted even deeper — a six-year low. Saudi Arabia is protecting its customer base, not chasing the war premium."},
+{n:8,claim:"Our July report said SABIC's five Jubail lines were shut with no restart date",v:"CONFIRMED",note:"Still shut — now in month six — and the Q2 results show the cost: a third of sales volumes gone and a small net loss."},
+{n:9,claim:"Our July report said Sadara was fully shut with a $3.7bn loan problem unresolved",v:"CONFIRMED",note:"Still unresolved: no rescue deal, no default notice, no restart filing — more than ten weeks past the deadline."},
+{n:10,claim:"Our July report said NEOM's money now flows to Oxagon, not The Line",v:"UPDATED",note:"Confirmed and advancing: the DataVolt AI data-centre campus at Oxagon says construction starts within months."}
+];
+
+const CORRECTIONS = [
+{n:1,claim:"Our July report treated the Jubail 4 & 6 desalination team selection as fresh news",v:"CORRECTED",note:"The selection was real, but old: the official announcement dates back to 11 December 2024 — a trade website had recycled the story. We have fixed the affected cards and now double-check dates on anything that comes from a single trade outlet."},
+{n:2,claim:"The reported $5.3 billion loan for HUMAIN's data centres",v:"STILL OPEN",note:"Still only one news agency has ever reported it — no confirmation, no denial. We keep it clearly marked as unconfirmed."},
+{n:3,claim:"An old claim that the clean-energy tenders had slipped by 2–3 months",v:"STILL OPEN",note:"Three checks later, still no source anywhere. It stays out of our records."},
+{n:4,claim:"What we looked for this time but could not find",v:"DECLARED GAP",note:"Ma'aden's Q2 results, updates on Veolia's Jubail projects, Alujain's Q2, waste-sector news (SIRC, MWAN tenders) and clean-energy awards. That does not necessarily mean nothing happened — we simply found nothing published. These go to the top of the list next time."}
+];
+
+const META = {"monitored_total":246,"verified_entities":["Acwa Power","AlUla Development Company","Alujain / NATPET","Aramco","DataVolt","Diriyah Company","HUMAIN (PIF)","MWAN (Waste Mgmt Center)","Ma'aden","Ministry of Finance","Ministry of Industry & Mineral Resources / Canada","NEOM","OPEC (secretariat)","Türkiye / Pakistan (defense pact)","OPEC+ / Ministry of Energy","PIF","SABIC","SDAIA","SPPC","SWPC","Sadara Chemical","Soudah Development","Veolia Middle East","Webuild"],"verified_entity_count":24,"on_watchlist":["Acwa Power","Alujain / NATPET","Aramco","MWAN (Waste Mgmt Center)","Ma'aden","NEOM","PIF","SABIC","SWPC","Sadara Chemical","Veolia Middle East","Webuild"],"on_watchlist_count":12,"national_bodies":["AlUla Development Company","Diriyah Company","HUMAIN (PIF)","Ministry of Finance","Ministry of Industry & Mineral Resources / Canada","OPEC+ / Ministry of Energy","SDAIA","SPPC","SWPC"],"generated":"26/08/2026","window":"01/04/2026 – 26/08/2026"};
+
+/* ----- header meta ----- */
+document.getElementById('m-period').textContent = META.window;
+document.getElementById('m-gen').textContent = 'Generated ' + META.generated;
+
+/* ----- derived counts ----- */
+const verifiedItems = DATA.length;
+const flaggedItems  = DATA.filter(d=>d.flagged).length;
+const corpItems     = DATA.filter(d=>d.scope==='Corporate').length;
+const govItems      = DATA.filter(d=>d.scope==='Government').length;
+const DEAL_FLOW = 6.5; // USD bn, in-window new awards / reported frameworks (see chart foot)
+
+/* ----- KPI cards ----- */
+const kpis = [
+  {accent:'#2563eb', num:META.monitored_total, lab:'Companies & bodies we track', note:'Our full watchlist of Saudi organisations'},
+  {accent:'#14b8a6', num:verifiedItems, sub:' items', lab:'News stories verified', note:META.verified_entity_count+' organisations covered · '+corpItems+' company / '+govItems+' government'},
+  {accent:'#ef4444', num:flaggedItems, lab:'🔴 Items to watch', note:'Big projects, infrastructure and security stories'},
+  {accent:'#f59e0b', num:'$'+DEAL_FLOW+'B', lab:'New money announced', note:'New deals this period (one $5.3bn item unconfirmed) · cancellations not counted'},
+  {accent:'#dc2626', num:'~$91', lab:'Oil price today (Brent, 25/08)', note:'Was ~$80 in early Aug when peace looked close · rose as talks failed and attacks spread'},
+];
+document.getElementById('kpis').innerHTML = kpis.map(k=>`
+  <div class="kpi" style="--kpi-accent:${k.accent}">
+    <div class="k-num">${k.num}${k.sub?`<small>${k.sub}</small>`:''}</div>
+    <div class="k-lab">${k.lab}</div>
+    <div class="k-note">${k.note}</div>
+  </div>`).join('');
+
+/* ----- audit section ----- */
+const VERDICT_CLASS = {'CONFIRMED':'v-conf','UPDATED':'v-upd','CLARIFIED':'v-clar'};
+const VERDICT_LABEL = {'CONFIRMED':'CONFIRMED','UPDATED':'CONFIRMED · UPDATED','CLARIFIED':'CLARIFIED'};
+(function(){
+  const counts = {CONFIRMED:0, UPDATED:0, CLARIFIED:0};
+  AUDIT.forEach(a=>counts[a.v]++);
+  document.getElementById('audit-banner').innerHTML =
+    `<span class="big">${AUDIT.length} / ${AUDIT.length} claims checked out</span>
+     <span><span class="verdict v-conf" style="justify-self:start">${counts.CONFIRMED} CONFIRMED</span></span>
+     <span><span class="verdict v-upd" style="justify-self:start">${counts.UPDATED} CONFIRMED · UPDATED</span></span>
+     <span><span class="verdict v-clar" style="justify-self:start">${counts.CLARIFIED} CLARIFIED</span></span>
+     <span style="font-weight:600">Nothing withdrawn · every major claim from our last report re-checked on 26 August</span>`;
+  document.getElementById('audit-rows').innerHTML = AUDIT.map(a=>`
+    <div class="audit-row">
+      <div class="a-num">${a.n}</div>
+      <div>
+        <div class="a-claim">${a.claim}</div>
+        <div class="a-note">${a.note}</div>
+      </div>
+      <span class="verdict ${VERDICT_CLASS[a.v]}">${VERDICT_LABEL[a.v]}</span>
+    </div>`).join('');
+  const CORR_CLASS = {'CORRECTED':'v-corr','VERIFIED':'v-conf','RESOLVED':'v-conf','STILL OPEN':'v-open','DECLARED GAP':'v-open'};
+  const cCounts = CORRECTIONS.reduce((a,x)=>(a[x.v]=(a[x.v]||0)+1,a),{});
+  document.getElementById('corr-banner').innerHTML =
+    `<span class="big">Corrections, open questions & honest gaps</span>
+     <span><span class="verdict v-corr" style="justify-self:start">${cCounts['CORRECTED']||0} CORRECTED</span></span>
+     <span><span class="verdict v-conf" style="justify-self:start">${(cCounts['RESOLVED']||0)+(cCounts['VERIFIED']||0)} RESOLVED / VERIFIED</span></span>
+     <span><span class="verdict v-open" style="justify-self:start">${(cCounts['STILL OPEN']||0)+(cCounts['DECLARED GAP']||0)} OPEN / GAPS</span></span>
+     <span style="font-weight:600">Verified against primary sources as of 26/08/2026</span>`;
+  document.getElementById('corr-rows').innerHTML = CORRECTIONS.map(a=>`
+    <div class="audit-row">
+      <div class="a-num">C${a.n}</div>
+      <div>
+        <div class="a-claim">${a.claim}</div>
+        <div class="a-note">${a.note}</div>
+      </div>
+      <span class="verdict ${CORR_CLASS[a.v]}">${a.v}</span>
+    </div>`).join('');
+})();
+
+/* ----- populate filter dropdowns ----- */
+const groups = [...new Set(DATA.map(d=>d.group))].sort();
+const cats   = [...new Set(DATA.map(d=>d.category))].sort();
+const gSel = document.getElementById('f-group'), cSel = document.getElementById('f-cat');
+groups.forEach(g=>gSel.insertAdjacentHTML('beforeend',`<option value="${g}">${g}</option>`));
+cats.forEach(c=>cSel.insertAdjacentHTML('beforeend',`<option value="${c}">${c}</option>`));
+
+/* ----- state ----- */
+const state = {scope:'all',group:'all',cat:'all',conf:'all',period:'all',flag:false,q:'',view:'card',
+               sortKey:'dateISO',sortDir:'desc'};
+
+const periodLabel = p => p==='Q2-2026'?'Q2 2026':(p==='Q3-2026'?'Q3 2026 · war restart':(p==='context'?'Active programme':(p==='policy-frame'?'Policy frame':p)));
+const esc = s => (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+function applies(d){
+  if(state.group!=='all' && d.group!==state.group) return false;
+  if(state.cat!=='all' && d.category!==state.cat) return false;
+  if(state.conf!=='all' && d.confidence!==state.conf) return false;
+  if(state.period!=='all' && d.period!==state.period) return false;
+  if(state.flag && !d.flagged) return false;
+  if(state.q){
+    const hay=(d.entity+' '+d.group+' '+d.category+' '+d.headline+' '+d.detail+' '+d.partners+' '+d.financials+' '+(d.giga||'')).toLowerCase();
+    if(!hay.includes(state.q.toLowerCase())) return false;
+  }
+  return true;
+}
+function sortList(list){
+  const k=state.sortKey, dir=state.sortDir==='asc'?1:-1;
+  return list.slice().sort((a,b)=>{
+    let va=a[k], vb=b[k];
+    if(k==='flagged'){va=a.flagged?1:0; vb=b.flagged?1:0;}
+    if(va<vb) return -1*dir; if(va>vb) return 1*dir; return 0;
+  });
+}
+
+/* ----- card renderer ----- */
+function cardHTML(d){
+  const gov = d.scope==='Government';
+  return `<div class="card ${gov?'gov':''}" data-id="${d.id}">
+    ${d.flagged?'<div class="flag-strip"></div>':''}
+    <div class="c-top">
+      <span class="entity">${esc(d.entity)}</span>
+      <span class="chip chip-conf conf-${d.confidence}">${d.confidence}</span>
+      ${d.flagged?'<span class="chip chip-flag">🔴 FLAG</span>':''}
+    </div>
+    <div class="c-group">${esc(d.group)} · ${periodLabel(d.period)}</div>
+    <div class="c-top">
+      <span class="chip chip-cat">${esc(d.category)}</span>
+      <span class="chip chip-date">${esc(d.date)}</span>
+    </div>
+    <div class="c-head" style="margin-top:8px">${esc(d.headline)}</div>
+    <div class="c-foot">
+      ${(d.ehServices&&d.ehServices.length)?`<span class="c-svc">🌿 ${d.ehServices.length} EH service line${d.ehServices.length!==1?'s':''}</span>`:`<span class="c-svc muted">Policy / portfolio item</span>`}
+      <span class="c-more">View full intelligence →</span>
+    </div>
+  </div>`;
+}
+
+/* ----- table renderer ----- */
+const COLS=[['id','ID'],['entity','Entity / Authority'],['group','Sector / Authority'],['category','Category'],['date','Date'],['flagged','Flag'],['confidence','Conf.']];
+function tableHTML(list){
+  if(!list.length) return `<div class="empty">No items match the current filters.</div>`;
+  const head = COLS.map(c=>{
+    const sorted = state.sortKey===c[0];
+    const arr = sorted ? (state.sortDir==='asc'?'▲':'▼') : '▾';
+    return `<th data-k="${c[0]}" class="${sorted?'sorted':''}">${c[1]}<span class="arr">${arr}</span></th>`;
+  }).join('') + '<th>Headline</th>';
+  const rows = list.map(d=>`<tr data-id="${d.id}">
+    <td>${d.id}</td>
+    <td class="t-ent">${esc(d.entity)} <span class="scope-tag ${d.scope==='Government'?'g':'c'}">${d.scope[0]}</span></td>
+    <td>${esc(d.group)}</td>
+    <td>${esc(d.category)}</td>
+    <td style="white-space:nowrap">${esc(d.date)}</td>
+    <td>${d.flagged?'🔴':'—'}</td>
+    <td><span class="chip chip-conf conf-${d.confidence}">${d.confidence}</span></td>
+    <td class="t-head">${esc(d.headline)}</td>
+  </tr>`).join('');
+  return `<div class="tbl-wrap"><table class="dt"><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+
+/* ----- main render ----- */
+function render(){
+  const filtered = DATA.filter(applies);
+  const corp = sortList(filtered.filter(d=>d.scope==='Corporate'));
+  const gov  = sortList(filtered.filter(d=>d.scope==='Government'));
+
+  document.getElementById('sec-corp').style.display = (state.scope==='Government')?'none':'';
+  document.getElementById('sec-gov').style.display  = (state.scope==='Corporate')?'none':'';
+
+  document.getElementById('corp-count').textContent = `${corp.length} item${corp.length!==1?'s':''}`;
+  document.getElementById('gov-count').textContent  = `${gov.length} item${gov.length!==1?'s':''}`;
+
+  if(state.view==='card'){
+    document.getElementById('corp-cards').style.display='';
+    document.getElementById('gov-cards').style.display='';
+    document.getElementById('corp-table').style.display='none';
+    document.getElementById('gov-table').style.display='none';
+    document.getElementById('corp-cards').innerHTML = corp.length?corp.map(cardHTML).join(''):`<div class="empty">No corporate items match the current filters.</div>`;
+    document.getElementById('gov-cards').innerHTML  = gov.length?gov.map(cardHTML).join(''):`<div class="empty">No government items match the current filters.</div>`;
+  }else{
+    document.getElementById('corp-cards').style.display='none';
+    document.getElementById('gov-cards').style.display='none';
+    document.getElementById('corp-table').style.display='';
+    document.getElementById('gov-table').style.display='';
+    document.getElementById('corp-table').innerHTML = tableHTML(corp);
+    document.getElementById('gov-table').innerHTML  = tableHTML(gov);
+  }
+  bindRowClicks();
+}
+
+/* ----- flagged summary (canonical, all flagged regardless of filters) ----- */
+function renderFlagged(){
+  const fl = DATA.filter(d=>d.flagged).sort((a,b)=> a.dateISO<b.dateISO?1:-1);
+  document.getElementById('flag-banner').textContent =
+    `${fl.length} stories worth keeping an eye on — big national projects, major infrastructure and security risks, gathered from both the company and government sections.`;
+  document.getElementById('flag-rows').innerHTML = fl.map(d=>{
+    const val = (d.financials && !/^not /i.test(d.financials)) ? d.financials.split(/[.;(]/)[0].trim() : 'Not disclosed';
+    return `<div class="flag-row" data-id="${d.id}">
+      <div class="fr-ent">${esc(d.entity)}<span class="scope-mini ${d.scope==='Government'?'sm-g':'sm-c'}">${d.scope[0]}</span></div>
+      <div class="fr-desc">${esc(d.headline)}</div>
+      <div class="fr-val">${esc(val)}</div>
+      <div class="fr-link">${esc(d.giga||'Vision 2030')}</div>
+    </div>`;
+  }).join('');
+  document.querySelectorAll('#flag-rows .flag-row').forEach(r=>r.addEventListener('click',()=>openDetail(r.dataset.id)));
+}
+
+/* ----- detail panel ----- */
+const overlay=document.getElementById('overlay'), panel=document.getElementById('panel');
+function openDetail(id){
+  const d=DATA.find(x=>x.id===id); if(!d) return;
+  const gov=d.scope==='Government';
+  const accent = gov?'':'blue';
+  document.getElementById('panel-head').innerHTML = `
+    <div class="ph-top">
+      <span class="scope-tag ${gov?'g':'c'}">${d.scope}</span>
+      <span class="chip chip-cat" style="${gov?'color:var(--eh-green-d);background:var(--eh-green-l)':''}">${esc(d.category)}</span>
+      <span class="chip chip-conf conf-${d.confidence}">${d.confidence} confidence</span>
+      <span class="panel-id">${d.id}</span>
+    </div>
+    <h3>${esc(d.headline)}</h3>
+    <div class="meta-row">
+      <span class="chip chip-date">${esc(d.entity)}</span>
+      <span class="chip chip-date">${esc(d.group)}</span>
+      <span class="chip chip-date">${esc(d.date)} · ${periodLabel(d.period)}</span>
+      ${d.flagged?'<span class="chip chip-flag">🔴 FLAGGED</span>':''}
+    </div>`;
+  const srcs = (d.sources||[]).map(s=> s.url
+    ? `<li><a href="${s.url}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`
+    : `<li>${esc(s.label)}</li>`).join('');
+  document.getElementById('panel-body').innerHTML = `
+    ${d.flagged?`<div class="giga-box"><div class="gb-lab">🔴 Linked to a major national project</div><div class="gb-val">${esc(d.giga||'Tied to Vision 2030 giga-project programme')}</div></div>`:''}
+    <div class="pf ${accent}"><div class="pf-lab">What happened</div><div class="pf-val">${esc(d.detail)}</div></div>
+    <div class="pf ${accent}"><div class="pf-lab">Key numbers</div><div class="pf-val big">${esc(d.financials)}</div></div>
+    <div class="pf ${accent}"><div class="pf-lab">Who is involved</div><div class="pf-val">${esc(d.partners)}</div></div>
+    <div class="pf ${accent}"><div class="pf-lab">Why it matters</div><div class="pf-val">${esc(d.implications)}</div></div>
+    <div class="pf ${accent}"><div class="pf-lab">What it means for EH</div><div class="pf-val">${esc(d.relevance)}</div></div>
+    ${(d.ehServices&&d.ehServices.length)?`
+    <div class="pf"><div class="pf-lab green">Environmental services EH can provide</div>
+      ${d.ehNote?`<div class="svc-note">${esc(d.ehNote)}</div>`:''}
+      <div class="svc-wrap">${d.ehServices.map(s=>`<span class="svc-chip">${esc(s)}</span>`).join('')}</div>
+    </div>`
+    :(d.ehNote?`<div class="pf"><div class="pf-lab green">Environmental services EH can provide</div><div class="svc-note">${esc(d.ehNote)}</div></div>`:'')}
+    <div class="pf ${accent}"><div class="pf-lab">Sources</div><ul class="src-list">${srcs||'<li>—</li>'}</ul></div>`;
+  overlay.classList.add('open'); panel.classList.add('open'); panel.setAttribute('aria-hidden','false');
+}
+function closeDetail(){overlay.classList.remove('open'); panel.classList.remove('open'); panel.setAttribute('aria-hidden','true');}
+overlay.addEventListener('click',closeDetail);
+document.getElementById('panel-close').addEventListener('click',closeDetail);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetail();});
+
+function bindRowClicks(){
+  document.querySelectorAll('.card[data-id]').forEach(c=>c.onclick=()=>openDetail(c.dataset.id));
+  document.querySelectorAll('table.dt tbody tr[data-id]').forEach(r=>r.onclick=()=>openDetail(r.dataset.id));
+  document.querySelectorAll('table.dt thead th[data-k]').forEach(th=>th.onclick=()=>{
+    const k=th.dataset.k;
+    if(state.sortKey===k){state.sortDir=state.sortDir==='asc'?'desc':'asc';}
+    else{state.sortKey=k; state.sortDir='asc';}
+    render();
+  });
+}
+
+/* ----- filter bindings ----- */
+const bind=(id,key)=>document.getElementById(id).addEventListener('change',e=>{state[key]=e.target.value; render();});
+bind('f-scope','scope'); bind('f-group','group'); bind('f-cat','cat'); bind('f-conf','conf'); bind('f-period','period');
+document.getElementById('f-q').addEventListener('input',e=>{state.q=e.target.value; render();});
+document.getElementById('f-flag').addEventListener('change',e=>{state.flag=e.target.checked; render();});
+document.getElementById('btn-reset').addEventListener('click',()=>{
+  Object.assign(state,{scope:'all',group:'all',cat:'all',conf:'all',period:'all',flag:false,q:''});
+  ['f-scope','f-group','f-cat','f-conf','f-period'].forEach(i=>document.getElementById(i).value='all');
+  document.getElementById('f-q').value=''; document.getElementById('f-flag').checked=false;
+  render();
+});
+document.getElementById('v-card').addEventListener('click',()=>{state.view='card';
+  document.getElementById('v-card').classList.add('active'); document.getElementById('v-table').classList.remove('active'); render();});
+document.getElementById('v-table').addEventListener('click',()=>{state.view='table';
+  document.getElementById('v-table').classList.add('active'); document.getElementById('v-card').classList.remove('active'); render();});
+
+/* ----- footer coverage ----- */
+(function(){
+  const pct = Math.round(META.verified_entity_count/META.monitored_total*100);
+  document.getElementById('cov-block').innerHTML = `
+    <div style="font-size:12.5px;color:var(--ink-soft);margin-top:4px">
+      <strong>${META.verified_entity_count}</strong> priority entities verified of <strong>${META.monitored_total}</strong> monitored
+      (<strong>${META.on_watchlist_count}</strong> direct watchlist names + ${META.national_bodies.length} governing national bodies & authorities) · ${verifiedItems} developments + ${AUDIT.length} audited Q1 claims + ${CORRECTIONS.length} corrections/resolutions.</div>
+    <div class="cov-meter"><div class="cov-fill" style="width:${Math.max(pct,6)}%"></div></div>
+    <div class="small">≈${pct}% of the entity universe verified this pass. The unverified remainder is the long tail of small contracting, transport, laboratory and consultancy firms with little or no public Q2/Q3 2026 disclosure.</div>`;
+  document.getElementById('vsub').textContent = `${META.verified_entity_count} entities · highest news-volume & relevance:`;
+  document.getElementById('vlist').innerHTML = META.verified_entities.map(v=>`<li>${esc(v)}</li>`).join('');
+  document.getElementById('disclaimer').innerHTML =
+    `<strong>Period basis.</strong> Items tagged “Q2 2026” fall within 01/04/2026–07/07/2026 (including late-March war events whose impact persists); items tagged “Q3 2026 · war restart” cover 07/07–26/08/2026. Q2 2026 earnings are now reported for the majors (Aramco 04/08; SABIC late July; Acwa 06/08) and are reflected in the records; Ma'aden and Alujain Q2 results were not located this pass and are declared gaps.`;
+})();
+
+/* ----- charts (vivid multi-colour categorical palette) ----- */
+const PALETTE=['#2563eb','#0ea5e9','#06b6d4','#14b8a6','#10b981','#22c55e','#84cc16','#eab308','#f59e0b','#f97316','#ef4444','#f43f5e','#ec4899','#a855f7','#6366f1'];
+const colorFor=(i)=>PALETTE[i % PALETTE.length];
+Chart.defaults.font.family="'Plus Jakarta Sans',sans-serif";
+Chart.defaults.font.size=11;
+Chart.defaults.color='#64748b';
+
+function countBy(key){const m={}; DATA.forEach(d=>{m[d[key]]=(m[d[key]]||0)+1;}); 
+  return Object.entries(m).sort((a,b)=>b[1]-a[1]);}
+
+const secData=countBy('group');
+new Chart(document.getElementById('chartSector'),{
+  type:'doughnut',
+  data:{labels:secData.map(x=>x[0]), datasets:[{data:secData.map(x=>x[1]), backgroundColor:PALETTE, borderColor:'#fff', borderWidth:2}]},
+  options:{cutout:'58%', plugins:{legend:{position:'right', labels:{boxWidth:10, padding:8, font:{size:10}}}}}
+});
+
+const catData=countBy('category');
+new Chart(document.getElementById('chartCat'),{
+  type:'bar',
+  data:{labels:catData.map(x=>x[0]), datasets:[{data:catData.map(x=>x[1]), backgroundColor:catData.map((_,i)=>colorFor(i)), borderRadius:5, barThickness:14}]},
+  options:{indexAxis:'y', plugins:{legend:{display:false}},
+    scales:{x:{beginAtZero:true, ticks:{precision:0, stepSize:1}, grid:{color:'#eceff3'}}, y:{grid:{display:false}, ticks:{font:{size:10}}}}}
+});
+
+const capData=[
+  {t:'AI & Data Centres (reported)', v:5.3},
+  {t:'Water & Desalination', v:0.69},
+  {t:'Tourism & Culture', v:0.49},
+];
+new Chart(document.getElementById('chartCap'),{
+  type:'bar',
+  data:{labels:capData.map(x=>x.t), datasets:[{data:capData.map(x=>x.v), backgroundColor:['#2563eb','#06b6d4','#f59e0b'], borderRadius:5, barThickness:30}]},
+  options:{plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>'$'+c.parsed.y+'bn'}}},
+    scales:{y:{beginAtZero:true, grid:{color:'#eceff3'}, ticks:{callback:v=>'$'+v+'bn'}}, x:{grid:{display:false}, ticks:{font:{size:10}}}}}
+});
+
+/* ----- init ----- */
+render();
+renderFlagged();
+</script>
+<style id="ehDark">
+body.dark{background:#0F1519 !important;color:#DDE6EB}
+body.dark .verdict,body.dark .v-conf,body.dark .kpi,body.dark .v-upd,body.dark .v-open,body.dark .chart-card,body.dark .v-corr,body.dark .masthead,body.dark .btn-print,body.dark .audit-wrap,body.dark .v-clar,body.dark .audit-open,body.dark .filters,body.dark .flag-wrap,body.dark .flag-banner,body.dark .flag-head-row,body.dark .highlights,body.dark .panel-close,body.dark .panel-head,body.dark .cov-meter,body.dark .note-box{background:#151C21 !important;border-color:#2C3A43 !important;color:#DDE6EB}
+body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#E6EDF1}
+body.dark table th{background:#1A242B !important;color:#CBD8DF}
+body.dark table td{border-color:#2C3A43 !important}
+body.dark svg text,body.dark svg tspan{fill:#C9D4DB !important}
+body.dark svg .domain,body.dark svg g.tick line{stroke:#3A4B55}
+body.dark a{color:#7FB4E8}
+body.dark [style*="background:#fff"],body.dark [style*="background: #fff"],body.dark [style*="background:#FFF"],body.dark [style*="background:#F"],body.dark [style*="background: #F"],body.dark [style*="background:#E"]{background:#1A242B !important;color:#D5E0E6 !important;border-color:#2C3A43 !important}
+body.dark [style*="color:#1"],body.dark [style*="color:#2"],body.dark [style*="color:#3"],body.dark [style*="color:#4"]{color:#C9D6DD !important}
+</style>
+<script>
+(function(){
+  window.addEventListener('message',function(e){
+    var d=e.data||{};
+    if(d.ehhub==='theme'&&(d.theme==='dark'||d.theme==='light')){
+      document.body.classList.toggle('dark',d.theme==='dark');
+      try{localStorage.setItem('ehhub.theme',d.theme);}catch(err){}
+    }
+  });
+  try{ if(localStorage.getItem('ehhub.theme')==='dark') document.body.classList.add('dark'); }catch(e){}
+})();
+</script>
+</body>
+</html>

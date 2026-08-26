@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saudi Arabia Fiscal Monitor 2026 — v4: H1 Actuals & the Red Sea Front</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous" onerror="document.write('<scr'+'ipt src=&quot;vendor/chart.umd.min.js&quot;><\/scr'+'ipt>')"></script>
+<style>
+:root{
+  --navy:#0A2A43; --navy2:#103a5c;
+  --blue:#0572BC; --blue-d:#045a96; --blue-tint:#e7f2fb;
+  --green:#54AB5D; --green-d:#3f8a47; --green-tint:#eaf6ec;
+  --rag-red:#D32F2F; --rag-amber:#F9A825; --rag-green:#388E3C;
+  --red-tint:#fbeaea; --amber-tint:#fdf4e0;
+  --bg:#F4F7FB; --card:#FFFFFF; --line:#e3e9f0;
+  --t1:#15233B; --t2:#5A6A7A; --t3:#8a98a8;
+  --radius:14px; --gap:20px;
+  --shadow:0 1px 3px rgba(16,40,70,.06), 0 6px 22px rgba(16,40,70,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Plus Jakarta Sans',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  background:var(--bg); color:var(--t1); line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif; font-weight:600; line-height:1.2; letter-spacing:-.01em}
+.wrap{max-width:1320px; margin:0 auto; padding:0 28px}
+a{color:inherit; text-decoration:none}
+
+/* ---------- Sticky nav ---------- */
+.topnav{
+  position:sticky; top:0; z-index:50; background:rgba(10,42,67,.97);
+  backdrop-filter:saturate(140%) blur(6px); border-bottom:1px solid rgba(255,255,255,.08);
+}
+.topnav .wrap{display:flex; align-items:center; gap:18px; height:58px}
+.topnav .brand{display:flex; align-items:center; gap:10px; color:#fff; font-weight:700; font-size:14px; white-space:nowrap}
+.topnav .brand img{width:26px; height:26px; border-radius:6px; background:#fff; padding:2px}
+.topnav .vtag{font-size:10px; font-weight:800; background:var(--rag-amber); color:#4a3502; padding:3px 8px; border-radius:6px; letter-spacing:.04em}
+.topnav nav{display:flex; gap:4px; margin-left:auto; flex-wrap:wrap}
+.topnav nav a{
+  color:#c7d6e4; font-size:12.5px; font-weight:600; padding:7px 11px; border-radius:8px;
+  transition:.15s; white-space:nowrap;
+}
+.topnav nav a:hover{color:#fff; background:rgba(255,255,255,.10)}
+
+/* ---------- Header ---------- */
+.hero{background:linear-gradient(160deg,#1c2b10 0%,var(--navy) 45%,var(--navy2) 100%); color:#fff; padding:42px 0 30px}
+.hero .badge-row{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px}
+.hero .ctx-badge{font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:5px 11px; border-radius:999px; background:rgba(255,255,255,.12); color:#dcebd0}
+.hero .ctx-badge.war{background:rgba(211,47,47,.35); color:#ffd2d2; border:1px solid rgba(255,140,140,.45)}
+.hero .ctx-badge.upd{background:rgba(84,171,93,.25); color:#cdeccf; border:1px solid rgba(84,171,93,.45)}
+.hero h1{font-size:34px; font-weight:700; max-width:980px; margin-bottom:8px}
+.hero .sub{font-size:16px; color:#bcd0e2; max-width:930px; font-weight:500}
+.hero .meta{display:flex; gap:22px; flex-wrap:wrap; margin-top:18px; font-size:12.5px; color:#9fb6cb}
+.hero .meta b{color:#e7f0f8; font-weight:600}
+.ctx-note{
+  margin-top:22px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12);
+  border-radius:12px; padding:16px 18px; font-size:13.5px; color:#dbe7f1; max-width:1020px; line-height:1.6;
+}
+.ctx-note b{color:#fff}
+.ctx-note .corr{color:#ffe0a3}
+.ctx-note .rev{color:#ffc4c4}
+.ctx-note .good{color:#b9e4bd}
+
+/* ---------- Provenance legend ---------- */
+.prov-legend{display:flex; gap:14px; flex-wrap:wrap; align-items:center; margin-top:16px; font-size:12px; color:#bcd0e2}
+.prov-legend .item{display:flex; align-items:center; gap:7px}
+.dot{width:11px; height:11px; border-radius:3px; display:inline-block}
+.dot.off{background:var(--green)} .dot.an{background:var(--rag-amber)} .dot.sc{background:var(--blue)}
+
+/* ---------- Section scaffolding ---------- */
+section{padding:34px 0; scroll-margin-top:64px}
+.sec-head{display:flex; align-items:baseline; gap:12px; margin-bottom:4px; flex-wrap:wrap}
+.sec-head h2{font-size:23px; color:var(--navy)}
+.sec-num{font-family:'Plus Jakarta Sans'; font-size:12px; font-weight:800; color:var(--blue); background:var(--blue-tint); padding:3px 9px; border-radius:7px; letter-spacing:.05em}
+.sec-sub{color:var(--t2); font-size:14px; margin:6px 0 22px; max-width:940px}
+.upd-chip{font-size:10px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; padding:3px 9px; border-radius:999px; background:var(--green-tint); color:var(--green-d); border:1px solid #bfe3c3}
+.upd-chip.warn{background:var(--red-tint); color:var(--rag-red); border-color:#eebcbc}
+
+/* provenance tag */
+.tag{font-size:10px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; padding:3px 8px; border-radius:6px; white-space:nowrap}
+.tag.off{background:var(--green-tint); color:var(--green-d)}
+.tag.an{background:var(--amber-tint); color:#9a6a06}
+.tag.sc{background:var(--blue-tint); color:var(--blue-d)}
+
+/* ---------- KPI cards ---------- */
+.kpi-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:var(--gap)}
+.kpi{background:var(--card); border-radius:var(--radius); padding:18px 18px 16px; box-shadow:var(--shadow); position:relative; border-top:3px solid var(--blue); overflow:hidden}
+.kpi.green{border-top-color:var(--green)}
+.kpi.red{border-top-color:var(--rag-red)}
+.kpi.amber{border-top-color:var(--rag-amber)}
+.kpi .ktop{display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:10px}
+.kpi .klabel{font-size:11.5px; font-weight:700; color:var(--t2); text-transform:uppercase; letter-spacing:.04em; line-height:1.35}
+.kpi .kval{font-size:27px; font-weight:800; font-family:'Plus Jakarta Sans'; color:var(--t1); letter-spacing:-.02em}
+.kpi .kunit{font-size:13px; font-weight:700; color:var(--t3); margin-left:3px}
+.kpi .kdelta{font-size:12px; font-weight:700; margin-top:7px; display:inline-flex; align-items:center; gap:4px}
+.kdelta.up{color:var(--rag-green)} .kdelta.down{color:var(--rag-red)} .kdelta.flat{color:var(--t2)} .kdelta.warn{color:#b5750a}
+.kpi .ksrc{font-size:10.5px; color:var(--t3); margin-top:8px; padding-top:8px; border-top:1px solid var(--line)}
+
+/* ---------- Charts ---------- */
+.chart-grid{display:grid; grid-template-columns:1fr 1fr; gap:var(--gap)}
+.card{background:var(--card); border-radius:var(--radius); padding:20px 22px; box-shadow:var(--shadow)}
+.card.full{grid-column:1 / -1}
+.card .chead{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:4px}
+.card h3{font-size:15.5px; color:var(--navy)}
+.card .csub{font-size:12.5px; color:var(--t2); margin:3px 0 14px; max-width:90%}
+.chart-box{position:relative; height:320px}
+.chart-box.tall{height:380px}
+.csrc{font-size:11px; color:var(--t3); margin-top:12px; padding-top:10px; border-top:1px solid var(--line); display:flex; gap:6px; align-items:center; flex-wrap:wrap}
+.csrc .tag{flex-shrink:0}
+.callout{background:var(--amber-tint); border-left:3px solid var(--rag-amber); padding:9px 13px; border-radius:8px; font-size:12.5px; color:#7a5403; margin-top:12px; line-height:1.5}
+.callout.blue{background:var(--blue-tint); border-left-color:var(--blue); color:#0b4a75}
+.callout.red{background:var(--red-tint); border-left-color:var(--rag-red); color:#7a1a1a}
+.callout.green{background:var(--green-tint); border-left-color:var(--green); color:#2c5e32}
+
+/* ---------- Scenario table ---------- */
+.tbl-wrap{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; overflow-x:auto}
+table.scen{width:100%; border-collapse:collapse; font-size:13px; min-width:900px}
+table.scen th{background:var(--navy); color:#fff; text-align:left; padding:13px 14px; font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; vertical-align:bottom}
+table.scen td{padding:13px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+table.scen tr.opt td{background:linear-gradient(90deg,var(--green-tint),transparent 60%)}
+table.scen tr.base td{background:linear-gradient(90deg,var(--amber-tint),transparent 60%)}
+table.scen tr.pess td{background:linear-gradient(90deg,var(--red-tint),transparent 60%)}
+table.scen .sname{font-weight:800; font-size:14px}
+table.scen tr.opt .sname{color:var(--rag-green)}
+table.scen tr.base .sname{color:#b5750a}
+table.scen tr.pess .sname{color:var(--rag-red)}
+table.scen .big{font-weight:800; font-size:15px; font-family:'Plus Jakarta Sans'}
+.riskpill{font-size:11px; font-weight:800; padding:3px 9px; border-radius:999px; display:inline-block}
+.riskpill.low{background:var(--green-tint); color:var(--green-d)}
+.riskpill.mod{background:var(--amber-tint); color:#9a6a06}
+.riskpill.high{background:var(--red-tint); color:var(--rag-red)}
+.basis{font-size:11px; color:var(--t3); font-style:italic; margin-top:3px}
+
+/* ---------- Sources ---------- */
+.src-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:var(--gap)}
+.src-card{background:var(--card); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:8px}
+.src-card .stop{display:flex; align-items:center; gap:11px}
+.src-badge{width:42px; height:42px; border-radius:10px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:14px; flex-shrink:0; font-family:'Plus Jakarta Sans'}
+.src-card .sname2{font-weight:800; font-size:14px; line-height:1.25}
+.src-card .sdate{font-size:11px; color:var(--t3); font-weight:600}
+.src-card .shead{font-size:13px; font-weight:700; color:var(--blue-d)}
+.src-card .sdesc{font-size:12.5px; color:var(--t2); line-height:1.5}
+.disclaimer{margin-top:22px; background:#fff; border:1px dashed var(--line); border-left:4px solid var(--blue); border-radius:10px; padding:16px 18px; font-size:12.5px; color:var(--t2); line-height:1.65}
+.disclaimer b{color:var(--t1)}
+
+/* ---------- Footer ---------- */
+footer{background:var(--navy); color:#aebfce; padding:30px 0; margin-top:14px; font-size:12.5px}
+footer .frow{display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap}
+footer b{color:#fff}
+footer .conf{display:inline-block; background:rgba(211,47,47,.2); color:#ffc9c9; font-weight:700; padding:3px 10px; border-radius:6px; font-size:11px; letter-spacing:.04em}
+footer ul{list-style:none; font-size:12px; line-height:1.9; color:#9fb6cb}
+
+@media (max-width:1080px){
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .chart-grid,.src-grid{grid-template-columns:1fr}
+  .hero h1{font-size:27px}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px}
+  .kpi-grid{grid-template-columns:1fr}
+  .topnav nav{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ STICKY NAV ============ -->
+<div class="topnav">
+  <div class="wrap">
+    <div class="brand"><img id="navlogo" alt="EH"><span>EH&nbsp;·&nbsp;Strategic Planning</span><span class="vtag">v4 · 26/08/2026 · H1 ACTUALS</span></div>
+    <nav>
+      <a href="#overview">Overview</a>
+      <a href="#kpis">KPIs</a>
+      <a href="#compare">Budget vs Actual</a>
+      <a href="#projection">Projection</a>
+      <a href="#scenarios">Scenarios</a>
+      <a href="#sources">Sources</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ============ SECTION 1 — HEADER ============ -->
+<header class="hero" id="overview">
+  <div class="wrap">
+    <div class="badge-row">
+      <span class="ctx-badge">Saudi Fiscal Monitor · FY2026</span>
+      <span class="ctx-badge upd">Official H1 data in — Q2 beat the stress case</span>
+      <span class="ctx-badge war">Red Sea second front open since 20/07</span>
+    </div>
+    <h1>Saudi Arabia Fiscal Monitor 2026: The Half-Year Reckoning</h1>
+    <p class="sub">Version 4. The MoF Q2 report (30/07) delivered a genuine surprise — a SAR 34.3B quarterly deficit against a stress benchmark of 90B+ — but the war opened a Red Sea second front on Saudi Arabia's last export corridor, and the H1 deficit of SAR 160B has consumed 97% of the full-year target with the seasonally heavy half still to come.</p>
+    <div class="meta">
+      <span>Data as of <b>26/08/2026</b></span>
+      <span>Currency: <b>SAR billion</b> unless noted</span>
+      <span>Primary sources: <b>Saudi MoF / NDMC · EIA</b></span>
+      <span>Supersedes: <b>v3 of 19/07/2026</b></span>
+    </div>
+
+    <div class="ctx-note">
+      <b>The fiscal surprise.</b> Q2 revenue rose 12% YoY to <b>SAR 338.8B</b> — oil revenue jumped <b>+22%</b> as wartime prices reached the budget through the Aramco accrual lag — while spending growth moderated sharply to +11% (goods &amp; services went from <b>+52% in Q1 to just +1%</b> in Q2, confirming Q1 was front-loaded, not a run-rate). The Q2 deficit of <b>SAR 34.3B</b> was flat against Q2 2025 and far below the ~90B stress benchmark this monitor set in v3. <span class="good">The v3 central case (240–270B) assumed a much worse Q2 than materialised.</span> H1 deficit: <b>SAR 160.0B</b>, financed entirely by borrowing; reserves untouched at SAR 399.1B; public debt SAR 1,685B.
+      <br><br><span class="rev">▼ The strategic deterioration.</span> On 20/07 the Houthis declared a Red Sea blockade of Saudi-linked shipping. On 25/07 they struck Aramco facilities at <b>Jizan (refinery hit, operations suspended)</b> and targeted <b>Yanbu</b> — the port handling <b>92% of Saudi seaborne crude exports in June (78% in July)</b> after Hormuz closed. Drones hit <b>Abqaiq</b> on 27/07. Tanker attacks near Yanbu continued through 24/08. Brent spiked above $100 after 25/07, held ~$90–95 through August, then fell to <b>$87.1 (settle 25/08)</b> as US sanctions landed soft and Pakistan-mediated diplomacy gained traction. Hormuz remains near-shut (~7 transits/day vs ~110); June exports ran 4.53 mb/d, −31% vs pre-war. Structurally, the <b>UAE's May exit from OPEC and OPEC+</b> compounds the pressure: Abu Dhabi now pumps outside quota discipline via its Fujairah bypass while Saudi routes are constrained — leaving OPEC+'s six consecutive paper quota hikes (through September) largely unmonetisable for Riyadh and diluting its swing-producer leverage. The fiscal variable that matters now is <b>volume — whether the Yanbu corridor holds</b> — not price.
+      <br><br><span class="corr">⚠ Why the FY range moves UP despite the Q2 beat:</span> v3's quarterly paths underweighted H2 seasonality. H2 is structurally the heavy half — H2 2025 alone ran a <b>SAR 184B</b> deficit in peacetime with cheap oil. With H1 at 160B official, even the friendly arithmetic lands the full year near or above the FY2025 outturn (276.6B). The v4 central case is <b>~SAR 290–330B (≈5.8–6.6% of GDP)</b> — an EH construction with the logic shown in Section 5, since no institution has published a post-Q2 forecast.
+    </div>
+
+    <div class="prov-legend">
+      <span style="font-weight:700;color:#e7f0f8">Provenance:</span>
+      <span class="item"><span class="dot off"></span>Official — Saudi MoF / NDMC / EIA</span>
+      <span class="item"><span class="dot an"></span>Analyst / market — cited</span>
+      <span class="item"><span class="dot sc"></span>EH scenario — anchored estimate</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ SECTION 2 — KPI CARDS ============ -->
+<section id="kpis">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">SECTION 02</span><h2>Headline metrics</h2><span class="upd-chip">H1 official actuals · market data to 25/08</span></div>
+    <p class="sec-sub">The Q2 2026 MoF report (released 30/07) is now the latest official fiscal data. Oil-market and shipping cards reflect the position as of 24–26/08/2026.</p>
+    <div class="kpi-grid" id="kpiGrid"></div>
+  </div>
+</section>
+
+<!-- ============ SECTION 3 — BUDGET vs ACTUAL ============ -->
+<section id="compare">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">SECTION 03</span><h2>Budget vs. H1 2026 actuals</h2><span class="upd-chip">Charts A &amp; C updated with Q2 data</span></div>
+    <p class="sec-sub">Charts A and C now carry the official first-half figures. Charts B and D retain the Q1 detail — the MoF's economic-type and sectoral quarterly breakdowns remain richest for Q1 — with H1 updates in the notes.</p>
+    <div class="chart-grid">
+
+      <div class="card">
+        <div class="chead">
+          <div><h3>A · Revenue by source — H1 2026 vs H1 2025</h3>
+          <p class="csub">First-half revenue rose 6% YoY to SAR 599.8B: oil +9% (the wartime price lag arriving), non-oil +2%.</p></div>
+          <span class="tag off">Official · MoF</span>
+        </div>
+        <div class="chart-box"><canvas id="chartA"></canvas></div>
+        <div class="callout green">The Q2 oil revenue surge (+22% YoY to SAR 185.1B) validated the accrual-lag thesis: the March–May price spike reached the budget one quarter later. Q3 accruals reflect June–August prices ($82–92) — still elevated — but on volumes running ~30% below pre-war.</div>
+        <div class="csrc"><span class="tag off">Source</span> Saudi MoF — Q2 FY2026 Quarterly Budget Performance Report (30/07/2026). H1 2025 derived from published YoY changes.</div>
+      </div>
+
+      <div class="card">
+        <div class="chead">
+          <div><h3>B · The Q1 spending surge — and its Q2 moderation</h3>
+          <p class="csub">Q1 2026 vs Q1 2025 by economic type. Q2 confirmed the surge was front-loaded, not a run-rate.</p></div>
+          <span class="tag off">Official · MoF</span>
+        </div>
+        <div class="chart-box"><canvas id="chartB"></canvas></div>
+        <div class="callout green">Q2 decelerated across the board: wages <b>+3%</b>, goods &amp; services <b>+1%</b> (from +52%), total spending +11% (from +20%). The exception: <b>financing expenses +41%</b> — debt service is now the fastest-growing line as war borrowing compounds.</div>
+        <div class="csrc"><span class="tag off">Source</span> Saudi MoF — Q1 &amp; Q2 FY2026 reports; year-on-year changes as published.</div>
+      </div>
+
+      <div class="card">
+        <div class="chead">
+          <div><h3>C · Quarterly deficit path — the Q2 normalisation</h3>
+          <p class="csub">Q2 2026 landed flat against Q2 2025 — but H1 has consumed 97% of the full-year target.</p></div>
+          <span class="tag off">Official · MoF</span>
+        </div>
+        <div class="chart-box"><canvas id="chartC"></canvas></div>
+        <div class="callout">H1 2026 deficit: <b>SAR 160.0B</b> vs H1 2025's 92.7B (+73%). All financed through borrowing — reserves untouched at SAR 399.1B. The FY2026 target (165.4B) is effectively exhausted with the seasonally heavy half still ahead.</div>
+        <div class="csrc"><span class="tag off">Source</span> Saudi MoF — quarterly budget performance reports, 2025–2026.</div>
+      </div>
+
+      <div class="card">
+        <div class="chead">
+          <div><h3>D · Expenditure by sector — quarterly pro-rata vs Q1 actual</h3>
+          <p class="csub">Q1 2026 actual spending against one quarter of the FY2026 budget (÷4). Both inputs are official MoF figures; the pro-rata split is an EH arithmetic view, since MoF does not publish quarterly budget phasing.</p></div>
+          <div style="display:flex;gap:6px"><span class="tag off">Official · inputs</span><span class="tag sc">EH · pro-rata ÷4</span></div>
+        </div>
+        <div class="chart-box"><canvas id="chartD"></canvas></div>
+        <div class="callout">H1 sector actuals (MoF): military <b>SAR 125B</b>, health &amp; social development <b>171B</b> (+10% YoY), education <b>~110B</b>, with infrastructure &amp; transport spending up <b>+21%</b> — war-adjacent and logistics-reroute lines are running hottest.</div>
+        <div class="csrc"><span class="tag off">Source</span> Saudi MoF — Q1 FY2026 report (chart); Q2/H1 sector figures via Argaam &amp; Arab News from the Q2 report.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 4 — PROJECTION ============ -->
+<section id="projection">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">SECTION 04</span><h2>Full-year 2026 projection</h2><span class="upd-chip warn">Re-based on official H1 · Red Sea front live</span></div>
+    <p class="sec-sub">Two official anchors now fix the first half of every path. The fork for H2 is between a grinding war with the Yanbu corridor holding, a diplomatic breakthrough on Hormuz, and a corridor breach — the scenario in which Saudi Arabia's last export route fails.</p>
+    <div class="chart-grid">
+
+      <div class="card full">
+        <div class="chead">
+          <div><h3>E · Brent crude — 2026 actual &amp; H2 scenarios</h3>
+          <p class="csub">Monthly Brent (approx.; Aug = month-to-date ≈$92, incl. the late-Aug slide to $87.1). The Red Sea strikes pushed Brent above $100 in late July; soft US sanctions and Pakistan-mediated diplomacy are now pulling the premium out.</p></div>
+          <div style="display:flex;gap:6px"><span class="tag an">Market · actuals</span><span class="tag sc">EH scenario · H2</span></div>
+        </div>
+        <div class="chart-box tall"><canvas id="chartE"></canvas></div>
+        <div class="callout">Late-August inflection: Washington's 24/08 "economic D-Day" sanctions set no wind-down deadline and spared Chinese banks — softer than markets feared — while Pakistan's army chief carried a sanctions-relief proposal to Tehran. Brent fell <b>7.7% in two sessions</b> to $87.1 (25/08). Iran–Oman talks on Strait management and indirect US–Iran contact via Pakistan are the live de-escalation tracks; both sides have nonetheless raised their conditions for reopening Hormuz.</div>
+        <div class="csrc"><span class="tag an">Sources</span> Monthly path: CNBC oil desk, Fortune, Trading Economics, Al Jazeera (settles: $88.10 on 17/07; &gt;$100 late July; $92.1 on 24/08; $87.1 on 25/08). CBA H2 range $70–100; 52-week high $120.88 (30/04). H2 lines are EH analytical paths. OPEC+ (02/08): sixth consecutive +188k b/d for September completes the 1.65 mb/d unwind; Q4 pause expected; hikes remain largely paper under war constraints.</div>
+      </div>
+
+      <div class="card full">
+        <div class="chead">
+          <div><h3>F · FY2026 deficit — scenario trajectories (v4)</h3>
+          <p class="csub">Two official anchors (Q1 −125.7, H1 −160.0), then three H2 paths against the budget target and FY2025 reference. Q3 waypoints are EH illustrative; year-ends are the scenario range midpoints.</p></div>
+          <div style="display:flex;gap:6px"><span class="tag off">Official · 2 anchors</span><span class="tag sc">EH scenario</span></div>
+        </div>
+        <div class="chart-box"><canvas id="chartF"></canvas></div>
+        <div class="callout blue"><b>The arithmetic behind the re-base, shown openly:</b> H1 2026 = 160.0 (official). The H2 2025 comparator ran a 183.9B deficit in peacetime with $65–70 oil. H2 2026 carries stronger oil accruals per barrel (+22% YoY demonstrated in Q2) but ~30% lower volumes, elevated war spending, and the Q4 seasonal settlement peak. A better-than-2025 H2 (~130–170B) still lands the year at ~290–330B; only a Hormuz deal materially beats that; a Yanbu corridor breach makes it much worse.</div>
+        <div class="csrc"><span class="tag off">Anchors</span> Q1, Q2/H1, FY2025, budget target: Saudi MoF. <span class="tag sc">Paths</span> EH constructions — no institutional post-Q2 FY2026 forecast had been published as of 26/08/2026.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 5 — SCENARIO TABLE ============ -->
+<section id="scenarios">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">SECTION 05</span><h2>Scenario analysis — H2 2026 (v4)</h2><span class="upd-chip warn">Fourth re-base · volume is now the variable</span></div>
+    <p class="sec-sub">Implied nominal GDP ≈ SAR 5.0 trillion (pre-war basis; the IMF's 1.7% growth cut implies modest downside to the denominator). All rows are EH constructions anchored to the official H1 print and the H2 2025 comparator.</p>
+    <div class="tbl-wrap">
+      <table class="scen">
+        <thead>
+          <tr>
+            <th>Scenario</th><th>Oil price (H2)</th><th>FY deficit<br>(SAR bn)</th><th>Deficit<br>% GDP</th><th>Vision 2030<br>capex risk</th><th>Key assumption</th><th>Prob.<br>(EH est.)</th>
+          </tr>
+        </thead>
+        <tbody id="scenBody"></tbody>
+      </table>
+    </div>
+    <div class="callout red" style="margin-top:16px"><b>The corridor is under live attack.</b> Since the Houthi blockade declaration (20/07): Jizan refinery struck and suspended (25/07, ~400k b/d — first strikes on Saudi oil facilities since 2022); Yanbu targeted by missiles (25/07, intercepted); Abqaiq hit by drones (27/07, attribution disputed between Iraq-based militias and the Houthis); tankers NCC Masa (24/07), Wafa (05/08) and Amzan (24/08) attacked near Yanbu; six seafarers killed in Bab el-Mandeb (11/08) — the first Red Sea fatalities of the blockade. Maritime intelligence (Marisks): the two chokepoints "can no longer be assessed independently" and there is "currently no genuinely safe side of the Arabian Peninsula."</div>
+    <div class="callout blue" style="margin-top:10px"><b>What would change the call.</b> An Iran–Oman/US framework reopening Hormuz moves us to the de-escalation case; a successful strike on Yanbu loading infrastructure or a sustained Bab el-Mandeb closure moves us to corridor breach. Catalysts: <b>OPEC+ meeting 06/09</b> (Q4 pause expected), <b>MoF Q3 report (~end-Oct)</b>, Aramco Q2 results and OSP prints, and the diplomatic track's next fortnight.</div>
+  </div>
+</section>
+
+<!-- ============ SECTION 6 — SOURCES ============ -->
+<section id="sources">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">SECTION 06</span><h2>Source attribution</h2></div>
+    <p class="sec-sub">Every figure traces to one of the institutions below. Official MoF/NDMC/EIA data carries the primary weight; analyst, market and scenario layers are labelled as such throughout.</p>
+    <div class="src-grid" id="srcGrid"></div>
+
+    <div class="disclaimer">
+      <b>Disclaimer &amp; methodology (v4).</b> H1 fiscal figures are official Saudi Ministry of Finance data from the Q2 FY2026 Quarterly Budget Performance Report (30/07/2026); H1 2025 comparators are derived from the MoF's published year-on-year changes. The FY2026 deficit ranges (central ~SAR 290–330B) are <b>EH scenario constructions, not cited forecasts</b> — no institution had published a post-Q2 FY2026 estimate as of 26/08/2026, and MoF has not revised its 165.4B target. The construction logic is disclosed in Section 4: official H1 (160.0B) plus an H2 path bracketed by the H2 2025 outturn (183.9B, derived from published FY and H1 2025 figures). This is a deliberate upward revision of v3's ranges despite the benign Q2 print: v3's quarterly interpolation underweighted H2 seasonality, and v4 corrects it. The Brent monthly path is compiled from market reporting (CNBC, Fortune, Trading Economics, Al Jazeera); August is month-to-date and some prints are intraday rather than official settlements. Yanbu export-share figures (92% June, 78% July) are Kpler data via AFP; the June export level (4.53 mb/d, −31%) is tanker-tracking, subject to AIS-silence undercounting during a period of widespread transponder darkness and GPS spoofing. The Aramco September OSP could not be verified as of this build and is flagged as pending. The Abqaiq attack attribution is disputed. Chart D compares Q1 actuals against a pro-rata quarter of the FY budget (÷4): both inputs are official MoF figures, but the equal quarterly phasing is an EH arithmetic convention — MoF does not publish quarterly budget phasing, and actual spending is not evenly distributed across the year (Q4 is seasonally heaviest). Probability weights are an EH indicative estimate. The conflict and the diplomacy are both fluid: figures dated 26/08/2026 may be overtaken quickly.
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 7 — FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="frow">
+      <div style="max-width:620px">
+        <div style="font-family:'Fraunces',serif;font-size:17px;color:#fff;margin-bottom:8px">Saudi Arabia Fiscal Monitor 2026 — v4</div>
+        <div>Prepared for <b>Internal Strategy</b> &nbsp;<span class="conf">CONFIDENTIAL</span></div>
+        <div style="margin-top:10px;color:#9fb6cb">Version 4 generated 26/08/2026 · supersedes v3 (19/07/2026), v2 (07/07/2026), v1 (28/06/2026) · Environmental Horizons — Strategic Planning, Business Development.<br>Official fiscal actuals reflect the Q2 2026 MoF release (30/07); oil-market and shipping data as of 24–26/08/2026. Next revision on the MoF Q3 report, a Hormuz agreement, or a material corridor development, whichever lands first.</div>
+      </div>
+      <div>
+        <div style="color:#fff;font-weight:700;margin-bottom:8px">Primary data sources</div>
+        <ul>
+          <li>Saudi Ministry of Finance — Q2 FY2026 Report (30/07/2026)</li>
+          <li>NDMC — borrowing plan · monthly sukuk · "Sah" programme</li>
+          <li>US EIA · CRS — chokepoint flows &amp; reroute capacity</li>
+          <li>IMF (Art. IV / WEO) — growth 1.7% (2026), 5.5% (2027)</li>
+          <li>OPEC — 02/08 statement · July MOMR demand revision</li>
+          <li>Kpler / Windward / Marisks — tanker tracking &amp; maritime risk</li>
+          <li>CNBC · Reuters · Bloomberg · Al Jazeera · AFP — market &amp; war reporting</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============ EMBEDDED DATA (figures in SAR billion) ============ */
+const LOGO = "data:image/jpeg;base64,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";
+document.getElementById('navlogo').src = LOGO;
+
+const FMT = (v,d=1)=> (v<0?'−':'')+Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const C = {
+  blue:'#0572BC', blued:'#045a96', green:'#54AB5D', grey:'#94A3B8', greyd:'#64748b',
+  red:'#D32F2F', amber:'#F9A825', ragGreen:'#388E3C', navy:'#0A2A43'
+};
+
+/* ---- KPI cards ---- */
+const KPIS = [
+  {label:'H1 2026 Deficit (official)', val:'160.0', unit:'B', cls:'red', delta:'97% of the FY target consumed · +73% vs H1 2025', dcls:'down', src:'MoF · Q2 FY2026 report (30/07)'},
+  {label:'Q2 2026 Deficit', val:'34.3', unit:'B', cls:'green', delta:'Flat vs Q2 2025 · far below the 90B stress benchmark', dcls:'up', src:'MoF · rev +12%, oil rev +22% YoY'},
+  {label:'Brent — settle 25/08', val:'87.1', unit:'$/bbl', cls:'amber', delta:'−7.7% in two sessions on soft sanctions + diplomacy', dcls:'warn', src:'CNBC / Reuters via Al Jazeera · Aug avg ≈$92'},
+  {label:'Yanbu Export Share', val:'92', unit:'%', cls:'red', delta:'of seaborne crude (Jun; 78% Jul) — corridor under attack', dcls:'down', src:'Kpler via AFP · single point of failure'},
+  {label:'Saudi Crude Exports (Jun)', val:'4.53', unit:'mb/d', cls:'red', delta:'−31% vs pre-war · Jizan refinery (400k b/d) suspended', dcls:'down', src:'Tanker tracking (cited) · AIS gaps possible'},
+  {label:'Hormuz Transits', val:'~7', unit:'/day', cls:'red', delta:'vs ~110 pre-war · Iran–Oman talks on reopening', dcls:'down', src:'MarineTraffic via CNN (18/08, indicative)'},
+  {label:'Public Debt (end-H1)', val:'1,685', unit:'B', cls:'amber', delta:'+166B YTD · financing costs +41% YoY in Q2', dcls:'warn', src:'MoF · domestic 1,060 / external 625'},
+  {label:'Reserves (end-June)', val:'399.1', unit:'B', cls:'green', delta:'Untouched — entire H1 deficit financed by borrowing', dcls:'flat', src:'MoF · current account 39.9B'}
+];
+document.getElementById('kpiGrid').innerHTML = KPIS.map(k=>`
+  <div class="kpi ${k.cls}">
+    <div class="ktop"><span class="klabel">${k.label}</span></div>
+    <div class="kval">${k.val}<span class="kunit">${k.unit}</span></div>
+    <div class="kdelta ${k.dcls}">${k.delta}</div>
+    <div class="ksrc">${k.src}</div>
+  </div>`).join('');
+
+/* ---- Scenario table (v4) ---- */
+const SCEN = [
+  {cls:'base', name:'Base — grinding war, corridor holds', oil:'$85\u201395', def:'~290\u2013330', pct:'~5.8\u20136.6%', risk:['high','Elevated'], assum:'Hormuz stays near-shut; Yanbu keeps loading under attack friction; oil accruals stay strong but volumes ~30% down; Q4 seasonal spending peak lands as usual. H2 deficit ~130\u2013170B \u2014 better than H2 2025 despite the war, on the price tailwind.', prob:'50%', basis:'EH construction \u00b7 H1 official + H2 2025 comparator (183.9B)'},
+  {cls:'opt', name:'De-escalation — Hormuz framework', oil:'$72\u201380', def:'~260\u2013290', pct:'~5.2\u20135.8%', risk:['mod','Moderate'], assum:'Iran\u2013Oman/US-via-Pakistan tracks deliver a reopening framework in the autumn; premium unwinds a third time but volumes recover into Q4; war spending tapers. Roughly the FY2025 outturn.', prob:'30%', basis:'EH construction \u00b7 late-Aug diplomatic momentum; CBA $70\u2013100 band'},
+  {cls:'pess', name:'Corridor breach — Yanbu / Bab el-Mandeb', oil:'&gt;$110 spike*', def:'~330\u2013380', pct:'~6.6\u20137.6%', risk:['high','Severe'], assum:'A successful strike on Yanbu loading infrastructure or sustained Bab el-Mandeb closure interrupts the last export route. Price spikes but Saudi barrels cannot reach buyers \u2014 revenue falls as spending surges. *High price, collapsed volumes.', prob:'20%', basis:'EH construction \u00b7 corridor attacks 25/07\u201324/08 as the live threat path'}
+];
+document.getElementById('scenBody').innerHTML = SCEN.map(s=>`
+  <tr class="${s.cls}">
+    <td class="sname">${s.name}</td>
+    <td>${s.oil}</td>
+    <td class="big">${s.def}</td>
+    <td>${s.pct}</td>
+    <td><span class="riskpill ${s.risk[0]}">${s.risk[1]}</span></td>
+    <td>${s.assum}<div class="basis">${s.basis}</div></td>
+    <td><b>${s.prob}</b></td>
+  </tr>`).join('');
+
+/* ---- Source cards ---- */
+const SRC = [
+  {bg:'#0A2A43', ini:'MoF', name:'Saudi MoF & NDMC', date:'Q2 report \u00b7 30/07/2026', head:'H1 deficit SAR 160.0B; Q2 just 34.3B; debt SAR 1,685B; reserves intact.', desc:'Q2 FY2026 Quarterly Budget Performance Report: revenue +12% (oil +22%), spending +11%, goods & services +1%, financing expenses +41%. July "Sah" retail sukuk at 4.60%. No revision to the 165.4B target.'},
+  {bg:'#C0392B', ini:'RSF', name:'Red Sea front — FDD · Windward · ABC · WaPo', date:'20/07 \u2013 24/08/2026', head:'Houthi blockade (20/07); Jizan struck &amp; suspended; Yanbu and Abqaiq targeted.', desc:'First strikes on Saudi oil facilities since 2022 (25/07). Tankers NCC Masa, Wafa and Amzan attacked near Yanbu; six seafarers killed in Bab el-Mandeb (11/08). Abqaiq attribution disputed (Iraq militias vs Houthi claim).'},
+  {bg:'#0572BC', ini:'MKT', name:'CNBC · Fortune · Trading Economics · Al Jazeera', date:'Jul\u2013Aug 2026', head:'Brent: $88.10 (17/07) \u2192 &gt;$100 (late Jul) \u2192 $92 (24/08) \u2192 $87.1 (25/08).', desc:'"Economic D-Day" sanctions (24/08) landed soft \u2014 no deadline, Chinese banks spared \u2014 and Pakistan carried a sanctions-relief proposal to Tehran; Brent shed 7.7% in two sessions as the premium partially unwound.'},
+  {bg:'#54AB5D', ini:'OPC', name:'OPEC / OPEC+', date:'02/08/2026 \u00b7 July MOMR', head:'Sixth consecutive +188k b/d (Sept) completes the 1.65 mb/d unwind; Q4 pause expected.', desc:'Hikes remain largely paper under war constraints. UAE left OPEC in May. July MOMR cut 2026 demand growth ~20% (third straight cut) and raised 2027 to +1.94 mb/d. Next meeting 06/09.'},
+  {bg:'#1f6f8b', ini:'TRK', name:'Kpler · Vortexa · Marisks · EIA/CRS', date:'Jun\u2013Aug 2026', head:'Yanbu = 92% of seaborne crude exports (Jun); exports 4.53 mb/d (\u221231%).', desc:'Petroline pushed toward ~7 mb/d with NGL-line conversion (EIA/CRS); every barrel exits via Bab el-Mandeb. Marisks: the two chokepoints "can no longer be assessed independently" \u2014 no safe side of the peninsula.'},
+  {bg:'#5A6A7A', ini:'IMF', name:'IMF — Article IV / WEO', date:'Jul 2026', head:'Growth 1.7% (2026) \u2192 5.5% (2027, conditional on Hormuz reopening).', desc:'"Showing agility and resilience, reflecting Saudi Arabia\u2019s strong macroeconomic fundamentals and diversified oil and logistics infrastructure" \u2014 while flagging trade, export and confidence damage from the war.'}
+];
+document.getElementById('srcGrid').innerHTML = SRC.map(s=>`
+  <div class="src-card">
+    <div class="stop"><div class="src-badge" style="background:${s.bg}">${s.ini}</div>
+      <div><div class="sname2">${s.name}</div><div class="sdate">${s.date}</div></div></div>
+    <div class="shead">${s.head}</div>
+    <div class="sdesc">${s.desc}</div>
+  </div>`).join('');
+
+/* ============ CHART.JS ============ */
+Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.color = '#5A6A7A';
+const GRID = '#eef2f7';
+const baseScales = (yTitle, prefix='') => ({
+  y:{ title:{display:!!yTitle,text:yTitle,font:{size:11,weight:'600'},color:'#8a98a8'},
+      grid:{color:GRID}, ticks:{callback:v=>prefix+v.toLocaleString()} },
+  x:{ grid:{display:false} }
+});
+const legendTop = {legend:{position:'top',align:'center',labels:{usePointStyle:true,pointStyle:'rectRounded',boxWidth:8,boxHeight:8,padding:10,font:{size:11,weight:'600'}}}};
+
+/* vertical event-marker plugin (no external dep) */
+const vMarkers = {
+  id:'vMarkers',
+  afterDraw(chart, args, opts){
+    if(!opts || !opts.markers) return;
+    const {ctx, chartArea:{top,bottom}, scales:{x}} = chart;
+    opts.markers.forEach(m=>{
+      const xp = x.getPixelForValue(m.x);
+      ctx.save();
+      ctx.strokeStyle = m.color||'#94A3B8'; ctx.lineWidth=1.4; ctx.setLineDash([5,4]);
+      ctx.beginPath(); ctx.moveTo(xp,top); ctx.lineTo(xp,bottom); ctx.stroke();
+      ctx.setLineDash([]); ctx.fillStyle=m.color||'#64748b';
+      ctx.font='700 10px Plus Jakarta Sans'; ctx.textAlign = m.align||'left';
+      ctx.fillText(m.label, xp+(m.align==='right'?-6:6), top+(m.yOff||12));
+      ctx.restore();
+    });
+  }
+};
+
+/* ---- Chart A: revenue by source, H1 YoY ---- */
+new Chart(document.getElementById('chartA'),{
+  type:'bar',
+  data:{ labels:['Oil revenue','Non-oil revenue','Total revenue'],
+    datasets:[
+      {label:'H1 2025', data:[301.5,264.6,566.1], backgroundColor:C.grey, borderRadius:5, maxBarThickness:54},
+      {label:'H1 2026', data:[329.8,269.9,599.8], backgroundColor:C.blue, borderRadius:5, maxBarThickness:54}
+    ]},
+  options:{ responsive:true, maintainAspectRatio:false,
+    plugins:{...legendTop, tooltip:{callbacks:{
+      label:c=>`${c.dataset.label}: SAR ${FMT(c.parsed.y)}B`,
+      afterBody:(items)=>{const ch=['Oil: +9% (Q2 alone: +22%)','Non-oil: +2%','Total: +6%'];return '\nYoY change → '+ch[items[0].dataIndex];}
+    }}},
+    scales: baseScales('SAR billion (half-year)') }
+});
+
+/* ---- Chart B: Q1 expenditure surge (Q2 moderation in note) ---- */
+new Chart(document.getElementById('chartB'),{
+  type:'bar',
+  data:{ labels:[['Goods &','services'],'Compensation','Capex',['Social','benefits'],'Other','Subsidies','Financing','Grants'],
+    datasets:[
+      {label:'Q1 2025', data:[64.63,146.09,27.79,30.47,34.18,6.49,12.39,0.27], backgroundColor:C.grey, borderRadius:5, maxBarThickness:30},
+      {label:'Q1 2026', data:[98.05,151.06,43.43,31.08,32.28,17.54,12.29,0.96], backgroundColor:C.green, borderRadius:5, maxBarThickness:30}
+    ]},
+  options:{ responsive:true, maintainAspectRatio:false, indexAxis:'y',
+    plugins:{...legendTop, tooltip:{callbacks:{
+      label:c=>`${c.dataset.label}: SAR ${FMT(c.parsed.x)}B`,
+      afterBody:(items)=>{const q1={0:'+52%',1:'+3%',2:'+56%',3:'+2%',4:'−6%',5:'+170%',6:'−1%',7:'+249%'};const q2={0:'+1%',1:'+3%',6:'+41%'};const i=items[0].dataIndex;let s='\nQ1 YoY: '+q1[i];if(q2[i]!==undefined)s+='  ·  Q2 YoY: '+q2[i];return s;}
+    }}},
+    scales:{ x:{title:{display:true,text:'SAR billion (quarter)',font:{size:11,weight:'600'},color:'#8a98a8'},grid:{color:GRID},ticks:{callback:v=>v.toLocaleString()}}, y:{grid:{display:false},ticks:{font:{size:11},autoSkip:false}} } }
+});
+
+/* ---- Chart C: quarterly deficit path ---- */
+new Chart(document.getElementById('chartC'),{
+  type:'bar',
+  data:{ labels:[['Q1 2025'],['Q2 2025'],['Q1 2026'],['Q2 2026']],
+    datasets:[{ label:'Deficit (SAR bn)', data:[-58.7,-34.0,-125.7,-34.3],
+      backgroundColor:['#c7d2dd','#c7d2dd',C.red,C.green], borderRadius:5, maxBarThickness:80 }]},
+  options:{ responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{display:false},
+      tooltip:{callbacks:{
+        label:c=>`Deficit: SAR ${FMT(Math.abs(c.parsed.y))}B`,
+        afterLabel:c=>{const p=['Peacetime · $75 Brent, OPEC+ cuts','Peacetime baseline','War Q1 · record; spending +20%','War Q2 · oil accruals arrive; spending +11%'];return p[c.dataIndex];}
+      }}},
+    scales:{ y:{title:{display:true,text:'SAR billion (quarterly deficit)',font:{size:11,weight:'600'},color:'#8a98a8'},grid:{color:GRID},ticks:{callback:v=>v.toLocaleString()}}, x:{grid:{display:false},ticks:{font:{size:11}}} } }
+});
+
+/* ---- Chart D: expenditure by sector (quarterly pro-rata vs Q1 actual) ---- */
+const secLabels=[['Military &','Security'],['Health &','Social Dev'],['General','Items'],'Education',['Regional','Admin'],['Economic','Resources'],['Municipal','Services'],['Public','Admin'],['Infra. &','Transport']];
+const secBudgetFY=[239.80,259.29,236.13,201.81,120.27,91.95,71.84,57.01,34.71];
+const secBudgetQ=secBudgetFY.map(v=>+(v/4).toFixed(1));
+const secQ1=[64.71,80.85,61.50,57.03,34.43,28.02,26.22,21.43,12.50];
+const secYoY=['+26%','+12%','+46%','+6%','+14%','+52%','+4%','+13%','+26%'];
+const secPct=['27%','31%','26%','28%','29%','30%','36%','38%','36%'];
+new Chart(document.getElementById('chartD'),{
+  type:'bar',
+  data:{ labels:secLabels,
+    datasets:[
+      {label:'FY2026 budget ÷4 (pro-rata quarter)', data:secBudgetQ, backgroundColor:C.blue, borderRadius:5, maxBarThickness:26},
+      {label:'Q1 2026 actual', data:secQ1, backgroundColor:C.amber, borderRadius:5, maxBarThickness:26}
+    ]},
+  options:{ responsive:true, maintainAspectRatio:false, indexAxis:'y',
+    plugins:{...legendTop, tooltip:{callbacks:{
+      label:c=>`${c.dataset.label}: SAR ${FMT(c.parsed.x)}B`,
+      afterBody:items=>{const i=items[0].dataIndex;return `\nQ1 YoY: ${secYoY[i]}  ·  Q1 = ${secPct[i]} of FY budget (MoF)`;} }}},
+    scales:{ x:{title:{display:true,text:'SAR billion (quarter)',font:{size:11,weight:'600'},color:'#8a98a8'},grid:{color:GRID},ticks:{callback:v=>v.toLocaleString()}}, y:{grid:{display:false},ticks:{font:{size:10.5},autoSkip:false}} } }
+});
+
+/* ---- Chart E: Brent path + v4 scenarios ---- */
+const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+/* Monthly approximations. Jul avg ≈$85 (70.8 → 88.1 → >100 after 25/07); Aug = MTD avg ≈$92 (settles: 92.1 on 24/08, 87.1 on 25/08). */
+const actual=[73,71,85,105,92,82,85,92,null,null,null,null];
+const baseS=[null,null,null,null,null,null,null,92,88,86,85,84];
+const escS =[null,null,null,null,null,null,null,92,105,115,112,108];
+const deeS =[null,null,null,null,null,null,null,92,82,77,74,72];
+const budgetRef=Array(12).fill(69.9);
+new Chart(document.getElementById('chartE'),{
+  type:'line',
+  data:{ labels:months, datasets:[
+    {label:'Brent actual (approx., Aug = MTD avg)', data:actual, borderColor:C.navy, backgroundColor:'rgba(10,42,67,.06)', borderWidth:3, tension:.3, pointRadius:3.5, pointHoverRadius:6, fill:true},
+    {label:'H2 — Base · grinding war ($85–95)', data:baseS, borderColor:C.amber, borderWidth:2.8, borderDash:[6,3], tension:.3, pointRadius:2.5},
+    {label:'H2 — Corridor breach (>$110 spike)', data:escS, borderColor:C.red, borderWidth:2.2, borderDash:[6,3], tension:.3, pointRadius:2.5},
+    {label:'H2 — De-escalation · Hormuz deal ($72–80)', data:deeS, borderColor:C.ragGreen, borderWidth:2.2, borderDash:[6,3], tension:.3, pointRadius:2.5},
+    {label:'Budget reference ($69.9, FY25 avg)', data:budgetRef, borderColor:'#b8c2cf', borderWidth:1.5, borderDash:[2,3], pointRadius:0, tension:0}
+  ]},
+  options:{ responsive:true, maintainAspectRatio:false, spanGaps:false,
+    interaction:{mode:'nearest',intersect:false},
+    plugins:{ ...legendTop,
+      tooltip:{callbacks:{label:c=>c.parsed.y==null?null:`${c.dataset.label}: $${c.parsed.y}/bbl`}},
+      vMarkers:{markers:[
+        {x:1.5,label:'War · 28 Feb',color:C.red},
+        {x:3.2,label:'Ceasefire · 8 Apr',color:C.greyd,yOff:26},
+        {x:4.4,label:'UAE exits OPEC · May',color:C.blued,yOff:12},
+        {x:6.2,label:'Restart · 8 Jul',color:C.red,yOff:26},
+        {x:6.8,label:'Red Sea front · 25 Jul',color:'#8B0000',yOff:42}
+      ]}
+    },
+    scales:{ y:{title:{display:true,text:'Brent USD / barrel',font:{size:11,weight:'600'},color:'#8a98a8'},grid:{color:GRID},ticks:{callback:v=>'$'+v}}, x:{grid:{display:false}} } },
+  plugins:[vMarkers]
+});
+
+/* ---- Chart F: FY deficit — scenario trajectories (v4, two official anchors) ---- */
+const fLabels=['Q1 2026\u2002(actual)','Q2 / H1\u2002(actual)','Q3','Q4 (year-end)'];
+const fActual=[-125.7,-160.0,null,null];
+/* Q3 waypoints are EH-illustrative; year-ends are scenario range midpoints. */
+const fBase=[-125.7,-160.0,-222,-310];
+const fEsc =[-125.7,-160.0,-238,-355];
+const fDee =[-125.7,-160.0,-212,-275];
+const fTarget=Array(4).fill(-165.4);
+const fFY25=Array(4).fill(-276.6);
+new Chart(document.getElementById('chartF'),{
+  type:'line',
+  data:{ labels:fLabels, datasets:[
+    {label:'Official actuals (Q1, H1)', data:fActual, borderColor:C.navy, backgroundColor:C.navy, borderWidth:3, pointRadius:5.5, pointHoverRadius:7, pointStyle:'rectRot'},
+    {label:'Base · grinding war — FY ~310', data:fBase, borderColor:C.amber, borderWidth:2.8, borderDash:[6,3], tension:.25, pointRadius:3.5},
+    {label:'Corridor breach — FY ~355', data:fEsc, borderColor:C.red, borderWidth:2.2, borderDash:[6,3], tension:.25, pointRadius:3},
+    {label:'De-escalation — FY ~275', data:fDee, borderColor:C.ragGreen, borderWidth:2.2, borderDash:[6,3], tension:.25, pointRadius:3},
+    {label:'Budget target (\u2212165.4)', data:fTarget, borderColor:C.blue, borderWidth:1.6, borderDash:[2,3], pointRadius:0, tension:0},
+    {label:'FY2025 outturn (\u2212276.6)', data:fFY25, borderColor:'#94A3B8', borderWidth:1.6, borderDash:[2,3], pointRadius:0, tension:0}
+  ]},
+  options:{ responsive:true, maintainAspectRatio:false, spanGaps:false,
+    interaction:{mode:'nearest',intersect:false},
+    plugins:{ ...legendTop,
+      tooltip:{callbacks:{
+        label:c=>c.parsed.y==null?null:`${c.dataset.label}: SAR ${FMT(Math.abs(c.parsed.y))}B cumulative`,
+        footer:items=>{const i=items[0].dataIndex; return i<=1?'Official MoF actual':(i===3?'Year-end = scenario range midpoint':'Q3 waypoint: EH illustrative interpolation');}
+      }}},
+    scales:{ y:{title:{display:true,text:'Cumulative deficit (SAR billion)',font:{size:11,weight:'600'},color:'#8a98a8'},grid:{color:GRID},ticks:{callback:v=>v.toLocaleString()}}, x:{grid:{display:false},ticks:{font:{size:11}}} } }
+});
+</script>
+<style id="ehDark">
+body.dark{background:#0F1519 !important;color:#DDE6EB}
+body.dark .tag,body.dark .kpi,body.dark .callout,body.dark .card,body.dark .src-card,body.dark .sec-num,body.dark .upd-chip,body.dark .sc,body.dark .riskpill,body.dark .warn,body.dark .full,body.dark .an,body.dark .blue,body.dark .high,body.dark .ctx-badge,body.dark .ctx-note,body.dark .tbl-wrap,body.dark .mod,body.dark .disclaimer{background:#151C21 !important;border-color:#2C3A43 !important;color:#DDE6EB}
+body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#E6EDF1}
+body.dark table th{background:#1A242B !important;color:#CBD8DF}
+body.dark table td{border-color:#2C3A43 !important}
+body.dark svg text,body.dark svg tspan{fill:#C9D4DB !important}
+body.dark svg .domain,body.dark svg g.tick line{stroke:#3A4B55}
+body.dark a{color:#7FB4E8}
+body.dark [style*="background:#fff"],body.dark [style*="background: #fff"],body.dark [style*="background:#FFF"],body.dark [style*="background:#F"],body.dark [style*="background: #F"],body.dark [style*="background:#E"]{background:#1A242B !important;color:#D5E0E6 !important;border-color:#2C3A43 !important}
+body.dark [style*="color:#1"],body.dark [style*="color:#2"],body.dark [style*="color:#3"],body.dark [style*="color:#4"]{color:#C9D6DD !important}
+</style>
+<script>
+(function(){
+  window.addEventListener('message',function(e){
+    var d=e.data||{};
+    if(d.ehhub==='theme'&&(d.theme==='dark'||d.theme==='light')){
+      document.body.classList.toggle('dark',d.theme==='dark');
+      try{localStorage.setItem('ehhub.theme',d.theme);}catch(err){}
+    }
+  });
+  try{ if(localStorage.getItem('ehhub.theme')==='dark') document.body.classList.add('dark'); }catch(e){}
+})();
+</script>
+</body>
+</html>

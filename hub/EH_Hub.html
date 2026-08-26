@@ -33,6 +33,11 @@ iframe.on{display:block}
 @keyframes sp{to{transform:rotate(360deg)}}
 .foot{font-size:11px;color:var(--mut);padding:4px 20px;background:#fff;border-top:1px solid var(--line)}
 :focus-visible{outline:2px solid #027DC3;outline-offset:2px}
+.nsub{padding:7px 15px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:12.5px;font-weight:600;color:var(--mut)}
+.nsub.on{background:var(--green);border-color:var(--green);color:#fff}
+body.dark #newsbar{background:#121A1F !important;border-color:#2C3A43 !important}
+body.dark .nsub{background:#1E2830 !important;border-color:#3A4B55 !important;color:#9FB3BE !important}
+body.dark .nsub.on{background:var(--green) !important;border-color:var(--green) !important;color:#fff !important}
 body.dark{background:#0F1519}
 body.dark header,body.dark .foot{background:#121A1F;border-color:#2C3A43}
 body.dark .brand{color:#E6EDF1}
@@ -64,9 +69,10 @@ body.dark iframe{background:#0F1519}
   <button id="langbtn" onclick="hubLang()" title="Switch language across all views" style="padding:7px 13px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:12.5px;font-weight:700">عربي</button>
   <button onclick="hubFS()" title="Presentation mode (fullscreen)" aria-label="Fullscreen current view" style="padding:7px 11px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:14px">⛶</button>
   <div class="tabs" role="tablist">
-    <button class="tab on" role="tab" data-f="stake" data-t="Stakeholder Map" aria-pressed="true" onclick="go(this)">🗺️ Stakeholder &amp; Competitive Map</button>
-    <button class="tab" role="tab" data-f="bids" data-t="Bid Intelligence" aria-pressed="false" onclick="go(this)">📊 Bid &amp; Tender Intelligence</button>
-    <button class="tab" role="tab" data-f="bubbles" data-t="Client Portfolio" aria-pressed="false" onclick="go(this)">🫧 Client Portfolio Bubbles</button>
+    <button class="tab on" role="tab" data-f="stake" data-t="Stakeholder Map" aria-pressed="true" onclick="go(this)"><span class="tl" data-en="🗺️ Stakeholder &amp; Competitive Map" data-ar="🗺️ خريطة أصحاب المصلحة والمنافسة">🗺️ Stakeholder &amp; Competitive Map</span></button>
+    <button class="tab" role="tab" data-f="bids" data-t="Bid Intelligence" aria-pressed="false" onclick="go(this)"><span class="tl" data-en="📊 Bid &amp; Tender Intelligence" data-ar="📊 تحليلات المناقصات والعطاءات">📊 Bid &amp; Tender Intelligence</span></button>
+    <button class="tab" role="tab" data-f="bubbles" data-t="Client Portfolio" aria-pressed="false" onclick="go(this)"><span class="tl" data-en="🫧 Client Portfolio Bubbles" data-ar="🫧 محفظة العملاء">🫧 Client Portfolio Bubbles</span></button>
+    <button class="tab" role="tab" data-f="news" data-t="News & Intelligence" aria-pressed="false" onclick="go(this)"><span class="tl" data-en="📰 News &amp; Intelligence" data-ar="📰 الأخبار والمستجدات">📰 News &amp; Intelligence</span></button>
   </div>
 </header>
 <div id="mob" style="display:none;background:#FFF6E5;border-bottom:1px solid #EAD9B0;color:#7A5B14;font:600 12px system-ui;padding:7px 16px">
@@ -80,17 +86,35 @@ body.dark iframe{background:#0F1519}
   <iframe id="f-stake" title="Stakeholder and competitive map" class="on" src="EH_Stakeholder_Map_CURRENT.html" loading="eager"></iframe>
   <iframe id="f-bids" title="Bid and tender intelligence" src="EH_Bid_Analysis_CURRENT.html" loading="eager"></iframe>
   <iframe id="f-bubbles" title="Client portfolio bubble chart" data-src="EH_Client_Bubble_Map_CURRENT.html" loading="lazy"></iframe>
+  <div id="newswrap" style="display:none;position:absolute;inset:0;flex-direction:column">
+    <div id="newsbar" style="display:flex;gap:6px;padding:8px 14px;background:#fff;border-bottom:1px solid var(--line)">
+      <button class="nsub on" data-n="v2030"><span class="tl" data-en="Vision 2030 Dashboard" data-ar="لوحة رؤية 2030">Vision 2030 Dashboard</span></button>
+      <button class="nsub" data-n="fiscal"><span class="tl" data-en="Saudi Fiscal Monitor 2026" data-ar="مرصد المالية السعودية 2026">Saudi Fiscal Monitor 2026</span></button>
+      <button class="nsub" data-n="corp"><span class="tl" data-en="Corporate &amp; Government News" data-ar="أخبار الشركات والحكومة">Corporate &amp; Government News</span></button>
+    </div>
+    <div style="position:relative;flex:1">
+      <div class="skel on" id="sk-v2030"><div class="in"><div class="spin"></div>Loading Vision 2030…</div></div>
+      <div class="skel" id="sk-fiscal"><div class="in"><div class="spin"></div>Loading Fiscal Monitor…</div></div>
+      <div class="skel" id="sk-corp"><div class="in"><div class="spin"></div>Loading News…</div></div>
+      <iframe id="f-v2030" title="Vision 2030 dashboard" data-src="vision2030_dashboard.html" loading="lazy" style="display:none"></iframe>
+      <iframe id="f-fiscal" title="Saudi fiscal monitor 2026" data-src="saudi_fiscal_monitor_2026.html" loading="lazy" style="display:none"></iframe>
+      <iframe id="f-corp" title="Corporate and government news" data-src="eh_news_intelligence.html" loading="lazy" style="display:none"></iframe>
+    </div>
+  </div>
 </main>
 <div class="foot">One link · three integrated views · bid data auto-refreshes hourly from the live tracker · stakeholder &amp; client data rebuilt from source workbooks on commit</div>
 <script>
 function $(id){return document.getElementById(id)}
 function go(btn){
   document.querySelectorAll('.tab').forEach(t=>{t.classList.toggle('on',t===btn);t.setAttribute('aria-pressed',t===btn?'true':'false');});
-  document.querySelectorAll('iframe').forEach(f=>{
-    const on=f.id==='f-'+btn.dataset.f;
+  const isNews=btn.dataset.f==='news';
+  $('newswrap').style.display=isNews?'flex':'none';
+  document.querySelectorAll('main > iframe').forEach(f=>{
+    const on=!isNews&&f.id==='f-'+btn.dataset.f;
     if(on&&!f.src&&f.dataset.src){f.src=f.dataset.src;$('sk-'+btn.dataset.f).classList.add('on');}
     f.classList.toggle('on',on);
   });
+  if(isNews) nGo(document.querySelector('.nsub.on')||document.querySelector('.nsub'));
   document.querySelectorAll('.skel').forEach(s=>s.style.zIndex=(s.id==='sk-'+btn.dataset.f)?4:-1);
   document.title='EH Hub — '+btn.dataset.t;
   try{history.replaceState(null,'','#'+btn.dataset.f);localStorage.setItem('ehhub.tab',btn.dataset.f);}catch(e){}
@@ -142,6 +166,7 @@ function bcastLang(){
   });
   var b=document.getElementById('langbtn');
   b.textContent=(hubL==='en'?'عربي':'EN');
+  relabel();
   b.setAttribute('aria-label',hubL==='en'?'Switch all views to Arabic':'Switch all views to English');
 }
 function hubLang(){
@@ -244,6 +269,27 @@ document.querySelectorAll('iframe').forEach(function(f){
   f.addEventListener('load',function(){ if(hubT==='dark') setTimeout(applyHubTheme,700); });
 });
 applyHubTheme();
+
+// ---- news sub-tabs ----
+function nGo(btn){
+  document.querySelectorAll('.nsub').forEach(x=>x.classList.toggle('on',x===btn));
+  const id=btn.dataset.n;
+  ['v2030','fiscal','corp'].forEach(k=>{
+    const f=$('f-'+k);
+    const on=k===id;
+    if(on&&!f.src&&f.dataset.src){f.src=f.dataset.src;$('sk-'+k).classList.add('on');
+      f.addEventListener('load',function(){$('sk-'+k).classList.remove('on'); if(hubT==='dark') setTimeout(applyHubTheme,500); if(hubL!=='en') setTimeout(bcastLang,500);},{once:true});
+    }
+    f.style.display=on?'block':'none';
+  });
+}
+document.querySelectorAll('.nsub').forEach(b=>b.addEventListener('click',()=>nGo(b)));
+// ---- bilingual hub chrome ----
+function relabel(){
+  document.querySelectorAll('.tl').forEach(el=>{
+    el.innerHTML=hubL==='ar'?el.dataset.ar:el.dataset.en;
+  });
+}
 </script>
 </body>
 </html>

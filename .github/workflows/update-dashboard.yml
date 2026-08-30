@@ -51,6 +51,7 @@ jobs:
           cp hub/vision2030_dashboard.html site/ 2>/dev/null || true
           cp hub/saudi_fiscal_monitor_2026.html site/ 2>/dev/null || true
           cp hub/eh_news_intelligence.html site/ 2>/dev/null || true
+          cp hub/pif_intelligence_hub.html site/ 2>/dev/null || true
           cp -r hub/vendor site/vendor 2>/dev/null || true
           echo "{\"built\":\"$(TZ='Asia/Riyadh' date +'%d %b %Y, %H:%M (KSA)')\"}" > site/build_info.json
       - name: Detect changes, update changelog, notify

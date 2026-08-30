@@ -900,18 +900,65 @@ body.dark #ehArView .avnote{color:#93A6B2}
   function ehChartTheme(dark){
     if(!window.Chart) return;
     var c=dark?'#C9D4DB':'#666', g=dark?'#2C3A43':'#E5E5E5';
+    function pl(x){
+      if(typeof x!=='string') return null;
+      var m=x.match(/^#([0-9a-f]{6})$/i);
+      if(m){var v=parseInt(m[1],16);return[(v>>16)&255,(v>>8)&255,v&255,1];}
+      m=x.match(/^rgba?\(([^)]+)\)$/i);
+      if(m){var p=m[1].split(',').map(Number);return[p[0],p[1],p[2],p[3]==null?1:p[3]];}
+      return null;
+    }
+    function lum(p){return (0.2126*p[0]+0.7152*p[1]+0.0722*p[2])/255;}
+    function lift(x){
+      var p=pl(x); if(!p) return x;
+      if(lum(p)>=0.42) return x;
+      var mx=Math.max(p[0],p[1],p[2],1);
+      var f=200/mx;
+      var r=Math.min(255,Math.round(p[0]*f+55)),gg=Math.min(255,Math.round(p[1]*f+55)),b=Math.min(255,Math.round(p[2]*f+55));
+      return p[3]<1?'rgba('+r+','+gg+','+b+','+Math.max(p[3],0.12)+')':'rgb('+r+','+gg+','+b+')';
+    }
     try{Chart.defaults.color=c;Chart.defaults.borderColor=g;}catch(e){}
     try{
       var insts=Chart.instances?Object.values(Chart.instances):[];
       insts.forEach(function(ch){try{
-        var o=ch.options||{};
-        if(o.plugins&&o.plugins.legend&&o.plugins.legend.labels)o.plugins.legend.labels.color=c;
-        if(o.plugins&&o.plugins.title)o.plugins.title.color=c;
-        if(o.scales)Object.keys(o.scales).forEach(function(k){var sc=o.scales[k];sc.ticks=sc.ticks||{};sc.ticks.color=c;sc.grid=sc.grid||{};sc.grid.color=g;if(sc.title)sc.title.color=c;});
+        // v4: mutate RAW config options (plain object), never the ch.options resolver proxy
+        var o=(ch.config&&ch.config.options)||{};
+        o.plugins=o.plugins||{};
+        o.plugins.legend=o.plugins.legend||{};
+        o.plugins.legend.labels=o.plugins.legend.labels||{};
+        o.plugins.legend.labels.color=c;
+        if(o.plugins.title) o.plugins.title.color=c;
+        var scs=o.scales||{};
+        Object.keys(scs).forEach(function(k){
+          var sc=scs[k]; if(!sc||typeof sc!=='object') return;
+          if(!sc.ticks)sc.ticks={}; sc.ticks.color=c;
+          if(!sc.grid)sc.grid={}; sc.grid.color=g;
+          if(sc.title&&typeof sc.title==='object') sc.title.color=c;
+        });
+        (ch.data&&ch.data.datasets||[]).forEach(function(ds){
+          if(ds.__ehO===undefined) ds.__ehO={b:ds.borderColor,g:ds.backgroundColor,p:ds.pointBackgroundColor,pb:ds.pointBorderColor};
+          ds.borderColor=dark?lift(ds.__ehO.b):ds.__ehO.b;
+          ds.backgroundColor=dark?lift(ds.__ehO.g):ds.__ehO.g;
+          if(ds.__ehO.p!==undefined) ds.pointBackgroundColor=dark?lift(ds.__ehO.p):ds.__ehO.p;
+          if(ds.__ehO.pb!==undefined) ds.pointBorderColor=dark?lift(ds.__ehO.pb):ds.__ehO.pb;
+        });
+        try{
+          var an=o.plugins.annotation&&o.plugins.annotation.annotations;
+          if(an)Object.keys(an).forEach(function(k){
+            var a=an[k]; if(!a||typeof a!=='object') return;
+            if(a.__ehB===undefined) a.__ehB=a.borderColor;
+            if(a.__ehB) a.borderColor=dark?lift(a.__ehB):a.__ehB;
+            if(a.label&&typeof a.label==='object'){
+              if(a.label.__ehC===undefined) a.label.__ehC=(a.label.color!==undefined?a.label.color:null);
+              a.label.color=dark?lift(a.label.__ehC||'#333333'):(a.label.__ehC||undefined);
+            }
+          });
+        }catch(e){}
         ch.update('none');
       }catch(e){}});
     }catch(e){}
   }
+  window.ehChartTheme=ehChartTheme;
   window.addEventListener('message',function(e){
     var d=e.data||{};
     if(d.ehhub==='theme'&&(d.theme==='dark'||d.theme==='light')){

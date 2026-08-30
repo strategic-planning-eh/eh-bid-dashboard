@@ -91,14 +91,17 @@ body.dark iframe{background:#0F1519}
       <button class="nsub on" data-n="v2030"><span class="tl" data-en="Vision 2030 Dashboard" data-ar="لوحة رؤية 2030">Vision 2030 Dashboard</span></button>
       <button class="nsub" data-n="fiscal"><span class="tl" data-en="Saudi Fiscal Monitor 2026" data-ar="مرصد المالية السعودية 2026">Saudi Fiscal Monitor 2026</span></button>
       <button class="nsub" data-n="corp"><span class="tl" data-en="Corporate &amp; Government News" data-ar="أخبار الشركات والحكومة">Corporate &amp; Government News</span></button>
+      <button class="nsub" data-n="pif"><span class="tl" data-en="PIF Intelligence Hub" data-ar="مركز استخبارات صندوق الاستثمارات">PIF Intelligence Hub</span></button>
     </div>
     <div style="position:relative;flex:1">
       <div class="skel on" id="sk-v2030"><div class="in"><div class="spin"></div>Loading Vision 2030…</div></div>
       <div class="skel" id="sk-fiscal"><div class="in"><div class="spin"></div>Loading Fiscal Monitor…</div></div>
       <div class="skel" id="sk-corp"><div class="in"><div class="spin"></div>Loading News…</div></div>
+      <div class="skel" id="sk-pif"><div class="in"><div class="spin"></div>Loading PIF Hub…</div></div>
       <iframe id="f-v2030" title="Vision 2030 dashboard" data-src="vision2030_dashboard.html" loading="lazy" style="display:none"></iframe>
       <iframe id="f-fiscal" title="Saudi fiscal monitor 2026" data-src="saudi_fiscal_monitor_2026.html" loading="lazy" style="display:none"></iframe>
       <iframe id="f-corp" title="Corporate and government news" data-src="eh_news_intelligence.html" loading="lazy" style="display:none"></iframe>
+      <iframe id="f-pif" title="PIF annual reports intelligence" data-src="pif_intelligence_hub.html" loading="lazy" style="display:none"></iframe>
     </div>
   </div>
 </main>
@@ -274,7 +277,7 @@ applyHubTheme();
 function nGo(btn){
   document.querySelectorAll('.nsub').forEach(x=>x.classList.toggle('on',x===btn));
   const id=btn.dataset.n;
-  ['v2030','fiscal','corp'].forEach(k=>{
+  ['v2030','fiscal','corp','pif'].forEach(k=>{
     const f=$('f-'+k);
     const on=k===id;
     if(on&&!f.src&&f.dataset.src){f.src=f.dataset.src;$('sk-'+k).classList.add('on');

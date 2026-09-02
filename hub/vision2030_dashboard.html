@@ -1194,7 +1194,7 @@ document.getElementById("resetBtn").addEventListener("click",()=>{
 apply();
 
 /* ─────────────────────── Tab switching ─────────────────────── */
-function switchTab(tab){
+function switchTab(tab){document.documentElement.lang=(tab==='arabic'?'ar':'en');
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   if(tab==='dashboard'){
@@ -1541,6 +1541,17 @@ body.dark .ar-corr{background:#1A242B !important;border-color:#2C3A43 !important
 body.dark .afi{background:#22303A !important}
 body.dark .ar-finding h3,body.dark .ar-corr h3{color:#E6EDF1 !important}
 body.dark .ar-finding p,body.dark .ar-corr p,body.dark .ar-finding li{color:#C2D0D9 !important}
+
+/* a11y audit fixes */
+
+:focus-visible{outline:2px solid #027DC3;outline-offset:2px}
+.chip{min-height:36px}
+#resetBtn,[id*=reset]{min-height:44px;padding:8px 14px}
+#searchInput,input[type=search],input[type=text]{min-height:44px}
+.view-toggle button,.tg-switch{min-height:36px}
+body.dark .label{color:#A7B7C2 !important}
+body.dark .seg{color:#A7B7C2 !important}
+body.dark h2{color:#D5E0E6 !important}
 </style>
 <script>
 (function(){

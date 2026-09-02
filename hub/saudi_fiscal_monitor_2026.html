@@ -653,6 +653,15 @@ body.dark #ehArView .avmeta{border-color:#2C3A43}
 body.dark #ehArView b{color:#E9F1F7}
 #ehArView .avnote{font-size:12.5px;color:#5F7078}
 body.dark #ehArView .avnote{color:#93A6B2}
+
+/* a11y audit fixes */
+
+:focus-visible{outline:2px solid #027DC3;outline-offset:2px}
+nav a, header a{min-height:44px;display:inline-flex;align-items:center}
+body.dark .sec-num{color:#93A6B2 !important}
+body.dark .sec-sub{color:#A9BAC4 !important}
+body.dark .upd-chip{color:#D8C68A !important;background:#2A2312 !important;border-color:#4A4023 !important}
+.ctx-badge.war{background:#8B2F2F !important}
 </style>
 <script>
 (function(){
@@ -778,6 +787,8 @@ body.dark #ehArView .avnote{color:#93A6B2}
   bar.innerHTML='<button id="ehLangEN" class="on">EN</button><button id="ehLangAR">عربي</button>';
   document.body.appendChild(bar);
   window.ehSetLang=function(l){
+    document.documentElement.lang=(l==='ar'?'ar':'en');
+    document.documentElement.dir=(l==='ar'?'rtl':'ltr');
     document.body.classList.toggle('ar-mode',l==='ar');
     document.getElementById('ehLangEN').classList.toggle('on',l!=='ar');
     document.getElementById('ehLangAR').classList.toggle('on',l==='ar');

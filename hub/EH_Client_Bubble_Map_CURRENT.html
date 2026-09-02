@@ -896,6 +896,18 @@ body.dark .seg{background:#151C21}
 body.dark .hc{text-shadow:0 1px 2px rgba(0,0,0,.6)}
 body.dark .hc:not([style*="background"]){color:#8FA3AE !important}
 body.dark [style*="color:#1A5FAB"]{color:#7FB4E8 !important}
+
+/* a11y audit fixes */
+
+.vw,.seg button{min-height:44px}
+.png{min-height:36px}
+.vw.on{background:#1F7A4C !important;border-color:#1F7A4C !important}
+.seg button.on{background:#0E5A9E !important}
+body.dark .vw.on{background:#1F7A4C !important;border-color:#1F7A4C !important}
+body.dark .seg button.on{background:#0E5A9E !important}
+.hint{color:#5A6A74}
+body.dark .hint{color:#AFC3CE !important}
+header small, .esub{color:#44525C}
 </style>
 <script>
 (function(){

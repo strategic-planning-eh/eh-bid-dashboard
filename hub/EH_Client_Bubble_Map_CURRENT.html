@@ -108,6 +108,16 @@
   .ecard svg{width:100%;height:auto;display:block}
   .wfbar,.pbar,.rbar{cursor:pointer}
   .wfbar:hover,.pbar:hover,.rbar:hover{opacity:.82}
+.ytog{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden;margin-inline-start:8px;vertical-align:2px}
+.ytog button{background:#fff;border:none;padding:3px 9px;font-size:10.5px;font-weight:700;font-family:inherit;color:var(--muted);cursor:pointer;line-height:1.6;min-height:24px}
+.ytog button+button{border-inline-start:1px solid var(--line)}
+.ytog button.on{background:#1F7A4C;color:#fff}
+.ytog button:hover:not(.on){background:#EEF3F6}
+body.dark .ytog{border-color:#2C3A43}
+body.dark .ytog button{background:#151C21;color:#9FB3BE}
+body.dark .ytog button+button{border-inline-start-color:#2C3A43}
+body.dark .ytog button.on{background:#1F7A4C;color:#fff}
+body.dark .ytog button:hover:not(.on){background:#1E2830}
 .sr-only{position:absolute !important;width:1px !important;height:1px !important;max-height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0 0 0 0) !important;clip-path:inset(50%) !important;white-space:nowrap !important;border:0 !important}
 :focus-visible{outline:2px solid #027DC3;outline-offset:2px}
 </style>
@@ -162,7 +172,7 @@
       <svg id="svgSlope" viewBox="0 0 960 480"></svg>
     </div>
     <div class="ecard">
-      <div class="eh2">Client Depth vs Value <button class="png" id="quadListBtn" onclick="qlToggle()" style="margin-inline-start:6px">Show all 60 names</button> <button class="png" data-svg="svgQuad">Export PNG</button></div>
+      <div class="eh2">Client Depth vs Value <span class="ytog" id="ytogQuad" role="group" aria-label="Year scope"><button data-y="2025">2025</button><button data-y="2026">2026</button><button data-y="both" class="on">Both</button></span> <button class="png" id="quadListBtn" onclick="qlToggle()" style="margin-inline-start:6px">Show all 60 names</button> <button class="png" data-svg="svgQuad">Export PNG</button></div>
       <div class="esub">Top 60 clients by value. Right = gives EH <b>many jobs</b>; up = worth <b>a lot of money</b>. The dashed lines are the middle of this group, splitting four kinds of client — hover any dot for the name and numbers.
       <div style="margin-top:6px;font-size:11.5px;line-height:1.7">
       <span style="color:#1F7A4C;font-weight:700">&#9679; Strategic accounts</span> — many jobs <i>and</i> big money: protect these relationships. &nbsp;
@@ -174,12 +184,12 @@
       <div id="quadList" style="display:none;margin-top:10px"></div>
     </div>
     <div class="ecard">
-      <div class="eh2">Deal-Size Distribution <button class="png" data-svg="svgDeal">Export PNG</button></div>
+      <div class="eh2">Deal-Size Distribution <span class="ytog" id="ytogDeal" role="group" aria-label="Year scope"><button data-y="2025">2025</button><button data-y="2026">2026</button><button data-y="both" class="on">Both</button></span> <button class="png" data-svg="svgDeal">Export PNG</button></div>
       <div class="esub">Clients bucketed by average deal size (total value ÷ total projects)</div>
       <svg id="svgDeal" viewBox="0 0 960 340"></svg>
     </div>
     <div class="ecard" style="grid-column:1/-1">
-      <div class="eh2">Whitespace Shortlist · cross-sell targets</div>
+      <div class="eh2">Whitespace Shortlist · cross-sell targets <span class="ytog" id="ytogWs" role="group" aria-label="Year scope"><button data-y="2025">2025</button><button data-y="2026">2026</button><button data-y="both" class="on">Both</button></span></div>
       <div class="esub">Each top client&#8217;s biggest services (blue, with share of their spend) next to the EH services they have <b>never</b> bought (green) &mdash; keyword-classified from project descriptions</div>
       <div id="wsList"></div>
     </div>
@@ -232,6 +242,7 @@ const PALETTE = {
 };
 
 let yearMode = "both";
+let quadYear="both", dealYear="both", wsYear="both";
 const hidden = new Set();
 
 const fmt = v => {
@@ -240,6 +251,8 @@ const fmt = v => {
   return "SAR " + v.toFixed(0);
 };
 const val  = d => yearMode==="2025" ? d.v2025 : yearMode==="2026" ? d.v2026 : d.v2025+d.v2026;
+const valY = (d,y) => y==="2025" ? d.v2025 : y==="2026" ? d.v2026 : d.v2025+d.v2026;
+const projY = (d,y) => y==="2025" ? (d.p2025||0) : y==="2026" ? (d.p2026||0) : (d.p2025||0)+(d.p2026||0);
 const proj = d => yearMode==="2025" ? d.p2025 : yearMode==="2026" ? d.p2026 : d.p2025+d.p2026;
 
 const tip = document.getElementById("tip");
@@ -467,57 +480,155 @@ function renderExec(){
   drawQuad(sorted);
   drawDeal();
   renderWhitespace();
+  wireYTog("ytogQuad", y=>{quadYear=y; drawQuad([...DATA].sort((a,b)=>EB(b)-EB(a)));});
+  wireYTog("ytogDeal", y=>{dealYear=y; drawDeal();});
+  wireYTog("ytogWs",   y=>{wsYear=y;   renderWhitespace();});
   var _lbl=document.getElementById("execScopeLbl");
   if(_lbl) _lbl.innerHTML = yearMode==="both"
     ? ''
     : 'Showing <b>'+yearMode+'</b> only — Depth vs Value, Deal-Size and Whitespace are scoped to '+yearMode+
       '; the Bridge, Retention and Sector-Shift cards always compare 2025 → 2026. &nbsp;';
 }
+function wireYTog(id, cb){
+  const el=document.getElementById(id); if(!el||el.dataset.wired) return;
+  el.dataset.wired="1";
+  el.querySelectorAll("button").forEach(b=>{
+    b.addEventListener("click",()=>{
+      el.querySelectorAll("button").forEach(x=>x.classList.remove("on"));
+      b.classList.add("on");
+      cb(b.dataset.y);
+    });
+  });
+}
 function t_axis(){return "How many jobs the client gives EH \u2192 (log scale)";}
+function quadRows(y){
+  return DATA.filter(d=>valY(d,y)>0&&projY(d,y)>0)
+    .map(d=>({n:d.name,p:projY(d,y),v:valY(d,y)}))
+    .sort((a,b)=>b.v-a.v).slice(0,60);
+}
 function drawQuad(sorted){
   const DKQ=document.body.classList.contains("dark");
   const HALO=DKQ?"#151C21":"#fff", TXT=DKQ?"#D5E0E6":"#37474F", MED=DKQ?"#4A5A64":"#B9C6CE", MEDT=DKQ?"#8FA3AE":"#8A99A3";
-  const svg=d3.select("#svgQuad"); svg.selectAll("*").remove();
+  const svg=d3.select("#svgQuad");
   const W=960,H=460,M={t:34,r:36,b:56,l:86};
-  const TOP=DATA.filter(d=>val(d)>0&&proj(d)>0)
-    .map(d=>({n:d.name,p:proj(d),v:val(d)}))
-    .sort((a,b)=>b.v-a.v).slice(0,60);
-  const px=d3.scaleLog().domain([0.8,d3.max(TOP,d=>d.p)*1.4]).range([M.l,W-M.r]);
-  const py=d3.scaleLog().domain([d3.min(TOP,d=>d.v)*0.6,d3.max(TOP,d=>d.v)*1.6]).range([H-M.b,M.t]);
+  const _y=quadYear;
+  const TOP=quadRows(_y);
+  if(!TOP.length){ svg.selectAll("*").remove(); return; }
+
+  // --- FIXED SCALES across all year modes so dots move only when their data moves ---
+  const ALL=[].concat(quadRows("both"),quadRows("2025"),quadRows("2026"));
+  const px=d3.scaleLog().domain([0.8,d3.max(ALL,d=>d.p)*1.4]).range([M.l,W-M.r]);
+  const py=d3.scaleLog().domain([d3.min(ALL,d=>d.v)*0.6,d3.max(ALL,d=>d.v)*1.6]).range([H-M.b,M.t]);
+
+  const REDUCE = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const DUR = REDUCE ? 0 : 2200;                 // slower so the shift is trackable
+  const EASE = d3.easeCubicInOut;
+  // stagger: dots leave in a wave (largest value first) instead of all at once
+  const STAG = REDUCE ? 0 : 22;
+  const delayOf = (d,i)=> i*STAG;
   const medP=d3.median(TOP,d=>d.p), medV=d3.median(TOP,d=>d.v);
-  svg.append("g").attr("transform",`translate(0,${H-M.b})`).call(d3.axisBottom(px).ticks(6,"~s")).selectAll("text").style("font-size","11px");
-  svg.append("g").attr("transform",`translate(${M.l},0)`).call(d3.axisLeft(py).ticks(6,"~s")).selectAll("text").style("font-size","11px");
-  svg.append("line").attr("x1",px(medP)).attr("x2",px(medP)).attr("y1",M.t).attr("y2",H-M.b).attr("stroke",MED).attr("stroke-dasharray","4 4");
-  svg.append("line").attr("x1",M.l).attr("x2",W-M.r).attr("y1",py(medV)).attr("y2",py(medV)).attr("stroke","#B9C6CE").attr("stroke-dasharray","4 4");
-  svg.append("text").attr("x",px(medP)+5).attr("y",M.t+11).style("font-size","10px").attr("fill",MEDT).text("median "+medP+" projects");
-  svg.append("text").attr("x",M.l+64).attr("y",py(medV)-6).style("font-size","10px").attr("fill",MEDT).text("median "+fmt(medV));
   const QCOL=DKQ?{S:"#5FC98E",C:"#E3C36B",T:"#7FB4E8",X:"#93A4AF"}:{S:"#1F7A4C",C:"#B8860B",T:"#1A5FAB",X:"#8A99A3"};
   const quad=d=>d.p>=medP?(d.v>=medV?"S":"T"):(d.v>=medV?"C":"X");
   const QN={S:0,C:0,T:0,X:0}; TOP.forEach(d=>QN[quad(d)]++);
-  const QL=[["Strategic accounts ("+QN.S+")",W-M.r-6,M.t+14,"end","S"],["Concentrated bets ("+QN.C+")",M.l+10,M.t+14,"start","C"],
-            ["Transactional volume ("+QN.T+")",W-M.r-6,H-M.b-10,"end","T"],["Smaller accounts ("+QN.X+")",M.l+10,H-M.b-10,"start","X"]];
-  QL.forEach(q=>svg.append("text").attr("x",q[1]).attr("y",q[2]).attr("text-anchor",q[3]).attr("fill",QCOL[q[4]]).style("font-size","12px").style("font-weight","700").text(q[0]));
-  svg.selectAll("circle.qd").data(TOP).enter().append("circle").attr("class","qd")
-    .attr("cx",d=>px(d.p)).attr("cy",d=>py(d.v)).attr("r",6)
-    .attr("fill",d=>QCOL[quad(d)]).attr("fill-opacity",.55).attr("stroke",d=>QCOL[quad(d)]).attr("stroke-width",1)
-    .append("title").text(d=>d.n+"\n"+d.p+" projects \u00b7 "+fmt(d.v));
-  // labels: top 10 by value, collision-nudged, side-aware, clamped
+
+  // ---------- static chrome: build once, then update ----------
+  let root=svg.select("g.qroot");
+  if(root.empty()){
+    svg.selectAll("*").remove();
+    root=svg.append("g").attr("class","qroot");
+    root.append("g").attr("class","qax-x").attr("transform",`translate(0,${H-M.b})`);
+    root.append("g").attr("class","qax-y").attr("transform",`translate(${M.l},0)`);
+    root.append("line").attr("class","qmed-v").attr("stroke-dasharray","4 4");
+    root.append("line").attr("class","qmed-h").attr("stroke-dasharray","4 4");
+    root.append("text").attr("class","qmed-vt").style("font-size","10px");
+    root.append("text").attr("class","qmed-ht").style("font-size","10px");
+    root.append("g").attr("class","qlabs");
+    root.append("g").attr("class","qdots");
+    root.append("g").attr("class","qquads");
+    root.append("text").attr("class","qxtitle").attr("x",(M.l+W-M.r)/2).attr("y",H-12)
+        .attr("text-anchor","middle").style("font-size","11px");
+    root.append("text").attr("class","qytitle")
+        .attr("transform",`rotate(-90)`)
+        .attr("x",-(M.t+(H-M.b-M.t)/2)).attr("y",18)
+        .attr("text-anchor","middle").style("font-size","11px");
+  }
+  const AXL=DKQ?"#5A6B76":"#C3CED5", AXT=DKQ?"#9FB3BE":"#6B7C86";
+  const axX=root.select(".qax-x").call(d3.axisBottom(px).ticks(6,"~s").tickSizeOuter(0));
+  const axY=root.select(".qax-y").call(d3.axisLeft(py).ticks(6,"~s").tickSizeOuter(0));
+  [axX,axY].forEach(a=>{
+    a.selectAll("text").style("font-size","11px").attr("fill",AXT);
+    a.selectAll("path.domain").attr("stroke",AXL).attr("stroke-width",1.2);
+    a.selectAll("line").attr("stroke",AXL);
+  });
+  root.select(".qxtitle").attr("fill",AXT).text(t_axis());
+  root.select(".qytitle").attr("fill",AXT).text("Contract value with EH \u2192 (SAR, log scale)");
+
+  // median guides glide to their new positions
+  root.select(".qmed-v").attr("stroke",MED).attr("y1",M.t).attr("y2",H-M.b)
+      .transition().duration(DUR).ease(EASE).attr("x1",px(medP)).attr("x2",px(medP));
+  root.select(".qmed-h").attr("stroke",MED).attr("x1",M.l).attr("x2",W-M.r)
+      .transition().duration(DUR).ease(EASE).attr("y1",py(medV)).attr("y2",py(medV));
+  root.select(".qmed-vt").attr("fill",MEDT).attr("y",M.t+11).text("median "+medP+" projects")
+      .transition().duration(DUR).ease(EASE).attr("x",px(medP)+5);
+  root.select(".qmed-ht").attr("fill",MEDT).attr("x",M.l+64).text("median "+fmt(medV))
+      .transition().duration(DUR).ease(EASE).attr("y",py(medV)-6);
+
+  // quadrant headings
+  const QL=[["Strategic accounts ("+QN.S+")",W-M.r-6,M.t+14,"end","S"],
+            ["Concentrated bets ("+QN.C+")",M.l+10,M.t+14,"start","C"],
+            ["Transactional volume ("+QN.T+")",W-M.r-6,H-M.b-10,"end","T"],
+            ["Smaller accounts ("+QN.X+")",M.l+10,H-M.b-10,"start","X"]];
+  const qq=root.select(".qquads").selectAll("text").data(QL,d=>d[4]);
+  qq.enter().append("text")
+      .attr("x",d=>d[1]).attr("y",d=>d[2]).attr("text-anchor",d=>d[3])
+      .style("font-size","12px").style("font-weight","700")
+    .merge(qq)
+      .attr("fill",d=>QCOL[d[4]])
+      .transition().duration(DUR*0.45).ease(EASE)
+      .style("opacity",0).transition().duration(DUR*0.45)
+      .on("start",function(){ d3.select(this).text(d3.select(this).datum()[0]); })
+      .style("opacity",1);
+
+  // ---------- dots: keyed join, glide between years ----------
+  const dots=root.select(".qdots").selectAll("circle.qd").data(TOP, d=>d.n);
+  dots.exit().transition().duration(DUR*0.5).ease(EASE)
+      .attr("r",0).attr("fill-opacity",0).attr("stroke-opacity",0).remove();
+  const dEnter=dots.enter().append("circle").attr("class","qd")
+      .attr("cx",d=>px(d.p)).attr("cy",d=>py(d.v))
+      .attr("r",0).attr("fill-opacity",0).attr("stroke-width",1);
+  dEnter.append("title");
+  dEnter.merge(dots)
+      .each(function(d){ d3.select(this).select("title").text(d.n+"\n"+d.p+" projects \u00b7 "+fmt(d.v)); })
+      .transition().duration(DUR).ease(EASE).delay(delayOf)
+      .attr("cx",d=>px(d.p)).attr("cy",d=>py(d.v)).attr("r",6)
+      .attr("fill",d=>QCOL[quad(d)]).attr("fill-opacity",.55).attr("stroke",d=>QCOL[quad(d)]);
+
+  // ---------- labels: top 10 by value, keyed so they travel with their dot ----------
   const lab=TOP.slice(0,10).map(d=>({d,x:px(d.p),y:py(d.v)}));
   lab.sort((a,b)=>a.y-b.y);
   for(let i=1;i<lab.length;i++){ if(lab[i].y-lab[i-1].y<14) lab[i].y=lab[i-1].y+14; }
   lab.forEach(o=>{
-    const right=o.x>(M.l+ (W-M.l-M.r)*0.62);
+    o.right = o.x>(M.l+(W-M.l-M.r)*0.62);
+    o.tx = o.right ? o.x-10 : o.x+10;
+    o.ty = Math.max(M.t+10,Math.min(H-M.b-6,o.y+4));
     let nm=o.d.n.replace(/\s*\(.*?\)\s*/g," ").trim();
-    if(nm.length>32) nm=nm.slice(0,31)+"\u2026";
-    const tx=right?o.x-10:o.x+10;
-    const ty=Math.max(M.t+10,Math.min(H-M.b-6,o.y+4));
-    svg.append("text").attr("x",tx).attr("y",ty).attr("text-anchor",right?"end":"start")
-      .style("font-size","10.5px").style("font-weight","600").attr("fill",TXT)
-      .attr("stroke",HALO).attr("stroke-width",3).attr("paint-order","stroke")
-      .text(nm);
+    o.nm = nm.length>32 ? nm.slice(0,31)+"\u2026" : nm;
   });
-  svg.append("text").attr("x",(M.l+W-M.r)/2).attr("y",H-12).attr("text-anchor","middle").style("font-size","11px").attr("fill",MEDT).text(t_axis());
-  // full name list, grouped by quadrant
+  const L=root.select(".qlabs").selectAll("text.qlb").data(lab, o=>o.d.n);
+  L.exit().transition().duration(DUR*0.5).style("opacity",0).remove();
+  L.enter().append("text").attr("class","qlb")
+      .attr("x",o=>o.tx).attr("y",o=>o.ty).style("opacity",0)
+      .style("font-size","10.5px").style("font-weight","600")
+      .attr("stroke-width",3).attr("paint-order","stroke")
+    .merge(L)
+      .attr("fill",TXT).attr("stroke",HALO)
+      .text(o=>o.nm)
+      .transition().duration(DUR).ease(EASE).delay((o,i)=>i*STAG)
+      .attr("x",o=>o.tx).attr("y",o=>o.ty)
+      .attr("text-anchor",o=>o.right?"end":"start")
+      .style("opacity",1);
+
+  // ---------- full name list ----------
   const QTITLE={S:"Strategic accounts",C:"Concentrated bets",T:"Transactional volume",X:"Smaller accounts"};
   var ql="";
   ["S","C","T","X"].forEach(q=>{
@@ -538,8 +649,9 @@ function qlToggle(){
 function drawDeal(){
   const svg=d3.select("#svgDeal"); svg.selectAll("*").remove();
   const W=960,H=340,M={t:26,r:30,b:64,l:66};
-  const rows=DATA.filter(d=>val(d)>0&&proj(d)>0)
-    .map(d=>({n:d.name,avg:val(d)/proj(d),v:val(d)}));
+  const _y=dealYear;
+  const rows=DATA.filter(d=>valY(d,_y)>0&&projY(d,_y)>0)
+    .map(d=>({n:d.name,avg:valY(d,_y)/projY(d,_y),v:valY(d,_y)}));
   const B=[["< 25K",0,25e3],["25–100K",25e3,1e5],["100–500K",1e5,5e5],["0.5–2M",5e5,2e6],["2–10M",2e6,1e7],["> 10M",1e7,Infinity]];
   const agg=B.map(b=>({lbl:b[0],c:rows.filter(r=>r.avg>=b[1]&&r.avg<b[2]).length,val:d3.sum(rows.filter(r=>r.avg>=b[1]&&r.avg<b[2]),r=>r.v)}));
   const tot=d3.sum(agg,a=>a.val);
@@ -579,7 +691,7 @@ function svcCat(t){
 }
 function renderWhitespace(){
   const per={};
-  const yOK=it=>yearMode==="both"?true:(String(it.y)===yearMode);
+  const yOK=it=>wsYear==="both"?true:(String(it.y)===wsYear);
   Object.keys(DETAIL).forEach(cl=>{
     const cv={}; let tot=0;
     DETAIL[cl].filter(yOK).forEach(it=>{ const c=svcCat(it.s); cv[c]=(cv[c]||0)+(it.v||0); tot+=(it.v||0); });

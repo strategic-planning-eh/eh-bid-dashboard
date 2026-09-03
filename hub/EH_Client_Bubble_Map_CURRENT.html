@@ -108,7 +108,7 @@
   .ecard svg{width:100%;height:auto;display:block}
   .wfbar,.pbar,.rbar{cursor:pointer}
   .wfbar:hover,.pbar:hover,.rbar:hover{opacity:.82}
-.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.sr-only{position:absolute !important;width:1px !important;height:1px !important;max-height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0 0 0 0) !important;clip-path:inset(50%) !important;white-space:nowrap !important;border:0 !important}
 :focus-visible{outline:2px solid #027DC3;outline-offset:2px}
 </style>
 </head>
@@ -138,7 +138,7 @@
   <span class="hint">Scroll to zoom · drag to pan · click a bubble for its projects &amp; services · click a sector to filter</span>
 </div>
 <div id="execWrap">
-  <div class="heatnote" style="padding:0 0 8px">Charts are interactive: scroll to zoom · drag to pan · double-click to reset · PNG ⬇ exports the current view.</div>
+  <div class="heatnote" id="execYearNote" style="padding:0 0 8px"><b id="execScopeLbl"></b>Charts are interactive: scroll to zoom · drag to pan · double-click to reset · PNG ⬇ exports the current view.</div>
   <div class="kband" id="kband"></div>
   <div class="egrid">
     <div class="ecard">
@@ -467,6 +467,11 @@ function renderExec(){
   drawQuad(sorted);
   drawDeal();
   renderWhitespace();
+  var _lbl=document.getElementById("execScopeLbl");
+  if(_lbl) _lbl.innerHTML = yearMode==="both"
+    ? ''
+    : 'Showing <b>'+yearMode+'</b> only — Depth vs Value, Deal-Size and Whitespace are scoped to '+yearMode+
+      '; the Bridge, Retention and Sector-Shift cards always compare 2025 → 2026. &nbsp;';
 }
 function t_axis(){return "How many jobs the client gives EH \u2192 (log scale)";}
 function drawQuad(sorted){
@@ -474,8 +479,8 @@ function drawQuad(sorted){
   const HALO=DKQ?"#151C21":"#fff", TXT=DKQ?"#D5E0E6":"#37474F", MED=DKQ?"#4A5A64":"#B9C6CE", MEDT=DKQ?"#8FA3AE":"#8A99A3";
   const svg=d3.select("#svgQuad"); svg.selectAll("*").remove();
   const W=960,H=460,M={t:34,r:36,b:56,l:86};
-  const TOP=DATA.filter(d=>EB(d)>0&&((d.p2025||0)+(d.p2026||0))>0)
-    .map(d=>({n:d.name,p:(d.p2025||0)+(d.p2026||0),v:EB(d)}))
+  const TOP=DATA.filter(d=>val(d)>0&&proj(d)>0)
+    .map(d=>({n:d.name,p:proj(d),v:val(d)}))
     .sort((a,b)=>b.v-a.v).slice(0,60);
   const px=d3.scaleLog().domain([0.8,d3.max(TOP,d=>d.p)*1.4]).range([M.l,W-M.r]);
   const py=d3.scaleLog().domain([d3.min(TOP,d=>d.v)*0.6,d3.max(TOP,d=>d.v)*1.6]).range([H-M.b,M.t]);
@@ -533,8 +538,8 @@ function qlToggle(){
 function drawDeal(){
   const svg=d3.select("#svgDeal"); svg.selectAll("*").remove();
   const W=960,H=340,M={t:26,r:30,b:64,l:66};
-  const rows=DATA.filter(d=>EB(d)>0&&((d.p2025||0)+(d.p2026||0))>0)
-    .map(d=>({n:d.name,avg:EB(d)/((d.p2025||0)+(d.p2026||0)),v:EB(d)}));
+  const rows=DATA.filter(d=>val(d)>0&&proj(d)>0)
+    .map(d=>({n:d.name,avg:val(d)/proj(d),v:val(d)}));
   const B=[["< 25K",0,25e3],["25–100K",25e3,1e5],["100–500K",1e5,5e5],["0.5–2M",5e5,2e6],["2–10M",2e6,1e7],["> 10M",1e7,Infinity]];
   const agg=B.map(b=>({lbl:b[0],c:rows.filter(r=>r.avg>=b[1]&&r.avg<b[2]).length,val:d3.sum(rows.filter(r=>r.avg>=b[1]&&r.avg<b[2]),r=>r.v)}));
   const tot=d3.sum(agg,a=>a.val);
@@ -574,10 +579,11 @@ function svcCat(t){
 }
 function renderWhitespace(){
   const per={};
+  const yOK=it=>yearMode==="both"?true:(String(it.y)===yearMode);
   Object.keys(DETAIL).forEach(cl=>{
-    const cv={}; let val=0;
-    DETAIL[cl].forEach(it=>{ const c=svcCat(it.s); cv[c]=(cv[c]||0)+(it.v||0); val+=(it.v||0); });
-    per[cl]={cv,val};
+    const cv={}; let tot=0;
+    DETAIL[cl].filter(yOK).forEach(it=>{ const c=svcCat(it.s); cv[c]=(cv[c]||0)+(it.v||0); tot+=(it.v||0); });
+    per[cl]={cv,val:tot};
   });
   const ALL=SVC_RULES.map(r=>r[0]);
   const rows=Object.entries(per).map(([cl,o])=>({
@@ -829,7 +835,7 @@ function setView(v){
   document.getElementById("wrap").style.display = v === "bubbles" ? "flex" : "none";
   document.getElementById("search").style.display = v === "bubbles" ? "" : "none";
   document.getElementById("reset").style.display  = v === "bubbles" ? "" : "none";
-  document.getElementById("yearSeg").style.display = v === "exec" ? "none" : "inline-flex";
+  document.getElementById("yearSeg").style.display = "inline-flex";
   closePanel();
   if (v === "heat") renderHeat(); else if (v === "exec") renderExec(); else render();
 }
@@ -870,9 +876,9 @@ render();
 (function(){
   try{
     var rows=DATA.slice().sort(function(a,b){return ((b.v2025||0)+(b.v2026||0))-((a.v2025||0)+(a.v2026||0));});
-    var t='<table class="sr-only"><caption>Client portfolio by total contract value (2025–2026)</caption><thead><tr><th scope="col">Client</th><th scope="col">Total SAR</th><th scope="col">Projects</th></tr></thead><tbody>';
+    var t='<table><caption>Client portfolio by total contract value (2025–2026)</caption><thead><tr><th scope="col">Client</th><th scope="col">Total SAR</th><th scope="col">Projects</th></tr></thead><tbody>';
     rows.forEach(function(r){t+='<tr><td>'+r.name+'</td><td>'+Math.round((r.v2025||0)+(r.v2026||0)).toLocaleString()+'</td><td>'+((r.p2025||0)+(r.p2026||0))+'</td></tr>';});
-    document.body.insertAdjacentHTML('beforeend',t+'</tbody></table>');
+    document.body.insertAdjacentHTML('beforeend','<div class="sr-only">'+t+'</tbody></table></div>');
     var s=document.querySelector('svg'); if(s){s.setAttribute('role','img');s.setAttribute('aria-label','Packed bubble chart of the client portfolio; bubble area is proportional to contract value. A ranked table of the same data follows for screen readers.');}
   }catch(e){}
 })();

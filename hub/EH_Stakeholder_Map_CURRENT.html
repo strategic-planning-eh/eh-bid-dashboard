@@ -138,7 +138,54 @@ table.heat td{padding:5px 6px;text-align:center;border-radius:4px;font-variant-n
 .modal table{border-collapse:collapse;width:100%}
 .modal .x{float:right;cursor:pointer;font-size:20px;color:var(--ink-soft)}
 .note{font-size:11.4px;color:var(--ink-soft);padding:6px 14px 2px;line-height:1.5}
-@media(max-width:1100px){.wrap{grid-template-columns:1fr}.side,.detail{max-height:none}}
+.mfilt{display:none}
+.dclose{display:none}
+@media(max-width:1100px){
+  .wrap{grid-template-columns:1fr;padding:0 14px 14px}
+  .side,.detail{max-height:none}
+  .kpis{padding:10px 14px}
+  .kpi{min-width:0;flex:1 1 calc(33.33% - 8px);padding:9px 12px}
+  .kpi .v{font-size:22px}
+}
+@media(max-width:768px){
+  /* map first, filters collapsible, detail as bottom sheet */
+  .wrap{display:flex;flex-direction:column;gap:10px}
+  .panel.center{order:1}
+  .mfilt{order:2;display:flex;align-items:center;gap:8px;width:100%;min-height:46px;
+    padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--paper);
+    color:var(--ink);font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;text-align:start}
+  .mfilt .mfcnt{margin-inline-start:auto;background:#1F7A4C;color:#fff;border-radius:11px;padding:1px 8px;font-size:11px;min-width:22px;text-align:center}
+  .mfilt .mfcnt:empty{display:none}
+  .mfilt[aria-expanded="true"]{border-bottom-left-radius:0;border-bottom-right-radius:0}
+  .panel.side{order:3;display:none;max-height:none;border-top-left-radius:0;border-top-right-radius:0;margin-top:-10px}
+  .panel.side.mopen{display:block}
+  .kpi{flex:1 1 calc(50% - 6px)}
+  .kpi .v{font-size:20px}
+  .kpi .l{font-size:10px}
+  /* canvas sized to the viewport */
+  #cv{width:100% !important;height:auto !important;aspect-ratio:1/1;max-height:70vh}
+  .tabs .tab{padding:9px 10px;font-size:12px;white-space:nowrap}
+  .tabs{overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  /* detail → bottom sheet */
+  .detail{order:4}
+  #detail.has{position:fixed;left:0;right:0;bottom:0;top:auto;max-height:78vh;overflow:auto;z-index:60;
+    border-radius:16px 16px 0 0;box-shadow:0 -12px 32px rgba(0,0,0,.25);border-bottom:0;padding-top:6px}
+  #detail.has .dclose{display:flex;position:sticky;top:0;margin-inline-start:auto;width:36px;height:36px;
+    align-items:center;justify-content:center;border:0;border-radius:18px;background:var(--mist);
+    color:var(--ink);font-size:22px;line-height:1;cursor:pointer;z-index:2}
+  #detail.has::before{content:"";display:block;width:44px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 6px}
+  .legend{font-size:11px;padding:8px 12px}
+}
+@media(max-width:480px){
+  header .hd{gap:8px}
+  header h1{font-size:15px}
+  header .sub{font-size:11px}
+  .btn{padding:8px 10px;font-size:12px}
+  .kpi{flex:1 1 calc(50% - 6px)}
+  .chips .chip{padding:5px 9px;font-size:11px}
+}
+
 :focus-visible{outline:2px solid #027DC3;outline-offset:2px}
 </style>
 <style>
@@ -262,6 +309,38 @@ html[dir=rtl] #ehcw{left:22px;right:auto}
 html.dark .zoomhint{color:#AFC3CE !important;background:rgba(21,28,33,.9) !important}
 .legend [style*="color:#C9A227"],.legend [style*="color:#B8860B"]{color:#7A5B14 !important}
 html.dark .legend [style*="color:#C9A227"],html.dark .legend [style*="color:#B8860B"]{color:#E3C36B !important}
+
+@media(max-width:768px){
+  .hd-actions{flex-wrap:wrap;gap:6px;width:100%;justify-content:flex-start}
+  .hd-actions .btn{flex:1 1 calc(50% - 3px);min-height:42px;padding:8px 6px;font-size:12px;white-space:normal;line-height:1.2}
+  #langBtn,#darkBtn{flex:1 1 calc(50% - 3px)}
+  .panel.center .tabs{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 24px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 24px),transparent)}
+  .panel.center .tabs::-webkit-scrollbar{display:none}
+}
+
+@media(max-width:768px){
+  header{padding:8px 12px;gap:8px;row-gap:6px;border-bottom-width:2px}
+  header .logo img{height:30px !important;width:auto}
+  header .titles h1{font-size:13.5px;line-height:1.25}
+  header .titles p{display:none}
+  header .logo{flex:none}
+  header .titles{flex:1 1 0;min-width:0}
+  /* actions become a compact 3-icon row: lang · dark · more(sheet) */
+  .hd-actions{width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-left:0}
+  .hd-actions .btn{flex:none;min-height:40px;padding:6px 4px;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* KPI strip: 3 compact tiles, single row */
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:8px 12px}
+  .kpi{padding:6px 8px;min-width:0}
+  .kpi .v{font-size:17px}
+  .kpi .l{font-size:9px;line-height:1.2}
+  .kpi:nth-child(n+4){display:none}   /* regulators / frequent / top region hidden on phone */
+  .panel.center .tabs .tab{min-height:40px}
+}
+@media(max-width:480px){
+  .hd-actions{grid-template-columns:1fr 1fr 1fr}
+  .hd-actions .btn:nth-child(1),.hd-actions .btn:nth-child(2){display:none}
+  .hd-actions{grid-template-columns:repeat(4,1fr)}
+}
 </style></head>
 <body>
 <header>
@@ -288,7 +367,11 @@ html.dark .legend [style*="color:#C9A227"],html.dark .legend [style*="color:#B88
 </div>
 
 <div class="wrap">
-  <div class="panel side">
+  <button class="mfilt" id="mfilt" type="button" aria-expanded="false" aria-controls="sidePanel" onclick="mfToggle()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:15px;height:15px"><path d="M3 5h18M6 12h12M10 19h4"/></svg>
+    <span id="mfiltLbl">Filters &amp; search</span><span class="mfcnt" id="mfcnt"></span>
+  </button>
+  <div class="panel side" id="sidePanel">
     <h3>Search company</h3>
     <section>
       <input type="text" id="search" placeholder="Type a name (EN/AR)…" autocomplete="off">
@@ -332,7 +415,7 @@ html.dark .legend [style*="color:#C9A227"],html.dark .legend [style*="color:#B88
       <div class="tab" id="tabList" onclick="switchTab('list')">List View</div>
     </div>
     <div class="viewbox" id="viewbox">
-      <div id="mapView"><div id="emptyHint" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:none"><div style="background:#fff;border:1px solid #E2E9EE;border-radius:14px;padding:26px 34px;text-align:center;color:#51626D;font-size:14px;box-shadow:0 6px 24px rgba(0,0,0,.08);pointer-events:auto">The map opens with <b>no filters selected</b>.<br>Tick stakeholder categories on the left to populate it — or<br><button class="btn" style="margin-top:12px" onclick="CATS.forEach(c=>state.cats.add(c.id));document.querySelectorAll('#catFilters input').forEach(i=>i.checked=true);recompute();draw();">Show everything</button></div></div><canvas id="cv" role="img" aria-label="Radial stakeholder map of 4,000+ organizations grouped by category and region. The List View tab provides the same data as an accessible table."></canvas><div class="tooltip" id="tip"></div>
+      <div id="mapView"><div id="emptyHint" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:none"><div style="background:#fff;border:1px solid #E2E9EE;border-radius:14px;padding:26px 34px;text-align:center;color:#51626D;font-size:14px;box-shadow:0 6px 24px rgba(0,0,0,.08);pointer-events:auto">The map opens with <b>no filters selected</b>.<br>Tick company types in the Filters panel to populate it — or<br><button class="btn" style="margin-top:12px" onclick="CATS.forEach(c=>state.cats.add(c.id));document.querySelectorAll('#catFilters input').forEach(i=>i.checked=true);recompute();draw();">Show everything</button></div></div><canvas id="cv" role="img" aria-label="Radial stakeholder map of 4,000+ organizations grouped by category and region. The List View tab provides the same data as an accessible table."></canvas><div class="tooltip" id="tip"></div>
         <div class="zoomctl">
           <button class="zbtn" onclick="zoomBy(1.45)" title="Zoom in">+</button>
           <button class="zbtn" onclick="zoomBy(1/1.45)" title="Zoom out">&minus;</button>
@@ -352,6 +435,7 @@ html.dark .legend [style*="color:#C9A227"],html.dark .legend [style*="color:#B88
   </div>
 
   <div class="panel detail" id="detail">
+    <button class="dclose" type="button" aria-label="Close details" onclick="document.getElementById('detail').classList.remove('has')">&times;</button>
     <h3>Company detail</h3>
     <div class="empty">Click any node on the map — or a search result — to see the full company profile here: category, sector, license activities, region, sites, bid history and tier.</div>
   </div>
@@ -511,7 +595,18 @@ function visible(n){
   return true;
 }
 let VIS=[];
-function recompute(){
+function mfToggle(){
+  var s=document.getElementById('sidePanel'), b=document.getElementById('mfilt');
+  var open=s.classList.toggle('mopen'); b.setAttribute('aria-expanded',open?'true':'false');
+  if(open){ s.scrollIntoView({behavior:'smooth',block:'start'}); }
+}
+function mfBadge(){
+  try{
+    var n=(state.cats?state.cats.size:0)+(state.regs?state.regs.size:0)+(state.tiers?state.tiers.size:0)+(state.type?1:0)+(state.sector?1:0)+(state.lic?1:0);
+    var el=document.getElementById('mfcnt'); if(el) el.textContent=n?n:'';
+  }catch(e){}
+}
+function recompute(){ mfBadge();
   VIS = NODES.filter(visible);
   var _eh=document.getElementById('emptyHint'); if(_eh)_eh.style.display=(VIS.length===0&&state.cats.size===0)?'flex':'none';
   document.getElementById('kTotal').textContent=VIS.length.toLocaleString();
@@ -716,6 +811,7 @@ function mwBlock(n){
   '</div>';
 }
 function showDetail(n){window.__cursel=n;
+  try{var _dp=document.getElementById('detail'); if(_dp){_dp.classList.add('has'); if(window.matchMedia('(max-width:768px)').matches){_dp.scrollTop=0;}}}catch(e){}
   const cat={c:CAT_COL[n.cat]||'#7A8A99',s:n.cat,id:n.cat};
   const flags=[];
   if(n.tier==='Tier 1')flags.push(['\u2b50 '+t('Tier 1 key player','\u0644\u0627\u0639\u0628 \u0631\u0626\u064a\u0633\u064a \u0641\u0626\u0629 1'),'#B8860B']);

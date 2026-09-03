@@ -33,6 +33,66 @@ iframe.on{display:block}
 @keyframes sp{to{transform:rotate(360deg)}}
 .foot{font-size:11px;color:var(--mut);padding:4px 20px;background:#fff;border-top:1px solid var(--line)}
 :focus-visible{outline:2px solid #027DC3;outline-offset:2px}
+/* ---------- responsive: hub shell ---------- */
+nav.mtabs{display:none}
+@media(max-width:1024px){
+  header{padding:8px 14px;gap:10px}
+  .tab{padding:8px 12px;font-size:13px}
+  #q{width:200px !important}
+}
+@media(max-width:820px){
+  header{flex-wrap:wrap;row-gap:6px}
+  .brand .desc{display:none !important}
+  #q{order:9;flex:1 1 100%;min-width:0;max-width:none;width:auto !important}
+  .fresh{display:none !important}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;padding:0 8px;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;white-space:nowrap}
+  #newsbar{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
+  .nsub{flex:0 0 auto;white-space:nowrap}
+}
+@media(max-width:640px){
+  html,body{height:100%}
+  header{display:grid !important;grid-template-columns:auto 1fr auto auto auto;grid-template-areas:"logo brand theme lang fs" "conf conf conf conf conf" "search search search search search";align-items:center;column-gap:6px;row-gap:4px}
+  .brand{display:contents}
+  .brand h1{grid-area:brand}
+  .conf{grid-area:conf;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;box-sizing:border-box;text-align:center}
+  header>img.logo{grid-area:logo;height:30px !important;width:auto;margin:0}
+  .brand{grid-area:brand;min-width:0}
+  .brand h1{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+  .conf{font-size:9px;padding:2px 6px;margin-top:0;border-radius:4px;letter-spacing:.2px}
+  .conf svg{display:none}
+  #themebtn{grid-area:theme} #langbtn{grid-area:lang} #fsbtn,header button[onclick*="hubFS"]{grid-area:fs}
+  #digestbtn{display:none !important}
+  #hsearch{grid-area:search;order:0 !important}
+  #q{width:100% !important}
+  header>nav[aria-label]{grid-column:1/-1}
+  .fresh{display:none !important}
+  body{display:flex;flex-direction:column;min-height:100dvh}
+  header{position:sticky;top:0;z-index:20;padding:6px 10px;gap:6px}
+  .brand h1{font-size:15px}
+  .brand small{display:none !important}
+  .conf{font-size:9px;padding:1px 6px;margin-top:1px}
+  .conf .dsep,.conf [lang=ar]{display:none}
+  #themebtn,#langbtn,#digestbtn,header button{min-height:38px;min-width:38px;padding:6px 9px}
+  .hbtn{font-size:12px}
+  /* hide the top tab strip; bottom bar takes over */
+  nav[aria-label] .tabs{display:none !important}
+  main{flex:1;min-height:0;position:relative}
+  iframe{position:absolute;inset:0;height:100%}
+  .foot{display:none !important}
+  nav.mtabs{position:sticky;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    background:#fff;border-top:1px solid var(--line);z-index:20;padding-bottom:env(safe-area-inset-bottom)}
+  .mtab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    min-height:56px;border:0;background:transparent;color:var(--mut);font:inherit;font-size:11px;font-weight:600;cursor:pointer}
+  .mtab svg{width:20px;height:20px}
+  .mtab.on{color:#1F7A4C;box-shadow:inset 0 3px 0 #1F7A4C}
+  body.dark .mtabs{background:#121A1F;border-top-color:var(--d-line)}
+  body.dark .mtab{color:#9FB3BE}
+  body.dark .mtab.on{color:#5FC98E;box-shadow:inset 0 3px 0 #5FC98E}
+  #newsbar{position:sticky;top:0;z-index:15}
+}
+
 .ic{width:16px;height:16px;vertical-align:-3px;margin-inline-end:6px;flex:0 0 auto}
 #themebtn .ic{margin-inline-end:0;vertical-align:-3px}
 .conf{display:inline-flex;align-items:center;flex-wrap:wrap;gap:0;margin-top:3px;padding:2px 8px;
@@ -40,7 +100,7 @@ iframe.on{display:block}
   font-size:10.5px;font-weight:700;letter-spacing:.3px;color:#8B1A1A;text-transform:uppercase;line-height:1.5}
 body.dark .conf{background:#2A1618;border-color:#7A3535;color:#F0A9A9}
 @media(max-width:640px){.conf{font-size:9.5px;padding:2px 6px}.conf .dsep,.conf [lang=ar]{display:none}}
-nav[aria-label]{display:contents}
+nav[aria-label]:not(.mtabs){display:contents}
 .skip{position:absolute;inset-inline-start:-9999px;top:10px;z-index:10000;background:#fff;color:var(--d-bg);padding:10px 16px;border:2px solid var(--blue);border-radius:8px;font-weight:700;font-size:13px}
 .skip:focus{inset-inline-start:12px}
 .brand h1{font-size:17px;margin:0;font-weight:800;line-height:1.2;display:inline}
@@ -51,19 +111,7 @@ body.dark .brand .desc{color:var(--d-mut)}
 #themebtn,#langbtn,#digestbtn,#fsbtn,header button{min-height:44px;min-width:44px}
 .hbtn{padding:7px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:13px}
 body.dark .fresh b{color:#7FD4A3}
-@media(max-width:900px){
-  header{flex-wrap:wrap;row-gap:8px;padding:10px 12px}
-  #q{order:9;flex:1 1 100%;min-width:0;max-width:none}
-  .fresh{display:none !important}
-}
-@media(max-width:640px){
-  .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;justify-content:flex-start;padding:0 8px;scrollbar-width:none}
-  .tabs::-webkit-scrollbar{display:none}
-  .tab{flex:0 0 auto;font-size:12.5px;padding:8px 12px;white-space:nowrap}
-  .brand small,.brand .desc{display:none}
-  #newsbar{overflow-x:auto;flex-wrap:nowrap}
-  .nsub{flex:0 0 auto;white-space:nowrap}
-}
+
 .nsub{padding:7px 15px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:12.5px;font-weight:600;color:var(--mut)}
 .nsub.on{background:var(--green);border-color:var(--green);color:#fff}
 body.dark #newsbar{background:var(--d-panel) !important;border-color:var(--d-line) !important}
@@ -79,7 +127,10 @@ body.dark .tab:hover:not(.on){background:#1B252C;color:var(--d-ink)}
 body.dark .fresh{background:#16211B;border-color:#2C4534;color:var(--d-mut)}
 body.dark #langbtn,body.dark #digestbtn,body.dark button{background:var(--d-soft) !important;border-color:var(--d-bord) !important;color:#CFE3F2 !important}
 body.dark #q{background:#1A242B;border-color:var(--d-bord);color:var(--d-ink)}
-body.dark #qdrop{background:#182126;border-color:var(--d-line)}
+body.dark #qdrop{background:#182126 !important;border-color:var(--d-bord) !important;box-shadow:0 8px 24px rgba(0,0,0,.5) !important}
+body.dark #qdrop .qh{border-bottom-color:#22303A !important;color:#E6EDF1 !important}
+body.dark #qdrop .qh:hover,body.dark #qdrop .qh:focus{background:#22303A !important}
+#qdrop .qh:hover,#qdrop .qh:focus{background:#F0F4F7}
 body.dark #qdrop .qh{border-color:#22303A !important;color:#D5E0E6}
 body.dark .skel{background:var(--d-bg)}
 body.dark iframe{background:var(--d-bg)}
@@ -108,9 +159,6 @@ body.dark iframe{background:var(--d-bg)}
     <button class="tab" role="tab" data-f="news" data-t="News & Intelligence" aria-pressed="false" onclick="go(this)"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h13v14H6a2 2 0 0 1-2-2V5z"/><path d="M17 8h3v9a2 2 0 0 1-2 2h-1M7 9h7M7 13h7M7 17h4"/></svg><span class="tl" data-en="News &amp; Intelligence" data-ar="الأخبار والمستجدات">News &amp; Intelligence</span></button>
   </div></nav>
 </header>
-<div id="mob" style="display:none;background:#FFF6E5;border-bottom:1px solid #EAD9B0;color:#7A5B14;font:600 12px system-ui;padding:7px 16px">
-  Best on a desktop screen — phones show a compact view · يُعرض بشكل أفضل على شاشة مكتبية <button onclick="this.parentElement.remove()" style="border:0;background:none;color:#7A5B14;font-weight:800;cursor:pointer;float:inline-end">✕</button>
-</div>
 <script>if(window.innerWidth<768)document.currentScript.previousElementSibling.style.display='block';</script>
 <main id="main">
   <div class="skel on" id="sk-stake"><div class="in"><div class="spin"></div>Loading the stakeholder map…</div></div>
@@ -138,10 +186,17 @@ body.dark iframe{background:var(--d-bg)}
     </div>
   </div>
 </main>
+<nav class="mtabs" aria-label="Sections" role="tablist">
+  <button class="mtab on" data-f="stake" role="tab" onclick="go(document.querySelector('.tab[data-f=stake]'))"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3z"/><path d="M9 3v15M15 6v15"/></svg><span class="tl" data-en="Map" data-ar="الخريطة">Map</span></button>
+  <button class="mtab" data-f="bids" role="tab" onclick="go(document.querySelector('.tab[data-f=bids]'))"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 21h18M7 17V9M12 21V5M17 17v-6"/></svg><span class="tl" data-en="Bids" data-ar="المناقصات">Bids</span></button>
+  <button class="mtab" data-f="bubbles" role="tab" onclick="go(document.querySelector('.tab[data-f=bubbles]'))"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><path d="M16 4.6a3.2 3.2 0 0 1 0 6.8M17.5 15.2c2 .5 3.1 2 3.5 4.8"/></svg><span class="tl" data-en="Clients" data-ar="العملاء">Clients</span></button>
+  <button class="mtab" data-f="news" role="tab" onclick="go(document.querySelector('.tab[data-f=news]'))"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h13v14H6a2 2 0 0 1-2-2V5z"/><path d="M17 8h3v9a2 2 0 0 1-2 2h-1M7 9h7M7 13h7M7 17h4"/></svg><span class="tl" data-en="News" data-ar="الأخبار">News</span></button>
+</nav>
 <div class="foot">One link · three integrated views · bid data auto-refreshes hourly from the live tracker · stakeholder &amp; client data rebuilt from source workbooks on commit</div>
 <script>
 function $(id){return document.getElementById(id)}
 function go(btn){
+  try{var _f=btn&&btn.dataset&&btn.dataset.f;document.querySelectorAll('.mtab').forEach(function(m){m.classList.toggle('on',m.dataset.f===_f);m.setAttribute('aria-selected',m.dataset.f===_f?'true':'false');});}catch(e){}
   document.querySelectorAll('.tab').forEach(t=>{t.classList.toggle('on',t===btn);t.setAttribute('aria-pressed',t===btn?'true':'false');});
   const isNews=btn.dataset.f==='news';
   $('newswrap').style.display=isNews?'flex':'none';

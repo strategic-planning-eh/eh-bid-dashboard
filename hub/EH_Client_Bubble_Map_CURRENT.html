@@ -120,6 +120,46 @@ body.dark .ytog button.on{background:#1F7A4C;color:#fff}
 body.dark .ytog button:hover:not(.on){background:#1E2830}
 .sr-only{position:absolute !important;width:1px !important;height:1px !important;max-height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0 0 0 0) !important;clip-path:inset(50%) !important;white-space:nowrap !important;border:0 !important}
 :focus-visible{outline:2px solid #027DC3;outline-offset:2px}
+
+/* ---------- responsive ---------- */
+#chart svg,#chart canvas{max-width:100%}
+@media(max-width:1024px){
+  header,.toolbar,#execWrap,#heatWrap{padding-left:14px;padding-right:14px}
+  .egrid{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  header{padding:10px 12px;gap:8px}
+  header h1{font-size:15px;line-height:1.3}
+  .kpis{margin-left:0;width:100%;gap:12px;font-size:11.5px;flex-wrap:wrap}
+  .toolbar{padding:8px 12px;gap:8px}
+  .toolbar .hint{display:none}
+  .toolbar #search{flex:1 1 100%;min-width:0}
+  .seg .vw,.seg button{padding:8px 10px;font-size:12px;min-height:40px}
+  #wrap{flex-direction:column}
+  #chart{width:100%;min-width:0}
+  #chart svg{width:100% !important;height:auto !important;max-height:80vh}
+  #legend{width:100%;max-width:none;padding:8px 12px;display:flex;flex-wrap:wrap;gap:6px 14px}
+  #legend h3{flex:1 1 100%}
+  .ecard{padding:12px}
+  .ecard .eh2{flex-wrap:wrap;gap:6px;font-size:13.5px}
+  .ecard svg{width:100%;height:auto}
+  .ytog{margin-inline-start:0}
+  .kband{grid-template-columns:1fr 1fr}
+  .kcard .kv{font-size:20px}
+  #heatWrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  #heatTbl table{min-width:640px}
+  /* detail panel → full-width bottom sheet */
+  #panel{top:auto;bottom:0;right:0;left:0;width:100%;max-width:100%;height:auto;max-height:80vh;
+    border-left:0;border-top:1px solid var(--line);border-radius:16px 16px 0 0;
+    box-shadow:0 -10px 30px rgba(0,0,0,.25);transform:translateY(105%);transition:transform .28s ease}
+  #panel.open{right:0;transform:translateY(0)}
+  #wsList table{display:block;overflow-x:auto;white-space:nowrap}
+}
+@media(max-width:480px){
+  .kband{grid-template-columns:1fr 1fr}
+  .kcard .kv{font-size:18px}
+  header h1 b{display:block}
+}
 </style>
 </head>
 <body>

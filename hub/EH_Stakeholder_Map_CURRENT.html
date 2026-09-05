@@ -11,7 +11,14 @@
   To add or edit a company, edit that feature list and reload.
 -->
 <html lang="en">
-<head>
+<head><script>
+/* EH env flags: iOS/iPadOS (incl. iPadOS desktop-mode UA) and iframe context */
+(function(){var ua=navigator.userAgent,c=document.documentElement.classList;
+var ios=/iP(hone|od|ad)/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1);
+var inframe=(function(){try{return window.self!==window.top;}catch(e){return true;}})();
+if(ios)c.add('ios'); if(inframe)c.add('inframe'); if(ios&&inframe)c.add('iosframe');
+if(navigator.maxTouchPoints>0)c.add('touch');})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Environmental Horizons — Stakeholder Map</title>
@@ -40,7 +47,7 @@ header{background:var(--paper);border-bottom:3px solid var(--eh-green);padding:1
 .kpi .v{font-size:22px;font-weight:800}
 .kpi .l{font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
 .kpi.accent .v{color:var(--eh-green)} .kpi.red .v{color:var(--c-act)} .kpi.gold .v{color:#B8860B} .kpi.blue .v{color:var(--eh-blue)}
-.wrap{display:grid;grid-template-columns:268px 1fr 300px;gap:12px;padding:0 22px 22px}
+.wrap{display:grid;grid-template-columns:268px minmax(0,1fr) 300px;gap:12px;padding:0 22px 22px}
 .panel{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden}
 .panel h3{font-size:11.5px;text-transform:uppercase;letter-spacing:.8px;color:var(--ink-soft);padding:12px 14px 8px}
 .side{padding-bottom:10px;max-height:calc(100vh - 190px);overflow-y:auto}
@@ -96,7 +103,7 @@ canvas{display:block;width:100%;height:100%}
 .sat-row{display:flex;align-items:center;gap:8px;margin:3px 0;font-size:12px}
 .sat-bar{height:14px;border-radius:3px;background:var(--eh-blue);min-width:2px}
 .sat-lbl{width:130px;font-family:monospace;font-size:11px;font-weight:700;color:var(--eh-blue)}
-.yoy{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:560px}
+.yoy{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;max-width:560px}
 .yoy-card{border:1px solid var(--line);border-radius:10px;padding:12px}
 .yoy-yr{font-size:18px;font-weight:800;color:var(--eh-green)}
 .geo-legend{font-size:11px;color:var(--ink-soft);margin-top:8px}
@@ -141,7 +148,7 @@ table.heat td{padding:5px 6px;text-align:center;border-radius:4px;font-variant-n
 .mfilt{display:none}
 .dclose{display:none}
 @media(max-width:1100px){
-  .wrap{grid-template-columns:1fr;padding:0 14px 14px}
+  .wrap{grid-template-columns:minmax(0,1fr);padding:0 14px 14px}
   .side,.detail{max-height:none}
   .kpis{padding:10px 14px}
   .kpi{min-width:0;flex:1 1 calc(33.33% - 8px);padding:9px 12px}
@@ -337,10 +344,61 @@ html.dark .legend [style*="color:#C9A227"],html.dark .legend [style*="color:#B88
   .panel.center .tabs .tab{min-height:40px}
 }
 @media(max-width:480px){
-  .hd-actions{grid-template-columns:1fr 1fr 1fr}
+  .hd-actions{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr)}
   .hd-actions .btn:nth-child(1),.hd-actions .btn:nth-child(2){display:none}
   .hd-actions{grid-template-columns:repeat(4,1fr)}
 }
+
+/* ---- audit 05/09: tablet tiers ---- */
+/* Landscape tablets 1101–1400: keep 3 columns but give the canvas the space */
+@media(min-width:1101px) and (max-width:1400px){
+  .wrap{grid-template-columns:224px minmax(0,1fr) 256px;gap:10px;padding:0 14px 14px}
+  .side section,.detail .drow{font-size:12px}
+  .kpi{padding:8px 12px} .kpi .v{font-size:20px}
+}
+/* Portrait tablets 769–1100: same canvas-first + drawer model as phones, roomier */
+@media(min-width:769px) and (max-width:1100px){
+  .wrap{display:flex;flex-direction:column;gap:12px}
+  .panel.center{order:1}
+  .mfilt{order:2;display:flex;align-items:center;gap:8px;width:100%;min-height:48px;padding:12px 16px;border:1px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);font:inherit;font-size:14px;font-weight:700;cursor:pointer;text-align:start}
+  .mfilt .mfcnt{margin-inline-start:auto;background:#1F7A4C;color:#fff;border-radius:11px;padding:1px 8px;font-size:11px;min-width:22px;text-align:center}
+  .mfilt .mfcnt:empty{display:none}
+  .panel.side{order:3;display:none;max-height:none}
+  .panel.side.mopen{display:block}
+  .panel.side #catFilters{columns:2;column-gap:24px}
+  .panel.side #catFilters label{break-inside:avoid}
+  .detail{order:4}
+  #detail.has{position:fixed;left:0;right:0;bottom:0;top:auto;max-height:70vh;overflow:auto;z-index:60;border-radius:16px 16px 0 0;box-shadow:0 -12px 32px rgba(0,0,0,.25);border-bottom:0;padding-top:6px}
+  #detail.has .dclose{display:flex;position:sticky;top:0;margin-inline-start:auto;width:36px;height:36px;align-items:center;justify-content:center;border:0;border-radius:18px;background:var(--mist);color:var(--ink);font-size:22px;cursor:pointer;z-index:2}
+  #detail.has::before{content:"";display:block;width:44px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 6px}
+  #cv{width:100% !important;height:auto !important;aspect-ratio:1/1;max-height:78vh}
+  .kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+  .kpi{min-width:0;padding:8px 10px}
+}
+@media(pointer:coarse){
+  .chip{min-height:44px;padding:10px 12px}
+  .btn,.tab,.zbtn{min-height:44px}
+  #catFilters label{min-height:44px;display:flex;align-items:center}
+}
+
+@media(pointer:coarse){
+  .hd-actions .btn,.panel.center .tabs .tab,.zbtn,.mfilt,.dclose{min-height:44px}
+  .hd-actions .btn{padding:8px 6px}
+}
+
+/* ---- iOS / touch hardening (05/09) ---- */
+html{-webkit-text-size-adjust:100%}
+button,[role=button],[role=tab],a,.tab,.chip,.btn,label{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+@media(max-width:820px){ input,select,textarea{font-size:16px !important} }   /* stops iOS focus-zoom */
+@media(max-width:768px){ #ehcbtn,#ehcp{display:none !important} }              /* hub bottom bar owns that corner */
+html.iosframe #ehcbtn,html.iosframe #ehcp{display:none !important}            /* fixed elements break inside iOS iframes */
+
+/* iOS-in-iframe: fixed bottom sheet becomes an in-flow panel placed right after the canvas */
+html.iosframe #detail.has{position:static !important;max-height:none;border-radius:12px;box-shadow:none;margin:10px 0;padding-top:8px}
+html.iosframe #detail.has::before{display:none}
+html.iosframe .detail{order:2 !important}
+html.iosframe .mfilt{order:3 !important} html.iosframe .panel.side{order:4 !important}
+html.iosframe .panel.side.mopen{display:block}
 </style></head>
 <body>
 <header>
@@ -811,7 +869,7 @@ function mwBlock(n){
   '</div>';
 }
 function showDetail(n){window.__cursel=n;
-  try{var _dp=document.getElementById('detail'); if(_dp){_dp.classList.add('has'); if(window.matchMedia('(max-width:768px)').matches){_dp.scrollTop=0;}}}catch(e){}
+  try{var _dp=document.getElementById('detail'); if(_dp){_dp.classList.add('has'); if(window.matchMedia('(max-width:768px)').matches){_dp.scrollTop=0;} if(document.documentElement.classList.contains('iosframe')){setTimeout(function(){_dp.scrollIntoView({block:'start',behavior:'smooth'});},60);}}}catch(e){}
   const cat={c:CAT_COL[n.cat]||'#7A8A99',s:n.cat,id:n.cat};
   const flags=[];
   if(n.tier==='Tier 1')flags.push(['\u2b50 '+t('Tier 1 key player','\u0644\u0627\u0639\u0628 \u0631\u0626\u064a\u0633\u064a \u0641\u0626\u0629 1'),'#B8860B']);

@@ -721,6 +721,8 @@ button,[role=button],[role=tab],a,.tab,.chip,.btn,label{touch-action:manipulatio
 @media(max-width:820px){ input,select,textarea{font-size:16px !important} }   /* stops iOS focus-zoom */
 @media(max-width:768px){ #ehcbtn,#ehcp{display:none !important} }              /* hub bottom bar owns that corner */
 html.iosframe #ehcbtn,html.iosframe #ehcp{display:none !important}            /* fixed elements break inside iOS iframes */
+
+@media (orientation:landscape) and (max-height:520px){ .hd,header{padding:4px 12px} h1{font-size:14px} .sub,.kicker,.hd p{display:none} .tab,.tab-btn,nav a{min-height:34px;padding:5px 10px;font-size:12.5px} }
 </style>
 <script>
 (function(){

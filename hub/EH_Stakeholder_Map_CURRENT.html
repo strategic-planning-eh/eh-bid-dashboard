@@ -399,6 +399,20 @@ html.iosframe #detail.has::before{display:none}
 html.iosframe .detail{order:2 !important}
 html.iosframe .mfilt{order:3 !important} html.iosframe .panel.side{order:4 !important}
 html.iosframe .panel.side.mopen{display:block}
+
+@media (orientation:landscape) and (max-height:520px){
+  header{padding:4px 10px !important;gap:6px}
+  header .logo,header .titles{display:none !important}
+  .hd-actions{width:100%;display:flex !important;gap:6px} .hd-actions .btn{min-height:34px !important;padding:4px 8px;font-size:12px;flex:1}
+  .kpis{display:none !important}
+  .panel.center .tabs .tab{min-height:34px;padding:5px 10px;font-size:12px}
+  .wrap{display:grid !important;grid-template-columns:minmax(0,1fr) 300px;gap:8px;padding:0 8px 8px}
+  .panel.center{order:1} .mfilt{display:none !important}
+  .panel.side{order:2;display:block !important;max-height:calc(100vh - 110px);overflow:auto;font-size:12px}
+  .detail{grid-column:1/-1;order:3}
+  #detail.has{position:static !important;max-height:none}
+  #cv{max-height:calc(100vh - 120px) !important}
+}
 </style></head>
 <body>
 <header>
@@ -1236,7 +1250,7 @@ function buildList(){
     if(va<vb)return -listSort.dir; if(va>vb)return listSort.dir; return 0;
   });
   const THC={'High':'#B23A3A','Medium':'#E8862E','Low':'#C9A227'};
-  let h='<div class="lcount"><b>'+rows.length.toLocaleString()+'</b> companies shown — ranked by <b>Total Score (Proposal B)</b> = capability 0–100 + strategic backing 0–25 + bids-vs-EH +15; for EH Clients the Score column shows the <b>EH Relationship Score</b> instead (“—” = not a scored/licensed company; missing data now neutral-filled, not zeroed) · click any row for detail · click a column to re-sort</div>';
+  let h='<div class="lcount"><b>'+rows.length.toLocaleString()+'</b> companies shown — ranked by <b>Total Score (v2)</b> = capability 0–100 + strategic backing 0–25 + bids-vs-EH +15; for EH Clients the Score column shows the <b>EH Relationship Score</b> instead (“—” = not a scored/licensed company; low-confidence rows are floored, never neutral-filled) · click any row for detail · click a column to re-sort</div>';
   h+='<table class="ltbl"><thead><tr>'+cols.map(c=>'<th data-k="'+c[0]+'">'+c[1]+(listSort.k===c[0]?(listSort.dir>0?' ▲':' ▼'):'')+'</th>').join('')+'</tr></thead><tbody>';
   h+=rows.map((n,i)=>'<tr tabindex="0" onkeydown="if(event.keyCode===13){this.click()}" data-i="'+i+'"><td><span class="tdot" style="background:'+(CAT_COL[n.cat]||'#7A8A99')+'"></span>'+esc(n.n)+'</td>'+
      '<td style="font-weight:700;color:'+(n.sc>=60?'#1E6B38':n.sc>=40?'#8A6D2E':'var(--ink)')+'">'+(n.sc==null?'\u2014':Math.round(n.sc*10)/10)+'</td>'+
@@ -1327,7 +1341,7 @@ const GUIDE_AR=`<span class="x" onclick="closeModal()">✕</span><h2>كيف تق
 <p>استخدم المرشحات يساراً — الفئة، المنطقة، الفئة (المستوى)، النوع، القطاع، سجل العطاءات — وكل العدادات والخريطة تتحدث معاً. مربع البحث يبرز أي شركة على الخريطة.</p>`;
 const METHOD_AR=`<span class="x" onclick="closeModal()">✕</span><h2>منهجية التصنيف والتقييم</h2>
 <p>حصلت كل منظمة على <b>فئة أساسية واحدة</b> عبر قواعد محددة مرتبة الأولوية، روجعت مع إدارة EH: (1) التقدم ضد EH لا يجعل الشركة منافساً بحد ذاته؛ (2) المصنعون وشركات التقنية والطاقة عملاء لا منافسون؛ (3) شركات التأجير والصيانة والنظافة ليست منافسة أبداً. التصنيفات اليدوية من فريق EH مرجعية نهائية.</p>
-<h3 style="margin:14px 0 6px">منهجية التقييم (المقترح ب — المراجَع)</h3>
+<h3 style="margin:14px 0 6px">منهجية التقييم (الإصدار الثاني — المراجَع)</h3>
 <p style="font-size:12.5px;line-height:1.8">الدرجة الكلية = <b>القدرة (0–100) + الإسناد الاستراتيجي (0–25) + التعرض للعطاءات (+15)</b>، بحد أقصى 140.<br><b>القدرة:</b> اتساع الخدمات حتى 30 · القوى العاملة 0–25 · المواقع 0–25 · المشاريع الكبرى +10 · متعددة الجنسيات +10، بسقف 100.<br><b>الإسناد:</b> صندوق الاستثمارات/حكومي 25 · أم متعددة الجنسيات 20 · مجموعة سعودية 15 · مشروع مشترك دولي 10 · مستقلة 0.<br><b>التعرض للعطاءات:</b> +15 لمن تقدم ضد EH.<br>البيانات المفقودة تُملأ بقيم محايدة مع مؤشر موثوقية (مرتفع/متوسط/منخفض). العملاء والجهات الحكومية والتنظيمية لا تُقيّم. تصنيف <b>منافس نشط</b> يشترط ترخيصاً واحداً مشتركاً على الأقل مع EH.</p><h3 style="margin:14px 0 6px">\u062f\u0631\u062c\u0629 \u0639\u0644\u0627\u0642\u0629 EH \u0648\u0641\u0626\u0627\u062a \u0627\u0644\u0639\u0645\u0644\u0627\u0621</h3><p style="font-size:12.5px;line-height:1.8">\u064a\u064f\u0642\u064a\u0651\u0645 \u0639\u0645\u0644\u0627\u0621 EH \u0645\u0646 0\u2013100 \u0648\u0641\u0642 <b>\u062f\u0631\u062c\u0629 \u0639\u0644\u0627\u0642\u0629 EH</b> \u0648\u0644\u064a\u0633 \u0645\u0639\u0627\u062f\u0644\u0629 \u0642\u062f\u0631\u0629 \u0627\u0644\u0645\u0646\u0627\u0641\u0633\u064a\u0646: <b>\u0642\u064a\u0645\u0629 \u0627\u0644\u0639\u0642\u0648\u062f \u0645\u0639 EH</b> (0\u201335) + <b>\u0639\u062f\u062f \u0627\u0644\u0645\u0634\u0627\u0631\u064a\u0639 / \u0643\u062b\u0627\u0641\u0629 \u0627\u0644\u0639\u0644\u0627\u0642\u0629</b> (0\u201320) + <b>\u062d\u062c\u0645 \u0627\u0644\u0639\u0645\u064a\u0644 \u0648\u0642\u0648\u062a\u0647 \u0627\u0644\u0634\u0631\u0627\u0626\u064a\u0629</b> (0\u201320) + <b>\u0625\u0645\u0643\u0627\u0646\u0627\u062a \u0627\u0644\u0646\u0645\u0648 \u0627\u0644\u0628\u064a\u0626\u064a</b> (0\u201315) + <b>\u0627\u062a\u0633\u0627\u0639 \u0627\u0644\u0639\u0644\u0627\u0642\u0629</b> (0\u201310). <b>\u0641\u0626\u0627\u062a \u0627\u0644\u0639\u0645\u0644\u0627\u0621 \u062a\u0642\u064a\u0633 \u0623\u0645\u0631\u0627\u064b \u0645\u062e\u062a\u0644\u0641\u0627\u064b: \u0645\u062f\u0649 \u062a\u0623\u062b\u064a\u0631 \u0627\u0644\u0634\u0631\u0643\u0629 \u0641\u064a \u062a\u0634\u0643\u064a\u0644 \u0628\u064a\u0626\u062a\u0647\u0627 \u0641\u064a \u0627\u0644\u0645\u0645\u0644\u0643\u0629.</b> \u0627\u0644\u0641\u0626\u0627\u062a \u062a\u064f\u0634\u062a\u0642 \u0627\u0641\u062a\u0631\u0627\u0636\u064a\u0627\u064b \u0645\u0646 \u0646\u0637\u0627\u0642\u0627\u062a \u0627\u0644\u062f\u0631\u062c\u0629 (1 \u2265 75 \u00b7 2 = 55\u201374 \u00b7 3 = 40\u201354 \u00b7 4 &lt; 40)\u060c \u0644\u0643\u0646 \u0627\u0644\u0643\u064a\u0627\u0646\u0627\u062a \u0627\u0644\u0633\u064a\u0627\u062f\u064a\u0629 \u0648\u0645\u0634\u0627\u0631\u064a\u0639 \u0635\u0646\u062f\u0648\u0642 \u0627\u0644\u0627\u0633\u062a\u062b\u0645\u0627\u0631\u0627\u062a \u0627\u0644\u062a\u064a \u062a\u0639\u064a\u062f \u062a\u0634\u0643\u064a\u0644 \u0627\u0644\u0627\u0642\u062a\u0635\u0627\u062f \u062a\u064f\u0645\u0646\u062d \u0627\u0644\u0641\u0626\u0629 1 \u0628\u063a\u0636 \u0627\u0644\u0646\u0638\u0631 \u0639\u0646 \u062f\u0631\u062c\u0629 \u0627\u0644\u0639\u0644\u0627\u0642\u0629 \u2014 \u0645\u062b\u0627\u0644: \u0645\u0639\u0627\u062f\u0646 (\u0641\u0626\u0629 1\u060c \u062f\u0631\u062c\u0629 \u0627\u0644\u0639\u0644\u0627\u0642\u0629 53). <b>\u0644\u0627 \u062a\u0648\u062c\u062f \u0627\u0633\u062a\u062b\u0646\u0627\u0621\u0627\u062a \u0639\u0644\u0649 \u0627\u0644\u062f\u0631\u062c\u0629:</b> \u062f\u0631\u062c\u0629 \u0639\u0644\u0627\u0642\u0629 EH \u062f\u0627\u0626\u0645\u0627\u064b \u0646\u0627\u062a\u062c \u0627\u0644\u0645\u0639\u0627\u062f\u0644\u0629 (\u0623\u0631\u0627\u0645\u0643\u0648: 72)\u060c \u0648\u0627\u0644\u062a\u0623\u062b\u064a\u0631 \u0627\u0644\u0627\u0633\u062a\u0631\u0627\u062a\u064a\u062c\u064a \u064a\u064f\u0645\u062b\u0644 \u0641\u064a \u0627\u0644\u0641\u0626\u0629 \u0641\u0642\u0637.</p>`;
 
 function openModal(k){document.getElementById('modalCard').innerHTML=k==='guide'?(LNG==='ar'?GUIDE_AR:GUIDE):(k==='method'?(LNG==='ar'?METHOD_AR:METHOD):licGlossary());document.getElementById('modal').style.display='flex'}

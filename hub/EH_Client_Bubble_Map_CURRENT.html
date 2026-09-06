@@ -248,7 +248,7 @@ body.dark .ytog button:hover:not(.on){background:#1E2830}
   <div id="heatTbl"></div>
 </div>
 <div id="wrap">
-  <div id="chart"></div>
+  <div id="chart"><div class="zctl" aria-label="Zoom controls"><button type="button" onclick="zoomStep(1.6)" aria-label="Zoom in">+</button><button type="button" onclick="zoomStep(1/1.6)" aria-label="Zoom out">−</button><button type="button" onclick="zoomReset()" aria-label="Reset zoom" title="Reset zoom">⟲</button></div></div>
   <div id="legend"><h3>Industry sector</h3><div id="lgItems"></div></div>
 </div>
 <footer>
@@ -323,6 +323,8 @@ function updateLabels(k){
     .style("font-size", d => (Math.min(13, Math.max(8.5, d.r*k/5.4)) / k) + "px");
 }
 
+function zoomReset(){ window.__zoomTarget=null; if(svg) svg.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity); }
+function zoomStep(f){ if(!svg) return; window.__zoomTarget=null; svg.transition().duration(300).call(zoomBehavior.scaleBy, f); }
 function zoomTo(d, scale){
   const s = scale || Math.min(30, 0.42 * Math.min(W, H) / d.r);
   const t = d3.zoomIdentity
@@ -377,7 +379,9 @@ function render(){
       .scaleExtent([0.8, 60])
       .on("zoom", e => { zoomG.attr("transform", e.transform); updateLabels(e.transform.k); });
   svg.call(zoomBehavior).on("dblclick.zoom", null);
-  svg.on("dblclick", () => svg.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity));
+  svg.on("dblclick", () => zoomReset());
+  svg.on("click", () => zoomReset());                 /* tap empty background → back to full view */
+  window.__zoomTarget=null;
 
   const g = zoomG.selectAll("g.node").data(leaves, d => d.data.name)
     .join("g").attr("class","node")
@@ -386,7 +390,7 @@ function render(){
   g.append("circle").attr("class","bub")
     .attr("r", d => d.r)
     .attr("fill", d => PALETTE[d.data.sector] || "#999")
-    .on("click", (e,d) => { e.stopPropagation(); zoomTo(d); showPanel(d.data); })
+    .on("click", (e,d) => { e.stopPropagation(); if(window.__zoomTarget===d){ zoomReset(); } else { window.__zoomTarget=d; zoomTo(d); } showPanel(d.data); })
     .on("mousemove", (e,d) => {
       tip.style.display = "block";
       tip.style.left = Math.min(e.clientX+14, window.innerWidth-330) + "px";
@@ -1106,6 +1110,22 @@ html.iosframe #ehcbtn,html.iosframe #ehcp{display:none !important}            /*
 
 html.iosframe #panel{position:static !important;transform:none !important;width:100% !important;max-width:100% !important;height:auto !important;max-height:none !important;border-radius:12px;box-shadow:none;margin:10px 12px;display:none}
 html.iosframe #panel.open{display:flex}
+
+/* ---- zoom controls + gesture ownership (06/09) ---- */
+#chart{position:relative}
+#chart svg{touch-action:none}                      /* d3 owns pinch/pan/double-tap; page zoom stays off the chart */
+.zctl{position:absolute;top:10px;right:10px;z-index:5;display:flex;flex-direction:column;gap:6px}
+.zctl button{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.94);color:#1F2A37;font:700 20px/1 Arial,sans-serif;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12);touch-action:manipulation}
+.zctl button:active{transform:scale(.96)}
+body.dark .zctl button{background:rgba(24,33,38,.94);color:#E6EDF1;border-color:#3A4B55}
+html.iosframe .zctl,.zctl{position:absolute}      /* absolute inside #chart, not fixed — safe inside iOS iframes */
+
+@media (orientation:landscape) and (max-height:520px){
+  header{padding:4px 12px} header h1{font-size:13px} .kpis{display:none !important}
+  .toolbar{padding:4px 10px;gap:6px} .toolbar .hint{display:none} .seg button,.vw{min-height:32px;padding:4px 9px;font-size:12px}
+  #chart svg{max-height:calc(100vh - 100px) !important}
+  .ecard svg{min-width:0} .ecard::after{display:none}
+}
 </style>
 <script>
 (function(){

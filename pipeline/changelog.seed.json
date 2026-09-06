@@ -1,0 +1,429 @@
+{
+ "weeks": [
+  {
+   "week": "2026-W36",
+   "from": "2026-08-31",
+   "to": "2026-09-06",
+   "built": "2026-09-06T09:00+03:00",
+   "fixes": [
+    {
+     "app": "stake",
+     "severity": "major",
+     "view": "Methodology",
+     "en": "Corrected: the Arabic methodology and the \"How is the Total Score calculated?\" answer still described the old v1 scoring; both now match the v2 model (Low-confidence rows are floored, never filled).",
+     "ar": "تصحيح: كانت منهجية التقييم بالعربية وجواب «كيف تُحسب الدرجة الكلية؟» يصفان النموذج القديم؛ أصبحا الآن مطابقَين للإصدار الثاني (الشركات ذات الموثوقية المنخفضة تُحد بحدّ أدنى ولا تُعبّأ بقيم مفترضة)."
+    },
+    {
+     "app": "stake",
+     "severity": "minor",
+     "view": "Header",
+     "en": "Corrected: the organization count in the header is now read from the data (it showed an old figure in Arabic).",
+     "ar": "تصحيح: عدد المنظمات في الترويسة يُقرأ الآن من البيانات (كان يعرض رقماً قديماً بالعربية)."
+    },
+    {
+     "app": "stake",
+     "severity": "minor",
+     "view": "Filters",
+     "en": "Renamed \"Stakeholder categories\" to \"Company type\" everywhere, and the map hint now tells phone users where the filter drawer is.",
+     "ar": "أُعيدت تسمية «فئات الأطراف» إلى «نوع الشركة» في كل مكان، وأصبح تلميح الخريطة يوضح لمستخدمي الهاتف مكان درج المرشحات."
+    },
+    {
+     "app": "hub",
+     "severity": "major",
+     "view": "What's New",
+     "en": "New: this What's New panel — weekly fixes, company changes, bid outcomes and data-refresh dates, in English and Arabic, on every device.",
+     "ar": "جديد: لوحة «ما الجديد» — الإصلاحات الأسبوعية وتغييرات الشركات ونتائج المنافسات وتواريخ تحديث البيانات، بالعربية والإنجليزية وعلى كل الأجهزة."
+    },
+    {
+     "app": "hub",
+     "severity": "minor",
+     "view": "Header",
+     "en": "The \"Data refreshed\" time now uses one format everywhere (e.g. 30 Aug · 09:00).",
+     "ar": "أصبح وقت «آخر تحديث للبيانات» بصيغة واحدة في كل مكان (مثل 30 Aug · 09:00)."
+    },
+    {
+     "app": "clients",
+     "severity": "minor",
+     "view": "Executive",
+     "en": "Wording: \"Total book 25+26\" is now \"Total contract value 2025–2026\"; instructions no longer say \"click\" or \"hover\" where you tap.",
+     "ar": "صياغة: «Total book 25+26» أصبحت «إجمالي قيمة العقود 2025–2026»؛ ولم تعد التعليمات تقول «انقر» أو «مرّر» حيث تلمس الشاشة."
+    },
+    {
+     "app": "stake",
+     "severity": "major",
+     "view": "Bid View",
+     "en": "Fixed: the Bid View and Saudi Map inside the Stakeholder & Competitive Map showed an old copy of the bid data (144 tenders); they now refresh from the live Bid & Tender build on every publish.",
+     "ar": "إصلاح: كان عرض المنافسات وخريطة السعودية داخل خريطة أصحاب المصلحة يعرضان نسخة قديمة من بيانات المنافسات (144 منافسة)؛ يتحدثان الآن من بناء المنافسات المباشر عند كل نشر."
+    },
+    {
+     "app": "stake",
+     "severity": "minor",
+     "view": "Regional View",
+     "en": "Fixed: the region × company type heat map was always empty.",
+     "ar": "إصلاح: كانت خريطة الحرارة (المنطقة × نوع الشركة) فارغة دائماً."
+    }
+   ],
+   "data": {
+    "added": [],
+    "removed": [],
+    "merged": [],
+    "confidence_up": [],
+    "tier_moves": [],
+    "bids": {
+     "new": 0,
+     "won": [
+      {
+       "title": "Environmental Emergency Services at Saudi Energy Power Plants (2026/#23)",
+       "client": "Saudi Electricity Company (SEC)",
+       "value": 15340000
+      }
+     ],
+     "lost": []
+    },
+    "clients": {
+     "new": 0,
+     "lost": 0
+    },
+    "totals": {
+     "orgs": 4195,
+     "tenders": 182,
+     "clients": 427
+    }
+   },
+   "sources": [
+    {
+     "name": "EH stakeholder workbook (EH_Stakeholder_Competitive_Map.xlsx)",
+     "refreshed": "2026-09-06T09:00+03:00"
+    },
+    {
+     "name": "Bid tracker (Google Sheets 2025 / 2026)",
+     "refreshed": "2026-09-06T09:00+03:00"
+    },
+    {
+     "name": "MWAN licence register",
+     "refreshed": null,
+     "note": "refresh date recorded in the workbook"
+    },
+    {
+     "name": "Vision 2030 Dashboard",
+     "refreshed": "2026-08-26",
+     "note": "report version: 26/08/2026"
+    },
+    {
+     "name": "Saudi Fiscal Monitor 2026",
+     "refreshed": "2026-08-26",
+     "note": "report version: v4 · 26/08/2026"
+    },
+    {
+     "name": "Corporate & Government News",
+     "refreshed": null,
+     "note": "report version: 26 August Update"
+    },
+    {
+     "name": "PIF Intelligence Hub",
+     "refreshed": null,
+     "note": "covers annual reports 2021–2025"
+    }
+   ]
+  },
+  {
+   "week": "2026-W35",
+   "from": "2026-08-24",
+   "to": "2026-08-30",
+   "built": "2026-08-29T09:00+03:00",
+   "fixes": [
+    {
+     "app": "stake",
+     "severity": "major",
+     "view": "Scoring",
+     "en": "New v2 scoring model rolled out: Total Score now weights how much of EH's own business a company could take (service overlap first). Low-confidence rows are floored at a small-company minimum instead of being filled with averages.",
+     "ar": "طُبّق نموذج التقييم الجديد (الإصدار الثاني): الدرجة الكلية توزن الآن حجم أعمال EH التي يمكن للشركة أخذها (تداخل الخدمات أولاً). الشركات ذات الموثوقية المنخفضة تُحد بحدّ أدنى بدلاً من تعبئتها بمتوسطات."
+    },
+    {
+     "app": "stake",
+     "severity": "major",
+     "view": "Data",
+     "en": "Research programme applied: data confidence raised for the bid-active rivals researched in phases 1a/1b (official register or two independent sources required).",
+     "ar": "طُبّق برنامج البحث: رُفعت موثوقية البيانات للمنافسين النشطين في المنافسات الذين بُحثوا في المرحلتَين 1أ/1ب (يُشترط سجل رسمي أو مصدران مستقلان)."
+    },
+    {
+     "app": "stake",
+     "severity": "minor",
+     "view": "Filters",
+     "en": "The \"Bid Competitor\" company type was retired — bidding against EH is shown as a flag and an encounter count, not as a type.",
+     "ar": "أُلغي نوع الشركة «منافس عطاءات» — يظهر التقدم ضد EH كمؤشر وعدد مواجهات، لا كنوع."
+    },
+    {
+     "app": "bids",
+     "severity": "minor",
+     "view": "Overview",
+     "en": "Tender 2026/#23 (Environmental Emergency Services at Saudi Energy Power Plants, SEC) marked Won.",
+     "ar": "سُجّلت المنافسة 2026/#23 (خدمات الطوارئ البيئية في محطات الكهرباء، الشركة السعودية للكهرباء) كفوز لـEH."
+    }
+   ],
+   "data": {
+    "added": [],
+    "removed": [],
+    "merged": [],
+    "confidence_up": [],
+    "tier_moves": [],
+    "bids": {
+     "new": 0,
+     "won": [],
+     "lost": []
+    },
+    "clients": {
+     "new": 0,
+     "lost": 0
+    },
+    "totals": {
+     "orgs": 4195,
+     "tenders": 182,
+     "clients": 427
+    }
+   },
+   "sources": [
+    {
+     "name": "EH stakeholder workbook (EH_Stakeholder_Competitive_Map.xlsx)",
+     "refreshed": "2026-08-29T09:00+03:00"
+    },
+    {
+     "name": "Bid tracker (Google Sheets 2025 / 2026)",
+     "refreshed": "2026-08-29T09:00+03:00"
+    },
+    {
+     "name": "MWAN licence register",
+     "refreshed": null,
+     "note": "refresh date recorded in the workbook"
+    },
+    {
+     "name": "Vision 2030 Dashboard",
+     "refreshed": "2026-08-26",
+     "note": "report version: 26/08/2026"
+    },
+    {
+     "name": "Saudi Fiscal Monitor 2026",
+     "refreshed": "2026-08-26",
+     "note": "report version: v4 · 26/08/2026"
+    },
+    {
+     "name": "Corporate & Government News",
+     "refreshed": null,
+     "note": "report version: 26 August Update"
+    },
+    {
+     "name": "PIF Intelligence Hub",
+     "refreshed": null,
+     "note": "covers annual reports 2021–2025"
+    }
+   ]
+  },
+  {
+   "week": "2026-W34",
+   "from": "2026-08-17",
+   "to": "2026-08-23",
+   "built": "2026-08-22T09:00+03:00",
+   "fixes": [
+    {
+     "app": "stake",
+     "severity": "major",
+     "view": "Data",
+     "en": "Duplicate companies merged: Al Mandariyah Environmental Services (Arabic and English rows), Namaa / GESCO, and 28 pairs with identical names. Each keeps one profile.",
+     "ar": "دُمجت الشركات المكررة: المندرية للخدمات البيئية (صفّا العربية والإنجليزية)، نماء / جيسكو، و28 زوجاً بأسماء متطابقة. لكل شركة ملف واحد."
+    },
+    {
+     "app": "hub",
+     "severity": "major",
+     "view": "Mobile",
+     "en": "Fixed: phone layout — bottom tab bar, filter drawer, tablet tiers, landscape-phone header.",
+     "ar": "إصلاح: تخطيط الهاتف — شريط تبويبات سفلي، درج المرشحات، مستويات الجهاز اللوحي، ترويسة الهاتف الأفقي."
+    },
+    {
+     "app": "clients",
+     "severity": "major",
+     "view": "Executive",
+     "en": "Fixed: charts were unreadable on iPhone in the Clients executive view; charts can now be swiped.",
+     "ar": "إصلاح: كانت الرسوم غير مقروءة على آيفون في العرض التنفيذي للعملاء؛ يمكن الآن تمرير الرسوم بالسحب."
+    },
+    {
+     "app": "stake",
+     "severity": "minor",
+     "view": "Map",
+     "en": "New zoom controls (+ / − / reset) on the bubble and radial maps.",
+     "ar": "أزرار تكبير جديدة (+ / − / إعادة) على خريطتَي الفقاعات والدائرة."
+    }
+   ],
+   "data": {
+    "added": [],
+    "removed": [
+     {
+      "n": "شركة المندرية للخدمات البيئية",
+      "alias": "Al Mandariyah Environmental Services",
+      "reason": "merged"
+     },
+     {
+      "n": "GESCO",
+      "alias": "Namaa Environmental Services (GESCO)",
+      "reason": "merged"
+     }
+    ],
+    "merged": [
+     {
+      "kept": "Al Mandariyah Environmental Services",
+      "alias": "شركة المندرية للخدمات البيئية"
+     },
+     {
+      "kept": "Namaa Environmental Services (GESCO)",
+      "alias": "GESCO"
+     }
+    ],
+    "confidence_up": [],
+    "tier_moves": [],
+    "bids": {
+     "new": 0,
+     "won": [],
+     "lost": []
+    },
+    "clients": {
+     "new": 0,
+     "lost": 0
+    },
+    "totals": {
+     "orgs": 4195,
+     "tenders": 182,
+     "clients": 427
+    },
+    "note": "Retro-filled from the cumulative change log; the 28 exact-name merges are described in Fixes (names not retained)."
+   },
+   "sources": [
+    {
+     "name": "EH stakeholder workbook (EH_Stakeholder_Competitive_Map.xlsx)",
+     "refreshed": "2026-08-22T09:00+03:00"
+    },
+    {
+     "name": "Bid tracker (Google Sheets 2025 / 2026)",
+     "refreshed": "2026-08-22T09:00+03:00"
+    },
+    {
+     "name": "MWAN licence register",
+     "refreshed": null,
+     "note": "refresh date recorded in the workbook"
+    },
+    {
+     "name": "Vision 2030 Dashboard",
+     "refreshed": "2026-08-26",
+     "note": "report version: 26/08/2026"
+    },
+    {
+     "name": "Saudi Fiscal Monitor 2026",
+     "refreshed": "2026-08-26",
+     "note": "report version: v4 · 26/08/2026"
+    },
+    {
+     "name": "Corporate & Government News",
+     "refreshed": null,
+     "note": "report version: 26 August Update"
+    },
+    {
+     "name": "PIF Intelligence Hub",
+     "refreshed": null,
+     "note": "covers annual reports 2021–2025"
+    }
+   ]
+  },
+  {
+   "week": "2026-W33",
+   "from": "2026-08-10",
+   "to": "2026-08-16",
+   "built": "2026-08-15T09:00+03:00",
+   "fixes": [
+    {
+     "app": "hub",
+     "severity": "major",
+     "view": "iOS",
+     "en": "Fixed: on iPhone and iPad the dashboards did not fill the screen inside the hub (Safari iframe sizing).",
+     "ar": "إصلاح: على آيفون وآيباد لم تكن اللوحات تملأ الشاشة داخل المنصة (مقاس إطار سفاري)."
+    },
+    {
+     "app": "hub",
+     "severity": "minor",
+     "view": "Dark mode",
+     "en": "Fixed: remaining light-coloured panels and unreadable text in dark mode across all views.",
+     "ar": "إصلاح: بقايا اللوحات الفاتحة والنصوص غير المقروءة في الوضع الداكن عبر كل اللوحات."
+    },
+    {
+     "app": "bids",
+     "severity": "minor",
+     "view": "Executive",
+     "en": "New: year toggle (2025 / 2026 / Both) and animated quadrant chart in the executive view.",
+     "ar": "جديد: مبدّل السنة (2025 / 2026 / الكل) ورسم رباعي متحرك في العرض التنفيذي."
+    },
+    {
+     "app": "hub",
+     "severity": "minor",
+     "view": "Header",
+     "en": "CONFIDENTIAL notice added to the hub header on every device.",
+     "ar": "أُضيف تنبيه «سرّي» إلى ترويسة المنصة على كل الأجهزة."
+    }
+   ],
+   "data": {
+    "added": [],
+    "removed": [],
+    "merged": [],
+    "confidence_up": [],
+    "tier_moves": [],
+    "bids": {
+     "new": 0,
+     "won": [],
+     "lost": []
+    },
+    "clients": {
+     "new": 0,
+     "lost": 0
+    },
+    "totals": {
+     "orgs": 4195,
+     "tenders": 182,
+     "clients": 427
+    }
+   },
+   "sources": [
+    {
+     "name": "EH stakeholder workbook (EH_Stakeholder_Competitive_Map.xlsx)",
+     "refreshed": "2026-08-15T09:00+03:00"
+    },
+    {
+     "name": "Bid tracker (Google Sheets 2025 / 2026)",
+     "refreshed": "2026-08-15T09:00+03:00"
+    },
+    {
+     "name": "MWAN licence register",
+     "refreshed": null,
+     "note": "refresh date recorded in the workbook"
+    },
+    {
+     "name": "Vision 2030 Dashboard",
+     "refreshed": "2026-08-26",
+     "note": "report version: 26/08/2026"
+    },
+    {
+     "name": "Saudi Fiscal Monitor 2026",
+     "refreshed": "2026-08-26",
+     "note": "report version: v4 · 26/08/2026"
+    },
+    {
+     "name": "Corporate & Government News",
+     "refreshed": null,
+     "note": "report version: 26 August Update"
+    },
+    {
+     "name": "PIF Intelligence Hub",
+     "refreshed": null,
+     "note": "covers annual reports 2021–2025"
+    }
+   ]
+  }
+ ],
+ "retention_weeks": 12,
+ "confidential": true
+}

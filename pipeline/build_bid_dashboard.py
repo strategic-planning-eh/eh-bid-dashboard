@@ -4,7 +4,16 @@ BA=BAALL['both']   # static header bits use the all-years view
 CHARTS=open('charts.js').read()
 LOGO=open('logo_b64.txt').read().strip()
 from datetime import datetime, timezone, timedelta
-BUILT=datetime.now(timezone(timedelta(hours=3))).strftime('%d %b %Y, %H:%M')+' (KSA)'
+BUILT=datetime.now(timezone(timedelta(hours=3))).strftime('%d %b \u00b7 %H:%M')   # same format as the hub freshness chip
+BUILT_ISO=datetime.now(timezone(timedelta(hours=3))).isoformat(timespec='minutes')
+YRS='\u2013'.join([str(min(r['year'] for r in BA['bidlist'])),str(max(r['year'] for r in BA['bidlist']))]) if BA.get('bidlist') else ''
+import unicodedata as _ud, re as _re
+def _norm(o):
+    if isinstance(o,str): return _re.sub(r'[\uFB50-\uFDFF\uFE70-\uFEFF]+',lambda m:_ud.normalize('NFKC',m.group(0)),o).replace('\u0640','')
+    if isinstance(o,list): return [_norm(x) for x in o]
+    if isinstance(o,dict): return {k:_norm(v) for k,v in o.items()}
+    return o
+BAALL=_norm(BAALL); BA=BAALL['both']
 LIC=json.load(open('licenses.json'))
 
 CSS=r'''
@@ -49,8 +58,8 @@ section.on{display:block}
 .kc .l{font-size:10.5px;color:#6B7C86;text-transform:uppercase;letter-spacing:.5px;margin-top:4px;font-weight:600}
 .kc .d{font-size:11px;color:#8A99A3;margin-top:3px}
 .grid{display:grid;gap:16px}
-.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:2fr 1fr}
-@media(max-width:900px){.g2,.g3{grid-template-columns:1fr}}
+.g2{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.g3{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
+@media(max-width:900px){.g2,.g3{grid-template-columns:minmax(0,1fr)}}
 .card{background:#fff;border:1px solid #E3EAE5;border-radius:14px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.03);margin-bottom:16px}
 .card h3{font-size:14px;font-weight:800;color:#1C2B33;margin-bottom:3px}
 .card .note{font-size:11.5px;color:#8A99A3;margin-bottom:12px;line-height:1.45}
@@ -108,8 +117,15 @@ table.t th{background:linear-gradient(180deg,#EFF6F1,#E8F1EC)}
 nav a.on{background:linear-gradient(180deg,#fff,#F1FBF4)}
 '''
 
-HTML=f'''<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EH Bid & Tender Intelligence</title><script>window.BUILT="{BUILT}";</script><style>{CSS}:focus-visible{{outline:2px solid #027DC3;outline-offset:2px}}
+HTML=f'''<!DOCTYPE html><html lang="en"><head><script>
+/* EH env flags: iOS/iPadOS (incl. iPadOS desktop-mode UA) and iframe context */
+(function(){{var ua=navigator.userAgent,c=document.documentElement.classList;
+var ios=/iP(hone|od|ad)/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1);
+var inframe=(function(){{try{{return window.self!==window.top;}}catch(e){{return true;}}}})();
+if(ios)c.add('ios'); if(inframe)c.add('inframe'); if(ios&&inframe)c.add('iosframe');
+if(navigator.maxTouchPoints>0)c.add('touch');}})();
+</script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EH Bid & Tender Intelligence</title><script>window.BUILT="{BUILT}";window.BUILT_ISO="{BUILT_ISO}";</script><style>{CSS}:focus-visible{{outline:2px solid #027DC3;outline-offset:2px}}
 .ntf{{display:inline-block;min-width:15px;padding:1px 6px;margin-inline-start:6px;border-radius:9px;background:#E8862E;color:#fff;font-size:9.5px;font-weight:800;text-align:center;vertical-align:1px}}
 
 body.dark{{background:#0F1519;color:#E6EDF1}}
@@ -157,9 +173,72 @@ body.dark .anst{{color:#E6EDF1 !important}}
 body.dark .anst-ar{{color:#9FB3BE !important}}
 body.dark .ansrow{{border-color:#2C3A43 !important;color:#D5E0E6}}
 body.dark [style*="background:#8A99A3"],body.dark [style*="background:#D4A92E"],body.dark [style*="background:#9AABB5"]{{color:#10171C !important}}
+
+/* ---------- responsive ---------- */
+@media(max-width:1024px){{
+  .wrap,.hd{{padding-left:14px;padding-right:14px}}
+  .g3{{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+}}
+@media(max-width:768px){{
+  .hd{{flex-wrap:wrap;gap:10px;align-items:flex-start}}
+  .hd img{{height:38px}}
+  .hd h1{{font-size:17px}}
+  .hd .sub{{font-size:11.5px}}
+  .hd-right{{margin-inline-start:0;width:100%;justify-content:flex-start;gap:8px}}
+  .hd .pill{{font-size:11px;padding:6px 11px;flex:1 1 100%;text-align:start}}
+  .g2,.g3{{grid-template-columns:minmax(0,1fr)}}
+  /* tab strip: scrollable, snap, edge fade */
+  .tabbar,nav.tabs,.tabs{{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;scroll-snap-type:x proximity;
+    -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent)}}
+  .tabbar::-webkit-scrollbar,.tabs::-webkit-scrollbar{{display:none}}
+  .tabbar .tab,.tabs .tab,.tab{{flex:0 0 auto;white-space:nowrap;scroll-snap-align:start;min-height:44px}}
+  .card{{padding:14px 14px}}
+  .kpi .v,.k .v{{font-size:24px}}
+  /* every table scrolls inside its card */
+  .card table{{display:block;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}}
+  canvas{{max-width:100% !important}}
+}}
+@media(max-width:480px){{
+  .hd h1{{font-size:15px}}
+  .kgrid,.kpis{{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+  .kpi .v,.k .v{{font-size:21px}}
+  .card h2,.card .h2{{font-size:14px}}
+}}
+
+/* ---- audit 05/09 ---- */
+.card{{min-width:0;max-width:100%}}
+.card svg{{display:block;width:100%;max-width:100%;height:auto}}
+.grid,.g2,.g3{{min-width:0}}
+@media(pointer:coarse){{ .hd-right button,.hd-right .seg button,.tab,[role=tab],.pill-btn,.lang{{min-height:44px}} .tab{{padding:10px 14px}} }}
+@media(max-width:360px){{ .hd .pill{{font-size:10.5px;padding:5px 9px}} .hd h1{{font-size:14px}} .hd-right{{gap:6px}} }}
+
+@media(max-width:360px){{ body{{overflow-x:hidden}} .hd{{padding:0 10px}} .hd-right{{width:100%;overflow:hidden}} .wrap{{padding:0 10px 40px}} }}
+
+/* ---- iOS / touch hardening (05/09) ---- */
+html{{-webkit-text-size-adjust:100%}}
+button,[role=button],[role=tab],a,.tab,.chip,.btn,label{{touch-action:manipulation;-webkit-tap-highlight-color:transparent}}
+@media(max-width:820px){{ input,select,textarea{{font-size:16px !important}} }}   /* stops iOS focus-zoom */
+@media(max-width:768px){{ #ehcbtn,#ehcp{{display:none !important}} }}              /* hub bottom bar owns that corner */
+html.iosframe #ehcbtn,html.iosframe #ehcp{{display:none !important}}            /* fixed elements break inside iOS iframes */
+
+@media (orientation:landscape) and (max-height:520px){{
+  .hd{{padding:4px 12px;gap:6px}} .hd img{{height:26px}} .hd h1{{font-size:14px}} .hd .sub,.hd .pill{{display:none}}
+  .hd-right{{width:auto;margin-inline-start:auto}}
+  .tab,[role=tab]{{min-height:34px;padding:5px 10px;font-size:12.5px}}
+}}
+
+/* ---- audit 05/09 ---- */
+.card{{min-width:0;max-width:100%}}
+.card svg{{display:block;width:100%;max-width:100%;height:auto}}
+.grid,.g2,.g3{{min-width:0}}
+@media(pointer:coarse){{ .hd-right button,.hd-right .seg button,.tab,[role=tab],.pill-btn,.lang{{min-height:44px}} .tab{{padding:10px 14px}} }}
+@media(max-width:360px){{ .hd .pill{{font-size:10.5px;padding:5px 9px}} .hd h1{{font-size:14px}} .hd-right{{gap:6px}} }}
+
+@media(max-width:360px){{ body{{overflow-x:hidden}} .hd{{padding:0 10px}} .hd-right{{width:100%;overflow:hidden}} .wrap{{padding:0 10px 40px}} }}
+
 </style></head>
 <body>
-<header><div class="hd"><img src="{LOGO}" alt="EH"><div><h1 id="h-title">Bid &amp; Tender Intelligence</h1><div class="sub" id="h-sub">Environmental Horizons (Afaq Al Beeah) — competitive bid analytics, 2024–2026</div></div>
+<header><div class="hd"><img src="{LOGO}" alt="EH"><div><h1 id="h-title">Bid &amp; Tender Intelligence</h1><div class="sub" id="h-sub">Environmental Horizons (Afaq Al-Biah) — competitive bid analytics, tracking years {YRS}</div></div>
 <div class="hd-right"><div class="langtog" style="margin-inline-end:8px"><button class="langbtn" id="sc-y2025" onclick="setScope('y2025')">2025</button><button class="langbtn" id="sc-y2026" onclick="setScope('y2026')">2026</button><button class="langbtn on" id="sc-both" onclick="setScope('both')">Both</button></div><div class="langtog"><button class="langbtn on" data-l="en" onclick="setLang('en')">EN</button><button class="langbtn" data-l="ar" onclick="setLang('ar')">عربي</button></div>
 <div class="pill" id="h-pill">{BA['kpi']['total']} tenders tracked<br>SAR {round(BA['kpi']['pipeline']/1e6)}M pipeline</div></div></div></header>
 <nav><div class="navin" id="nav"></div></nav>

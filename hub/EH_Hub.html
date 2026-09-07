@@ -368,7 +368,10 @@ function qGo(name){
 // ---- presentation mode ----
 function hubFS(){
   var f=document.querySelector('iframe.on');
-  if(f&&f.requestFullscreen) f.requestFullscreen();
+  if(!f){var w=$('newswrap');if(w&&w.style.display!=='none'){f=Array.prototype.find.call(w.querySelectorAll('iframe'),function(x){return x.style.display!=='none'&&x.src;});}}
+  if(!f)return;
+  var rq=f.requestFullscreen||f.webkitRequestFullscreen;
+  if(rq)rq.call(f);
 }
 
 // ---- weekly digest (shared changelog from the site build) ----

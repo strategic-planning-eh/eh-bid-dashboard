@@ -154,7 +154,7 @@ nav a.xl{border-color:var(--g);color:var(--g)}
 // reconciled · D7 Diriyah = lowered · D8 SAR primary · D9 AR23–25 baseline.
 // ============================================================================
 const FX = 3.75;
-const BUILD = {version:'v1.1.0', date:'2026-09-07', source:'PIF Strategy 2026–2030 — Public Version (© PIF 2026, 69 pp.)'};
+const BUILD = {version:'v1.1.1', date:'2026-09-07', source:'PIF Strategy 2026–2030 — Public Version (© PIF 2026, 69 pp.)'};
 
 const S = {
   // ---------------------------------------------------------------- headline
@@ -448,9 +448,9 @@ const I18N={
 "p_cmp":["PIF has had three five-year plans. For each thing PIF measures, this table shows what the 2021–25 plan promised, what actually happened, and what the new 2026–30 plan says. The coloured label on the right sums it up: if the new plan is silent, the label says \"Not mentioned again\" — we do not guess. Where the 2017–20 plan's targets are not in our files, the cell says so.","كان للصندوق ثلاث خطط خمسية. لكل ما يقيسه الصندوق، يعرض هذا الجدول ما وعدت به خطة 2021–2025، وما حدث فعلاً، وما تقوله خطة 2026–2030 الجديدة. العلامة الملونة على الجانب تلخّص الأمر: إذا صمتت الخطة الجديدة تقول العلامة «لم يُذكر مجدداً» — نحن لا نخمّن. وحيث لا توجد مستهدفات خطة 2017–2020 في ملفاتنا تقول الخانة ذلك."],
 "c_tgt":["What PIF measures","ما يقيسه الصندوق"],"c_p1":["2017–20 plan","خطة 2017–2020"],"c_p2s":["2021–25 promised","2021–2025 الموعود"],"c_p2d":["2021–25 what happened","2021–2025 ما حدث"],"c_p3":["2026–30 plan says","خطة 2026–2030 تقول"],"c_cls":["In short","باختصار"],
 "nid":["not in our files","ليس في ملفاتنا"],"nrec":["no final number published","لا رقم نهائي منشور"],"none3":["nothing — not published","لا شيء — غير منشور"],"stated":["promised","الموعود"],"deliv":["what happened","ما حدث"],"na":["a target only; results come after 2025","مستهدف فقط؛ النتائج بعد 2025"],
-"h_bars":["Promised vs what happened, 2021–25 (promise = 100)","الموعود مقابل ما حدث 2021–2025 (الوعد = 100)"],
+"h_bars":["How close each promise came: the dashed line is the promise, the bar is what happened","كم اقترب كل وعد: الخط المتقطع هو الوعد والعمود هو ما حدث"],
 "h_traj":["4. How fast things grew, year on year","4. سرعة النمو سنةً بعد سنة"],
-"p_traj":["Green bars show the actual average growth per year. The outlined bar shows how fast PIF would have needed to grow to hit its 2021–25 target. There is no bar for 2026–30 because PIF set no fund-wide target — the empty last row is deliberate.","الأعمدة الخضراء تعرض متوسط النمو الفعلي في السنة. العمود المفرّغ يعرض السرعة التي كان الصندوق يحتاجها لتحقيق مستهدف 2021–2025. لا عمود ل2026–2030 لأن الصندوق لم يحدد مستهدفاً على مستوى الصندوق — الصف الأخير الفارغ مقصود."],
+"p_traj":["Green bars show the actual average growth per year. The grey bar shows how fast PIF would have needed to grow to hit its 2021–25 target. There is no bar for 2026–30 because PIF set no fund-wide target — the empty last row is deliberate.","الأعمدة الخضراء تعرض متوسط النمو الفعلي في السنة. العمود الرمادي يعرض السرعة التي كان الصندوق يحتاجها لتحقيق مستهدف 2021–2025. لا عمود ل2026–2030 لأن الصندوق لم يحدد مستهدفاً على مستوى الصندوق — الصف الأخير الفارغ مقصود."],
 "traj_y":["% growth per year","% نمو في السنة"],
 "h_shift":["5. From 13 sectors to 6 groups","5. من 13 قطاعاً إلى 6 مجموعات"],
 "p_shift":["On one side: the 13 industries PIF used to organise itself around, with the share of its money in each in 2021 (the only year PIF published that split). On the other: the six groups in the new plan, in PIF's order. The lines are our judgement of which industry moved into which group — PIF did not draw this map, and two industries (banking, consumer goods) have no obvious new home. Water moves up from inside the 4th-largest industry into the name of a group. Waste appears for the first time, in group 05's focus text.","على جانب: الصناعات الثلاث عشرة التي كان الصندوق ينظّم نفسه حولها، مع حصة أمواله في كل منها في 2021 (السنة الوحيدة التي نشر فيها الصندوق ذلك التوزيع). وعلى الجانب الآخر: المجموعات الست في الخطة الجديدة بترتيب الصندوق. الخطوط هي تقديرنا لأي صناعة انتقلت إلى أي مجموعة — الصندوق لم يرسم هذه الخريطة، وصناعتان (البنوك، السلع الاستهلاكية) بلا مكان جديد واضح. تصعد المياه من داخل رابع أكبر صناعة إلى اسم مجموعة. وتظهر النفايات لأول مرة في نص تركيز المجموعة 05."],
@@ -475,7 +475,7 @@ const I18N={
 "m_title":["Where the numbers come from","من أين جاءت الأرقام"],"m_close":["Close","إغلاق"],"m_reg":["Every number on this page and its source","كل رقم في هذه الصفحة ومصدره"],
 "m_p":["Each number on this page carries one of the source codes below. When the 2026–30 plan and an annual report disagree, we use the plan's number and still show the other one.","كل رقم في هذه الصفحة يحمل أحد رموز المصادر أدناه. عندما تختلف خطة 2026–2030 عن تقرير سنوي نستخدم رقم الخطة ونعرض الآخر أيضاً."],
 "footer":["Sources: PIF Strategy 2026–2030 (public version, © PIF 2026) and PIF's annual reports for 2023, 2024 and 2025 via the companion page. No outside data used. For use inside Environmental Horizons.","المصادر: استراتيجية صندوق الاستثمارات العامة 2026–2030 (النسخة العامة) وتقارير الصندوق السنوية 2023 و2024 و2025 عبر الصفحة المرافقة. لم تُستخدم بيانات خارجية. للاستخدام داخل آفاق البيئة."],
-"k_seeabove":["see the note above","انظر الملاحظة أعلاه"],"build":["Version","الإصدار"],"src_lbl":["Source","المصدر"]
+"promise_lbl":["the promise (100)","الوعد (100)"],"legend_bars":["Green = did it · Red = fell short · the dashed line is the promise","أخضر = تحقق · أحمر = لم يتحقق · الخط المتقطع هو الوعد"],"k_seeabove":["see the note above","انظر الملاحظة أعلاه"],"build":["Version","الإصدار"],"src_lbl":["Source","المصدر"]
 };
 
 let LANG='en',THEME='light';const charts={};
@@ -528,13 +528,13 @@ function drawAll(){
   // ---- comparison chart (indexed)
   const numeric=S.targets.filter(x=>x.p2&&x.p2.stated!=null&&x.p2.deliv!=null&&x.p1!=null&&x.id!=='dir'&&x.id!=='ra'&&x.id!=='jobs');
   mk('cCmp',{type:'bar',data:{labels:numeric.map(x=>P([x.en,x.ar])),datasets:[
-    {label:t('stated'),data:numeric.map(_=>100),backgroundColor:'transparent',borderColor:C.grey,borderWidth:2},
-    {label:t('deliv'),data:numeric.map(x=>+(x.p2.deliv/x.p2.stated*100).toFixed(1)),backgroundColor:numeric.map(x=>{const ok=x.id==='intl'?x.p2.deliv<=x.p2.stated:x.p2.deliv>=x.p2.stated;return ok?C.g:C.red})}]},
-    options:{indexAxis:'y',scales:{x:{min:0,title:{display:true,text:t('h_bars')}},y:{ticks:{autoSkip:false}}},plugins:{legend:{display:true},tooltip:{callbacks:{afterBody:c=>[numeric[c[0].dataIndex].p2.src]}}}}});
-  document.getElementById('cmpsrc').innerHTML=numeric.map(x=>`<b>${P([x.en,x.ar])}</b>: ${fmt(x.p2.deliv)} / ${fmt(x.p2.stated)} ${x.unit} — ${esc(x.p2.src)}`).join('<br>')+`<br>${L('Jobs and non-governmental investment are omitted: no closing actual exists. International share is a ceiling, so below target counts as met.','الوظائف والاستثمار غير الحكومي محذوفان: لا رقم فعلي ختامي. الحصة الدولية حدٌّ أعلى، لذا يُعدّ ما دون المستهدف تحقيقاً.')}`;
+    {label:t('deliv'),data:numeric.map(x=>+(x.p2.deliv/x.p2.stated*100).toFixed(1)),backgroundColor:numeric.map(x=>{const ok=x.id==='intl'?x.p2.deliv<=x.p2.stated:x.p2.deliv>=x.p2.stated;return ok?C.g:C.red}),borderRadius:3}]},
+    options:{layout:{padding:{top:20}},indexAxis:'y',scales:{x:{min:0,title:{display:true,text:t('h_bars')}},y:{ticks:{autoSkip:false}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>t('deliv')+': '+c.raw+' ('+t('stated')+' = 100)',afterBody:c=>[numeric[c[0].dataIndex].p2.src]}},annotation:undefined},},
+    plugins:[{id:'promiseLine',afterDatasetsDraw(ch){const {ctx,chartArea,scales}=ch;const x=scales.x.getPixelForValue(100);ctx.save();ctx.strokeStyle=C.ink;ctx.setLineDash([6,4]);ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x,chartArea.top);ctx.lineTo(x,chartArea.bottom);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle=C.ink;ctx.font='600 11px '+Chart.defaults.font.family;ctx.textAlign='center';ctx.fillText(t('promise_lbl'),x,chartArea.top+14);ctx.restore();}}]});
+  document.getElementById('cmpsrc').innerHTML='<b>'+t('legend_bars')+'</b><br>'+numeric.map(x=>`<b>${P([x.en,x.ar])}</b>: ${fmt(x.p2.deliv)} / ${fmt(x.p2.stated)} ${x.unit} — ${esc(x.p2.src)}`).join('<br>')+`<br>${L('Jobs and non-governmental investment are omitted: no closing actual exists. International share is a ceiling, so below target counts as met.','الوظائف والاستثمار غير الحكومي محذوفان: لا رقم فعلي ختامي. الحصة الدولية حدٌّ أعلى، لذا يُعدّ ما دون المستهدف تحقيقاً.')}`;
   // ---- trajectory chart
   const TJ=S.traj;
-  mk('cTraj',{type:'bar',data:{labels:TJ.map(x=>P([x.en,x.ar])),datasets:[{label:t('traj_y'),data:TJ.map(x=>x.v),backgroundColor:TJ.map(x=>x.kind==='req'?'transparent':x.kind==='none'?'transparent':C.g),borderColor:TJ.map(x=>x.kind==='req'?C.grey:x.kind==='none'?C.red:C.g),borderWidth:TJ.map(x=>x.kind==='deliv'?0:2),borderDash:undefined}]},
+  mk('cTraj',{type:'bar',data:{labels:TJ.map(x=>P([x.en,x.ar])),datasets:[{label:t('traj_y'),data:TJ.map(x=>x.v),backgroundColor:TJ.map(x=>x.kind==='req'?(THEME==='dark'?'rgba(160,175,185,.35)':'rgba(96,115,125,.25)'):x.kind==='none'?'transparent':C.g),borderColor:TJ.map(x=>x.kind==='req'?C.grey:x.kind==='none'?C.red:C.g),borderWidth:TJ.map(x=>x.kind==='deliv'?0:2),borderDash:undefined}]},
     options:{indexAxis:'y',scales:{x:{min:0,max:60,title:{display:true,text:t('traj_y')}},y:{ticks:{autoSkip:false}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>(c.raw==null?t('k_none'):c.raw+'% p.a.'),afterBody:c=>[TJ[c[0].dataIndex].src]}}}}});
   document.getElementById('trajsrc').innerHTML=TJ.map(x=>`<b>${P([x.en,x.ar])}</b>: ${x.v==null?t('k_none'):iso(x.v+'%')} — ${esc(x.src)}`).join('<br>');
   // ---- sector shift SVG
@@ -562,7 +562,7 @@ function drawAll(){
   document.getElementById('msrc').innerHTML=S.sources.map(s=>`<tr><td><b>${s.id}</b></td><td>${P([s.en,s.ar])}</td></tr>`).join('');
   const seen=new Set();document.getElementById('mreg').innerHTML=`<tr><th>${t('r_el')}</th><th>${t('src_lbl')}</th><th>${t('r_g')}</th></tr>`+REG.filter(r=>{const k=r.label+'|'+r.src;if(seen.has(k)||!r.label)return false;seen.add(k);return true}).map(r=>`<tr><td>${esc(r.label)}</td><td class="tiny">${esc(r.src)}</td><td class="c">${r.g}</td></tr>`).join('');
 }
-function mk(id,cfg){if(charts[id])charts[id].destroy();const o=cfg.options||{};o.responsive=true;o.maintainAspectRatio=false;o.plugins=o.plugins||{};o.plugins.legend=Object.assign({position:'bottom'},o.plugins.legend||{});cfg.options=o;charts[id]=new Chart(document.getElementById(id),cfg)}
+function mk(id,cfg){if(charts[id])charts[id].destroy();const o=cfg.options||{};o.responsive=true;o.maintainAspectRatio=false;o.animation=false;o.plugins=o.plugins||{};o.plugins.legend=Object.assign({position:'bottom'},o.plugins.legend||{});cfg.options=o;charts[id]=new Chart(document.getElementById(id),cfg)}
 function drawShift(C){
   const svg=document.getElementById('shiftsvg');const sec=S.sectors2021,eco=S.ecosystems;const W=1000,H=560,lx=30,rx=W-30,bw=270,rw=350;const rtl=LANG==='ar';
   const LX=rtl?rx-bw:lx, RX=rtl?lx:rx-rw;

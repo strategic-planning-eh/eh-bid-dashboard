@@ -1,0 +1,107 @@
+{
+ "generated": "2026-09-07 07:43",
+ "title": "Change table — PIF Strategy 2026–2030 hub insertion",
+ "failures": [],
+ "changes": [
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "hub-insert",
+   "note": "News sub-tab: PIF Strategy 2026–2030 button with New badge, adjacent to PIF Intelligence Hub",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<button class=\"nsub\" data-n=\"pif\"><span class=\"tl\" data-en=\"PIF Intelligence Hub\" data-ar=\"مركز استخبارات صندوق الاستثمارات\">PIF Intelligence Hub</span></button>\n    </div>",
+   "new": "<button class=\"nsub\" data-n=\"pif\"><span class=\"tl\" data-en=\"PIF Intelligence Hub\" data-ar=\"مركز استخبارات صندوق الاستثمارات\">PIF Intelligence Hub</span></button>\n      <button class=\"nsub\" data-n=\"strat\" title=\"PIF Strategy 2026–2030 — what changed, and what it means for EH · استراتيجية صندوق الاستثمارات العامة 2026–2030 — ما الذي تغيّر وماذا يعني لآفاق البيئة\"><span class=\"tl\" data-en=\"PIF Strate"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "hub-insert",
+   "note": "News view: skeleton + lazy iframe for pif_strategy_2026_2030.html",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<iframe id=\"f-pif\" title=\"PIF annual reports intelligence\" data-src=\"pif_intelligence_hub.html\" loading=\"lazy\" style=\"display:none\"></iframe>",
+   "new": "<iframe id=\"f-pif\" title=\"PIF annual reports intelligence\" data-src=\"pif_intelligence_hub.html\" loading=\"lazy\" style=\"display:none\"></iframe>\n      <div class=\"skel\" id=\"sk-strat\"><div class=\"in\"><div class=\"spin\"></div>Loading PIF Strategy 2026–2030…</div></div>\n      <iframe id=\"f-strat\" title=\"PIF Strategy 2026–2030 — what changed, and what it means for EH\" data-src=\"pif_strategy_2026_2030.html"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "hub-insert",
+   "note": "nGo(): register 'strat' in the sub-tab array",
+   "occurrences": 1,
+   "ok": true,
+   "old": "['v2030','fiscal','corp','pif'].forEach(k=>{",
+   "new": "['v2030','fiscal','corp','pif','strat'].forEach(k=>{"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "hub-insert",
+   "note": "CSS: .newb badge on sub-tabs (hidden when active/seen)",
+   "occurrences": 1,
+   "ok": true,
+   "old": ".nsub.on{background:var(--green);border-color:var(--green);color:#fff}",
+   "new": ".nsub.on{background:var(--green);border-color:var(--green);color:#fff}\n.nsub .newb{display:inline-block;margin-inline-start:6px;padding:1px 6px;border-radius:9px;background:#E8862E;color:#fff;font-size:10px;font-weight:800;vertical-align:middle;letter-spacing:.02em}\n.nsub.on .newb,.nsub.seen .newb{display:none}"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "hub-insert",
+   "note": "Sub-tab click: add .seen so the New badge retires after first open",
+   "occurrences": 1,
+   "ok": true,
+   "old": "document.querySelectorAll('.nsub').forEach(b=>b.addEventListener('click',()=>nGo(b)));",
+   "new": "document.querySelectorAll('.nsub').forEach(b=>b.addEventListener('click',()=>{nGo(b);b.classList.add('seen');}));"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "cross-link",
+   "note": "Nav: link to pif_strategy_2026_2030.html",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<a href=\"#findings\" data-k=\"nav_findings\">Findings</a></nav>",
+   "new": "<a href=\"#findings\" data-k=\"nav_findings\">Findings</a><a href=\"pif_strategy_2026_2030.html\" data-k=\"nav_strat\" style=\"border-color:var(--g);color:var(--g)\">PIF Strategy 2026–2030 →</a></nav>"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "cross-link",
+   "note": "I18N: nav_strat key (EN/AR)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const I18N={\"title\":",
+   "new": "const I18N={\"nav_strat\": [\"PIF Strategy 2026–2030 →\", \"استراتيجية صندوق الاستثمارات العامة 2026–2030 ←\"], \"title\":"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "cross-link",
+   "note": "Findings f4: pointer to the strategy dashboard and the canonical ecosystem spelling (EN)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "and the 2026–2030 structure with its named \"Clean Energy, Water and Renewables Infrastructure\" ecosystem (2025).</p>",
+   "new": "and the 2026–2030 structure with its named \"Clean Energy, Water and Renewables Infrastructure\" ecosystem (2025). The strategy document itself, published 2026, is analysed in the companion dashboard <a href=\"pif_strategy_2026_2030.html\">PIF Strategy 2026–2030</a>; it spells the ecosystem \"Clean Energy, Water &amp; Renewable Infrastructure\", which is treated as canonical there.</p>"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "cross-link",
+   "note": "Findings f4 (AR): pointer to the strategy dashboard",
+   "occurrences": 1,
+   "ok": true,
+   "old": "والطاقة المتجددة\\\" (2025).\"]",
+   "new": "والطاقة المتجددة\\\" (2025). وثيقة الاستراتيجية نفسها (2026) محلَّلة في اللوحة المرافقة <a href=\\\"pif_strategy_2026_2030.html\\\">استراتيجية صندوق الاستثمارات العامة 2026–2030</a>.\"]"
+  },
+  {
+   "file": "wf",
+   "kind": "exact",
+   "category": "publish",
+   "note": "Workflow: copy pif_strategy_2026_2030.html into site/",
+   "occurrences": 1,
+   "ok": true,
+   "old": "          cp hub/pif_intelligence_hub.html site/ 2>/dev/null || true\n",
+   "new": "          cp hub/pif_intelligence_hub.html site/ 2>/dev/null || true\n          cp hub/pif_strategy_2026_2030.html site/ 2>/dev/null || true\n"
+  }
+ ]
+}

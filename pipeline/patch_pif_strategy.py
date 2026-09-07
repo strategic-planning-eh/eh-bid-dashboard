@@ -92,6 +92,14 @@ rep('pif', 'والطاقة المتجددة\\" (2025)."]',
     'والطاقة المتجددة\\" (2025). وثيقة الاستراتيجية نفسها (2026) محلَّلة في اللوحة المرافقة <a href=\\"pif_strategy_2026_2030.html\\">استراتيجية صندوق الاستثمارات العامة 2026–2030</a>."]',
     'cross-link', 'Findings f4 (AR): pointer to the strategy dashboard')
 
+# 6b. Presentation mode: hubFS() only looked for `iframe.on`, but the News view shows its sub-pages by
+#     display:block/none, so fullscreen did nothing there (pre-existing bug, surfaced while testing the new tab).
+rep('hub', "function hubFS(){\n  var f=document.querySelector('iframe.on');\n  if(f&&f.requestFullscreen) f.requestFullscreen();\n}",
+    "function hubFS(){\n  var f=document.querySelector('iframe.on');\n"
+    "  if(!f){var w=$('newswrap');if(w&&w.style.display!=='none'){f=Array.prototype.find.call(w.querySelectorAll('iframe'),function(x){return x.style.display!=='none'&&x.src;});}}\n"
+    "  if(!f)return;\n  var rq=f.requestFullscreen||f.webkitRequestFullscreen;\n  if(rq)rq.call(f);\n}",
+    'bugfix', 'hubFS(): pick the visible News sub-page iframe when no top-level iframe is active; add webkit fallback')
+
 # --------------------------------------------- .github/workflows/update-dashboard.yml
 # 9. publish the new dashboard alongside the PIF hub (the workflow only copies files it is told to)
 rep('wf', "          cp hub/pif_intelligence_hub.html site/ 2>/dev/null || true\n",

@@ -100,6 +100,15 @@ rep('hub', "function hubFS(){\n  var f=document.querySelector('iframe.on');\n  i
     "  if(!f)return;\n  var rq=f.requestFullscreen||f.webkitRequestFullscreen;\n  if(rq)rq.call(f);\n}",
     'bugfix', 'hubFS(): pick the visible News sub-page iframe when no top-level iframe is active; add webkit fallback')
 
+# 6c. "What's New" digest: the button hides itself when changelog.json cannot be fetched (e.g. opening the
+#     file locally, or if the pipeline has not produced the file). Show it anyway with a clear explanation.
+rep('hub', "if(j.entries&&j.entries.length) document.getElementById('digestbtn').style.display='inline-block';\n}).catch(function(){});",
+    "if(j.entries&&j.entries.length) document.getElementById('digestbtn').style.display='inline-block';\n}).catch(function(){DIGEST={entries:[],updated:'',offline:true};document.getElementById('digestbtn').style.display='inline-block';});",
+    'bugfix', "Digest: keep the What's-New button visible when changelog.json is unreachable")
+rep('hub', ".join('') || '<div style=\"color:#5F7078;font-size:13px\">No changes recorded in the last 7 days.</div>';",
+    ".join('') || '<div style=\"color:#5F7078;font-size:13px\">'+(DIGEST.offline?'The change log could not be loaded. It is created by the hourly site build (changelog.json), so it only shows on the published site \u2014 not when this file is opened directly from disk.':'No changes recorded in the last 7 days.')+'</div>';",
+    'bugfix', 'Digest: explain why the log is empty when opened offline')
+
 # --------------------------------------------- .github/workflows/update-dashboard.yml
 # 9. publish the new dashboard alongside the PIF hub (the workflow only copies files it is told to)
 rep('wf', "          cp hub/pif_intelligence_hub.html site/ 2>/dev/null || true\n",

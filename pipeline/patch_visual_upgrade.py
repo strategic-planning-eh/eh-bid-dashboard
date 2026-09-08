@@ -50,6 +50,11 @@ rep('stake', '<script src="eh-shared.js" defer></script>\n</body>',
 # ---- Bubble map: hover copy
 rep('bub', 'hover any dot for the name and numbers.', 'tap or hover any dot for the name and numbers.', 'plain-language', 'Bubble map: tap is the first verb (lesson #7)')
 
+# ---- News intelligence: repair the corrupted chart-grid rule (pre-existing; three charts were stacking in one column)
+rep('news', ".charts{display:grid; grid-template-columns:minmax(0,1.minmax(0,05fr)) minmax(0,1.minmax(0,15fr)) minmax(0,1.minmax(0,15fr)); gap:16px}",
+    ".charts{display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1.15fr) minmax(0,1.15fr); gap:16px}",
+    'bugfix', 'News intelligence: fix corrupted grid-template-columns so the three charts sit side by side again')
+
 # ---- PIF annual-reports page: remaining analyst labels
 rep('pif', 'PIF uses a standard international industry list (called GICS)', 'PIF uses a standard international industry list', 'plain-language', 'PIF hub: drop the GICS acronym from the reader-facing sentence', count=2)
 

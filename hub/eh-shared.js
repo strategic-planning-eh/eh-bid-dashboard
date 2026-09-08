@@ -1,4 +1,4 @@
-/* eh-shared.js — EH Hub shared behaviour layer · v1.0.0 · 2026-09-07
+/* eh-shared.js — EH Hub shared behaviour layer · v1.0.1 · 2026-09-08
    Include with <script src="eh-shared.js" defer></script> after the page's own scripts.
    1. Embedded mode: adds html.eh-embedded (+ html.eh-page-<id>) when the page is inside the hub.
    2. Hub bridge: one listener for {ehhub:'lang'|'theme'} that calls whatever the page exposes,
@@ -77,7 +77,16 @@
     var n=0; var els=document.querySelectorAll('p,td,th,li,span,div,small,label,a,button,caption,dt,dd');
     for(var i=0;i<els.length&&n<400;i++){ var el=els[i]; if(!el.childNodes.length||el.closest('svg,canvas'))continue; var hasText=false; for(var c=0;c<el.childNodes.length;c++){ if(el.childNodes[c].nodeType===3&&el.childNodes[c].textContent.trim().length>2){hasText=true;break;} } if(!hasText)continue; var fs=parseFloat(getComputedStyle(el).fontSize); if(fs&&fs<12){ el.style.fontSize='12px'; n++; } }
   }
+  /* 3d. Bid dashboard: when the 2025 / 2026 / Both scope changes, or a tab (e.g. Pricing intelligence) opens,
+     the redrawn cards fade-rise in and the KPI tiles count to their new values. Wraps the page's own functions. */
+  function animateCards(root){ if(!motion)return; root=root||document; var els=root.querySelectorAll('.card,.kc'); var i=0; els.forEach(function(el){ if(el.getBoundingClientRect().height===0)return; el.classList.remove('eh-fade-in'); void el.offsetWidth; el.style.animationDelay=Math.min(i*35,280)+'ms'; el.classList.add('eh-fade-in'); i++; }); }
+  function countUpNow(root){ if(!motion)return; (root||document).querySelectorAll(KPI_SEL).forEach(function(el){ if(el.children.length)return; var raw=el.textContent.trim(); var p=parseNum(raw); if(!p||p.n===0||raw.length>18)return; var start=performance.now(),dur=480; function step(t){ var k=Math.min(1,(t-start)/dur); k=1-Math.pow(1-k,3); el.textContent=p.pre+fmt(p.n*k,p)+p.post; if(k<1)requestAnimationFrame(step); else el.textContent=raw; } requestAnimationFrame(step); }); }
+  function wrapBids(){
+    if(PAGE!=='bids')return;
+    if(typeof window.setScope==='function'&&!window.setScope.__eh){ var os=window.setScope; window.setScope=function(){ var r=os.apply(this,arguments); setTimeout(function(){ animateCards(document); countUpNow(document.getElementById('kstrip')||document); },20); return r; }; window.setScope.__eh=true; }
+    if(typeof window.go==='function'&&!window.go.__eh){ var og=window.go; window.go=function(id){ var r=og.apply(this,arguments); var sec=document.getElementById('s-'+id); setTimeout(function(){ animateCards(sec||document); },20); return r; }; window.go.__eh=true; }
+  }
   function ready(fn){ if(document.readyState==='complete')setTimeout(fn,60); else window.addEventListener('load',function(){setTimeout(fn,60);}); }
-  ready(function(){ stagger(); countUp(); floorText(); setTimeout(floorText,1500); });
-  window.EH_SHARED={version:'1.0.0',page:PAGE,embedded:embedded,motion:motion,floorText:floorText};
+  ready(function(){ stagger(); countUp(); floorText(); wrapBids(); setTimeout(floorText,1500); });
+  window.EH_SHARED={version:'1.0.1',page:PAGE,embedded:embedded,motion:motion,floorText:floorText};
 })();

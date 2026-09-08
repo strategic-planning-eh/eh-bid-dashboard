@@ -1141,6 +1141,12 @@ html.iosframe .zctl,.zctl{position:absolute}      /* absolute inside #chart, not
   try{ if(localStorage.getItem('ehhub.theme')==='dark') document.body.classList.add('dark'); }catch(e){}
 })();
 </script>
+<script>
+const EH_BUB_CAPS={"svgBridge": "Reads left to right: last year's total, then each client that added or lost value, ending at this year's total.", "svgPareto": "The curve shows how few clients make up most of the value — the steeper the start, the more EH depends on a handful of names.", "svgRet": "Green bars are clients kept or gained between the two years; red bars are clients lost — the balance between them is the story.", "svgSlope": "Each line is a sector: rising lines took a bigger share of revenue this year, falling lines a smaller one.", "svgQuad": "Top right is the ideal — clients who buy many services and spend a lot; bottom right are big spenders who buy only one or two services and could buy more.", "svgDeal": "Most clients sit in the small-deal buckets on the left; the few on the right carry a large share of the value."};
+(function(){ function place(){ Object.keys(EH_BUB_CAPS).forEach(function(id){ var s=document.getElementById(id); if(!s||s.parentElement.querySelector('.eh-caption[data-for="'+id+'"]'))return; var cap=document.createElement('div'); cap.className='eh-caption'; cap.setAttribute('data-for',id); cap.textContent=EH_BUB_CAPS[id]; s.insertAdjacentElement('afterend',cap); }); }
+  if(document.readyState==='complete') place(); else window.addEventListener('load',place); setTimeout(place,1500); document.addEventListener('click',function(){ setTimeout(place,300); });
+})();
+</script>
 <script src="eh-shared.js" defer></script>
 </body>
 </html>

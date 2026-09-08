@@ -21,7 +21,7 @@ except ImportError as e:
     print('visual_check: missing dependency', e, '— pip install playwright pillow && playwright install --with-deps chromium'); sys.exit(2)
 
 PAGES = {  # file: minimum expectations {canvases painted, kpi cards, tables, svgs}
-    'EH_Hub.html':                     dict(kpi=0, tables=0, svgs=0),
+    'index.html':                      dict(kpi=0, tables=0, svgs=0),   # hub shell — the workflow publishes hub/EH_Hub.html as site/index.html
     'EH_Stakeholder_Map_CURRENT.html': dict(kpi=5, tables=0, svgs=0),
     'EH_Bid_Analysis_CURRENT.html':    dict(kpi=6, tables=0, svgs=1),
     'EH_Client_Bubble_Map_CURRENT.html': dict(kpi=0, tables=0, svgs=1),
@@ -31,11 +31,12 @@ PAGES = {  # file: minimum expectations {canvases painted, kpi cards, tables, sv
     'pif_intelligence_hub.html':       dict(kpi=5, tables=3, svgs=0, canvases=12),
     'pif_strategy_2026_2030.html':     dict(kpi=6, tables=4, svgs=1, canvases=2),
 }
+ALIASES = {'index.html': 'EH_Hub.html'}   # accepted alternative filename when the primary is absent (local runs against hub/)
 THRESHOLD = 0.06   # 6 % of pixels changed vs the last good build → flag (charts with live data move a little every hour)
 CHECK_JS = r"""(()=>{const vis=e=>{const r=e.getBoundingClientRect();return r.width>0&&r.height>0&&getComputedStyle(e).visibility!=='hidden'};
  const canv=[...document.querySelectorAll('canvas')].filter(vis);
  const blank=canv.filter(c=>{try{const x=c.getContext('2d');if(!x||!c.width)return true;const d=x.getImageData(0,0,c.width,c.height).data;for(let i=3;i<d.length;i+=4*97){if(d[i]>0)return false;}return true;}catch(e){return false;}}).map(c=>c.id||'(no id)');
- return {canvases:canv.length,blank,kpi:[...document.querySelectorAll('.kpi,.kc,.metric,[class*=kpi]')].filter(vis).length,
+ return {chartlib:typeof Chart!=='undefined',canvases:canv.length,blank,kpi:[...document.querySelectorAll('.kpi,.kc,.metric,[class*=kpi]')].filter(vis).length,
   tables:[...document.querySelectorAll('table')].filter(vis).length,svgs:[...document.querySelectorAll('svg')].filter(vis).filter(s=>s.getBoundingClientRect().height>60).length,
   height:document.documentElement.scrollHeight,words:(document.body.innerText||'').split(/\s+/).length};})()"""
 
@@ -57,6 +58,7 @@ def diff_ratio(a_path, b_path):
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--site', required=True); ap.add_argument('--baseline', default='pipeline/visual_baseline')
     ap.add_argument('--out', default='pipeline/visual_out'); ap.add_argument('--update-baseline', action='store_true'); ap.add_argument('--port', type=int, default=8794)
+    ap.add_argument('--allow-cdn', action='store_true', help='let cdnjs/jsdelivr/fonts load (default: blocked, so the gate exercises the vendor/ fallbacks and screenshots stay deterministic)')
     a = ap.parse_args(); os.makedirs(a.out, exist_ok=True); os.makedirs(a.baseline, exist_ok=True)
     have_baseline = any(f.endswith('.png') for f in os.listdir(a.baseline))
     srv = serve(os.path.abspath(a.site), a.port); base = f'http://127.0.0.1:{a.port}/'
@@ -64,19 +66,25 @@ def main():
     with sync_playwright() as p:
         br = p.chromium.launch()
         for page, want in PAGES.items():
-            if not os.path.exists(os.path.join(a.site, page)): report[page] = 'missing'; failures.append(f'{page}: file missing from site/'); continue
+            if not os.path.exists(os.path.join(a.site, page)) and ALIASES.get(page) and os.path.exists(os.path.join(a.site, ALIASES[page])): page_file = ALIASES[page]
+            elif not os.path.exists(os.path.join(a.site, page)): report[page] = 'missing'; failures.append(f'{page}: file missing from site/'); continue
+            else: page_file = page
             for lang in ('en', 'ar'):
                 ctx = br.new_context(viewport={'width': 1440, 'height': 900}, reduced_motion='reduce'); pg = ctx.new_page(); errs = []
                 pg.on('pageerror', lambda e: errs.append(str(e)[:160]))
-                pg.route('**/*', lambda r: r.abort() if any(d in r.request.url for d in ('cdnjs', 'jsdelivr', 'googleapis', 'gstatic', 'openstreetmap', 'cartocdn')) else r.continue_())
+                # External hosts are blocked by default so (a) the run does not depend on a CDN being up, (b) screenshots are identical build-to-build,
+                # (c) the vendor/ fallbacks every page carries are exercised on every build. --allow-cdn lifts the block for scripts and fonts only.
+                blocked = ('openstreetmap', 'cartocdn') if a.allow_cdn else ('cdnjs', 'jsdelivr', 'googleapis', 'gstatic', 'openstreetmap', 'cartocdn')
+                pg.route('**/*', lambda r, _b=blocked: r.abort() if any(d in r.request.url for d in _b) else r.continue_())
                 try:
                     pg.add_init_script(f"try{{localStorage.setItem('ehhub.lang','{lang}');}}catch(e){{}}")
-                    pg.goto(base + page + '?embedded=1', wait_until='load', timeout=60000); pg.wait_for_timeout(2500)
+                    pg.goto(base + page_file + '?embedded=1', wait_until='load', timeout=60000); pg.wait_for_timeout(2500)
                     pg.evaluate(f"window.postMessage({{ehhub:'lang',lang:'{lang}'}},'*')"); pg.wait_for_timeout(1500)
                     m = pg.evaluate(CHECK_JS); key = f'{page}__{lang}'; shot = os.path.join(a.out, key + '.png'); pg.screenshot(path=shot, full_page=True)
                     probs = []
                     if errs: probs.append('script errors: ' + '; '.join(errs[:2]))
-                    if m['blank']: probs.append('blank charts: ' + ', '.join(m['blank']))
+                    if want.get('canvases', 0) and not m['chartlib']: probs.append('Chart.js did not load — CDN blocked by this check and vendor/chart.umd.min.js not served (copy hub/chart.umd.min.js into hub/vendor/)')
+                    elif m['blank']: probs.append('blank charts: ' + ', '.join(m['blank']))
                     if want.get('canvases', 0) and m['canvases'] < want['canvases']: probs.append(f"canvases {m['canvases']} < {want['canvases']}")
                     for k in ('kpi', 'tables', 'svgs'):
                         if m[k] < want.get(k, 0): probs.append(f"{k} {m[k]} < {want[k]}")

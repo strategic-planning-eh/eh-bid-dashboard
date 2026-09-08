@@ -75,7 +75,9 @@ def main():
                 # External hosts are blocked by default so (a) the run does not depend on a CDN being up, (b) screenshots are identical build-to-build,
                 # (c) the vendor/ fallbacks every page carries are exercised on every build. --allow-cdn lifts the block for scripts and fonts only.
                 blocked = ('openstreetmap', 'cartocdn') if a.allow_cdn else ('cdnjs', 'jsdelivr', 'googleapis', 'gstatic', 'openstreetmap', 'cartocdn')
-                pg.route('**/*', lambda r, _b=blocked: r.abort() if any(d in r.request.url for d in _b) else r.continue_())
+                def _route(route, request, _b=blocked):   # Playwright calls the handler as handler(route, request)
+                    (route.abort() if any(d in request.url for d in _b) else route.continue_())
+                pg.route('**/*', _route)
                 try:
                     pg.add_init_script(f"try{{localStorage.setItem('ehhub.lang','{lang}');}}catch(e){{}}")
                     pg.goto(base + page_file + '?embedded=1', wait_until='load', timeout=60000); pg.wait_for_timeout(2500)

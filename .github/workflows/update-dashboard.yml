@@ -58,7 +58,7 @@ jobs:
           cp hub/eh_news_intelligence.html site/ 2>/dev/null || true
           cp hub/pif_intelligence_hub.html site/ 2>/dev/null || true
           cp hub/pif_strategy_2026_2030.html site/ 2>/dev/null || true
-          cp hub/eh-shared.css hub/eh-shared.js site/ 2>/dev/null || true
+          cp hub/eh-shared.css hub/eh-shared.js hub/eh-ar-dashboard.js site/ 2>/dev/null || true
           cp -r hub/vendor site/vendor 2>/dev/null || true
           echo "{\"built\":\"$(TZ='Asia/Riyadh' date +'%d %b %Y, %H:%M (KSA)')\",\"built_iso\":\"$(TZ='Asia/Riyadh' date +'%Y-%m-%dT%H:%M+03:00')\"}" > site/build_info.json
       - name: Detect changes, update changelog, notify
@@ -109,6 +109,41 @@ jobs:
         with:
           name: whatsnew-snapshot
           path: pipeline/snapshot_new/snapshot.json
+          retention-days: 90
+          overwrite: true
+
+      # ---------- Visual regression gate (roadmap X7): every page, EN + AR, must render with painted charts and no script errors,
+      #            and must not have changed by more than 6 % of pixels since the last good build (baseline = artefact) ----------
+      - name: Restore visual baseline
+        uses: dawidd6/action-download-artifact@v6
+        continue-on-error: true
+        with:
+          workflow: update-dashboard.yml
+          workflow_conclusion: success
+          name: visual-baseline
+          path: pipeline/visual_baseline
+          search_artifacts: true
+
+      - name: Visual regression check
+        run: |
+          pip install playwright pillow >/dev/null
+          python -m playwright install --with-deps chromium >/dev/null
+          python pipeline/visual_check.py --site site --baseline pipeline/visual_baseline --out pipeline/visual_out
+
+      - name: Keep screenshots (always) and the new baseline (on pass)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-screens
+          path: |
+            pipeline/visual_out
+            pipeline/visual_baseline
+          retention-days: 30
+      - name: Update visual baseline artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-baseline
+          path: pipeline/visual_baseline
           retention-days: 90
           overwrite: true
 

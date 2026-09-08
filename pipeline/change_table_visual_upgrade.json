@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-07 12:47",
+ "generated": "2026-09-08 05:34",
  "title": "Change table — Stage B visual upgrade",
  "failures": [],
  "changes": [
@@ -212,6 +212,16 @@
    "ok": true,
    "old": "hover any dot for the name and numbers.",
    "new": "tap or hover any dot for the name and numbers."
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "bugfix",
+   "note": "News intelligence: fix corrupted grid-template-columns so the three charts sit side by side again",
+   "occurrences": 1,
+   "ok": true,
+   "old": ".charts{display:grid; grid-template-columns:minmax(0,1.minmax(0,05fr)) minmax(0,1.minmax(0,15fr)) minmax(0,1.minmax(0,15fr)); gap:16px}",
+   "new": ".charts{display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1.15fr) minmax(0,1.15fr); gap:16px}"
   },
   {
    "file": "pif",

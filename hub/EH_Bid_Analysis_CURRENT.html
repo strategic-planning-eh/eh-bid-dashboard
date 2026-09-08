@@ -42,6 +42,7 @@ section.on{display:block}
 .ansbody{font-size:12.5px;color:#3A4A52;line-height:1.65;margin-top:8px}
 .ansrow{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #EEF2F0;font-size:12.5px;color:#3A4A52}
 .kstrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:18px 0}
+.kc:has(.v.hero){grid-column:span 2;border-top-width:4px}.kc .v.hero{font-size:34px}.kc:has(.v.hero) .l{font-size:12.5px;font-weight:700}@media(max-width:700px){.kc:has(.v.hero){grid-column:span 1}.kc .v.hero{font-size:26px}}
 .kc{background:#fff;border:1px solid #E3EAE5;border-radius:12px;padding:13px 15px;box-shadow:0 1px 3px rgba(0,0,0,.03)}
 .kc .v{font-size:25px;font-weight:800;color:#1A5FAB;line-height:1.05}
 .kc .v.g{color:#2E7D46}.kc .v.r{color:#C0504D}
@@ -207,7 +208,8 @@ html.iosframe #ehcbtn,html.iosframe #ehcp{display:none !important}            /*
   .tab,[role=tab]{min-height:34px;padding:5px 10px;font-size:12.5px}
 }
 
-</style></head>
+</style><link rel="stylesheet" href="eh-shared.css">
+</head>
 <body>
 <header><div class="hd"><img src="data:image/png;base64,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" alt="EH"><div><h1 id="h-title">Bid &amp; Tender Intelligence</h1><div class="sub" id="h-sub">Environmental Horizons (Afaq Al Beeah) — competitive bid analytics, 2024–2026</div></div>
 <div class="hd-right"><div class="langtog" style="margin-inline-end:8px"><button class="langbtn" id="sc-y2025" onclick="setScope('y2025')">2025</button><button class="langbtn" id="sc-y2026" onclick="setScope('y2026')">2026</button><button class="langbtn on" id="sc-both" onclick="setScope('both')">Both</button></div><div class="langtog"><button class="langbtn on" data-l="en" onclick="setLang('en')">EN</button><button class="langbtn" data-l="ar" onclick="setLang('ar')">عربي</button></div>
@@ -400,10 +402,10 @@ function go(id){if(ntfTab(id)){NTF.seen.add(id);setTimeout(rNav,50);}curTab=id;T
 let k=BA.kpi;
 function kc(v,l,d,cls){return `<div class="kc"><div class="v ${cls||''}">${v}</div><div class="l">${l}</div>${d?`<div class="d">${d}</div>`:''}</div>`;}
 function rKPI(){$('kstrip').innerHTML=
+ kc(pct(k.win_rate),t('Win rate','نسبة الفوز'),k.eh_won+'/'+k.awarded+t(' awarded',' مُرساة'),(k.win_rate>=50?'g':'r')+' hero')+
+ kc('SAR '+fmtM(k.pipeline),t('Total tendered value','إجمالي قيمة المنافسات'),k.with_value+t(' priced',' مُسعّرة'),'hero')+
+ kc('SAR '+fmtM(k.open_pipeline),t('Open pipeline','المحفظة المفتوحة'),k.open_count+t(' pending',' قيد الانتظار'),'hero')+
  kc(k.total,t('Tenders tracked','المنافسات المتتبَّعة'),'2024–2026')+
- kc('SAR '+fmtM(k.pipeline),t('Total tendered value','إجمالي قيمة المنافسات'),k.with_value+t(' priced',' مُسعّرة'))+
- kc('SAR '+fmtM(k.open_pipeline),t('Open pipeline','المحفظة المفتوحة'),k.open_count+t(' pending',' قيد الانتظار'))+
- kc(pct(k.win_rate),t('Win rate','نسبة الفوز'),k.eh_won+'/'+k.awarded+t(' awarded',' مُرساة'),k.win_rate>=50?'g':'r')+
  kc(k.competitors,t('Competitors faced','المنافسون المواجَهون'),t('head-to-head','مواجهة مباشرة'))+
  kc(k.avg_bidders,t('Avg participants/tender','متوسط المشاركين بالمنافسة'),t('max ','الأقصى ')+k.max_bidders)+
  kc(Math.round(100*k.committee_accept/k.committee_total)+'%',t('Bid selectivity','انتقائية التقديم'),k.committee_accept+'/'+k.committee_total+t(' accepted',' مقبولة'))+
@@ -838,4 +840,5 @@ window.addEventListener('load',function(){ _lblCharts();
   });
 });
 </script>
+<script src="eh-shared.js" defer></script>
 </body></html>

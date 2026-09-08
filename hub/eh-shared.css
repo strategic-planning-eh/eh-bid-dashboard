@@ -1,0 +1,70 @@
+/* eh-shared.css — EH Hub shared visual layer · v1.0.0 · 2026-09-07
+   Loaded by every page in hub/. One source of truth for: font stack, embedded-mode header collapse,
+   readable minimum text size, shared patterns (KPI card, chip, source popover, not-published state),
+   and the moderate motion layer. Motion is wrapped in prefers-reduced-motion and can be disabled
+   globally by setting html[data-eh-motion="off"]. */
+
+/* ---------- 1. Typography: one stack for all nine pages (D-B5). Swap --eh-font when EH's brand
+   typeface is supplied; nothing else needs to change. ---------- */
+:root{
+  --eh-font:"Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Roboto,"Noto Sans Arabic",Tahoma,Arial,sans-serif;
+  --eh-green:#2BAE68; --eh-blue:#027DC3; --eh-amber:#E8862E; --eh-red:#C0392B; --eh-grey:#5F7078;
+  --eh-motion-fast:180ms; --eh-motion:420ms; --eh-motion-slow:600ms;
+}
+html,body,button,input,select,textarea,h1,h2,h3,h4,.tab-btn,nav a,.pill,.chip,.kc,.kpi,.metric{font-family:var(--eh-font) !important}
+/* readable floor for body copy on desktop: nothing that carries meaning below 12px */
+html.eh-floor .sub,html.eh-floor .tiny,html.eh-floor .src,html.eh-floor .muted,html.eh-floor small,html.eh-floor .l,html.eh-floor .ml,html.eh-floor .d,html.eh-floor .note,html.eh-floor .cap,html.eh-floor .foot,html.eh-floor footer,html.eh-floor .legend,html.eh-floor .lg,html.eh-floor td,html.eh-floor th,html.eh-floor li{font-size:max(12px,1em)}
+
+/* ---------- 2. Embedded mode (D-B1): when a page is inside the hub, its own header, logo and
+   language/theme controls disappear; in-page navigation and toolbars stay. Selectors are per page. ---------- */
+html.eh-embedded body{padding-top:0 !important}
+/* PIF pages (pif_intelligence_hub, pif_strategy_2026_2030): keep nav, drop logo/title/controls */
+html.eh-embedded.eh-page-pif header>img,html.eh-embedded.eh-page-pif header>div:not(.ctl):not(nav),html.eh-embedded.eh-page-pif header .ctl,
+html.eh-embedded.eh-page-strat header>img,html.eh-embedded.eh-page-strat header>div:not(.ctl):not(nav),html.eh-embedded.eh-page-strat header .ctl{display:none !important}
+html.eh-embedded.eh-page-pif header,html.eh-embedded.eh-page-strat header{padding-top:8px !important;padding-bottom:0 !important}
+/* Stakeholder map: keep the action buttons, drop logo/title and its own lang/dark buttons */
+html.eh-embedded.eh-page-stake header .logo,html.eh-embedded.eh-page-stake header .titles,html.eh-embedded.eh-page-stake #langBtn,html.eh-embedded.eh-page-stake #darkBtn{display:none !important}
+html.eh-embedded.eh-page-stake header{padding:6px 12px !important;min-height:0 !important}
+/* Bid & Tender: keep year toggle and counter pill, drop logo/title/language toggle */
+html.eh-embedded.eh-page-bids .hd>img,html.eh-embedded.eh-page-bids .hd>div:first-of-type,html.eh-embedded.eh-page-bids .langbtn,html.eh-embedded.eh-page-bids .langtog:has(.langbtn){display:none !important}
+/* Bubble map: keep the KPI strip and toolbar, drop the title */
+html.eh-embedded.eh-page-bub header>h1{display:none !important}
+/* News intelligence: drop top language bar and masthead; filter bar stays */
+html.eh-embedded.eh-page-news .topbar,html.eh-embedded.eh-page-news .masthead,html.eh-embedded.eh-page-news #ehLangBar{display:none !important}
+/* Vision 2030: keep the panel tabs, drop brand block and date */
+html.eh-embedded.eh-page-v2030 .brand-block,html.eh-embedded.eh-page-v2030 .asof,html.eh-embedded.eh-page-v2030 #ehLangBar{display:none !important}
+html.eh-embedded.eh-page-v2030 .masthead{padding-top:6px !important;padding-bottom:0 !important}
+/* Fiscal monitor: keep section nav, drop brand and language pill */
+html.eh-embedded.eh-page-fisc .topnav .brand,html.eh-embedded.eh-page-fisc #ehLangBar{display:none !important}
+
+/* ---------- 3. Shared patterns ---------- */
+.eh-chip{display:inline-block;font-size:11.5px;font-weight:600;border-radius:12px;padding:2px 9px;white-space:nowrap;border:1px solid transparent;line-height:1.5}
+.eh-chip.grey{background:rgba(95,112,120,.12);color:#5F7078}.eh-chip.blue{background:rgba(2,125,195,.12);color:#027DC3}.eh-chip.green{background:rgba(43,174,104,.14);color:#1F8A4C}.eh-chip.red{background:rgba(192,57,43,.12);color:#C0392B}.eh-chip.amber{background:rgba(232,134,46,.16);color:#9A5A17}
+body.dark .eh-chip.green,[data-theme=dark] .eh-chip.green{color:#7BD9A3}body.dark .eh-chip.red,[data-theme=dark] .eh-chip.red{color:#E0655A}body.dark .eh-chip.amber,[data-theme=dark] .eh-chip.amber{color:#E0B865}
+.eh-none{display:inline-block;border:1.5px dashed #8A9AA3;color:#5F7078;border-radius:6px;padding:2px 8px;font-weight:600;font-size:12.5px}
+.eh-caption{font-size:12.5px;color:#37474F;margin:6px 0 2px;line-height:1.45}body.dark .eh-caption,[data-theme=dark] .eh-caption{color:#C8D3DA}
+.eh-note{border-inline-start:3px solid var(--eh-blue);background:rgba(2,125,195,.07);padding:8px 12px;border-radius:0 8px 8px 0;font-size:12.5px;margin:8px 0}
+[dir=rtl] .eh-note{border-radius:8px 0 0 8px}
+.eh-hero .v,.kc.eh-hero .v{font-size:34px !important}
+.kc.eh-hero,.eh-hero{grid-column:span 2;border-width:2px !important}
+.eh-cite{border-bottom:1px dotted var(--eh-blue);cursor:pointer}
+
+/* ---------- 4. Moderate motion layer (D-B7: always on, OS reduced-motion turns it off) ---------- */
+@media (prefers-reduced-motion:no-preference){
+  html:not([data-eh-motion="off"]) .eh-fade-in{animation:ehFadeUp var(--eh-motion) ease-out both}
+  html:not([data-eh-motion="off"]) .eh-stagger>*{animation:ehFadeUp var(--eh-motion) ease-out both}
+  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(1){animation-delay:0ms}
+  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(2){animation-delay:40ms}
+  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(3){animation-delay:80ms}
+  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(4){animation-delay:120ms}
+  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(5){animation-delay:160ms}
+  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(6){animation-delay:200ms}
+  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(7){animation-delay:240ms}
+  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(8){animation-delay:280ms}
+  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(n+9){animation-delay:320ms}
+  html:not([data-eh-motion="off"]) .eh-pulse{animation:ehPulse var(--eh-motion-slow) ease-out 1}
+  html:not([data-eh-motion="off"]) .eh-xfade{transition:opacity var(--eh-motion-fast) ease-out}
+}
+@keyframes ehFadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes ehPulse{0%{box-shadow:0 0 0 0 rgba(43,174,104,.55)}100%{box-shadow:0 0 0 12px rgba(43,174,104,0)}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important}}

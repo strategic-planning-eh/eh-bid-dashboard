@@ -168,6 +168,7 @@ body.dark .ytog button:hover:not(.on){background:#1E2830}
   header h1 b{display:block}
 }
 </style>
+<link rel="stylesheet" href="eh-shared.css">
 </head>
 <body>
 <header>
@@ -220,7 +221,7 @@ body.dark .ytog button:hover:not(.on){background:#1E2830}
     </div>
     <div class="ecard">
       <div class="eh2">Client Depth vs Value <span class="ytog" id="ytogQuad" role="group" aria-label="Year scope"><button data-y="2025">2025</button><button data-y="2026">2026</button><button data-y="both" class="on">Both</button></span> <button class="png" id="quadListBtn" onclick="qlToggle()" style="margin-inline-start:6px">Show all 60 names</button> <button class="png" data-svg="svgQuad">Export PNG</button></div>
-      <div class="esub">Top 60 clients by value. Right = gives EH <b>many jobs</b>; up = worth <b>a lot of money</b>. The dashed lines are the middle of this group, splitting four kinds of client — hover any dot for the name and numbers.
+      <div class="esub">Top 60 clients by value. Right = gives EH <b>many jobs</b>; up = worth <b>a lot of money</b>. The dashed lines are the middle of this group, splitting four kinds of client — tap or hover any dot for the name and numbers.
       <div style="margin-top:6px;font-size:11.5px;line-height:1.7">
       <span style="color:#1F7A4C;font-weight:700">&#9679; Strategic accounts</span> — many jobs <i>and</i> big money: protect these relationships. &nbsp;
       <span style="color:#B8860B;font-weight:700">&#9679; Concentrated bets</span> — big money from only a few jobs: one lost contract hurts, deepen the relationship. &nbsp;
@@ -1140,5 +1141,6 @@ html.iosframe .zctl,.zctl{position:absolute}      /* absolute inside #chart, not
   try{ if(localStorage.getItem('ehhub.theme')==='dark') document.body.classList.add('dark'); }catch(e){}
 })();
 </script>
+<script src="eh-shared.js" defer></script>
 </body>
 </html>

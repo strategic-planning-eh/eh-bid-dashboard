@@ -121,6 +121,7 @@ body.dark .fresh b{color:#7FD4A3}
 
 .nsub{padding:7px 15px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:12.5px;font-weight:600;color:var(--mut)}
 .nsub.on{background:var(--green);border-color:var(--green);color:#fff}
+@media (prefers-reduced-motion:no-preference){@keyframes ehIn{from{opacity:0}to{opacity:1}} main>iframe.on,#newswrap iframe.vis{animation:ehIn 180ms ease-out}}
 .nsub .newb{display:inline-block;margin-inline-start:6px;padding:1px 6px;border-radius:9px;background:#E8862E;color:#fff;font-size:10px;font-weight:800;vertical-align:middle;letter-spacing:.02em}
 .nsub.on .newb,.nsub.seen .newb{display:none}
 body.dark #newsbar{background:var(--d-panel) !important;border-color:var(--d-line) !important}
@@ -213,9 +214,9 @@ button,[role=tab],a,.tab,.mtab{touch-action:manipulation;-webkit-tap-highlight-c
 </header>
 <script>if(window.innerWidth<768)document.currentScript.previousElementSibling.style.display='block';</script>
 <main id="main">
-  <div class="skel on" id="sk-stake"><div class="in"><div class="spin"></div>Loading the stakeholder map…</div></div>
-  <div class="skel" id="sk-bids"><div class="in"><div class="spin"></div>Loading bid intelligence…</div></div>
-  <div class="skel" id="sk-bubbles"><div class="in"><div class="spin"></div>Loading the client portfolio…</div></div>
+  <div class="skel on" id="sk-stake"><div class="in"><div class="spin"></div><span class="tl" data-en="Loading the stakeholder map…" data-ar="جارٍ تحميل خريطة أصحاب المصلحة…">Loading the stakeholder map…</span></div></div>
+  <div class="skel" id="sk-bids"><div class="in"><div class="spin"></div><span class="tl" data-en="Loading bid intelligence…" data-ar="جارٍ تحميل استخبارات المناقصات…">Loading bid intelligence…</span></div></div>
+  <div class="skel" id="sk-bubbles"><div class="in"><div class="spin"></div><span class="tl" data-en="Loading the client portfolio…" data-ar="جارٍ تحميل محفظة العملاء…">Loading the client portfolio…</span></div></div>
   <iframe id="f-stake" title="Stakeholder and competitive map" class="on" src="EH_Stakeholder_Map_CURRENT.html" loading="eager"></iframe>
   <iframe id="f-bids" title="Bid and tender intelligence" src="EH_Bid_Analysis_CURRENT.html" loading="eager"></iframe>
   <iframe id="f-bubbles" title="Client portfolio bubble chart" data-src="EH_Client_Bubble_Map_CURRENT.html" loading="lazy"></iframe>
@@ -228,15 +229,15 @@ button,[role=tab],a,.tab,.mtab{touch-action:manipulation;-webkit-tap-highlight-c
       <button class="nsub" data-n="strat" title="PIF Strategy 2026–2030 — what changed, and what it means for EH · استراتيجية صندوق الاستثمارات العامة 2026–2030 — ما الذي تغيّر وماذا يعني لآفاق البيئة"><span class="tl" data-en="PIF Strategy 2026–2030" data-ar="استراتيجية صندوق الاستثمارات العامة 2026–2030">PIF Strategy 2026–2030</span><span class="newb" aria-label="New">New</span></button>
     </div>
     <div style="position:relative;flex:1">
-      <div class="skel on" id="sk-v2030"><div class="in"><div class="spin"></div>Loading Vision 2030…</div></div>
-      <div class="skel" id="sk-fiscal"><div class="in"><div class="spin"></div>Loading Fiscal Monitor…</div></div>
-      <div class="skel" id="sk-corp"><div class="in"><div class="spin"></div>Loading News…</div></div>
-      <div class="skel" id="sk-pif"><div class="in"><div class="spin"></div>Loading PIF Hub…</div></div>
+      <div class="skel on" id="sk-v2030"><div class="in"><div class="spin"></div><span class="tl" data-en="Loading Vision 2030…" data-ar="جارٍ تحميل رؤية 2030…">Loading Vision 2030…</span></div></div>
+      <div class="skel" id="sk-fiscal"><div class="in"><div class="spin"></div><span class="tl" data-en="Loading Fiscal Monitor…" data-ar="جارٍ تحميل مرصد المالية…">Loading Fiscal Monitor…</span></div></div>
+      <div class="skel" id="sk-corp"><div class="in"><div class="spin"></div><span class="tl" data-en="Loading News…" data-ar="جارٍ تحميل الأخبار…">Loading News…</span></div></div>
+      <div class="skel" id="sk-pif"><div class="in"><div class="spin"></div><span class="tl" data-en="Loading PIF Hub…" data-ar="جارٍ تحميل مركز الصندوق…">Loading PIF Hub…</span></div></div>
       <iframe id="f-v2030" title="Vision 2030 dashboard" data-src="vision2030_dashboard.html" loading="lazy" style="display:none"></iframe>
       <iframe id="f-fiscal" title="Saudi fiscal monitor 2026" data-src="saudi_fiscal_monitor_2026.html" loading="lazy" style="display:none"></iframe>
       <iframe id="f-corp" title="Corporate and government news" data-src="eh_news_intelligence.html" loading="lazy" style="display:none"></iframe>
       <iframe id="f-pif" title="PIF annual reports intelligence" data-src="pif_intelligence_hub.html" loading="lazy" style="display:none"></iframe>
-      <div class="skel" id="sk-strat"><div class="in"><div class="spin"></div>Loading PIF Strategy 2026–2030…</div></div>
+      <div class="skel" id="sk-strat"><div class="in"><div class="spin"></div><span class="tl" data-en="Loading PIF Strategy 2026–2030…" data-ar="جارٍ تحميل استراتيجية الصندوق 2026–2030…">Loading PIF Strategy 2026–2030…</span></div></div>
       <iframe id="f-strat" title="PIF Strategy 2026–2030 — what changed, and what it means for EH" data-src="pif_strategy_2026_2030.html" loading="lazy" style="display:none"></iframe>
     </div>
   </div>
@@ -434,7 +435,7 @@ function nGo(btn){
     if(on&&!f.src&&f.dataset.src){f.src=f.dataset.src;$('sk-'+k).classList.add('on');
       f.addEventListener('load',function(){$('sk-'+k).classList.remove('on'); if(hubT==='dark') setTimeout(applyHubTheme,500); if(hubL!=='en') setTimeout(bcastLang,500);},{once:true});
     }
-    f.style.display=on?'block':'none';
+    f.style.display=on?'block':'none';f.classList.toggle('vis',on);
   });
 }
 document.querySelectorAll('.nsub').forEach(b=>b.addEventListener('click',()=>{nGo(b);b.classList.add('seen');}));

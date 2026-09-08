@@ -1,4 +1,4 @@
-/* eh-shared.css — EH Hub shared visual layer · v1.0.0 · 2026-09-07
+/* eh-shared.css — EH Hub shared visual layer · v1.0.1 · 2026-09-08
    Loaded by every page in hub/. One source of truth for: font stack, embedded-mode header collapse,
    readable minimum text size, shared patterns (KPI card, chip, source popover, not-published state),
    and the moderate motion layer. Motion is wrapped in prefers-reduced-motion and can be disabled
@@ -26,7 +26,10 @@ html.eh-embedded.eh-page-pif header,html.eh-embedded.eh-page-strat header{paddin
 html.eh-embedded.eh-page-stake header .logo,html.eh-embedded.eh-page-stake header .titles,html.eh-embedded.eh-page-stake #langBtn,html.eh-embedded.eh-page-stake #darkBtn{display:none !important}
 html.eh-embedded.eh-page-stake header{padding:6px 12px !important;min-height:0 !important}
 /* Bid & Tender: keep year toggle and counter pill, drop logo/title/language toggle */
-html.eh-embedded.eh-page-bids .hd>img,html.eh-embedded.eh-page-bids .hd>div:first-of-type,html.eh-embedded.eh-page-bids .langbtn,html.eh-embedded.eh-page-bids .langtog:has(.langbtn){display:none !important}
+html.eh-embedded.eh-page-bids .hd>img,html.eh-embedded.eh-page-bids .hd>div:first-of-type,html.eh-embedded.eh-page-bids .langtog:has([data-l]){display:none !important}
+/* the 2025 / 2026 / Both scope toggle shares the .langbtn class and must stay visible */
+html.eh-embedded.eh-page-bids .hd{min-height:0 !important;height:auto !important;padding:6px 14px !important;justify-content:flex-end}
+html.eh-embedded.eh-page-bids header{min-height:0 !important}
 /* Bubble map: keep the KPI strip and toolbar, drop the title */
 html.eh-embedded.eh-page-bub header>h1{display:none !important}
 /* News intelligence: drop top language bar and masthead; filter bar stays */

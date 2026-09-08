@@ -1,0 +1,43 @@
+{
+ "embedded_class": {
+  "f-stake": "true/eh-page-stake",
+  "f-bids": "true/eh-page-bids",
+  "f-bubbles": "true/eh-page-bub",
+  "f-v2030": "true/eh-page-v2030",
+  "f-fiscal": "true/eh-page-fisc",
+  "f-corp": "true/eh-page-news",
+  "f-pif": "true/eh-page-pif",
+  "f-strat": "true/eh-page-strat"
+ },
+ "header_height_px": {
+  "f-stake": 0,
+  "f-bids": 0,
+  "f-bubbles": 0,
+  "f-v2030": 0,
+  "f-fiscal": 0,
+  "f-corp": 0,
+  "f-pif": 0,
+  "f-strat": 57
+ },
+ "lang_after_toggle": {
+  "f-stake": "rtl/ar",
+  "f-bids": "rtl/ar",
+  "f-bubbles": "?/en",
+  "f-v2030": "rtl/ar",
+  "f-fiscal": "rtl/ar",
+  "f-corp": "rtl/ar",
+  "f-pif": "rtl/ar",
+  "f-strat": "rtl/ar"
+ },
+ "dark_after_toggle": {
+  "f-stake": false,
+  "f-bids": true,
+  "f-bubbles": true,
+  "f-v2030": true,
+  "f-fiscal": true,
+  "f-corp": true,
+  "f-pif": true,
+  "f-strat": true
+ },
+ "errors": []
+}

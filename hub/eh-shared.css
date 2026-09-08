@@ -40,6 +40,12 @@ html.eh-embedded.eh-page-v2030 .masthead{padding-top:6px !important;padding-bott
 /* Fiscal monitor: keep section nav, drop brand and language pill */
 html.eh-embedded.eh-page-fisc .topnav .brand,html.eh-embedded.eh-page-fisc #ehLangBar{display:none !important}
 
+/* ---------- 2b. Arabic dashboards (N1): explainer blocks moved under their charts; the rest of the Arabic report follows the charts ---------- */
+.eh-ar-cap{display:none;margin-top:12px;padding-top:10px;border-top:1px dashed rgba(95,112,120,.35);font-size:13px;line-height:1.65}
+body.ar-mode .eh-ar-cap{display:block}.eh-ar-title{font-weight:800;margin-bottom:4px;color:var(--eh-blue)}
+body.ar-mode #ehArView.eh-ar-rest{display:block}body:not(.ar-mode) #ehArView.eh-ar-rest{display:none !important}
+body.ar-mode .kpi .kdelta,body.ar-mode .kpi .ksrc,body.ar-mode .kpi .k-note{direction:ltr;text-align:start;unicode-bidi:plaintext}
+
 /* ---------- 3. Shared patterns ---------- */
 .eh-chip{display:inline-block;font-size:11.5px;font-weight:600;border-radius:12px;padding:2px 9px;white-space:nowrap;border:1px solid transparent;line-height:1.5}
 .eh-chip.grey{background:rgba(95,112,120,.12);color:#5F7078}.eh-chip.blue{background:rgba(2,125,195,.12);color:#027DC3}.eh-chip.green{background:rgba(43,174,104,.14);color:#1F8A4C}.eh-chip.red{background:rgba(192,57,43,.12);color:#C0392B}.eh-chip.amber{background:rgba(232,134,46,.16);color:#9A5A17}

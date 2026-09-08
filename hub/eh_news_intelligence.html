@@ -903,7 +903,7 @@ body.dark .blue{color:#7FB4E8 !important}
 #ehLangBar button.on{background:#0E5A9E;color:#fff}
 body.dark #ehLangBar button{background:#1E2830;color:#9FB3BE}
 body.dark #ehLangBar button.on{background:#0E5A9E;color:#fff}
-body.ar-mode > *:not(#ehArView):not(#ehLangBar):not(script):not(style){display:none !important}
+body.ar-mode .eh-en-only{display:none !important}
 #ehArView{display:none;max-width:1040px;margin:0 auto;padding:64px 26px 60px;font-size:15px;line-height:2;color:#26323A}
 body.ar-mode #ehArView{display:block}
 body.dark #ehArView{color:#C9D6DD}
@@ -1090,6 +1090,7 @@ html.iosframe #ehcbtn,html.iosframe #ehcp{display:none !important}            /*
   try{ if(localStorage.getItem('ehhub.lang')==='ar') ehSetLang('ar'); }catch(e){}
 })();
 </script>
+<script src="eh-ar-dashboard.js" defer></script>
 <script src="eh-shared.js" defer></script>
 </body>
 </html>

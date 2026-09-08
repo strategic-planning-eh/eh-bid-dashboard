@@ -1,4 +1,4 @@
-/* eh-shared.css — EH Hub shared visual layer · v1.0.1 · 2026-09-08
+/* eh-shared.css — EH Hub shared visual layer · v1.1.0 · 2026-09-08
    Loaded by every page in hub/. One source of truth for: font stack, embedded-mode header collapse,
    readable minimum text size, shared patterns (KPI card, chip, source popover, not-published state),
    and the moderate motion layer. Motion is wrapped in prefers-reduced-motion and can be disabled
@@ -67,7 +67,12 @@ body.dark .eh-chip.green,[data-theme=dark] .eh-chip.green{color:#7BD9A3}body.dar
   html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(n+9){animation-delay:320ms}
   html:not([data-eh-motion="off"]) .eh-pulse{animation:ehPulse var(--eh-motion-slow) ease-out 1}
   html:not([data-eh-motion="off"]) .eh-xfade{transition:opacity var(--eh-motion-fast) ease-out}
+ html:not([data-eh-motion="off"]) .eh-expand{animation:ehExpand var(--eh-motion) ease-out both;overflow:hidden}
+  html:not([data-eh-motion="off"]) .eh-grow{animation:ehGrow 480ms cubic-bezier(.2,.7,.2,1) both;transform-origin:0 50%}
+  [dir=rtl] html:not([data-eh-motion="off"]) .eh-grow,html[dir=rtl]:not([data-eh-motion="off"]) .eh-grow{transform-origin:100% 50%}
 }
+@keyframes ehExpand{from{opacity:0;transform:translateY(-6px);clip-path:inset(0 0 100% 0)}to{opacity:1;transform:none;clip-path:inset(0 0 0 0)}}
+@keyframes ehGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes ehFadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @keyframes ehPulse{0%{box-shadow:0 0 0 0 rgba(43,174,104,.55)}100%{box-shadow:0 0 0 12px rgba(43,174,104,0)}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important}}

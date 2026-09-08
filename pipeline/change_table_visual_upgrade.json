@@ -1,0 +1,387 @@
+{
+ "generated": "2026-09-07 12:47",
+ "title": "Change table — Stage B visual upgrade",
+ "failures": [],
+ "changes": [
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "shared-layer",
+   "note": "EH_Stakeholder_Map_CURRENT.html: load eh-shared.css",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</head>",
+   "new": "<link rel=\"stylesheet\" href=\"eh-shared.css\">\n</head>"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "shared-layer",
+   "note": "EH_Stakeholder_Map_CURRENT.html: load eh-shared.js",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</body>",
+   "new": "<script src=\"eh-shared.js\" defer></script>\n</body>"
+  },
+  {
+   "file": "bids",
+   "kind": "exact",
+   "category": "shared-layer",
+   "note": "EH_Bid_Analysis_CURRENT.html: load eh-shared.css",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</head>",
+   "new": "<link rel=\"stylesheet\" href=\"eh-shared.css\">\n</head>"
+  },
+  {
+   "file": "bids",
+   "kind": "exact",
+   "category": "shared-layer",
+   "note": "EH_Bid_Analysis_CURRENT.html: load eh-shared.js",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</body>",
+   "new": "<script src=\"eh-shared.js\" defer></script>\n</body>"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "shared-layer",
+   "note": "EH_Client_Bubble_Map_CURRENT.html: load eh-shared.css",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</head>",
+   "new": "<link rel=\"stylesheet\" href=\"eh-shared.css\">\n</head>"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "shared-layer",
+   "note": "EH_Client_Bubble_Map_CURRENT.html: load eh-shared.js",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</body>",
+   "new": "<script src=\"eh-shared.js\" defer></script>\n</body>"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "shared-layer",
+   "note": "eh_news_intelligence.html: load eh-shared.css",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</head>",
+   "new": "<link rel=\"stylesheet\" href=\"eh-shared.css\">\n</head>"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "shared-layer",
+   "note": "eh_news_intelligence.html: load eh-shared.js",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</body>",
+   "new": "<script src=\"eh-shared.js\" defer></script>\n</body>"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "shared-layer",
+   "note": "vision2030_dashboard.html: load eh-shared.css",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</head>",
+   "new": "<link rel=\"stylesheet\" href=\"eh-shared.css\">\n</head>"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "shared-layer",
+   "note": "vision2030_dashboard.html: load eh-shared.js",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</body>",
+   "new": "<script src=\"eh-shared.js\" defer></script>\n</body>"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "shared-layer",
+   "note": "saudi_fiscal_monitor_2026.html: load eh-shared.css",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</head>",
+   "new": "<link rel=\"stylesheet\" href=\"eh-shared.css\">\n</head>"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "shared-layer",
+   "note": "saudi_fiscal_monitor_2026.html: load eh-shared.js",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</body>",
+   "new": "<script src=\"eh-shared.js\" defer></script>\n</body>"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "shared-layer",
+   "note": "pif_intelligence_hub.html: load eh-shared.css",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</head>",
+   "new": "<link rel=\"stylesheet\" href=\"eh-shared.css\">\n</head>"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "shared-layer",
+   "note": "pif_intelligence_hub.html: load eh-shared.js",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</body>",
+   "new": "<script src=\"eh-shared.js\" defer></script>\n</body>"
+  },
+  {
+   "file": "strat",
+   "kind": "exact",
+   "category": "shared-layer",
+   "note": "pif_strategy_2026_2030.html: load eh-shared.css",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</head>",
+   "new": "<link rel=\"stylesheet\" href=\"eh-shared.css\">\n</head>"
+  },
+  {
+   "file": "strat",
+   "kind": "exact",
+   "category": "shared-layer",
+   "note": "pif_strategy_2026_2030.html: load eh-shared.js",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</body>",
+   "new": "<script src=\"eh-shared.js\" defer></script>\n</body>"
+  },
+  {
+   "file": "v2030",
+   "kind": "regex",
+   "category": "fonts",
+   "note": "vision2030_dashboard.html: remove Google Fonts links (D-B5)",
+   "occurrences": 3,
+   "ok": true,
+   "old": "\\s*<link[^>]*fonts\\.g(?:oogleapis|static)\\.com[^>]*>",
+   "new": ""
+  },
+  {
+   "file": "fisc",
+   "kind": "regex",
+   "category": "fonts",
+   "note": "saudi_fiscal_monitor_2026.html: remove Google Fonts links (D-B5)",
+   "occurrences": 3,
+   "ok": true,
+   "old": "\\s*<link[^>]*fonts\\.g(?:oogleapis|static)\\.com[^>]*>",
+   "new": ""
+  },
+  {
+   "file": "news",
+   "kind": "regex",
+   "category": "fonts",
+   "note": "eh_news_intelligence.html: remove Google Fonts links (D-B5)",
+   "occurrences": 3,
+   "ok": true,
+   "old": "\\s*<link[^>]*fonts\\.g(?:oogleapis|static)\\.com[^>]*>",
+   "new": ""
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "ten-second",
+   "note": "Stakeholder map: default Tier 1 view + note instead of zeros and an empty map",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<script src=\"eh-shared.js\" defer></script>\n</body>",
+   "new": "<script>/* default view (visual upgrade 07/09): Tier 1 shown on open, with a note; Reset filters shows the old empty gate */\nsetTimeout(function(){try{if(!state.cats.size&&!state.tiers.size){CATS.forEach(function(c){state.cats.add(c.id);});document.querySelectorAll('#catFilters input').forEach(function(i){i.checked=true;});state.tiers.add('Tier 1');chipGroup('tierChips',TIERS,state.tiers);recomput"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "plain-language",
+   "note": "Bubble map: tap is the first verb (lesson #7)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "hover any dot for the name and numbers.",
+   "new": "tap or hover any dot for the name and numbers."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "plain-language",
+   "note": "PIF hub: drop the GICS acronym from the reader-facing sentence",
+   "occurrences": 2,
+   "ok": true,
+   "old": "PIF uses a standard international industry list (called GICS)",
+   "new": "PIF uses a standard international industry list"
+  },
+  {
+   "file": "bids",
+   "kind": "exact",
+   "category": "ten-second",
+   "note": "Bid KPI strip: win rate, total tendered value, open pipeline first and marked hero (D-B4)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function rKPI(){$('kstrip').innerHTML=\n kc(k.total,t('Tenders tracked','المنافسات المتتبَّعة'),'2024–2026')+\n kc('SAR '+fmtM(k.pipeline),t('Total tendered value','إجمالي قيمة المنافسات'),k.with_value+t(' priced',' مُسعّرة'))+\n kc('SAR '+fmtM(k.open_pipeline),t('Open pipeline','المحفظة المفتوحة'),k.open_count+t(' pending',' قيد الانتظار'))+\n kc(pct(k.win_rate),t('Win rate','نسبة الفوز'),k.eh_won+'/",
+   "new": "function rKPI(){$('kstrip').innerHTML=\n kc(pct(k.win_rate),t('Win rate','نسبة الفوز'),k.eh_won+'/'+k.awarded+t(' awarded',' مُرساة'),(k.win_rate>=50?'g':'r')+' hero')+\n kc('SAR '+fmtM(k.pipeline),t('Total tendered value','إجمالي قيمة المنافسات'),k.with_value+t(' priced',' مُسعّرة'),'hero')+\n kc('SAR '+fmtM(k.open_pipeline),t('Open pipeline','المحفظة المفتوحة'),k.open_count+t(' pending',' قيد الانت"
+  },
+  {
+   "file": "bids",
+   "kind": "exact",
+   "category": "ten-second",
+   "note": "Bid KPI strip: hero tile styling (served copy)",
+   "occurrences": 1,
+   "ok": true,
+   "old": ".kstrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:18px 0}",
+   "new": ".kstrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:18px 0}\n.kc:has(.v.hero){grid-column:span 2;border-top-width:4px}.kc .v.hero{font-size:34px}.kc:has(.v.hero) .l{font-size:12.5px;font-weight:700}@media(max-width:700px){.kc:has(.v.hero){grid-column:span 1}.kc .v.hero{font-size:26px}}"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "bilingual",
+   "note": "Hub skeleton text bilingual: Loading the stakeholder map…",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"spin\"></div>Loading the stakeholder map…",
+   "new": "<div class=\"spin\"></div><span class=\"tl\" data-en=\"Loading the stakeholder map…\" data-ar=\"جارٍ تحميل خريطة أصحاب المصلحة…\">Loading the stakeholder map…</span>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "bilingual",
+   "note": "Hub skeleton text bilingual: Loading bid intelligence…",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"spin\"></div>Loading bid intelligence…",
+   "new": "<div class=\"spin\"></div><span class=\"tl\" data-en=\"Loading bid intelligence…\" data-ar=\"جارٍ تحميل استخبارات المناقصات…\">Loading bid intelligence…</span>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "bilingual",
+   "note": "Hub skeleton text bilingual: Loading the client portfolio…",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"spin\"></div>Loading the client portfolio…",
+   "new": "<div class=\"spin\"></div><span class=\"tl\" data-en=\"Loading the client portfolio…\" data-ar=\"جارٍ تحميل محفظة العملاء…\">Loading the client portfolio…</span>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "bilingual",
+   "note": "Hub skeleton text bilingual: Loading Vision 2030…",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"spin\"></div>Loading Vision 2030…",
+   "new": "<div class=\"spin\"></div><span class=\"tl\" data-en=\"Loading Vision 2030…\" data-ar=\"جارٍ تحميل رؤية 2030…\">Loading Vision 2030…</span>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "bilingual",
+   "note": "Hub skeleton text bilingual: Loading Fiscal Monitor…",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"spin\"></div>Loading Fiscal Monitor…",
+   "new": "<div class=\"spin\"></div><span class=\"tl\" data-en=\"Loading Fiscal Monitor…\" data-ar=\"جارٍ تحميل مرصد المالية…\">Loading Fiscal Monitor…</span>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "bilingual",
+   "note": "Hub skeleton text bilingual: Loading News…",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"spin\"></div>Loading News…",
+   "new": "<div class=\"spin\"></div><span class=\"tl\" data-en=\"Loading News…\" data-ar=\"جارٍ تحميل الأخبار…\">Loading News…</span>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "bilingual",
+   "note": "Hub skeleton text bilingual: Loading PIF Hub…",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"spin\"></div>Loading PIF Hub…",
+   "new": "<div class=\"spin\"></div><span class=\"tl\" data-en=\"Loading PIF Hub…\" data-ar=\"جارٍ تحميل مركز الصندوق…\">Loading PIF Hub…</span>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "bilingual",
+   "note": "Hub skeleton text bilingual: Loading PIF Strategy 2026–2030…",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"spin\"></div>Loading PIF Strategy 2026–2030…",
+   "new": "<div class=\"spin\"></div><span class=\"tl\" data-en=\"Loading PIF Strategy 2026–2030…\" data-ar=\"جارٍ تحميل استراتيجية الصندوق 2026–2030…\">Loading PIF Strategy 2026–2030…</span>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "motion",
+   "note": "Hub: 180 ms cross-fade when a frame is shown (reduced-motion safe)",
+   "occurrences": 1,
+   "ok": true,
+   "old": ".nsub.on{background:var(--green);border-color:var(--green);color:#fff}",
+   "new": ".nsub.on{background:var(--green);border-color:var(--green);color:#fff}\n@media (prefers-reduced-motion:no-preference){@keyframes ehIn{from{opacity:0}to{opacity:1}} main>iframe.on,#newswrap iframe.vis{animation:ehIn 180ms ease-out}}"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "motion",
+   "note": "Hub nGo(): mark the visible News frame so the cross-fade can run",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    f.style.display=on?'block':'none';",
+   "new": "    f.style.display=on?'block':'none';f.classList.toggle('vis',on);"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "shared-layer",
+   "note": "build_bid_dashboard.py: emit eh-shared.css link",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</head>",
+   "new": "<link rel=\"stylesheet\" href=\"eh-shared.css\">\n</head>"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "shared-layer",
+   "note": "build_bid_dashboard.py: emit eh-shared.js script",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</body>",
+   "new": "<script src=\"eh-shared.js\" defer></script>\n</body>"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "ten-second",
+   "note": "build_bid_dashboard.py: hero tile CSS (this CSS block is a plain string in the generator)",
+   "occurrences": 1,
+   "ok": true,
+   "old": ".kstrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:18px 0}",
+   "new": ".kstrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:18px 0}\n.kc:has(.v.hero){grid-column:span 2;border-top-width:4px}.kc .v.hero{font-size:34px}.kc:has(.v.hero) .l{font-size:12.5px;font-weight:700}@media(max-width:700px){.kc:has(.v.hero){grid-column:span 1}.kc .v.hero{font-size:26px}}"
+  },
+  {
+   "file": "wf",
+   "kind": "exact",
+   "category": "publish",
+   "note": "Workflow: publish eh-shared.css and eh-shared.js",
+   "occurrences": 1,
+   "ok": true,
+   "old": "          cp hub/pif_strategy_2026_2030.html site/ 2>/dev/null || true\n",
+   "new": "          cp hub/pif_strategy_2026_2030.html site/ 2>/dev/null || true\n          cp hub/eh-shared.css hub/eh-shared.js site/ 2>/dev/null || true\n"
+  }
+ ]
+}

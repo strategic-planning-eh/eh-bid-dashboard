@@ -4,16 +4,7 @@ BA=BAALL['both']   # static header bits use the all-years view
 CHARTS=open('charts.js').read()
 LOGO=open('logo_b64.txt').read().strip()
 from datetime import datetime, timezone, timedelta
-BUILT=datetime.now(timezone(timedelta(hours=3))).strftime('%d %b \u00b7 %H:%M')   # same format as the hub freshness chip
-BUILT_ISO=datetime.now(timezone(timedelta(hours=3))).isoformat(timespec='minutes')
-YRS='\u2013'.join([str(min(r['year'] for r in BA['bidlist'])),str(max(r['year'] for r in BA['bidlist']))]) if BA.get('bidlist') else ''
-import unicodedata as _ud, re as _re
-def _norm(o):
-    if isinstance(o,str): return _re.sub(r'[\uFB50-\uFDFF\uFE70-\uFEFF]+',lambda m:_ud.normalize('NFKC',m.group(0)),o).replace('\u0640','')
-    if isinstance(o,list): return [_norm(x) for x in o]
-    if isinstance(o,dict): return {k:_norm(v) for k,v in o.items()}
-    return o
-BAALL=_norm(BAALL); BA=BAALL['both']
+BUILT=datetime.now(timezone(timedelta(hours=3))).strftime('%d %b %Y, %H:%M')+' (KSA)'
 LIC=json.load(open('licenses.json'))
 
 CSS=r'''
@@ -52,6 +43,7 @@ section.on{display:block}
 .ansbody{font-size:12.5px;color:#3A4A52;line-height:1.65;margin-top:8px}
 .ansrow{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #EEF2F0;font-size:12.5px;color:#3A4A52}
 .kstrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:18px 0}
+.kc:has(.v.hero){grid-column:span 2;border-top-width:4px}.kc .v.hero{font-size:34px}.kc:has(.v.hero) .l{font-size:12.5px;font-weight:700}@media(max-width:700px){.kc:has(.v.hero){grid-column:span 1}.kc .v.hero{font-size:26px}}
 .kc{background:#fff;border:1px solid #E3EAE5;border-radius:12px;padding:13px 15px;box-shadow:0 1px 3px rgba(0,0,0,.03)}
 .kc .v{font-size:25px;font-weight:800;color:#1A5FAB;line-height:1.05}
 .kc .v.g{color:#2E7D46}.kc .v.r{color:#C0504D}
@@ -125,7 +117,7 @@ var inframe=(function(){{try{{return window.self!==window.top;}}catch(e){{return
 if(ios)c.add('ios'); if(inframe)c.add('inframe'); if(ios&&inframe)c.add('iosframe');
 if(navigator.maxTouchPoints>0)c.add('touch');}})();
 </script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EH Bid & Tender Intelligence</title><script>window.BUILT="{BUILT}";window.BUILT_ISO="{BUILT_ISO}";</script><style>{CSS}:focus-visible{{outline:2px solid #027DC3;outline-offset:2px}}
+<title>EH Bid & Tender Intelligence</title><script>window.BUILT="{BUILT}";</script><style>{CSS}:focus-visible{{outline:2px solid #027DC3;outline-offset:2px}}
 .ntf{{display:inline-block;min-width:15px;padding:1px 6px;margin-inline-start:6px;border-radius:9px;background:#E8862E;color:#fff;font-size:9.5px;font-weight:800;text-align:center;vertical-align:1px}}
 
 body.dark{{background:#0F1519;color:#E6EDF1}}
@@ -236,9 +228,10 @@ html.iosframe #ehcbtn,html.iosframe #ehcp{{display:none !important}}            
 
 @media(max-width:360px){{ body{{overflow-x:hidden}} .hd{{padding:0 10px}} .hd-right{{width:100%;overflow:hidden}} .wrap{{padding:0 10px 40px}} }}
 
-</style></head>
+</style><link rel="stylesheet" href="eh-shared.css">
+</head>
 <body>
-<header><div class="hd"><img src="{LOGO}" alt="EH"><div><h1 id="h-title">Bid &amp; Tender Intelligence</h1><div class="sub" id="h-sub">Environmental Horizons (Afaq Al-Biah) — competitive bid analytics, tracking years {YRS}</div></div>
+<header><div class="hd"><img src="{LOGO}" alt="EH"><div><h1 id="h-title">Bid &amp; Tender Intelligence</h1><div class="sub" id="h-sub">Environmental Horizons (Afaq Al Beeah) — competitive bid analytics, 2024–2026</div></div>
 <div class="hd-right"><div class="langtog" style="margin-inline-end:8px"><button class="langbtn" id="sc-y2025" onclick="setScope('y2025')">2025</button><button class="langbtn" id="sc-y2026" onclick="setScope('y2026')">2026</button><button class="langbtn on" id="sc-both" onclick="setScope('both')">Both</button></div><div class="langtog"><button class="langbtn on" data-l="en" onclick="setLang('en')">EN</button><button class="langbtn" data-l="ar" onclick="setLang('ar')">عربي</button></div>
 <div class="pill" id="h-pill">{BA['kpi']['total']} tenders tracked<br>SAR {round(BA['kpi']['pipeline']/1e6)}M pipeline</div></div></div></header>
 <nav><div class="navin" id="nav"></div></nav>
@@ -280,6 +273,7 @@ window.addEventListener('load',function(){{ _lblCharts();
   }});
 }});
 </script>
+<script src="eh-shared.js" defer></script>
 </body></html>'''
 
 APP=open('app.js').read()

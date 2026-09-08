@@ -5,7 +5,12 @@ name: Update Bid Dashboard
 on:
   schedule:
     - cron: '0 * * * *'        # every hour, on the hour (UTC)
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      changelog_init:
+        description: "First-ever What's New run (no previous snapshot exists). Leave false normally."
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -55,7 +60,7 @@ jobs:
           cp hub/pif_strategy_2026_2030.html site/ 2>/dev/null || true
           cp hub/eh-shared.css hub/eh-shared.js site/ 2>/dev/null || true
           cp -r hub/vendor site/vendor 2>/dev/null || true
-          echo "{\"built\":\"$(TZ='Asia/Riyadh' date +'%d %b %Y, %H:%M (KSA)')\"}" > site/build_info.json
+          echo "{\"built\":\"$(TZ='Asia/Riyadh' date +'%d %b %Y, %H:%M (KSA)')\",\"built_iso\":\"$(TZ='Asia/Riyadh' date +'%Y-%m-%dT%H:%M+03:00')\"}" > site/build_info.json
       - name: Detect changes, update changelog, notify
         working-directory: pipeline
         env:
@@ -68,7 +73,44 @@ jobs:
         run: |
           python notify_and_log.py || true
           cp state.json ../site/state.json 2>/dev/null || true
-          cp changelog.json ../site/changelog.json 2>/dev/null || true
+          # the bid-digest log keeps its own name; site/changelog.json is the weekly What's New (built below)
+          cp changelog.json ../site/bid_digest.json 2>/dev/null || true
+
+      # ---------- What's New: previous dataset snapshot (artefact of the last successful run) ----------
+      - name: Restore previous dataset snapshot
+        uses: dawidd6/action-download-artifact@v6
+        continue-on-error: true
+        with:
+          workflow: update-dashboard.yml
+          workflow_conclusion: success
+          name: whatsnew-snapshot
+          path: pipeline/snapshot_prev
+          search_artifacts: true
+
+      - name: Restore previous published changelog (retention across runs)
+        run: |
+          curl -fsSL "$SITE_URL/changelog.json" -o pipeline/changelog_prev.json && cp pipeline/changelog_prev.json site/changelog.json || cp pipeline/changelog.seed.json site/changelog.json 2>/dev/null || echo "no published changelog yet"
+        env:
+          SITE_URL: https://strategic-planning-eh.github.io/eh-bid-dashboard
+
+      - name: Build What's New (diff snapshot, parse CHANGES.md)
+        run: |
+          INIT=""
+          if [ "${{ github.event.inputs.changelog_init }}" = "true" ]; then INIT="--init"; fi
+          if [ ! -f pipeline/snapshot_prev/snapshot.json ] && [ -f pipeline/snapshots/snapshot.json ]; then
+            mkdir -p pipeline/snapshot_prev && cp pipeline/snapshots/snapshot.json pipeline/snapshot_prev/
+          fi
+          if [ ! -f pipeline/snapshot_prev/snapshot.json ]; then INIT="--init"; echo "no snapshot found — initialising (data diff empty this week only)"; fi
+          python pipeline/build_changelog.py --hub site --prev pipeline/snapshot_prev --changes pipeline/CHANGES.md \
+            --out site/changelog.json --snapshot-out pipeline/snapshot_new $INIT
+
+      - name: Keep the new snapshot as an artefact (next week's diff)
+        uses: actions/upload-artifact@v4
+        with:
+          name: whatsnew-snapshot
+          path: pipeline/snapshot_new/snapshot.json
+          retention-days: 90
+          overwrite: true
 
       - name: Package the page
         uses: actions/upload-pages-artifact@v3

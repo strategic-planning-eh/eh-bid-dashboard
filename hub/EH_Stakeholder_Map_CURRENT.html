@@ -498,7 +498,7 @@ html.iosframe .panel.side.mopen{display:block}
       <div id="listView"></div>
       <div id="regView">
         <div class="heatwrap"><h4>Stakeholder density by region</h4><div class="bars" id="regBars"></div></div>
-        <div class="heatwrap"><h4>Heat map — region × stakeholder category</h4><div style="overflow-x:auto"><table class="heat" id="heat"></table></div></div>
+        <div class="heatwrap"><h4>Heat map — region × company type</h4><div style="overflow-x:auto"><table class="heat" id="heat"></table></div></div>
       </div>
       <div id="bidView"></div>
       <div id="geoView"></div>
@@ -949,8 +949,8 @@ CATS.forEach(c=>{
   catBox.appendChild(l);
 });
 function chipGroup(elId, items, set){
-  const box=document.getElementById(elId);
-  items.forEach(v=>{const ch=document.createElement('div');ch.className='chip';ch.dataset.v=v;ch.textContent=(elId==='regChips'?regL(v):elId==='tierChips'?tierL(v):elId==='freqChips'?freqL(v):v);
+  const box=document.getElementById(elId); box.innerHTML='';   /* re-callable: never stacks a second set of chips */
+  items.forEach(v=>{const ch=document.createElement('div');ch.className=set.has(v)?'chip on':'chip';ch.dataset.v=v;ch.textContent=(elId==='regChips'?regL(v):elId==='tierChips'?tierL(v):elId==='freqChips'?freqL(v):v);
     ch.onclick=()=>{set.has(v)?(set.delete(v),ch.classList.remove('on')):(set.add(v),ch.classList.add('on'));recompute()};
     box.appendChild(ch)});
 }
@@ -1015,7 +1015,7 @@ function buildRegional(){
   // heat
   let html='<tr><th>Region</th>'+CATS.map(c=>'<th class="rot">'+c.s+'</th>').join('')+'<th>Total</th></tr>';
   let hmax=1; const grid={};
-  ordered.forEach(r=>{grid[r]={};CATS.forEach(c=>{const v=VIS.filter(n=>n.rg===r&&n.cat===c.id).length;grid[r][c.id]=v;if(v>hmax)hmax=v})});
+  ordered.forEach(r=>{grid[r]={};CATS.forEach(c=>{const v=VIS.filter(n=>n.rg===r&&(n.typ||'Other')===c.id).length;grid[r][c.id]=v;if(v>hmax)hmax=v})});
   ordered.forEach(r=>{
     html+='<tr><th>'+r+'</th>'+CATS.map(c=>{const v=grid[r][c.id];const t=v/hmax;
       const bg=v?'rgba(63,163,77,'+(0.10+t*0.78)+')':'transparent';
@@ -1644,7 +1644,7 @@ const ANSF={
 })();
 </script>
 <script>/* default view (visual upgrade 07/09): Tier 1 shown on open, with a note; Reset filters shows the old empty gate */
-setTimeout(function(){try{if(!state.cats.size&&!state.tiers.size){CATS.forEach(function(c){state.cats.add(c.id);});document.querySelectorAll('#catFilters input').forEach(function(i){i.checked=true;});state.tiers.add('Tier 1');chipGroup('tierChips',TIERS,state.tiers);recompute();draw();var h=document.getElementById('emptyHint');if(h)h.style.display='none';var mv=document.getElementById('mapView');if(mv&&!document.getElementById('tier1Note')){var n=document.createElement('div');n.id='tier1Note';n.className='eh-note eh-fade-in';n.style.cssText='position:absolute;top:10px;left:12px;right:12px;z-index:6;pointer-events:auto';n.innerHTML=(typeof LNG!=='undefined'&&LNG==='ar')?'يُعرض الآن أصحاب المصلحة من <b>الفئة الأولى</b> فقط. أزل شريحة «الفئة الأولى» في الفلاتر لعرض الجميع (4,195 جهة). <a href=\'#\' onclick=\'this.parentNode.remove();return false\' style=\'float:left\'>إخفاء</a>':'Showing <b>Tier 1</b> organisations only. Remove the Tier 1 chip in Filters to see all 4,195. <a href=\'#\' onclick=\'this.parentNode.remove();return false\' style=\'float:right\'>hide</a>';mv.appendChild(n);}}}catch(e){}},250);</script>
+setTimeout(function(){try{if(!state.cats.size&&!state.tiers.size){CATS.forEach(function(c){state.cats.add(c.id);});document.querySelectorAll('#catFilters input').forEach(function(i){i.checked=true;});state.tiers.add('Tier 1');chipGroup('tierChips',TIERS,state.tiers);recompute();draw();var h=document.getElementById('emptyHint');if(h)h.style.display='none';var mv=document.getElementById('mapView');if(mv&&!document.getElementById('tier1Note')){var n=document.createElement('div');n.id='tier1Note';n.className='eh-note eh-fade-in';n.style.cssText='position:absolute;top:10px;left:12px;right:12px;z-index:6;pointer-events:auto';n.innerHTML=(typeof LNG!=='undefined'&&LNG==='ar')?'يُعرض الآن أصحاب المصلحة من <b>الفئة الأولى</b> فقط. أزل شريحة «الفئة الأولى» في الفلاتر لعرض الجميع (4,195 جهة). <button type=\'button\' onclick=\'this.parentNode.remove()\' style=\'float:left;background:none;border:0;padding:0 2px;margin:0;font:inherit;font-weight:600;color:inherit;opacity:.75;cursor:pointer;text-decoration:none\' aria-label=\'إخفاء هذه الملاحظة\'>إخفاء</button>':'Showing <b>Tier 1</b> organisations only. Remove the Tier 1 chip in Filters to see all 4,195. <button type=\'button\' onclick=\'this.parentNode.remove()\' style=\'float:right;background:none;border:0;padding:0 2px;margin:0;font:inherit;font-weight:600;color:inherit;opacity:.75;cursor:pointer;text-decoration:none\' aria-label=\'Hide this note\'>hide</button>';mv.appendChild(n);}}}catch(e){}},250);</script>
 <script src="eh-shared.js" defer></script>
 </body>
 </html>

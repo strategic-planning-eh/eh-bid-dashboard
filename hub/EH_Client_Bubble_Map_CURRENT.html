@@ -699,27 +699,51 @@ function qlToggle(){
   b.textContent=show?"Hide names":"Show all 60 names";
 }
 function drawDeal(){
-  const svg=d3.select("#svgDeal"); svg.selectAll("*").remove();
+  /* Persistent chart: bars are keyed by bucket, so a year switch morphs each bar in place instead of redrawing cold.
+     First paint rises from the baseline with a short stagger; later calls (year toggle, theme change) only move what changed. */
+  const svg=d3.select("#svgDeal");
   const W=960,H=340,M={t:26,r:30,b:64,l:66};
   const _y=dealYear;
   const rows=DATA.filter(d=>valY(d,_y)>0&&projY(d,_y)>0)
     .map(d=>({n:d.name,avg:valY(d,_y)/projY(d,_y),v:valY(d,_y)}));
   const B=[["< 25K",0,25e3],["25–100K",25e3,1e5],["100–500K",1e5,5e5],["0.5–2M",5e5,2e6],["2–10M",2e6,1e7],["> 10M",1e7,Infinity]];
   const agg=B.map(b=>({lbl:b[0],c:rows.filter(r=>r.avg>=b[1]&&r.avg<b[2]).length,val:d3.sum(rows.filter(r=>r.avg>=b[1]&&r.avg<b[2]),r=>r.v)}));
-  const tot=d3.sum(agg,a=>a.val);
+  const tot=d3.sum(agg,a=>a.val)||1, pct=a=>Math.round(100*a.val/tot);
   const x=d3.scaleBand().domain(agg.map(a=>a.lbl)).range([M.l,W-M.r]).padding(0.28);
-  const y=d3.scaleLinear().domain([0,d3.max(agg,a=>a.c)*1.18]).range([H-M.b,M.t]);
-  svg.append("g").attr("transform",`translate(0,${H-M.b})`).call(d3.axisBottom(x)).selectAll("text").style("font-size","11.5px");
-  svg.append("g").attr("transform",`translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5)).selectAll("text").style("font-size","11px");
-  svg.selectAll("rect.db").data(agg).enter().append("rect")
-    .attr("x",a=>x(a.lbl)).attr("width",x.bandwidth()).attr("y",a=>y(a.c)).attr("height",a=>H-M.b-y(a.c))
-    .attr("rx",6).attr("fill","#027DC3").attr("fill-opacity",.75)
-    .append("title").text(a=>a.c+" clients · "+fmt(a.val)+" ("+Math.round(100*a.val/tot)+"% of book)");
-  svg.selectAll("text.dc").data(agg).enter().append("text")
-    .attr("x",a=>x(a.lbl)+x.bandwidth()/2).attr("y",a=>y(a.c)-8).attr("text-anchor","middle")
-    .style("font-size","12px").style("font-weight","700").attr("fill","#1C2B33")
-    .text(a=>a.c+" · "+Math.round(100*a.val/tot)+"%");
-  svg.append("text").attr("x",M.l).attr("y",16).style("font-size","11px").attr("fill","#5F7078").text("bars = client count · label % = share of total book value in that bucket");
+  const y=d3.scaleLinear().domain([0,(d3.max(agg,a=>a.c)||1)*1.18]).range([H-M.b,M.t]);
+  const DK=document.body.classList.contains("dark");
+  const REDUCE=(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)||document.documentElement.getAttribute("data-eh-motion")==="off";
+  const DUR=REDUCE?0:560, STAG=REDUCE?0:45, EASE=d3.easeCubicOut;
+  const BAR=DK?"#4FB0E8":"#027DC3", TXT=DK?"#E6EEF2":"#1C2B33", SUB=DK?"#9FB3BE":"#5F7078", AX=DK?"#9FB3BE":"#6B7C86", AXL=DK?"#5A6B76":"#C3CED5";
+  let root=svg.select("g.deal-root"); const first=root.empty();
+  if(first){
+    root=svg.append("g").attr("class","deal-root");
+    root.append("g").attr("class","deal-ax-x").attr("transform",`translate(0,${H-M.b})`);
+    root.append("g").attr("class","deal-ax-y").attr("transform",`translate(${M.l},0)`);
+    root.append("text").attr("class","deal-note").attr("x",M.l).attr("y",16).style("font-size","11px");
+  }
+  const axX=root.select(".deal-ax-x").call(d3.axisBottom(x).tickSizeOuter(0));
+  const axY=root.select(".deal-ax-y"); (DUR?axY.transition().duration(DUR).ease(EASE):axY).call(d3.axisLeft(y).ticks(5).tickSizeOuter(0));
+  [axX,axY].forEach(a=>{a.selectAll("text").style("font-size","11px").attr("fill",AX);a.selectAll("path.domain").attr("stroke",AXL);a.selectAll("line").attr("stroke",AXL);});
+  axX.selectAll("text").style("font-size","11.5px");
+  root.select(".deal-note").attr("fill",SUB).text("bars = client count · label % = share of total book value in that bucket");
+  const delay=(a,i)=>first?i*STAG:0;
+  const bars=root.selectAll("rect.db").data(agg,a=>a.lbl);
+  const bEnter=bars.enter().append("rect").attr("class","db").attr("rx",6).attr("fill-opacity",.75)
+    .attr("x",a=>x(a.lbl)).attr("width",x.bandwidth()).attr("y",H-M.b).attr("height",0);
+  bEnter.append("title");
+  const bAll=bEnter.merge(bars).attr("fill",BAR);
+  bAll.select("title").text(a=>a.c+" clients · "+fmt(a.val)+" ("+pct(a)+"% of book)");
+  bAll.transition().duration(DUR).ease(EASE).delay(delay)
+    .attr("x",a=>x(a.lbl)).attr("width",x.bandwidth()).attr("y",a=>y(a.c)).attr("height",a=>H-M.b-y(a.c));
+  const labs=root.selectAll("text.dc").data(agg,a=>a.lbl);
+  const lEnter=labs.enter().append("text").attr("class","dc").attr("text-anchor","middle").style("font-size","12px").style("font-weight","700")
+    .attr("x",a=>x(a.lbl)+x.bandwidth()/2).attr("y",H-M.b-8).attr("opacity",0).each(function(){this.__c=0;this.__p=0;});
+  lEnter.merge(labs).attr("fill",TXT)
+    .transition().duration(DUR).ease(EASE).delay(delay)
+    .attr("x",a=>x(a.lbl)+x.bandwidth()/2).attr("y",a=>y(a.c)-8).attr("opacity",1)
+    .tween("deal-label",function(a){const el=this,ic=d3.interpolateRound(el.__c||0,a.c),ip=d3.interpolateRound(el.__p||0,pct(a));return t=>{el.textContent=ic(t)+" · "+ip(t)+"%";};})
+    .on("end interrupt",function(a){this.__c=a.c;this.__p=pct(a);this.textContent=a.c+" · "+pct(a)+"%";});
 }
 const SVC_RULES=[
  ["Chemical Waste",["chemical","كيميائ","كيماو","lab waste","مخبري"]],

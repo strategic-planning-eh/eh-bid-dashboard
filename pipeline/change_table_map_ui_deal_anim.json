@@ -1,0 +1,67 @@
+{
+ "generated": "2026-09-09 11:57",
+ "title": "Change table — Stakeholder Map UI fixes (tier chips · heat map · hide button) · Deal-Size chart motion",
+ "failures": [],
+ "changes": [
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "tier-chips",
+   "note": "Filters: Tier Level chips no longer duplicate; a chip that is already selected renders as active",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function chipGroup(elId, items, set){\n  const box=document.getElementById(elId);\n  items.forEach(v=>{const ch=document.createElement('div');ch.className='chip';",
+   "new": "function chipGroup(elId, items, set){\n  const box=document.getElementById(elId); box.innerHTML='';   /* re-callable: never stacks a second set of chips */\n  items.forEach(v=>{const ch=document.createElement('div');ch.className=set.has(v)?'chip on':'chip';"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "heat-map",
+   "note": "Regional View: heat-map cells count by company type (the field the columns are), so cells are no longer all empty",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const v=VIS.filter(n=>n.rg===r&&n.cat===c.id).length;",
+   "new": "const v=VIS.filter(n=>n.rg===r&&(n.typ||'Other')===c.id).length;"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "heat-map",
+   "note": "Regional View: heat-map heading says what the columns are",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<h4>Heat map — region × stakeholder category</h4>",
+   "new": "<h4>Heat map — region × company type</h4>"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "tier-note",
+   "note": "Tier 1 banner: \"hide\" is a proper button, no underline through the text (EN)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<a href=\\'#\\' onclick=\\'this.parentNode.remove();return false\\' style=\\'float:right\\'>hide</a>",
+   "new": "<button type=\\'button\\' onclick=\\'this.parentNode.remove()\\' style=\\'float:right;background:none;border:0;padding:0 2px;margin:0;font:inherit;font-weight:600;color:inherit;opacity:.75;cursor:pointer;text-decoration:none\\' aria-label=\\'Hide this note\\'>hide</button>"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "tier-note",
+   "note": "Tier 1 banner: \"hide\" is a proper button, no underline through the text (AR)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<a href=\\'#\\' onclick=\\'this.parentNode.remove();return false\\' style=\\'float:left\\'>إخفاء</a>",
+   "new": "<button type=\\'button\\' onclick=\\'this.parentNode.remove()\\' style=\\'float:left;background:none;border:0;padding:0 2px;margin:0;font:inherit;font-weight:600;color:inherit;opacity:.75;cursor:pointer;text-decoration:none\\' aria-label=\\'إخفاء هذه الملاحظة\\'>إخفاء</button>"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "deal-motion",
+   "note": "Clients executive tab: Deal-Size Distribution bars rise on first paint, morph on year toggle, labels count old→new; dark-aware; reduced-motion respected",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function drawDeal(){\n  const svg=d3.select(\"#svgDeal\"); svg.selectAll(\"*\").remove();\n  const W=960,H=340,M={t:26,r:30,b:64,l:66};\n  const _y=dealYear;\n  const rows=DATA.filter(d=>valY(d,_y)>0&&projY(d,_y)>0)\n    .map(d=>({n:d.name,avg:valY(d,_y)/projY(d,_y),v:valY(d,_y)}));\n  const B=[[\"< 25K\",0,25e3],[\"25–100K\",25e3,1e5],[\"100–500K\",1e5,5e5],[\"0.5–2M\",5e5,2e6],[\"2–10M\",2e6,1e7],[\"> 10M\",1e7,Infin",
+   "new": "function drawDeal(){\n  /* Persistent chart: bars are keyed by bucket, so a year switch morphs each bar in place instead of redrawing cold.\n     First paint rises from the baseline with a short stagger; later calls (year toggle, theme change) only move what changed. */\n  const svg=d3.select(\"#svgDeal\");\n  const W=960,H=340,M={t:26,r:30,b:64,l:66};\n  const _y=dealYear;\n  const rows=DATA.filter(d=>va"
+  }
+ ]
+}

@@ -92,7 +92,7 @@ function rKPI(){$('kstrip').innerHTML=
  kc('SAR '+fmtM(k.open_pipeline),t('Open pipeline','المحفظة المفتوحة'),k.open_count+t(' pending',' قيد الانتظار'))+
  kc(pct(k.win_rate),t('Win rate','نسبة الفوز'),k.eh_won+'/'+k.awarded+t(' awarded',' مُرساة'),k.win_rate>=50?'g':'r')+
  kc(k.competitors,t('Competitors faced','المنافسون المواجَهون'),t('head-to-head','مواجهة مباشرة'))+
- kc(k.avg_bidders,t('Avg participants/tender','متوسط المشاركين بالمنافسة'),t('max ','الأقصى ')+k.max_bidders)+
+ kc(k.avg_bidders,t('Avg participants / tender','متوسط المشاركين بالمنافسة'),t('max ','الأقصى ')+k.max_bidders)+
  kc(Math.round(100*k.committee_accept/k.committee_total)+'%',t('Bid selectivity','انتقائية التقديم'),k.committee_accept+'/'+k.committee_total+t(' accepted',' مقبولة'))+
  kc('SAR '+fmtM(k.median_value),t('Median tender','وسيط قيمة المنافسة'),t('typical size','الحجم النموذجي'));}
 

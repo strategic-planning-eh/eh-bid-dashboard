@@ -44,10 +44,10 @@ section.on{display:block}
 .ansrow{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #EEF2F0;font-size:12.5px;color:#3A4A52}
 .kstrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:18px 0}
 .kc:has(.v.hero){grid-column:span 2;border-top-width:4px}.kc .v.hero{font-size:34px}.kc:has(.v.hero) .l{font-size:12.5px;font-weight:700}@media(max-width:700px){.kc:has(.v.hero){grid-column:span 1}.kc .v.hero{font-size:26px}}
-.kc{background:#fff;border:1px solid #E3EAE5;border-radius:12px;padding:13px 15px;box-shadow:0 1px 3px rgba(0,0,0,.03)}
+.kc{background:#fff;border:1px solid #E3EAE5;border-radius:12px;padding:13px 15px;box-shadow:0 1px 3px rgba(0,0,0,.03);overflow:hidden;min-width:0}
 .kc .v{font-size:25px;font-weight:800;color:#1A5FAB;line-height:1.05}
 .kc .v.g{color:#2E7D46}.kc .v.r{color:#C0504D}
-.kc .l{font-size:10.5px;color:#6B7C86;text-transform:uppercase;letter-spacing:.5px;margin-top:4px;font-weight:600}
+.kc .l{font-size:10.5px;color:#6B7C86;text-transform:uppercase;letter-spacing:.5px;margin-top:4px;font-weight:600;overflow-wrap:anywhere;line-height:1.3}
 .kc .d{font-size:11px;color:#8A99A3;margin-top:3px}
 .grid{display:grid;gap:16px}
 .g2{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.g3{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}

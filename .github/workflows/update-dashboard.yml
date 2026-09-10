@@ -61,6 +61,13 @@ jobs:
           cp hub/eh-shared.css hub/eh-shared.js hub/eh-ar-dashboard.js site/ 2>/dev/null || true
           cp -r hub/vendor site/vendor 2>/dev/null || true
           echo "{\"built\":\"$(TZ='Asia/Riyadh' date +'%d %b %Y, %H:%M (KSA)')\",\"built_iso\":\"$(TZ='Asia/Riyadh' date +'%Y-%m-%dT%H:%M+03:00')\"}" > site/build_info.json
+
+      - name: Sync live bid data into the Stakeholder Map (per-company counts, new competitors, Bid View)
+        run: |
+          python pipeline/sync_bids_to_apps.py --map site/EH_Stakeholder_Map_CURRENT.html \
+            --competitors pipeline/competitors_rebuilt.json --bids site/EH_Bid_Analysis_CURRENT.html
+          mv site/bid_sync_report.json pipeline/bid_sync_report.json 2>/dev/null || true
+
       - name: Detect changes, update changelog, notify
         working-directory: pipeline
         env:

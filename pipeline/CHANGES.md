@@ -12,6 +12,11 @@ RULES
  • This file is confidential like the rest of the hub.
 -->
 
+## 2026-W37
+hub | major | Data | New rule: the bid tracker (EH-WIN-02-F01) is the single source for who bids against EH. Every app now shows the same stamp — "Competitors N · tracker as of <date>" — and the map's bid flags are recomputed from the tracker on every publish. | قاعدة جديدة: جدول تتبع العطاءات (EH-WIN-02-F01) هو المصدر الوحيد لمن يتقدّم ضد EH. تعرض كل التطبيقات الآن الختم نفسه — «المنافسون N · وفق جدول العطاءات حتى <التاريخ>» — ويُعاد حساب مؤشرات العطاءات في الخريطة من الجدول عند كل نشر.
+stake | major | Data | Corrected: about 255 companies were flagged as bidders on workbook research the tracker does not confirm; they no longer count and are marked "Claimed bidder (unverified)" in the company panel. | تصحيح: كانت نحو 255 شركة مُعلَّمة كمتقدّمة ضد EH بناءً على بحث في المصنّف لا يؤكده الجدول؛ لم تعد تُحتسب وتظهر بعلامة «متقدّم مُدّعى (غير مؤكد)» في لوحة الشركة.
+stake | minor | Filters | The map now opens on every company that bid against EH (all tiers) instead of Tier 1 only; the Tier 1 view is one click away in Filters. | تفتح الخريطة الآن على كل الشركات التي تقدّمت ضد EH (كل الفئات) بدلاً من الفئة الأولى فقط؛ وعرض الفئة الأولى على بُعد نقرة في الفلاتر.
+
 ## 2026-W36
 stake | major | Bid View | Fixed: the Bid View and Saudi Map inside the Stakeholder & Competitive Map showed an old copy of the bid data (144 tenders); they now refresh from the live Bid & Tender build on every publish. | إصلاح: كان عرض المنافسات وخريطة السعودية داخل خريطة أصحاب المصلحة يعرضان نسخة قديمة من بيانات المنافسات (144 منافسة)؛ يتحدثان الآن من بناء المنافسات المباشر عند كل نشر.
 stake | minor | Regional View | Fixed: the region × company type heat map was always empty. | إصلاح: كانت خريطة الحرارة (المنطقة × نوع الشركة) فارغة دائماً.

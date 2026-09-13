@@ -20,7 +20,9 @@ header{background:#fff;border-bottom:1px solid var(--line);padding:8px 20px;disp
 .logo{height:34px;width:auto}
 .brand{font-weight:800;font-size:16px;color:var(--ink);line-height:1.15}
 .brand small{display:block;font-weight:600;font-size:10.5px;color:var(--mut);letter-spacing:.3px}
-.fresh{font-size:10.5px;color:var(--mut);background:#F0F5F2;border:1px solid #DCE8DF;border-radius:20px;padding:4px 12px;display:none}
+.fresh{font-size:11px;color:var(--mut);background:#F0F5F2;border:1px solid #DCE8DF;border-radius:20px;padding:4px 12px;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;align-self:center}
+.fresh[hidden]{display:none}
+body.dark .fresh{background:rgba(31,122,76,.18);border-color:rgba(31,122,76,.4)}
 .fresh b{color:#1F7A4C}
 .tabs{display:flex;gap:4px;margin-inline-start:auto}
 .tab{padding:9px 18px;border:1px solid transparent;border-radius:9px 9px 0 0;background:transparent;cursor:pointer;font-size:13.5px;font-weight:600;color:var(--mut);box-shadow:inset 0 -3px 0 transparent;transition:all .15s}
@@ -51,7 +53,6 @@ nav.mtabs{display:none}
   header{flex-wrap:wrap;row-gap:6px}
   .brand .desc{display:none !important}
   #q{order:9;flex:1 1 100%;min-width:0;max-width:none;width:auto !important}
-  .fresh{display:none !important}
   .tabs{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;padding:0 8px;scrollbar-width:none}
   .tabs::-webkit-scrollbar{display:none}
   .tab{flex:0 0 auto;white-space:nowrap}
@@ -424,7 +425,8 @@ function L(en,ar){return hubL==='ar'?ar:en;}
 var APPS={stake:['Stakeholder & Competitive Map','خريطة أصحاب المصلحة والمنافسة'],bids:['Bid & Tender Intelligence','تحليلات المنافسات والعطاءات'],clients:['Clients & Revenue','العملاء والإيرادات'],news:['News & Intelligence','الأخبار والمستجدات'],hub:['Hub','المنصة']};
 var APPTAB={stake:'stake',map:'stake',bids:'bids',clients:'bubbles',news:'news',hub:null};
 function appName(a){var x=APPS[a]||APPS.hub;return L(x[0],x[1]);}
-function fmtFresh(iso){var d=new Date(iso);if(isNaN(d))return String(iso||'').slice(0,16);var f=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Riyadh',day:'numeric',month:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(d),o={};f.forEach(function(x){o[x.type]=x.value;});return (+o.day)+' '+MON[+o.month-1]+' \u00b7 '+o.hour+':'+o.minute;}
+function fmtFresh(iso){var d=new Date(iso);if(isNaN(d))return String(iso||'').slice(0,16);var _r=fmtFresh0(d);return _r?_r+' KSA':_r;}
+function fmtFresh0(d){var f=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Riyadh',day:'numeric',month:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(d),o={};f.forEach(function(x){o[x.type]=x.value;});return (+o.day)+' '+MON[+o.month-1]+' \u00b7 '+o.hour+':'+o.minute;}
 function fmtD(x){var d=new Date(x+'T12:00:00');return isNaN(d)?x:d.getUTCDate()+' '+MON[d.getUTCMonth()];}
 function setFresh(iso){ if(!iso)return; FRESH_ISO=iso; var v=$('freshv'); if(v){v.textContent=fmtFresh(iso); $('fresh').hidden=false;} wnRenderFresh(); }
 function isoWeekOf(ds){var d=new Date(ds+'T12:00:00Z');var day=(d.getUTCDay()+6)%7;d.setUTCDate(d.getUTCDate()-day+3);var fy=new Date(Date.UTC(d.getUTCFullYear(),0,4));var w=1+Math.round(((d-fy)/86400000-3+((fy.getUTCDay()+6)%7))/7);var mon=new Date(ds+'T12:00:00Z');mon.setUTCDate(mon.getUTCDate()-day);var sun=new Date(mon);sun.setUTCDate(mon.getUTCDate()+6);return {week:d.getUTCFullYear()+'-W'+String(w).padStart(2,'0'),from:mon.toISOString().slice(0,10),to:sun.toISOString().slice(0,10)};}

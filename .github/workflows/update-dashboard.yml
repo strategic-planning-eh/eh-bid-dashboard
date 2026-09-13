@@ -66,18 +66,21 @@ jobs:
         run: |
           DEC=""; [ -f pipeline/twin_decisions.xlsx ] && DEC="--decisions pipeline/twin_decisions.xlsx"
           python pipeline/sync_bids_to_apps.py --map site/EH_Stakeholder_Map_CURRENT.html \
-            --competitors pipeline/competitors_rebuilt.json --bids site/EH_Bid_Analysis_CURRENT.html $DEC
-          mv site/bid_sync_report.json pipeline/bid_sync_report.json 2>/dev/null || true
+            --competitors pipeline/competitors_rebuilt.json --bids site/EH_Bid_Analysis_CURRENT.html $DEC \
+            --aliases pipeline/aliases.csv --tracker-stamp "$(TZ='Asia/Riyadh' date +'%-d %b %Y')"
+          cp site/bid_sync_report.json pipeline/bid_sync_report.json 2>/dev/null || true
           python pipeline/make_twin_sheet.py --report pipeline/bid_sync_report.json --map site/EH_Stakeholder_Map_CURRENT.html \
             --out pipeline/possible_twins_review.xlsx $( [ -f pipeline/twin_decisions.xlsx ] && echo --previous pipeline/twin_decisions.xlsx )
 
-      - name: Keep the bid-sync report and the twin review workbook (Actions → this run → Artifacts)
+      - name: Keep the bid-sync report, twin review workbook, aliases and feed (Actions → this run → Artifacts)
         uses: actions/upload-artifact@v4
         with:
           name: bid-sync-review
           path: |
             pipeline/bid_sync_report.json
             pipeline/possible_twins_review.xlsx
+            pipeline/aliases.csv
+            site/competitors_feed.json
           retention-days: 90
           overwrite: true
 

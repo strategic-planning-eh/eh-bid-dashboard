@@ -121,5 +121,31 @@
   }
   function ready(fn){ if(document.readyState==='complete')setTimeout(fn,60); else window.addEventListener('load',function(){setTimeout(fn,60);}); }
   ready(function(){ stagger(); countUp(); floorText(); wrapBids(); setTimeout(floorText,1500); });
-  window.EH_SHARED={version:'1.1.0',page:PAGE,embedded:embedded,motion:motion,floorText:floorText};
+  // ---- one stamp for every app: "Competitors: N · tracker as of D Mon YYYY" from sync_stamp.json (written by
+  //      pipeline/sync_bids_to_apps.py on each publish). Also rendered when embedded in the hub — the hub's own header
+  //      hides chips, so the app header inside the iframe is where the reader sees it.
+  function syncStamp(){
+    var host=document.querySelector('header .mast-inner')||document.querySelector('header .hd')||document.querySelector('header');
+    if(!host)return;
+    function render(j){
+      if(!j||!j.competitors)return;
+      var n=Number(j.competitors).toLocaleString('en-US'), d=j.tracker_as_of||'';
+      var st=document.createElement('style');
+      st.textContent='.eh-syncstamp{font-size:11px;color:#6B7C86;background:#F0F5F2;border:1px solid #DCE8DF;border-radius:20px;padding:4px 12px;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;align-self:center;margin-inline-start:auto;font-family:inherit}.eh-syncstamp b{color:#1F7A4C;font-weight:700}body.dark .eh-syncstamp{background:rgba(31,122,76,.18);border-color:rgba(31,122,76,.4);color:#B9C6CC}.eh-syncstamp [data-l]{display:none}.eh-syncstamp [data-l].on{display:inline}@media print{.eh-syncstamp{display:none!important}}@media(max-width:640px){.eh-syncstamp{font-size:10px;padding:3px 8px}}';
+      document.head.appendChild(st);
+      var el=document.createElement('div'); el.className='eh-syncstamp'; el.id='ehSyncStamp'; el.title='Competitor counts on every EH app come from the bid tracker (EH-WIN-02-F01) — the single source for bid data.';
+      el.innerHTML='<span data-l="en">Competitors <b>'+n+'</b> · tracker as of <b dir="ltr">'+d+'</b></span><span data-l="ar" dir="rtl">المنافسون <b>'+n+'</b> · وفق جدول العطاءات حتى <b dir="ltr">'+d+'</b></span>';
+      host.appendChild(el);
+      function pick(){ var ar=/^ar/i.test(document.documentElement.lang||'')||document.documentElement.dir==='rtl'||document.body.classList.contains('ar')||document.body.classList.contains('rtl');
+        el.querySelectorAll('[data-l]').forEach(function(s){ s.classList.toggle('on',(s.getAttribute('data-l')==='ar')===ar); }); }
+      pick();
+      try{ new MutationObserver(pick).observe(document.documentElement,{attributes:true,attributeFilter:['lang','dir']}); new MutationObserver(pick).observe(document.body,{attributes:true,attributeFilter:['class']}); }catch(e){}
+    }
+    fetch('sync_stamp.json',{cache:'no-store'}).then(function(r){ if(!r.ok)throw 0; return r.json(); }).then(render).catch(function(){
+      // local fallback: the map carries the same stamp inside its DATA block
+      try{ var s=document.getElementById('DATA'); if(s){ var D=JSON.parse(s.textContent); if(D&&D.sync)render(D.sync); } }catch(e){}
+    });
+  }
+  ready(syncStamp);
+  window.EH_SHARED={version:'1.2.0',page:PAGE,embedded:embedded,motion:motion,floorText:floorText};
 })();

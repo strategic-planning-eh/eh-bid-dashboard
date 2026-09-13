@@ -1,14 +1,51 @@
 ﻿tracker_name,map_name,method,status,added
-مكتب الدعم البيئي للاستشارات البيئية,شركة الدعم للخدمات البيئية,core-subset,auto,Sep 2026
-شركة سفر للتجارة و المقاولات,شركة أفراس للتجارة والمقاولات,fuzzy 0.91,auto,Sep 2026
-شركة الرصف والبناء السعودية للتجارةوالصناعة والمقاولات المحدودة,شركة الرصف والبناء السعودية للتجارة والصناعة والمقاولات,core-fuzzy 0.91,auto,Sep 2026
-شركة اسبك للمقاولات والاستشارات البيئية,شركة اسبك للمقاولات و الاستشارات البيئية,core-subset,auto,Sep 2026
-شركة خدمات البيئة المتحدة,شركة خدمات البيئة المتحدة لنقل النفايات,core-subset,auto,Sep 2026
-مكتب عيسى رمضان عيسى الحرتاني للاستشارات البيئية,مكتب الدكتور عيسى رمضان الحرتاني للاستشارات البيئية,core-subset,auto,Sep 2026
-شركة رمز للاستشارات المهنية,رمز للاستشارات المهنية,core,auto,Sep 2026
-شركة ريناد المجد,شركة ريناد المجد لتقنية المعلومات,core-subset,auto,Sep 2026
-شركة كيو إنترناشيونال كونسلتنتس للاستشارات الهندسية شركة شخص واحد,شركة كيو إنترناشيونال كونسلتنتس,core-subset,auto,Sep 2026
-شركة دلتا الحلول للخدمات البيئية,دلتا الحلول للخدمات البيئية,core,auto,Sep 2026
-شركة لانا الطبية شركة مساهمة سعودية,شركة لانا الطبية,core-subset,auto,Sep 2026
-شركة أيبلس العربية,شركة ايبلس العربية للاعمال الجيوتقنية و البيئية المحدودة شخص واحد,core-subset,auto,Sep 2026
-شركة رائدات الاستدامة للاستشارات البيئية,شركة الإستدامة البيئية للخدمات البيئية,core-subset,auto,Sep 2026
+شركة الرصف والبناء السعودية للتجارةوالصناعة والمقاولات المحدودة,شركة الرصف والبناء السعودية للتجارة والصناعة والمقاولات,core-fuzzy 0.91,approved,Sep 2026
+شركة اسبك للمقاولات والاستشارات البيئية,شركة اسبك للمقاولات و الاستشارات البيئية,core-subset,approved,Sep 2026
+شركة خدمات البيئة المتحدة,شركة خدمات البيئة المتحدة لنقل النفايات,core-subset,approved,Sep 2026
+مكتب عيسى رمضان عيسى الحرتاني للاستشارات البيئية,مكتب الدكتور عيسى رمضان الحرتاني للاستشارات البيئية,core-subset,approved,Sep 2026
+شركة رمز للاستشارات المهنية,رمز للاستشارات المهنية,core,approved,Sep 2026
+شركة ريناد المجد,شركة ريناد المجد لتقنية المعلومات,core-subset,approved,Sep 2026
+شركة كيو إنترناشيونال كونسلتنتس للاستشارات الهندسية شركة شخص واحد,شركة كيو إنترناشيونال كونسلتنتس,core-subset,approved,Sep 2026
+شركة دلتا الحلول للخدمات البيئية,دلتا الحلول للخدمات البيئية,core,approved,Sep 2026
+شركة لانا الطبية شركة مساهمة سعودية,شركة لانا الطبية,core-subset,approved,Sep 2026
+شركة أيبلس العربية,شركة ايبلس العربية للاعمال الجيوتقنية و البيئية المحدودة شخص واحد,core-subset,approved,Sep 2026
+Environmental Testing & Laboratories Co.,ENVIRONMENTAL TESTING AND LABORATORIES C,reviewer merge,reviewer,Sep 2026
+Green East Environmental Contracting Est.,GREEN EAST ENVIRONMENT CONTRACTING,reviewer merge,reviewer,Sep 2026
+Green Impact Environmental Consulting Office,Green Impact of Environment,reviewer merge,reviewer,Sep 2026
+Advanced Triad Turbines Services (ATTS),Advanced Triad Turbine Services (ATTS),reviewer merge,reviewer,Sep 2026
+The Metals and Recycling Company (MRC),Metal Recycling Company for Environmental Services,reviewer merge,reviewer,Sep 2026
+Al Kayan Al Amthal Environmental Services,Kayan Al Amthal,reviewer merge,reviewer,Sep 2026
+Basmat Habwah Environmental Consulting Establishment,Basma Habwa Environmental Services,reviewer merge,reviewer,Sep 2026
+DB Metal Arabia Recycling Co. (Single Owner),Metal Recycling Company for Environmental Services,reviewer merge,reviewer,Sep 2026
+Dr. Ali Saleh Al-Duhaiman Environmental Consulting Co. (ADECO),شركة د علي صالح الدهيمان للاستشارات البيئية,reviewer merge,reviewer,Sep 2026
+Majd Al-Khuzama Environmental Consulting Office,مكتب مجد الخزامى للاستشارات البيئية,reviewer merge,reviewer,Sep 2026
+Sharyan Al-Shamal Global General Contracting Co.,شركة شريان الشمال العالمية,reviewer merge,reviewer,Sep 2026
+Master Works,شركة ماستر وركس,reviewer merge,reviewer,Sep 2026
+Fursan Istedemah Environmental Consultation Office (FIECO),مكتب فرسان الاستدامة للاستشارات البيئية,reviewer merge,reviewer,Sep 2026
+Mohammed Saeed Abdullah Al-Aklabi Environmental Consulting Office,مكتب محمد سعيد عبدالله الاكلبي للاستشارات البيئية,reviewer merge,reviewer,Sep 2026
+Friends of the Environment Environmental Consulting Office (Asdeqah El Beeah),Environmental Friend Environmental Consulting Office,reviewer merge,reviewer,Sep 2026
+Fouad Fahad alsaleh and khaled hamd Co.,Fouad Fahad Al-Saleh & Khalid Al-Duwailah Environmental & Engineering Consulting (FKEC) (Engineering Principles),reviewer merge,reviewer,Sep 2026
+Geotechnical & Environmental Co. Ltd (GECO),Geotechnical & Environmental Company Ltd,reviewer merge,reviewer,Sep 2026
+QAMAAT Engineering Consultancy,Qamaat Engineering Consulting Office,reviewer merge,reviewer,Sep 2026
+Sustainable Solutions Environmental Services Co.,Sustainable Environment Co. (SECO),reviewer merge,reviewer,Sep 2026
+Al-Andalus Engineering Consulting Co.,شركة الاندلس للاستشارات الهندسية,reviewer merge,reviewer,Sep 2026
+Al-Masader International Co. for Environment & Quality Systems,شركة مصادر الجودة البيئية,reviewer merge,reviewer,Sep 2026
+Al Adaa El Motawazen Contracting Co,شركة الاداء المتوازن للمقاولات,reviewer merge,reviewer,Sep 2026
+Bureau Veritas Office Co.,شركة مكتب فيريتاس,reviewer merge,reviewer,Sep 2026
+Ecoryx Co. Ltd,شركة ايكوركس المحدودة,reviewer merge,reviewer,Sep 2026
+Forsan Al-Istidadama Environmental Consulting Office,مكتب فرسان الاستدامة للاستشارات البيئية,reviewer merge,reviewer,Sep 2026
+Dr Eisa Alhartany Environmental Consultancy,مكتب الدكتور عيسى رمضان الحرتاني للاستشارات البيئية,reviewer merge,reviewer,Sep 2026
+Jadarah Business Consulting Company,شركة جدارة الأعمال للاستشارات الادارية,reviewer merge,reviewer,Sep 2026
+Emtithaal Environmental Consulting Co.,شركة إمتثال للاستشارات البيئية,reviewer merge,reviewer,Sep 2026
+Naqaa Environmental (GETES KSA),Naqaa Environmental Consulting Office,reviewer merge,reviewer,Sep 2026
+Environmental Integration,Environmental Integration Consulting Office,core,approved,Sep 2026
+Quality techno certification,Quality Tech Certification Co. (One-Person Co.),core-fuzzy 0.96,approved,Sep 2026
+مؤسسة مكتب الكاف للاستشارات البيئية,مكتب الكاف للاستشارات البيئية,core-subset,approved,Sep 2026
+Environmental consultnt,Environmental Consultant Office,fuzzy 0.98,approved,Sep 2026
+Ali K. Alharbi Environmental Consulting,Ali Khudair Al-Harbi Environmental Consulting Co. (AH ENVIRO),core-subset+ratio 0.82,approved,Sep 2026
+ADVANCED TRIAD TURBINES SERVICES,Advanced Triad Turbine Services (ATTS),core-subset+ratio 0.91,approved,Sep 2026
+alkayan alamthel,Kayan Al Amthal,core-fuzzy 0.94,approved,Sep 2026
+شركة البيئة المستدامة,شركة البيئة المستدامة للصناعة,core-subset,approved,Sep 2026
+ESCO for Environmental Consultation,ESCO Environmental Consulting Co. (One-Person Co.),core,approved,Sep 2026
+شركة ركائز المعمار للاستشارات المهنية مهنية شخص واحد,Rakaez Al-Ma’mar Professional Consulting Co. (One-Person Professional Co.),twin,approved,Sep 2026
+شركة طاقات الانجاز للاستشارات البيئية,Taqat El Injaz Environmental Consulting,twin,approved,Sep 2026

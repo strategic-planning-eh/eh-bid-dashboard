@@ -125,6 +125,7 @@
   //      pipeline/sync_bids_to_apps.py on each publish). Also rendered when embedded in the hub — the hub's own header
   //      hides chips, so the app header inside the iframe is where the reader sees it.
   function syncStamp(){
+    if(PAGE!=='stake'&&PAGE!=='bids'&&PAGE!=='bub'&&PAGE!=='news')return;   // competitor stamp belongs to the four intelligence apps only, not the Vision 2030 / fiscal / PIF pages
     var host=document.querySelector('header .mast-inner')||document.querySelector('header .hd')||document.querySelector('header');
     if(!host)return;
     function render(j){

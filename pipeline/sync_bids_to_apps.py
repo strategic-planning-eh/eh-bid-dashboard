@@ -20,8 +20,15 @@ What this does, in order (all idempotent, all on the published copy in site/):
   c. The Bid View / Saudi Map block (BANALYTICS) is refreshed from the live Bid & Tender build via refresh_map_banalytics.py
      (skipped with a warning if the bid app file is not present, e.g. when run locally).
 
-Workbook bid flags on companies that do NOT appear in the live rosters are left untouched and counted in the report —
-they may come from tenders outside the tracker's scope; whether to clear them is an open decision.
+  d. TRACKER IS LAW (decided 13 Sep 2026): bid / bc / bf / h2h on every map company are COMPUTED from the live rosters on each
+     run. A company the rosters do not name gets bid=False, bc=0. If the workbook had flagged it as a bidder, the flag is kept
+     as `claimed=True` (+ a "Claimed bidder (unverified) …" note) so the research is visible but never counted. Confirmations
+     from earlier runs do not persist: a company matched last month but absent from today's rosters is reset the same way.
+  e. Name bridging lives in pipeline/aliases.csv (tracker_name, map_name, method, status). Rows with status approved/reviewer/
+     auto are applied before any fuzzy matching. Every match this run finds by a non-exact method is appended as status=auto
+     for a one-time look; reviewer merges from twin_decisions.xlsx are written there too, so the CSV is the durable store.
+  f. One feed for every app: competitors_feed.json + sync_stamp.json next to the map. The stamp ("Competitors: N · tracker as
+     of D Mon YYYY") is what the map, the Bid & Tender app, the clients app and the news hub must all print.
 
 Usage (CI):  python pipeline/sync_bids_to_apps.py --map site/EH_Stakeholder_Map_CURRENT.html \
                  --competitors pipeline/competitors_rebuilt.json --bids site/EH_Bid_Analysis_CURRENT.html
@@ -76,6 +83,8 @@ def main():
     ap.add_argument('--map', required=True); ap.add_argument('--competitors', required=True); ap.add_argument('--bids')
     ap.add_argument('--decisions', help='twin review workbook (possible_twins.xlsx) with the Decision column filled in; merges become aliases, "Keep separate" pairs are dropped from future twin lists')
     ap.add_argument('--min-encounters', type=int, default=1, help='ignore roster competitors below this many encounters when ADDING new nodes')
+    ap.add_argument('--aliases', default=os.path.join(HERE, 'aliases.csv'), help='tracker_name → map_name bridging table (created if missing)')
+    ap.add_argument('--tracker-stamp', default=None, help='date the tracker export was taken, e.g. "13 Sep 2026" (defaults to today, KSA)')
     a = ap.parse_args()
 
     mh = open(a.map, encoding='utf-8').read()
@@ -92,6 +101,23 @@ def main():
             for part in re.split(r'\s*[;,/]\s*|\s+\|\s+', al):
                 k = norm(part)
                 if k: idx.setdefault(k, n)
+    # ---- aliases.csv: approved bridges (AR roster spelling → EN workbook name, etc.) take priority over every fuzzy rule
+    import csv
+    alias_rows, alias_keys = [], set()
+    if os.path.exists(a.aliases):
+        with open(a.aliases, encoding='utf-8-sig', newline='') as f: alias_rows = list(csv.DictReader(f))
+    for r in alias_rows:
+        if str(r.get('status', '')).strip().lower() not in ('approved', 'reviewer', 'auto'): continue
+        tgt = idx.get(norm(r['map_name']))
+        k = norm(r['tracker_name'])
+        if tgt is not None and k: idx[k] = tgt; alias_keys.add(k)
+    known_alias_pairs = {(norm(r['tracker_name']), norm(r['map_name'])) for r in alias_rows}
+    new_alias_rows = []
+    def remember_alias(tracker_name, map_name, method, status):
+        pair = (norm(tracker_name), norm(map_name))
+        if pair in known_alias_pairs or pair[0] == pair[1]: return
+        known_alias_pairs.add(pair)
+        new_alias_rows.append({'tracker_name': tracker_name.strip(), 'map_name': map_name.strip(), 'method': method, 'status': status, 'added': stamp})
     # ---- reviewer decisions from the twin sheet: "Merge → keep A/B" makes the other name an alias; "Keep separate" is remembered
     decided_pairs, merges, auto_sides = set(), 0, []
     if a.decisions and os.path.exists(a.decisions):
@@ -130,7 +156,7 @@ def main():
                 lose = B if keep == A else A
                 tgt = idx.get(norm(keep))
                 if tgt is not None:
-                    idx[norm(lose)] = tgt; merges += 1
+                    idx[norm(lose)] = tgt; merges += 1; remember_alias(lose, tgt['n'], 'reviewer merge', 'reviewer')
                     al = tgt.get('notes') or ''
                     if f'Alias (merged duplicate): {lose}' not in al: tgt['notes'] = (al + ' ' if al else '') + f'Alias (merged duplicate): {lose}'
                     loser = next((n for n in nodes if norm(n['n']) == norm(lose) and n is not tgt), None)
@@ -203,6 +229,8 @@ def main():
     touched = set()
     for c in comps:
         n, how = find(c['name'])
+        if n is not None and how == 'exact' and norm(c['name']) in alias_keys: how = 'alias'
+        if n is not None and how not in ('exact', 'alias'): remember_alias(c['name'], n['n'], how, 'auto')
         if n is None:
             if c['encounters'] >= a.min_encounters: added.append(c)
             else: unmatched_low.append(c['name'])
@@ -244,7 +272,7 @@ def main():
             notes = SENT_RE.sub(sent, notes, count=1) if SENT_RE.search(notes) else (notes + (' ' if notes else '') + sent)
             if f'Alias (merged duplicate): {c["name"]}' not in notes: notes += f' Alias (merged duplicate): {c["name"]}'
             n['notes'] = notes; n['bid_synced'] = stamp
-            matched.append((c['name'], n['n'], 'twin ' + best[0][1][:60])); twin_matched.append(c['name'])
+            matched.append((c['name'], n['n'], 'twin ' + best[0][1][:60])); twin_matched.append(c['name']); remember_alias(c['name'], n['n'], 'twin', 'auto')
             if before != (True, c['encounters'], bf_of(c['encounters'])): changed.append((n['n'], before[1], c['encounters']))
         else: still_add.append(c)
     added = still_add
@@ -258,15 +286,44 @@ def main():
                                f"region and company type unverified. " + roster_sentence(c, stamp),
                       'bid_synced': stamp, 'auto_added': stamp})
 
-    cleared = 0
-    for n in nodes:   # reviewer said "Clear flag": the workbook flag goes, unless the live rosters confirmed the company this run
-        if norm(n['n']) in clear_flags and id(n) not in touched and n.get('bid'):
-            n['bid'] = False; n['bc'] = 0; n['bf'] = ''; n.pop('h2h', None); n['bid_cleared'] = stamp; cleared += 1
-    workbook_only = [n['n'] for n in nodes if n.get('bid') and id(n) not in touched and not n.get('auto_added')]
+    # ---- d. tracker is law: anything the rosters did not confirm THIS run stops counting as a bidder
+    claimed, stale_cleared, cleared = [], [], 0
+    added_ids = {id(n) for n in nodes if n.get('auto_added') == stamp}
+    CLAIM_RE = re.compile(r'\s*Claimed bidder \(unverified\)[^.]*\.')
+    for n in nodes:
+        if id(n) in touched or id(n) in added_ids: n.pop('claimed', None); n['bid_src'] = 'tracker'; n['notes'] = CLAIM_RE.sub('', n.get('notes') or ''); continue
+        if n.get('merged_into'): continue
+        if n.get('bid'):
+            was_tracker = bool(n.get('bid_synced')) or bool(n.get('auto_added'))
+            (stale_cleared if was_tracker else claimed).append(n['n'])
+            n['claimed'] = not was_tracker and norm(n['n']) not in clear_flags
+            n['bid'] = False; n['bc'] = 0; n['bf'] = ''; n.pop('h2h', None); n.pop('bid_synced', None); n['bid_cleared'] = stamp
+            n['bid_src'] = 'claimed' if n['claimed'] else ''
+            if n['claimed'] and not CLAIM_RE.search(n.get('notes') or ''):
+                n['notes'] = ((n.get('notes') or '') + f' Claimed bidder (unverified): flagged in the stakeholder workbook, no record in the EH bid tracker as of {stamp}.').strip()
+            if not n['claimed']: n.pop('claimed', None); cleared += norm(n['n']) in clear_flags
+        elif n.get('claimed'): n['bid_src'] = 'claimed'
+    workbook_only = claimed   # kept for the report's key names
     # ---- possible twins among workbook-only flags and freshly added nodes, minus pairs the reviewer already decided
     focus = [id(n) for n in nodes if (n.get('bid') and id(n) not in touched) or n.get('auto_added')]
     twin_list = [p for p in twins.find_twins(nodes, focus) if frozenset((norm(p['a']['n']), norm(p['b']['n']))) not in decided_pairs]
 
+    if new_alias_rows or not os.path.exists(a.aliases):
+        fields = ['tracker_name', 'map_name', 'method', 'status', 'added']
+        with open(a.aliases, 'w', encoding='utf-8-sig', newline='') as f:
+            w = csv.DictWriter(f, fieldnames=fields); w.writeheader()
+            for r in alias_rows + new_alias_rows: w.writerow({k: r.get(k, '') for k in fields})
+    # ---- f. one feed for every app
+    tracker_stamp = a.tracker_stamp or dt.datetime.now(dt.timezone(dt.timedelta(hours=3))).strftime('%-d %b %Y')
+    bidders = [n for n in nodes if n.get('bid') and not n.get('merged_into')]
+    feed = {'tracker_as_of': tracker_stamp, 'synced': dt.datetime.now(dt.timezone(dt.timedelta(hours=3))).isoformat(timespec='minutes'),
+            'roster_competitors': len(comps), 'map_bidders': len(bidders), 'recurring': sum(1 for n in bidders if (n.get('bc') or 0) >= 2),
+            'claimed_unverified': len(claimed), 'stamp': f"Competitors: {len(comps)} · tracker as of {tracker_stamp}",
+            'competitors': sorted(({'name': n['n'], 'cat': n.get('cat'), 'tier': n.get('tier'), 'bc': n.get('bc'), 'bf': n.get('bf'), 'h2h': n.get('h2h')} for n in bidders), key=lambda x: (-(x['bc'] or 0), x['name']))}
+    _dir = os.path.dirname(os.path.abspath(a.map))
+    json.dump(feed, open(os.path.join(_dir, 'competitors_feed.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    json.dump({'stamp': feed['stamp'], 'tracker_as_of': tracker_stamp, 'competitors': len(comps), 'synced': feed['synced']}, open(os.path.join(_dir, 'sync_stamp.json'), 'w', encoding='utf-8'), ensure_ascii=False)
+    D['sync'] = {'stamp': feed['stamp'], 'tracker_as_of': tracker_stamp, 'competitors': len(comps)}
     payload = json.dumps(D, ensure_ascii=False).replace('</', '<\\/')
     mh = mh[:mdata.start(2)] + payload + mh[mdata.end(2):]
     open(a.map, 'w', encoding='utf-8').write(mh)
@@ -280,15 +337,17 @@ def main():
 
     report = {'synced': dt.datetime.now(dt.timezone(dt.timedelta(hours=3))).isoformat(timespec='minutes'),
               'roster_competitors': len(comps), 'matched': len(matched), 'counts_changed': len(changed), 'added': [c['name'] for c in added],
-              'workbook_only_bid_flags': len(workbook_only), 'workbook_only_names': workbook_only, 'reviewer_merges_applied': merges, 'merge_side_chosen_automatically': auto_sides, 'reviewer_flags_cleared': cleared, 'twin_matched_instead_of_added': twin_matched, 'banalytics': ban,
+              'claimed_unverified': len(claimed), 'claimed_names': claimed, 'stale_tracker_confirmations_reset': stale_cleared,
+              'aliases_added': new_alias_rows, 'stamp': feed['stamp'], 'reviewer_merges_applied': merges, 'merge_side_chosen_automatically': auto_sides, 'reviewer_flags_cleared': cleared, 'twin_matched_instead_of_added': twin_matched, 'banalytics': ban,
               'possible_twins': [{'a': p['a']['n'], 'b': p['b']['n'], 'score': round(p['score'], 2), 'reason': p['reason']} for p in twin_list],
               'matches': [{'roster': r, 'map': m, 'how': h} for r, m, h in matched], 'changes': [{'map': m, 'from': f, 'to': t} for m, f, t in changed]}
     json.dump(report, open(os.path.join(os.path.dirname(os.path.abspath(a.map)), 'bid_sync_report.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print(f"bid sync: {len(comps)} roster competitors → {len(matched)} matched to map companies ({len(changed)} counts changed), "
           f"{len(added)} added to the map ({len(twin_matched)} recognised as twins of existing companies instead), "
-          f"{len(workbook_only)} workbook-only bid flags left as they were; {len(twin_list)} possible twin pairs listed for review"
+          f"{len(claimed)} workbook flags kept as claimed-unverified (not counted), {len(stale_cleared)} stale confirmations reset, "
+          f"{len(new_alias_rows)} aliases recorded; {len(twin_list)} possible twin pairs listed for review"
           + (f"; {merges} reviewer merges applied" if merges else '') + (f"; {cleared} flags cleared by reviewer" if cleared else '') + '.')
-    print('BANALYTICS:', ban)
+    print('BANALYTICS:', ban); print('STAMP:', feed['stamp'])
     if ban.startswith('FAILED'): sys.exit(2)
 
 if __name__ == '__main__':

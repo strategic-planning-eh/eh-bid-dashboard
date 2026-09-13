@@ -82,7 +82,6 @@ jobs:
           overwrite: true
 
       - name: Detect changes, update changelog, notify
-      - name: Detect changes, update changelog, notify
         working-directory: pipeline
         env:
           SITE_URL: https://strategic-planning-eh.github.io/eh-bid-dashboard

@@ -77,7 +77,9 @@ if(navigator.maxTouchPoints>0)c.add('touch');})();
   .pline .yr{flex:none;font-size:10.5px;font-weight:600;color:#fff;border-radius:5px;padding:2px 6px}
   .pline .yr.y25{background:#8A9BA8}
   .pline .yr.y26{background:var(--eh-blue)}
-  .pline .sv{flex:1;line-height:1.5}
+  .pline .sv{flex:1;min-width:0;line-height:1.5;overflow-wrap:anywhere}
+.sv .nm{display:block;unicode-bidi:isolate}
+.sv small.meta{display:block;direction:ltr;unicode-bidi:isolate;text-align:start;margin-top:2px}
   .pline .sv small{color:var(--muted)}
   .pline .amt{flex:none;font-weight:600;white-space:nowrap}
   .pline .amt.na{color:var(--muted);font-weight:400}
@@ -454,8 +456,8 @@ function showListPanel(title, sub, color, totHtml, items){
   document.getElementById("ptot").innerHTML = totHtml;
   document.getElementById("plines").innerHTML = items.map(e => `
     <div class="pline">
-      <span class="sv" dir="auto">${esc(e.name)}${e.meta?` <small>${e.meta}</small>`:""}</span>
-      <span class="amt">${e.amt}</span>
+      <span class="sv"><span class="nm" dir="auto">${esc(e.name)}</span>${e.meta?`<small class="meta" dir="ltr">${e.meta}</small>`:""}</span>
+      <span class="amt" dir="ltr">${e.amt}</span>
     </div>`).join("");
   document.getElementById("panel").classList.add("open");
 }
@@ -1143,6 +1145,11 @@ html.iosframe #panel.open{display:flex}
 .zctl button{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.94);color:#1F2A37;font:700 20px/1 Arial,sans-serif;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12);touch-action:manipulation}
 .zctl button:active{transform:scale(.96)}
 body.dark .zctl button{background:rgba(24,33,38,.94);color:#E6EDF1;border-color:#3A4B55}
+body.dark #panel{background:#151C21;border-color:#2C3A43;color:#E6EDF1;box-shadow:-8px 0 24px rgba(0,0,0,.45)}
+body.dark .ph{border-color:#2C3A43} body.dark #pco{color:#E6EDF1}
+body.dark .pline{border-color:#2C3A43;color:#E6EDF1} body.dark .pline:hover{background:#1E2830}
+body.dark .sv .nm{color:#E6EDF1} body.dark .sv small,body.dark #psec,body.dark .amt.na{color:#9FB3BE}
+body.dark .amt{color:#E6EDF1}
 html.iosframe .zctl,.zctl{position:absolute}      /* absolute inside #chart, not fixed — safe inside iOS iframes */
 
 @media (orientation:landscape) and (max-height:520px){

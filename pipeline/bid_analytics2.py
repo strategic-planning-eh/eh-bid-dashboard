@@ -27,7 +27,26 @@ def compute(bids, rfull, comp):
      avg_value=round(st.mean(val(bids))) if val(bids) else 0,
      median_value=round(st.median(val(bids))) if val(bids) else 0,
      total_guarantee=round(sum(b['bankval'] for b in bids if b['bankval'])),
+     # ---- Executive Summary fields (Sep 2026) ----
+     guarantee_n=sum(1 for b in bids if b['bankval']),
+     value_won=round(sum(b['value'] for b in awarded if b['eh_won'] and b['value'])),
+     value_lost=round(sum(b['value'] for b in awarded if not b['eh_won'] and b['value'])),
+     accepted_not_submitted=sum(1 for b in bids if 'accept' in (b['committee'] or '').lower() and not b['offer']),
+     lost_no_winner=sum(1 for b in awarded if not b['eh_won'] and not b['winner']),
+     lost_no_reason=sum(1 for b in awarded if not b['eh_won'] and not (b.get('reason') or '').strip()),
+     unclassified=sum(1 for b in bids if not b['svcdept']),
     )
+    # open-pipeline ageing, measured from the tender launch date to the build date (KSA)
+    import datetime as _dt
+    _today=(_dt.datetime.utcnow()+_dt.timedelta(hours=3)).date()
+    def _age(b):
+        try: return (_today-_dt.date.fromisoformat(str(b['launch'])[:10])).days
+        except Exception: return None
+    _open=[b for b in bids if not b.get('decided') and (b.get('status') or '')!='Cancelled']
+    kpi['open_stale90']=sum(1 for b in _open if (_age(b) or 0)>90)
+    kpi['open_stale90_value']=round(sum(b['value'] or 0 for b in _open if (_age(b) or 0)>90))
+    kpi['open_stale180']=sum(1 for b in _open if (_age(b) or 0)>180)
+    kpi['as_of']=_today.isoformat()
 
     # ---------- TIMELINE (monthly) ----------
     months=sorted(set(b['month'] for b in bids if b['month']))
@@ -136,6 +155,15 @@ def compute(bids, rfull, comp):
     # rfull is passed in per scope (see driver at the bottom)
     winner_canon=json.load(open('winner_canon.json'))
     competitors_rebuilt=comp
+    # value each competitor took off EH: join winner_canon (tender key → canon of the winning bidder) to tender values
+    _bykey={f"{b['year']}-{b['sn']}":b for b in bids}
+    _won_by_canon={}
+    for _k,_wc in winner_canon.items():
+        if _wc=='__EH__' or _k not in _bykey: continue
+        _won_by_canon.setdefault(_wc,[]).append(_bykey[_k]['value'])
+    for c in competitors_rebuilt:
+        _vals=[v for cn in c.get('canons',[]) for v in _won_by_canon.get(cn,[])]
+        c['won_value']=round(sum(v for v in _vals if v)); c['won_value_n']=sum(1 for v in _vals if v)
     from parse_rosters import canon as _canon, is_eh as _is_eh_name
     import unicodedata as _u
     def _na(x):
@@ -346,7 +374,8 @@ def compute(bids, rfull, comp):
             svc=SVCN2.get(b['svcdept'],''), dur=int(b['dur']) if b['dur'] else None,
             winner=win, outcome=outcome(b), status=(b['status'] or ''),
             committee=b['committee'], reason=b['comments'], lossreason=(b.get('reason') or None),
-            window=_days(b['launch'],b['submit']) if (b['launch'] and b['submit']) else None))
+            window=_days(b['launch'],b['submit']) if (b['launch'] and b['submit']) else None,
+            age_days=_age(b), past_deadline=_days(b['submit'],_today.isoformat()) if (b['submit'] and not b.get('decided') and (b.get('status') or '')!='Cancelled') else None))
 
     out['turnaround']=turnaround
     out['bidlist']=bidlist

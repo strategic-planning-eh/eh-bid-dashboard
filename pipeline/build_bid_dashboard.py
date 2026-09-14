@@ -56,6 +56,18 @@ section.on{display:block}
 .card h3{font-size:14px;font-weight:800;color:#1C2B33;margin-bottom:3px}
 .card .note{font-size:11.5px;color:#8A99A3;margin-bottom:12px;line-height:1.45}
 .sech{font-size:18px;font-weight:800;color:#0F3D2E;margin:6px 0 4px;display:flex;align-items:center;gap:9px}
+/* ---- Executive Summary tab ---- */
+.exc h3{margin:0}.exh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
+.png{font:600 11px Segoe UI,Tahoma,Arial,sans-serif;background:#F4F8F5;border:1px solid #DCE8DF;color:#1F7A4C;border-radius:7px;padding:5px 10px;cursor:pointer;white-space:nowrap}.png:hover{background:#E6F2EA}
+.exd{display:inline-block;font-size:11px;font-weight:700;margin-inline-start:6px;color:#6B7C86}.exd.up{color:#2E7D46}.exd.down{color:#C0504D}
+.excov{font-size:12.5px;font-weight:600;color:#3A4A52;background:#F4F8F5;border:1px solid #E3EAE5;border-inline-start:4px solid #1A5FAB;border-radius:8px;padding:9px 12px;margin:6px 0 12px}
+.exfoot{font-size:12px;color:#5F7078;margin-top:8px;line-height:1.5}.exfoot a,.excov a,.exdec a{color:#1A5FAB;cursor:pointer;text-decoration:none}.exfoot a:hover,.excov a:hover,.exdec a:hover{text-decoration:underline}
+.exT{font:800 14px Segoe UI,Tahoma,Arial,sans-serif;fill:#0F3D2E}.exS{font:600 10.5px Segoe UI,Tahoma,Arial,sans-serif;fill:#6B7C86}.exq{font:700 10.5px Segoe UI,Tahoma,Arial,sans-serif;fill:#8A99A3}
+.exg3{grid-template-columns:minmax(0,3fr) minmax(0,2fr)}@media(max-width:900px){.exg3{grid-template-columns:1fr}}
+table.ext th{position:static}table.ext td{padding:6px 8px;font-size:12px}
+ol.exdec{margin:6px 0 0;padding-inline-start:22px;font-size:13px;line-height:1.7}ol.exdec li b{font-size:15px;margin-inline-end:4px}
+.exw{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #EFF4F2;font-size:12.5px;line-height:1.5}.exw:last-of-type{border-bottom:0}
+.exk .kc .l{font-weight:700;color:#3A4A52}.exk .kc .d{font-size:11.5px;line-height:1.5}
 .sech:before{content:'';width:5px;height:20px;background:#3FA34D;border-radius:3px}
 .secsub{font-size:12.5px;color:#6B7C86;margin-bottom:16px}
 .ch{width:100%;height:auto;display:block;overflow:visible;direction:ltr}
@@ -124,6 +136,7 @@ body.dark{{background:#0F1519;color:#E6EDF1}}
 body.dark .card,body.dark .kcard,body.dark .kc,body.dark .ansbox,body.dark .wli{{background:#151C21;border-color:#2C3A43;color:#E6EDF1}}
 body.dark .kc *,body.dark .card h3{{color:#E6EDF1}}
 body.dark .kc div{{color:inherit}}
+body.dark .png{{background:#1E2830;border-color:#3A4B55;color:#CFE3F2}}body.dark .excov{{background:#1A242B;border-color:#2C3A43;color:#E6EDF1}}body.dark .exT{{fill:#E6EDF1}}body.dark .exS,body.dark .exq{{fill:#9FB3BE}}body.dark .exfoot,body.dark .exw,body.dark ol.exdec{{color:#C9D4DB}}body.dark .exw{{border-color:#2C3A43}}body.dark .exk .kc .l{{color:#C9D4DB}}
 body.dark [style*="background:#fff"],body.dark [style*="background:#FFF"]{{background:#151C21 !important;color:#E6EDF1 !important;border-color:#2C3A43 !important}}
 body.dark nav{{background:#121A1F;border-color:#2C3A43}}
 body.dark .metric{{background:#1A242B !important;border-color:#2C3A43 !important}}
@@ -246,6 +259,7 @@ html.iosframe #ehcbtn,html.iosframe #ehcp{{display:none !important}}            
 <section id="s-service"></section>
 <section id="s-funnel"></section>
 <section id="s-tenders"></section>
+<section id="s-executive"></section>
 <section id="s-watchlist"></section>
 <section id="s-limitations"></section>
 <div class="foot" id="h-foot">Generated for Environmental Horizons · figures reflect the bid-tracking workbooks and are partial where the live trackers are still being filled · self-contained dashboard.</div>

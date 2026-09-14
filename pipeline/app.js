@@ -18,7 +18,7 @@ const DDUR={'≤3 mo':'≤3 أشهر','4–6 mo':'4–6 أشهر','7–12 mo':'7
 const dv=(m,v)=>L==='ar'?(m[v]||v):v;
 
 // ---------- NAV ----------
-const TABS=[['overview','Overview','نظرة عامة'],['pipeline','Pipeline & Timeline','المنافسات والجدول الزمني'],['winloss','Win / Loss','الفوز / الخسارة'],['pricing','Pricing Intelligence','تحليل الأسعار'],['competitors','Competitors','المنافسون'],['clients','Clients','العملاء'],['service','Service & Platform','الخدمات والمنصات'],['funnel','Bid Turnaround','مدة اتخاذ القرار'],['tenders','All Tenders','جميع المنافسات'],['watchlist','Watchlist','قائمة المتابعة'],['limitations','Notes & Limits','ملاحظات وحدود']];
+const TABS=[['overview','Overview','نظرة عامة'],['pipeline','Pipeline & Timeline','المنافسات والجدول الزمني'],['winloss','Win / Loss','الفوز / الخسارة'],['pricing','Pricing Intelligence','تحليل الأسعار'],['competitors','Competitors','المنافسون'],['clients','Clients','العملاء'],['service','Service & Platform','الخدمات والمنصات'],['funnel','Bid Turnaround','مدة اتخاذ القرار'],['tenders','All Tenders','جميع المنافسات'],['executive','Executive Summary','الملخّص التنفيذي'],['watchlist','Watchlist','قائمة المتابعة'],['limitations','Notes & Limits','ملاحظات وحدود']];
 
 // ---- "new since your last visit" engine (per-browser, localStorage) ----
 const NTF={nw:new Set(),dec:new Set(),upd:new Set(),px:new Set(),seen:new Set(),when:null};
@@ -388,7 +388,173 @@ function rChrome(){var el;
  if(el=$('h-pill'))el.innerHTML=t(k.total+' tenders tracked<br>SAR '+Math.round(k.pipeline/1e6)+'M tracked · '+Math.round(k.open_pipeline/1e6)+'M open',k.total+' منافسة متتبَّعة<br>'+Math.round(k.pipeline/1e6)+'م متتبَّعة · '+Math.round(k.open_pipeline/1e6)+'م مفتوحة');
  if(el=$('sc-both'))el.textContent=t('Both','الكل');
  if(el=$('h-foot'))el.textContent=t('Generated for Environmental Horizons · figures reflect the bid-tracking workbooks and are partial where the live trackers are still being filled · self-contained dashboard.','أُعدّت لصالح آفاق البيئة · تعكس الأرقام جداول تتبّع المنافسات وهي جزئية حيثما لا تزال قيد التعبئة · لوحة مستقلة.');}
-function renderAll(){k=BA.kpi;rNtf();rKPI();rOverview();rPipeline();rWinloss();renderPricing();renderCompetitors();rClients();rService();rFunnel();renderTenders();rLimitations();rWatchlist();rChrome();}
+function renderAll(){k=BA.kpi;rNtf();rKPI();rOverview();rPipeline();rWinloss();renderPricing();renderCompetitors();rClients();rService();rFunnel();renderTenders();rExecutive();rLimitations();rWatchlist();rChrome();}
+
+// ===================== EXECUTIVE SUMMARY (Sep 2026) =====================
+// Everything here is computed from the BA block of the active scope at render time — no stored numbers.
+// Fields added by bid_analytics2.py in Sep 2026 (value_won, open_stale90, won_value …) are used when present and
+// derived from bidlist / competitors when a build predates them, so the tab never shows a blank.
+const EXC={won:'#2E7D46',lost:'#C0504D',pend:'#3E86C8',stale:'#E8862E',grey:'#9AABB5',ink:'#1C2B33'};
+function exAge(b){ if(b.age_days!=null)return b.age_days; if(!b.date)return null; return Math.round((Date.now()-new Date(b.date).getTime())/864e5); }
+function exData(B){
+ const bl=B.bidlist||[], k=B.kpi||{}, f=B.funnel||{};
+ const won=bl.filter(b=>b.outcome==='Won'), lost=bl.filter(b=>b.outcome==='Lost'), open=bl.filter(b=>b.outcome==='Pending');
+ const decided=won.length+lost.length;
+ const sum=(A,fn)=>A.reduce((s,b)=>s+(fn(b)||0),0);
+ const stale90=open.filter(b=>(exAge(b)||0)>90), stale180=open.filter(b=>(exAge(b)||0)>180);
+ const accepted=f.committee_accept!=null?f.committee_accept:(k.committee_accept||0), submitted=f.submitted!=null?f.submitted:(k.submitted||0);
+ return {
+  total:k.total||bl.length, reviewed:k.committee_total||0, accepted, submitted, decided, wonN:won.length, lostN:lost.length,
+  winRate:decided?Math.round(100*won.length/decided):null,
+  valueWon:k.value_won!=null?k.value_won:sum(won,b=>b.value), valueLost:k.value_lost!=null?k.value_lost:sum(lost,b=>b.value),
+  openN:open.length, openValue:k.open_pipeline!=null?k.open_pipeline:sum(open,b=>b.value),
+  stale90N:k.open_stale90!=null?k.open_stale90:stale90.length, stale90V:k.open_stale90_value!=null?k.open_stale90_value:sum(stale90,b=>b.value),
+  stale180N:k.open_stale180!=null?k.open_stale180:stale180.length,
+  avgBidders:k.avg_bidders, maxBidders:k.max_bidders, guarantee:k.total_guarantee||0, guaranteeN:k.guarantee_n,
+  acceptedNotSubmitted:k.accepted_not_submitted!=null?k.accepted_not_submitted:Math.max(0,accepted-submitted),
+  lostNoWinner:k.lost_no_winner!=null?k.lost_no_winner:lost.filter(b=>!b.winner).length,
+  lostNoReason:k.lost_no_reason!=null?k.lost_no_reason:lost.filter(b=>!(b.lossreason||'').trim()).length,
+  unclassified:k.unclassified!=null?k.unclassified:bl.filter(b=>!b.svc).length,
+  compWinsMatched:(B.competitors||[]).reduce((s,c)=>s+(c.wins||0),0),
+  open, lost, won
+ };
+}
+function exDelta(cur,prev,unit,goodUp){ if(cur==null||prev==null)return ''; const d=cur-prev; if(!d)return `<span class="exd">${t('unchanged vs prior year','دون تغيير عن العام السابق')}</span>`;
+ const good=goodUp?d>0:d<0; return `<span class="exd ${good?'up':'down'}">${d>0?'▲':'▼'} ${unit==='pt'?Math.abs(d)+' '+t('pts','نقطة'):unit==='M'?'SAR '+fmtM(Math.abs(d)):Math.round(Math.abs(d)*10)/10} ${t('vs prior year','عن العام السابق')}</span>`; }
+function exSvgHead(W,title,sub){ return `<text x="14" y="20" class="exT">${esc(title)}</text>${sub?`<text x="14" y="36" class="exS">${esc(sub)}</text>`:''}`; }
+function exScopeLabel(){ return SCOPE==='both'?YRS:SCOPE.slice(1); }
+function exBtn(id,name){ return `<button class="png" onclick="exPNG('${id}','${name}')" title="${t('Download this chart as a PNG image','تنزيل هذا الرسم كصورة PNG')}">${t('Export PNG','تصدير PNG')}</button>`; }
+function exGo(tab,filters){ if(filters){Object.keys(filters).forEach(kk=>{TF[kk]=filters[kk];}); renderTenders();} go(tab); }
+
+// ---- 1. funnel
+function exFunnel(d){
+ const stages=[[t('Tracked','متتبَّعة'),d.total],[t('Committee reviewed','راجعتها اللجنة'),d.reviewed],[t('Committee accepted','قبلتها اللجنة'),d.accepted],[t('Submitted','قُدّمت'),d.submitted],[t('Decided','حُسمت'),d.decided],[t('Won','فاز EH'),d.wonN]];
+ const W=wd,H=56+stages.length*40,x0=230,iw=W-x0-140,max=Math.max(stages[0][1],1);
+ let leak=null,leakI=-1;
+ let s=`<svg id="ex-funnel" viewBox="0 0 ${W} ${H}" class="ch exsvg">${exSvgHead(W,t('From tracked to won','من المتابعة إلى الفوز'),t('Scope','النطاق')+': '+exScopeLabel())}`;
+ stages.forEach(([l,v],i)=>{const y=52+i*40,w=Math.max(v/max*iw,2);const prev=i?stages[i-1][1]:null;const drop=prev?Math.round(100*(prev-v)/prev):null;
+  if(prev&&(prev-v)>(leak||0)){leak=prev-v;leakI=i;}
+  const col=i===stages.length-1?EXC.won:(i===stages.length-2?EXC.pend:C.blue);
+  s+=`<text x="${x0-10}" y="${y+20}" text-anchor="end" class="chl">${esc(l)}</text><rect x="${x0}" y="${y+4}" width="${w.toFixed(1)}" height="26" rx="4" fill="${col}" fill-opacity="${0.55+0.45*(i/(stages.length-1))}"><title>${esc(l)}: ${v}</title></rect>`;
+  s+=`<text x="${x0+w+8}" y="${y+22}" class="chv">${v}</text>${drop!=null?`<text x="${x0+w+8+String(v).length*9+10}" y="${y+22}" class="chs">−${drop}%</text>`:''}`;});
+ s+='</svg>';
+ const leakTxt=leakI>0?t(`Largest leak: ${stages[leakI-1][0]} → ${stages[leakI][0]}, ${leak} tenders`,`أكبر تسرّب: ${stages[leakI-1][0]} ← ${stages[leakI][0]}، ${leak} منافسة`):'';
+ return `<div class="card exc"><div class="exh"><h3>${t('Tender funnel — from tracked to won','قمع المنافسات — من المتابعة إلى الفوز')}</h3>${exBtn('ex-funnel','funnel')}</div>
+  <div class="note">${t('Each stage shows the count and the share lost from the stage before. Click a stage name to open those tenders.','كل مرحلة تُظهر العدد ونسبة المفقود من المرحلة السابقة. انقر اسم المرحلة لفتح منافساتها.')}</div>${s}
+  <div class="exfoot"><b>${leakTxt}</b> · <a onclick="exGo('tenders',{outcome:'Pending',year:'all',platform:'all',svc:'all',q:''})">${t('Open tenders','المنافسات المفتوحة')} →</a> · <a onclick="exGo('tenders',{outcome:'Lost',year:'all',platform:'all',svc:'all',q:''})">${t('Lost tenders','المنافسات المفقودة')} →</a></div></div>`;
+}
+// ---- 3. where we win (decided vs won by band / service)
+function exWinBars(id,rows,lab,title,sub,note){
+ const W=620,rh=34,H=52+rows.length*rh+8,x0=190,iw=W-x0-150,max=Math.max(...rows.map(r=>r.awarded||0),1);
+ let s=`<svg id="${id}" viewBox="0 0 ${W} ${H}" class="ch exsvg">${exSvgHead(W,title,t('Scope','النطاق')+': '+exScopeLabel())}`;
+ rows.forEach((r,i)=>{const y=50+i*rh,wa=Math.max((r.awarded||0)/max*iw,2),ww=(r.won||0)/max*iw;const wr=r.awarded?Math.round(100*r.won/r.awarded):null;
+  s+=`<text x="${x0-10}" y="${y+19}" text-anchor="end" class="chl">${esc(lab(r))}</text><rect x="${x0}" y="${y+5}" width="${wa.toFixed(1)}" height="22" rx="3" fill="${r.grey?EXC.grey:C.line}" ${r.grey?'fill-opacity=".5"':''}/><rect x="${x0}" y="${y+5}" width="${ww.toFixed(1)}" height="22" rx="3" fill="${r.grey?EXC.grey:EXC.won}"><title>${esc(lab(r))}: ${r.won}/${r.awarded}</title></rect>`;
+  s+=`<text x="${x0+wa+8}" y="${y+21}" class="chv">${r.won||0}/${r.awarded||0}</text><text x="${x0+wa+8+String((r.won||0)+'/'+(r.awarded||0)).length*9+8}" y="${y+21}" class="chs">${wr==null?'—':wr+'%'} · ${r.count} ${t('bid','منافسة')}</text>`;});
+ s+='</svg>';
+ return `<div class="card exc"><div class="exh"><h3>${title}</h3>${exBtn(id,id.replace('ex-',''))}</div><div class="note">${note}</div>${s}<div class="exfoot">${sub}</div></div>`;
+}
+function exWhere(B){
+ const vb=(B.value_bands||[]).filter(r=>r.count);
+ const best=vb.filter(r=>r.awarded>=2).sort((a,b)=>(b.won/b.awarded)-(a.won/a.awarded)||b.awarded-a.awarded)[0], worst=vb.filter(r=>r.awarded>=2).sort((a,b)=>(a.won/a.awarded)-(b.won/b.awarded)||b.awarded-a.awarded)[0];
+ const subV=(best&&worst)?t(`Strongest band: ${best.band} (${best.won} of ${best.awarded}). Weakest: ${worst.band} (${worst.won} of ${worst.awarded}).`,`أقوى فئة: ${best.band} (${best.won} من ${best.awarded}). أضعفها: ${worst.band} (${worst.won} من ${worst.awarded}).`):'';
+ const sm=(B.service_mix||[]).map(r=>({...r,grey:r.name==='Unclassified'})).sort((a,b)=>(b.awarded||0)-(a.awarded||0));
+ const unc=sm.find(r=>r.grey);
+ const subS=unc?t(`${unc.count} tenders carry no service tag in the tracker — their outcomes are not attributable to a line of business.`,`${unc.count} منافسة بلا تصنيف خدمة في الجدول — لا يمكن نسب نتائجها إلى خط أعمال.`):'';
+ return `<div class="grid g2">${exWinBars('ex-bands',vb,r=>t(r.band,r.band.replace('M',' م')),t('Win rate by deal size (SAR)','نسبة الفوز حسب حجم الصفقة (ريال)'),subV,t('Grey bar = decided tenders in the band; green = won by EH. Deal size is the submitted or awarded value.','الشريط الرمادي = المنافسات المحسومة في الفئة؛ الأخضر = ما فاز به EH. حجم الصفقة هو القيمة المقدَّمة أو المُرساة.'))}
+ ${exWinBars('ex-svc',sm,r=>dv(DSVC,r.name),t('Win rate by service line','نسبة الفوز حسب خط الخدمة'),subS,t('Same reading as the deal-size chart. "Unclassified" is drawn grey: it is a data gap, not a service.','القراءة كما في رسم حجم الصفقة. «غير مصنّف» مرسوم بالرمادي: فجوة بيانات لا خدمة.'))}</div>`;
+}
+// ---- 4. threat matrix
+function exThreat(B,d){
+ const all=(B.competitors||[]).filter(c=>c.encounters>0);
+ const priced=all.filter(c=>c.undercut_pct!=null&&(c.priced_vs||0)>=1), unpriced=all.length-priced.length;
+ const ranked=priced.filter(c=>(c.priced_vs||0)>=2).sort((a,b)=>b.undercut_pct-a.undercut_pct||b.encounters-a.encounters||(b.wins||0)-(a.wins||0));
+ const top=ranked.slice(0,8);
+ const W=wd,H=340,P={t:46,r:24,b:44,l:56},iw=W-P.l-P.r,ih=H-P.t-P.b;
+ const xmax=Math.max(...priced.map(c=>c.encounters),1)+1;
+ const rad=c=>4+3*Math.min(c.wins||0,3);
+ const col=c=>c.undercut_pct>=67?EXC.lost:c.undercut_pct>=34?EXC.stale:C.blue;
+ const xm=P.l+iw*0.5, ym=P.t+ih*0.5;
+ let s=`<svg id="ex-threat" viewBox="0 0 ${W} ${H}" class="ch exsvg">${exSvgHead(W,t('Who we meet most, and who prices below us','من نواجهه أكثر، ومن يسعّر دوننا'),t('x: shared tenders with EH · y: share of shared priced tenders where the competitor bid below EH · ring = has beaten EH','س: منافسات مشتركة مع EH · ع: نسبة المنافسات المُسعَّرة المشتركة التي سعّر فيها المنافس دون EH · الحلقة = تغلّب على EH'))}`;
+ s+=`<rect x="${xm}" y="${P.t}" width="${iw/2}" height="${ih/2}" fill="${EXC.lost}" fill-opacity=".06"/><line x1="${xm}" y1="${P.t}" x2="${xm}" y2="${P.t+ih}" stroke="${C.line}" stroke-dasharray="4 4"/><line x1="${P.l}" y1="${ym}" x2="${W-P.r}" y2="${ym}" stroke="${C.line}" stroke-dasharray="4 4"/>`;
+ s+=`<text x="${W-P.r-6}" y="${P.t+ih*0.5-6}" text-anchor="end" class="exq">${esc(t('Frequent and cheaper than us — sustained price pressure','متكرّر وأرخص منّا — ضغط سعري مستمر'))}</text><text x="${P.l+6}" y="${P.t+ih*0.5-6}" class="exq">${esc(t('Rarely met, usually cheaper','نادر اللقاء، غالباً أرخص'))}</text><text x="${W-P.r-6}" y="${P.t+ih-8}" text-anchor="end" class="exq">${esc(t('Frequent, priced above us','متكرّر ويسعّر فوقنا'))}</text>`;
+ const YS=112; for(let i=0;i<=4;i++){const y=P.t+ih-ih*(i*25)/YS;s+=`<line x1="${P.l}" y1="${y}" x2="${W-P.r}" y2="${y}" stroke="${C.line}" stroke-opacity=".6"/><text x="${P.l-8}" y="${y+3}" text-anchor="end" class="cax">${i*25}%</text>`;}
+ for(let i=0;i<=xmax;i+=Math.max(1,Math.round(xmax/8))){const x=P.l+i/xmax*iw;s+=`<text x="${x}" y="${H-P.b+16}" text-anchor="middle" class="cax2">${i}</text>`;}
+ const dupe={}; const pos=c=>{const key=c.encounters+'/'+c.undercut_pct;const i=(dupe[key]=(dupe[key]||0)+1)-1;const j=i?((i%2?1:-1)*Math.ceil(i/2)*12):0;return [P.l+c.encounters/xmax*iw+j,P.t+ih-c.undercut_pct/YS*ih];};
+ const XY=new Map(); priced.forEach(c=>XY.set(c,pos(c)));
+ priced.forEach(c=>{const [x,y]=XY.get(c);s+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${rad(c)}" fill="${col(c)}" fill-opacity="${(c.priced_vs||0)>=2?0.8:0.35}" stroke="${c.wins?EXC.lost:'#fff'}" stroke-width="${c.wins?2.5:1}" style="cursor:pointer" onclick="exGo('competitors')"><title>${esc(c.name)} · ${c.encounters} ${esc(t('encounters','مواجهة'))} · ${esc(t('below EH in','دون EH في'))} ${c.undercut_pct}% ${esc(t('of','من'))} ${c.priced_vs} ${esc(t('priced','مُسعَّرة'))} · ${c.wins||0} ${esc(t('wins vs EH','فوز على EH'))}</title></circle>`;});
+ const lab=priced.filter(c=>c.wins).sort((a,b)=>XY.get(a)[0]-XY.get(b)[0]).slice(0,6);   // only competitors who have actually beaten EH are named on the chart; the table names the rest
+ lab.forEach((c,i)=>{const [x,y]=XY.get(c);const below=y<P.t+ih*0.35;const dy=(below?1:-1)*[20,36,52][Math.floor(i/2)%3]*(i%2?1:1)+(i%2?(below?14:-14):0);s+=`<line x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${x.toFixed(1)}" y2="${(y+dy-(dy>0?4:-4)).toFixed(1)}" stroke="${EXC.grey}" stroke-width=".8"/><text x="${x.toFixed(1)}" y="${(y+dy).toFixed(1)}" text-anchor="middle" class="chs">${esc(String(c.name).slice(0,26))}</text>`;});
+ s+=`<text x="${P.l+iw/2}" y="${H-4}" text-anchor="middle" class="caxt">${esc(t('Shared tenders with EH','منافسات مشتركة مع EH'))}</text></svg>`;
+ const rows=top.map((c,i)=>`<tr style="cursor:pointer" onclick="exGo('competitors')"><td style="color:#5F7078">${i+1}</td><td><b dir="auto">${esc(c.name)}</b></td><td style="text-align:center">${c.encounters}</td><td style="text-align:center;color:${col(c)};font-weight:700">${c.undercut_pct}%</td><td style="text-align:center;color:#8A99A3">${c.priced_vs}</td><td style="text-align:center">${c.wins?`<b style="color:${EXC.lost}">${c.wins}</b>`:'0'}</td></tr>`).join('');
+ const cover=t(`${priced.length} of ${all.length} competitors have at least one tender priced against EH (${unpriced} never disclosed a price) · winner identified in ${d.lostN-d.lostNoWinner} of ${d.lostN} lost tenders`,`${priced.length} من ${all.length} منافساً لديهم منافسة واحدة على الأقل مُسعَّرة مقابل EH (${unpriced} لم يُفصحوا عن سعر) · الفائز مُحدَّد في ${d.lostN-d.lostNoWinner} من ${d.lostN} منافسة مفقودة`);
+ return `<div class="card exc"><div class="exh"><h3>${t('Threat matrix — frequency and price pressure','مصفوفة التهديد — التكرار والضغط السعري')}</h3>${exBtn('ex-threat','threat_matrix')}</div>
+  <div class="excov">${cover} · <a onclick="exGo('tenders',{outcome:'Lost',year:'all',platform:'all',svc:'all',q:''})">${t('lost tenders','المنافسات المفقودة')} →</a></div>
+  <div class="grid g3 exg3"><div>${s}</div>
+  <div><table class="t ext"><thead><tr><th>#</th><th>${t('Competitor','المنافس')}</th><th>${t('Met','مواجهات')}</th><th>${t('Below EH','دون EH')}</th><th>${t('Priced','مُسعَّرة')}</th><th>${t('Won vs EH','فاز على EH')}</th></tr></thead><tbody>${rows}</tbody></table>
+  <div class="exfoot">${t('Ranked by how often the competitor priced below EH, then by how often we meet — among competitors with at least two priced head-to-heads. Top-right of the chart is where sustained price pressure comes from; a red ring marks a competitor who has actually beaten EH. Click a row for the full record.','مرتَّب حسب تكرار التسعير دون EH ثم تكرار اللقاء — بين المنافسين الذين لهم مواجهتان مُسعَّرتان على الأقل. أعلى يمين الرسم مصدر الضغط السعري المستمر؛ الحلقة الحمراء تعني منافساً تغلّب على EH فعلاً. انقر السطر للسجل الكامل.')}</div></div></div></div>`;
+}
+// ---- 5. price position
+function exPrice(B,d){
+ const rows=(B.pricing&&B.pricing.rows||[]).filter(r=>r.eh&&r.n_priced>1&&r.gap!=null).sort((a,b)=>a.gap-b.gap);
+ const sm=B.pricing&&B.pricing.summary||{};
+ const lowest=rows.filter(r=>r.rank===1).length, lowWon=rows.filter(r=>r.rank===1&&r.won).length;
+ const CAP=300, W=wd, bh=14, H=64+rows.length*bh+34, x0=64, iw=W-x0-90;
+ let s=`<svg id="ex-price" viewBox="0 0 ${W} ${H}" class="ch exsvg">${exSvgHead(W,t('How far above the lowest bid EH priced, tender by tender','كم كان سعر EH فوق أدنى عرض، منافسة بمنافسة'),t('one bar per tender with two or more disclosed prices · 0% = EH was the lowest bidder · green = EH won anyway','شريط لكل منافسة فيها سعران مُفصَحان أو أكثر · 0% = EH الأدنى سعراً · الأخضر = فاز EH رغم ذلك'))}`;
+ [0,50,100,150,200,250,300].forEach(v=>{const x=x0+iw*v/CAP;s+=`<line x1="${x}" y1="${52}" x2="${x}" y2="${56+rows.length*bh}" stroke="${C.line}"/><text x="${x}" y="${56+rows.length*bh+14}" text-anchor="middle" class="cax2">${v===CAP?'≥':''}${v}%</text>`;});
+ rows.forEach((r,i)=>{const y=54+i*bh, g=Math.max(0,r.gap), w=Math.max(2,Math.min(g,CAP)/CAP*iw);const c=r.won?EXC.won:(r.status==='Awarded'||r.has_winner)?EXC.lost:EXC.pend;
+  s+=`<text x="${x0-6}" y="${y+10}" text-anchor="end" class="cax">#${r.sn}/${String(r.year).slice(2)}</text><rect x="${x0}" y="${y+2}" width="${w.toFixed(1)}" height="${bh-4}" rx="2" fill="${c}" fill-opacity="${r.level==='full'?0.9:0.45}"><title>#${r.sn}/${String(r.year).slice(2)} ${esc(r.title||'')} · EH +${Math.round(g)}% ${esc(t('above the lowest bid','فوق أدنى عرض'))} · ${r.rank}/${r.n_priced} ${esc(t('by price','بالسعر'))}${r.won?' · '+esc(t('EH won','فاز EH')):''}</title></rect>`;
+  s+=`<text x="${(x0+w+5).toFixed(1)}" y="${y+10}" class="chs">${g>CAP?'+'+Math.round(g)+'%':'+'+Math.round(g)+'%'}${r.won?' ✓':''}</text>`;});
+ s+=`<text x="${x0}" y="${H-6}" class="chs">${esc(t('Faded bar = only part of the field disclosed a price','الشريط الباهت = جزء من المتنافسين فقط أفصح عن سعره'))}</text></svg>`;
+ const head=t(`Of ${sm.tenders||rows.length} tenders with price data, ${rows.length} have two or more disclosed prices. EH was the lowest bidder in ${lowest} of them (won ${lowWon}). Typically EH priced ${sm.median_gap!=null?Math.round(sm.median_gap):'—'}% above the lowest bid; where EH lost to a known winner, its price was a median ${sm.median_win_gap!=null?Math.round(sm.median_win_gap):'—'}% above the winning bid (n = ${sm.win_gap_n||0}). We win on evaluation, not on price.`,`من ${sm.tenders||rows.length} منافسة ببيانات أسعار، ${rows.length} فيها سعران مُفصَحان أو أكثر. كان EH الأدنى سعراً في ${lowest} منها (فاز ب ${lowWon}). عادةً سعّر EH ${sm.median_gap!=null?Math.round(sm.median_gap):'—'}% فوق أدنى عرض؛ وحيث خسر EH أمام فائز معروف كان سعره بوسيط ${sm.median_win_gap!=null?Math.round(sm.median_win_gap):'—'}% فوق العرض الفائز (ن = ${sm.win_gap_n||0}). نفوز بالتقييم لا بالسعر.`);
+ const reasons={}; d.lost.forEach(b=>{const r=(b.lossreason||'').trim();if(r)reasons[r]=(reasons[r]||0)+1;});
+ const rr=Object.entries(reasons).sort((a,b)=>b[1]-a[1]).map(([r,n])=>`<tr><td dir="auto">${esc(r)}</td><td style="text-align:end"><b>${n}</b></td></tr>`).join('')+`<tr style="color:#8A99A3"><td>${t('No reason recorded','لا سبب مُسجَّل')}</td><td style="text-align:end"><b>${d.lostNoReason}</b></td></tr>`;
+ return `<div class="card exc"><div class="exh"><h3>${t('Price position — we win on technical, not on price','موقع السعر — نفوز بالتقييم الفني لا بالسعر')}</h3>${exBtn('ex-price','price_position')}</div>
+  <div class="excov">${head}</div>
+  <div class="grid g3 exg3"><div>${s}</div><div><div class="note" style="margin-bottom:6px"><b>${t('Recorded loss reasons','أسباب الخسارة المُسجَّلة')}</b> · ${d.lostN} ${t('lost','مفقودة')}</div><table class="t ext"><tbody>${rr}</tbody></table></div></div></div>`;
+}
+// ---- 6. decisions + watchlist
+function exDecisions(B,d){
+ const wl=(B.watchlist||[]).slice().sort((a,b)=>({high:0,med:1,medium:1,low:2}[a.sev]||3)-({high:0,med:1,medium:1,low:2}[b.sev]||3)).slice(0,3);
+ return `<div class="card exc"><h3>${t('Watch items','عناصر المتابعة')}</h3><div class="note">${t('Top three by severity, from the Watchlist tab.','الأعلى ثلاثة حسب الخطورة، من تبويب قائمة المتابعة.')}</div>
+  ${wl.map(w=>`<div class="exw ${w.sev}"><span class="tag" style="background:${w.sev==='high'?EXC.lost:EXC.stale}">${esc(t(w.kind,w.kind_ar||w.kind))}</span><div dir="auto">${esc(t(w.text,w.text_ar||w.text))}</div></div>`).join('')||`<div class="note">${t('No watch items.','لا عناصر متابعة.')}</div>`}
+  <div class="exfoot"><a onclick="go('watchlist')">${t('See all','عرض الكل')} →</a></div></div>`;
+}
+// ---- the tab
+function rExecutive(){
+ const B=BA, d=exData(B);
+ const other=SCOPE==='y2025'?null:(BAD.y2025?exData(BAD.y2025):null), cur=SCOPE==='both'?(BAD.y2026?exData(BAD.y2026):d):d;   // deltas: 2026 vs 2025 (Both), or the scope year vs the other year
+ const delta=(a,b,u,g)=>other&&cur?exDelta(a(cur),a(other),u,g):'';
+ const asof=(B.kpi&&B.kpi.as_of)||(window.BUILT||'').slice(0,10);
+ $('s-executive').innerHTML=
+ `<div class="sech">${t('Executive summary','الملخّص التنفيذي')}</div><div class="secsub">${t('Five questions a director needs answered before the Sunday meeting — computed from the bid tracker on every rebuild','خمسة أسئلة يحتاج المدير إجابتها قبل اجتماع الأحد — تُحسب من جدول العطاءات عند كل إعادة بناء')}${asof?' · '+t('as of','حتى')+' <b dir="ltr">'+esc(asof)+'</b>':''} · ${t('scope','النطاق')} <b dir="ltr">${exScopeLabel()}</b></div>
+ <div class="kstrip exk">
+  ${kc(d.winRate==null?'—':d.winRate+'%',t('Win rate on decided tenders','نسبة الفوز في المنافسات المحسومة'),`${d.wonN} ${t('of','من')} ${d.decided} ${t('decided','محسومة')} ${delta(x=>x.winRate,null,'pt',true)}`,d.winRate>=50?'g':'r')}
+  ${kc('SAR '+fmtM(d.valueWon),t('Value won','القيمة المكسوبة'),`${t('vs','مقابل')} SAR ${fmtM(d.valueLost)} ${t('lost to others','مفقودة لآخرين')} ${delta(x=>x.valueWon,null,'M',true)}`,'g')}
+  ${kc('SAR '+fmtM(d.openValue),t('Open pipeline','المحفظة المفتوحة'),`${d.openN} ${t('open','مفتوحة')} · <span style="color:${EXC.stale};font-weight:700">SAR ${fmtM(d.stale90V)} ${t('older than 90 days','أقدم من 90 يوماً')}</span> (${d.stale90N})`)}
+  ${kc(d.total?Math.round(100*d.submitted/d.total)+'%':'—',t('Submission conversion','نسبة التقديم'),`${d.submitted} ${t('submitted of','قُدّمت من')} ${d.total} · ${t('committee accepted','قبول اللجنة')} ${d.reviewed?Math.round(100*d.accepted/d.reviewed)+'%':'—'}`)}
+  ${kc(d.avgBidders!=null?d.avgBidders:'—',t('Bidders per tender','متنافسون لكل منافسة'),`${t('max','الأقصى')} ${d.maxBidders||'—'} · ${t('competitive intensity','شدّة التنافس')} ${delta(x=>x.avgBidders,null,'',false)}`)}
+  ${kc('SAR '+fmtM(d.guarantee),t('Bonds tied up','ضمانات مقيَّدة'),`${d.guaranteeN!=null?d.guaranteeN+' '+t('bid bonds recorded','سند عطاء مُسجَّل'):t('bid-bond value recorded','قيمة سندات العطاء المُسجَّلة')}`)}
+ </div>
+ ${exFunnel(d)}
+ ${exWhere(B)}
+ ${exThreat(B,d)}
+ ${exPrice(B,d)}
+ ${exDecisions(B,d)}`;
+}
+// ---- PNG export: clone the SVG, inline the stylesheet's text styles, paint on a white canvas at 2.5×
+function exPNG(id,name){
+ const svg=document.getElementById(id); if(!svg)return;
+ const cl=svg.cloneNode(true); const vb=svg.viewBox.baseVal;
+ cl.setAttribute('width',vb.width); cl.setAttribute('height',vb.height); cl.setAttribute('xmlns','http://www.w3.org/2000/svg');
+ const src=svg.querySelectorAll('*'), dst=cl.querySelectorAll('*');
+ src.forEach((el,i)=>{ if(el.tagName==='text'||el.tagName==='tspan'){const cs=getComputedStyle(el); dst[i].setAttribute('style',`font:${cs.fontWeight} ${cs.fontSize} 'Segoe UI',Tahoma,Arial,sans-serif;fill:${cs.fill}`);} dst[i].removeAttribute('onclick'); });
+ const bg=document.createElementNS('http://www.w3.org/2000/svg','rect'); bg.setAttribute('width',vb.width); bg.setAttribute('height',vb.height); bg.setAttribute('fill','#fff'); cl.insertBefore(bg,cl.firstChild);
+ const xml=new XMLSerializer().serializeToString(cl); const img=new Image(); const S=2.5;
+ img.onload=()=>{const c=document.createElement('canvas');c.width=Math.round(vb.width*S);c.height=Math.round(vb.height*S);const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(img,0,0,c.width,c.height);
+  const a=document.createElement('a');a.download=`EH_BidExec_${name}_${SCOPE==='both'?'both':SCOPE.slice(1)}_${new Date().toISOString().slice(0,10)}.png`;a.href=c.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();};
+ img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(xml);
+}
+
 window.addEventListener('message',function(e){
   var d=e.data||{};
   if(d.ehhub==='lang'&&(d.lang==='ar'||d.lang==='en')&&typeof L!=='undefined'&&L!==d.lang){setLang(d.lang);}

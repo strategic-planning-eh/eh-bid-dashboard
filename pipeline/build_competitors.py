@@ -113,6 +113,7 @@ def build(bids, rosters):
             acc['under']+=d['under']; acc['priced_vs']+=d['priced_vs']; acc['prices']+=d['prices']
             acc['names'].update(d['names'])
         if len(grp)>1: mergelog.append([acc['names'].most_common(1)[0][0], [dispname(k) for k in grp[1:]]])
+        acc['canons']=list(grp)          # every canon spelling folded into this competitor — used by bid_analytics2 to join winner_canon → value
         final[base]=acc
     print('Merged duplicate groups:', len(mergelog))
     for m in mergelog[:15]: print('  KEEP:', m[0][:40], '<- merged:', [x[:34] for x in m[1]])
@@ -124,7 +125,7 @@ def build(bids, rosters):
             name=disp, encounters=d['enc'], wins=d['wins'], dq=d['dq'],
             undercut=d['under'], priced_vs=d['priced_vs'],
             undercut_pct=round(100*d['under']/d['priced_vs']) if d['priced_vs'] else None,
-            avg_price=round(st.mean(d['prices'])) if d['prices'] else None))
+            avg_price=round(st.mean(d['prices'])) if d['prices'] else None, canons=d.get('canons',[c])))
     competitors.sort(key=lambda x:(-x['encounters'],-x['wins']))
     return competitors, winner_canon
 

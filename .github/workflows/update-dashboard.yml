@@ -80,6 +80,7 @@ jobs:
             pipeline/bid_sync_report.json
             pipeline/possible_twins_review.xlsx
             pipeline/aliases.csv
+            pipeline/roster_duplicates.json
             site/competitors_feed.json
           retention-days: 90
           overwrite: true

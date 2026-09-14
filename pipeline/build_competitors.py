@@ -72,6 +72,37 @@ def build(bids, rosters):
             if sim(dn, dispname(k2))>=0.85:
                 merged_into[k2]=k; grp.append(k2)
         groups.append(grp)
+    # ----- ALIAS FOLD (tracker is law, 14 Sep 2026): two roster spellings that pipeline/aliases.csv bridges to the same
+    #       stakeholder-map record are one company. Folding them here keeps the Bid & Tender count, the map count and the
+    #       stamp identical; the pairs are written to roster_duplicates.json so the spelling can be corrected in the sheet.
+    import csv, os, re, unicodedata
+    def _anorm(s):
+        s=unicodedata.normalize('NFKC', str(s or '')); s=re.sub(r'[\u0640\u200b-\u200d\ufeff\u064b-\u0652]', '', s)
+        s=re.sub(r'[إأآا]', 'ا', s).replace('ى','ي').replace('ة','ه').replace('ؤ','و').replace('ئ','ي')
+        return re.sub(r'\s+',' ', s).strip().casefold()
+    _alias={}
+    _ap=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'aliases.csv')
+    if os.path.exists(_ap):
+        for r in csv.DictReader(open(_ap, encoding='utf-8-sig', newline='')):
+            if str(r.get('status','')).strip().lower() in ('approved','reviewer'): _alias[_anorm(r['tracker_name'])]=_anorm(r['map_name'])
+    def _target(grp):
+        for k in grp:                                   # any spelling in the group with an approved bridge decides the target
+            n=_anorm(dispname(k))
+            if n in _alias: return _alias[n]
+        return _anorm(dispname(grp[0]))
+    _by_target=collections.OrderedDict(); roster_dups=[]
+    for grp in groups:                                  # groups are in encounter order, so the most-seen spelling stays the base
+        t=_target(grp)
+        if t in _by_target:
+            prev=_by_target[t]
+            if _anorm(dispname(grp[0]))==t and _anorm(dispname(prev[0]))!=t: prev, grp = list(grp), prev   # the spelling that IS the record name is kept
+            roster_dups.append({'kept': dispname(prev[0]), 'folded': [dispname(k) for k in grp], 'via_alias_target': t})
+            _by_target[t]=prev+grp
+        else: _by_target[t]=list(grp)
+    groups=list(_by_target.values())
+    json.dump(roster_dups, open('roster_duplicates.json','w'), ensure_ascii=False, indent=1)
+    print('Alias-folded roster duplicates:', len(roster_dups))
+    for d in roster_dups[:15]: print('  KEEP:', d['kept'][:40], '<- folded:', [x[:34] for x in d['folded']])
     mergelog=[]
     final={}
     for grp in groups:

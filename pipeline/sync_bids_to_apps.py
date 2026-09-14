@@ -78,6 +78,35 @@ def roster_sentence(c, stamp):
 
 SENT_RE = re.compile(r'Tender-roster intelligence \([^)]*\):[^.]*(?:\.\d[^.]*)*\.')   # sentence may contain "≈ SAR 2,334,347." decimals? keep simple
 
+def fold_bid_app(bids_path, roster_to_record):
+    """Tracker is law, but one company = one record: roster spellings that this run resolved to the SAME map record are
+    folded inside the Bid & Tender app's embedded BA block (every scope: both / y2025 / y2026), so its competitor
+    count and scorecard agree with the map and the stamp whatever the state of aliases.csv. Returns folded count for 'both'."""
+    h = open(bids_path, encoding='utf-8').read()
+    m = re.search(r'(<script id="BA" type="application/json">)(.*?)(</script>)', h, re.DOTALL)
+    if not m: return None
+    BA = json.loads(m.group(2)); folded_pairs = []
+    for scope, blk in BA.items():
+        comps = blk.get('competitors') if isinstance(blk, dict) else None
+        if not comps: continue
+        by = {}; order = []
+        for c in comps:
+            key = roster_to_record.get(norm(c['name']), norm(c['name']))
+            if key not in by: by[key] = dict(c); order.append(key); continue
+            d = by[key]
+            if scope == 'both': folded_pairs.append((d['name'], c['name']))
+            for f in ('encounters', 'wins', 'dq', 'undercut', 'priced_vs'): d[f] = (d.get(f) or 0) + (c.get(f) or 0)
+            w1, w2 = (d.get('encounters') or 0) - (c.get('encounters') or 0), (c.get('encounters') or 0)
+            if d.get('avg_price') and c.get('avg_price') and (w1 + w2): d['avg_price'] = round((d['avg_price'] * w1 + c['avg_price'] * w2) / (w1 + w2))
+            elif not d.get('avg_price'): d['avg_price'] = c.get('avg_price')
+            d['undercut_pct'] = round(100 * d['undercut'] / d['priced_vs']) if d.get('priced_vs') else None
+        out = [by[k] for k in order]; out.sort(key=lambda x: (-(x.get('encounters') or 0), -(x.get('wins') or 0)))
+        blk['competitors'] = out
+        if isinstance(blk.get('kpi'), dict) and 'competitors' in blk['kpi']: blk['kpi']['competitors'] = len(out)
+    payload = json.dumps(BA, ensure_ascii=False).replace('</', '<\\/')
+    open(bids_path, 'w', encoding='utf-8').write(h[:m.start(2)] + payload + h[m.end(2):])
+    return len(BA.get('both', {}).get('competitors', [])) if isinstance(BA.get('both'), dict) else None, folded_pairs
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--map', required=True); ap.add_argument('--competitors', required=True); ap.add_argument('--bids')
@@ -112,6 +141,8 @@ def main():
         k = norm(r['tracker_name'])
         if tgt is not None and k: idx[k] = tgt; alias_keys.add(k)
     known_alias_pairs = {(norm(r['tracker_name']), norm(r['map_name'])) for r in alias_rows}
+    rejected_pairs = {(norm(r['tracker_name']), norm(r['map_name'])) for r in alias_rows if str(r.get('status', '')).strip().lower() == 'rejected'}
+    # status=rejected: the reviewer said these are different companies — no matcher may pair them again
     new_alias_rows = []
     def remember_alias(tracker_name, map_name, method, status):
         pair = (norm(tracker_name), norm(map_name))
@@ -229,6 +260,7 @@ def main():
     touched = set()
     for c in comps:
         n, how = find(c['name'])
+        if n is not None and (norm(c['name']), norm(n['n'])) in rejected_pairs: n, how = None, None
         if n is not None and how == 'exact' and norm(c['name']) in alias_keys: how = 'alias'
         if n is not None and how not in ('exact', 'alias'): remember_alias(c['name'], n['n'], how, 'auto')
         if n is None:
@@ -261,6 +293,7 @@ def main():
         best = None
         for n in nodes:
             if n.get('auto_added'): continue
+            if (norm(c['name']), norm(n['n'])) in rejected_pairs: continue   # reviewer said: different companies
             r = twins.compare(tmp, n, freq)
             if r and (best is None or r[0] > best[0][0]): best = (r, n)
         if best and best[0][0] >= 0.85 and id(best[1]) not in touched:
@@ -313,17 +346,24 @@ def main():
         with open(a.aliases, 'w', encoding='utf-8-sig', newline='') as f:
             w = csv.DictWriter(f, fieldnames=fields); w.writeheader()
             for r in alias_rows + new_alias_rows: w.writerow({k: r.get(k, '') for k in fields})
+    # ---- one company = one record, on the bid app side too
+    roster_to_record = {norm(r): norm(mp) for r, mp, how in matched}
+    bid_app_count, bid_app_folded = (None, [])
+    if a.bids and os.path.exists(a.bids):
+        res = fold_bid_app(a.bids, roster_to_record)
+        if res: bid_app_count, bid_app_folded = res
     # ---- f. one feed for every app
     tracker_stamp = a.tracker_stamp or dt.datetime.now(dt.timezone(dt.timedelta(hours=3))).strftime('%-d %b %Y')
     bidders = [n for n in nodes if n.get('bid') and not n.get('merged_into')]
+    n_comp = bid_app_count if bid_app_count is not None else len(bidders)   # the stamp shows the folded count — identical on every app
     feed = {'tracker_as_of': tracker_stamp, 'synced': dt.datetime.now(dt.timezone(dt.timedelta(hours=3))).isoformat(timespec='minutes'),
-            'roster_competitors': len(comps), 'map_bidders': len(bidders), 'recurring': sum(1 for n in bidders if (n.get('bc') or 0) >= 2),
-            'claimed_unverified': len(claimed), 'stamp': f"Competitors: {len(comps)} · tracker as of {tracker_stamp}",
-            'competitors': sorted(({'name': n['n'], 'cat': n.get('cat'), 'tier': n.get('tier'), 'bc': n.get('bc'), 'bf': n.get('bf'), 'h2h': n.get('h2h')} for n in bidders), key=lambda x: (-(x['bc'] or 0), x['name']))}
+            'roster_competitors': len(comps), 'competitors': n_comp, 'map_bidders': len(bidders), 'recurring': sum(1 for n in bidders if (n.get('bc') or 0) >= 2),
+            'claimed_unverified': len(claimed), 'bid_app_folded_pairs': bid_app_folded, 'stamp': f"Competitors: {n_comp} · tracker as of {tracker_stamp}",
+            'competitor_list': sorted(({'name': n['n'], 'cat': n.get('cat'), 'tier': n.get('tier'), 'bc': n.get('bc'), 'bf': n.get('bf'), 'h2h': n.get('h2h')} for n in bidders), key=lambda x: (-(x['bc'] or 0), x['name']))}
     _dir = os.path.dirname(os.path.abspath(a.map))
     json.dump(feed, open(os.path.join(_dir, 'competitors_feed.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-    json.dump({'stamp': feed['stamp'], 'tracker_as_of': tracker_stamp, 'competitors': len(comps), 'synced': feed['synced']}, open(os.path.join(_dir, 'sync_stamp.json'), 'w', encoding='utf-8'), ensure_ascii=False)
-    D['sync'] = {'stamp': feed['stamp'], 'tracker_as_of': tracker_stamp, 'competitors': len(comps)}
+    json.dump({'stamp': feed['stamp'], 'tracker_as_of': tracker_stamp, 'competitors': n_comp, 'synced': feed['synced']}, open(os.path.join(_dir, 'sync_stamp.json'), 'w', encoding='utf-8'), ensure_ascii=False)
+    D['sync'] = {'stamp': feed['stamp'], 'tracker_as_of': tracker_stamp, 'competitors': n_comp}
     payload = json.dumps(D, ensure_ascii=False).replace('</', '<\\/')
     mh = mh[:mdata.start(2)] + payload + mh[mdata.end(2):]
     open(a.map, 'w', encoding='utf-8').write(mh)
@@ -345,7 +385,7 @@ def main():
     print(f"bid sync: {len(comps)} roster competitors → {len(matched)} matched to map companies ({len(changed)} counts changed), "
           f"{len(added)} added to the map ({len(twin_matched)} recognised as twins of existing companies instead), "
           f"{len(claimed)} workbook flags kept as claimed-unverified (not counted), {len(stale_cleared)} stale confirmations reset, "
-          f"{len(new_alias_rows)} aliases recorded; {len(twin_list)} possible twin pairs listed for review"
+          f"{len(new_alias_rows)} aliases recorded; {len(bid_app_folded)} spelling pairs folded in the bid app; {len(twin_list)} possible twin pairs listed for review"
           + (f"; {merges} reviewer merges applied" if merges else '') + (f"; {cleared} flags cleared by reviewer" if cleared else '') + '.')
     print('BANALYTICS:', ban); print('STAMP:', feed['stamp'])
     if ban.startswith('FAILED'): sys.exit(2)

@@ -12,6 +12,10 @@ RULES
  • This file is confidential like the rest of the hub.
 -->
 
+## 2026-W38
+bids | major | Executive Summary | New tab between All Tenders and Watchlist: six headline cards, the tender funnel, win rate by deal size and service line, a competitor threat matrix (who actually takes tenders off EH), EH's price position in the field, and a "needs a decision" list — every chart exportable as PNG. | تبويب جديد بين «جميع المنافسات» و«قائمة المتابعة»: ست بطاقات رئيسية، قمع المنافسات، نسبة الفوز حسب حجم الصفقة وخط الخدمة، مصفوفة تهديد المنافسين (من يأخذ المنافسات من EH فعلاً)، موقع سعر EH بين المتنافسين، وقائمة «يحتاج قراراً» — وكل رسم قابل للتصدير كصورة PNG.
+clients | minor | Revenue Bridge | Fixed: in the client list that opens from a bridge bar, Arabic names and the "SAR a → SAR b" figures overlapped; the figures now sit on their own line under the name. The panel is also readable in dark mode. | تصحيح: في قائمة العملاء التي تُفتح من أعمدة جسر الإيرادات كانت الأسماء العربية تتداخل مع أرقام «ر.س أ ← ر.س ب»؛ أصبحت الأرقام الآن في سطر مستقل تحت الاسم، وباتت اللوحة مقروءة في الوضع الداكن.
+
 ## 2026-W37
 hub | major | Data | New rule: the bid tracker (EH-WIN-02-F01) is the single source for who bids against EH. Every app now shows the same stamp — "Competitors N · tracker as of <date>" — and the map's bid flags are recomputed from the tracker on every publish. | قاعدة جديدة: جدول تتبع العطاءات (EH-WIN-02-F01) هو المصدر الوحيد لمن يتقدّم ضد EH. تعرض كل التطبيقات الآن الختم نفسه — «المنافسون N · وفق جدول العطاءات حتى <التاريخ>» — ويُعاد حساب مؤشرات العطاءات في الخريطة من الجدول عند كل نشر.
 stake | major | Data | Corrected: about 255 companies were flagged as bidders on workbook research the tracker does not confirm; they no longer count and are marked "Claimed bidder (unverified)" in the company panel. | تصحيح: كانت نحو 255 شركة مُعلَّمة كمتقدّمة ضد EH بناءً على بحث في المصنّف لا يؤكده الجدول؛ لم تعد تُحتسب وتظهر بعلامة «متقدّم مُدّعى (غير مؤكد)» في لوحة الشركة.

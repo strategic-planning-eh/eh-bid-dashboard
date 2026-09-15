@@ -38,6 +38,7 @@ import argparse, json, re, sys, os, unicodedata, subprocess, datetime as dt
 from difflib import SequenceMatcher
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import twins
+from namecheck import looks_like_company   # 15 Sep 2026
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 LEGAL = r'\b(company|co|ltd|llc|est|establishment|office|for|the|and|of|general|trading|contracting|شركة|مؤسسة|مكتب|للاستشارات|للخدمات|للمقاولات|للتجارة|المحدودة|ذات|مسؤولية|محدودة|الشخص|الواحد|مهنية|شخص|واحد)\b'
@@ -120,6 +121,8 @@ def main():
     mdata, D = grab(mh, 'DATA'); nodes = D['nodes']
     comps = json.load(open(a.competitors, encoding='utf-8'))
     comps = [c for c in comps if c.get('name') and c.get('encounters')]
+    not_company_roster_pre = [c['name'] for c in comps if not looks_like_company(c['name'])]
+    comps = [c for c in comps if looks_like_company(c['name'])]     # a reason or a tender title in the roster is dropped before anything counts it
     stamp = dt.datetime.now(dt.timezone(dt.timedelta(hours=3))).strftime('%b %Y')
 
     # ---- index the map: normalised names + aliases recorded in notes
@@ -256,7 +259,7 @@ def main():
         return None, 'none'
 
     # ---- a. update matched nodes
-    matched, changed, added, unmatched_low = [], [], [], []
+    matched, changed, added, unmatched_low, not_company_roster, not_company_nodes = [], [], [], [], [], []
     touched = set()
     for c in comps:
         n, how = find(c['name'])
@@ -264,7 +267,8 @@ def main():
         if n is not None and how == 'exact' and norm(c['name']) in alias_keys: how = 'alias'
         if n is not None and how not in ('exact', 'alias'): remember_alias(c['name'], n['n'], how, 'auto')
         if n is None:
-            if c['encounters'] >= a.min_encounters: added.append(c)
+            if c['encounters'] >= a.min_encounters and looks_like_company(c['name']): added.append(c)
+            elif not looks_like_company(c['name']): not_company_roster.append(c['name'])
             else: unmatched_low.append(c['name'])
             continue
         if id(n) in touched:   # two roster names collapsed onto one map company — sum them
@@ -319,6 +323,10 @@ def main():
                                f"region and company type unverified. " + roster_sentence(c, stamp),
                       'bid_synced': stamp, 'auto_added': stamp})
 
+    # ---- map records that are not companies (a tender title, a rejection reason) stop counting, whatever the rosters say
+    for n in nodes:
+        if not n.get('merged_into') and n.get('bid') and not looks_like_company(n['n']):
+            not_company_nodes.append(n['n']); touched.discard(id(n)); n['bid']=False; n['bc']=0; n['bf']=''; n.pop('h2h',None); n['not_company']=stamp
     # ---- d. tracker is law: anything the rosters did not confirm THIS run stops counting as a bidder
     claimed, stale_cleared, cleared = [], [], 0
     added_ids = {id(n) for n in nodes if n.get('auto_added') == stamp}
@@ -378,7 +386,8 @@ def main():
     report = {'synced': dt.datetime.now(dt.timezone(dt.timedelta(hours=3))).isoformat(timespec='minutes'),
               'roster_competitors': len(comps), 'matched': len(matched), 'counts_changed': len(changed), 'added': [c['name'] for c in added],
               'claimed_unverified': len(claimed), 'claimed_names': claimed, 'stale_tracker_confirmations_reset': stale_cleared,
-              'aliases_added': new_alias_rows, 'stamp': feed['stamp'], 'reviewer_merges_applied': merges, 'merge_side_chosen_automatically': auto_sides, 'reviewer_flags_cleared': cleared, 'twin_matched_instead_of_added': twin_matched, 'banalytics': ban,
+              'aliases_added': new_alias_rows, 'stamp': feed['stamp'], 'reviewer_merges_applied': merges,
+              'not_company_roster_names': not_company_roster_pre + not_company_roster, 'not_company_map_records': not_company_nodes, 'merge_side_chosen_automatically': auto_sides, 'reviewer_flags_cleared': cleared, 'twin_matched_instead_of_added': twin_matched, 'banalytics': ban,
               'possible_twins': [{'a': p['a']['n'], 'b': p['b']['n'], 'score': round(p['score'], 2), 'reason': p['reason']} for p in twin_list],
               'matches': [{'roster': r, 'map': m, 'how': h} for r, m, h in matched], 'changes': [{'map': m, 'from': f, 'to': t} for m, f, t in changed]}
     json.dump(report, open(os.path.join(os.path.dirname(os.path.abspath(a.map)), 'bid_sync_report.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

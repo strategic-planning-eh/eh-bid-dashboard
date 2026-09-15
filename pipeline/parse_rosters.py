@@ -1,4 +1,5 @@
 import openpyxl, json, unicodedata, re, statistics
+from namecheck import looks_like_company   # 15 Sep 2026: reasons and tender titles are not bidders
 
 def norm_ar(s):
     s=unicodedata.normalize('NFKC', str(s or '')).lower()
@@ -19,6 +20,7 @@ def is_name(v):
     t=v.strip()
     if len(t)<6 or len(t)>90: return False
     if is_amt(v): return False
+    if not looks_like_company(t): return False
     cn=norm_ar(t)
     if cn in HEADERW or cn in ('م','no','sn'): return False
     for ph in ['الشركات الي قدمت','قائمه الموردين','الموردين المتقدمين','الموردين المرسى','المرسى عليه','تقديم خدمات','اعداد دراسه','تنفيذ اعمال','اجراء دراسه','قياس بيئي','عدد الشركات','الشركه الفائزه','تاريخ فتح','رقم المنافسه','تقرير فتح','فتح العروض','الموعد النهائي','تاريخ الترسيه']:

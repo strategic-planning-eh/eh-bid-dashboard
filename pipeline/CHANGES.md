@@ -13,6 +13,7 @@ RULES
 -->
 
 ## 2026-W38
+bids | minor | Data | Fixed: a rejection reason typed into the tracker's winner column ("وجود عطاء مالي مقدم من منافس اخر", bid 81/26) was read as a competitor. Cells that read as a reason or a tender title are now kept out of every competitor list, and the reason is filed as the loss reason. | تصحيح: سبب رفض كُتب في عمود «الشركة الفائزة» («وجود عطاء مالي مقدم من منافس اخر»، المنافسة 81/26) قُرئ كمنافس. الخلايا التي تُقرأ كسبب أو كعنوان منافسة تُستبعد الآن من كل قوائم المنافسين، ويُسجَّل السبب كسبب الخسارة.
 bids | major | Executive Summary | New tab between All Tenders and Watchlist: six headline cards, the tender funnel, win rate by deal size and service line, a competitor threat matrix (who actually takes tenders off EH), EH's price position in the field, and a "needs a decision" list — every chart exportable as PNG. | تبويب جديد بين «جميع المنافسات» و«قائمة المتابعة»: ست بطاقات رئيسية، قمع المنافسات، نسبة الفوز حسب حجم الصفقة وخط الخدمة، مصفوفة تهديد المنافسين (من يأخذ المنافسات من EH فعلاً)، موقع سعر EH بين المتنافسين، وقائمة «يحتاج قراراً» — وكل رسم قابل للتصدير كصورة PNG.
 clients | minor | Revenue Bridge | Fixed: in the client list that opens from a bridge bar, Arabic names and the "SAR a → SAR b" figures overlapped; the figures now sit on their own line under the name. The panel is also readable in dark mode. | تصحيح: في قائمة العملاء التي تُفتح من أعمدة جسر الإيرادات كانت الأسماء العربية تتداخل مع أرقام «ر.س أ ← ر.س ب»؛ أصبحت الأرقام الآن في سطر مستقل تحت الاسم، وباتت اللوحة مقروءة في الوضع الداكن.
 

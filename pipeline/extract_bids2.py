@@ -1,4 +1,6 @@
 import openpyxl, re, json, datetime
+from namecheck import is_reason_text   # 15 Sep 2026: reason text typed in the winner column must not become a competitor
+WINNER_REASON_ROWS=[]
 
 def bidflag(v):
     """True when the offer cell contains text meaning 'we bid' rather than a number.
@@ -88,7 +90,11 @@ for f,yr in [('bids2025.xlsx',2025),('bids2026.xlsx',2026)]:
         except: continue
         g=lambda key: ws.cell(ri,m[key]).value if key in m else None
         st=map_status(g('status'))
-        winner=g('winner')
+        winner=g('winner'); winner_reason=None
+        if winner and is_reason_text(winner):          # e.g. "وجود عطاء مالي مقدم من منافس اخر" — a verdict, not a company
+            winner_reason=str(winner).strip(); winner=None
+            if st is None: st='Not awarded'             # a reason for losing implies the tender was lost
+            WINNER_REASON_ROWS.append((yr,sn,winner_reason))
         # skip empty pre-numbered placeholder rows (SN present but no real content)
         _content=[g('title'),g('client'),g('launch'),g('platform'),g('offer'),winner,g('nbid'),g('committee'),g('dur'),g('svcdept'),g('bankval')]
         if not any(str(x).strip() for x in _content if x not in (None,'')): continue
@@ -112,7 +118,7 @@ for f,yr in [('bids2025.xlsx',2025),('bids2026.xlsx',2026)]:
             eh_won=(True if st=='Awarded' else False if st=='Not awarded' else (is_eh(winner) if winner else None)),
             decided=(st in ('Awarded','Not awarded')) or bool(winner and str(winner).strip()),
             status=st,
-            reason=str(g('reason') or '').strip(),
+            reason=(str(g('reason') or '').strip() or (winner_reason or '')),
             appr=dict(ceo=acc(g('ceo')),fin=acc(g('fin')),tech=acc(g('tech')),bd=acc(g('bd')),pm=acc(g('pm')),admin=acc(g('admin')),legal=acc(g('legal'))),
         )
         if b['offer'] is not None and b['offer']<100: b['offer']=None   # sub-100 SAR = data-entry error, not a real bid
@@ -156,5 +162,6 @@ json.dump({'bids':allbids,'rosters':rosters}, open('bidraw2.json','w'), ensure_a
 print('bids:',len(allbids),'| with launch date:',sum(1 for b in allbids if b['month']))
 print('with platform:',sum(1 for b in allbids if b['platform']),'| with duration:',sum(1 for b in allbids if b['dur']))
 print('with svc dept:',sum(1 for b in allbids if b['svcdept']),'| with committee:',sum(1 for b in allbids if b['committee']))
+if WINNER_REASON_ROWS: print('DATA QUALITY — reason text found in the winner column (fix in the sheet):', ['%s/%s: %s' % (y,s,r[:60]) for y,s,r in WINNER_REASON_ROWS])
 print('with offer:',sum(1 for b in allbids if b['offer']),'| with winner:',sum(1 for b in allbids if b['winner']),'| EH won:',sum(1 for b in allbids if b['eh_won']))
 print('rosters:',len(rosters),'| roster line-items:',sum(len(v) for v in rosters.values()))

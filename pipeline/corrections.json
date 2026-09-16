@@ -1,0 +1,61 @@
+{
+ "_note": "Corrections confirmed by Youssef on 16 Sep 2026 from EH-WIN-02-F01_..._ver01.xlsx. Applied on top of the Drive workbook by extract_bids2.py; enter the same changes in the Drive file and these become no-ops.",
+ "updates": {
+  "2025-10": {
+   "svcdept": "Env. Service Dep."
+  },
+  "2025-59": {
+   "svcdept": "Env. Service Dep."
+  },
+  "2025-77": {
+   "svcdept": "Env. Study Dep."
+  },
+  "2025-78": {
+   "svcdept": "Env. Study Dep."
+  },
+  "2025-44": {
+   "client": "المركز الوطني للرقابة على الإلتزام البيئي"
+  },
+  "2025-45": {
+   "client": "المركز الوطني للرقابة على الإلتزام البيئي"
+  }
+ },
+ "additions": [
+  {
+   "year": 2025,
+   "sn": 80,
+   "launch": null,
+   "month": null,
+   "submit": "2026-01-25",
+   "submonth": "2026-01",
+   "title": "إعداد دراسة تقييم الأثر البيئي لمردم النفايات المنزلية بمدينة عرعر",
+   "client": "أمانة منطقة الحدود الشمالية",
+   "platform": "Etimad",
+   "dur": null,
+   "svcdept": "",
+   "committee": "",
+   "comments": "",
+   "offer": null,
+   "ehsub": false,
+   "discount": "",
+   "bankval": null,
+   "nbid": null,
+   "winner": "",
+   "winval": null,
+   "eh_won": null,
+   "decided": false,
+   "status": null,
+   "reason": "",
+   "appr": {
+    "ceo": false,
+    "fin": false,
+    "tech": false,
+    "bd": true,
+    "pm": false,
+    "admin": false,
+    "legal": false
+   },
+   "value": null
+  }
+ ]
+}

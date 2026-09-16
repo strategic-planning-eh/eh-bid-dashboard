@@ -76,6 +76,7 @@ function render(){
  $('opps').innerHTML=EF.opportunities.filter(o=>o.group===GROUP).map(o=>`<div class="opp"><div class="chips"><span class="chip h-${o.horizon}">${esc(L(o.horizon,HOR[o.horizon]||o.horizon))}</span><span class="chip o">${esc(L(o.owner,OWN[o.owner]||o.owner))}</span>${P(o.page)}</div><div><div class="st">${esc(L(o.en,o.ar))}</div><div class="ac"><b>${L('Action','الإجراء')}:</b> ${esc(L(o.action_en,o.action_ar))}</div></div></div>`).join('');
  // programme map
  $('pmwrap').innerHTML=programmeMap();
+ $('charts').innerHTML=`<div class="card"><h2>${L('The Kingdom by the Fund\'s numbers — what the report quantifies','المملكة بأرقام الصندوق — ما يقيسه التقرير')}</h2><div class="note">${L('Every figure the report gives a number to, charted. It does not itemise the 80 waste opportunities or the 45 feasibility studies — those counts are the most the report discloses (see "What we don\'t know").','كل ما أعطاه التقرير رقماً، مرسوماً. لا يفصّل التقرير فرص النفايات الثمانين ولا دراسات الجدوى الـ45 — تلك الأعداد هي أقصى ما يكشفه (انظر «ما لا نعرفه»).')}</div></div>`+EF.charts.map(c=>`<div class="card"><div class="hd"><h2>${esc(L(c.title_en,c.title_ar))}</h2><button class="png" onclick="exPNG('${c.id}','${c.id.replace('c-','')}')">${L('Export PNG','تصدير PNG')}</button></div><div class="note">${esc(L(c.sub_en,c.sub_ar))} · ${c.pages.map(P).join(' ')}</div>${chart(c)}</div>`).join('');
  // stakeholders + events
  $('stk').innerHTML=`<h2>${L('Stakeholders to add or update in the map','أصحاب مصلحة لإضافتهم أو تحديثهم في الخريطة')}</h2><div class="note">${L('Field values ready to paste into the stakeholder workbook.','قيم الحقول جاهزة للنقل إلى مصنّف أصحاب المصلحة.')}</div>
  <table class="t"><thead><tr><th></th><th>${L('Name','الاسم')}</th><th>${L('Category · Tier','الفئة · المستوى')}</th><th>${L('Role for EH','الدور بالنسبة لآفاق البيئة')}</th><th></th></tr></thead><tbody>
@@ -87,6 +88,25 @@ function render(){
  // facts ledger (collapsible)
  $('facts').innerHTML=`<summary style="cursor:pointer;font-weight:700">${L('Extraction ledger — every figure with its page','سجل الاستخراج — كل رقم بصفحته')} (${EF.facts.length})</summary><table class="t" style="margin-top:10px"><tbody>${EF.facts.map(f=>`<tr><td style="white-space:nowrap">${P(f.page)}</td><td style="color:var(--muted);white-space:nowrap">${esc(f.cat)}</td><td>${esc(L(f.en,f.ar))}</td></tr>`).join('')}</tbody></table>`;
  $('foot').innerHTML=esc(L(m.method_en,m.method_ar));
+}
+function chart(c){
+ const W=1100, rowH=34, L0=430, iw=W-L0-190, ink=DARK?'#E6EDF1':'#16333F', mut='#6B7C86';
+ const head=`<text x="14" y="22" font-size="14" font-weight="800" fill="${ink}">${esc(L(c.title_en,c.title_ar))}</text><text x="14" y="38" font-size="10.5" fill="${mut}">${esc(L('Source: Environment Fund Annual Report 2025 · p.','المصدر: التقرير السنوي لصندوق البيئة 2025 · ص'))} ${c.pages.join(', ')}</text>`;
+ if(c.type==='compare'){
+  const H=56+c.rows.length*44+30, max=Math.max(...c.rows.flatMap(r=>[r.a,r.b]));
+  let s=`<svg id="${c.id}" class="pm" viewBox="0 0 ${W} ${H}" width="100%" xmlns="http://www.w3.org/2000/svg" dir="ltr">${head}`;
+  s+=`<rect x="${W-190}" y="14" width="12" height="12" fill="${c.colors[0]}"/><text x="${W-172}" y="24" font-size="11" fill="${ink}">${c.series[0]}</text><rect x="${W-110}" y="14" width="12" height="12" fill="${c.colors[1]}"/><text x="${W-92}" y="24" font-size="11" fill="${ink}">${c.series[1]}</text>`;
+  c.rows.forEach((r,i)=>{const y=56+i*44;const wa=r.a/max*iw,wb=r.b/max*iw;const up=r.b>r.a;const better=/days|الأيام/.test(r.en+r.ar)?!up:up;
+   s+=`<text x="${L0-12}" y="${y+22}" text-anchor="end" font-size="12" fill="${ink}">${esc(L(r.en,r.ar))}</text><rect x="${L0}" y="${y+4}" width="${wa}" height="13" rx="2" fill="${c.colors[0]}"/><text x="${L0+wa+6}" y="${y+15}" font-size="11" fill="${mut}">${r.a}</text><rect x="${L0}" y="${y+20}" width="${wb}" height="13" rx="2" fill="${c.colors[1]}"/><text x="${L0+wb+6}" y="${y+31}" font-size="11" font-weight="700" fill="${ink}">${r.b} <tspan fill="${better?'#1F7A4C':'#C0504D'}">${up?'▲':'▼'} ${Math.abs(Math.round((r.b-r.a)/r.a*100))}%</tspan></text><text x="${W-40}" y="${y+22}" text-anchor="end" font-size="10" fill="${mut}">${L('p.','ص')} ${r.p}</text>`;});
+  return s+'</svg>';
+ }
+ const H=56+c.rows.length*rowH+16, vals=c.rows.map(r=>r.v), max=c.pct?100:Math.max(...vals);
+ const scale=v=>c.log?Math.log10(v+1)/Math.log10(max+1)*iw:v/max*iw;
+ let s=`<svg id="${c.id}" class="pm" viewBox="0 0 ${W} ${H}" width="100%" xmlns="http://www.w3.org/2000/svg" dir="ltr">${head}`;
+ c.rows.forEach((r,i)=>{const y=56+i*rowH,w=Math.max(scale(r.v),2);const col=r.c||c.color;
+  s+=`<text x="${L0-12}" y="${y+19}" text-anchor="end" font-size="12" fill="${ink}">${esc(L(r.en,r.ar))}</text><rect x="${L0}" y="${y+5}" width="${w.toFixed(1)}" height="22" rx="3" fill="${col}"/><text x="${L0+w+8}" y="${y+20}" font-size="12.5" font-weight="700" fill="${ink}">${r.v.toLocaleString('en-US')}${c.pct?'%':c.unit==='t'?' t':''}</text><text x="${W-40}" y="${y+20}" text-anchor="end" font-size="10" fill="${mut}">${L('p.','ص')} ${r.p}</text>`;});
+ if(c.log)s+=`<text x="${L0}" y="${H-4}" font-size="10" fill="${mut}">${esc(L('log scale — bar lengths are not proportional','مقياس لوغاريتمي — أطوال الأشرطة غير تناسبية'))}</text>`;
+ return s+'</svg>';
 }
 function programmeMap(){
  const pm=EF.programme_map, W=1100, rowH=40, top=56;
@@ -134,6 +154,7 @@ HTML = f"""<!DOCTYPE html>
  <div class="card" id="xref"></div>
  <div class="card"><h2 id="h-opp"></h2><div class="tabs" id="tabs"></div><div id="opps"></div></div>
  <div class="card" id="pmwrap"></div>
+ <div id="charts"></div>
  <div class="g2"><div class="card" id="stk"></div><div class="card" id="evt"></div></div>
  <div class="card" id="gaps"></div>
  <details class="card" id="facts"></details>

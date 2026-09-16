@@ -58,6 +58,7 @@ jobs:
           cp hub/eh_news_intelligence.html site/ 2>/dev/null || true
           cp hub/pif_intelligence_hub.html site/ 2>/dev/null || true
           cp hub/pif_strategy_2026_2030.html site/ 2>/dev/null || true
+          cp hub/environment_fund_2025.html site/ 2>/dev/null || true
           cp hub/eh-shared.css hub/eh-shared.js hub/eh-ar-dashboard.js site/ 2>/dev/null || true
           cp -r hub/vendor site/vendor 2>/dev/null || true
           echo "{\"built\":\"$(TZ='Asia/Riyadh' date +'%d %b %Y, %H:%M (KSA)')\",\"built_iso\":\"$(TZ='Asia/Riyadh' date +'%Y-%m-%dT%H:%M+03:00')\"}" > site/build_info.json

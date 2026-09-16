@@ -252,6 +252,7 @@ html[dir=rtl] #wnpanel{--wnx:-30px}@media(max-width:640px){#wnpanel{width:100%}}
       <button class="nsub" data-n="corp"><span class="tl" data-en="Corporate &amp; Government News" data-ar="أخبار الشركات والحكومة">Corporate &amp; Government News</span></button>
       <button class="nsub" data-n="pif"><span class="tl" data-en="PIF Intelligence Hub" data-ar="مركز استخبارات صندوق الاستثمارات">PIF Intelligence Hub</span></button>
       <button class="nsub" data-n="strat" title="PIF Strategy 2026–2030 — what changed, and what it means for EH · استراتيجية صندوق الاستثمارات العامة 2026–2030 — ما الذي تغيّر وماذا يعني لآفاق البيئة"><span class="tl" data-en="PIF Strategy 2026–2030" data-ar="استراتيجية صندوق الاستثمارات العامة 2026–2030">PIF Strategy 2026–2030</span><span class="newb" aria-label="New">New</span></button>
+      <button class="nsub" data-n="ef2025" title="Environment Fund 2025 Annual Report — what it means for EH · التقرير السنوي لصندوق البيئة 2025 — ماذا يعني لآفاق البيئة"><span class="tl" data-en="Environment Fund 2025 Report" data-ar="تقرير صندوق البيئة 2025">Environment Fund 2025 Report</span><span class="newb" aria-label="New">New</span></button>
     </div>
     <div style="position:relative;flex:1">
       <div class="skel on" id="sk-v2030"><div class="in"><div class="spin"></div><span class="tl" data-en="Loading Vision 2030…" data-ar="جارٍ تحميل رؤية 2030…">Loading Vision 2030…</span></div></div>
@@ -264,6 +265,8 @@ html[dir=rtl] #wnpanel{--wnx:-30px}@media(max-width:640px){#wnpanel{width:100%}}
       <iframe id="f-pif" title="PIF annual reports intelligence" data-src="pif_intelligence_hub.html" loading="lazy" style="display:none"></iframe>
       <div class="skel" id="sk-strat"><div class="in"><div class="spin"></div><span class="tl" data-en="Loading PIF Strategy 2026–2030…" data-ar="جارٍ تحميل استراتيجية الصندوق 2026–2030…">Loading PIF Strategy 2026–2030…</span></div></div>
       <iframe id="f-strat" title="PIF Strategy 2026–2030 — what changed, and what it means for EH" data-src="pif_strategy_2026_2030.html" loading="lazy" style="display:none"></iframe>
+      <div class="skel" id="sk-ef2025"><div class="in"><div class="spin"></div><span class="tl" data-en="Loading Environment Fund 2025 Report…" data-ar="جارٍ تحميل تقرير صندوق البيئة 2025…">Loading Environment Fund 2025 Report…</span></div></div>
+      <iframe id="f-ef2025" title="Environment Fund 2025 Annual Report — what it means for EH" data-src="environment_fund_2025.html" loading="lazy" style="display:none"></iframe>
     </div>
   </div>
 </main>
@@ -517,7 +520,7 @@ applyHubTheme();
 function nGo(btn){
   document.querySelectorAll('.nsub').forEach(x=>x.classList.toggle('on',x===btn));
   const id=btn.dataset.n;
-  ['v2030','fiscal','corp','pif','strat'].forEach(k=>{
+  ['v2030','fiscal','corp','pif','strat','ef2025'].forEach(k=>{
     const f=$('f-'+k);
     const on=k===id;
     if(on&&!f.src&&f.dataset.src){f.src=f.dataset.src;$('sk-'+k).classList.add('on');

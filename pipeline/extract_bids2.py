@@ -1,4 +1,4 @@
-import openpyxl, re, json, datetime
+import openpyxl, re, json, datetime, unicodedata
 from namecheck import is_reason_text   # 15 Sep 2026: reason text typed in the winner column must not become a competitor
 WINNER_REASON_ROWS=[]
 
@@ -101,7 +101,7 @@ for f,yr in [('bids2025.xlsx',2025),('bids2026.xlsx',2026)]:
         b=dict(year=yr, sn=sn,
             launch=dstr(g('launch')), month=mkey(g('launch')),
             submit=dstr(g('submit')), submonth=mkey(g('submit')),
-            title=str(g('title') or '').strip(),
+            title=re.sub(r'\s+',' ',unicodedata.normalize('NFKC',str(g('title') or ''))).strip(),   # presentation-form Arabic (تقديم) folds to plain letters; line breaks collapse
             client=str(g('client') or '').strip(),
             platform=str(g('platform') or '').strip(),
             dur=num(g('dur')),
@@ -157,6 +157,19 @@ OVERRIDES={(2026,16): dict(value=20000000, offer=20000000, winval=20000000)}  # 
 for _b in allbids:
     _o=OVERRIDES.get((_b['year'],_b['sn']))
     if _o: _b.update(_o)
+# ---- corrections.json: field updates and added rows confirmed by the bid team (see the file's _note) ----
+import os as _os
+_cp=_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),'corrections.json')
+if _os.path.exists(_cp):
+    _c=json.load(open(_cp,encoding='utf-8')); _byk={f"{b['year']}-{b['sn']}":b for b in allbids}; _nu=_na=0
+    for _k,_fields in (_c.get('updates') or {}).items():
+        if _k in _byk:
+            _b=_byk[_k]; _b.update(_fields); _nu+=1
+            if 'offer' in _fields or 'winval' in _fields: _b['value']=_b['winval'] if _b.get('winval') else _b.get('offer')
+    for _row in (_c.get('additions') or []):
+        _k=f"{_row['year']}-{_row['sn']}"
+        if _k not in _byk: allbids.append(_row); _byk[_k]=_row; _na+=1
+    print(f'corrections.json applied: {_nu} rows updated, {_na} rows added')
 
 json.dump({'bids':allbids,'rosters':rosters}, open('bidraw2.json','w'), ensure_ascii=False)
 print('bids:',len(allbids),'| with launch date:',sum(1 for b in allbids if b['month']))

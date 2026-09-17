@@ -108,15 +108,15 @@ function chart(c){
  const head=`<text x="14" y="22" font-size="14" font-weight="800" fill="${ink}">${esc(L(c.title_en,c.title_ar))}</text><text x="14" y="38" font-size="10.5" fill="${mut}">${esc(L('Source: Environment Fund Annual Report 2025 · p.','المصدر: التقرير السنوي لصندوق البيئة 2025 · ص'))} ${c.pages.join(', ')}</text>`;
  if(c.type==='compare'){
   const H=56+c.rows.length*44+30, max=Math.max(...c.rows.flatMap(r=>[r.a,r.b]));
-  let s=`<svg id="${c.id}" class="pm" viewBox="0 0 ${W} ${H}" width="100%" xmlns="http://www.w3.org/2000/svg" dir="ltr">${head}`;
-  s+=`<rect x="${W-190}" y="14" width="12" height="12" fill="${c.colors[0]}"/><text x="${W-172}" y="24" font-size="11" fill="${ink}">${c.series[0]}</text><rect x="${W-110}" y="14" width="12" height="12" fill="${c.colors[1]}"/><text x="${W-92}" y="24" font-size="11" fill="${ink}">${c.series[1]}</text>`;
+  let s=`<svg id="${c.id}" class="pm" viewBox="0 44 ${W} ${H-44}" width="100%" xmlns="http://www.w3.org/2000/svg" dir="ltr">${head}`;
+  s+=`<rect x="${W-190}" y="44" width="12" height="12" fill="${c.colors[0]}"/><text x="${W-172}" y="54" font-size="11" fill="${ink}">${c.series[0]}</text><rect x="${W-110}" y="44" width="12" height="12" fill="${c.colors[1]}"/><text x="${W-92}" y="54" font-size="11" fill="${ink}">${c.series[1]}</text>`;
   c.rows.forEach((r,i)=>{const y=56+i*44;const wa=r.a/max*iw,wb=r.b/max*iw;const up=r.b>r.a;const better=/days|الأيام/.test(r.en+r.ar)?!up:up;
    s+=`<text x="${L0-12}" y="${y+22}" text-anchor="end" font-size="12" fill="${ink}">${esc(L(r.en,r.ar))}</text><rect x="${L0}" y="${y+4}" width="${wa}" height="13" rx="2" fill="${c.colors[0]}"/><text x="${L0+wa+6}" y="${y+15}" font-size="11" fill="${mut}">${r.a}</text><rect x="${L0}" y="${y+20}" width="${wb}" height="13" rx="2" fill="${c.colors[1]}"/><text x="${L0+wb+6}" y="${y+31}" font-size="11" font-weight="700" fill="${ink}">${r.b} <tspan fill="${better?'#1F7A4C':'#C0504D'}">${up?'▲':'▼'} ${Math.abs(Math.round((r.b-r.a)/r.a*100))}%</tspan></text><text x="${W-40}" y="${y+22}" text-anchor="end" font-size="10" fill="${mut}">${L('p.','ص')} ${r.p}</text>`;});
   return s+'</svg>';
  }
  const H=56+c.rows.length*rowH+16, vals=c.rows.map(r=>r.v), max=c.pct?100:Math.max(...vals);
  const scale=v=>c.log?Math.log10(v+1)/Math.log10(max+1)*iw:v/max*iw;
- let s=`<svg id="${c.id}" class="pm" viewBox="0 0 ${W} ${H}" width="100%" xmlns="http://www.w3.org/2000/svg" dir="ltr">${head}`;
+ let s=`<svg id="${c.id}" class="pm" viewBox="0 44 ${W} ${H-44}" width="100%" xmlns="http://www.w3.org/2000/svg" dir="ltr">${head}`;
  c.rows.forEach((r,i)=>{const y=56+i*rowH,w=Math.max(scale(r.v),2);const col=r.c||c.color;
   s+=`<text x="${L0-12}" y="${y+19}" text-anchor="end" font-size="12" fill="${ink}">${esc(L(r.en,r.ar))}</text><rect x="${L0}" y="${y+5}" width="${w.toFixed(1)}" height="22" rx="3" fill="${col}"/><text x="${L0+w+8}" y="${y+20}" font-size="12.5" font-weight="700" fill="${ink}">${r.v.toLocaleString('en-US')}${c.pct?'%':c.unit==='t'?' t':''}</text><text x="${W-40}" y="${y+20}" text-anchor="end" font-size="10" fill="${mut}">${L('p.','ص')} ${r.p}</text>`;});
  if(c.log)s+=`<text x="${L0}" y="${H-4}" font-size="10" fill="${mut}">${esc(L('log scale — bar lengths are not proportional','مقياس لوغاريتمي — أطوال الأشرطة غير تناسبية'))}</text>`;
@@ -142,7 +142,7 @@ function programmeMap(){
  s+='</svg>';
  return `<div class="hd"><h2>${L('Programme map — what touches whom','خريطة البرامج — ما يمسّ من')}</h2><button class="png" onclick="exPNG('ex-pm','programme_map')">${L('Export PNG','تصدير PNG')}</button></div><div class="note">${L('Loan support, guarantees and impact investment reach EH directly; grants, PPP, fees and shared services reach EH through the centres it is licensed by and bids to.','دعم القروض والضمانات واستثمارات الأثر تصل آفاق البيئة مباشرة؛ أما المنح والتخصيص والمقابلات المالية والخدمات المشتركة فتصلها عبر المراكز التي ترخّصها وتتقدم لمنافساتها.')}</div>${s}`;
 }
-function exPNG(id,name){const svg=$(id);if(!svg)return;const cl=svg.cloneNode(true);const vb=svg.viewBox.baseVal;cl.setAttribute('width',vb.width);cl.setAttribute('height',vb.height);cl.removeAttribute('class');
+function exPNG(id,name){const svg=$(id);if(!svg)return;const cl=svg.cloneNode(true);const b=svg.viewBox.baseVal,vb={width:b.width,height:b.y+b.height};cl.setAttribute('viewBox',`0 0 ${vb.width} ${vb.height}`);cl.setAttribute('width',vb.width);cl.setAttribute('height',vb.height);cl.removeAttribute('class');
  cl.querySelectorAll('text').forEach(t=>t.setAttribute('font-family',"'Segoe UI',Tahoma,Arial,sans-serif"));
  const bg=document.createElementNS('http://www.w3.org/2000/svg','rect');bg.setAttribute('width',vb.width);bg.setAttribute('height',vb.height);bg.setAttribute('fill',DARK?'#151C21':'#fff');cl.insertBefore(bg,cl.firstChild);
  const xml=new XMLSerializer().serializeToString(cl),img=new Image(),S=2.5;img.onload=()=>{const c=document.createElement('canvas');c.width=vb.width*S;c.height=vb.height*S;const x=c.getContext('2d');x.drawImage(img,0,0,c.width,c.height);const a=document.createElement('a');a.download=`EH_EnvFund2025_${name}_${LANG}_${new Date().toISOString().slice(0,10)}.png`;a.href=c.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();};img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(xml);}

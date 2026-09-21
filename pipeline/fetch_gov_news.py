@@ -68,6 +68,13 @@ def parse_date(text):
         return f'{int(m.group(4)):04d}-{MONTHS[m.group(3).lower()]:02d}-{int(m.group(2)):02d}'
     return None
 
+def date_from_url(url):
+    m = re.search(r'/(\d{2})(\d{2})(20\d{2})\d?\.aspx$', url or '')
+    if m:
+        d, mo, y = int(m.group(1)), int(m.group(2)), int(m.group(3))
+        if 1 <= d <= 31 and 1 <= mo <= 12: return f'{y:04d}-{mo:02d}-{d:02d}'
+    return None
+
 def clean(s):
     s = htmlmod.unescape(str(s or ''))
     s = re.sub(r'[\u200b\u200c\u200d\ufeff\u0640]', '', s)
@@ -127,12 +134,16 @@ def anchors_from_html(html_text, base, pattern):
             if node is None: break
             ctx = clean(node.get_text(' '))
             if parse_date(ctx): break
-        out.append(dict(title=text, url=key, date=parse_date(ctx)))
+        out.append(dict(title=text, url=key, date=parse_date(ctx) or date_from_url(key)))
     return out, soup
 
 def fetch_html(src, dbg):
-    r = http_get(src['url'])
-    out, soup = anchors_from_html(r.text, src['url'], src.get('link_pattern'))
+    try:
+        html_text = http_get(src['url']).text
+    except requests.exceptions.ConnectionError as e:
+        dbg['fallback'] = f'plain request failed ({str(e)[:120]}) — rendered in the browser instead'
+        html_text = rendered_html(src['url'])
+    out, soup = anchors_from_html(html_text, src['url'], src.get('link_pattern'))
     if not out:  # record what the page did contain so the pattern can be corrected
         dbg['sample'] = [(urljoin(src['url'], a['href']), clean(a.get_text(' '))[:60]) for a in soup.find_all('a', href=True)[:25]]
     else:
@@ -175,8 +186,9 @@ def fetch_sharepoint(src, dbg):
 def fetch_spa(src, cfg, dbg):
     spa = cfg['spa']; rx = re.compile(spa['link_pattern'])
     tried = []
+    lang = src.get('lang', 'ar'); seg = '' if lang == 'ar' else lang + '/'
     for tmpl in spa['search_urls']:
-        url = tmpl.format(lang=src.get('lang', 'ar'), q=quote(src['query']))
+        url = tmpl.format(seg=seg, q=quote(src['query']))
         tried.append(url)
         try:
             html_text = rendered_html(url, settle_ms=3500)
@@ -188,13 +200,17 @@ def fetch_spa(src, cfg, dbg):
         for a in soup.find_all('a', href=True):
             href = urljoin(url, a['href'].strip()).split('?')[0]
             if not rx.search(href) or href in seen: continue
-            text = clean(a.get_text(' '))
+            h = a.find(['h1', 'h2', 'h3', 'h4', 'h5'])          # the card's heading — not the dateline that follows it
+            text = clean(h.get_text(' ')) if h else clean(a.get_text(' '))
             if len(text) < 20:  # card links often wrap an image; take the card's heading instead
                 card = a.find_parent(['article', 'li', 'div'])
                 if card:
-                    h = card.find(['h1', 'h2', 'h3', 'h4', 'p'])
+                    h = card.find(['h1', 'h2', 'h3', 'h4', 'h5', 'p'])
                     text = clean(h.get_text(' ')) if h else text
             if len(text) < 20: continue
+            # SPA cards end with a dateline ("… Riyadh, September 21, 2026, SPA --"); keep the headline only
+            text = re.split(r'\s+(?:Riyadh|Jeddah|Makkah|Madinah|Dammam|Jubail|Yanbu|AlUla|Tabuk|Abha|Hail|Qassim|Najran|Jazan|Arar|Sakaka|Al-Baha|Taif|Buraidah|[A-Z][a-z]+),\s+(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d', text)[0]
+            text = re.split(r'\s+(?:الرياض|جدة|مكة المكرمة|المدينة المنورة|الدمام|الجبيل|ينبع|العلا|تبوك|أبها|حائل|بريدة|نجران|جازان|عرعر|سكاكا|الباحة|الطائف)\s+\d{1,2}\s+\S+\s+\d{4}', text)[0].strip()
             seen.add(href)
             ctx, node = '', a
             for _ in range(4):

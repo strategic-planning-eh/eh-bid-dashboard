@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Government news — regulators EH answers to, refreshed weekly</title>
+<link rel="stylesheet" href="eh-shared.css">
+<style>
+:root{--bg:#F4F7F5;--card:#fff;--ink:#16333F;--muted:#5F7078;--line:#E3EAE5;--green:#1F7A4C;--blue:#1A5FAB;--amber:#E8862E;--red:#C0504D;--chip:#F0F5F2;--gov:#1A5FAB}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{font-family:var(--eh-font,"Segoe UI",Tahoma,Arial,sans-serif);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5}
+body.dark{--bg:#0F1519;--card:#151C21;--ink:#E6EDF1;--muted:#9FB3BE;--line:#2C3A43;--chip:#1E2830;--gov:#7FA7E6}
+header{background:linear-gradient(90deg,#1A5FAB,#1F7A4C);color:#fff;padding:16px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+header h1{margin:0;font-size:19px;font-weight:800}header .sub{font-size:12px;opacity:.9;margin-top:2px}
+header .ctl{margin-inline-start:auto;display:flex;gap:6px}
+.tog{display:inline-flex;border:1px solid rgba(255,255,255,.5);border-radius:8px;overflow:hidden}.tog button{background:transparent;color:#fff;border:0;padding:6px 12px;cursor:pointer;font:600 12px inherit}.tog button.on{background:#fff;color:#1A5FAB}
+main{max-width:1380px;margin:0 auto;padding:16px 22px 40px}
+.stamp{font-size:12px;color:var(--muted);margin:0 0 12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}.stamp b{color:var(--ink)}
+.kstrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-bottom:16px}
+.kc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;border-top:4px solid var(--gov)}
+.kc .v{font-size:24px;font-weight:800;color:var(--gov);line-height:1.1}.kc .l{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.4}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:16px}
+.card h2{margin:0 0 4px;font-size:16px;font-weight:800;display:flex;align-items:center;gap:8px}.card h2::before{content:"";width:4px;height:18px;background:var(--gov);border-radius:2px;display:inline-block}
+.card .note{font-size:12.5px;color:var(--muted);margin-bottom:10px}
+.bodies{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin-top:8px}
+.bd{border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;background:var(--bg)}.bd.on{outline:2px solid var(--gov)}
+.bd .n{font-weight:700;font-size:13px}.bd .m{font-size:11.5px;color:var(--muted);margin-top:4px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;background:var(--muted)}.dot.ok{background:var(--green)}.dot.empty{background:var(--amber)}.dot.error{background:var(--red)}.dot.skipped,.dot.robots{background:#9AABB5}
+.fl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0 14px}
+.fl select,.fl input{font:inherit;font-size:12.5px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+.fl input{min-width:220px}
+.tabs{display:inline-flex;gap:4px;flex-wrap:wrap}.tabs button{background:var(--chip);border:1px solid var(--line);color:var(--ink);border-radius:20px;padding:6px 14px;cursor:pointer;font:600 12.5px inherit}.tabs button.on{background:var(--gov);color:#fff;border-color:var(--gov)}
+.it{display:grid;grid-template-columns:96px 1fr;gap:6px 14px;padding:11px 0;border-top:1px solid var(--line)}.it:first-of-type{border-top:0}
+.it .d{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:2px}.it .d small{display:block;font-size:10.5px}
+.it .t{font-size:13.5px;line-height:1.55}.it .t a{color:var(--ink);text-decoration:none;font-weight:600}.it .t a:hover{text-decoration:underline;color:var(--gov)}
+.it .meta{margin-top:5px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.chip{font-size:10.5px;font-weight:700;border-radius:6px;padding:2px 8px;color:#fff;background:var(--muted)}
+.chip.body{background:var(--gov)}.chip.src-official{background:var(--green)}.chip.src-spa{background:#5F7078}.chip.tag{background:var(--chip);color:var(--ink);border:1px solid var(--line)}.chip.lang{background:transparent;color:var(--muted);border:1px solid var(--line)}
+.empty{padding:22px;text-align:center;color:var(--muted);font-size:13px;background:var(--chip);border-radius:10px}
+.warn{font-size:12.5px;padding:10px 12px;background:var(--chip);border-radius:8px;border-inline-start:3px solid var(--amber);margin-top:10px}
+.foot{font-size:11.5px;color:var(--muted);text-align:center;margin-top:20px;line-height:1.6}
+table.t{width:100%;border-collapse:collapse;font-size:12px}table.t th{text-align:start;font-size:11px;letter-spacing:.3px;color:var(--muted);text-transform:uppercase;padding:6px 8px;border-bottom:1px solid var(--line)}table.t td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+details summary{cursor:pointer;font-weight:700}
+@media(max-width:640px){.it{grid-template-columns:1fr}.it .d{padding:0}}
+</style>
+</head>
+<body>
+<header>
+ <div><h1 id="title"></h1><div class="sub" id="sub"></div></div>
+ <div class="ctl"><div class="tog" id="lang"><button data-l="en" onclick="setLang('en')">EN</button><button data-l="ar" onclick="setLang('ar')">عربي</button></div></div>
+</header>
+<main>
+ <div class="stamp" id="stamp"></div>
+ <div class="kstrip" id="kstrip"></div>
+ <div class="card" id="bodies"></div>
+ <div class="card" id="feed"></div>
+ <details class="card" id="status"></details>
+ <div class="foot" id="foot"></div>
+</main>
+<script>
+let LANG=(localStorage.getItem('gov.lang')||localStorage.getItem('ef.lang')||'en'), DARK=false, FEED=null, LOADERR=null;
+const S={body:'all',period:'week',tag:'all',src:'all',q:''};
+const L=(en,ar)=>LANG==='ar'?ar:en, $=id=>document.getElementById(id), esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const TAGL={licence:['Licence','ترخيص'],tender:['Tender / contract','منافسة / عقد'],regulation:['Regulation','لائحة / نظام'],fine:['Fine / violation','غرامة / مخالفة'],mou:['MoU / agreement','مذكرة / اتفاقية'],event:['Event','فعالية'],investment:['Investment','استثمار']};
+const STL={ok:['Fetched','تم الجلب'],empty:['Reachable, nothing found','متاح، لا عناصر'],error:['Fetch failed','فشل الجلب'],skipped:['Skipped','تم التخطي'],robots:['Site blocks robots — via SPA','الموقع يمنع الروبوتات — عبر واس']};
+function setLang(l){LANG=l;try{localStorage.setItem('gov.lang',l)}catch(e){};document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';render();}
+function setDark(d){DARK=d;document.body.classList.toggle('dark',d);}
+window.addEventListener('message',e=>{const d=e.data||{};if(d.ehhub==='lang'&&(d.lang==='ar'||d.lang==='en'))setLang(d.lang);if(d.ehhub==='theme')setDark(d.theme==='dark');});
+const fmtD=iso=>{if(!iso)return L('date n/a','بدون تاريخ');const d=new Date(iso+'T00:00:00');return d.toLocaleDateString(LANG==='ar'?'ar-SA-u-nu-latn':'en-GB',{day:'2-digit',month:'short',year:'numeric'});};
+const daysAgo=iso=>iso?Math.floor((Date.now()-new Date(iso+'T00:00:00'))/864e5):null;
+function bodyOf(id){return (FEED.bodies||[]).find(b=>b.id===id)||{id,en:id,ar:id,short:id};}
+function bodyState(b){ // worst-case across sources, but "ok" if any source delivered
+ const ss=b.sources||[];if(!ss.length)return 'skipped';
+ if(ss.some(s=>s.status==='ok'))return 'ok';
+ if(b.robots_disallow&&ss.every(s=>s.type==='spa'&&s.status!=='ok'))return ss.some(s=>s.status==='error')?'error':'empty';
+ if(ss.some(s=>s.status==='empty'))return 'empty';
+ if(ss.some(s=>s.status==='error'))return 'error';return 'skipped';}
+function inPeriod(it){const d=it.date||it.first_seen;if(S.period==='all')return true;const n=daysAgo(d);if(n==null)return S.period!=='week';return S.period==='week'?(d>=FEED.week_from&&d<=FEED.week_to)||it.first_seen>=FEED.week_from:n<=30;}
+function filtered(){return (FEED.items||[]).filter(it=>(S.body==='all'||it.body===S.body)&&inPeriod(it)&&(S.tag==='all'||(it.tags||[]).includes(S.tag))&&(S.src==='all'||it.source===S.src)&&(!S.q||it.title.toLowerCase().includes(S.q.toLowerCase())));}
+function render(){
+ document.querySelectorAll('#lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===LANG));
+ $('title').textContent=L('Government — what the regulators announced','الحكومة — ما أعلنته الجهات التنظيمية');
+ $('sub').textContent=L('Official releases from the bodies EH is licensed and inspected by, collected every Sunday morning. Headlines in the language they were published in.','البيانات الرسمية للجهات التي ترخّص آفاق البيئة وتفتّش عليها، تُجمع كل صباح أحد. العناوين بلغة نشرها.');
+ if(!FEED){$('stamp').innerHTML='';$('kstrip').innerHTML='';$('bodies').innerHTML='';$('status').innerHTML='';
+  $('feed').innerHTML=`<div class="empty">${LOADERR?esc(L('The weekly feed file (gov_news.json) could not be loaded. It is published by the Sunday workflow; if you opened this page as a local file, it is only available from the published hub.','لم يُحمَّل ملف التغذية الأسبوعي (gov_news.json). يُنشره سير العمل صباح الأحد؛ وإن فتحت الصفحة كملف محلي فهو متاح من المركز المنشور فقط.')):esc(L('Loading…','جارٍ التحميل…'))}</div>`;return;}
+ const items=FEED.items||[], wk=items.filter(it=>(it.date&&it.date>=FEED.week_from&&it.date<=FEED.week_to)||it.first_seen>=FEED.week_from);
+ const m30=items.filter(it=>{const n=daysAgo(it.date||it.first_seen);return n!=null&&n<=30;});
+ const bodies=FEED.bodies||[], reporting=bodies.filter(b=>items.some(it=>it.body===b.id)).length, problems=bodies.reduce((n,b)=>n+(b.sources||[]).filter(s=>s.status==='error').length,0);
+ $('stamp').innerHTML=`<span>${L('Collected','تاريخ الجمع')} <b dir="ltr">${esc(FEED.generated_ksa||FEED.generated)}</b></span><span>·</span><span>${L('Feed week','أسبوع التغذية')} <b dir="ltr">${fmtD(FEED.week_from)} – ${fmtD(FEED.week_to)}</b></span><span>·</span><span>${L('keeps','الاحتفاظ')} <b>${FEED.retention_days}</b> ${L('days','يوماً')}</span>`;
+ $('kstrip').innerHTML=[[wk.length,L('Announcements this feed week','إعلانات في أسبوع التغذية')],[m30.length,L('In the last 30 days','خلال 30 يوماً')],[`${reporting} / ${bodies.length}`,L('Bodies with at least one item on file','جهات لديها عنصر واحد على الأقل')],[problems,L('Sources that failed on the last run','مصادر فشلت في آخر تشغيل')]].map(([v,l])=>`<div class="kc"><div class="v" dir="ltr">${v}</div><div class="l">${l}</div></div>`).join('');
+ // bodies with freshness
+ $('bodies').innerHTML=`<h2>${L('Bodies followed — click one to filter','الجهات المتابَعة — انقر للتصفية')}</h2><div class="note">${L('Green: the last run fetched items. Amber: reachable but nothing found. Red: fetch failed. Grey: followed through SPA only because the site blocks robots.','أخضر: آخر تشغيل جلب عناصر. كهرماني: متاح دون عناصر. أحمر: فشل الجلب. رمادي: يُتابَع عبر واس فقط لأن الموقع يمنع الروبوتات.')}</div>
+ <div class="bodies">${bodies.map(b=>{const st=bodyState(b);const last=items.filter(it=>it.body===b.id).map(it=>it.date||it.first_seen).sort().pop();const cnt=items.filter(it=>it.body===b.id).length;
+  return `<div class="bd ${S.body===b.id?'on':''}" onclick="S.body=S.body==='${b.id}'?'all':'${b.id}';render()"><div class="n">${esc(L(b.en,b.ar))}</div><div class="m"><span class="dot ${b.robots_disallow&&st!=='ok'?'robots':st}" title="${esc(L(...(STL[b.robots_disallow&&st!=='ok'?'robots':st]||[st,st])))}"></span><span>${cnt} ${L('on file','على السجل')}</span><span>·</span><span>${last?L('latest','الأحدث')+' '+fmtD(last):L('none yet','لا شيء بعد')}</span>${b.robots_disallow?`<span>· ${L('via SPA','عبر واس')}</span>`:''}</div></div>`;}).join('')}</div>`;
+ // feed
+ const list=filtered();
+ const tags=[...new Set(items.flatMap(it=>it.tags||[]))];
+ $('feed').innerHTML=`<h2>${L('Announcements','الإعلانات')} <span style="opacity:.6;font-weight:600;font-size:13px">(${list.length})</span></h2>
+ <div class="fl"><div class="tabs">${[['week',L('This feed week','هذا الأسبوع')],['30',L('Last 30 days','آخر 30 يوماً')],['all',L('Everything on file','كل السجل')]].map(([k,l])=>`<button class="${S.period===k?'on':''}" onclick="S.period='${k}';render()">${l}</button>`).join('')}</div>
+  <select onchange="S.tag=this.value;render()"><option value="all">${L('All topics','كل المواضيع')}</option>${tags.map(t=>`<option value="${t}" ${S.tag===t?'selected':''}>${esc(L(...(TAGL[t]||[t,t])))}</option>`).join('')}</select>
+  <select onchange="S.src=this.value;render()"><option value="all">${L('Official + SPA','رسمي + واس')}</option><option value="official" ${S.src==='official'?'selected':''}>${L('Official sites only','المواقع الرسمية فقط')}</option><option value="spa" ${S.src==='spa'?'selected':''}>${L('SPA only','واس فقط')}</option></select>
+  <input placeholder="${L('Search headlines…','ابحث في العناوين…')}" value="${esc(S.q)}" oninput="S.q=this.value;render()">
+  ${S.body!=='all'?`<button class="chip body" style="cursor:pointer;border:0" onclick="S.body='all';render()">${esc(bodyOf(S.body).short)} ✕</button>`:''}</div>
+ ${list.length?list.map(it=>`<div class="it"><div class="d" dir="ltr">${fmtD(it.date)}${!it.date?`<small>${L('seen','رُصد')} ${fmtD(it.first_seen)}</small>`:''}</div><div><div class="t" dir="auto" lang="${it.lang}"><a href="${esc(it.url)}" target="_blank" rel="noopener">${esc(it.title)}</a></div><div class="meta"><span class="chip body">${esc(bodyOf(it.body).short)}</span><span class="chip src-${it.source}">${it.source==='official'?L('Official','رسمي'):L('SPA','واس')}</span><span class="chip lang">${it.lang==='ar'?'AR':'EN'}</span>${(it.tags||[]).map(t=>`<span class="chip tag">${esc(L(...(TAGL[t]||[t,t])))}</span>`).join('')}</div></div></div>`).join('')
+  :`<div class="empty">${S.period==='week'?L('No announcement was found for this selection in the feed week. That is a result, not a gap: the sources were checked on the date above.','لم يُرصد إعلان لهذا الاختيار في أسبوع التغذية. هذه نتيجة لا فجوة: فُحصت المصادر في التاريخ أعلاه.'):L('Nothing on file for this selection.','لا شيء على السجل لهذا الاختيار.')}</div>`}`;
+ // status table
+ $('status').innerHTML=`<summary>${L('Source status — last run','حالة المصادر — آخر تشغيل')}</summary><table class="t" style="margin-top:10px"><thead><tr><th>${L('Body','الجهة')}</th><th>${L('Source','المصدر')}</th><th>${L('Status','الحالة')}</th><th>${L('Found','وُجد')}</th><th>${L('New','جديد')}</th><th>${L('Note','ملاحظة')}</th></tr></thead><tbody>
+ ${bodies.flatMap(b=>(b.sources||[]).map(s=>`<tr><td>${esc(b.short)}</td><td dir="ltr" style="word-break:break-all;max-width:360px">${esc(s.type.toUpperCase())} · ${esc(s.lang||'')} · ${esc((s.url||'').slice(0,90))}</td><td><span class="dot ${s.status}"></span> ${esc(L(...(STL[s.status]||[s.status,s.status])))}</td><td dir="ltr">${s.count}</td><td dir="ltr">${s.new}</td><td>${esc(s.note||'')}</td></tr>`)).join('')}</tbody></table>
+ ${bodies.some(b=>b.map_note)?`<div class="warn">${bodies.filter(b=>b.map_note).map(b=>esc(b.map_note)).join(' ')}</div>`:''}`;
+ $('foot').textContent=L(FEED.note_en,FEED.note_ar);
+}
+document.documentElement.lang=LANG;document.documentElement.dir=LANG==='ar'?'rtl':'ltr';render();
+fetch('gov_news.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(j=>{FEED=j;render();}).catch(e=>{LOADERR=String(e);render();});
+</script>
+<script src="eh-shared.js" defer></script>
+</body></html>

@@ -145,8 +145,11 @@ def parse_changes(path, week):
 
 # ------------------------------------------------------------------ main
 def iso_week(d):
-    y, w, _ = d.isocalendar(); mon = d - dt.timedelta(days=d.weekday())
-    return f'{y}-W{w:02d}', mon.isoformat(), (mon + dt.timedelta(days=6)).isoformat()
+    """Sunday–Saturday week (Saudi working week). Label = ISO week of the Monday inside it, so Mon–Sat dates keep their
+    old label and a Sunday heads the week that follows it."""
+    sun = d - dt.timedelta(days=(d.weekday() + 1) % 7); mon = sun + dt.timedelta(days=1)
+    y, w, _ = mon.isocalendar()
+    return f'{y}-W{w:02d}', sun.isoformat(), (sun + dt.timedelta(days=6)).isoformat()
 
 def main():
     ap = argparse.ArgumentParser()

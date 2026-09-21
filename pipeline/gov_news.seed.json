@@ -1,0 +1,229 @@
+{
+ "generated": "",
+ "generated_ksa": "not yet run",
+ "week_from": "2026-09-20",
+ "week_to": "2026-09-26",
+ "retention_days": 90,
+ "bodies": [
+  {
+   "id": "mewa",
+   "en": "Ministry of Environment, Water & Agriculture (MEWA)",
+   "ar": "وزارة البيئة والمياه والزراعة",
+   "short": "MEWA",
+   "site": "https://www.mewa.gov.sa",
+   "robots_disallow": false,
+   "map_note": "",
+   "sources": [
+    {
+     "type": "rss",
+     "lang": "ar",
+     "url": "https://www.mewa.gov.sa/_layouts/15/feed.aspx?xsl=1&web=/ar/MediaCenter/News&page=ea8b9cb5-f87b-4fff-8947-f2133bb4bdcb&wp=e791e78d-3a99-4727-af0b-e1fa687594d5&pageurl=/ar/MediaCenter/News/Pages/home.aspx",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    },
+    {
+     "type": "spa",
+     "lang": "ar",
+     "url": "SPA search: وزارة البيئة والمياه والزراعة",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    }
+   ]
+  },
+  {
+   "id": "mwan",
+   "en": "National Center for Waste Management (MWAN)",
+   "ar": "المركز الوطني لإدارة النفايات (موان)",
+   "short": "MWAN",
+   "site": "https://mwan.gov.sa",
+   "robots_disallow": true,
+   "map_note": "",
+   "sources": [
+    {
+     "type": "spa",
+     "lang": "ar",
+     "url": "SPA search: المركز الوطني لإدارة النفايات",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "url": "SPA search: National Center for Waste Management",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    }
+   ]
+  },
+  {
+   "id": "ncec",
+   "en": "National Center for Environmental Compliance (NCEC)",
+   "ar": "المركز الوطني للرقابة على الالتزام البيئي",
+   "short": "NCEC",
+   "site": "https://www.ncec.gov.sa",
+   "robots_disallow": false,
+   "map_note": "",
+   "sources": [
+    {
+     "type": "sharepoint",
+     "lang": "ar",
+     "url": "https://www.ncec.gov.sa/ar/MediaCenter/News/Pages/default.aspx",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    },
+    {
+     "type": "spa",
+     "lang": "ar",
+     "url": "SPA search: المركز الوطني للرقابة على الالتزام البيئي",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    }
+   ]
+  },
+  {
+   "id": "rcjy",
+   "en": "Royal Commission for Jubail & Yanbu (RCJY)",
+   "ar": "الهيئة الملكية للجبيل وينبع",
+   "short": "RCJY",
+   "site": "https://www.rcjy.gov.sa",
+   "robots_disallow": false,
+   "map_note": "",
+   "sources": [
+    {
+     "type": "html",
+     "lang": "en",
+     "url": "https://www.rcjy.gov.sa/en/news",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    },
+    {
+     "type": "html",
+     "lang": "ar",
+     "url": "https://www.rcjy.gov.sa/ar/news",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    },
+    {
+     "type": "spa",
+     "lang": "ar",
+     "url": "SPA search: الهيئة الملكية للجبيل وينبع",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    }
+   ]
+  },
+  {
+   "id": "rcmc",
+   "en": "Royal Commission for Makkah City & Holy Sites (RCMC)",
+   "ar": "الهيئة الملكية لمدينة مكة المكرمة والمشاعر المقدسة",
+   "short": "RCMC",
+   "site": "https://www.rcmc.gov.sa",
+   "robots_disallow": true,
+   "map_note": "",
+   "sources": [
+    {
+     "type": "spa",
+     "lang": "ar",
+     "url": "SPA search: الهيئة الملكية لمدينة مكة المكرمة",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "url": "SPA search: Royal Commission for Makkah City",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    }
+   ]
+  },
+  {
+   "id": "rcu",
+   "en": "Royal Commission for AlUla (RCU)",
+   "ar": "الهيئة الملكية لمحافظة العلا",
+   "short": "RCU",
+   "site": "https://www.rcu.gov.sa",
+   "robots_disallow": false,
+   "map_note": "",
+   "sources": [
+    {
+     "type": "spa",
+     "lang": "ar",
+     "url": "SPA search: الهيئة الملكية لمحافظة العلا",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "url": "SPA search: Royal Commission for AlUla",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    }
+   ]
+  },
+  {
+   "id": "momah",
+   "en": "Ministry of Municipalities & Housing (MOMAH)",
+   "ar": "وزارة البلديات والإسكان",
+   "short": "MOMAH",
+   "site": "https://momah.gov.sa",
+   "robots_disallow": false,
+   "map_note": "The map lists this ministry twice (old and new names); the feed treats it as one body.",
+   "sources": [
+    {
+     "type": "spa",
+     "lang": "ar",
+     "url": "SPA search: وزارة البلديات والإسكان",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    }
+   ]
+  }
+ ],
+ "items": [],
+ "note_en": "Headlines are shown in the language they were published in. \"Official\" = the body's own site; \"SPA\" = Saudi Press Agency coverage. Bodies whose sites disallow automated access are followed through SPA only.",
+ "note_ar": "تُعرض العناوين بلغة نشرها الأصلية. «رسمي» = موقع الجهة نفسها؛ «واس» = تغطية وكالة الأنباء السعودية. الجهات التي تمنع مواقعها الوصول الآلي تُتابَع عبر واس فقط."
+}

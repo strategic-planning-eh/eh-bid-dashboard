@@ -1,65 +1,293 @@
 {
-  "_comment": "Regulatory bodies followed by the Government tab. `sources` run in order; every entry records its own status in gov_news.json so the page can show a per-body freshness chip. Types: rss (plain XML), html (server-rendered list), sharepoint (JavaScript-rendered SharePoint news list — needs Playwright), spa (Saudi Press Agency search — needs Playwright). Bodies whose own site disallows automated access (robots.txt) are followed through SPA only.",
-  "bodies": [
-    {"id": "mewa", "en": "Ministry of Environment, Water & Agriculture (MEWA)", "ar": "وزارة البيئة والمياه والزراعة", "short": "MEWA", "site": "https://www.mewa.gov.sa",
-     "aliases": ["وزارة البيئة والمياه والزراعة", "وزارة البيئة", "MEWA", "Ministry of Environment"],
-     "sources": [
-       {"type": "rss", "lang": "ar", "url": "https://www.mewa.gov.sa/_layouts/15/feed.aspx?xsl=1&web=/ar/MediaCenter/News&page=ea8b9cb5-f87b-4fff-8947-f2133bb4bdcb&wp=e791e78d-3a99-4727-af0b-e1fa687594d5&pageurl=/ar/MediaCenter/News/Pages/home.aspx"},
-       {"type": "spa", "lang": "ar", "query": "وزارة البيئة والمياه والزراعة"}
-     ]},
-    {"id": "mwan", "en": "National Center for Waste Management (MWAN)", "ar": "المركز الوطني لإدارة النفايات (موان)", "short": "MWAN", "site": "https://mwan.gov.sa",
-     "aliases": ["المركز الوطني لإدارة النفايات", "موان", "MWAN", "Waste Management Center"],
-     "robots_disallow": true,
-     "sources": [
-       {"type": "spa", "lang": "ar", "query": "المركز الوطني لإدارة النفايات"},
-       {"type": "spa", "lang": "en", "query": "National Center for Waste Management"}
-     ]},
-    {"id": "ncec", "en": "National Center for Environmental Compliance (NCEC)", "ar": "المركز الوطني للرقابة على الالتزام البيئي", "short": "NCEC", "site": "https://www.ncec.gov.sa",
-     "aliases": ["المركز الوطني للرقابة على الالتزام البيئي", "الالتزام البيئي", "NCEC", "Environmental Compliance"],
-     "sources": [
-       {"type": "sharepoint", "lang": "ar", "url": "https://www.ncec.gov.sa/ar/MediaCenter/News/Pages/default.aspx", "link_pattern": "/MediaCenter/News/Pages/(?!default\\.aspx)[^\"'#?]+\\.aspx"},
-       {"type": "spa", "lang": "ar", "query": "المركز الوطني للرقابة على الالتزام البيئي"}
-     ]},
-    {"id": "rcjy", "en": "Royal Commission for Jubail & Yanbu (RCJY)", "ar": "الهيئة الملكية للجبيل وينبع", "short": "RCJY", "site": "https://www.rcjy.gov.sa",
-     "aliases": ["الهيئة الملكية للجبيل وينبع", "الهيئة الملكية", "RCJY", "Royal Commission for Jubail"],
-     "sources": [
-       {"type": "html", "lang": "en", "url": "https://www.rcjy.gov.sa/en/news", "link_pattern": "/en/news/[^/\"'#?]+/?$"},
-       {"type": "html", "lang": "ar", "url": "https://www.rcjy.gov.sa/ar/news", "link_pattern": "/ar/news/[^/\"'#?]+/?$"},
-       {"type": "spa", "lang": "ar", "query": "الهيئة الملكية للجبيل وينبع"}
-     ]},
-    {"id": "rcmc", "en": "Royal Commission for Makkah City & Holy Sites (RCMC)", "ar": "الهيئة الملكية لمدينة مكة المكرمة والمشاعر المقدسة", "short": "RCMC", "site": "https://www.rcmc.gov.sa",
-     "aliases": ["الهيئة الملكية لمدينة مكة", "الهيئة الملكية لمكة", "RCMC", "Royal Commission for Makkah"],
-     "robots_disallow": true,
-     "sources": [
-       {"type": "spa", "lang": "ar", "query": "الهيئة الملكية لمدينة مكة المكرمة"},
-       {"type": "spa", "lang": "en", "query": "Royal Commission for Makkah City"}
-     ]},
-    {"id": "rcu", "en": "Royal Commission for AlUla (RCU)", "ar": "الهيئة الملكية لمحافظة العلا", "short": "RCU", "site": "https://www.rcu.gov.sa",
-     "aliases": ["الهيئة الملكية لمحافظة العلا", "الهيئة الملكية للعلا", "RCU", "Royal Commission for AlUla"],
-     "sources": [
-       {"type": "spa", "lang": "ar", "query": "الهيئة الملكية لمحافظة العلا"},
-       {"type": "spa", "lang": "en", "query": "Royal Commission for AlUla"}
-     ]},
-    {"id": "momah", "en": "Ministry of Municipalities & Housing (MOMAH)", "ar": "وزارة البلديات والإسكان", "short": "MOMAH", "site": "https://momah.gov.sa",
-     "aliases": ["وزارة البلديات والإسكان", "وزارة الشؤون البلدية", "MOMAH", "Ministry of Municipalities"],
-     "map_note": "The map lists this ministry twice (old and new names); the feed treats it as one body.",
-     "sources": [
-       {"type": "spa", "lang": "ar", "query": "وزارة البلديات والإسكان"}
-     ]}
+ "_comment": "Regulatory bodies followed by the Government tab. `sources` run in order; every entry records its own status in gov_news.json so the page can show a per-body freshness chip. Types: rss (plain XML), html (server-rendered list), sharepoint (JavaScript-rendered SharePoint news list — needs Playwright), spa (Saudi Press Agency search — needs Playwright). Bodies whose own site disallows automated access (robots.txt) are followed through SPA only.",
+ "bodies": [
+  {
+   "id": "mewa",
+   "en": "Ministry of Environment, Water & Agriculture (MEWA)",
+   "ar": "وزارة البيئة والمياه والزراعة",
+   "short": "MEWA",
+   "site": "https://www.mewa.gov.sa",
+   "aliases": [
+    "وزارة البيئة والمياه والزراعة",
+    "وزارة البيئة",
+    "MEWA",
+    "Ministry of Environment"
+   ],
+   "sources": [
+    {
+     "type": "sharepoint",
+     "lang": "ar",
+     "url": "https://www.mewa.gov.sa/ar/MediaCenter/News/Pages/Home.aspx",
+     "link_pattern": "/MediaCenter/News/Pages/(?!Home\\.aspx|default\\.aspx)[^\"'#?]+\\.aspx",
+     "_note": "The RSS link on MEWA's RSS page returns 404 (checked 21 Sep 2026); the news list is read from the rendered page like NCEC's."
+    },
+    {
+     "type": "spa",
+     "lang": "ar",
+     "query": "وزارة البيئة والمياه والزراعة"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "query": "Ministry of Environment, Water and Agriculture"
+    }
+   ]
+  },
+  {
+   "id": "mwan",
+   "en": "National Center for Waste Management (MWAN)",
+   "ar": "المركز الوطني لإدارة النفايات (موان)",
+   "short": "MWAN",
+   "site": "https://mwan.gov.sa",
+   "aliases": [
+    "المركز الوطني لإدارة النفايات",
+    "موان",
+    "MWAN",
+    "Waste Management Center"
+   ],
+   "robots_disallow": true,
+   "sources": [
+    {
+     "type": "spa",
+     "lang": "ar",
+     "query": "المركز الوطني لإدارة النفايات"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "query": "National Center for Waste Management"
+    }
+   ]
+  },
+  {
+   "id": "ncec",
+   "en": "National Center for Environmental Compliance (NCEC)",
+   "ar": "المركز الوطني للرقابة على الالتزام البيئي",
+   "short": "NCEC",
+   "site": "https://www.ncec.gov.sa",
+   "aliases": [
+    "المركز الوطني للرقابة على الالتزام البيئي",
+    "الالتزام البيئي",
+    "NCEC",
+    "Environmental Compliance"
+   ],
+   "sources": [
+    {
+     "type": "sharepoint",
+     "lang": "ar",
+     "url": "https://www.ncec.gov.sa/ar/MediaCenter/News/Pages/default.aspx",
+     "link_pattern": "/MediaCenter/News/Pages/(?!default\\.aspx)[^\"'#?]+\\.aspx"
+    },
+    {
+     "type": "spa",
+     "lang": "ar",
+     "query": "المركز الوطني للرقابة على الالتزام البيئي"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "query": "National Center for Environmental Compliance"
+    }
+   ]
+  },
+  {
+   "id": "rcjy",
+   "en": "Royal Commission for Jubail & Yanbu (RCJY)",
+   "ar": "الهيئة الملكية للجبيل وينبع",
+   "short": "RCJY",
+   "site": "https://www.rcjy.gov.sa",
+   "aliases": [
+    "الهيئة الملكية للجبيل وينبع",
+    "الهيئة الملكية",
+    "RCJY",
+    "Royal Commission for Jubail"
+   ],
+   "sources": [
+    {
+     "type": "html",
+     "lang": "en",
+     "url": "https://www.rcjy.gov.sa/en/news",
+     "link_pattern": "/en/news/[^/\"'#?]+/?$"
+    },
+    {
+     "type": "html",
+     "lang": "ar",
+     "url": "https://www.rcjy.gov.sa/ar/news",
+     "link_pattern": "/ar/news/[^/\"'#?]+/?$"
+    },
+    {
+     "type": "spa",
+     "lang": "ar",
+     "query": "الهيئة الملكية للجبيل وينبع"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "query": "Royal Commission for Jubail and Yanbu"
+    }
+   ]
+  },
+  {
+   "id": "rcmc",
+   "en": "Royal Commission for Makkah City & Holy Sites (RCMC)",
+   "ar": "الهيئة الملكية لمدينة مكة المكرمة والمشاعر المقدسة",
+   "short": "RCMC",
+   "site": "https://www.rcmc.gov.sa",
+   "aliases": [
+    "الهيئة الملكية لمدينة مكة",
+    "الهيئة الملكية لمكة",
+    "RCMC",
+    "Royal Commission for Makkah"
+   ],
+   "robots_disallow": true,
+   "sources": [
+    {
+     "type": "spa",
+     "lang": "ar",
+     "query": "الهيئة الملكية لمدينة مكة المكرمة"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "query": "Royal Commission for Makkah City"
+    }
+   ]
+  },
+  {
+   "id": "rcu",
+   "en": "Royal Commission for AlUla (RCU)",
+   "ar": "الهيئة الملكية لمحافظة العلا",
+   "short": "RCU",
+   "site": "https://www.rcu.gov.sa",
+   "aliases": [
+    "الهيئة الملكية لمحافظة العلا",
+    "الهيئة الملكية للعلا",
+    "RCU",
+    "Royal Commission for AlUla"
+   ],
+   "sources": [
+    {
+     "type": "spa",
+     "lang": "ar",
+     "query": "الهيئة الملكية لمحافظة العلا"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "query": "Royal Commission for AlUla"
+    }
+   ]
+  },
+  {
+   "id": "momah",
+   "en": "Ministry of Municipalities & Housing (MOMAH)",
+   "ar": "وزارة البلديات والإسكان",
+   "short": "MOMAH",
+   "site": "https://momah.gov.sa",
+   "aliases": [
+    "وزارة البلديات والإسكان",
+    "وزارة الشؤون البلدية",
+    "MOMAH",
+    "Ministry of Municipalities"
+   ],
+   "map_note": "The map lists this ministry twice (old and new names); the feed treats it as one body.",
+   "sources": [
+    {
+     "type": "spa",
+     "lang": "ar",
+     "query": "وزارة البلديات والإسكان"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "query": "Ministry of Municipalities and Housing"
+    }
+   ]
+  }
+ ],
+ "spa": {
+  "search_urls": [
+   "https://spa.gov.sa/{seg}search?q={q}",
+   "https://spa.gov.sa/{seg}search?query={q}"
   ],
-  "spa": {
-    "search_urls": ["https://spa.gov.sa/{lang}/search?query={q}", "https://spa.gov.sa/{lang}/search?q={q}", "https://www.spa.gov.sa/{lang}/search?query={q}"],
-    "link_pattern": "^https?://(www\\.)?spa\\.gov\\.sa/(ar|en)/(w|n|N)?\\d{5,}",
-    "max_per_query": 15
-  },
-  "tags": {
-    "licence":     ["ترخيص", "تراخيص", "رخصة", "تصريح", "licen", "permit"],
-    "tender":      ["منافسة", "منافسات", "طرح", "مناقصة", "ترسية", "عقد", "tender", "award", "contract", "procurement"],
-    "regulation":  ["لائحة", "لوائح", "نظام", "اشتراطات", "قرار", "تعميم", "regulat", "bylaw", "decree", "requirement"],
-    "fine":        ["غرامة", "غرامات", "مخالفة", "مخالفات", "ضبط", "fine", "penalt", "violation", "seiz"],
-    "mou":         ["مذكرة تفاهم", "اتفاقية", "شراكة", "توقيع", "MoU", "agreement", "partnership", "sign"],
-    "event":       ["ملتقى", "مؤتمر", "معرض", "ورشة", "فعالية", "forum", "conference", "exhibition", "workshop", "summit"],
-    "investment":  ["استثمار", "فرص", "تخصيص", "invest", "opportunit", "privati"]
-  },
-  "retention_days": 90
+  "link_pattern": "^https?://(www\\.)?spa\\.gov\\.sa/(en/)?N\\d{5,}$",
+  "max_per_query": 15,
+  "_note": "Arabic pages sit at the site root (spa.gov.sa/search, spa.gov.sa/N…); English under /en/. Confirmed from the first run (21 Sep 2026): /ar/search returned the home page; /en/search?q= returned results."
+ },
+ "tags": {
+  "licence": [
+   "ترخيص",
+   "تراخيص",
+   "رخصة",
+   "تصريح",
+   "licen",
+   "permit"
+  ],
+  "tender": [
+   "منافسة",
+   "منافسات",
+   "طرح",
+   "مناقصة",
+   "ترسية",
+   "عقد",
+   "tender",
+   "award",
+   "contract",
+   "procurement"
+  ],
+  "regulation": [
+   "لائحة",
+   "لوائح",
+   "نظام",
+   "اشتراطات",
+   "قرار",
+   "تعميم",
+   "regulat",
+   "bylaw",
+   "decree",
+   "requirement"
+  ],
+  "fine": [
+   "غرامة",
+   "غرامات",
+   "مخالفة",
+   "مخالفات",
+   "ضبط",
+   "fine",
+   "penalt",
+   "violation",
+   "seiz"
+  ],
+  "mou": [
+   "مذكرة تفاهم",
+   "اتفاقية",
+   "شراكة",
+   "توقيع",
+   "MoU",
+   "agreement",
+   "partnership",
+   "sign"
+  ],
+  "event": [
+   "ملتقى",
+   "مؤتمر",
+   "معرض",
+   "ورشة",
+   "فعالية",
+   "forum",
+   "conference",
+   "exhibition",
+   "workshop",
+   "summit"
+  ],
+  "investment": [
+   "استثمار",
+   "فرص",
+   "تخصيص",
+   "invest",
+   "opportunit",
+   "privati"
+  ]
+ },
+ "retention_days": 90
 }

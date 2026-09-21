@@ -1,0 +1,64 @@
+# Government news for the Hub's News & Intelligence → Government tab.
+# Runs every Sunday 06:00 KSA (03:00 UTC) and on demand. Collects the week's official releases from the regulators
+# EH answers to (pipeline/gov_news_sources.json), merges them with the previously published feed, and stores the
+# result as the `gov-news` artefact. The hourly Update Bid Dashboard workflow picks that artefact up and publishes it
+# as site/gov_news.json — the same hand-off pattern the What's New snapshot uses, so no write permission is needed.
+name: Government news (weekly)
+
+on:
+  schedule:
+    - cron: '0 3 * * 0'          # Sunday 03:00 UTC = 06:00 KSA
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "Comma-separated body ids to fetch (e.g. mwan,ncec). Leave empty for all."
+        default: ''
+
+permissions:
+  contents: read
+  actions: write        # lets the manual run trigger the publisher
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install requirements (plus a browser for the JavaScript-rendered sites)
+        run: |
+          pip install -q requests beautifulsoup4 playwright
+          python -m playwright install --with-deps chromium >/dev/null
+
+      - name: Fetch the previously published feed (items are kept for 90 days)
+        run: |
+          curl -fsSL "$SITE_URL/gov_news.json" -o pipeline/gov_news_prev.json || echo "no published feed yet — starting from the seed"
+        env:
+          SITE_URL: https://strategic-planning-eh.github.io/eh-bid-dashboard
+
+      - name: Collect this week's announcements
+        run: |
+          ONLY=""; [ -n "${{ github.event.inputs.only }}" ] && ONLY="--only ${{ github.event.inputs.only }}"
+          PREV=pipeline/gov_news_prev.json; [ -f "$PREV" ] || PREV=pipeline/gov_news.seed.json
+          python pipeline/fetch_gov_news.py --prev "$PREV" --out pipeline/gov_news.json --debug pipeline/gov_news_debug.json $ONLY
+
+      - name: Keep the feed for the hourly publisher (and the debug file for fixing adapters)
+        uses: actions/upload-artifact@v4
+        with:
+          name: gov-news
+          path: |
+            pipeline/gov_news.json
+            pipeline/gov_news_debug.json
+          retention-days: 90
+          overwrite: true
+
+      - name: Publish now (trigger the hourly workflow so the tab updates without waiting)
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        continue-on-error: true
+        run: gh workflow run update-dashboard.yml --ref "${GITHUB_REF_NAME}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

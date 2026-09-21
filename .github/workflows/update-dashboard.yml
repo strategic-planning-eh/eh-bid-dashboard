@@ -59,6 +59,7 @@ jobs:
           cp hub/pif_intelligence_hub.html site/ 2>/dev/null || true
           cp hub/pif_strategy_2026_2030.html site/ 2>/dev/null || true
           cp hub/environment_fund_2025.html site/ 2>/dev/null || true
+          cp hub/government_news.html site/ 2>/dev/null || true
           cp hub/eh-shared.css hub/eh-shared.js hub/eh-ar-dashboard.js site/ 2>/dev/null || true
           cp -r hub/vendor site/vendor 2>/dev/null || true
           echo "{\"built\":\"$(TZ='Asia/Riyadh' date +'%d %b %Y, %H:%M (KSA)')\",\"built_iso\":\"$(TZ='Asia/Riyadh' date +'%Y-%m-%dT%H:%M+03:00')\"}" > site/build_info.json
@@ -100,6 +101,25 @@ jobs:
           cp state.json ../site/state.json 2>/dev/null || true
           # the bid-digest log keeps its own name; site/changelog.json is the weekly What's New (built below)
           cp changelog.json ../site/bid_digest.json 2>/dev/null || true
+
+      # ---------- Government news: weekly feed collected by gov-news.yml (Sunday 06:00 KSA) ----------
+      - name: Restore the weekly Government news feed
+        uses: dawidd6/action-download-artifact@v6
+        continue-on-error: true
+        with:
+          workflow: gov-news.yml
+          workflow_conclusion: success
+          name: gov-news
+          path: pipeline/gov_news_in
+          search_artifacts: true
+
+      - name: Publish the feed (artefact → last published copy → seed)
+        run: |
+          if [ -f pipeline/gov_news_in/gov_news.json ]; then cp pipeline/gov_news_in/gov_news.json site/gov_news.json; echo "gov news: weekly artefact";
+          elif curl -fsSL "$SITE_URL/gov_news.json" -o site/gov_news.json; then echo "gov news: kept the previously published feed";
+          else cp pipeline/gov_news.seed.json site/gov_news.json; echo "gov news: seed (no run yet)"; fi
+        env:
+          SITE_URL: https://strategic-planning-eh.github.io/eh-bid-dashboard
 
       # ---------- What's New: previous dataset snapshot (artefact of the last successful run) ----------
       - name: Restore previous dataset snapshot

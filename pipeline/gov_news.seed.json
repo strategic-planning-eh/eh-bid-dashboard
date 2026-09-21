@@ -15,9 +15,9 @@
    "map_note": "",
    "sources": [
     {
-     "type": "rss",
+     "type": "sharepoint",
      "lang": "ar",
-     "url": "https://www.mewa.gov.sa/_layouts/15/feed.aspx?xsl=1&web=/ar/MediaCenter/News&page=ea8b9cb5-f87b-4fff-8947-f2133bb4bdcb&wp=e791e78d-3a99-4727-af0b-e1fa687594d5&pageurl=/ar/MediaCenter/News/Pages/home.aspx",
+     "url": "https://www.mewa.gov.sa/ar/MediaCenter/News/Pages/Home.aspx",
      "fetched": "",
      "count": 0,
      "new": 0,
@@ -28,6 +28,16 @@
      "type": "spa",
      "lang": "ar",
      "url": "SPA search: وزارة البيئة والمياه والزراعة",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "url": "SPA search: Ministry of Environment, Water and Agriculture",
      "fetched": "",
      "count": 0,
      "new": 0,
@@ -95,6 +105,16 @@
      "new": 0,
      "status": "skipped",
      "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "url": "SPA search: National Center for Environmental Compliance",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
     }
    ]
   },
@@ -131,6 +151,16 @@
      "type": "spa",
      "lang": "ar",
      "url": "SPA search: الهيئة الملكية للجبيل وينبع",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "url": "SPA search: Royal Commission for Jubail and Yanbu",
      "fetched": "",
      "count": 0,
      "new": 0,
@@ -214,6 +244,16 @@
      "type": "spa",
      "lang": "ar",
      "url": "SPA search: وزارة البلديات والإسكان",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "url": "SPA search: Ministry of Municipalities and Housing",
      "fetched": "",
      "count": 0,
      "new": 0,

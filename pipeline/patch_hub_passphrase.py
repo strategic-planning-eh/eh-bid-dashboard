@@ -15,6 +15,10 @@
                                 only finds were older than the window shows amber with the reason, KPI tiles follow the
                                 body filter
 Run once: python3 pipeline/patch_hub_passphrase.py
+
+Follow-up (22 Sep 2026, after the first sealed publish broke the hub layout): delivery moved to a service worker
+(eh-sw.js written by encrypt_site.py) so pages load untouched; the lock control became ehLock(), which clears the key
+from the worker store and from session/local storage. Those two edits were applied directly to hub/EH_Hub.html.
 """
 import os, sys, shutil
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE); sys.path.insert(0, HERE)

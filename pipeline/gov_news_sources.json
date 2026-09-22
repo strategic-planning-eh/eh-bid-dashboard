@@ -211,7 +211,7 @@
    "https://spa.gov.sa/{seg}search?query={q}"
   ],
   "link_pattern": "^https?://(www\\.)?spa\\.gov\\.sa/(en/)?N\\d{5,}$",
-  "max_per_query": 15,
+  "max_per_query": 30,
   "_note": "Arabic pages sit at the site root (spa.gov.sa/search, spa.gov.sa/N…); English under /en/. Confirmed from the first run (21 Sep 2026): /ar/search returned the home page; /en/search?q= returned results."
  },
  "tags": {
@@ -289,5 +289,6 @@
    "privati"
   ]
  },
- "retention_days": 90
+ "retention_days": 90,
+ "keep_min_per_body": 5
 }

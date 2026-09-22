@@ -221,6 +221,7 @@ def fetch_spa(src, cfg, dbg):
             out.append(dict(title=text, url=href, date=parse_date(ctx)))
             if len(out) >= spa.get('max_per_query', 15): break
         if out:
+            out.sort(key=lambda o: int(re.search(r'/N(\d+)', o['url']).group(1)) if re.search(r'/N(\d+)', o['url']) else 0, reverse=True)  # SPA story numbers rise over time
             dbg['url'] = url; dbg['sample'] = [(o['url'], o['title'][:60]) for o in out[:8]]
             return out
         dbg.setdefault('sample_any', []).extend([(urljoin(url, a['href']), clean(a.get_text(' '))[:50]) for a in soup.find_all('a', href=True)[:20]])
@@ -305,10 +306,21 @@ def main():
         bodies_out.append({k: body[k] for k in ('id', 'en', 'ar', 'short', 'site') if k in body} | {'robots_disallow': body.get('robots_disallow', False), 'map_note': body.get('map_note', ''), 'sources': statuses})
 
     # retention + near-duplicate collapse (same body, same normalised title → keep the official one, else the earlier)
+    KEEP_MIN = cfg.get('keep_min_per_body', 5)
+    def story_no(u):
+        m = re.search(r'/N(\d{5,})', u or ''); return int(m.group(1)) if m else 0
+    # SPA search ranks by relevance, not date: a body may only ever surface old stories. Each body therefore keeps its
+    # newest KEEP_MIN stories on file regardless of age; the page marks anything outside the window as archive.
+    by_body = {}
+    for it in items.values(): by_body.setdefault(it['body'], []).append(it)
+    protected = set()
+    for bid, lst in by_body.items():
+        lst.sort(key=lambda x: (x.get('date') or '', story_no(x.get('url')), x['first_seen']), reverse=True)
+        protected.update(x['id'] for x in lst[:KEEP_MIN])
     kept, by_key = [], {}
     for it in items.values():
         d = it.get('date') or it.get('first_seen')
-        if d and d < cutoff: continue
+        if d and d < cutoff and it['id'] not in protected: continue
         key = (it['body'], norm_title(it['title']))
         if key in by_key:
             old = by_key[key]

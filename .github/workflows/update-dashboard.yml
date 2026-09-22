@@ -116,10 +116,11 @@ jobs:
       - name: Publish the feed (artefact → last published copy → seed)
         run: |
           if [ -f pipeline/gov_news_in/gov_news.json ]; then cp pipeline/gov_news_in/gov_news.json site/gov_news.json; echo "gov news: weekly artefact";
-          elif curl -fsSL "$SITE_URL/gov_news.json" -o site/gov_news.json; then echo "gov news: kept the previously published feed";
+          elif curl -fsSL "$SITE_URL/gov_news.json" -o site/gov_news.json && python pipeline/encrypt_site.py --decrypt site/gov_news.json; then echo "gov news: kept the previously published feed";
           else cp pipeline/gov_news.seed.json site/gov_news.json; echo "gov news: seed (no run yet)"; fi
         env:
           SITE_URL: https://strategic-planning-eh.github.io/eh-bid-dashboard
+          HUB_PASSPHRASE: ${{ secrets.HUB_PASSPHRASE }}
 
       # ---------- What's New: previous dataset snapshot (artefact of the last successful run) ----------
       - name: Restore previous dataset snapshot
@@ -134,9 +135,11 @@ jobs:
 
       - name: Restore previous published changelog (retention across runs)
         run: |
-          curl -fsSL "$SITE_URL/changelog.json" -o pipeline/changelog_prev.json && cp pipeline/changelog_prev.json site/changelog.json || cp pipeline/changelog.seed.json site/changelog.json 2>/dev/null || echo "no published changelog yet"
+          if curl -fsSL "$SITE_URL/changelog.json" -o pipeline/changelog_prev.json && python pipeline/encrypt_site.py --decrypt pipeline/changelog_prev.json; then cp pipeline/changelog_prev.json site/changelog.json;
+          else cp pipeline/changelog.seed.json site/changelog.json 2>/dev/null || echo "no published changelog yet"; fi
         env:
           SITE_URL: https://strategic-planning-eh.github.io/eh-bid-dashboard
+          HUB_PASSPHRASE: ${{ secrets.HUB_PASSPHRASE }}
 
       - name: Build What's New (diff snapshot, parse CHANGES.md)
         run: |
@@ -191,6 +194,12 @@ jobs:
           path: pipeline/visual_baseline
           retention-days: 90
           overwrite: true
+
+      # ---------- Passphrase protection: every page and data file is sealed; the build FAILS if the secret is missing ----------
+      - name: Seal the site with the hub passphrase
+        env:
+          HUB_PASSPHRASE: ${{ secrets.HUB_PASSPHRASE }}
+        run: python pipeline/encrypt_site.py --site site
 
       - name: Package the page
         uses: actions/upload-pages-artifact@v3

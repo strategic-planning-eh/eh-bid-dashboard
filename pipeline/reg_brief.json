@@ -1,0 +1,54 @@
+{
+ "_howto": "Monthly brief for the Regulatory news tab. Written by Business Development (with Claude) on the first Sunday of each month from that month's gov_news.json; one object per month, newest first. Every point must cite story ids from gov_news.json in `refs` — a point without a source is not published. Upload to pipeline/reg_brief.json; the hourly publisher copies it to the site (sealed like everything else).",
+ "briefs": [
+  {
+   "month": "2026-09",
+   "written": "2026-09-27",
+   "author_en": "EH Business Development",
+   "author_ar": "إدارة تطوير الأعمال — آفاق البيئة",
+   "coverage_en": "Covers the stories on file for September 2026 at the time of writing: NCEC only — the other bodies had no September items in the first collection (21 Sep). To be extended when the 27 Sep collection is reviewed.",
+   "coverage_ar": "يغطي القصص الموجودة على السجل لسبتمبر 2026 وقت الكتابة: المركز الوطني للرقابة على الالتزام البيئي فقط — لم يكن للجهات الأخرى عناصر لسبتمبر في الجمع الأول (21 سبتمبر). يُستكمل عند مراجعة جمع 27 سبتمبر.",
+   "summary_en": "September was about enforcement reach. NCEC opened a digital channel for the public to report environmental violations, signed a monitoring partnership covering Darin and Tarout island in the Eastern Province, and co-ran the 'Response 25' pollution-incident drill with 51 entities in the same region.",
+   "summary_ar": "كان سبتمبر شهر توسيع نطاق الرقابة. أطلق المركز الوطني للرقابة على الالتزام البيئي قناة رقمية لبلاغات الجمهور عن المخالفات البيئية، ووقّع شراكة رقابية تغطي دارين وجزيرة تاروت بالمنطقة الشرقية، وشارك في تنظيم التمرين التعبوي «استجابة 25» لحوادث التلوث بمشاركة 51 جهة في المنطقة نفسها.",
+   "by_body": [
+    {
+     "body": "ncec",
+     "en": "Digital violation reporting (بلاغ رقمي) service launched for the public (15 Sep). Cooperation agreement with Darin & Tarout to strengthen environmental monitoring on the island (15 Sep). 'Response 25' operational drill in the Eastern Province with 51 participating entities (14 Sep).",
+     "ar": "إطلاق خدمة «بلاغ رقمي» للجمهور (15 سبتمبر). اتفاقية تعاون مع دارين وتاروت لتعزيز الرقابة البيئية في الجزيرة (15 سبتمبر). التمرين التعبوي «استجابة 25» بالمنطقة الشرقية بمشاركة 51 جهة (14 سبتمبر).",
+     "refs": [
+      "217122c1394e",
+      "dd00f397f1c6",
+      "caadd2678391"
+     ]
+    }
+   ],
+   "for_eh": [
+    {
+     "kind": "risk",
+     "en": "Public digital reporting raises the chance that a client site — or EH's own facility and transport fleet — is reported and inspected on a complaint, not on a schedule. Worth a reminder to site HSE teams that visible housekeeping and labelling now matter to the public as well as to inspectors.",
+     "ar": "البلاغات الرقمية من الجمهور تزيد احتمال أن يُبلَّغ عن موقع عميل — أو عن مجمع آفاق البيئة وأسطول النقل — ويُفتَّش بناءً على شكوى لا على جدول. يُستحسن تذكير فرق السلامة بالمواقع بأن النظافة الظاهرة والتوسيم باتا مهمين للجمهور كما للمفتشين.",
+     "refs": [
+      "217122c1394e"
+     ]
+    },
+    {
+     "kind": "opportunity",
+     "en": "More complaint-driven inspections tend to increase demand for compliance support: environmental permit files, waste manifests and disposal certificates in order. EH's traceability documents (F02, F08–F10) are the deliverable clients will be asked for.",
+     "ar": "زيادة التفتيش المبني على الشكاوى ترفع عادةً الطلب على دعم الالتزام: ملفات التصاريح البيئية وبيانات نقل النفايات وشهادات التخلص مرتّبة. وثائق التتبع لدى آفاق البيئة (F02، F08–F10) هي ما سيُطلب من العملاء.",
+     "refs": [
+      "217122c1394e"
+     ]
+    },
+    {
+     "kind": "opportunity",
+     "en": "Coastal monitoring in Darin/Tarout and a 51-entity spill drill in the Eastern Province signal continued spend on marine-pollution readiness there. Relevant to EH's spill-response and hazardous-waste offering; check whether EH is on the responder lists these drills draw from.",
+     "ar": "الرقابة الساحلية في دارين/تاروت وتمرين انسكاب بمشاركة 51 جهة في المنطقة الشرقية يشيران إلى استمرار الإنفاق على جاهزية مواجهة التلوث البحري هناك. يهم عرض آفاق البيئة في الاستجابة للانسكابات والنفايات الخطرة؛ يُتحقَّق مما إذا كانت الشركة ضمن قوائم المستجيبين التي تستند إليها هذه التمارين.",
+     "refs": [
+      "dd00f397f1c6",
+      "caadd2678391"
+     ]
+    }
+   ]
+  }
+ ]
+}

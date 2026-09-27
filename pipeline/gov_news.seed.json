@@ -261,6 +261,161 @@
      "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
     }
    ]
+  },
+  {
+   "id": "ncvc",
+   "en": "National Center for Vegetation Cover & Combating Desertification (NCVC)",
+   "ar": "المركز الوطني لتنمية الغطاء النباتي ومكافحة التصحر",
+   "short": "NCVC",
+   "site": "https://ncvc.gov.sa",
+   "robots_disallow": false,
+   "map_note": "",
+   "sources": [
+    {
+     "type": "spa",
+     "lang": "ar",
+     "url": "SPA search: المركز الوطني لتنمية الغطاء النباتي ومكافحة التصحر",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "url": "SPA search: National Center for Vegetation Cover",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    }
+   ]
+  },
+  {
+   "id": "ncw",
+   "en": "National Center for Wildlife (NCW)",
+   "ar": "المركز الوطني لتنمية الحياة الفطرية",
+   "short": "NCW",
+   "site": "https://ncw.gov.sa",
+   "robots_disallow": false,
+   "map_note": "",
+   "sources": [
+    {
+     "type": "spa",
+     "lang": "ar",
+     "url": "SPA search: المركز الوطني لتنمية الحياة الفطرية",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "url": "SPA search: National Center for Wildlife",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    }
+   ]
+  },
+  {
+   "id": "mim",
+   "en": "Ministry of Industry & Mineral Resources",
+   "ar": "وزارة الصناعة والثروة المعدنية",
+   "short": "Industry",
+   "site": "https://mim.gov.sa",
+   "robots_disallow": false,
+   "map_note": "",
+   "sources": [
+    {
+     "type": "spa",
+     "lang": "ar",
+     "url": "SPA search: وزارة الصناعة والثروة المعدنية",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "url": "SPA search: Ministry of Industry and Mineral Resources",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    }
+   ]
+  },
+  {
+   "id": "mof",
+   "en": "Ministry of Finance",
+   "ar": "وزارة المالية",
+   "short": "Finance",
+   "site": "https://mof.gov.sa",
+   "robots_disallow": false,
+   "map_note": "",
+   "sources": [
+    {
+     "type": "spa",
+     "lang": "ar",
+     "url": "SPA search: وزارة المالية",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "url": "SPA search: Ministry of Finance",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    }
+   ]
+  },
+  {
+   "id": "mc",
+   "en": "Ministry of Commerce",
+   "ar": "وزارة التجارة",
+   "short": "Commerce",
+   "site": "https://mc.gov.sa",
+   "robots_disallow": false,
+   "map_note": "",
+   "sources": [
+    {
+     "type": "spa",
+     "lang": "ar",
+     "url": "SPA search: وزارة التجارة",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "url": "SPA search: Ministry of Commerce",
+     "fetched": "",
+     "count": 0,
+     "new": 0,
+     "status": "skipped",
+     "note": "awaiting the first Sunday run (or run the Government news workflow manually from the Actions tab)"
+    }
+   ]
   }
  ],
  "items": [],

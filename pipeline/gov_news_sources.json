@@ -1,5 +1,5 @@
 {
- "_comment": "Regulatory bodies followed by the Government tab. `sources` run in order; every entry records its own status in gov_news.json so the page can show a per-body freshness chip. Types: rss (plain XML), html (server-rendered list), sharepoint (JavaScript-rendered SharePoint news list — needs Playwright), spa (Saudi Press Agency search — needs Playwright). Bodies whose own site disallows automated access (robots.txt) are followed through SPA only.",
+ "_comment": "Regulatory bodies followed by the Government tab. `sources` run in order; every entry records its own status in gov_news.json so the page can show a per-body freshness chip. Types: rss (plain XML), html (server-rendered list), sharepoint (JavaScript-rendered SharePoint news list — needs Playwright), spa (Saudi Press Agency search — needs Playwright). Bodies whose own site disallows automated access (robots.txt) are followed through SPA only. Added 27 Sep 2026 at Youssef's request: NCVC, NCW, Ministries of Industry, Finance and Commerce — SPA only until an official list is verified.",
  "bodies": [
   {
    "id": "mewa",
@@ -201,6 +201,135 @@
      "type": "spa",
      "lang": "en",
      "query": "Ministry of Municipalities and Housing"
+    }
+   ]
+  },
+  {
+   "id": "ncvc",
+   "en": "National Center for Vegetation Cover & Combating Desertification (NCVC)",
+   "ar": "المركز الوطني لتنمية الغطاء النباتي ومكافحة التصحر",
+   "short": "NCVC",
+   "site": "https://ncvc.gov.sa",
+   "aliases": [
+    "المركز الوطني لتنمية الغطاء النباتي",
+    "الغطاء النباتي",
+    "مكافحة التصحر",
+    "NCVC",
+    "Vegetation Cover",
+    "Combating Desertification"
+   ],
+   "sources": [
+    {
+     "type": "spa",
+     "lang": "ar",
+     "query": "المركز الوطني لتنمية الغطاء النباتي ومكافحة التصحر"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "query": "National Center for Vegetation Cover"
+    }
+   ]
+  },
+  {
+   "id": "ncw",
+   "en": "National Center for Wildlife (NCW)",
+   "ar": "المركز الوطني لتنمية الحياة الفطرية",
+   "short": "NCW",
+   "site": "https://ncw.gov.sa",
+   "aliases": [
+    "المركز الوطني لتنمية الحياة الفطرية",
+    "الحياة الفطرية",
+    "NCW",
+    "National Center for Wildlife",
+    "Wildlife"
+   ],
+   "sources": [
+    {
+     "type": "spa",
+     "lang": "ar",
+     "query": "المركز الوطني لتنمية الحياة الفطرية"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "query": "National Center for Wildlife"
+    }
+   ]
+  },
+  {
+   "id": "mim",
+   "en": "Ministry of Industry & Mineral Resources",
+   "ar": "وزارة الصناعة والثروة المعدنية",
+   "short": "Industry",
+   "site": "https://mim.gov.sa",
+   "aliases": [
+    "وزارة الصناعة والثروة المعدنية",
+    "وزارة الصناعة",
+    "وزير الصناعة",
+    "Ministry of Industry",
+    "Minister of Industry"
+   ],
+   "sources": [
+    {
+     "type": "spa",
+     "lang": "ar",
+     "query": "وزارة الصناعة والثروة المعدنية"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "query": "Ministry of Industry and Mineral Resources"
+    }
+   ]
+  },
+  {
+   "id": "mof",
+   "en": "Ministry of Finance",
+   "ar": "وزارة المالية",
+   "short": "Finance",
+   "site": "https://mof.gov.sa",
+   "aliases": [
+    "وزارة المالية",
+    "وزير المالية",
+    "Ministry of Finance",
+    "Minister of Finance"
+   ],
+   "sources": [
+    {
+     "type": "spa",
+     "lang": "ar",
+     "query": "وزارة المالية"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "query": "Ministry of Finance"
+    }
+   ]
+  },
+  {
+   "id": "mc",
+   "en": "Ministry of Commerce",
+   "ar": "وزارة التجارة",
+   "short": "Commerce",
+   "site": "https://mc.gov.sa",
+   "aliases": [
+    "وزارة التجارة",
+    "وزير التجارة",
+    "Ministry of Commerce",
+    "Minister of Commerce"
+   ],
+   "sources": [
+    {
+     "type": "spa",
+     "lang": "ar",
+     "query": "وزارة التجارة"
+    },
+    {
+     "type": "spa",
+     "lang": "en",
+     "query": "Ministry of Commerce"
     }
    ]
   }

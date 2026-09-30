@@ -11,6 +11,10 @@ on:
         description: "First-ever What's New run (no previous snapshot exists). Leave false normally."
         type: boolean
         default: false
+      accept_visual_changes:
+        description: "Accept an intended change of look (e.g. rewritten text) as the new visual baseline. The other checks — script errors, blank charts, missing cards — still apply."
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -177,7 +181,8 @@ jobs:
         run: |
           pip install playwright pillow >/dev/null
           python -m playwright install --with-deps chromium >/dev/null
-          python pipeline/visual_check.py --site site --baseline pipeline/visual_baseline --out pipeline/visual_out
+          ACCEPT=""; [ "${{ github.event.inputs.accept_visual_changes }}" = "true" ] && ACCEPT="--update-baseline" && echo "Accepting today's look as the new baseline (pixel comparison skipped; all other checks run)."
+          python pipeline/visual_check.py --site site --baseline pipeline/visual_baseline --out pipeline/visual_out $ACCEPT
 
       - name: Keep screenshots (always) and the new baseline (on pass)
         if: always()

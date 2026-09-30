@@ -144,9 +144,9 @@ nav a.xl{border-color:var(--g);color:var(--g)}
 <script>
 // ============================================================================
 // pif_strategy_2026_2030.html — data layer
-// Rule: every number carries `src`. "S26 pN" = PIF Strategy 2026–2030 public
+// Rule: every number carries `src`. "Strategy document" = PIF Strategy 2026–2030 public
 // document, printed page N. "ARyy pN" = PIF Annual Report 20yy, printed page N.
-// "HUB D.x.y" = pif_intelligence_hub.html embedded data object field.
+// "figures in the PIF Intelligence Hub" = pif_intelligence_hub.html embedded data object field.
 // Confidence: H = stated explicitly in source/project data; M = inferred from
 // two or more explicit statements; L = personal analysis.
 // Standing decisions (Youssef, 07 Sep 2026): D1 strategy canonical · D2 SIRC
@@ -160,21 +160,21 @@ const BUILD = {version:'v1.1.1', date:'2026-09-07', source:'PIF Strategy 2026–
 const S = {
   // ---------------------------------------------------------------- headline
   kpi: [
-    {id:'aum',   sar:3396, usd:'>900',  unit:'bn', src:'S26 p4, p7, p17 (">$900 billion"); AR25 p10 (SAR 3,396 bn); HUB D.aum.own[2025]', g:'H'},
-    {id:'gdp',   sar:1286, usd:'>342',  unit:'bn', src:'S26 p7, p17 (">$342 billion" 2021–2025); AR25 p10 (SAR 1,286 bn); HUB D.gdp[2025]', g:'H'},
-    {id:'gdppct',pct:11,                            src:'S26 p4 ("up to 11%"), p17 ("11%... by the end of that period"); AR25 p16', g:'H'},
-    {id:'lc',    pct:57,                            src:'S26 p4, p17 (57% in 2024); AR25 p104; HUB D.local.score[2024]', g:'H'},
-    {id:'newinv',sar:750,  usd:'>199',  unit:'bn', src:'S26 p17 (">$199 billion" new projects 2021–2025); AR25 p28 (SAR 750+ bn); HUB D.vrp.cumulative[2025]', g:'H', plus:true},
-    {id:'lps',   sar:590,  usd:'>157',  unit:'bn', src:'S26 p7, p17 (">$157 billion" 2020–2024); AR25 p28 (SAR 590+ bn), p104 (591)', g:'H', plus:true},
-    {id:'cos',   n:'>220', conflict:['211 — AR25 p16','225 — AR24 p10'], src:'S26 p17 ("more than 220 companies"); AR25 p16 (211); AR24 p10 (225); HUB D.companies.total', g:'H'},
-    {id:'target',none:true,                         src:'S26 all 36 PDF pages searched: no PIF-level numeric target for 2030 (D3)', g:'H'}
+    {id:'aum',   sar:3396, usd:'>900',  unit:'billion', src:'Strategy document p.4, p.7, p.17 (">$900 billion"); 2025 report p.10 (SAR 3,396 billion); figures in the PIF Intelligence Hub', g:'H'},
+    {id:'gdp',   sar:1286, usd:'>342',  unit:'billion', src:'Strategy document p.7, p.17 (">$342 billion" 2021–2025); 2025 report p.10 (SAR 1,286 billion); figures in the PIF Intelligence Hub', g:'H'},
+    {id:'gdppct',pct:11,                            src:'Strategy document p.4 ("up to 11%"), p.17 ("11%... by the end of that period"); 2025 report p.16', g:'H'},
+    {id:'lc',    pct:57,                            src:'Strategy document p.4, p.17 (57% in 2024); 2025 report p.104; figures in the PIF Intelligence Hub', g:'H'},
+    {id:'newinv',sar:750,  usd:'>199',  unit:'billion', src:'Strategy document p.17 (">$199 billion" new projects 2021–2025); 2025 report p.28 (SAR 750+ billion); figures in the PIF Intelligence Hub', g:'H', plus:true},
+    {id:'lps',   sar:590,  usd:'>157',  unit:'billion', src:'Strategy document p.7, p.17 (">$157 billion" 2020–2024); 2025 report p.28 (SAR 590+ billion), p.104 (591)', g:'H', plus:true},
+    {id:'cos',   n:'>220', conflict:['211 — AR25 p16','225 — AR24 p10'], src:'Strategy document p.17 ("more than 220 companies"); 2025 report p.16 (211); 2024 report p.10 (225); figures in the PIF Intelligence Hub', g:'H'},
+    {id:'target',none:true,                         src:'Strategy document all 36 PDF pages searched: no PIF-level numeric target for 2030', g:'H'}
   ],
 
   // ------------------------------------------------------------- structure
   shifts: [
-    {en:['Building','Optimizing'], ar:['البناء','التحسين'], src:'S26 p4'},
-    {en:['Sectors','Ecosystems'], ar:['القطاعات','المنظومات'], src:'S26 p4'},
-    {en:['Public','Private Leadership'], ar:['العام','قيادة القطاع الخاص'], src:'S26 p4'}
+    {en:['Building','Optimizing'], ar:['البناء','التحسين'], src:'Strategy document p.4'},
+    {en:['Sectors','Ecosystems'], ar:['القطاعات','المنظومات'], src:'Strategy document p.4'},
+    {en:['Public','Private Leadership'], ar:['العام','قيادة القطاع الخاص'], src:'Strategy document p.4'}
   ],
   objectives: [ // S26 p4, p23 (seven objectives; D1: canonical over AR25 p30 four pillars)
     ['Deliver investments and projects that catalyze and enable ecosystems.','تقديم استثمارات ومشاريع تحفّز المنظومات وتمكّنها.'],
@@ -185,11 +185,11 @@ const S = {
     ['Enhance economic complexity and maturity of value chains through effective engagement with private sector and government bodies.','رفع التعقيد الاقتصادي ونضج سلاسل القيمة من خلال التفاعل الفعّال مع القطاع الخاص والجهات الحكومية.'],
     ['Deliver impact through agile execution, cost-efficient operations, effective controls, collaborative leadership, and advanced AI with strong data foundations.','تحقيق الأثر عبر التنفيذ المرن والعمليات الكفؤة والضوابط الفعّالة والقيادة التشاركية والذكاء الاصطناعي المتقدم على أسس بيانات قوية.']
   ],
-  objectivesSuperseded: {en:'PIF\u2019s 2025 annual report (p30) summarised this as four "pillars" instead of seven goals. The strategy document is the later and fuller version, so we use it.', ar:'لخّص تقرير الصندوق السنوي 2025 (ص30) هذا في أربع «ركائز» بدلاً من سبعة أهداف. وثيقة الاستراتيجية هي النسخة الأحدث والأكمل، لذا نعتمدها.'},
+  objectivesSuperseded: {en:'PIF\u2019s 2025 annual report (p.30) summarised this as four "pillars" instead of seven goals. The strategy document is the later and fuller version, so we use it.', ar:'لخّص تقرير الصندوق السنوي 2025 (ص30) هذا في أربع «ركائز» بدلاً من سبعة أهداف. وثيقة الاستراتيجية هي النسخة الأحدث والأكمل، لذا نعتمدها.'},
   portfolios: [ // S26 p5, p22–23
     {en:'Vision Portfolio', ar:'محفظة الرؤية', den:'Invests in and catalyzes development of six ecosystems to capitalize on evolving opportunities and support the next phase of transformation in the local economy.', dar:'تستثمر في تطوير ست منظومات وتحفّزه للاستفادة من الفرص المتغيرة ودعم المرحلة التالية من التحول في الاقتصاد المحلي.'},
     {en:'Strategic Portfolio', ar:'المحفظة الاستراتيجية', den:'Actively manages and scales the key strategic holdings of Saudi Arabia toward global leadership and makes new high-conviction international investments; will "optimize liquidity through strategic listings, divestments, and capital-market activity as non-strategic assets are responsibly handed over to the private sector".', dar:'تدير الحيازات الاستراتيجية الرئيسية للمملكة وتوسّعها نحو الريادة العالمية، وتقوم باستثمارات دولية جديدة عالية القناعة؛ وستعمل على «تحسين السيولة عبر الإدراجات الاستراتيجية والتخارجات ونشاط أسواق رأس المال مع تسليم الأصول غير الاستراتيجية إلى القطاع الخاص».'},
-    {en:'Financial Portfolio', ar:'المحفظة المالية', den:'Maximizes diversified financial returns through investments with leading global investment partners to strengthen PIF\u2019s financial position and grow national wealth for future generations.', dar:'تعظّم العوائد المالية المتنوعة من خلال الاستثمار مع شركاء استثمار عالميين رائدين لتعزيز المركز المالي للصندوق وتنمية الثروة الوطنية للأجيال القادمة.'}
+    {en:'Financial Portfolio', ar:'المحفظة المالية', den:'Maximizes diversified financial returns through investments with leading global investment partners to strengthen Public Investment Fund (PIF)\u2019s financial position and grow national wealth for future generations.', dar:'تعظّم العوائد المالية المتنوعة من خلال الاستثمار مع شركاء استثمار عالميين رائدين لتعزيز المركز المالي للصندوق وتنمية الثروة الوطنية للأجيال القادمة.'}
   ],
   ecosystems: [ // S26 p5, p25–35. Arabic names are EH renderings (D4).
     {n:1, en:'Tourism, Travel & Entertainment', ar:'السياحة والسفر والترفيه', tag:['Hosting the World in Saudi Arabia','استضافة العالم في المملكة'], page:'p25',
@@ -208,7 +208,7 @@ const S = {
      focus:['Develop and localize renewable energy capacity, grow capacity of renewable power generation, develop sustainable waste management practices & continue water desalination effort.','تطوير وتوطين قدرات الطاقة المتجددة، وزيادة قدرة توليد الطاقة المتجددة، وتطوير ممارسات مستدامة لإدارة النفايات، ومواصلة جهود تحلية المياه.'],
      cos:['acwa','Badeel','SIRC'], eh:'H', hook:['"develop sustainable waste management practices" — and SIRC, PIF\u2019s recycling company, is named here','«تطوير ممارسات مستدامة لإدارة النفايات» — والشركة السعودية الاستثمارية لإعادة التدوير، شركة الصندوق لإعادة التدوير، مسمّاة هنا'],
      flag:['PIF does not say which waste it means — household, industrial or hazardous. We do not assume either way.','لا يحدد الصندوق أي نفايات يعني — منزلية أم صناعية أم خطرة. ونحن لا نفترض في أي اتجاه.'],
-     nameNote:['PIF\u2019s 2025 annual report (p31) spelled this group\u2019s name slightly differently; we use the strategy\u2019s spelling.','كتب تقرير الصندوق السنوي 2025 (ص31) اسم هذه المجموعة بصيغة مختلفة قليلاً؛ نستخدم صيغة الاستراتيجية.']},
+     nameNote:['PIF\u2019s 2025 annual report (p.31) spelled this group\u2019s name slightly differently; we use the strategy\u2019s spelling.','كتب تقرير الصندوق السنوي 2025 (ص31) اسم هذه المجموعة بصيغة مختلفة قليلاً؛ نستخدم صيغة الاستراتيجية.']},
     {n:6, en:'NEOM', ar:'نيوم', tag:['Blueprint for Next-Gen Economies','مخطط لاقتصادات الجيل القادم'], page:'p35',
      focus:['Strategic sectors such as NEOM ports, Oxagon manufacturing hub, green Hydrogen project and clean and artificial intelligence facilities.','قطاعات استراتيجية مثل موانئ نيوم، ومركز أوكساجون للتصنيع، ومشروع الهيدروجين الأخضر، ومرافق الطاقة النظيفة والذكاء الاصطناعي.'],
      cos:['NEOM'], eh:'H', hook:['"Oxagon manufacturing hub, green Hydrogen project"','«مركز أوكساجون للتصنيع، مشروع الهيدروجين الأخضر»']}
@@ -217,86 +217,86 @@ const S = {
   // ------------------------------------------- multi-period comparison (2b)
   // baseline: value at period start; stated: target; delivered: actual. null = not in source/project data.
   targets: [
-    {id:'aum', en:'Money PIF manages', ar:'الأموال التي يديرها الصندوق', unit:'SAR bn',
-     p1:{base:971, baseY:2018, deliv:1544, delivY:2020, stated:null, src:'HUB D.aum.own[2018..2020] (AR21 p28)'},
-     p2:{base:1544, stated:4000, deliv:3396, src:'target AR24 p28–29; actual AR25 p10, p28; HUB D.aum'},
-     p3:{stated:null, actualRestated:['says \">$900 bn\" today; no 2030 target','يقول «أكثر من 900 مليار دولار» اليوم؛ لا مستهدف 2030'], src:'S26 p4, p7, p17 — actual only, no 2030 target'},
+    {id:'aum', en:'Money PIF manages', ar:'الأموال التي يديرها الصندوق', unit:'SAR billion',
+     p1:{base:971, baseY:2018, deliv:1544, delivY:2020, stated:null, src:'figures in the PIF Intelligence Hub[2018..2020] (2021 report p.28)'},
+     p2:{base:1544, stated:4000, deliv:3396, src:'target 2024 report p.28–29; actual 2025 report p.10, p.28; figures in the PIF Intelligence Hub'},
+     p3:{stated:null, actualRestated:['says \">$900 billion\" today; no 2030 target','يقول «أكثر من 900 مليار دولار» اليوم؛ لا مستهدف 2030'], src:'Strategy document p.4, p.7, p.17 — actual only, no 2030 target'},
      cls:'not_restated'},
-    {id:'nli', en:'New investment inside Saudi Arabia each year (minimum)', ar:'استثمار جديد داخل المملكة كل سنة (حد أدنى)', unit:'SAR bn/yr',
+    {id:'nli', en:'New investment inside Saudi Arabia each year (minimum)', ar:'استثمار جديد داخل المملكة كل سنة (حد أدنى)', unit:'SAR billion/yr',
      p1:{src:'not in project data'},
-     p2:{stated:150, deliv:171.1, note:['2025; cumulative 750+ (min 5×150 = 750)','2025؛ تراكمي +750 (الحد الأدنى 5×150 = 750)'], src:'AR24 p28–29; AR25 p28'},
-     p3:{stated:null, actualRestated:['>$199 bn cumulative 2021–25','أكثر من 199 مليار دولار تراكمياً 2021–2025'], src:'S26 p17'},
+     p2:{stated:150, deliv:171.1, note:['2025; cumulative 750+ (min 5×150 = 750)','2025؛ تراكمي +750 (الحد الأدنى 5×150 = 750)'], src:'2024 report p.28–29; 2025 report p.28'},
+     p3:{stated:null, actualRestated:['>$199 billion cumulative 2021–25','أكثر من 199 مليار دولار تراكمياً 2021–2025'], src:'Strategy document p.17'},
      cls:'not_restated'},
     {id:'newsec', en:'Share of PIF\u2019s money in new industries', ar:'حصة أموال الصندوق في صناعات جديدة', unit:'%',
-     p1:{deliv:15, delivY:2020, src:'AR24 p28–29 baseline'},
-     p2:{base:15, stated:21, deliv:45, note:['"> 21%" target; "~45%" actual','المستهدف «> 21%»؛ الفعلي «~45%»'], src:'AR24 p28–29; AR25 p28'},
-     p3:{stated:null, src:'S26 — not mentioned'},
+     p1:{deliv:15, delivY:2020, src:'2024 report p.28–29 baseline'},
+     p2:{base:15, stated:21, deliv:45, note:['"> 21%" target; "~45%" actual','المستهدف «> 21%»؛ الفعلي «~45%»'], src:'2024 report p.28–29; 2025 report p.28'},
+     p3:{stated:null, src:'Strategy document — not mentioned'},
      cls:'not_restated'},
     {id:'intl', en:'Share of PIF\u2019s money invested abroad', ar:'حصة أموال الصندوق المستثمرة في الخارج', unit:'%',
-     p1:{deliv:30, delivY:2020, src:'AR24 p28–29 baseline'},
-     p2:{base:30, stated:24, deliv:20, note:['AR24 shows 24% as target from 30%; AR25 writes "< 24%" — met','التقرير السنوي 2024 يعرض 24% كمستهدف من 30%؛ التقرير السنوي 2025 يكتب «< 24%» — تحقق'], src:'AR24 p28–29; AR25 p28; HUB D.split[2025].i'},
-     p3:{stated:null, src:'S26 — not mentioned'},
+     p1:{deliv:30, delivY:2020, src:'2024 report p.28–29 baseline'},
+     p2:{base:30, stated:24, deliv:20, note:['2024 report shows 24% as target from 30%; 2025 report writes "< 24%" — met','التقرير السنوي 2024 يعرض 24% كمستهدف من 30%؛ التقرير السنوي 2025 يكتب «< 24%» — تحقق'], src:'2024 report p.28–29; 2025 report p.28; figures in the PIF Intelligence Hub.i'},
+     p3:{stated:null, src:'Strategy document — not mentioned'},
      cls:'not_restated'},
-    {id:'gdp', en:'Added to the Saudi non-oil economy (total since 2021)', ar:'ما أُضيف للاقتصاد غير النفطي (المجموع منذ 2021)', unit:'SAR bn',
+    {id:'gdp', en:'Added to the Saudi non-oil economy (total since 2021)', ar:'ما أُضيف للاقتصاد غير النفطي (المجموع منذ 2021)', unit:'SAR billion',
      p1:{src:'not in project data'},
-     p2:{stated:1200, deliv:1286, src:'AR24 p28–29; AR25 p10, p28; HUB D.gdp'},
-     p3:{stated:null, actualRestated:['>$342 bn; "up to 11%"','أكثر من 342 مليار دولار؛ «حتى 11%»'], src:'S26 p4, p7, p17'},
+     p2:{stated:1200, deliv:1286, src:'2024 report p.28–29; 2025 report p.10, p.28; figures in the PIF Intelligence Hub'},
+     p3:{stated:null, actualRestated:['>$342 billion; "up to 11%"','أكثر من 342 مليار دولار؛ «حتى 11%»'], src:'Strategy document p.4, p.7, p.17'},
      cls:'not_restated'},
     {id:'jobs', en:'Jobs created (total)', ar:'الوظائف المستحدثة (المجموع)', unit:'jobs',
      p1:{src:'not in project data'},
-     p2:{stated:1800000, deliv:730249, delivY:2023, note:['last reported 2023; no 2024/2025 figure','آخر رقم منشور 2023؛ لا رقم لعامَي 2024/2025'], src:'AR24 p28–29; AR23 p10–11; HUB findings f3'},
-     p3:{stated:null, assetLevel:['asset level only: RSG >170,000; Diriyah 125,000+ by 2030','على مستوى الأصول فقط: البحر الأحمر الدولية >170,000؛ الدرعية +125,000 بحلول 2030'], src:'S26 p37, p56, p61'},
+     p2:{stated:1800000, deliv:730249, delivY:2023, note:['last reported 2023; no 2024/2025 figure','آخر رقم منشور 2023؛ لا رقم لعامَي 2024/2025'], src:'2024 report p.28–29; 2023 report p.10–11; HUB findings f3'},
+     p3:{stated:null, assetLevel:['asset level only: RSG >170,000; Diriyah 125,000+ by 2030','على مستوى الأصول فقط: البحر الأحمر الدولية >170,000؛ الدرعية +125,000 بحلول 2030'], src:'Strategy document p.37, p.56, p.61'},
      cls:'not_restated'},
     {id:'lc', en:'Share of spending that goes to Saudi suppliers', ar:'نسبة الإنفاق التي تذهب لمورّدين سعوديين', unit:'%',
      p1:{src:'not in project data'},
-     p2:{stated:60, deliv:57, delivY:2024, note:['no 2025 score published','لا درجة منشورة لعام 2025'], src:'AR24 p28–29; AR25 p104; HUB D.local.score'},
-     p3:{stated:null, actualRestated:['repeats 57% (2024); says buying local will be pushed through its companies','يكرر 57% (2024)؛ يقول إن الشراء المحلي سيُدفع عبر شركاته'], src:'S26 p4, p17, p41'},
+     p2:{stated:60, deliv:57, delivY:2024, note:['no 2025 score published','لا درجة منشورة لعام 2025'], src:'2024 report p.28–29; 2025 report p.104; figures in the PIF Intelligence Hub'},
+     p3:{stated:null, actualRestated:['repeats 57% (2024); says buying local will be pushed through its companies','يكرر 57% (2024)؛ يقول إن الشراء المحلي سيُدفع عبر شركاته'], src:'Strategy document p.4, p.17, p.41'},
      cls:'not_restated'},
-    {id:'ngi', en:'Private money brought in alongside PIF (total)', ar:'أموال خاصة استُقطبت إلى جانب الصندوق (المجموع)', unit:'SAR bn',
+    {id:'ngi', en:'Private money brought in alongside PIF (total)', ar:'أموال خاصة استُقطبت إلى جانب الصندوق (المجموع)', unit:'SAR billion',
      p1:{src:'not in project data'},
-     p2:{stated:1200, deliv:null, note:['no recorded actual in project data','لا رقم فعلي مسجَّل في بيانات المشروع'], src:'AR24 p28–29; AR23 p14–15'},
-     p3:{stated:null, note:['talks about attracting private money, but gives no number','يتحدث عن استقطاب أموال خاصة دون رقم'], src:'S26 p68'},
+     p2:{stated:1200, deliv:null, note:['no recorded actual in project data','لا رقم فعلي مسجَّل في بيانات المشروع'], src:'2024 report p.28–29; 2023 report p.14–15'},
+     p3:{stated:null, note:['talks about attracting private money, but gives no number','يتحدث عن استقطاب أموال خاصة دون رقم'], src:'Strategy document p.68'},
      cls:'not_restated'},
     {id:'arch', en:'How the plan is organised', ar:'كيف نُظّمت الخطة', unit:'',
-     p1:{text:['PIF Program 2018–2020 (targets not in project data)','برنامج الصندوق 2018–2020 (المستهدفات ليست في بيانات المشروع)'], src:'AR25 p20'},
-     p2:{text:['8 pillars · 13 industries · 8 investment pools','8 ركائز · 13 صناعة · 8 مجموعات استثمار'], src:'AR25 p26–27, p44; AR24 p28–29'},
-     p3:{text:['7 goals · 6 groups · 3 boxes (portfolios)','7 أهداف · 6 مجموعات · 3 صناديق (محافظ)'], src:'S26 p4–5, p22–23'},
+     p1:{text:['PIF Program 2018–2020 (targets not in project data)','برنامج الصندوق 2018–2020 (المستهدفات ليست في بيانات المشروع)'], src:'2025 report p.20'},
+     p2:{text:['8 pillars · 13 industries · 8 investment pools','8 ركائز · 13 صناعة · 8 مجموعات استثمار'], src:'2025 report p.26–27, p.44; 2024 report p.28–29'},
+     p3:{text:['7 goals · 6 groups · 3 boxes (portfolios)','7 أهداف · 6 مجموعات · 3 صناديق (محافظ)'], src:'Strategy document p.4–5, p.22–23'},
      cls:'restructured'},
     {id:'waste', en:'Waste management as something PIF says it will work on', ar:'إدارة النفايات كأمر يقول الصندوق إنه سيعمل عليه', unit:'',
-     p1:{text:['absent','غائب'], src:'HUB findings f5'},
+     p1:{text:['absent','غائب'], src:'PIF Intelligence Hub findings f5'},
      p2:{text:['absent (SIRC reverse vending machines only)','غائب (أجهزة البيع العكسي لسرك فقط)'], src:'HUB wasteQuotes 2022–2025'},
-     p3:{text:['"develop sustainable waste management practices" — PIF does not say which kinds of waste','«تطوير ممارسات مستدامة لإدارة النفايات» — لا يحدد الصندوق أي أنواع النفايات'], src:'S26 p33'},
+     p3:{text:['"develop sustainable waste management practices" — PIF does not say which kinds of waste','«تطوير ممارسات مستدامة لإدارة النفايات» — لا يحدد الصندوق أي أنواع النفايات'], src:'Strategy document p.33'},
      cls:'new'},
     {id:'water', en:'Water', ar:'المياه', unit:'',
-     p1:{text:['inside Utilities & renewables (12.4% of PIF\u2019s money, 2021)','ضمن المرافق والطاقة المتجددة (12.4% من الأصول، 2021)'], src:'HUB D.strat2021'},
-     p2:{text:['inside Utilities and Renewables sector','ضمن قطاع المرافق والطاقة المتجددة'], src:'AR24 p28–29'},
-     p3:{text:['now in the name of group 05; "continue water desalination effort"','الآن في اسم المجموعة 05؛ «مواصلة جهود تحلية المياه»'], src:'S26 p5, p33'},
+     p1:{text:['inside Utilities & renewables (12.4% of PIF\u2019s money, 2021)','ضمن المرافق والطاقة المتجددة (12.4% من الأصول، 2021)'], src:'figures in the PIF Intelligence Hub2021'},
+     p2:{text:['inside Utilities and Renewables sector','ضمن قطاع المرافق والطاقة المتجددة'], src:'2024 report p.28–29'},
+     p3:{text:['now in the name of group 05; "continue water desalination effort"','الآن في اسم المجموعة 05؛ «مواصلة جهود تحلية المياه»'], src:'Strategy document p.5, p.33'},
      cls:'raised'},
     {id:'sirc', en:'SIRC (PIF\u2019s recycling company)', ar:'الشركة السعودية الاستثمارية لإعادة التدوير (شركة الصندوق لإعادة التدوير)', unit:'',
-     p1:{text:['not mentioned (AR21)','غير مذكورة (التقرير السنوي 2021)'], src:'HUB wasteQuotes[2021]'},
-     p2:{text:['SAIL marine ops (AR22); 70→200 reverse vending machines','عمليات SAIL البحرية (2022)؛ 70←200 جهاز بيع عكسي'], src:'HUB wasteQuotes 2022, 2024, 2025'},
-     p3:{text:['named as one of the three companies in group 05','مسمّاة كإحدى الشركات الثلاث في المجموعة 05'], src:'S26 p33'},
+     p1:{text:['not mentioned (2021 report)','غير مذكورة (التقرير السنوي 2021)'], src:'HUB wasteQuotes[2021]'},
+     p2:{text:['SAIL marine ops (2022 report); 70→200 reverse vending machines','عمليات SAIL البحرية (2022)؛ 70←200 جهاز بيع عكسي'], src:'HUB wasteQuotes 2022, 2024, 2025'},
+     p3:{text:['named as one of the three companies in group 05','مسمّاة كإحدى الشركات الثلاث في المجموعة 05'], src:'Strategy document p.33'},
      cls:'raised'},
     {id:'climate', en:'Share of PIF\u2019s money in climate-related companies', ar:'حصة أموال الصندوق في شركات مرتبطة بالمناخ', unit:'%',
      p1:{src:'—'},
-     p2:{text:['2% / 21% disclosed (2024), dropped in AR25','2% / 21% أُفصح عنها (2024)، أُسقطت في التقرير السنوي 2025'], src:'HUB findings f3 (AR24 p95)'},
-     p3:{text:['not mentioned','غير مذكورة'], src:'S26'},
+     p2:{text:['2% / 21% disclosed (2024), dropped in 2025 report','2% / 21% أُفصح عنها (2024)، أُسقطت في التقرير السنوي 2025'], src:'PIF Intelligence Hub findings f3 (2024 report p.95)'},
+     p3:{text:['not mentioned','غير مذكورة'], src:'Strategy document'},
      cls:'dropped'},
-    {id:'dir', en:'Diriyah annual visitors by 2030', ar:'زوار الدرعية السنويون بحلول 2030', unit:'mn',
+    {id:'dir', en:'Diriyah annual visitors by 2030', ar:'زوار الدرعية السنويون بحلول 2030', unit:'million',
      p1:{src:'—'},
-     p2:{stated:47, na:true, note:['"over 47 MN annual visitors by 2030"','«أكثر من 47 مليون زائر سنوياً بحلول 2030»'], src:'AR24 p66–67'},
-     p3:{stated:25, note:['"25 million+ annual visits"','«أكثر من 25 مليون زيارة سنوية»'], src:'S26 p61'},
+     p2:{stated:47, na:true, note:['"over 47 MN annual visitors by 2030"','«أكثر من 47 مليون زائر سنوياً بحلول 2030»'], src:'2024 report p.66–67'},
+     p3:{stated:25, note:['"25 million+ annual visits"','«أكثر من 25 مليون زيارة سنوية»'], src:'Strategy document p.61'},
      cls:'lowered'},
     {id:'rsg30', en:'Red Sea Global 2030 GDP / jobs', ar:'البحر الأحمر الدولية 2030: الناتج / الوظائف', unit:'',
-     p1:{src:'—'}, p2:{text:['not stated','غير مذكور'], src:'AR24 p68–69; AR25 p68–69'},
-     p3:{text:['>$8 bn GDP; >170,000 direct & indirect jobs by 2030','أكثر من 8 مليارات دولار ناتجاً؛ أكثر من 170,000 وظيفة مباشرة وغير مباشرة بحلول 2030'], src:'S26 p37, p56'},
+     p1:{src:'—'}, p2:{text:['not stated','غير مذكور'], src:'2024 report p.68–69; 2025 report p.68–69'},
+     p3:{text:['>$8 billion GDP; >170,000 direct & indirect jobs by 2030','أكثر من 8 مليارات دولار ناتجاً؛ أكثر من 170,000 وظيفة مباشرة وغير مباشرة بحلول 2030'], src:'Strategy document p.37, p.56'},
      cls:'new'},
     {id:'ra', en:'Riyadh Air destinations by 2030', ar:'وجهات طيران الرياض بحلول 2030', unit:'destinations',
-     p1:{src:'—'}, p2:{stated:100, na:true, note:['also $20 bn GDP, 200,000 jobs','وأيضاً 20 مليار دولار ناتجاً، 200,000 وظيفة'], src:'AR23 p30–31; AR25 p25'},
-     p3:{stated:100, note:['~100; ~$20 bn GDP; jobs not restated','نحو 100؛ نحو 20 مليار دولار ناتجاً؛ الوظائف لم يُعاد ذكرها'], src:'S26 p36'},
+     p1:{src:'—'}, p2:{stated:100, na:true, note:['also $20 billion GDP, 200,000 jobs','وأيضاً 20 مليار دولار ناتجاً، 200,000 وظيفة'], src:'2023 report p.30–31; 2025 report p.25'},
+     p3:{stated:100, note:['~100; ~$20 billion GDP; jobs not restated','نحو 100؛ نحو 20 مليار دولار ناتجاً؛ الوظائف لم يُعاد ذكرها'], src:'Strategy document p.36'},
      cls:'unchanged'},
     {id:'direct', en:'PIF\u2019s four jobs under Vision 2030', ar:'مهام الصندوق الأربع في رؤية 2030', unit:'',
-     p1:{text:'4', src:'AR25 p20'}, p2:{text:'4', src:'AR25 p26'}, p3:{text:['4, same wording','4، بالصياغة نفسها'], src:'S26 p15'},
+     p1:{text:'4', src:'2025 report p.20'}, p2:{text:'4', src:'2025 report p.26'}, p3:{text:['4, same wording','4، بالصياغة نفسها'], src:'Strategy document p.15'},
      cls:'unchanged'}
   ],
   classes: { // chip labels + colours
@@ -311,14 +311,14 @@ const S = {
 
   // ------------------------------------------------------- trajectory (2c)
   traj: [
-    {en:'Money PIF manages, 2018→2020 (what happened)', ar:'أموال الصندوق 2018→2020 (ما حدث)', v:26.1, kind:'deliv', src:'HUB D.aum.own: 971→1,544 over 2 yrs', g:'H'},
-    {en:'Money PIF manages, 2020→2025 (needed to reach SAR 4 trillion)', ar:'أموال الصندوق 2020→2025 (المطلوب لبلوغ 4 تريليونات ريال)', v:21.0, kind:'req', src:'AR24 p28–29: 1,544→4,000 over 5 yrs', g:'H'},
-    {en:'Money PIF manages, 2020→2025 (what happened)', ar:'أموال الصندوق 2020→2025 (ما حدث)', v:17.1, kind:'deliv', src:'HUB D.aum.own: 1,544→3,396 over 5 yrs', g:'H'},
-    {en:'Money PIF manages, 2015→2025 (the way the plan tells it, in dollars)', ar:'أموال الصندوق 2015→2025 (كما ترويها الخطة، بالدولار)', v:19.6, kind:'deliv', src:'S26 p7, p17: $150 bn→>$900 bn over 10 yrs ("six-fold")', g:'H'},
-    {en:'Buying from Saudi private companies, 2020→2024', ar:'الشراء من شركات سعودية خاصة 2020→2024', v:35.2, kind:'deliv', src:'HUB D.local.spend: 62→207 over 4 yrs (AR25 p104)', g:'H'},
-    {en:'Green bonds (borrowing for green projects), 2022→2025', ar:'السندات الخضراء (اقتراض لمشاريع خضراء) 2022→2025', v:54.3, kind:'deliv', src:'HUB D.green.raised: 3.0→11.02 over 3 yrs', g:'H'},
-    {en:'PIF staff numbers, 2021→2025', ar:'عدد موظفي الصندوق 2021→2025', v:22.9, kind:'deliv', src:'HUB D.staff.total: 1,457→3,321 over 4 yrs', g:'H'},
-    {en:'Any fund-wide target, 2026→2030', ar:'أي مستهدف على مستوى الصندوق 2026→2030', v:null, kind:'none', src:'S26 — no PIF-level numeric 2030 target (D3); pace cannot be computed', g:'H'}
+    {en:'Money PIF manages, 2018→2020 (what happened)', ar:'أموال الصندوق 2018→2020 (ما حدث)', v:26.1, kind:'deliv', src:'figures in the PIF Intelligence Hub: 971→1,544 over 2 yrs', g:'H'},
+    {en:'Money PIF manages, 2020→2025 (needed to reach SAR 4 trillion)', ar:'أموال الصندوق 2020→2025 (المطلوب لبلوغ 4 تريليونات ريال)', v:21.0, kind:'req', src:'2024 report p.28–29: 1,544→4,000 over 5 yrs', g:'H'},
+    {en:'Money PIF manages, 2020→2025 (what happened)', ar:'أموال الصندوق 2020→2025 (ما حدث)', v:17.1, kind:'deliv', src:'figures in the PIF Intelligence Hub: 1,544→3,396 over 5 yrs', g:'H'},
+    {en:'Money PIF manages, 2015→2025 (the way the plan tells it, in dollars)', ar:'أموال الصندوق 2015→2025 (كما ترويها الخطة، بالدولار)', v:19.6, kind:'deliv', src:'Strategy document p.7, p.17: $150 billion→>$900 billion over 10 yrs ("six-fold")', g:'H'},
+    {en:'Buying from Saudi private companies, 2020→2024', ar:'الشراء من شركات سعودية خاصة 2020→2024', v:35.2, kind:'deliv', src:'figures in the PIF Intelligence Hub: 62→207 over 4 yrs (2025 report p.104)', g:'H'},
+    {en:'Green bonds (borrowing for green projects), 2022→2025', ar:'السندات الخضراء (اقتراض لمشاريع خضراء) 2022→2025', v:54.3, kind:'deliv', src:'figures in the PIF Intelligence Hub: 3.0→11.02 over 3 yrs', g:'H'},
+    {en:'PIF staff numbers, 2021→2025', ar:'عدد موظفي الصندوق 2021→2025', v:22.9, kind:'deliv', src:'figures in the PIF Intelligence Hub: 1,457→3,321 over 4 yrs', g:'H'},
+    {en:'Any fund-wide target, 2026→2030', ar:'أي مستهدف على مستوى الصندوق 2026→2030', v:null, kind:'none', src:'Strategy document — no PIF-level numeric 2030 target; pace cannot be computed', g:'H'}
   ],
 
   // -------------------------------------------------- sector shift (2d)
@@ -328,100 +328,100 @@ const S = {
     v:[25.6,23.5,23.0,12.4,7.5,2.6,1.6,1.4,0.8,0.6,0.3,0.3,0.2],
     // EH mapping to 2026 ecosystems (index 1–6, 0 = no ecosystem). Confidence L (personal analysis).
     map:[3,2,0,5,4,3,1,4,2,3,0,3,3],
-    src:'HUB D.strat2021 (AR21 p5). Mapping to ecosystems is EH analysis (L).'
+    src:'figures in the PIF Intelligence Hub2021 (2021 report p.5). Mapping to ecosystems is EH analysis (L).'
   },
 
   // ----------------------------------------------- EH relevance heatmap (§3)
   relevance: [ // rel: H/M/L/N ; exp: up/held/down/new
-    {en:'Group 05: "develop sustainable waste management practices"', ar:'المجموعة 05: «تطوير ممارسات مستدامة لإدارة النفايات»', rel:'H', exp:'up', j:['The first time PIF has ever written waste into a plan. It does not say which kinds of waste.','أول مرة يكتب فيها الصندوق النفايات في خطة. لا يحدد أي أنواع النفايات.'], src:'S26 p33', g:'H'},
-    {en:'SIRC (PIF\u2019s recycling company) is named in group 05', ar:'الشركة السعودية الاستثمارية لإعادة التدوير (شركة الصندوق لإعادة التدوير) مسمّاة في المجموعة 05', rel:'H', exp:'up', j:['This is the company PIF will use for waste. For EH it is both a possible customer and a serious competitor.','هذه الشركة التي سيستخدمها الصندوق للنفايات. بالنسبة لآفاق البيئة هي عميل محتمل ومنافس جدي في الوقت نفسه.'], src:'S26 p33; workbook Stakeholders row 1492', g:'H'},
-    {en:'Group 05: "continue water desalination effort"; acwa and Badeel named', ar:'المجموعة 05: «مواصلة جهود تحلية المياه»؛ أكوا، بديل', rel:'H', exp:'up', j:['Desalination plants produce salty waste, sludge, used filters and chemicals. EH already serves such plants.','تنتج محطات التحلية مخلفات مالحة وحمأة وفلاتر مستعملة وكيماويات. آفاق البيئة تخدم مثل هذه المحطات أصلاً.'], src:'S26 p33; EH_company_profile.pdf', g:'H'},
-    {en:'Private operators "lead delivery, operations, and expansion"', ar:'المشغّلون من القطاع الخاص «يقودون التنفيذ والتشغيل والتوسع»', rel:'H', exp:'up', j:['PIF says in plain words that private companies, not PIF, should run and expand things. That means buying services from firms like EH.','يقول الصندوق بكلمات واضحة إن الشركات الخاصة، لا الصندوق، هي من يجب أن تشغّل الأشياء وتوسّعها. هذا يعني شراء خدمات من شركات مثل آفاق البيئة.'], src:'S26 p23, p41', g:'H'},
-    {en:'PIF will push its companies to buy Saudi', ar:'سيدفع الصندوق شركاته للشراء من السعودية', rel:'H', exp:'up', j:['PIF says it will hold its companies to "local content frameworks" — rules on buying from Saudi suppliers. EH is one.','يقول الصندوق إنه سيُلزم شركاته ب«أطر المحتوى المحلي» — قواعد للشراء من مورّدين سعوديين. آفاق البيئة منهم.'], src:'S26 p41', g:'H'},
-    {en:'Group 03: King Abdullah Economic City (Rabigh) named; "industrial zones"', ar:'المجموعة 03: مدينة الملك عبدالله الاقتصادية (رابغ) مسمّاة؛ «المناطق الصناعية»', rel:'H', exp:'up', j:['Car and drug factories produce hazardous waste (paint sludge, solvents, batteries, lab waste) — right next to our Al-Juhfah site.','تنتج مصانع السيارات والأدوية نفايات خطرة (حمأة الدهانات، المذيبات، البطاريات، مخلفات المعامل) — بجوار موقعنا في الجحفة مباشرة.'], src:'S26 p29, p36', g:'M'},
-    {en:'Group 06: NEOM\u2019s Oxagon industrial city and hydrogen plant', ar:'المجموعة 06: مدينة أوكساجون الصناعية في نيوم ومصنع الهيدروجين', rel:'H', exp:'held', j:['A big cluster of industry on the Red Sea coast that will produce hazardous waste. Nothing new versus last year\u2019s report.','تجمّع صناعي كبير على ساحل البحر الأحمر سينتج نفايات خطرة. لا جديد مقارنة بتقرير العام الماضي.'], src:'S26 p35; AR25 p64–65', g:'H'},
-    {en:'Group 04: mining, metals, building materials, ports', ar:'المجموعة 04: التعدين والمعادن ومواد البناء والموانئ', rel:'M', exp:'held', j:['Mining and metal plants produce waste EH is licensed to handle, but most of it is far from our site.','تنتج مصانع التعدين والمعادن نفايات مرخّص لآفاق البيئة التعامل معها، لكن معظمها بعيد عن موقعنا.'], src:'S26 p31', g:'M'},
-    {en:'Group 02: building cities; "construction services", "facility management"; Jeddah Central named', ar:'المجموعة 02: بناء المدن؛ «خدمات الإنشاء»، «إدارة المرافق»؛ وسط جدة مسمّى', rel:'M', exp:'up', j:['Building and demolition create rubble, contaminated soil and asbestos to deal with.','يخلّف البناء والهدم أنقاضاً وتربة ملوثة وأسبستوس تحتاج معالجة.'], src:'S26 p27', g:'M'},
-    {en:'Group 01: tourism; "supporting services"; Red Sea Global buys ~$700 mn a year from Saudi firms', ar:'المجموعة 01: السياحة؛ «الخدمات الداعمة»؛ البحر الأحمر الدولية تشتري نحو 700 مليون دولار سنوياً من شركات سعودية', rel:'M', exp:'up', j:['A named customer with a known budget and a stated push to buy Saudi.','عميل مسمّى بميزانية معروفة ودفع معلن للشراء من السعودية.'], src:'S26 p25, p56', g:'H'},
-    {en:'PIF may merge companies and stretch project timelines', ar:'قد يدمج الصندوق شركات ويمدّد جداول المشاريع', rel:'M', exp:'up', j:['Customers could merge or disappear; projects could be delayed.','قد يندمج عملاء أو يختفون؛ وقد تتأخر مشاريع.'], src:'S26 p40', g:'M'},
-    {en:'PIF may sell companies it no longer sees as essential', ar:'قد يبيع الصندوق شركات لم يعد يراها أساسية', rel:'M', exp:'new', j:['Could include environmental companies. PIF does not say.','قد يشمل شركات بيئية. الصندوق لا يقول.'], src:'S26 p23', g:'L'},
-    {en:'PIF describes how it will judge success, but gives no numbers', ar:'يصف الصندوق كيف سيحكم على النجاح لكن دون أرقام', rel:'L', exp:'held', j:['Nothing EH can measure itself against.','لا شيء يمكن لآفاق البيئة قياس نفسها عليه.'], src:'S26 p42', g:'H'},
-    {en:'Green finance / green bonds', ar:'التمويل الأخضر / السندات الخضراء', rel:'N', exp:'down', j:['PIF\u2019s green bonds could fund pollution-control projects. The plan does not mention them at all.','يمكن لسندات الصندوق الخضراء تمويل مشاريع مكافحة التلوث. الخطة لا تذكرها إطلاقاً.'], src:'S26 — absent', g:'H'},
-    {en:'How PIF companies run tenders (Etimad etc.)', ar:'كيف تجري شركات الصندوق مناقصاتها (اعتماد وغيرها)', rel:'N', exp:'held', j:['Not mentioned','غير مذكور'], src:'S26 — absent', g:'H'}
+    {en:'Group 05: "develop sustainable waste management practices"', ar:'المجموعة 05: «تطوير ممارسات مستدامة لإدارة النفايات»', rel:'H', exp:'up', j:['The first time PIF has ever written waste into a plan. It does not say which kinds of waste.','أول مرة يكتب فيها الصندوق النفايات في خطة. لا يحدد أي أنواع النفايات.'], src:'Strategy document p.33', g:'H'},
+    {en:'SIRC (PIF\u2019s recycling company) is named in group 05', ar:'الشركة السعودية الاستثمارية لإعادة التدوير (شركة الصندوق لإعادة التدوير) مسمّاة في المجموعة 05', rel:'H', exp:'up', j:['This is the company PIF will use for waste. For EH it is both a possible customer and a serious competitor.','هذه الشركة التي سيستخدمها الصندوق للنفايات. بالنسبة لآفاق البيئة هي عميل محتمل ومنافس جدي في الوقت نفسه.'], src:'Strategy document p.33; workbook Stakeholders row 1492', g:'H'},
+    {en:'Group 05: "continue water desalination effort"; acwa and Badeel named', ar:'المجموعة 05: «مواصلة جهود تحلية المياه»؛ أكوا، بديل', rel:'H', exp:'up', j:['Desalination plants produce salty waste, sludge, used filters and chemicals. EH already serves such plants.','تنتج محطات التحلية مخلفات مالحة وحمأة وفلاتر مستعملة وكيماويات. آفاق البيئة تخدم مثل هذه المحطات أصلاً.'], src:'Strategy document p.33; EH_company_profile.pdf', g:'H'},
+    {en:'Private operators "lead delivery, operations, and expansion"', ar:'المشغّلون من القطاع الخاص «يقودون التنفيذ والتشغيل والتوسع»', rel:'H', exp:'up', j:['PIF says in plain words that private companies, not PIF, should run and expand things. That means buying services from firms like EH.','يقول الصندوق بكلمات واضحة إن الشركات الخاصة، لا الصندوق، هي من يجب أن تشغّل الأشياء وتوسّعها. هذا يعني شراء خدمات من شركات مثل آفاق البيئة.'], src:'Strategy document p.23, p.41', g:'H'},
+    {en:'PIF will push its companies to buy Saudi', ar:'سيدفع الصندوق شركاته للشراء من السعودية', rel:'H', exp:'up', j:['PIF says it will hold its companies to "local content frameworks" — rules on buying from Saudi suppliers. EH is one.','يقول الصندوق إنه سيُلزم شركاته ب«أطر المحتوى المحلي» — قواعد للشراء من مورّدين سعوديين. آفاق البيئة منهم.'], src:'Strategy document p.41', g:'H'},
+    {en:'Group 03: King Abdullah Economic City (Rabigh) named; "industrial zones"', ar:'المجموعة 03: مدينة الملك عبدالله الاقتصادية (رابغ) مسمّاة؛ «المناطق الصناعية»', rel:'H', exp:'up', j:['Car and drug factories produce hazardous waste (paint sludge, solvents, batteries, lab waste) — right next to our Al-Juhfah site.','تنتج مصانع السيارات والأدوية نفايات خطرة (حمأة الدهانات، المذيبات، البطاريات، مخلفات المعامل) — بجوار موقعنا في الجحفة مباشرة.'], src:'Strategy document p.29, p.36', g:'M'},
+    {en:'Group 06: NEOM\u2019s Oxagon industrial city and hydrogen plant', ar:'المجموعة 06: مدينة أوكساجون الصناعية في نيوم ومصنع الهيدروجين', rel:'H', exp:'held', j:['A big cluster of industry on the Red Sea coast that will produce hazardous waste. Nothing new versus last year\u2019s report.','تجمّع صناعي كبير على ساحل البحر الأحمر سينتج نفايات خطرة. لا جديد مقارنة بتقرير العام الماضي.'], src:'Strategy document p.35; 2025 report p.64–65', g:'H'},
+    {en:'Group 04: mining, metals, building materials, ports', ar:'المجموعة 04: التعدين والمعادن ومواد البناء والموانئ', rel:'M', exp:'held', j:['Mining and metal plants produce waste EH is licensed to handle, but most of it is far from our site.','تنتج مصانع التعدين والمعادن نفايات مرخّص لآفاق البيئة التعامل معها، لكن معظمها بعيد عن موقعنا.'], src:'Strategy document p.31', g:'M'},
+    {en:'Group 02: building cities; "construction services", "facility management"; Jeddah Central named', ar:'المجموعة 02: بناء المدن؛ «خدمات الإنشاء»، «إدارة المرافق»؛ وسط جدة مسمّى', rel:'M', exp:'up', j:['Building and demolition create rubble, contaminated soil and asbestos to deal with.','يخلّف البناء والهدم أنقاضاً وتربة ملوثة وأسبستوس تحتاج معالجة.'], src:'Strategy document p.27', g:'M'},
+    {en:'Group 01: tourism; "supporting services"; Red Sea Global buys ~$700 million a year from Saudi firms', ar:'المجموعة 01: السياحة؛ «الخدمات الداعمة»؛ البحر الأحمر الدولية تشتري نحو 700 مليون دولار سنوياً من شركات سعودية', rel:'M', exp:'up', j:['A named customer with a known budget and a stated push to buy Saudi.','عميل مسمّى بميزانية معروفة ودفع معلن للشراء من السعودية.'], src:'Strategy document p.25, p.56', g:'H'},
+    {en:'PIF may merge companies and stretch project timelines', ar:'قد يدمج الصندوق شركات ويمدّد جداول المشاريع', rel:'M', exp:'up', j:['Customers could merge or disappear; projects could be delayed.','قد يندمج عملاء أو يختفون؛ وقد تتأخر مشاريع.'], src:'Strategy document p.40', g:'M'},
+    {en:'PIF may sell companies it no longer sees as essential', ar:'قد يبيع الصندوق شركات لم يعد يراها أساسية', rel:'M', exp:'new', j:['Could include environmental companies. PIF does not say.','قد يشمل شركات بيئية. الصندوق لا يقول.'], src:'Strategy document p.23', g:'L'},
+    {en:'PIF describes how it will judge success, but gives no numbers', ar:'يصف الصندوق كيف سيحكم على النجاح لكن دون أرقام', rel:'L', exp:'held', j:['Nothing EH can measure itself against.','لا شيء يمكن لآفاق البيئة قياس نفسها عليه.'], src:'Strategy document p.42', g:'H'},
+    {en:'Green finance / green bonds', ar:'التمويل الأخضر / السندات الخضراء', rel:'N', exp:'down', j:['PIF\u2019s green bonds could fund pollution-control projects. The plan does not mention them at all.','يمكن لسندات الصندوق الخضراء تمويل مشاريع مكافحة التلوث. الخطة لا تذكرها إطلاقاً.'], src:'Strategy document — absent', g:'H'},
+    {en:'How PIF companies run tenders (Etimad etc.)', ar:'كيف تجري شركات الصندوق مناقصاتها (اعتماد وغيرها)', rel:'N', exp:'held', j:['Not mentioned','غير مذكور'], src:'Strategy document — absent', g:'H'}
   ],
 
   // -------------------------------------------- giga reconciliation (2f)
   giga: [
-    {p:'NEOM', item:['Scope','النطاق'], base:'Oxagon, THE LINE, Trojena, Magna, Islands', bsrc:'AR25 p64', s26:'"NEOM ports, Oxagon manufacturing hub, green Hydrogen project and clean and artificial intelligence facilities"', ssrc:'S26 p35', d:['THE LINE, Trojena, Magna and the islands are no longer mentioned — the plan talks only about industry, energy and AI','ذا لاين وتروجينا وماجنا والجزر لم تُذكر — الخطة تتحدث فقط عن الصناعة والطاقة والذكاء الاصطناعي'], cls:'not_restated'},
-    {p:'NEOM', item:['Green hydrogen','الهيدروجين الأخضر'], base:'90% complete; operational 2026', bsrc:'AR25 p18, p64; AR24 p64', s26:'named as focus; no % or date', ssrc:'S26 p35', d:['Date not restated','التاريخ لم يُعاد ذكره'], cls:'not_restated'},
-    {p:'NEOM', item:['Port terminal 2026','محطة الميناء 2026'], base:'"on track to be operational in 2026"', bsrc:'AR24 p64', s26:'not restated', ssrc:'S26', d:['Not restated','لم يُعاد ذكره'], cls:'not_restated'},
-    {p:'Red Sea Global', item:['Open resorts','المنتجعات المفتوحة'], base:'4 (AR24); Desert Rock "fifth property" + Shura Island 3 hotels (AR25)', bsrc:'AR24 p68; AR25 p68–69', s26:'"fourteen open resorts"', ssrc:'S26 p37, p56', d:['The two documents count resorts differently; we show both','تعدّ الوثيقتان المنتجعات بطريقتَين مختلفتَين؛ نعرض الرقمَين'], cls:'conflict'},
-    {p:'Red Sea Global', item:['AMAALA first guests 2026','أمالا: أول الضيوف 2026'], base:'set to welcome first guests in 2026', bsrc:'AR25 p68', s26:'not restated', ssrc:'S26', d:['Not restated','لم يُعاد ذكره'], cls:'not_restated'},
-    {p:'Red Sea Global', item:['2030 GDP / jobs','2030: الناتج / الوظائف'], base:'—', bsrc:'—', s26:'>$8 bn GDP; >170,000 direct & indirect jobs', ssrc:'S26 p37, p56', d:['Newly introduced','مُستحدث'], cls:'new'},
-    {p:'Red Sea Global', item:['Local content','المحتوى المحلي'], base:'—', bsrc:'—', s26:'56%; ~$700 mn to Saudi companies in 2024', ssrc:'S26 p56', d:['Newly introduced','مُستحدث'], cls:'new'},
-    {p:'Diriyah', item:['Visitors 2030','الزوار 2030'], base:'"over 47 MN annual visitors by 2030"', bsrc:'AR24 p66–67', s26:'"25 million+ annual visits"', ssrc:'S26 p61', d:['The visitor target was cut by almost half','خُفّض مستهدف الزوار إلى النصف تقريباً'], cls:'lowered'},
-    {p:'Diriyah', item:['Jobs / residents 2030','الوظائف / السكان 2030'], base:'—', bsrc:'—', s26:'125,000+ direct jobs; >34,000 residents', ssrc:'S26 p61', d:['Newly introduced','مُستحدث'], cls:'new'},
-    {p:'Diriyah', item:['Opera House SAR 5.26 bn; Wadi Safar SAR 6 bn; KSU contract "SAR 4,225 billion"','دار الأوبرا 5.26 مليار؛ وادي صفار 6 مليارات؛ عقد جامعة الملك سعود «4,225 مليار»'], base:'as printed', bsrc:'AR25 p66–67', s26:'not restated', ssrc:'S26', d:['Not mentioned again. The "4,225 billion" in the 2025 report is almost certainly a misprint for million; we flag it but do not change it','لم يُذكر مجدداً. رقم «4,225 مليار» في تقرير 2025 يُرجَّح أنه خطأ مطبعي والمقصود مليون؛ نعلّمه دون تغييره'], cls:'not_restated'},
-    {p:'Qiddiya', item:['Six Flags opened 31 Dec 2025; PMBS Stadium SAR 15 bn','سيكس فلاقز افتُتح 31 ديسمبر 2025؛ استاد الأمير محمد بن سلمان 15 مليار'], base:'as printed', bsrc:'AR25 p70', s26:'named under group 01 only', ssrc:'S26 p25', d:['Not restated','لم يُعاد ذكره'], cls:'not_restated'},
-    {p:'Qiddiya', item:['48 mn tourists; 325,000 jobs; 600,000+ residents','48 مليون سائح؛ 325,000 وظيفة؛ أكثر من 600,000 ساكن'], base:'as printed', bsrc:'AR23 p78', s26:'not restated', ssrc:'S26', d:['Not restated','لم يُعاد ذكره'], cls:'not_restated'},
-    {p:'ROSHN', item:['Scale metrics','مؤشرات الحجم'], base:'>200 mn m² portfolio; 70% home-ownership national goal', bsrc:'AR25 p18, p72', s26:'>3,000 homes handed over; 11 sites in 3 regions; 9 launches >17,000 homes; 13 partnerships; 1.4 mn m²', ssrc:'S26 p36', d:['The two documents measure different things, so the numbers cannot be compared','تقيس الوثيقتان أمرَين مختلفَين، فلا يمكن مقارنة الرقمَين'], cls:'conflict'},
-    {p:'KAFD', item:['GDP projection; RHQs','توقع الناتج؛ المقرات الإقليمية'], base:'SAR 9.39 bn → 32.68 bn by 2030; 20 RHQs', bsrc:'AR25 p60', s26:'20 RHQs restated; GDP projection not restated', ssrc:'S26 p65', d:['GDP projection not restated','توقع الناتج لم يُعاد ذكره'], cls:'not_restated'},
-    {p:'Riyadh Air', item:['2030 targets','مستهدفات 2030'], base:'100 destinations; $20 bn GDP; 200,000 jobs', bsrc:'AR23 p30–31; AR25 p25', s26:'~100 destinations; ~$20 bn GDP; jobs not restated', ssrc:'S26 p36', d:['Jobs not restated','الوظائف لم يُعاد ذكرها'], cls:'unchanged'},
-    {p:'KAEC / Lucid', item:['Automotive cluster','مجمع السيارات'], base:'King Salman Automotive Cluster designated; Hyundai 50,000 vehicles/yr; Ceer, Lucid', bsrc:'AR25 p18, p22', s26:'Lucid 20,000-vehicle robotaxi programme with Uber; KAEC named group 03 company', ssrc:'S26 p29, p36', d:['New programme; the Hyundai and Ceer production numbers are not repeated','برنامج جديد؛ أرقام إنتاج هيونداي وسير لم تتكرر'], cls:'new'}
+    {p:'NEOM', item:['Scope','النطاق'], base:'Oxagon, THE LINE, Trojena, Magna, Islands', bsrc:'2025 report p.64', s26:'"NEOM ports, Oxagon manufacturing hub, green Hydrogen project and clean and artificial intelligence facilities"', ssrc:'Strategy document p.35', d:['THE LINE, Trojena, Magna and the islands are no longer mentioned — the plan talks only about industry, energy and AI','ذا لاين وتروجينا وماجنا والجزر لم تُذكر — الخطة تتحدث فقط عن الصناعة والطاقة والذكاء الاصطناعي'], cls:'not_restated'},
+    {p:'NEOM', item:['Green hydrogen','الهيدروجين الأخضر'], base:'90% complete; operational 2026', bsrc:'2025 report p.18, p.64; 2024 report p.64', s26:'named as focus; no % or date', ssrc:'Strategy document p.35', d:['Date not restated','التاريخ لم يُعاد ذكره'], cls:'not_restated'},
+    {p:'NEOM', item:['Port terminal 2026','محطة الميناء 2026'], base:'"on track to be operational in 2026"', bsrc:'2024 report p.64', s26:'not restated', ssrc:'Strategy document', d:['Not restated','لم يُعاد ذكره'], cls:'not_restated'},
+    {p:'Red Sea Global', item:['Open resorts','المنتجعات المفتوحة'], base:'4 (2024 report); Desert Rock "fifth property" + Shura Island 3 hotels (2025 report)', bsrc:'2024 report p.68; 2025 report p.68–69', s26:'"fourteen open resorts"', ssrc:'Strategy document p.37, p.56', d:['The two documents count resorts differently; we show both','تعدّ الوثيقتان المنتجعات بطريقتَين مختلفتَين؛ نعرض الرقمَين'], cls:'conflict'},
+    {p:'Red Sea Global', item:['AMAALA first guests 2026','أمالا: أول الضيوف 2026'], base:'set to welcome first guests in 2026', bsrc:'2025 report p.68', s26:'not restated', ssrc:'Strategy document', d:['Not restated','لم يُعاد ذكره'], cls:'not_restated'},
+    {p:'Red Sea Global', item:['2030 GDP / jobs','2030: الناتج / الوظائف'], base:'—', bsrc:'—', s26:'>$8 billion GDP; >170,000 direct & indirect jobs', ssrc:'Strategy document p.37, p.56', d:['Newly introduced','مُستحدث'], cls:'new'},
+    {p:'Red Sea Global', item:['Local content','المحتوى المحلي'], base:'—', bsrc:'—', s26:'56%; ~$700 million to Saudi companies in 2024', ssrc:'Strategy document p.56', d:['Newly introduced','مُستحدث'], cls:'new'},
+    {p:'Diriyah', item:['Visitors 2030','الزوار 2030'], base:'"over 47 MN annual visitors by 2030"', bsrc:'2024 report p.66–67', s26:'"25 million+ annual visits"', ssrc:'Strategy document p.61', d:['The visitor target was cut by almost half','خُفّض مستهدف الزوار إلى النصف تقريباً'], cls:'lowered'},
+    {p:'Diriyah', item:['Jobs / residents 2030','الوظائف / السكان 2030'], base:'—', bsrc:'—', s26:'125,000+ direct jobs; >34,000 residents', ssrc:'Strategy document p.61', d:['Newly introduced','مُستحدث'], cls:'new'},
+    {p:'Diriyah', item:['Opera House SAR 5.26 billion; Wadi Safar SAR 6 billion; KSU contract "SAR 4,225 billion"','دار الأوبرا 5.26 مليار؛ وادي صفار 6 مليارات؛ عقد جامعة الملك سعود «4,225 مليار»'], base:'as printed', bsrc:'2025 report p.66–67', s26:'not restated', ssrc:'Strategy document', d:['Not mentioned again. The "4,225 billion" in the 2025 report is almost certainly a misprint for million; we flag it but do not change it','لم يُذكر مجدداً. رقم «4,225 مليار» في تقرير 2025 يُرجَّح أنه خطأ مطبعي والمقصود مليون؛ نعلّمه دون تغييره'], cls:'not_restated'},
+    {p:'Qiddiya', item:['Six Flags opened 31 Dec 2025; PMBS Stadium SAR 15 billion','سيكس فلاقز افتُتح 31 ديسمبر 2025؛ استاد الأمير محمد بن سلمان 15 مليار'], base:'as printed', bsrc:'2025 report p.70', s26:'named under group 01 only', ssrc:'Strategy document p.25', d:['Not restated','لم يُعاد ذكره'], cls:'not_restated'},
+    {p:'Qiddiya', item:['48 million tourists; 325,000 jobs; 600,000+ residents','48 مليون سائح؛ 325,000 وظيفة؛ أكثر من 600,000 ساكن'], base:'as printed', bsrc:'2023 report p.78', s26:'not restated', ssrc:'Strategy document', d:['Not restated','لم يُعاد ذكره'], cls:'not_restated'},
+    {p:'ROSHN', item:['Scale metrics','مؤشرات الحجم'], base:'>200 million m² portfolio; 70% home-ownership national goal', bsrc:'2025 report p.18, p.72', s26:'>3,000 homes handed over; 11 sites in 3 regions; 9 launches >17,000 homes; 13 partnerships; 1.4 million m²', ssrc:'Strategy document p.36', d:['The two documents measure different things, so the numbers cannot be compared','تقيس الوثيقتان أمرَين مختلفَين، فلا يمكن مقارنة الرقمَين'], cls:'conflict'},
+    {p:'KAFD', item:['GDP projection; RHQs','توقع الناتج؛ المقرات الإقليمية'], base:'SAR 9.39 billion → 32.68 billion by 2030; 20 RHQs', bsrc:'2025 report p.60', s26:'20 RHQs restated; GDP projection not restated', ssrc:'Strategy document p.65', d:['GDP projection not restated','توقع الناتج لم يُعاد ذكره'], cls:'not_restated'},
+    {p:'Riyadh Air', item:['2030 targets','مستهدفات 2030'], base:'100 destinations; $20 billion GDP; 200,000 jobs', bsrc:'2023 report p.30–31; 2025 report p.25', s26:'~100 destinations; ~$20 billion GDP; jobs not restated', ssrc:'Strategy document p.36', d:['Jobs not restated','الوظائف لم يُعاد ذكرها'], cls:'unchanged'},
+    {p:'KAEC / Lucid', item:['Automotive cluster','مجمع السيارات'], base:'King Salman Automotive Cluster designated; Hyundai 50,000 vehicles/yr; Ceer, Lucid', bsrc:'2025 report p.18, p.22', s26:'Lucid 20,000-vehicle robotaxi programme with Uber; KAEC named group 03 company', ssrc:'Strategy document p.29, p.36', d:['New programme; the Hyundai and Ceer production numbers are not repeated','برنامج جديد؛ أرقام إنتاج هيونداي وسير لم تتكرر'], cls:'new'}
   ],
 
   // -------------------------------------------------------- regional (§4)
   regional: {
     assets:[
-      {en:'KAEC (Rabigh)', ar:'مدينة الملك عبدالله الاقتصادية (رابغ)', eco:3, what:['Named in group 03; Lucid builds cars here and plans 20,000 self-driving taxis with Uber','مسمّاة في المجموعة 03؛ تصنع لوسيد سياراتها هنا وتخطط ل20,000 سيارة أجرة ذاتية القيادة مع أوبر'], src:'S26 p29, p36', km:'~50 km from Al-Juhfah', kmAr:'نحو 50 كم من الجحفة'},
-      {en:'NEOM / Oxagon', ar:'نيوم / أوكساجون', eco:6, what:['Has a group of its own; ports, factories, a hydrogen plant and data centres','له مجموعة خاصة به؛ موانئ ومصانع ومصنع هيدروجين ومراكز بيانات'], src:'S26 p35', km:'Red Sea coast, north', kmAr:'ساحل البحر الأحمر، شمالاً'},
-      {en:'Jeddah Central', ar:'وسط جدة', eco:2, what:['Named in group 02','مسمّى في المجموعة 02'], src:'S26 p27', km:'~150 km south', kmAr:'نحو 150 كم جنوباً'},
-      {en:'Red Sea Global', ar:'البحر الأحمر الدولية', eco:1, what:['Named in group 01; 14 resorts open; 56% of its spending goes to Saudi firms (~$700 mn in 2024); aims for 170,000+ jobs by 2030','مسمّاة في المجموعة 01؛ 14 منتجعاً مفتوحاً؛ 56% من إنفاقها لشركات سعودية (نحو 700 مليون دولار في 2024)؛ تستهدف أكثر من 170,000 وظيفة بحلول 2030'], src:'S26 p25, p37, p56', km:'Red Sea coast, north', kmAr:'ساحل البحر الأحمر، شمالاً'}
+      {en:'KAEC (Rabigh)', ar:'مدينة الملك عبدالله الاقتصادية (رابغ)', eco:3, what:['Named in group 03; Lucid builds cars here and plans 20,000 self-driving taxis with Uber','مسمّاة في المجموعة 03؛ تصنع لوسيد سياراتها هنا وتخطط ل20,000 سيارة أجرة ذاتية القيادة مع أوبر'], src:'Strategy document p.29, p.36', km:'~50 km from Al-Juhfah', kmAr:'نحو 50 كم من الجحفة'},
+      {en:'NEOM / Oxagon', ar:'نيوم / أوكساجون', eco:6, what:['Has a group of its own; ports, factories, a hydrogen plant and data centres','له مجموعة خاصة به؛ موانئ ومصانع ومصنع هيدروجين ومراكز بيانات'], src:'Strategy document p.35', km:'Red Sea coast, north', kmAr:'ساحل البحر الأحمر، شمالاً'},
+      {en:'Jeddah Central', ar:'وسط جدة', eco:2, what:['Named in group 02','مسمّى في المجموعة 02'], src:'Strategy document p.27', km:'~150 km south', kmAr:'نحو 150 كم جنوباً'},
+      {en:'Red Sea Global', ar:'البحر الأحمر الدولية', eco:1, what:['Named in group 01; 14 resorts open; 56% of its spending goes to Saudi firms (~$700 million in 2024); aims for 170,000+ jobs by 2030','مسمّاة في المجموعة 01؛ 14 منتجعاً مفتوحاً؛ 56% من إنفاقها لشركات سعودية (نحو 700 مليون دولار في 2024)؛ تستهدف أكثر من 170,000 وظيفة بحلول 2030'], src:'Strategy document p.25, p.37, p.56', km:'Red Sea coast, north', kmAr:'ساحل البحر الأحمر، شمالاً'}
     ],
     absent:[['King Salman Gate (Makkah)','بوابة الملك سلمان (مكة المكرمة)'],['Rua Al Haram Al Makki','رؤى الحرم المكي'],['ROSHN ALMANAR (Makkah)','روشن المنار (مكة المكرمة)'],['Soudah Peaks','قمم السودة'],['ARDARA AlWadi (Abha)','أردارا الوادي (أبها)']],
-    absentSrc:'present in AR25 (p18, p22–25, p60–61, p72–73); absent from S26 ecosystem lists',
-    regionalStatement:{en:'No regional chapter or statement about the Western Region, Makkah–Madinah corridor or Red Sea coast exists in the document. The word "region" appears only in ROSHN\u2019s "three regions" (p36).', ar:'لا يوجد فصل إقليمي أو بيان عن المنطقة الغربية أو ممر مكة–المدينة أو ساحل البحر الأحمر في الوثيقة. كلمة «مناطق» تظهر فقط في «ثلاث مناطق» لروشن (ص36).'},
+    absentSrc:'present in 2025 report (p.18, p.22–25, p.60–61, p.72–73); absent from Strategy document ecosystem lists',
+    regionalStatement:{en:'No regional chapter or statement about the Western Region, Makkah–Madinah corridor or Red Sea coast exists in the document. The word "region" appears only in ROSHN\u2019s "three regions" (p.36).', ar:'لا يوجد فصل إقليمي أو بيان عن المنطقة الغربية أو ممر مكة–المدينة أو ساحل البحر الأحمر في الوثيقة. كلمة «مناطق» تظهر فقط في «ثلاث مناطق» لروشن (ص36).'},
     inference:{en:'Compared with last year\u2019s report, the plan talks less about Makkah and more about industry on our coast: the car and manufacturing zone at King Abdullah Economic City next to Rabigh, and NEOM\u2019s industrial city Oxagon to the north. Factories make hazardous waste, and that waste has to go to a licensed site. PIF names no site of its own. EH\u2019s Al-Juhfah facility is the only licensed hazardous-waste disposal cluster on this coast. This is our reading; PIF does not say it.', ar:'مقارنة بتقرير العام الماضي، تتحدث الخطة أقل عن مكة المكرمة وأكثر عن الصناعة على ساحلنا: منطقة السيارات والتصنيع في مدينة الملك عبدالله الاقتصادية بجوار رابغ، ومدينة أوكساجون الصناعية في نيوم شمالاً. المصانع تنتج نفايات خطرة، وهذه النفايات يجب أن تذهب إلى موقع مرخّص. لا يسمّي الصندوق أي موقع خاص به. منشأة آفاق البيئة في الجحفة هي مجمع التخلص من النفايات الخطرة المرخّص الوحيد على هذا الساحل. هذه قراءتنا؛ الصندوق لا يقولها.'}
   },
 
   // --------------------------------------------------- threats & opps (§5)
   opps: [
-    ['PIF has written waste management into its plan for the first time (group 05)','كتب الصندوق إدارة النفايات في خطته لأول مرة (المجموعة 05)','S26 p33','H'],
-    ['More desalination plants, with Badeel and acwa named as the builders','مزيد من محطات التحلية، مع تسمية بديل وأكوا كمنفّذَين','S26 p33','H'],
-    ['PIF says private companies should run and expand things — i.e. it will buy services rather than do them itself','يقول الصندوق إن الشركات الخاصة يجب أن تشغّل الأشياء وتوسّعها — أي أنه سيشتري الخدمات بدلاً من أدائها بنفسه','S26 p23, p41','H'],
-    ['PIF will push its companies to buy from Saudi suppliers like EH','سيدفع الصندوق شركاته للشراء من مورّدين سعوديين مثل آفاق البيئة','S26 p41','H'],
-    ['Car factories next door at King Abdullah Economic City are part of the plan (Lucid, 20,000 self-driving taxis)','مصانع السيارات المجاورة في مدينة الملك عبدالله الاقتصادية جزء من الخطة (لوسيد، 20,000 سيارة أجرة ذاتية القيادة)','S26 p29, p36','M'],
-    ['NEOM\u2019s industrial city Oxagon and its hydrogen plant keep growing','مدينة أوكساجون الصناعية في نيوم ومصنع الهيدروجين يواصلان النمو','S26 p35','H'],
-    ['Red Sea Global spends ~$700 mn a year with Saudi firms and is still growing','تنفق البحر الأحمر الدولية نحو 700 مليون دولار سنوياً مع شركات سعودية وما زالت تنمو','S26 p56','M'],
-    ['"Industrial zones" and "facility management" are named as things PIF will build — both need waste services','«المناطق الصناعية» و«إدارة المرافق» مسمّاتان كأمور سيبنيها الصندوق — وكلاهما يحتاج خدمات نفايات','S26 p27, p29','M'],
-    ['The Jeddah Central project is part of the plan (group 02)','مشروع وسط جدة جزء من الخطة (المجموعة 02)','S26 p27','M'],
-    ['Goal 06 commits PIF to working with private companies and government bodies','الهدف 06 يلزم الصندوق بالعمل مع الشركات الخاصة والجهات الحكومية','S26 p23','M']
+    ['PIF has written waste management into its plan for the first time (group 05)','كتب الصندوق إدارة النفايات في خطته لأول مرة (المجموعة 05)','Strategy document p.33','H'],
+    ['More desalination plants, with Badeel and acwa named as the builders','مزيد من محطات التحلية، مع تسمية بديل وأكوا كمنفّذَين','Strategy document p.33','H'],
+    ['PIF says private companies should run and expand things — that is it will buy services rather than do them itself','يقول الصندوق إن الشركات الخاصة يجب أن تشغّل الأشياء وتوسّعها — أي أنه سيشتري الخدمات بدلاً من أدائها بنفسه','Strategy document p.23, p.41','H'],
+    ['PIF will push its companies to buy from Saudi suppliers like EH','سيدفع الصندوق شركاته للشراء من مورّدين سعوديين مثل آفاق البيئة','Strategy document p.41','H'],
+    ['Car factories next door at King Abdullah Economic City are part of the plan (Lucid, 20,000 self-driving taxis)','مصانع السيارات المجاورة في مدينة الملك عبدالله الاقتصادية جزء من الخطة (لوسيد، 20,000 سيارة أجرة ذاتية القيادة)','Strategy document p.29, p.36','M'],
+    ['NEOM\u2019s industrial city Oxagon and its hydrogen plant keep growing','مدينة أوكساجون الصناعية في نيوم ومصنع الهيدروجين يواصلان النمو','Strategy document p.35','H'],
+    ['Red Sea Global spends ~$700 million a year with Saudi firms and is still growing','تنفق البحر الأحمر الدولية نحو 700 مليون دولار سنوياً مع شركات سعودية وما زالت تنمو','Strategy document p.56','M'],
+    ['"Industrial zones" and "facility management" are named as things PIF will build — both need waste services','«المناطق الصناعية» و«إدارة المرافق» مسمّاتان كأمور سيبنيها الصندوق — وكلاهما يحتاج خدمات نفايات','Strategy document p.27, p.29','M'],
+    ['The Jeddah Central project is part of the plan (group 02)','مشروع وسط جدة جزء من الخطة (المجموعة 02)','Strategy document p.27','M'],
+    ['Goal 06 commits PIF to working with private companies and government bodies','الهدف 06 يلزم الصندوق بالعمل مع الشركات الخاصة والجهات الحكومية','Strategy document p.23','M']
   ],
   threats: [
-    ['SIRC, PIF\u2019s own recycling company, is the one PIF names for waste — a competitor with PIF behind it','الشركة السعودية الاستثمارية لإعادة التدوير، شركة الصندوق لإعادة التدوير، هي التي يسمّيها الصندوق للنفايات — منافس يقف الصندوق خلفه','S26 p33','H'],
-    ['PIF does not say which waste it means — household, industrial or hazardous. If it means hazardous, SIRC becomes a direct rival','لا يحدد الصندوق أي نفايات يعني — منزلية أم صناعية أم خطرة. إذا كان يعني الخطرة تصبح سرك منافساً مباشراً','S26 p33','H'],
-    ['No fund-wide targets for 2030, so we cannot estimate how much work will come','لا مستهدفات على مستوى الصندوق لعام 2030، فلا يمكننا تقدير حجم العمل المتوقع','S26 all pages','H'],
-    ['PIF says it may merge companies and "refine timelines" — customers could vanish and projects slip','يقول الصندوق إنه قد يدمج شركات و«يعدّل الجداول الزمنية» — قد يختفي عملاء وتتأخر مشاريع','S26 p40','M'],
-    ['NEOM is now described only as industry, energy and AI; THE LINE, Trojena and Magna are not mentioned','يوصف نيوم الآن بالصناعة والطاقة والذكاء الاصطناعي فقط؛ ذا لاين وتروجينا وماجنا غير مذكورة','S26 p35','M'],
-    ['Diriyah\u2019s visitor target was cut from 47 million to 25 million — other big projects may shrink too','خُفّض مستهدف زوار الدرعية من 47 إلى 25 مليوناً — قد تتقلص مشاريع كبرى أخرى أيضاً','S26 p61; AR24 p66','M'],
-    ['PIF\u2019s green bonds, which could pay for pollution-control work, are not mentioned in the plan','سندات الصندوق الخضراء، التي يمكن أن تموّل أعمال مكافحة التلوث، غير مذكورة في الخطة','S26 — absent; AR25 p92','M'],
-    ['PIF may sell companies; SIRC\u2019s subsidiaries could end up owned by a stronger private rival','قد يبيع الصندوق شركات؛ وقد تنتهي شركات سرك التابعة مملوكة لمنافس خاص أقوى','S26 p23, p41','L'],
-    ['PIF\u2019s documents disagree on how many companies it owns (220+, 211, 225) — companies are being merged or dropped','تختلف وثائق الصندوق في عدد الشركات التي يملكها (+220، 211، 225) — شركات تُدمج أو تُستبعد','S26 p17; AR25 p16; AR24 p10','L'],
-    ['The plan exists only in English, so there are no official Arabic names to use in EH documents','الخطة بالإنجليزية فقط، فلا أسماء عربية رسمية لاستخدامها في وثائق آفاق البيئة','S26','L']
+    ['Saudi Investment Recycling Company (SIRC), PIF\u2019s own recycling company, is the one PIF names for waste — a competitor with PIF behind it','الشركة السعودية الاستثمارية لإعادة التدوير، شركة الصندوق لإعادة التدوير، هي التي يسمّيها الصندوق للنفايات — منافس يقف الصندوق خلفه','Strategy document p.33','H'],
+    ['PIF does not say which waste it means — household, industrial or hazardous. If it means hazardous, SIRC becomes a direct rival','لا يحدد الصندوق أي نفايات يعني — منزلية أم صناعية أم خطرة. إذا كان يعني الخطرة تصبح سرك منافساً مباشراً','Strategy document p.33','H'],
+    ['No fund-wide targets for 2030, so we cannot estimate how much work will come','لا مستهدفات على مستوى الصندوق لعام 2030، فلا يمكننا تقدير حجم العمل المتوقع','Strategy document all pages','H'],
+    ['PIF says it may merge companies and "refine timelines" — customers could vanish and projects slip','يقول الصندوق إنه قد يدمج شركات و«يعدّل الجداول الزمنية» — قد يختفي عملاء وتتأخر مشاريع','Strategy document p.40','M'],
+    ['NEOM is now described only as industry, energy and AI; THE LINE, Trojena and Magna are not mentioned','يوصف نيوم الآن بالصناعة والطاقة والذكاء الاصطناعي فقط؛ ذا لاين وتروجينا وماجنا غير مذكورة','Strategy document p.35','M'],
+    ['Diriyah\u2019s visitor target was cut from 47 million to 25 million — other big projects may shrink too','خُفّض مستهدف زوار الدرعية من 47 إلى 25 مليوناً — قد تتقلص مشاريع كبرى أخرى أيضاً','Strategy document p.61; 2024 report p.66','M'],
+    ['PIF\u2019s green bonds, which could pay for pollution-control work, are not mentioned in the plan','سندات الصندوق الخضراء، التي يمكن أن تموّل أعمال مكافحة التلوث، غير مذكورة في الخطة','Strategy document — absent; 2025 report p.92','M'],
+    ['PIF may sell companies; SIRC\u2019s subsidiaries could end up owned by a stronger private rival','قد يبيع الصندوق شركات؛ وقد تنتهي شركات سرك التابعة مملوكة لمنافس خاص أقوى','Strategy document p.23, p.41','L'],
+    ['PIF\u2019s documents disagree on how many companies it owns (220+, 211, 225) — companies are being merged or dropped','تختلف وثائق الصندوق في عدد الشركات التي يملكها (+220، 211، 225) — شركات تُدمج أو تُستبعد','Strategy document p.17; 2025 report p.16; 2024 report p.10','L'],
+    ['The plan exists only in English, so there are no official Arabic names to use in EH documents','الخطة بالإنجليزية فقط، فلا أسماء عربية رسمية لاستخدامها في وثائق آفاق البيئة','Strategy document','L']
   ],
 
   // ------------------------------------------- searched, none found (§5)
   noneFound: {
-    en:['Hazardous waste','Industrial waste','Landfill / final disposal','Remediation / contaminated land','Asbestos','Circular economy','Recycling (word)','MWAN','NCEC','MEWA','Royal Commission for Jubail & Yanbu','Etimad','SME programmes','Private Sector Hub / MUSAHAMA by name','Green bonds / green finance','Rabigh · Yanbu · Jubail · Ras Al-Khair','Western Region · Makkah · Madinah','SIRC mandate, assets or plans','Enowa · Veolia · VCM','Any PIF-level 2030 numeric target','KPIs for the §2.9 measurement framework','Arabic names of ecosystems or objectives'],
+    en:['Hazardous waste','Industrial waste','Landfill / final disposal','Remediation / contaminated land','Asbestos','Circular economy','Recycling (word)','MWAN','NCEC','MEWA','Royal Commission for Jubail & Yanbu','Etimad','SME programmes','Private Sector Hub / MUSAHAMA by name','Green bonds / green finance','Rabigh · Yanbu · Jubail · Ras Al-Khair','Western Region · Makkah · Madinah','SIRC mandate, assets or plans','Enowa · Veolia · VCM','Any PIF-level 2030 numeric target','performance measures for the §2.9 measurement framework','Arabic names of ecosystems or objectives'],
     ar:['النفايات الخطرة','النفايات الصناعية','المرادم / التخلص النهائي','المعالجة / الأراضي الملوثة','الأسبستوس','الاقتصاد الدائري','إعادة التدوير (ككلمة)','موان','المركز الوطني للرقابة على الالتزام البيئي','وزارة البيئة والمياه والزراعة','الهيئة الملكية للجبيل وينبع','اعتماد','برامج المنشآت الصغيرة والمتوسطة','منصة القطاع الخاص / مساهمة بالاسم','السندات الخضراء / التمويل الأخضر','رابغ · ينبع · الجبيل · رأس الخير','المنطقة الغربية · مكة المكرمة · المدينة المنورة','تفويض سرك أو أصولها أو خططها','إنوا · فيوليا · سوق الكربون الطوعي','أي مستهدف رقمي على مستوى الصندوق لعام 2030','مؤشرات إطار القياس (القسم 2.9)','أسماء عربية للمنظومات أو الأهداف']
   },
 
   // ---------------------------------------------------------- sources list
   sources: [
-    {id:'S26', en:'PIF Strategy 2026–2030 — Public Version (PIF, © 2026, 69 printed pages; file PIF_Strategy_2026-2030_EN.pdf). Used as the main source when documents disagree.', ar:'استراتيجية صندوق الاستثمارات العامة 2026–2030 — النسخة العامة (69 صفحة). المصدر الرئيسي عند اختلاف الوثائق.'},
-    {id:'AR25', en:'PIF Annual Report 2025 (pifannualreport2025englishhyperlinked.pdf)', ar:'التقرير السنوي 2025 لصندوق الاستثمارات العامة'},
-    {id:'AR24', en:'PIF Annual Report 2024 (20250904_PIF_AR24_Public_English_Interactive_PDF.pdf)', ar:'التقرير السنوي 2024'},
-    {id:'AR23', en:'PIF Annual Report 2023 (PIF2023AnnualReportEN.pdf)', ar:'التقرير السنوي 2023'},
+    {id:'Strategy document', en:'PIF Strategy 2026–2030 — Public Version (PIF, © 2026, 69 printed pages; file PIF_Strategy_2026-2030_EN.pdf). Used as the main source when documents disagree.', ar:'استراتيجية صندوق الاستثمارات العامة 2026–2030 — النسخة العامة (69 صفحة). المصدر الرئيسي عند اختلاف الوثائق.'},
+    {id:'2025 report', en:'PIF Annual Report 2025 (pifannualreport2025englishhyperlinked.pdf)', ar:'التقرير السنوي 2025 لصندوق الاستثمارات العامة'},
+    {id:'2024 report', en:'PIF Annual Report 2024 (20250904_PIF_AR24_Public_English_Interactive_PDF.pdf)', ar:'التقرير السنوي 2024'},
+    {id:'2023 report', en:'PIF Annual Report 2023 (PIF2023AnnualReportEN.pdf)', ar:'التقرير السنوي 2023'},
     {id:'HUB', en:'The companion page on PIF\u2019s annual reports 2021–2025 (pif_intelligence_hub.html)', ar:'الصفحة المرافقة عن التقارير السنوية للصندوق 2021–2025'},
     {id:'WB', en:'EH\u2019s own competitor and client workbook (EH_Stakeholder_Competitive_Map_4.xlsx)', ar:'مصنف آفاق البيئة للمنافسين والعملاء'},
     {id:'FX', en:'Dollar figures are shown as the strategy prints them; riyals are the main unit; PIF\u2019s own rate of SAR 3.75 = $1', ar:'أرقام الدولار كما تطبعها الاستراتيجية؛ الريال هو الوحدة الأساسية؛ سعر الصندوق 3.75 ريال = دولار'}
@@ -434,15 +434,15 @@ const I18N={
 "btn_ar":["العربية","English"],"btn_theme_dark":["Dark","داكن"],"btn_theme_light":["Light","فاتح"],"btn_src":["Where the numbers come from","من أين جاءت الأرقام"],
 "nav_over":["The plan in brief","الخطة باختصار"],"nav_eco":["Six groups","المجموعات الست"],"nav_cmp":["Then and now","الماضي والحاضر"],"nav_traj":["How fast it grew","سرعة النمو"],"nav_shift":["Sectors → groups","القطاعات ← المجموعات"],"nav_eh":["What matters to EH","ما يهم آفاق البيئة"],"nav_giga":["Big projects","المشاريع الكبرى"],"nav_reg":["Our region","منطقتنا"],"nav_to":["Risks & openings","المخاطر والفرص"],"nav_none":["Not mentioned","غير المذكور"],
 "link_hub":["← PIF's annual reports 2021–2025 (companion page)","← التقارير السنوية للصندوق 2021–2025 (الصفحة المرافقة)"],
-"howto":["<b>How to read this page.</b> Every number here comes from a document you can check. <b>S26 p12</b> means page 12 of PIF's 2026–2030 strategy; <b>AR25 p30</b> means page 30 of PIF's 2025 annual report; <b>HUB</b> means the companion page on the annual reports. Tap any number marked <span class=cite>like this</span> to see exactly where it came from, or open <b>Where the numbers come from</b>. <b>✓</b> = printed in the document · <b>≈</b> = worked out from printed numbers · <b>?</b> = PIF never published it (we never show zero for a missing number). Amounts are in Saudi riyals; the dollar amounts are the ones PIF printed (SAR 3.75 = $1).","<b>كيف تقرأ هذه الصفحة.</b> كل رقم هنا مأخوذ من وثيقة يمكنك التحقق منها. <b>S26 ص12</b> تعني الصفحة 12 من استراتيجية الصندوق 2026–2030؛ <b>AR25 ص30</b> تعني الصفحة 30 من تقرير الصندوق السنوي 2025؛ <b>HUB</b> تعني الصفحة المرافقة عن التقارير السنوية. اضغط على أي رقم معلَّم <span class=cite>هكذا</span> لترى مصدره بالضبط، أو افتح <b>من أين جاءت الأرقام</b>. <b>✓</b> = مطبوع في الوثيقة · <b>≈</b> = محسوب من أرقام مطبوعة · <b>؟</b> = لم ينشره الصندوق (لا نعرض صفراً أبداً مكان رقم مفقود). المبالغ بالريال السعودي؛ ومبالغ الدولار هي التي طبعها الصندوق (3.75 ريال = دولار)."],
+"howto":["<b>How to read this page.</b> Every number here comes from a document you can check. <b>Strategy document p.12</b> means page 12 of PIF's 2026–2030 strategy; <b>2025 report p.30</b> means page 30 of PIF's 2025 annual report; <b>HUB</b> means the companion page on the annual reports. Tap any number marked <span class=cite>like this</span> to see exactly where it came from, or open <b>Where the numbers come from</b>. <b>✓</b> = printed in the document · <b>≈</b> = worked out from printed numbers · <b>?</b> = PIF never published it (we never show zero for a missing number). Amounts are in Saudi riyals; the dollar amounts are the ones PIF printed (SAR 3.75 = $1).","<b>كيف تقرأ هذه الصفحة.</b> كل رقم هنا مأخوذ من وثيقة يمكنك التحقق منها. <b>وثيقة الاستراتيجية ص12</b> تعني الصفحة 12 من استراتيجية الصندوق 2026–2030؛ <b>تقرير 2025 ص30</b> تعني الصفحة 30 من تقرير الصندوق السنوي 2025؛ <b>HUB</b> تعني الصفحة المرافقة عن التقارير السنوية. اضغط على أي رقم معلَّم <span class=cite>هكذا</span> لترى مصدره بالضبط، أو افتح <b>من أين جاءت الأرقام</b>. <b>✓</b> = مطبوع في الوثيقة · <b>≈</b> = محسوب من أرقام مطبوعة · <b>؟</b> = لم ينشره الصندوق (لا نعرض صفراً أبداً مكان رقم مفقود). المبالغ بالريال السعودي؛ ومبالغ الدولار هي التي طبعها الصندوق (3.75 ريال = دولار)."],
 "d3":["<b>PIF has not published any fund-wide number to aim for by 2030.</b> We read all 36 pages. The plan says where PIF stands today, and gives a few numbers for individual companies (Riyadh Air, Red Sea Global, Diriyah), but it sets no target for how big the fund should be, how much it will invest in Saudi Arabia, how many jobs it will create, or how much it will buy from Saudi suppliers. Wherever a 2030 target would normally appear on this page, you will see \"Not published\" instead of a number.","<b>لم ينشر الصندوق أي رقم على مستوى الصندوق يسعى لتحقيقه بحلول 2030.</b> قرأنا الصفحات الست والثلاثين كلها. تقول الخطة أين يقف الصندوق اليوم، وتذكر بعض الأرقام لشركات بعينها (طيران الرياض، البحر الأحمر الدولية، الدرعية)، لكنها لا تحدد هدفاً لحجم الصندوق أو لحجم استثماره في المملكة أو لعدد الوظائف أو لحجم مشترياته من المورّدين السعوديين. أينما كان يُتوقع ظهور مستهدف 2030 في هذه الصفحة ستجد «غير منشور» بدلاً من رقم."],
 "k_aum":["Money PIF manages","الأموال التي يديرها الصندوق"],"k_gdp":["Added to Saudi non-oil economy, 2021–25","ما أضافه للاقتصاد غير النفطي 2021–2025"],"k_gdppct":["Share of Saudi non-oil economy, 2025","حصته من الاقتصاد غير النفطي 2025"],"k_lc":["Spending that went to Saudi suppliers, 2024","نسبة الإنفاق على مورّدين سعوديين 2024"],"k_newinv":["Put into new Saudi projects, 2021–25","ما وُضع في مشاريع سعودية جديدة 2021–2025"],"k_lps":["Bought from Saudi private companies, 2020–24","ما اشتراه من شركات سعودية خاصة 2020–2024"],"k_cos":["Companies PIF owns","الشركات التي يملكها الصندوق"],"k_target":["Fund-wide target for 2030","مستهدف 2030 على مستوى الصندوق"],
-"k_none":["Not published","غير منشور"],"k_conf":["other documents say","وثائق أخرى تقول"],"k_sar":["SAR","ريال"],"k_bn":["bn","مليار"],
+"k_none":["Not published","غير منشور"],"k_conf":["other documents say","وثائق أخرى تقول"],"k_sar":["SAR","ريال"],"k_bn":["billion","مليار"],
 "h_over":["1. The plan in brief","1. الخطة باختصار"],
 "p_over":["Three changes of direction, seven goals, and three \"portfolios\" — PIF's word for the three boxes it now sorts its investments into. The first box holds six \"ecosystems\" — PIF's word for a group of companies and projects that are meant to work together; section 2 covers those. The wording is PIF's own; page numbers refer to the printed strategy.","ثلاثة تغيرات في الاتجاه، وسبعة أهداف، وثلاث «محافظ» — وهي كلمة الصندوق للصناديق الثلاثة التي يصنّف استثماراته فيها الآن. يضم الصندوق الأول ست «منظومات» — وهي كلمة الصندوق لمجموعة من الشركات والمشاريع يُراد لها أن تعمل معاً؛ القسم 2 يغطيها. الصياغة هي صياغة الصندوق؛ أرقام الصفحات تشير إلى الاستراتيجية المطبوعة."],
-"h_shifts":["What has changed (p4)","ما الذي تغيّر (ص4)"],"h_obj":["PIF's seven goals (p4, p23)","أهداف الصندوق السبعة (ص4، ص23)"],"h_port":["The three boxes (p5, p22–23)","الصناديق الثلاثة (ص5، ص22–23)"],
+"h_shifts":["What has changed (p.4)","ما الذي تغيّر (ص4)"],"h_obj":["PIF's seven goals (p.4, p.23)","أهداف الصندوق السبعة (ص4، ص23)"],"h_port":["The three boxes (p.5, p.22–23)","الصناديق الثلاثة (ص5، ص22–23)"],
 "from":["From","من"],"to":["to","إلى"],
-"h_eco":["2. The six groups PIF will build around (p25–35)","2. المجموعات الست التي سيبني الصندوق حولها (ص25–35)"],
+"h_eco":["2. The six groups PIF will build around (p.25–35)","2. المجموعات الست التي سيبني الصندوق حولها (ص25–35)"],
 "p_eco":["Each card shows what PIF says it will focus on, and the companies it names on that page. The badge on the right is our view of how much that group matters to EH. The line marked \"Where EH fits\" quotes the words in PIF's text that open a door for environmental services. The Arabic names are our translations.","تعرض كل بطاقة ما يقول الصندوق إنه سيركز عليه، والشركات التي يسمّيها في تلك الصفحة. الشارة على الجانب هي رأينا في مدى أهمية تلك المجموعة لآفاق البيئة. السطر المعلَّم «أين تدخل آفاق البيئة» يقتبس الكلمات في نص الصندوق التي تفتح باباً للخدمات البيئية. الأسماء العربية ترجمتنا."],
 "eco_focus":["What PIF will focus on","ما سيركز عليه الصندوق"],"eco_cos":["Companies PIF names","الشركات التي يسمّيها الصندوق"],"eco_hook":["Where EH fits","أين تدخل آفاق البيئة"],"eco_rel":["Matters to EH","الأهمية لآفاق البيئة"],
 "h_cmp":["3. Then and now: each target across three plans","3. الماضي والحاضر: كل مستهدف عبر ثلاث خطط"],
@@ -508,7 +508,7 @@ function drawAll(){
   // ---- overview
   document.getElementById('shifts').innerHTML=S.shifts.map(x=>{const a=P([x.en,x.ar]);return `<div class="shift"><span class="from">${t('from')} <b>${a[0]}</b></span><span class="arr">→</span><span class="tov">${t('to')} <b>${a[1]}</b></span>${cite('',x.src)}</div>`}).join('');
   document.getElementById('obj').innerHTML=S.objectives.map((o,i)=>`<li><span class="num">${iso(String(i+1).padStart(2,'0'))}</span>${P(o)}</li>`).join('');
-  document.getElementById('objsup').innerHTML=P([S.objectivesSuperseded.en,S.objectivesSuperseded.ar])+' '+cite('S26 p4, p23','S26 p4, p23; AR25 p30');
+  document.getElementById('objsup').innerHTML=P([S.objectivesSuperseded.en,S.objectivesSuperseded.ar])+' '+cite('S26 p4, p23','Strategy document p.4, p.23; 2025 report p.30');
   document.getElementById('ports').innerHTML=S.portfolios.map(p=>`<div class="port"><b>${P([p.en,p.ar])}</b><p>${P([p.den,p.dar])}</p></div>`).join('')+`<div class="src">${cite('S26 p5, p22–23','S26 p5, p22–23')}</div>`;
   // ---- ecosystems
   document.getElementById('ecogrid').innerHTML=S.ecosystems.map(e=>`<div class="eco ${e.n===5?'eco5':''}"><div class="ehead"><span class="en">${iso(String(e.n).padStart(2,'0'))}</span><div><b>${P([e.en,e.ar])}</b><div class="tag">${P(e.tag)}</div></div>${relBadge(e.eh)}</div>
@@ -540,7 +540,7 @@ function drawAll(){
   document.getElementById('trajsrc').innerHTML=TJ.map(x=>`<b>${P([x.en,x.ar])}</b>: ${x.v==null?t('k_none'):iso(x.v+'%')} — ${esc(x.src)}`).join('<br>');
   // ---- sector shift SVG
   drawShift(C);
-  document.getElementById('shiftsrc').innerHTML=cite('HUB D.strat2021 (AR21 p5) · S26 p5','HUB D.strat2021 (AR21 p5); S26 p5')+' · '+L('Mapping lines: EH analysis (confidence L).','خطوط الربط: تحليل آفاق البيئة (ثقة منخفضة).');
+  document.getElementById('shiftsrc').innerHTML=cite('figures in the PIF Intelligence Hub2021 (2021 report p.5) · Strategy document p.5','figures in the PIF Intelligence Hub2021 (2021 report p.5); Strategy document p.5')+' · '+L('Mapping lines: EH analysis (confidence L).','خطوط الربط: تحليل آفاق البيئة (ثقة منخفضة).');
   // ---- relevance heatmap
   document.getElementById('relt').innerHTML=`<tr><th>${t('r_el')}</th><th>${t('r_rel')}</th><th>${t('r_exp')}</th><th>${t('r_j')}</th><th>${t('r_src')}</th><th>${t('r_g')}</th></tr>`+
     S.relevance.map(r=>`<tr><td>${P([r.en,r.ar])}</td><td class="c cell${r.rel}">${t('rel_'+r.rel)}</td><td class="c cellx${r.exp}">${t('exp_'+r.exp)}</td><td>${P(r.j)}</td><td class="tiny">${cite(esc(r.src),r.src,r.g)}</td><td class="c">${r.g}</td></tr>`).join('');
@@ -551,7 +551,7 @@ function drawAll(){
   document.getElementById('regt').innerHTML=`<tr><th>${t('r_el')}</th><th>${t('reg_eco')}</th><th>${t('r_j')}</th><th>${t('reg_dist')}</th></tr>`+S.regional.assets.map(a=>`<tr><td><b>${P([a.en,a.ar])}</b></td><td class="c">${iso(String(a.eco).padStart(2,'0'))}</td><td>${P(a.what)} ${cite('',a.src)}</td><td>${P([a.km,a.kmAr])}</td></tr>`).join('');
   document.getElementById('regabs').innerHTML=S.regional.absent.map(a=>`<li>${P(a)}</li>`).join('');
   document.getElementById('regabssrc').innerHTML=cite(esc(S.regional.absentSrc),S.regional.absentSrc);
-  document.getElementById('regstate').innerHTML=P([S.regional.regionalStatement.en,S.regional.regionalStatement.ar])+' '+cite('S26','S26 — whole document searched');
+  document.getElementById('regstate').innerHTML=P([S.regional.regionalStatement.en,S.regional.regionalStatement.ar])+' '+cite('S26','Strategy document — whole document searched');
   document.getElementById('reginf').innerHTML=P([S.regional.inference.en,S.regional.inference.ar]);
   // ---- T&O
   const to=(arr)=>arr.map(r=>`<li>${P([r[0],r[1]])} <span class="tiny">${cite(esc(r[2]),r[2],r[3])} · ${r[3]}</span></li>`).join('');

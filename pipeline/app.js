@@ -476,6 +476,12 @@ function exWhere(B){
  ${exWinBars('ex-svc',sm,r=>dv(DSVC,r.name),t('Win rate by service line','نسبة الفوز حسب خط الخدمة'),subS,t('Same reading as the deal-size chart. "Unclassified" is drawn grey: it is a data gap, not a service.','القراءة كما في رسم حجم الصفقة. «غير مصنّف» مرسوم بالرمادي: فجوة بيانات لا خدمة.'))}</div>`;
 }
 // ---- 4. threat matrix
+// Loss reasons grouped by meaning (rule set by Youssef, 02/10/2026). The recorded wording is never altered.
+function lossNorm(s){return String(s||'').toLowerCase().replace(/[\u064B-\u0652\u0640]/g,'').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').replace(/\s+/g,' ').trim();}
+function lossCat(r){const s=lossNorm(r); if(!s)return null;
+ if(/فني|technical/.test(s)||/غير مطابق/.test(s)&&!/سعر|مالي/.test(s))return {k:'tech',en:'Technical offer rejected',ar:'تم رفض العرض الفني'};
+ if(/سعر|مالي|اقل|الاعلي|اعلي|ارخص|price|financial|cheaper|lower bid|higher bid/.test(s))return {k:'price',en:'Rejected on price',ar:'رُفض بسبب السعر'};
+ return {k:'raw:'+String(r).trim(),en:String(r).trim(),ar:String(r).trim()};}
 function exThreat(B,d){
  const all=(B.competitors||[]).filter(c=>c.encounters>0);
  const priced=all.filter(c=>c.undercut_pct!=null&&(c.priced_vs||0)>=1), unpriced=all.length-priced.length;
@@ -522,8 +528,8 @@ function exPrice(B,d){
   s+=`<text x="${(x0+w+5).toFixed(1)}" y="${y+10}" class="chs">${g>CAP?'+'+Math.round(g)+'%':'+'+Math.round(g)+'%'}${r.won?' ✓':''}</text>`;});
  s+=`<text x="${x0}" y="${H-6}" class="chs">${esc(t('Faded bar = only part of the field disclosed a price','الشريط الباهت = جزء من المتنافسين فقط أفصح عن سعره'))}</text></svg>`;
  const head=t(`Of ${sm.tenders||rows.length} tenders with price data, ${rows.length} have two or more disclosed prices. EH was the lowest bidder in ${lowest} of them (won ${lowWon}). Typically EH priced ${sm.median_gap!=null?Math.round(sm.median_gap):'—'}% above the lowest bid; where EH lost to a known winner, its price was a median ${sm.median_win_gap!=null?Math.round(sm.median_win_gap):'—'}% above the winning bid (n = ${sm.win_gap_n||0}). We win on evaluation, not on price.`,`من ${sm.tenders||rows.length} منافسة ببيانات أسعار، ${rows.length} فيها سعران مُفصَحان أو أكثر. كان EH الأدنى سعراً في ${lowest} منها (فاز ب ${lowWon}). عادةً سعّر EH ${sm.median_gap!=null?Math.round(sm.median_gap):'—'}% فوق أدنى عرض؛ وحيث خسر EH أمام فائز معروف كان سعره بوسيط ${sm.median_win_gap!=null?Math.round(sm.median_win_gap):'—'}% فوق العرض الفائز (ن = ${sm.win_gap_n||0}). نفوز بالتقييم لا بالسعر.`);
- const reasons={}; d.lost.forEach(b=>{const r=(b.lossreason||'').trim();if(r)reasons[r]=(reasons[r]||0)+1;});
- const rr=Object.entries(reasons).sort((a,b)=>b[1]-a[1]).map(([r,n])=>`<tr><td dir="auto">${esc(r)}</td><td style="text-align:end"><b>${n}</b></td></tr>`).join('')+`<tr style="color:#8A99A3"><td>${t('No reason recorded','لا سبب مُسجَّل')}</td><td style="text-align:end"><b>${d.lostNoReason}</b></td></tr>`;
+ const reasons={}; d.lost.forEach(b=>{const r=(b.lossreason||'').trim();const c=lossCat(r);if(!c)return;const g=reasons[c.k]||(reasons[c.k]={c,n:0,w:{}});g.n++;g.w[r]=(g.w[r]||0)+1;});
+ const rr=Object.values(reasons).sort((a,b)=>b.n-a.n).map(g=>{const grouped=g.c.k==='tech'||g.c.k==='price';const words=Object.keys(g.w);return `<tr><td dir="auto">${grouped?`<b>${esc(t(g.c.en,g.c.ar))}</b>`:esc(g.c.en)}${grouped&&(words.length>1||words[0]!==g.c.ar)?`<div dir="auto" style="font-size:10.5px;color:#8A99A3;line-height:1.45;margin-top:3px">${words.map(w=>esc(w)+(g.w[w]>1?' ×'+g.w[w]:'')).join(' · ')}</div>`:''}</td><td style="text-align:end;vertical-align:top"><b>${g.n}</b></td></tr>`;}).join('')+`<tr style="color:#8A99A3"><td>${t('No reason recorded','لا سبب مُسجَّل')}</td><td style="text-align:end"><b>${d.lostNoReason}</b></td></tr>`;
  return `<div class="card exc"><div class="exh"><h3>${t('Price position — we win on technical, not on price','موقع السعر — نفوز بالتقييم الفني لا بالسعر')}</h3>${exBtn('ex-price','price_position')}</div>
   <div class="excov">${head}</div>
   <div class="grid g3 exg3"><div>${s}</div><div><div class="note" style="margin-bottom:6px"><b>${t('Recorded loss reasons','أسباب الخسارة المُسجَّلة')}</b> · ${d.lostN} ${t('lost','مفقودة')}</div><table class="t ext"><tbody>${rr}</tbody></table></div></div></div>`;

@@ -68,19 +68,29 @@ function rNtf(){
  var parts=[];
  if(NTF.nw.size){
    const val=BA.bidlist.filter(b=>NTF.nw.has(b.year+'-'+b.sn)).reduce((a,b)=>a+(b.value||0),0);
-   parts.push('<a style="'+lk+'" onclick="go(\'tenders\')">'+NTF.nw.size+t(' new tender(s)',' منافسة/منافسات جديدة')+(val?' ('+fmtSAR(val)+')':'')+'</a>');
+   parts.push('<a style="'+lk+'" onclick="jumpTo(\'tenders\',\'nw\')">'+NTF.nw.size+t(' new tender(s)',' منافسة/منافسات جديدة')+(val?' ('+fmtSAR(val)+')':'')+'</a>');
  }
  NTF.dec.forEach(k=>{
    const b=BA.bidlist.find(x=>x.year+'-'+x.sn===k);
-   if(b) parts.push('<a style="'+lk+'" onclick="go(\'winloss\')">'+lbl(k)+' \u2192 '+t(b.outcome,(typeof DOUT!=='undefined'&&DOUT[b.outcome])||b.outcome)+'</a>');
+   if(b) parts.push('<a style="'+lk+'" onclick="jumpTo(\'tenders\',\''+k+'\')">'+lbl(k)+' \u2192 '+t(b.outcome,(typeof DOUT!=='undefined'&&DOUT[b.outcome])||b.outcome)+'</a>');
  });
- if(NTF.px.size) parts.push('<a style="'+lk+'" onclick="go(\'pricing\')">'+NTF.px.size+t(' pricing update(s)',' تحديث/تحديثات تسعير')+'</a>');
- if(NTF.upd.size) parts.push('<a style="'+lk+'" onclick="go(\'tenders\')">'+NTF.upd.size+t(' row update(s)',' تحديث/تحديثات صفوف')+'</a>');
+ if(NTF.px.size) parts.push('<a style="'+lk+'" onclick="jumpTo(\'pricing\',\'px\')">'+NTF.px.size+t(' pricing update(s)',' تحديث/تحديثات تسعير')+'</a>');
+ if(NTF.upd.size) parts.push('<a style="'+lk+'" onclick="jumpTo(\'tenders\',\'upd\')">'+NTF.upd.size+t(' row update(s)',' تحديث/تحديثات صفوف')+'</a>');
  el.style.cssText='margin:10px 0 2px;background:#FFF8EC;border:1px solid #EAD9B0;border-radius:10px;padding:9px 14px;font-size:12px;color:#5C4A14;display:flex;gap:14px;flex-wrap:wrap;align-items:center';
  el.innerHTML='<b>'+t('Since ','منذ ')+NTF.when+':</b> '+parts.join(' <span style="color:#C9B98A">\u00b7</span> ')+
   '<button onclick="this.parentElement.style.display=\'none\'" style="border:0;background:none;cursor:pointer;font-weight:800;color:#8A7A44;margin-inline-start:auto">\u2715</button>';
 }
 function rNav(){$('nav').innerHTML=TABS.map(([id,en,ar])=>`<a id="t-${id}" class="${curTab==id?'on':''}" onclick="go('${id}')">${t(en,ar)}${ntfTab(id)?`<span class="ntf">${ntfTab(id)}</span>`:''}</a>`).join('');}
+function jumpTo(tab,which){
+ var keys=(which==='nw'||which==='upd'||which==='px')?Array.from(NTF[which]):[which];
+ if(!keys.length){go(tab);return;}
+ if(tab==='tenders'){TF.year='all';TF.outcome='all';TF.platform='all';TF.svc='all';TF.q='';TF.only=new Set(keys);renderTenders();}
+ if(tab==='pricing'){BA.pricing.rows.forEach(function(r,i){if(keys.indexOf(r.year+'-'+r.sn)>-1)pxExpand[i]=true;});renderPricing();}
+ go(tab);
+ if(!document.getElementById('bkflashcss')){var st=document.createElement('style');st.id='bkflashcss';st.textContent='@keyframes bkflash{0%,60%{background:#FFF1C9;box-shadow:inset 4px 0 0 #E8862E}100%{background:transparent;box-shadow:none}}.bkflash,.bkflash td{animation:bkflash 2.6s ease-out}';document.head.appendChild(st);}
+ setTimeout(function(){var first=null;keys.forEach(function(k){document.querySelectorAll('[data-bk="'+k+'"]').forEach(function(el){if(!first)first=el;el.classList.remove('bkflash');void el.offsetWidth;el.classList.add('bkflash');});});
+  if(first)first.scrollIntoView({behavior:'smooth',block:'center'});},120);
+}
 function go(id){if(ntfTab(id)){NTF.seen.add(id);setTimeout(rNav,50);}curTab=id;TABS.forEach(([tt])=>{$('t-'+tt).classList.toggle('on',tt==id);$('s-'+tt).classList.toggle('on',tt==id);});window.scrollTo(0,0);}
 
 // ---------- KPI STRIP ----------
@@ -180,7 +190,7 @@ function renderPricing(){
        <div style="flex:1"><div style="width:${w}%;height:15px;background:${col};border-radius:3px;min-width:3px"></div></div>
        <div style="font-size:10.5px;color:#1C2B33;font-weight:${b.eh?'700':'500'};white-space:nowrap;min-width:150px;text-align:left">${fmtSAR(b.price)}${isWin?' <span style="color:#2E7D46;font-weight:700">★ '+t('won','فائز')+'</span>':''}</div></div>`;
    }).join('');
-   return `<div class="card" style="margin-bottom:10px;padding:0;overflow:hidden">
+   return `<div class="card" data-bk="${r.year}-${r.sn}" style="margin-bottom:10px;padding:0;overflow:hidden">
      <div tabindex="0" role="button" onkeydown="if(event.keyCode===13){this.click()}" onclick="togglePx(${i})" style="cursor:pointer;padding:12px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:${open?'#F7FAFC':'#fff'}">
        <div style="min-width:70px"><b style="font-size:13px">#${r.sn}/${String(r.year).slice(2)}</b>${ntfChip(r.year+"-"+r.sn)}<div style="font-size:9px;color:#5F7078">${r.n} ${t('bidders','متقدمين')}${r.undisc_count?' · '+r.undisc_count+' '+t('undisclosed','غير معلنة'):''}${r.dq_count?' · '+r.dq_count+' '+t('DQ','مستبعد'):''}</div></div>
        <div style="flex:1;min-width:200px"><div dir="auto" style="font-size:11.5px;color:#1C2B33;font-weight:600;line-height:1.3">${esc(r.title)||'<span style=\'color:#aaa\'>'+t('(untitled tender)','(منافسة بلا عنوان)')+'</span>'}</div><div dir="auto" style="font-size:10px;color:#5F7078;margin-top:1px">${esc(r.client)}</div></div>
@@ -312,7 +322,7 @@ function rFunnel(){
 
 // ===================== ALL TENDERS (list view) =====================
 const TF={year:'all',outcome:'all',platform:'all',svc:'all',q:''};
-function setTF(kk,v){TF[kk]=v;renderTenders();}
+function setTF(kk,v){TF[kk]=v;TF.only=null;renderTenders();}
 function platN(p){p=(p||'').toLowerCase();if(p.includes('etimad'))return 'Etimad';if(p.includes('ariba')||p.includes('sec')||p.includes('sap'))return 'SEC-SAP / SAP Ariba';if(p.includes('mail'))return 'Email';return p?'Other':'\u2014';}
 function uniqVals(fn){return [...new Set(BA.bidlist.map(fn).filter(x=>x&&x!=='\u2014'))].sort();}
 function renderTenders(){
@@ -322,7 +332,8 @@ function renderTenders(){
    (TF.outcome=='all'||b.outcome==TF.outcome)&&
    (TF.platform=='all'||platN(b.platform)==TF.platform)&&
    (TF.svc=='all'||b.svc==TF.svc)&&
-   (!TF.q||((b.title+' '+b.client+' #'+b.sn).toLowerCase().includes(TF.q.toLowerCase()))));
+   (!TF.q||((b.title+' '+b.client+' #'+b.sn).toLowerCase().includes(TF.q.toLowerCase())))&&
+   (!TF.only||TF.only.has(b.year+'-'+b.sn)));
  const ss='padding:7px 10px;border:1px solid #CBD6DC;border-radius:7px;font-size:12px;color:#3A4A52;background:#fff;cursor:pointer';
  const sel=(kk,opts,lab,disp)=>`<div style="display:flex;flex-direction:column;gap:3px"><label style="font-size:10px;color:#8A99A3;text-transform:uppercase;letter-spacing:.4px;font-weight:600">${lab}</label><select onchange="setTF('${kk}',this.value)" style="${ss}">${['all',...opts].map(o=>`<option value="${o}" ${TF[kk]==o?'selected':''}>${o=='all'?t('All','الكل'):(disp?disp(o):o)}</option>`).join('')}</select></div>`;
  const outcomes=['Won','Lost','Not awarded','Cancelled','Pending'].filter(o=>BA.bidlist.some(b=>b.outcome==o));
@@ -333,8 +344,8 @@ function renderTenders(){
    ${sel('svc',uniqVals(b=>b.svc),t('Service line','مجال الخدمة'),o=>dv(DSVC,o))}
    <div style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:180px"><label style="font-size:10px;color:#8A99A3;text-transform:uppercase;letter-spacing:.4px;font-weight:600">${t('Search title / client / ref','البحث في العنوان / العميل / المرجع')}</label>
      <input oninput="setTF('q',this.value)" value="${esc(TF.q)}" placeholder="${t('Type to filter…','للتصفية اكتب…')}" style="${ss};width:100%;cursor:text"></div>
-   <button onclick="TF.year='all';TF.outcome='all';TF.platform='all';TF.svc='all';TF.q='';renderTenders()" style="padding:8px 14px;border:1px solid #D5DEE2;background:#F4F8F5;color:#6B7C86;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer">${t('Reset','إعادة تعيين')}</button></div>`;
- const rows=list.map(b=>`<tr>
+   <button onclick="TF.year='all';TF.outcome='all';TF.platform='all';TF.svc='all';TF.q='';TF.only=null;renderTenders()" style="padding:8px 14px;border:1px solid #D5DEE2;background:#F4F8F5;color:#6B7C86;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer">${t('Reset','إعادة تعيين')}</button></div>`;
+ const rows=list.map(b=>`<tr data-bk="${b.year}-${b.sn}">
    <td><b>#${b.sn}</b>${ntfChip(b.year+"-"+b.sn)}<div style="font-size:9.5px;color:#5F7078">${b.year}</div></td>
    <td style="font-size:10.5px;color:#7B8A92;white-space:nowrap">${b.date||'\u2014'}</td>
    <td style="max-width:280px"><div dir="auto" style="font-size:11.5px;line-height:1.35">${esc(b.title)||'<span style="color:#bbb">\u2014</span>'}</div></td>
@@ -349,6 +360,7 @@ function renderTenders(){
  $('s-tenders').innerHTML=
  `<div class="sech">${t('All tracked tenders','جميع المنافسات المتتبَّعة')}</div><div class="secsub">${t('Every real tender in the workbooks (empty placeholder rows excluded). Filter by any column or search. ','كل منافسة فعلية في الملفات (بلا صفوف فارغة). صفِّ بأي عمود أو ابحث. ')}<b>${list.length}</b>${t(' of '+BA.bidlist.length+' shown.',' من '+BA.bidlist.length+' معروضة.')}</div>
  ${ctrls}
+ ${TF.only?`<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:-4px 0 12px;background:#FFF8EC;border:1px solid #EAD9B0;border-radius:9px;padding:8px 13px;font-size:12px;color:#5C4A14"><b>${t('Showing the '+TF.only.size+' tender(s) flagged since '+(NTF.when||'your last visit'),'عرض '+TF.only.size+' منافسة/منافسات مُعلَّمة منذ '+(NTF.when||'آخر زيارة'))}</b><button onclick="TF.only=null;renderTenders()" style="margin-inline-start:auto;border:1px solid #D9C48E;background:#fff;color:#8A6D2E;border-radius:7px;padding:5px 11px;font-size:11.5px;font-weight:700;cursor:pointer">${t('Show all tenders','عرض كل المنافسات')}</button></div>`:''}
  <div class="card" style="padding:6px 10px">
  <table class="t"><thead><tr><th>${t('Ref','المرجع')}</th><th>${t('Launched','الطرح')}</th><th>${t('Title','العنوان')}</th><th>${t('Client','العميل')}</th><th>${t('Platform','المنصة')}</th><th>${t('Service','الخدمة')}</th><th style="text-align:right">${t('EH value','قيمة EH')}</th><th style="text-align:center">${t('Bidders','المتقدمون')}</th><th>${t('Outcome','النتيجة')}</th><th>${t('Winner','الفائز')}</th></tr></thead>
  <tbody>${rows||'<tr><td colspan="10" style="text-align:center;padding:30px;color:#5F7078">'+t('No tenders match these filters.','لا توجد منافسات مطابقة لهذه الفلاتر.')+'</td></tr>'}</tbody></table></div>`;

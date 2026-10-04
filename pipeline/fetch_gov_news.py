@@ -75,6 +75,48 @@ def date_from_url(url):
         if 1 <= d <= 31 and 1 <= mo <= 12: return f'{y:04d}-{mo:02d}-{d:02d}'
     return None
 
+AR_HIJRI = r'(?:محرم|صفر|ربيع الأول|ربيع الاول|ربيع الآخر|ربيع الاخر|ربيع الثاني|جمادى الأولى|جمادى الاولى|جمادى الآخرة|جمادى الاخرة|جمادى الثانية|رجب|شعبان|رمضان|شوال|ذو القعدة|ذو الحجة)'
+def sane(d):
+    """Reject impossible dates: in the future (more than a day ahead) or before 2015."""
+    if not d: return None
+    try:
+        x = dt.date.fromisoformat(d)
+    except Exception:
+        return None
+    today = dt.datetime.now(KSA).date()
+    return d if dt.date(2015, 1, 1) <= x <= today + dt.timedelta(days=1) else None
+
+def dateline_date(text):
+    """The date written inside the story itself — the most reliable source.
+    Arabic SPA: «المدينة 19 ربيع الآخر 1448 ه الموافق 30 سبتمبر 2026 م»; English SPA: "Riyadh, September 30, 2026, SPA"."""
+    t = clean(text)
+    m = re.search(r'الموافق\s+([0-9٠-٩]{1,2}\s+\S+\s+[0-9٠-٩]{4})', t)
+    if m: return sane(parse_date(m.group(1)))
+    m = re.search(r'\b[A-Z][A-Za-z-]+,\s+((?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4})', t)
+    if m: return sane(parse_date(m.group(1)))
+    return None
+
+def trim_headline(text):
+    """Remove the dateline and anything after it, and a leading section label such as «بيئي /»."""
+    t = clean(text)
+    t = re.split(r'\s+\S+\s+[0-9٠-٩]{1,2}\s+' + AR_HIJRI + r'\s+[0-9٠-٩]{4}\s*ه', t)[0]
+    t = re.split(r'\s+\S+\s+[0-9٠-٩]{1,2}\s+\S+\s+[0-9٠-٩]{4}\s*ه', t)[0]
+    t = re.split(r'\s+(?:[A-Z][A-Za-z-]+),\s+(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d', t)[0]
+    t = re.sub(r'^[\u0600-\u06FF]{2,12}\s*/\s*', '', t)
+    return t.strip()
+
+def card_date(a, link_rx):
+    """Date from the story's own card: walk up only while the ancestor holds this one story link."""
+    node = a
+    for _ in range(4):
+        node = node.parent
+        if node is None: return None
+        links = {x['href'].split('#')[0] for x in node.find_all('a', href=True) if link_rx is None or link_rx.search(x['href'])}
+        if len(links) > 1: return None          # reached a list of stories: any date here may belong to another one
+        d = sane(parse_date(clean(node.get_text(' '))))
+        if d: return d
+    return None
+
 def clean(s):
     s = htmlmod.unescape(str(s or ''))
     s = re.sub(r'[\u200b\u200c\u200d\ufeff\u0640]', '', s)
@@ -127,14 +169,10 @@ def anchors_from_html(html_text, base, pattern):
         key = href.split('#')[0]
         if key in seen: continue
         seen.add(key)
-        # a date usually sits in the same card/list item: walk up to 3 ancestors
-        ctx, node = '', a
-        for _ in range(3):
-            node = node.parent
-            if node is None: break
-            ctx = clean(node.get_text(' '))
-            if parse_date(ctx): break
-        out.append(dict(title=text, url=key, date=parse_date(ctx) or date_from_url(key)))
+        d, src = dateline_date(text), 'dateline'
+        if not d: d, src = card_date(a, rx), 'card'
+        if not d: d, src = sane(date_from_url(key)), 'address'
+        out.append(dict(title=trim_headline(text), url=key, date=d, date_src=src if d else 'unknown'))
     return out, soup
 
 def fetch_html(src, dbg):
@@ -208,17 +246,14 @@ def fetch_spa(src, cfg, dbg):
                     h = card.find(['h1', 'h2', 'h3', 'h4', 'h5', 'p'])
                     text = clean(h.get_text(' ')) if h else text
             if len(text) < 20: continue
+            raw_text = text
             # SPA cards end with a dateline ("… Riyadh, September 21, 2026, SPA --"); keep the headline only
             text = re.split(r'\s+(?:Riyadh|Jeddah|Makkah|Madinah|Dammam|Jubail|Yanbu|AlUla|Tabuk|Abha|Hail|Qassim|Najran|Jazan|Arar|Sakaka|Al-Baha|Taif|Buraidah|[A-Z][a-z]+),\s+(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d', text)[0]
             text = re.split(r'\s+(?:الرياض|جدة|مكة المكرمة|المدينة المنورة|الدمام|الجبيل|ينبع|العلا|تبوك|أبها|حائل|بريدة|نجران|جازان|عرعر|سكاكا|الباحة|الطائف)\s+\d{1,2}\s+\S+\s+\d{4}', text)[0].strip()
             seen.add(href)
-            ctx, node = '', a
-            for _ in range(4):
-                node = node.parent
-                if node is None: break
-                ctx = clean(node.get_text(' '))
-                if parse_date(ctx): break
-            out.append(dict(title=text, url=href, date=parse_date(ctx)))
+            d, dsrc = dateline_date(raw_text), 'dateline'
+            if not d: d, dsrc = card_date(a, rx), 'card'
+            out.append(dict(title=trim_headline(text), url=href, date=d, date_src=dsrc if d else 'unknown'))
             if len(out) >= spa.get('max_per_query', 15): break
         if out:
             out.sort(key=lambda o: int(re.search(r'/N(\d+)', o['url']).group(1)) if re.search(r'/N(\d+)', o['url']) else 0, reverse=True)  # SPA story numbers rise over time
@@ -294,9 +329,11 @@ def main():
                     # SPA search returns loosely related stories; keep them out unless the body is named in the headline
                     dbg.setdefault('dropped_unmatched', []).append(title[:70]); continue
                 if iid in items:
-                    if not items[iid].get('date') and f.get('date'): items[iid]['date'] = f['date']
+                    old = items[iid]
+                    if f.get('date') and (old.get('date_src') in (None, 'unknown', 'card', 'address') or not old.get('date')) and f.get('date_src') in ('dateline', 'card', 'address'):
+                        old['date'], old['date_src'] = f['date'], f['date_src']
                     continue
-                items[iid] = dict(id=iid, body=body['id'], title=title, lang=lang_of(title), date=f.get('date'), url=url, source=stype,
+                items[iid] = dict(id=iid, body=body['id'], title=trim_headline(title), lang=lang_of(title), date=f.get('date'), date_src=f.get('date_src', 'unknown'), url=url, source=stype,
                                   tags=tag(title, cfg['tags']), first_seen=today.isoformat())
                 st['new'] += 1
             st['count'] = len(found)
@@ -304,6 +341,32 @@ def main():
             statuses.append(st); debug['sources'].append(dbg)
             print(f"{body['id']:6s} {src['type']:10s} {st['status']:7s} found={st['count']:3d} new={st['new']:3d} {st['seconds']}s {st['note']}")
         bodies_out.append({k: body[k] for k in ('id', 'en', 'ar', 'short', 'site') if k in body} | {'robots_disallow': body.get('robots_disallow', False), 'map_note': body.get('map_note', ''), 'sources': statuses})
+
+    # ---- date check for every item on file (fixes items carried over from earlier runs)
+    redated, art_budget = 0, int(cfg.get('article_date_lookups', 40))
+    for it in items.values():
+        d = dateline_date(it['title'])               # older titles still carry the dateline: use it, then trim it off
+        it['title'] = trim_headline(it['title']) or it['title']
+        if d: it['date'], it['date_src'] = d, 'dateline'
+        if it.get('date_src') in ('dateline', 'article'):
+            it['date'] = sane(it.get('date')); continue
+        if it.get('date') and not sane(it['date']): it['date'] = None
+        if it.get('date_src') is None:               # written before 02/10/2026: date may come from a neighbouring story
+            it['date'], it['date_src'] = None, 'unknown'
+        if not it.get('date'):
+            ad = sane(date_from_url(it.get('url')))
+            if ad: it['date'], it['date_src'] = ad, 'address'
+        if not it.get('date') and art_budget > 0 and not a.no_browser:
+            art_budget -= 1
+            try:
+                page = rendered_html(it['url'], settle_ms=1500)
+                txt = clean(BeautifulSoup(page, 'html.parser').get_text(' '))
+                m = re.search(r'<meta[^>]+(?:article:published_time|datePublished|pubdate)[^>]+content="([^"]+)"', page)
+                nd = (sane(parse_date(m.group(1))) if m else None) or dateline_date(txt)
+                if nd: it['date'], it['date_src'] = nd, 'article'; redated += 1
+            except Exception as e:
+                debug.setdefault('article_date_errors', []).append(f"{it['url']}: {type(e).__name__}")
+    print(f'date check: {redated} items dated from their article page; {sum(1 for i in items.values() if not i.get("date"))} still without a date')
 
     # retention + near-duplicate collapse (same body, same normalised title → keep the official one, else the earlier)
     KEEP_MIN = cfg.get('keep_min_per_body', 5)

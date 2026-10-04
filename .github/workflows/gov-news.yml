@@ -41,10 +41,25 @@ jobs:
           SITE_URL: https://strategic-planning-eh.github.io/eh-bid-dashboard
           HUB_PASSPHRASE: ${{ secrets.HUB_PASSPHRASE }}
 
+      - name: Fallback — the feed kept by the last successful run
+        uses: dawidd6/action-download-artifact@v6
+        continue-on-error: true
+        with:
+          workflow: gov-news.yml
+          workflow_conclusion: success
+          name: gov-news
+          path: pipeline/gov_news_last
+          search_artifacts: true
+
       - name: Collect this week's announcements
         run: |
           ONLY=""; [ -n "${{ github.event.inputs.only }}" ] && ONLY="--only ${{ github.event.inputs.only }}"
-          PREV=pipeline/gov_news_prev.json; [ -f "$PREV" ] || PREV=pipeline/gov_news.seed.json
+          # Stories already on file must never be lost: published feed → last run's feed → empty seed (first run only)
+          count() { python -c "import json,sys;print(len(json.load(open(sys.argv[1])).get('items',[])))" "$1" 2>/dev/null || echo 0; }
+          PREV=""
+          if [ -f pipeline/gov_news_prev.json ] && [ "$(count pipeline/gov_news_prev.json)" -gt 0 ]; then PREV=pipeline/gov_news_prev.json; echo "previous feed: published copy ($(count $PREV) stories)";
+          elif [ -f pipeline/gov_news_last/gov_news.json ] && [ "$(count pipeline/gov_news_last/gov_news.json)" -gt 0 ]; then PREV=pipeline/gov_news_last/gov_news.json; echo "::warning::published feed unreadable — using the last run's feed ($(count $PREV) stories)";
+          else PREV=pipeline/gov_news.seed.json; echo "::warning::no previous feed found — starting from the empty seed; only stories found in this run will be on file"; fi
           python pipeline/fetch_gov_news.py --prev "$PREV" --out pipeline/gov_news.json --debug pipeline/gov_news_debug.json $ONLY
 
       - name: Keep the feed for the hourly publisher (and the debug file for fixing adapters)

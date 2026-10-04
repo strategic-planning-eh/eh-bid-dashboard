@@ -80,7 +80,8 @@ function bodyState(b,cnt){ // "ok" only if a source delivered AND something is o
  if(b.robots_disallow&&ss.every(s=>s.type==='spa'&&s.status!=='ok'))return ss.some(s=>s.status==='error')?'error':'empty';
  if(ss.some(s=>s.status==='empty'))return 'empty';
  if(ss.some(s=>s.status==='error'))return 'error';return 'skipped';}
-function inPeriod(it){const d=it.date||it.first_seen;if(S.period==='all')return true;const n=daysAgo(d);if(n==null)return S.period!=='week';return S.period==='week'?(d>=FEED.week_from&&d<=FEED.week_to)||it.first_seen>=FEED.week_from:n<=30;}
+function inWeek(it){return it.date?(it.date>=FEED.week_from&&it.date<=FEED.week_to):(it.first_seen>=FEED.week_from);} // own date decides; collection day only when the date is unknown
+function inPeriod(it){if(S.period==='all')return true;if(S.period==='week')return inWeek(it);const n=daysAgo(it.date||it.first_seen);return n!=null&&n<=30;}
 function filtered(){const k=it=>(it.date||it.first_seen||'');return (FEED.items||[]).filter(it=>(S.body==='all'||it.body===S.body)&&inPeriod(it)&&(S.tag==='all'||(it.tags||[]).includes(S.tag))&&(S.src==='all'||it.source===S.src)&&(!S.q||it.title.toLowerCase().includes(S.q.toLowerCase()))).sort((a,b)=>S.sort==='asc'?k(a).localeCompare(k(b)):k(b).localeCompare(k(a)));}
 const KINDL={risk:['Risk','مخاطر'],opportunity:['Opportunity','فرصة'],licensing:['Licensing & compliance','ترخيص والتزام'],tender:['Tenders & investment','منافسات واستثمار'],watch:['Watch','متابعة']};
 const monthName=m=>{const [y,mo]=m.split('-');return new Date(+y,+mo-1,1).toLocaleDateString(LANG==='ar'?'ar-SA-u-nu-latn':'en-GB',{month:'long',year:'numeric'});};
@@ -105,7 +106,7 @@ function render(){
  $('sub').textContent=L('Official releases from the bodies EH is licensed and inspected by, collected every Sunday morning. Headlines in the language they were published in.','البيانات الرسمية للجهات التي ترخّص آفاق البيئة وتفتّش عليها، تُجمع كل صباح أحد. العناوين بلغة نشرها.');
  if(!FEED){$('stamp').innerHTML='';$('kstrip').innerHTML='';$('bodies').innerHTML='';$('status').innerHTML='';renderBrief();
   $('feed').innerHTML=`<div class="empty">${LOADERR?esc(L('The weekly feed file (gov_news.json) could not be loaded. It is published by the Sunday workflow; if you opened this page as a local file, it is only available from the published hub.','لم يُحمَّل ملف التغذية الأسبوعي (gov_news.json). يُنشره سير العمل صباح الأحد؛ وإن فتحت الصفحة كملف محلي فهو متاح من المركز المنشور فقط.')):esc(L('Loading…','جارٍ التحميل…'))}</div>`;return;}
- const all=FEED.items||[], items=S.body==='all'?all:all.filter(it=>it.body===S.body), wk=items.filter(it=>(it.date&&it.date>=FEED.week_from&&it.date<=FEED.week_to)||it.first_seen>=FEED.week_from);
+ const all=FEED.items||[], items=S.body==='all'?all:all.filter(it=>it.body===S.body), wk=items.filter(inWeek);
  const m30=items.filter(it=>{const n=daysAgo(it.date||it.first_seen);return n!=null&&n<=30;});
  const bodies=FEED.bodies||[], reporting=bodies.filter(b=>all.some(it=>it.body===b.id)).length, problems=bodies.reduce((n,b)=>n+(b.sources||[]).filter(s=>s.status==='error').length,0);
  $('stamp').innerHTML=`<span>${L('Collected','تاريخ الجمع')} <b dir="ltr">${esc(FEED.generated_ksa||FEED.generated)}</b></span><span>·</span><span>${L('Feed week','أسبوع التغذية')} <b dir="ltr">${fmtD(FEED.week_from)} – ${fmtD(FEED.week_to)}</b></span><span>·</span><span>${L('keeps','الاحتفاظ')} <b>${FEED.retention_days}</b> ${L('days','يوماً')}</span>`;

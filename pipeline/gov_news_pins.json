@@ -1,0 +1,6 @@
+{
+ "_howto": "Stories to keep on the Regulatory news tab even if the weekly search does not find them. Add a line with the story's address and the body it belongs to (mewa, mwan, ncec, rcjy, rcmc, rcu, momah, ncvc, ncw, mim, mof, mc). The collector opens each page, reads its headline and date, and keeps it like any other story. Remove a line to stop pinning it.",
+ "pins": [
+  {"url": "https://spa.gov.sa/N2689556", "body": "mewa", "added": "2026-10-02", "by": "Youssef"}
+ ]
+}

@@ -117,17 +117,34 @@ def card_date(a, link_rx):
         if d: return d
     return None
 
+def spa_story_date(url):
+    """Date of an SPA story from its own page: the dateline at the start of the description tag, checked against the
+    picture's year-month folder. Plain HTTP — SPA story pages are server-rendered."""
+    html = http_get(url, timeout=25).text
+    desc = ''
+    for prop in ('og:description', 'description', 'twitter:description'):
+        m = re.search(r'<meta[^>]+(?:property|name)="' + re.escape(prop) + r'"[^>]+content="([^"]{0,600})', html) or \
+            re.search(r'<meta[^>]+content="([^"]{0,600})"[^>]+(?:property|name)="' + re.escape(prop) + r'"', html)
+        if m: desc = htmlmod.unescape(m.group(1)); break
+    d = dateline_date(desc[:300])
+    img = re.search(r'/backend/original/(20\d\d)(\d\d)/', html)
+    if d and img and d[:7] != f'{img.group(1)}-{img.group(2)}':
+        # a picture can be filed a day or so later at a month boundary; reject only clear disagreements
+        dd = dt.date.fromisoformat(d); im = dt.date(int(img.group(1)), int(img.group(2)), 1)
+        if abs((dd.replace(day=1) - im).days) > 40: return None, f'dateline {d} disagrees with picture folder {img.group(1)}-{img.group(2)}'
+    return d, ('ok' if d else 'no dateline in description')
+
 def spa_consistency(items, log):
     """SPA story numbers rise over time. Use stories dated from their own dateline as reference points and reject any
     other date that contradicts them by more than 30 days."""
     def num(u):
         m = re.search(r'/N(\d{5,})', u or ''); return int(m.group(1)) if m else None
-    refs = sorted((num(i['url']), i['date']) for i in items.values() if i.get('source') == 'spa' and i.get('date_src') == 'dateline' and i.get('date') and num(i['url']))
+    refs = sorted((num(i['url']), i['date']) for i in items.values() if i.get('source') == 'spa' and i.get('date_src') in ('dateline', 'page') and i.get('date') and num(i['url']))
     if not refs: return 0
     bad = 0
     for it in items.values():
         n = num(it.get('url'))
-        if it.get('source') != 'spa' or not n or not it.get('date') or it.get('date_src') == 'dateline': continue
+        if it.get('source') != 'spa' or not n or not it.get('date') or it.get('date_src') in ('dateline', 'page'): continue
         d = dt.date.fromisoformat(it['date'])
         later = [dt.date.fromisoformat(rd) for rn, rd in refs if rn < n]      # published before this story
         earlier = [dt.date.fromisoformat(rd) for rn, rd in refs if rn > n]    # published after this story
@@ -363,11 +380,22 @@ def main():
 
     # ---- date check for every item on file (fixes items carried over from earlier runs)
     redated, art_budget = 0, int(cfg.get('article_date_lookups', 40))
+    spa_budget = int(cfg.get('spa_story_lookups', 120))
     for it in items.values():
         d = dateline_date(it['title'])               # older titles still carry the dateline: use it, then trim it off
         it['title'] = trim_headline(it['title']) or it['title']
         if d: it['date'], it['date_src'] = d, 'dateline'
-        if it.get('date_src') in ('dateline', 'article'):
+        if it.get('source') == 'spa' and it.get('date_src') not in ('dateline', 'page') and spa_budget > 0:   # SPA: the story page decides
+            spa_budget -= 1
+            try:
+                nd, why = spa_story_date(it['url'])
+                if nd:
+                    if nd != it.get('date'): redated += 1
+                    it['date'], it['date_src'] = nd, 'page'; continue
+                debug.setdefault('spa_story_dates', []).append(f"{it['url']}: {why}")
+            except Exception as e:
+                debug.setdefault('spa_story_dates', []).append(f"{it['url']}: {type(e).__name__}")
+        if it.get('date_src') in ('dateline', 'article', 'page'):
             it['date'] = sane(it.get('date')); continue
         if it.get('date') and not sane(it['date']): it['date'] = None
         if it.get('date_src') is None:               # written before 02/10/2026: date may come from a neighbouring story

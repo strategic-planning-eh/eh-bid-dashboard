@@ -117,6 +117,25 @@ def card_date(a, link_rx):
         if d: return d
     return None
 
+def spa_consistency(items, log):
+    """SPA story numbers rise over time. Use stories dated from their own dateline as reference points and reject any
+    other date that contradicts them by more than 30 days."""
+    def num(u):
+        m = re.search(r'/N(\d{5,})', u or ''); return int(m.group(1)) if m else None
+    refs = sorted((num(i['url']), i['date']) for i in items.values() if i.get('source') == 'spa' and i.get('date_src') == 'dateline' and i.get('date') and num(i['url']))
+    if not refs: return 0
+    bad = 0
+    for it in items.values():
+        n = num(it.get('url'))
+        if it.get('source') != 'spa' or not n or not it.get('date') or it.get('date_src') == 'dateline': continue
+        d = dt.date.fromisoformat(it['date'])
+        later = [dt.date.fromisoformat(rd) for rn, rd in refs if rn < n]      # published before this story
+        earlier = [dt.date.fromisoformat(rd) for rn, rd in refs if rn > n]    # published after this story
+        if (later and d < max(later) - dt.timedelta(days=30)) or (earlier and d > min(earlier) + dt.timedelta(days=30)):
+            log.append(f"{it['url']}: {it['date']} ({it.get('date_src')}) contradicts SPA numbering — rejected")
+            it['date'], it['date_src'] = None, 'unknown'; bad += 1
+    return bad
+
 def clean(s):
     s = htmlmod.unescape(str(s or ''))
     s = re.sub(r'[\u200b\u200c\u200d\ufeff\u0640]', '', s)
@@ -362,11 +381,15 @@ def main():
                 page = rendered_html(it['url'], settle_ms=1500)
                 txt = clean(BeautifulSoup(page, 'html.parser').get_text(' '))
                 m = re.search(r'<meta[^>]+(?:article:published_time|datePublished|pubdate)[^>]+content="([^"]+)"', page)
-                nd = (sane(parse_date(m.group(1))) if m else None) or dateline_date(txt)
+                head = trim_headline(it['title'])[:40]
+                at = txt.find(head) if head else -1
+                nd = (sane(parse_date(m.group(1))) if m else None) or (dateline_date(txt[at:at + len(head) + 600]) if at >= 0 else None)
                 if nd: it['date'], it['date_src'] = nd, 'article'; redated += 1
             except Exception as e:
                 debug.setdefault('article_date_errors', []).append(f"{it['url']}: {type(e).__name__}")
-    print(f'date check: {redated} items dated from their article page; {sum(1 for i in items.values() if not i.get("date"))} still without a date')
+    rejected = []; nbad = spa_consistency(items, rejected)
+    if rejected: debug['rejected_dates'] = rejected; print('\n'.join('date rejected: ' + r for r in rejected))
+    print(f'date check: {redated} items dated from their article page; {nbad} dates rejected by the SPA numbering check; {sum(1 for i in items.values() if not i.get("date"))} still without a date')
 
     # retention + near-duplicate collapse (same body, same normalised title → keep the official one, else the earlier)
     KEEP_MIN = cfg.get('keep_min_per_body', 5)

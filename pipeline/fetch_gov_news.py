@@ -378,6 +378,29 @@ def main():
             print(f"{body['id']:6s} {src['type']:10s} {st['status']:7s} found={st['count']:3d} new={st['new']:3d} {st['seconds']}s {st['note']}")
         bodies_out.append({k: body[k] for k in ('id', 'en', 'ar', 'short', 'site') if k in body} | {'robots_disallow': body.get('robots_disallow', False), 'map_note': body.get('map_note', ''), 'sources': statuses})
 
+    # ---- pinned stories (pipeline/gov_news_pins.json): kept even when the weekly search misses them
+    pinned_ids = set(); pin_log = []
+    pin_path = os.path.join(HERE, 'gov_news_pins.json')
+    if os.path.exists(pin_path):
+        for p in json.load(open(pin_path, encoding='utf-8')).get('pins', []):
+            url = (p.get('url') or '').strip(); bid = p.get('body')
+            if not url or not bid: continue
+            iid = item_id(url, '')
+            if iid not in items:
+                try:
+                    html = http_get(url, timeout=25).text
+                    m = re.search(r'<meta[^>]+(?:property|name)="og:title"[^>]+content="([^"]+)"', html) or re.search(r'<title>([^<]+)</title>', html)
+                    title = trim_headline(htmlmod.unescape(m.group(1))) if m else url
+                    d = None
+                    if 'spa.gov.sa' in url:
+                        try: d, _ = spa_story_date(url)
+                        except Exception: d = None
+                    items[iid] = dict(id=iid, body=bid, title=title, lang=lang_of(title), date=d, date_src='page' if d else 'unknown', url=url,
+                                      source='spa' if 'spa.gov.sa' in url else 'official', tags=tag(title, cfg['tags']), first_seen=today.isoformat())
+                except Exception as e:
+                    pin_log.append(f'pinned {url}: could not be opened ({type(e).__name__})'); continue
+            items[iid]['pinned'] = True; pinned_ids.add(iid)
+
     # ---- date check for every item on file (fixes items carried over from earlier runs)
     redated, art_budget = 0, int(cfg.get('article_date_lookups', 40))
     spa_budget = int(cfg.get('spa_story_lookups', 120))
@@ -431,6 +454,7 @@ def main():
     for bid, lst in by_body.items():
         lst.sort(key=lambda x: (x.get('date') or '', story_no(x.get('url')), x['first_seen']), reverse=True)
         protected.update(x['id'] for x in lst[:KEEP_MIN])
+    protected |= pinned_ids
     kept, by_key = [], {}
     for it in items.values():
         d = it.get('date') or it.get('first_seen')
@@ -444,7 +468,11 @@ def main():
     kept = sorted(by_key.values(), key=lambda x: (x.get('date') or x['first_seen'], x['first_seen']), reverse=True)
 
     # feed week (Sunday–Saturday, matching What's New)
-    wk_start = today - dt.timedelta(days=(today.weekday() + 1) % 7)
+    # The feed week is the Sunday–Saturday week that contains *yesterday*: the scheduled Sunday-morning run reports the
+    # week that has just ended (not the one that started a few hours earlier, which would always be empty); a mid-week
+    # run reports the week in progress.
+    ref = today - dt.timedelta(days=1)
+    wk_start = ref - dt.timedelta(days=(ref.weekday() + 1) % 7)
     feed = {'generated': now.isoformat(timespec='minutes'), 'generated_ksa': now.strftime('%d %b %Y, %H:%M (KSA)'),
             'week_from': wk_start.isoformat(), 'week_to': (wk_start + dt.timedelta(days=6)).isoformat(),
             'retention_days': retention, 'bodies': bodies_out, 'items': kept,
@@ -455,6 +483,15 @@ def main():
     json.dump(debug, open(a.debug, 'w', encoding='utf-8'), ensure_ascii=False, indent=1, default=str)
     new_total = sum(s['new'] for b in bodies_out for s in b['sources'])
     print(f'\nfeed: {len(kept)} items kept ({new_total} new this run) across {len(bodies_out)} bodies → {a.out}')
+    wk_to = (wk_start + dt.timedelta(days=6)).isoformat(); wk_from = wk_start.isoformat()
+    in_wk = lambda i: (wk_from <= i['date'] <= wk_to) if i.get('date') else i['first_seen'] >= wk_from
+    print(f'summary for the week {wk_from} to {wk_to}:')
+    for b in bodies_out:
+        mine = [i for i in kept if i['body'] == b['id']]
+        print(f"  {b['id']:6s} on file {len(mine):3d} · this week {sum(1 for i in mine if in_wk(i)):2d}")
+    for i in kept:
+        if i.get('pinned'): print(f"  pinned  {i['url']} · {i['body']} · date {i.get('date') or 'unknown'} ({i.get('date_src')}) · this week: {'yes' if in_wk(i) else 'no'}")
+    for l in pin_log: print('  ' + l)
     if _PW['browser'] is not None:
         _PW['browser'].close(); _PW['pw'].stop()
 

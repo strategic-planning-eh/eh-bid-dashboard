@@ -235,16 +235,17 @@ function hbars(id,rows,opt={}){ // rows: [{label, values:[core,adj] | value, tip
   $(id).innerHTML=s+'</svg>'}
 function vbars(id,cats,series,opt={}){ // series: [{name,color,vals[]}] stacked
   if(!cats.length||!series.some(s=>s.vals.some(v=>v))){$(id).innerHTML=`<div class="empty">${opt.empty||L('Searched, none found for these filters.','تم البحث، ولا توجد نتائج لهذه المرشحات.')}</div>`;return}
-  const W=560,H=230,pl=30,pb=34,pt=10,iw=W-pl-10,ih=H-pb-pt,tot=cats.map((c,i)=>series.reduce((a,s)=>a+s.vals[i],0)),max=Math.max(1,...tot);
-  const step=Math.ceil(max/4),top=step*4,bw=Math.min(36,iw/cats.length*0.62),gx=i=>pl+iw*(i+0.5)/cats.length;
-  let s=`<svg class="ch" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opt.title||'')}">`;
+  const W=560,H=230,pl=38,pb=34,pt=10,iw=W-pl-10,ih=H-pb-pt,tot=cats.map((c,i)=>series.reduce((a,s)=>a+s.vals[i],0)),max=Math.max(1,...tot);
+  const raw=max/4,mag=Math.pow(10,Math.floor(Math.log10(raw))),step=Math.max(1,[1,2,5,10].map(m=>m*mag).find(v=>v>=raw)),top=step*4,bw=Math.min(36,iw/cats.length*0.62),gx=i=>pl+iw*(i+0.5)/cats.length;
+  let s=`<svg class="ch" viewBox="0 0 ${W} ${H}" direction="ltr" role="img" aria-label="${esc(opt.title||'')}">`;
   for(let k=0;k<=4;k++){const y=pt+ih-ih*k/4;s+=`<line class="grid" x1="${pl}" x2="${W-6}" y1="${y}" y2="${y}"/><text x="${pl-6}" y="${y+4}" text-anchor="end">${step*k}</text>`}
   cats.forEach((c,i)=>{let y=pt+ih;const ord=LANG==='ar'?cats.length-1-i:i,x=gx(ord)-bw/2;
     series.forEach((se,k)=>{const v=se.vals[i];if(!v)return;const h=ih*v/top;s+=`<rect x="${x}" y="${y-h+(k?0:0)}" width="${bw}" height="${Math.max(1,h-2)}" rx="3" fill="${se.color}"/>`;y-=h});
-    if(tot[i])s+=`<text x="${gx(ord)}" y="${y-4}" text-anchor="middle" class="lbl">${tot[i]}</text>`;
+    if(tot[i]&&opt.valueLabels!==false)s+=`<text x="${gx(ord)}" y="${y-4}" text-anchor="middle" class="lbl">${tot[i]}</text>`;
     s+=`<text x="${gx(ord)}" y="${H-14}" text-anchor="middle">${esc(c.label)}</text>`;
-    s+=`<rect class="hit" x="${gx(ord)-iw/cats.length/2}" y="${pt}" width="${iw/cats.length}" height="${ih}" data-tip="${esc('<b>'+c.label+'</b><br>'+series.map((se,k)=>se.name+': '+se.vals[i]).join('<br>'))}"/>`});
-  $(id).innerHTML=s+'</svg>'}
+    s+=`<rect class="hit" x="${gx(ord)-iw/cats.length/2}" y="${pt}" width="${iw/cats.length}" height="${ih}" data-tip="${esc('<b>'+(c.tip||c.label)+'</b><br>'+series.map((se,k)=>se.name+': '+se.vals[i]).join('<br>')+(series.length>1?'<br>'+L('Total','المجموع')+': '+tot[i]:''))}"/>`});
+  const lg=opt.legend&&series.length>1?`<div class="lgd" style="display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:4px">${series.map(se=>`<span style="display:inline-flex;align-items:center;gap:6px"><i style="width:10px;height:10px;border-radius:2px;background:${se.color};display:inline-block"></i>${esc(se.name)}</span>`).join('')}</div>`:'';
+  $(id).innerHTML=s+'</svg>'+lg}
 function exportPNG(id,name){const svg=$(id).querySelector('svg');if(!svg)return;const cs=getComputedStyle(document.body);
   let src=new XMLSerializer().serializeToString(svg);
   ['--core','--adj','--bar','--bar2','--grid','--muted','--ink'].forEach(v=>{src=src.split('var('+v+')').join(cs.getPropertyValue(v).trim())});
@@ -361,8 +362,16 @@ function renderMarket(){
   hbars('mk-sector',S.map(([k,v])=>({label:nm(SN[k]),values:[v.open,v.n-v.open],tip:`<b>${esc(nm(SN[k]))}</b><br>${L('Tenders','منافسات')}: ${v.n} (${(100*v.n/tot).toFixed(1)}%)<br>${L('Open at capture','مفتوحة عند الالتقاط')}: ${v.open}<br>${L('Document fees (size estimate)','قيمة الكراسات (تقدير للحجم)')}: ${fmtN(v.fees)} ${L('SAR','ريال')}<br><span style="color:var(--muted)">${v.acts.slice(0,4).map(a=>esc(a[0])+' '+a[1]).join('<br>')}</span>`})),{labelW:260});
   const G=Object.entries(w.agency_groups).sort((a,b)=>b[1].n-a[1].n);
   hbars('mk-group',G.map(([k,v])=>({label:nm(GN[k]),value:v.n,tip:`<b>${esc(nm(GN[k]))}</b><br>${L('Tenders','منافسات')}: ${v.n}<br>${L('Document fees (size estimate)','قيمة الكراسات (تقدير للحجم)')}: ${fmtN(v.fees)} ${L('SAR','ريال')}`})),{labelW:240});
-  const DY=w.rows.filter(r=>r.dim==='date'&&r.key>=w.from&&r.key<=w.to).sort((a,b)=>a.key<b.key?-1:1);
-  vbars('mk-day',DY.map((r,i)=>{const d=new Date(r.key+'T00:00:00');return {label:(i===0||d.getDate()===1)?d.toLocaleDateString(LANG==='ar'?'ar-SA-u-ca-gregory-nu-latn':'en-GB',{day:'numeric',month:'short'}):String(d.getDate())}}),[{name:L('Open at capture','مفتوحة عند الالتقاط'),color:'var(--core)',vals:DY.map(r=>r.open)},{name:L('Closed','مغلقة'),color:'var(--adj)',vals:DY.map(r=>r.n-r.open)}]);
+  // Per day: every window from the latest capture, joined into one continuous day axis (days with no tenders show as 0).
+  const dd={};W.filter(x=>x.capture===w.capture).forEach(x=>x.rows.forEach(r=>{if(r.dim!=='date')return;const k=String(r.key).slice(0,10);if(!/^\d{4}-\d{2}-\d{2}$/.test(k)||k<String(x.from).slice(0,10)||k>String(x.to).slice(0,10))return;dd[k]={n:r.n,open:r.open}}));
+  const dk=Object.keys(dd).sort(),DY=[];
+  if(dk.length){for(let d=new Date(dk[0]+'T00:00:00Z'),e=new Date(dk[dk.length-1]+'T00:00:00Z');d<=e;d=new Date(+d+864e5)){const k=d.toISOString().slice(0,10);DY.push({key:k,...(dd[k]||{n:0,open:0})})}}
+  const thin=DY.length>20?Math.ceil(DY.length/14):1,loc=LANG==='ar'?'ar-SA-u-ca-gregory-nu-latn':'en-GB';let lastM=null;
+  vbars('mk-day',DY.map((r,i)=>{const d=new Date(r.key+'T00:00:00'),full=d.toLocaleDateString(loc,{weekday:'short',day:'numeric',month:'short'});
+      if(i%thin)return {label:'',tip:full};const m=d.getMonth(),lab=m!==lastM?d.toLocaleDateString(loc,{day:'numeric',month:'short'}):String(d.getDate());lastM=m;return {label:lab,tip:full}}),
+    [{name:L('Open at capture','مفتوحة عند الالتقاط'),color:'var(--core)',vals:DY.map(r=>r.open)},{name:L('Closed','مغلقة'),color:'var(--adj)',vals:DY.map(r=>r.n-r.open)}],
+    {legend:true,valueLabels:DY.length<=20,title:L('Tenders published per day','المنافسات المنشورة يوميًا')});
+  if(DY.length)$('mk-day').insertAdjacentHTML('beforeend',`<div style="font-size:11.5px;color:var(--muted);margin-top:2px">${L(`${fmtD(DY[0].key)} to ${fmtD(DY[DY.length-1].key)}: ${fmtN(DY.reduce((a,r)=>a+r.n,0))} tenders. Fridays and Saturdays are usually empty because agencies publish on working days.`,`من ${fmtD(DY[0].key)} إلى ${fmtD(DY[DY.length-1].key)}: ${fmtN(DY.reduce((a,r)=>a+r.n,0))} منافسة. تكون الجمعة والسبت فارغة غالبًا لأن الجهات تنشر في أيام العمل.`)}</div>`);
   const AG=w.rows.filter(r=>r.dim==='agency').sort((a,b)=>b.n-a.n).slice(0,15);
   hbars('mk-agency',AG.map(r=>({label:r.key,ar:1,value:r.n,tip:`<b>${esc(r.key)}</b><br>${L('Tenders','منافسات')}: ${r.n}<br>${L('Document fees (size estimate)','قيمة الكراسات (تقدير للحجم)')}: ${fmtN(r.fees)} ${L('SAR','ريال')}`})),{labelW:260});
   const TY=w.rows.filter(r=>r.dim==='type').sort((a,b)=>b.n-a.n),tf=TY.reduce((a,r)=>a+r.fees,0)||1;

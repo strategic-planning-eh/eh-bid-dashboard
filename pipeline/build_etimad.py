@@ -10,7 +10,7 @@ CI:    python pipeline/build_etimad.py --sheet pipeline/etimad_data.xlsx --map s
            --tracker pipeline/bids2025.xlsx pipeline/bids2026.xlsx --bidraw pipeline/bidraw2.json --out pipeline/etimad_tenders.json
 Local: python build_etimad.py --raw etimad/raw --map hub/EH_Stakeholder_Map_CURRENT.html --out etimad_tenders.json
 """
-import argparse, csv, glob, json, os, re, sys, unicodedata
+import argparse, csv, datetime, glob, json, os, re, sys, unicodedata
 from datetime import date
 
 # ---------------------------------------------------------------- normalisation
@@ -223,6 +223,18 @@ def read_sheet(path):
     Returns raw cards, decisions, agency bridge rows and counter rows."""
     import openpyxl
     wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
+    def cell(v):
+        # Google Sheets turns typed dates into real dates; the export then gives datetimes.
+        # Keep the text shapes the rest of the build expects: 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM'.
+        if v is None:
+            return ''
+        if isinstance(v, datetime.datetime):
+            return v.strftime('%Y-%m-%d') if (v.hour, v.minute, v.second) == (0, 0, 0) else v.strftime('%Y-%m-%d %H:%M')
+        if isinstance(v, datetime.date):
+            return v.strftime('%Y-%m-%d')
+        if isinstance(v, float) and v.is_integer():
+            return str(int(v))
+        return str(v).strip()
     def rows(name):
         if name not in wb.sheetnames:
             return []
@@ -231,7 +243,7 @@ def read_sheet(path):
         out = []
         for r in it:
             if r and any(v not in (None, '') for v in r):
-                out.append({h: ('' if v is None else str(v).strip()) for h, v in zip(head, r)})
+                out.append({h: cell(v) for h, v in zip(head, r)})
         return out
     cards = []
     for r in rows('raw_cards'):

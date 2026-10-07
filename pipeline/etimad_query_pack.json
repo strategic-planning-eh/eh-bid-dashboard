@@ -6,7 +6,8 @@
   "Every Arabic keyword search also returns a fixed block of about 24-47 tenders with reference numbers 2000xxxxxx (agencies shown as e.g. '20251231SAUDI IRRIGATION ORGANIZATION'). These are not matches; the capture drops them from keyword results and records them once per week through lane 'block'.",
   "Results are sorted by submission deadline (newest first). Asking for a page past the last one silently returns page 1 again, so the capture stops when a page repeats.",
   "The status filter (TenderCategory) did NOT work through the URL or through the site's own search panel on 7 Oct 2026; open/closed is therefore read from the 'days left' field on each card.",
-  "Agency, activity, region and tender-type filters are not yet verified as URL parameters; those lanes are drafts to be tested in Stage 2 before they are relied on."
+  "Agency, activity, region and tender-type filters are not yet verified as URL parameters; those lanes are drafts to be tested in Stage 2 before they are relied on.",
+  "Lane 'market' (added 7 Oct 2026): the default listing without a keyword shows every tender, newest first, open and closed. Only counts are stored (sheet tab 'market'), not tender rows."
  ],
  "queries": [
   {
@@ -479,6 +480,17 @@
    "label_en": "By tender type",
    "filter": "tender type",
    "tested_2026_10_07": false
+  },
+  {
+   "id": "market-all",
+   "lane": "market",
+   "label_ar": "كل المنافسات المنشورة في الأسبوع",
+   "label_en": "Every tender published in the week (full market)",
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?PageSize=24",
+   "paging": "click » page by page (the URL page number is ignored here) until the publication date passes the start of the week; about 20–25 pages a week",
+   "stores": "counts only, by date, tender type, activity and agency, into the sheet tab 'market'",
+   "tested_2026_10_07": true,
+   "first_run": "7 Oct 2026: 50 pages, 1,198 tenders read; window 21 Sep – 7 Oct kept (1,150 tenders)"
   }
  ]
 }

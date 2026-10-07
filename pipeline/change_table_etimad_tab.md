@@ -1,6 +1,6 @@
 # Change table
 
-Generated 2026-10-07 10:58 · 12 edits · 0 failures
+Generated 2026-10-07 11:28 · 12 edits · 0 failures
 
 | # | File | Kind | Category | Note | Occurrences | OK |
 |---|---|---|---|---|---|---|
@@ -169,5 +169,5 @@ Generated 2026-10-07 10:58 · 12 edits · 0 failures
 **New**
 ```
 ## 2026-W41
-hub | major | Government Tenders | New view: Government Tenders. Every Sunday, public tenders on Etimad are read, sorted by what EH can bid for (Core, Adjacent or not relevant, by service line), matched to the stakeholder map and the bid tracker, and shown with deadlines, Priority flags, where the market is going, the biggest requesters and agencies that are not yet clients. "Last capt
+hub | major | Government Tenders | New view: Government Tenders. Every Sunday, public tenders on Etimad are read, sorted by what EH can bid for (Core, Adjacent or not relevant, by service line), matched to the stakeholder map and the bid tracker, and shown with deadlines, Priority flags, where the market is going for EH, a count and sector view of every tender published on Etimad (what
 ```

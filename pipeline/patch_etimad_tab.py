@@ -98,10 +98,10 @@ rep('vis', "                    if have_baseline and os.path.exists(bpath) and n
 rep('chg', "## 2026-W41\n", "## 2026-W41\n"
     "hub | major | Government Tenders | New view: Government Tenders. Every Sunday, public tenders on Etimad are read, sorted by what EH can bid for "
     "(Core, Adjacent or not relevant, by service line), matched to the stakeholder map and the bid tracker, and shown with deadlines, Priority flags, "
-    "where the market is going, the biggest requesters and agencies that are not yet clients. \"Last captured\" turns amber if the data is more than "
+    "where the market is going for EH, a count and sector view of every tender published on Etimad (what the Kingdom is buying), the biggest requesters, agencies that are not yet clients, and the bid-tracker row number for tenders EH has studied or bid on. \"Last captured\" turns amber if the data is more than "
     "8 days old. | عرض جديد: المنافسات الحكومية. كل أحد تُقرأ منافسات اعتماد العامة وتُصنَّف حسب ما يمكن لآفاق البيئة التقدم له (أساسي، مجاور، "
-    "أو خارج النطاق، حسب خط الخدمة)، وتُربط بخريطة أصحاب المصلحة وجدول متابعة المنافسات، وتُعرض بمواعيدها وأولويتها واتجاه السوق وأكبر الجهات "
-    "الطارحة والجهات التي ليست عملاء بعد. يتحول «آخر التقاط» إلى اللون الكهرماني إذا تجاوز عمر البيانات 8 أيام.\n",
+    "أو خارج النطاق، حسب خط الخدمة)، وتُربط بخريطة أصحاب المصلحة وجدول متابعة المنافسات، وتُعرض بمواعيدها وأولويتها واتجاه السوق لآفاق، مع عدد كل المنافسات المنشورة في اعتماد وتوزيعها على القطاعات (ما الذي تشتريه المملكة)، وأكبر الجهات "
+    "الطارحة والجهات التي ليست عملاء بعد، ورقم الصف في جدول المنافسات لكل منافسة درستها آفاق أو تقدمت لها. يتحول «آخر التقاط» إلى اللون الكهرماني إذا تجاوز عمر البيانات 8 أيام.\n",
     'whatsnew', 'One What\'s New line')
 
 if FAILURES:

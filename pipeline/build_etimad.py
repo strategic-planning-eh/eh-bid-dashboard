@@ -193,6 +193,30 @@ class Tagger:
         self.last_terms = [h[1] for h in hits] if rel != 'Not EH' else []
         return rel, lines, rule, review
 
+# ---------------------------------------------------------------- sectors (Etimad activity → plain sector)
+SECTORS = [  # (id, EN, AR, activity keywords — first match wins)
+    ('env', 'Environment & waste', 'البيئة والنفايات', ['الخدمات البيئيه', 'النفايات', 'التدوير']),
+    ('health', 'Healthcare & medical supplies', 'الصحة والمستلزمات الطبية', ['الطبيه', 'الادويه', 'النقاهه', 'المختبريه']),
+    ('it', 'IT & telecoms', 'تقنية المعلومات والاتصالات', ['تقنيه المعلومات', 'الاتصالات', 'الحواسيب']),
+    ('om', 'Operations, maintenance & cleaning', 'التشغيل والصيانة والنظافة', ['التشغيل والصيانه', 'صيانه', 'تنجيد', 'تنقيه الهواء']),
+    ('build', 'Construction & engineering', 'الإنشاءات والهندسة', ['مقاولات', 'مواد البناء', 'الاستشارات الهندسيه', 'انابيب', 'المعادن المشكله']),
+    ('utility', 'Utilities, energy & fuel', 'المرافق والطاقة والوقود', ['الكهرباء', 'البترول', 'محطات الوقود']),
+    ('supply', 'Spare parts, tools & vehicles', 'قطع الغيار والأدوات والمركبات', ['قطع الغيار', 'الادوات والالات', 'السيارات والمعدات', 'المواد الكيماويه', 'المواد الكيميائيه']),
+    ('security', 'Security & safety', 'الأمن والسلامة', ['الامن و السلامه', 'الامن والسلامه']),
+    ('consult', 'Consulting & business services', 'الاستشارات وخدمات الأعمال', ['الاستشاريه', 'الاستشارات', 'الخدمات التجاريه', 'التامين', 'التخليص الجمركي', 'العقارات']),
+    ('media', 'Media, events & printing', 'الإعلام والفعاليات والطباعة', ['النشر والطباعه', 'المعارض', 'المناسبات']),
+    ('transport', 'Transport & logistics', 'النقل والخدمات اللوجستية', ['النقل', 'الموانئ', 'التاجير']),
+    ('goods', 'Furniture, clothing & household goods', 'الأثاث والملابس والسلع المنزلية', ['الاثاث', 'الملابس', 'الملبوسات', 'المنسوجات', 'الكماليات', 'الاواني', 'الخياطه']),
+    ('food', 'Food, agriculture & hospitality', 'الغذاء والزراعة والضيافة', ['الغذائيه', 'زراعيه', 'الزراعيه', 'المواشي', 'المطاعم', 'الايواء', 'سياحيه']),
+    ('edu', 'Education & training', 'التعليم والتدريب', ['التعليم', 'التدريب']),
+]
+def sector_of(activity):
+    a = norm(activity)
+    for sid, en, ar, kws in SECTORS:
+        if any(norm(k) in a for k in kws):
+            return sid
+    return 'other'
+
 # ---------------------------------------------------------------- inputs
 def read_sheet(path):
     """The private Google Sheet (downloaded by fetch_from_sheets.py as etimad_data.xlsx).
@@ -218,7 +242,7 @@ def read_sheet(path):
                       'enq': r['enquiry_deadline'][:10], 'open': r['bid_opening'], 'fee': r['document_fee'],
                       'activity': r['activity'], 'agency_raw': r['agency_as_shown'], 'title': r['title_as_shown'],
                       'queries': [q for q in r.get('found_by_search', '').split('|') if q]})
-    return cards, rows('decisions'), rows('agency_bridge'), rows('counts')
+    return cards, rows('decisions'), rows('agency_bridge'), rows('counts'), rows('market')
 
 def read_raw_dir(raw_dir):
     """Local / Stage-1 mode: snapshots on disk (etimad/raw/<date>.json or the ‖ text dump)."""
@@ -364,10 +388,55 @@ def build(cards, tax, recs, bridge, trk, decisions, counts, captured_dates):
         t['fee_sar'] = fee_value(t['fee'])
         t['is_open'] = 'إنتهى' not in t['days'] and (t['last_seen'] == last_capture)
         t['region'] = None   # only on the tender's own Etimad page; not captured yet
+        t['sector'] = sector_of(t['activity'])
     return {'built': date.today().isoformat(), 'last_capture': last_capture, 'captures': sorted(set(captured_dates)),
             'count': len(tenders), 'counts': counts,
             'service_lines': [{'id': L['id'], 'en': L['en'], 'ar': L['ar']} for L in tax['lines']],
             'tenders': sorted(tenders.values(), key=lambda x: x['sub'])}
+
+AGENCY_GROUPS = [  # first match wins
+    ('health', ['مستشفي', 'مستشفيات', 'الصحي', 'الصحيه', 'تجمع', 'القلب', 'للعلوم الصحيه']),
+    ('water', ['مياه', 'تحليه']),
+    ('defence', ['القوات', 'حرس', 'الامن', 'المباحث', 'الدفاع', 'السجون', 'المخدرات', 'العسكري', 'الحرس', 'الصواريخ', 'امن الدوله', 'هيئه الاركان', 'المجاهدين']),
+    ('local', ['امانه', 'بلديه', 'اماره', 'الشوون الفنيه']),
+    ('edu', ['جامعه', 'كليه', 'التعليم', 'التدريب']),
+    ('ministry', ['وزاره']),
+]
+AGENCY_GROUP_NAMES = {'health': ('Health (hospitals, clusters)', 'الصحة (مستشفيات وتجمعات)'), 'water': ('Water', 'المياه'),
+    'defence': ('Defence & security', 'الدفاع والأمن'), 'local': ('Municipalities & regional offices', 'البلديات والجهات المناطقية'),
+    'edu': ('Universities & training', 'الجامعات والتدريب'), 'ministry': ('Ministries (central)', 'الوزارات (مركزيًا)'), 'other': ('Other bodies', 'جهات أخرى')}
+def agency_group(name):
+    a = norm(name)
+    for g, kws in AGENCY_GROUPS:
+        if any(norm(k) in a for k in kws):
+            return g
+    return 'other'
+
+def build_market(rows):
+    """All Etimad tenders (full-market capture): one block per capture window, with activities grouped into sectors."""
+    caps = {}
+    for r in rows:
+        try:
+            k = (r['capture_date'][:10], r['window_from'][:10], r['window_to'][:10])
+            caps.setdefault(k, []).append({'dim': r['dimension'], 'key': r['key'], 'n': int(float(r['tenders'])),
+                                           'open': int(float(r.get('open_at_capture') or 0)), 'fees': float(r.get('document_fees_sar') or 0)})
+        except (KeyError, ValueError):
+            continue
+    out = []
+    for (cap, wf, wt), rr in sorted(caps.items()):
+        sec = {}
+        for r in rr:
+            if r['dim'] == 'activity':
+                sid = sector_of(r['key'])
+                o = sec.setdefault(sid, {'n': 0, 'open': 0, 'fees': 0.0, 'acts': []})
+                o['n'] += r['n']; o['open'] += r['open']; o['fees'] += r['fees']; o['acts'].append([r['key'], r['n']])
+        grp = {}
+        for r in rr:
+            if r['dim'] == 'agency':
+                g = agency_group(r['key'])
+                o = grp.setdefault(g, {'n': 0, 'fees': 0.0}); o['n'] += r['n']; o['fees'] += r['fees']
+        out.append({'capture': cap, 'from': wf, 'to': wt, 'rows': rr, 'sectors': sec, 'agency_groups': grp})
+    return {'windows': out, 'group_names': {k: {'en': v[0], 'ar': v[1]} for k, v in AGENCY_GROUP_NAMES.items()}, 'sector_names': {sid: {'en': en, 'ar': ar} for sid, en, ar, _ in SECTORS} | {'other': {'en': 'Other', 'ar': 'أخرى'}}}
 
 def match_agency(agency, recs, bridge):
     a = norm(agency)
@@ -391,14 +460,15 @@ def main():
     a = ap.parse_args()
     tax = json.load(open(a.taxonomy, encoding='utf-8'))
     if a.sheet and os.path.exists(a.sheet):
-        cards, decisions, bridge_rows, counts = read_sheet(a.sheet)
+        cards, decisions, bridge_rows, counts, market = read_sheet(a.sheet)
     elif a.raw:
-        cards, decisions, bridge_rows, counts = read_raw_dir(a.raw), [], [], []
+        cards, decisions, bridge_rows, counts, market = read_raw_dir(a.raw), [], [], [], []
     else:
-        cards, decisions, bridge_rows, counts = [], [], [], []
+        cards, decisions, bridge_rows, counts, market = [], [], [], [], []
     recs = load_map_html(a.map)
     out = build(cards, tax, recs, bridge_from_rows(bridge_rows), load_tracker_files(a.tracker, a.bidraw),
                 decisions, counts, [c['capture'] for c in cards])
+    out['market'] = build_market(market)
     json.dump(out, open(a.out, 'w', encoding='utf-8'), ensure_ascii=False, default=str)
     rel = sum(1 for t in out['tenders'] if t['relevance'] != 'Not EH')
     print(f"Etimad: {out['count']} tenders ({rel} relevant), last capture {out['last_capture']} → {a.out}")

@@ -1,0 +1,472 @@
+{
+  "version": "0.2-draft",
+  "as_of": "2026-10-07",
+  "notes": [
+    "Draft v0.2 after the 7 Oct 2026 test capture. Terms are written in natural Arabic; build_etimad.py normalises them the same way as titles before matching (diacritics, tatweel, zero-width removed; NFKC; أ/إ/آ→ا, ى→ي, ة→ه, Persian ی/ک→ي/ك).",
+    "Each word may carry the prefixes ال / وال / بال / لل / ل / و / ب / ف, and the last word may carry the endings ه / ات / يه, so 'تصريح بيئي' also matches 'التصاريح البيئية' only if the plural is listed: plurals are listed explicitly.",
+    "نفايات and مخلفات are synonyms: any term containing one is also tried with the other.",
+    "requires_service_verb: the title must also contain one of service_verbs, otherwise the tender is treated as supply of goods (Not EH).",
+    "Changes from v0.1 are marked with \"added_v02\".",
+    "supply_goods_nouns (added v0.2): a title that starts with a supply word followed by one of these nouns is supply of goods even if it contains a service word (e.g. 'توريد عربة نقل النفايات الطبية')."
+  ],
+  "service_verbs": [
+    "جمع",
+    "نقل",
+    "معالجة",
+    "التخلص",
+    "تخلص",
+    "إتلاف",
+    "ترحيل",
+    "تخزين",
+    "إزالة",
+    "رفع",
+    "خدمة",
+    "خدمات",
+    "تشغيل",
+    "تنفيذ",
+    "أعمال",
+    "إعداد",
+    "دراسة",
+    "تقييم",
+    "استخراج",
+    "إصدار"
+  ],
+  "supply_starts": [
+    "توريد",
+    "تأمين وتوريد",
+    "تامين",
+    "تأمين",
+    "شراء",
+    "حامل",
+    "عربة",
+    "حاوية",
+    "حاويات",
+    "ملصقات",
+    "طباعة"
+  ],
+  "supply_escape_words": [
+    "خدمة",
+    "خدمات",
+    "تنفيذ",
+    "أعمال",
+    "تشغيل",
+    "جمع",
+    "نقل",
+    "معالجة",
+    "التخلص",
+    "استخراج",
+    "دراسة",
+    "إعداد"
+  ],
+  "lines": [
+    {
+      "id": 1,
+      "ar": "الدراسات والاستشارات البيئية",
+      "en": "Environmental studies & consultancy",
+      "include_ar": [
+        "تقييم الأثر البيئي",
+        "الأثر البيئي",
+        "الأثر البيئي والاجتماعي",
+        "تصريح بيئي",
+        "التصاريح البيئية",
+        "تصاريح بيئية",
+        "الرخصة البيئية",
+        "رخصة بيئية",
+        "الرصد البيئي",
+        "الرقابة البيئية",
+        "استشارات بيئية",
+        "خطة إدارة بيئية",
+        "الدراسات البيئية",
+        "دراسة بيئية",
+        "الإغلاق البيئي"
+      ],
+      "added_v02": [
+        "التصاريح البيئية",
+        "تصاريح بيئية",
+        "الرخصة البيئية",
+        "رخصة بيئية",
+        "الدراسات البيئية",
+        "دراسة بيئية",
+        "الإغلاق البيئي"
+      ],
+      "include_en": [
+        "environmental impact assessment",
+        "EIA",
+        "ESIA",
+        "environmental permit",
+        "environmental monitoring",
+        "environmental consultancy"
+      ],
+      "exclude_ar": [],
+      "activities": [
+        "الأنشطة الاستشارية الأخرى",
+        "الخدمات البيئية"
+      ]
+    },
+    {
+      "id": 2,
+      "ar": "الاستدامة والحوكمة البيئية",
+      "en": "Sustainability & ESG",
+      "include_ar": [
+        "البصمة الكربونية",
+        "غازات الاحتباس الحراري",
+        "الحياد الكربوني",
+        "تقرير الاستدامة",
+        "الحوكمة البيئية والاجتماعية",
+        "تقييم دورة الحياة"
+      ],
+      "include_en": [
+        "carbon footprint",
+        "greenhouse gas",
+        "GHG",
+        "net zero",
+        "sustainability report",
+        "ESG",
+        "life cycle assessment"
+      ],
+      "exclude_ar": [],
+      "activities": []
+    },
+    {
+      "id": 3,
+      "ar": "معالجة النفايات الخطرة والتخلص منها",
+      "en": "Hazardous & industrial waste treatment & disposal",
+      "include_ar": [
+        "نفايات خطرة",
+        "النفايات الخطرة",
+        "نفايات صناعية",
+        "معالجة النفايات",
+        "التخلص من النفايات",
+        "ردم النفايات",
+        "النفايات والسموم",
+        "نفايات المواد الكيميائية"
+      ],
+      "added_v02": [
+        "النفايات والسموم",
+        "نفايات المواد الكيميائية"
+      ],
+      "include_en": [
+        "hazardous waste",
+        "industrial waste",
+        "waste treatment",
+        "waste disposal"
+      ],
+      "requires_service_verb": true,
+      "exclude_ar": [],
+      "activities": [
+        "أنشطة التدوير وجمع النفايات ومعالجتها وتصريفها واسترجاع المواد"
+      ]
+    },
+    {
+      "id": 4,
+      "ar": "تنظيف الخزانات والحمأة الزيتية",
+      "en": "Tank cleaning, oily sludge & hydrocarbon recovery",
+      "include_ar": [
+        "تنظيف خزانات",
+        "تنظيف الخزانات",
+        "الحمأة الزيتية",
+        "معالجة الحمأة",
+        "استرجاع الهيدروكربونات",
+        "الزيوت المستعملة"
+      ],
+      "include_en": [
+        "tank cleaning",
+        "oily sludge",
+        "sludge treatment",
+        "used oil"
+      ],
+      "exclude_ar": [],
+      "activities": []
+    },
+    {
+      "id": 5,
+      "ar": "معالجة مياه الصرف الصناعي",
+      "en": "Industrial wastewater treatment",
+      "include_ar": [
+        "مياه الصرف الصناعي",
+        "الصرف الصناعي"
+      ],
+      "pair_ar": {
+        "term": "محطة معالجة",
+        "needs_one_of": [
+          "صناعي",
+          "صناعية",
+          "نفايات",
+          "الصرف الصناعي"
+        ]
+      },
+      "include_en": [
+        "industrial wastewater",
+        "effluent treatment"
+      ],
+      "exclude_ar": [],
+      "activities": []
+    },
+    {
+      "id": 6,
+      "ar": "الاستجابة للطوارئ البيئية",
+      "en": "Environmental emergency response",
+      "include_ar": [
+        "تسرب نفطي",
+        "تسربات نفطية",
+        "التسربات النفطية",
+        "مكافحة التلوث",
+        "تسرب كيميائي",
+        "التسربات الكيميائية"
+      ],
+      "include_en": [
+        "oil spill",
+        "spill response",
+        "pollution control"
+      ],
+      "exclude_ar": [
+        "تسرب الغاز",
+        "تسرب البيانات",
+        "مانعات تسرب"
+      ],
+      "activities": []
+    },
+    {
+      "id": 7,
+      "ar": "إعادة تأهيل المواقع الملوثة",
+      "en": "Contaminated site rehabilitation",
+      "include_ar": [
+        "التربة الملوثة",
+        "معالجة التربة",
+        "إعادة تأهيل المواقع",
+        "إزالة التلوث"
+      ],
+      "include_en": [
+        "contaminated soil",
+        "soil remediation",
+        "site remediation"
+      ],
+      "exclude_ar": [],
+      "activities": []
+    },
+    {
+      "id": 8,
+      "ar": "إنشاء وتشغيل المرادم",
+      "en": "Landfill construction & operation",
+      "include_ar": [
+        "مردم",
+        "المرادم",
+        "مرادم",
+        "خلايا الردم",
+        "تشغيل وصيانة المردم"
+      ],
+      "weak_ar": [
+        "تبطين"
+      ],
+      "include_en": [
+        "landfill"
+      ],
+      "exclude_ar": [],
+      "activities": []
+    },
+    {
+      "id": 9,
+      "ar": "إدارة الرماد",
+      "en": "Carbon / fly ash management",
+      "include_ar": [
+        "الرماد المتطاير",
+        "رماد الكربون",
+        "الرماد الثقيل"
+      ],
+      "include_en": [
+        "fly ash",
+        "bottom ash"
+      ],
+      "exclude_ar": [
+        "الرمادي"
+      ],
+      "activities": []
+    },
+    {
+      "id": 10,
+      "ar": "جمع ونقل النفايات الخطرة",
+      "en": "Hazardous waste collection & transport",
+      "include_ar": [
+        "نقل النفايات",
+        "جمع النفايات",
+        "نقل المواد الخطرة",
+        "التخلص من النفايات"
+      ],
+      "include_en": [
+        "waste collection",
+        "waste transport"
+      ],
+      "requires_qualifier_ar": [
+        "خطرة",
+        "صناعية",
+        "كيميائية",
+        "الرعاية الصحية",
+        "طبية",
+        "معدية",
+        "سموم",
+        "المعتمدة"
+      ],
+      "exclude_ar": [],
+      "activities": [
+        "أنشطة التدوير وجمع النفايات ومعالجتها وتصريفها واسترجاع المواد",
+        "الخدمات البيئية"
+      ]
+    },
+    {
+      "id": 11,
+      "ar": "فلاتر الهواء",
+      "en": "Air filters",
+      "include_ar": [
+        "فلاتر الهواء",
+        "تنقية الهواء",
+        "مرشحات الهواء"
+      ],
+      "include_en": [
+        "air filter"
+      ],
+      "exclude_ar": [
+        "فلاتر زيت",
+        "فلاتر اليات",
+        "زيوت وفلاتر"
+      ],
+      "activities": [],
+      "note_v02": "Title only. The Etimad activity 'إصلاح وصيانة أجهزة التبريد وتنقية الهواء' is air-conditioning repair and must not count."
+    },
+    {
+      "id": 12,
+      "ar": "الأسبستوس",
+      "en": "Asbestos management",
+      "include_ar": [
+        "الأسبستوس",
+        "الاسبستوس",
+        "إزالة الأسبستوس",
+        "اسبستوس"
+      ],
+      "include_en": [
+        "asbestos"
+      ],
+      "exclude_ar": [],
+      "activities": []
+    },
+    {
+      "id": 13,
+      "ar": "الخدمات البحرية",
+      "en": "Marine services",
+      "include_ar": [
+        "المسح البحري",
+        "المسح الهيدروغرافي",
+        "المسح الباثيمتري",
+        "جودة مياه البحر",
+        "الرواسب البحرية",
+        "الشعاب المرجانية",
+        "النمذجة الهيدروديناميكية"
+      ],
+      "include_en": [
+        "hydrographic survey",
+        "bathymetric",
+        "marine survey",
+        "seawater quality",
+        "coral reef"
+      ],
+      "exclude_ar": [],
+      "activities": []
+    },
+    {
+      "id": 14,
+      "ar": "النفايات الطبية",
+      "en": "Medical waste (collection / treatment only)",
+      "include_ar": [
+        "النفايات الطبية",
+        "نفايات الرعاية الصحية",
+        "النفايات الرعاية الصحية",
+        "نفايات طبية"
+      ],
+      "added_v02": [
+        "النفايات الرعاية الصحية"
+      ],
+      "include_en": [
+        "medical waste",
+        "clinical waste",
+        "healthcare waste"
+      ],
+      "requires_service_verb": true,
+      "exclude_ar": [],
+      "activities": [
+        "أنشطة التدوير وجمع النفايات ومعالجتها وتصريفها واسترجاع المواد",
+        "الخدمات البيئية"
+      ]
+    }
+  ],
+  "exclusions_ar": [
+    "نظافة المدن",
+    "النظافة العامة",
+    "نظافة المباني",
+    "نظافة مبنى",
+    "نظافة الشوارع",
+    "نظافة الطرق",
+    "نظافة محافظة",
+    "توريد أكياس",
+    "توريد حاويات",
+    "حاويات نفايات",
+    "سلات النفايات",
+    "مكابس النفايات",
+    "مخلفات البناء",
+    "مخلفات الهدم",
+    "المخلفات الصلبة",
+    "المقلب العمومي",
+    "ناتج الحفر"
+  ],
+  "adjacent_rules": [
+    {
+      "id": "A1",
+      "en": "General or municipal waste removal / transfer (not hazardous)",
+      "ar": "إزالة أو نقل نفايات عامة أو بلدية",
+      "when": "title has نفايات/مخلفات AND a service verb AND no Core term"
+    },
+    {
+      "id": "A2",
+      "en": "Regulator tender in an environmental activity",
+      "ar": "منافسة من جهة تنظيمية في نشاط بيئي",
+      "when": "agency is MWAN or NCEC AND activity is الخدمات البيئية or a waste activity"
+    },
+    {
+      "id": "A3",
+      "en": "Environmental services bundled into another contract",
+      "ar": "خدمات بيئية ضمن عقد أشمل",
+      "when": "a Core term appears together with تشغيل وصيانة / نظافة in the same title"
+    }
+  ],
+  "priority_agencies_ar": [
+    "نيوم",
+    "البحر الأحمر الدولية",
+    "القدية",
+    "الدرعية",
+    "العلا",
+    "روشن",
+    "صندوق الاستثمارات العامة",
+    "الهيئة الملكية"
+  ],
+  "regulator_agencies_ar": [
+    "المركز الوطني لإدارة النفايات",
+    "المركز الوطني للرقابة على الالتزام البيئي",
+    "وزارة البيئة والمياه والزراعة",
+    "الهيئة الملكية للجبيل وينبع",
+    "الهيئة الملكية لمحافظة العلا",
+    "وزارة البلديات والإسكان"
+  ],
+  "supply_goods_nouns": [
+    "عربة",
+    "عربات",
+    "حاوية",
+    "حاويات",
+    "أكياس",
+    "ملصقات",
+    "مستلزمات",
+    "مستهلكات",
+    "حامل",
+    "باب",
+    "حافظة",
+    "فلاتر",
+    "خزانات"
+  ]
+}

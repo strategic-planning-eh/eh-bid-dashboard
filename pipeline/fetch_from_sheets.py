@@ -73,6 +73,15 @@ def main():
         sys.exit('ERROR: set SHEET_ID_2025 and/or SHEET_ID_2026 repository variables.')
     for file_id, out_name in targets.items():
         download(drive, file_id, out_name)
+    # Government Tenders (Etimad): private Google Sheet EH_Etimad_data, shared only with the robot.
+    # Never fatal — without it the tab shows that no capture is loaded.
+    if os.environ.get('SHEET_ID_ETIMAD'):
+        try:
+            download(drive, os.environ['SHEET_ID_ETIMAD'], 'etimad_data.xlsx')
+        except Exception as e:
+            print(f'  WARNING: Etimad sheet not downloaded ({type(e).__name__}: {e}) — the Government Tenders tab will say no capture is loaded')
+    else:
+        print('  note: SHEET_ID_ETIMAD not set — the Government Tenders tab will say no capture is loaded')
 
 if __name__ == '__main__':
     main()

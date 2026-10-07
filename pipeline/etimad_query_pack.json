@@ -1,0 +1,484 @@
+{
+ "version": "0.1-draft",
+ "as_of": "2026-10-07",
+ "notes": [
+  "Etimad's keyword search is spelling-exact: 'الأثر البيئي' and 'الاثر البيئي' returned different tenders on 7 Oct 2026, so both spellings are listed wherever a hamza or taa marbuta could vary.",
+  "Every Arabic keyword search also returns a fixed block of about 24-47 tenders with reference numbers 2000xxxxxx (agencies shown as e.g. '20251231SAUDI IRRIGATION ORGANIZATION'). These are not matches; the capture drops them from keyword results and records them once per week through lane 'block'.",
+  "Results are sorted by submission deadline (newest first). Asking for a page past the last one silently returns page 1 again, so the capture stops when a page repeats.",
+  "The status filter (TenderCategory) did NOT work through the URL or through the site's own search panel on 7 Oct 2026; open/closed is therefore read from the 'days left' field on each card.",
+  "Agency, activity, region and tender-type filters are not yet verified as URL parameters; those lanes are drafts to be tested in Stage 2 before they are relied on."
+ ],
+ "queries": [
+  {
+   "id": "kw-nifayat",
+   "lane": "rows",
+   "label_ar": "بحث: نفايات",
+   "label_en": "Search: Waste (نفايات)",
+   "keyword": "نفايات",
+   "service_lines": [
+    3,
+    10,
+    14
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D9%86%D9%81%D8%A7%D9%8A%D8%A7%D8%AA&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": true
+  },
+  {
+   "id": "kw-mukhallafat",
+   "lane": "rows",
+   "label_ar": "بحث: مخلفات",
+   "label_en": "Search: Waste (مخلفات)",
+   "keyword": "مخلفات",
+   "service_lines": [
+    3,
+    10
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D9%85%D8%AE%D9%84%D9%81%D8%A7%D8%AA&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": true
+  },
+  {
+   "id": "kw-athar-hamza",
+   "lane": "rows",
+   "label_ar": "بحث: الأثر البيئي",
+   "label_en": "Search: Environmental impact (with hamza)",
+   "keyword": "الأثر البيئي",
+   "service_lines": [
+    1
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%A7%D9%84%D8%A3%D8%AB%D8%B1%20%D8%A7%D9%84%D8%A8%D9%8A%D8%A6%D9%8A&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": true
+  },
+  {
+   "id": "kw-athar-plain",
+   "lane": "rows",
+   "label_ar": "بحث: الاثر البيئي",
+   "label_en": "Search: Environmental impact (without hamza)",
+   "keyword": "الاثر البيئي",
+   "service_lines": [
+    1
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%A7%D9%84%D8%A7%D8%AB%D8%B1%20%D8%A7%D9%84%D8%A8%D9%8A%D8%A6%D9%8A&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": true
+  },
+  {
+   "id": "kw-biiya",
+   "lane": "rows",
+   "label_ar": "بحث: بيئية",
+   "label_en": "Search: Environmental (adjective)",
+   "keyword": "بيئية",
+   "service_lines": [
+    1
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%A8%D9%8A%D8%A6%D9%8A%D8%A9&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": true
+  },
+  {
+   "id": "kw-rukhsa",
+   "lane": "rows",
+   "label_ar": "بحث: الرخصة البيئية",
+   "label_en": "Search: Environmental licence",
+   "keyword": "الرخصة البيئية",
+   "service_lines": [
+    1
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%A7%D9%84%D8%B1%D8%AE%D8%B5%D8%A9%20%D8%A7%D9%84%D8%A8%D9%8A%D8%A6%D9%8A%D8%A9&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": false
+  },
+  {
+   "id": "kw-tasrih",
+   "lane": "rows",
+   "label_ar": "بحث: تصريح بيئي",
+   "label_en": "Search: Environmental permit",
+   "keyword": "تصريح بيئي",
+   "service_lines": [
+    1
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%AA%D8%B5%D8%B1%D9%8A%D8%AD%20%D8%A8%D9%8A%D8%A6%D9%8A&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": false
+  },
+  {
+   "id": "kw-tasarih",
+   "lane": "rows",
+   "label_ar": "بحث: التصاريح البيئية",
+   "label_en": "Search: Environmental permits",
+   "keyword": "التصاريح البيئية",
+   "service_lines": [
+    1
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%A7%D9%84%D8%AA%D8%B5%D8%A7%D8%B1%D9%8A%D8%AD%20%D8%A7%D9%84%D8%A8%D9%8A%D8%A6%D9%8A%D8%A9&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": false
+  },
+  {
+   "id": "kw-karbon",
+   "lane": "rows",
+   "label_ar": "بحث: الكربونية",
+   "label_en": "Search: Carbon footprint",
+   "keyword": "الكربونية",
+   "service_lines": [
+    2
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%A7%D9%84%D9%83%D8%B1%D8%A8%D9%88%D9%86%D9%8A%D8%A9&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": false
+  },
+  {
+   "id": "kw-istidama",
+   "lane": "rows",
+   "label_ar": "بحث: الاستدامة",
+   "label_en": "Search: Sustainability",
+   "keyword": "الاستدامة",
+   "service_lines": [
+    2
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D8%AF%D8%A7%D9%85%D8%A9&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": false
+  },
+  {
+   "id": "kw-khazanat",
+   "lane": "rows",
+   "label_ar": "بحث: خزانات",
+   "label_en": "Search: Tanks",
+   "keyword": "خزانات",
+   "service_lines": [
+    4
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%AE%D8%B2%D8%A7%D9%86%D8%A7%D8%AA&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": true
+  },
+  {
+   "id": "kw-hamaa",
+   "lane": "rows",
+   "label_ar": "بحث: الحمأة",
+   "label_en": "Search: Sludge (with hamza)",
+   "keyword": "الحمأة",
+   "service_lines": [
+    4
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%A7%D9%84%D8%AD%D9%85%D8%A3%D8%A9&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": true
+  },
+  {
+   "id": "kw-hama-plain",
+   "lane": "rows",
+   "label_ar": "بحث: الحماة",
+   "label_en": "Search: Sludge (without hamza)",
+   "keyword": "الحماة",
+   "service_lines": [
+    4
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%A7%D9%84%D8%AD%D9%85%D8%A7%D8%A9&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": false
+  },
+  {
+   "id": "kw-zuyut",
+   "lane": "rows",
+   "label_ar": "بحث: الزيوت",
+   "label_en": "Search: Oils",
+   "keyword": "الزيوت",
+   "service_lines": [
+    4
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%A7%D9%84%D8%B2%D9%8A%D9%88%D8%AA&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": true
+  },
+  {
+   "id": "kw-sarf",
+   "lane": "rows",
+   "label_ar": "بحث: الصرف الصناعي",
+   "label_en": "Search: Industrial wastewater",
+   "keyword": "الصرف الصناعي",
+   "service_lines": [
+    5
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%A7%D9%84%D8%B5%D8%B1%D9%81%20%D8%A7%D9%84%D8%B5%D9%86%D8%A7%D8%B9%D9%8A&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": true
+  },
+  {
+   "id": "kw-tasarrub",
+   "lane": "rows",
+   "label_ar": "بحث: تسرب",
+   "label_en": "Search: Spills",
+   "keyword": "تسرب",
+   "service_lines": [
+    6
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%AA%D8%B3%D8%B1%D8%A8&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": true
+  },
+  {
+   "id": "kw-talawwuth",
+   "lane": "rows",
+   "label_ar": "بحث: تلوث",
+   "label_en": "Search: Pollution",
+   "keyword": "تلوث",
+   "service_lines": [
+    6,
+    7
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%AA%D9%84%D9%88%D8%AB&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": true
+  },
+  {
+   "id": "kw-turba",
+   "lane": "rows",
+   "label_ar": "بحث: التربة",
+   "label_en": "Search: Soil",
+   "keyword": "التربة",
+   "service_lines": [
+    7
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%A7%D9%84%D8%AA%D8%B1%D8%A8%D8%A9&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": true
+  },
+  {
+   "id": "kw-mardam",
+   "lane": "rows",
+   "label_ar": "بحث: مردم",
+   "label_en": "Search: Landfill",
+   "keyword": "مردم",
+   "service_lines": [
+    8
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D9%85%D8%B1%D8%AF%D9%85&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": true
+  },
+  {
+   "id": "kw-maradim",
+   "lane": "rows",
+   "label_ar": "بحث: المرادم",
+   "label_en": "Search: Landfills",
+   "keyword": "المرادم",
+   "service_lines": [
+    8
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%A7%D9%84%D9%85%D8%B1%D8%A7%D8%AF%D9%85&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": false
+  },
+  {
+   "id": "kw-ramad",
+   "lane": "rows",
+   "label_ar": "بحث: الرماد",
+   "label_en": "Search: Ash",
+   "keyword": "الرماد",
+   "service_lines": [
+    9
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%A7%D9%84%D8%B1%D9%85%D8%A7%D8%AF&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": true
+  },
+  {
+   "id": "kw-falatir",
+   "lane": "rows",
+   "label_ar": "بحث: فلاتر",
+   "label_en": "Search: Filters",
+   "keyword": "فلاتر",
+   "service_lines": [
+    11
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D9%81%D9%84%D8%A7%D8%AA%D8%B1&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": true
+  },
+  {
+   "id": "kw-asbestos",
+   "lane": "rows",
+   "label_ar": "بحث: اسبستوس",
+   "label_en": "Search: Asbestos (without hamza)",
+   "keyword": "اسبستوس",
+   "service_lines": [
+    12
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%A7%D8%B3%D8%A8%D8%B3%D8%AA%D9%88%D8%B3&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": true
+  },
+  {
+   "id": "kw-asbestos-h",
+   "lane": "rows",
+   "label_ar": "بحث: الأسبستوس",
+   "label_en": "Search: Asbestos (with hamza)",
+   "keyword": "الأسبستوس",
+   "service_lines": [
+    12
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%A7%D9%84%D8%A3%D8%B3%D8%A8%D8%B3%D8%AA%D9%88%D8%B3&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": false
+  },
+  {
+   "id": "kw-hydro",
+   "lane": "rows",
+   "label_ar": "بحث: هيدروغرافي",
+   "label_en": "Search: Hydrographic",
+   "keyword": "هيدروغرافي",
+   "service_lines": [
+    13
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D9%87%D9%8A%D8%AF%D8%B1%D9%88%D8%BA%D8%B1%D8%A7%D9%81%D9%8A&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": true
+  },
+  {
+   "id": "kw-bahri",
+   "lane": "rows",
+   "label_ar": "بحث: المسح البحري",
+   "label_en": "Search: Marine survey",
+   "keyword": "المسح البحري",
+   "service_lines": [
+    13
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%A7%D9%84%D9%85%D8%B3%D8%AD%20%D8%A7%D9%84%D8%A8%D8%AD%D8%B1%D9%8A&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": false
+  },
+  {
+   "id": "kw-shiab",
+   "lane": "rows",
+   "label_ar": "بحث: الشعاب المرجانية",
+   "label_en": "Search: Coral reefs",
+   "keyword": "الشعاب المرجانية",
+   "service_lines": [
+    13
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%A7%D9%84%D8%B4%D8%B9%D8%A7%D8%A8%20%D8%A7%D9%84%D9%85%D8%B1%D8%AC%D8%A7%D9%86%D9%8A%D8%A9&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": false
+  },
+  {
+   "id": "kw-tibbiya",
+   "lane": "rows",
+   "label_ar": "بحث: النفايات الطبية",
+   "label_en": "Search: Medical waste",
+   "keyword": "النفايات الطبية",
+   "service_lines": [
+    14
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%A7%D9%84%D9%86%D9%81%D8%A7%D9%8A%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B7%D8%A8%D9%8A%D8%A9&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": false
+  },
+  {
+   "id": "kw-riaya",
+   "lane": "rows",
+   "label_ar": "بحث: الرعاية الصحية الخطرة",
+   "label_en": "Search: Hazardous healthcare waste",
+   "keyword": "الرعاية الصحية الخطرة",
+   "service_lines": [
+    14
+   ],
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D8%A7%D9%84%D8%B1%D8%B9%D8%A7%D9%8A%D8%A9%20%D8%A7%D9%84%D8%B5%D8%AD%D9%8A%D8%A9%20%D8%A7%D9%84%D8%AE%D8%B7%D8%B1%D8%A9&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "paging": "from page 1 until a page has no open tender, or the page repeats page 1",
+   "tested_2026_10_07": false
+  },
+  {
+   "id": "block-2000",
+   "lane": "block",
+   "label_ar": "كتلة المنافسات ذات المرجع 2000",
+   "label_en": "Always-returned 2000-series block",
+   "keyword": "قققززز",
+   "url": "https://tenders.etimad.sa/Tender/AllTendersForVisitor?MultipleSearch=%D9%82%D9%82%D9%82%D8%B2%D8%B2%D8%B2&PublishDateId=5&PageSize=24&IsSearch=true&SortDirection=DESC&Sort=SubmitionDate&PageNumber={N}",
+   "tested_2026_10_07": true,
+   "why": "A nonsense Arabic keyword returns only the always-on block, so it can be captured and tagged once."
+  },
+  {
+   "id": "agency-mwan",
+   "lane": "rows",
+   "label_ar": "الجهة: المركز الوطني لإدارة النفايات",
+   "label_en": "Agency: National Waste Management Center (MWAN)",
+   "filter": "agency",
+   "tested_2026_10_07": false
+  },
+  {
+   "id": "agency-ncec",
+   "lane": "rows",
+   "label_ar": "الجهة: المركز الوطني للرقابة على الالتزام البيئي",
+   "label_en": "Agency: National Center for Environmental Compliance (NCEC)",
+   "filter": "agency",
+   "tested_2026_10_07": false
+  },
+  {
+   "id": "agency-ef",
+   "lane": "rows",
+   "label_ar": "الجهة: صندوق البيئة",
+   "label_en": "Agency: Environment Fund",
+   "filter": "agency",
+   "tested_2026_10_07": false
+  },
+  {
+   "id": "agency-rcjy",
+   "lane": "rows",
+   "label_ar": "الجهة: الهيئة الملكية للجبيل وينبع",
+   "label_en": "Agency: Royal Commission for Jubail & Yanbu",
+   "filter": "agency",
+   "tested_2026_10_07": false
+  },
+  {
+   "id": "agency-swa",
+   "lane": "rows",
+   "label_ar": "الجهة: الهيئة السعودية للمياه",
+   "label_en": "Agency: Saudi Water Authority (EH client)",
+   "filter": "agency",
+   "tested_2026_10_07": false
+  },
+  {
+   "id": "act-waste",
+   "lane": "rows",
+   "label_ar": "النشاط: أنشطة التدوير وجمع النفايات ومعالجتها وتصريفها واسترجاع المواد",
+   "label_en": "Activity: waste collection, treatment & recycling",
+   "filter": "activity",
+   "tested_2026_10_07": false
+  },
+  {
+   "id": "act-env",
+   "lane": "rows",
+   "label_ar": "النشاط: الخدمات البيئية",
+   "label_en": "Activity: environmental services",
+   "filter": "activity",
+   "tested_2026_10_07": false
+  },
+  {
+   "id": "cnt-all",
+   "lane": "count",
+   "label_ar": "كل المنافسات النشطة",
+   "label_en": "All active tenders (site counter)",
+   "source": "counter 'منافسات نشطة' on the results page",
+   "tested_2026_10_07": true
+  },
+  {
+   "id": "cnt-region",
+   "lane": "count",
+   "label_ar": "حسب المنطقة (13)",
+   "label_en": "By region (13)",
+   "filter": "region",
+   "tested_2026_10_07": false
+  },
+  {
+   "id": "cnt-type",
+   "lane": "count",
+   "label_ar": "حسب نوع المنافسة",
+   "label_en": "By tender type",
+   "filter": "tender type",
+   "tested_2026_10_07": false
+  }
+ ]
+}

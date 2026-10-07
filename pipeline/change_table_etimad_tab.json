@@ -1,0 +1,127 @@
+{
+ "generated": "2026-10-07 10:58",
+ "title": "Change table",
+ "failures": [],
+ "changes": [
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "hub",
+   "note": "Desktop tab, between Bid Intelligence and Clients & Revenue",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    <button class=\"tab\" role=\"tab\" data-f=\"bubbles\"",
+   "new": "    <button class=\"tab\" role=\"tab\" data-f=\"tenders\" data-t=\"Government Tenders\" aria-pressed=\"false\" onclick=\"go(this)\" title=\"Etimad tenders EH can bid for, refreshed every Sunday · منافسات اعتماد التي يمكن لآفاق البيئة التقدم لها، تُحدَّث كل أحد\"><svg class=\"ic\" aria-hidden=\"true\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "hub",
+   "note": "Mobile tab",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  <button class=\"mtab\" data-f=\"bubbles\"",
+   "new": "  <button class=\"mtab\" data-f=\"tenders\" role=\"tab\" onclick=\"go(document.querySelector('.tab[data-f=tenders]'))\"><svg aria-hidden=\"true\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h5\"/><path d=\"M14 3v5h5M8 9h3M8 13h5\"/><circle cx=\"16.5\" cy=\"16.5\" r=\"3\"/><path d=\"M18.7 18.7 21 21"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "hub",
+   "note": "Loading skeleton",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  <div class=\"skel\" id=\"sk-bubbles\">",
+   "new": "  <div class=\"skel\" id=\"sk-tenders\"><div class=\"in\"><div class=\"spin\"></div><span class=\"tl\" data-en=\"Loading government tenders…\" data-ar=\"جارٍ تحميل المنافسات الحكومية…\">Loading government tenders…</span></div></div>\n  <div class=\"skel\" id=\"sk-bubbles\">"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "hub",
+   "note": "Lazy iframe",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  <iframe id=\"f-bubbles\" title=\"Client portfolio bubble chart\"",
+   "new": "  <iframe id=\"f-tenders\" title=\"Government tenders on Etimad that EH can bid for\" data-src=\"etimad_tenders.html\" loading=\"lazy\"></iframe>\n  <iframe id=\"f-bubbles\" title=\"Client portfolio bubble chart\""
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "hub",
+   "note": "Subtitle: five views",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<span dir=\"ltr\">Four live views of EH's market — competitors, tenders, clients &amp; Saudi news</span>",
+   "new": "<span dir=\"ltr\">Five live views of EH's market — competitors, bids, government tenders, clients &amp; Saudi news</span>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "hub",
+   "note": "Subtitle (Arabic): five views",
+   "occurrences": 1,
+   "ok": true,
+   "old": "أربع لوحات حيّة: المنافسون والمناقصات والعملاء والأخبار",
+   "new": "خمس لوحات حيّة: المنافسون والمناقصات والمنافسات الحكومية والعملاء والأخبار"
+  },
+  {
+   "file": "fetch",
+   "kind": "exact",
+   "category": "fetch",
+   "note": "Download the Etimad sheet (optional)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    for file_id, out_name in targets.items():\n        download(drive, file_id, out_name)\n",
+   "new": "    for file_id, out_name in targets.items():\n        download(drive, file_id, out_name)\n    # Government Tenders (Etimad): private Google Sheet EH_Etimad_data, shared only with the robot.\n    # Never fatal — without it the tab shows that no capture is loaded.\n    if os.environ.get('SHEET_ID_ETIMAD'):\n        try:\n            download(drive, os.environ['SHEET_ID_ETIMAD'], 'etimad_data.xlsx')\n     "
+  },
+  {
+   "file": "wf",
+   "kind": "exact",
+   "category": "workflow",
+   "note": "Pass the Etimad sheet ID",
+   "occurrences": 1,
+   "ok": true,
+   "old": "          SHEET_ID_2026: ${{ vars.SHEET_ID_2026 }}\n        run: python pipeline/run_pipeline.py",
+   "new": "          SHEET_ID_2026: ${{ vars.SHEET_ID_2026 }}\n          SHEET_ID_ETIMAD: ${{ vars.SHEET_ID_ETIMAD }}\n        run: python pipeline/run_pipeline.py"
+  },
+  {
+   "file": "wf",
+   "kind": "exact",
+   "category": "workflow",
+   "note": "Build step after the map sync",
+   "occurrences": 1,
+   "ok": true,
+   "old": "      - name: Keep the bid-sync report, twin review workbook, aliases and feed (Actions → this run → Artifacts)",
+   "new": "      # ---------- Government Tenders (Etimad): built at publish time from the private sheet; never committed, never an artefact ----------\n      - name: Build the Government Tenders page\n        run: |\n          python pipeline/build_etimad.py --sheet pipeline/etimad_data.xlsx --map site/EH_Stakeholder_Map_CURRENT.html \\\n            --tracker pipeline/bids2025.xlsx pipeline/bids2026.xlsx --bidraw"
+  },
+  {
+   "file": "vis",
+   "kind": "exact",
+   "category": "visual",
+   "note": "Check the Etimad page",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    'pif_strategy_2026_2030.html':     dict(kpi=6, tables=4, svgs=1, canvases=2),",
+   "new": "    'pif_strategy_2026_2030.html':     dict(kpi=6, tables=4, svgs=1, canvases=2),\n    'etimad_tenders.html':             dict(kpi=6, tables=0, svgs=0, nodiff=True),   # content changes with each Sunday capture"
+  },
+  {
+   "file": "vis",
+   "kind": "exact",
+   "category": "visual",
+   "note": "No pixel comparison for pages flagged nodiff",
+   "occurrences": 1,
+   "ok": true,
+   "old": "                    if have_baseline and os.path.exists(bpath) and not a.update_baseline:",
+   "new": "                    if have_baseline and os.path.exists(bpath) and not a.update_baseline and not want.get('nodiff'):"
+  },
+  {
+   "file": "chg",
+   "kind": "exact",
+   "category": "whatsnew",
+   "note": "One What's New line",
+   "occurrences": 1,
+   "ok": true,
+   "old": "## 2026-W41\n",
+   "new": "## 2026-W41\nhub | major | Government Tenders | New view: Government Tenders. Every Sunday, public tenders on Etimad are read, sorted by what EH can bid for (Core, Adjacent or not relevant, by service line), matched to the stakeholder map and the bid tracker, and shown with deadlines, Priority flags, where the market is going, the biggest requesters and agencies that are not yet clients. \"Last capt"
+  }
+ ]
+}

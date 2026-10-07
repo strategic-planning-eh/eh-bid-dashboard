@@ -13,6 +13,7 @@ RULES
 -->
 
 ## 2026-W41
+hub | major | Government Tenders | New view: Government Tenders. Every Sunday, public tenders on Etimad are read, sorted by what EH can bid for (Core, Adjacent or not relevant, by service line), matched to the stakeholder map and the bid tracker, and shown with deadlines, Priority flags, where the market is going, the biggest requesters and agencies that are not yet clients. "Last captured" turns amber if the data is more than 8 days old. | عرض جديد: المنافسات الحكومية. كل أحد تُقرأ منافسات اعتماد العامة وتُصنَّف حسب ما يمكن لآفاق البيئة التقدم له (أساسي، مجاور، أو خارج النطاق، حسب خط الخدمة)، وتُربط بخريطة أصحاب المصلحة وجدول متابعة المنافسات، وتُعرض بمواعيدها وأولويتها واتجاه السوق وأكبر الجهات الطارحة والجهات التي ليست عملاء بعد. يتحول «آخر التقاط» إلى اللون الكهرماني إذا تجاوز عمر البيانات 8 أيام.
 news | major | Saudi Government Finances | The Arabic edition now matches the English one: the same sections, tables, cards and all seven charts, in the same order and right-to-left, fully translated — instead of a shorter separate Arabic report. | أصبحت النسخة العربية مطابقة للإنجليزية: الأقسام والجداول والبطاقات والرسوم السبعة نفسها، بالترتيب نفسه ومن اليمين إلى اليسار، مترجمة بالكامل — بدلاً من تقرير عربي مختصر منفصل.
 
 ## 2026-W40

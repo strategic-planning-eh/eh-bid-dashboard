@@ -48,6 +48,7 @@ jobs:
           GOOGLE_APPLICATION_CREDENTIALS: service_account.json
           SHEET_ID_2025: ${{ vars.SHEET_ID_2025 }}
           SHEET_ID_2026: ${{ vars.SHEET_ID_2026 }}
+          SHEET_ID_ETIMAD: ${{ vars.SHEET_ID_ETIMAD }}
         run: python pipeline/run_pipeline.py
 
       - name: Prepare the published site (hub + all three apps)
@@ -78,6 +79,14 @@ jobs:
           cp site/bid_sync_report.json pipeline/bid_sync_report.json 2>/dev/null || true
           python pipeline/make_twin_sheet.py --report pipeline/bid_sync_report.json --map site/EH_Stakeholder_Map_CURRENT.html \
             --out pipeline/possible_twins_review.xlsx $( [ -f pipeline/twin_decisions.xlsx ] && echo --previous pipeline/twin_decisions.xlsx )
+
+      # ---------- Government Tenders (Etimad): built at publish time from the private sheet; never committed, never an artefact ----------
+      - name: Build the Government Tenders page
+        run: |
+          python pipeline/build_etimad.py --sheet pipeline/etimad_data.xlsx --map site/EH_Stakeholder_Map_CURRENT.html \
+            --tracker pipeline/bids2025.xlsx pipeline/bids2026.xlsx --bidraw pipeline/bidraw2.json --out pipeline/etimad_tenders.json
+          python pipeline/build_etimad_page.py pipeline/etimad_tenders.json site/etimad_tenders.html
+          rm -f pipeline/etimad_data.xlsx pipeline/etimad_tenders.json
 
       - name: Keep the bid-sync report, twin review workbook, aliases and feed (Actions → this run → Artifacts)
         uses: actions/upload-artifact@v4

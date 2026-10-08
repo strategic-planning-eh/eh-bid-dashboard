@@ -325,6 +325,16 @@ const TF={year:'all',outcome:'all',platform:'all',svc:'all',q:''};
 function setTF(kk,v){TF[kk]=v;TF.only=null;renderTenders();}
 function platN(p){p=(p||'').toLowerCase();if(p.includes('etimad'))return 'Etimad';if(p.includes('ariba')||p.includes('sec')||p.includes('sap'))return 'SEC-SAP / SAP Ariba';if(p.includes('mail'))return 'Email';return p?'Other':'\u2014';}
 function uniqVals(fn){return [...new Set(BA.bidlist.map(fn).filter(x=>x&&x!=='\u2014'))].sort();}
+const SUBW={yes:['Submitted — date not recorded','قُدِّم العرض — التاريخ غير مسجّل'],
+ no:['EH did not submit','لم تقدّم EH عرضاً'],
+ rejected:['EH did not submit — the bid committee said no','لم تقدّم EH عرضاً — رفضت لجنة المنافسات المشاركة'],
+ cancelled:['EH did not submit — the tender was cancelled','لم تقدّم EH عرضاً — أُلغيت المنافسة'],
+ open:['Not submitted yet — the deadline is still open','لم يُقدَّم بعد — الموعد ما زال مفتوحاً'],
+ none:['EH did not submit — no offer recorded','لم تقدّم EH عرضاً — لا عرض مسجّل'],
+ unrecorded:['No submission recorded in the tracker','لا تقديم مسجّل في ملف المتابعة']};
+function subCell(b){if(b.subdate)return `<span style="font-size:10.5px;color:#1A5FAB;font-weight:600;white-space:nowrap">${b.subdate}</span>`;
+ const w=SUBW[b.sub]||SUBW.unrecorded, col=b.sub=='yes'?'#1A5FAB':(b.sub=='open'?'#3E86C8':'#77868F');
+ return `<div dir="auto" style="font-size:10px;color:${col};max-width:150px;line-height:1.35;white-space:normal">${t(w[0],w[1])}</div>`;}
 function renderTenders(){
  const OC={'Won':'#2E7D46','Lost':'#C0504D','Not awarded':'#E8862E','Cancelled':'#5F7078','Pending':'#3E86C8'};
  const list=BA.bidlist.filter(b=>
@@ -348,6 +358,8 @@ function renderTenders(){
  const rows=list.map(b=>`<tr data-bk="${b.year}-${b.sn}">
    <td><b>#${b.sn}</b>${ntfChip(b.year+"-"+b.sn)}<div style="font-size:9.5px;color:#5F7078">${b.year}</div></td>
    <td style="font-size:10.5px;color:#7B8A92;white-space:nowrap">${b.date||'\u2014'}</td>
+   <td style="font-size:10.5px;color:#3A4A52;white-space:nowrap">${b.deadline||`<span style="color:#77868F;font-size:10px;white-space:normal">${t('No deadline recorded','لا موعد مسجّل')}</span>`}</td>
+   <td>${subCell(b)}</td>
    <td style="max-width:280px"><div dir="auto" style="font-size:11.5px;line-height:1.35">${esc(b.title)||'<span style="color:#bbb">\u2014</span>'}</div></td>
    <td style="max-width:150px"><div dir="auto" style="font-size:11px;color:#3A4A52">${esc(b.client)||'\u2014'}</div></td>
    <td style="font-size:11px;white-space:nowrap">${esc(dv(DPLAT,platN(b.platform)))}</td>
@@ -362,8 +374,8 @@ function renderTenders(){
  ${ctrls}
  ${TF.only?`<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:-4px 0 12px;background:#FFF8EC;border:1px solid #EAD9B0;border-radius:9px;padding:8px 13px;font-size:12px;color:#5C4A14"><b>${t('Showing the '+TF.only.size+' tender(s) flagged since '+(NTF.when||'your last visit'),'عرض '+TF.only.size+' منافسة/منافسات مُعلَّمة منذ '+(NTF.when||'آخر زيارة'))}</b><button onclick="TF.only=null;renderTenders()" style="margin-inline-start:auto;border:1px solid #D9C48E;background:#fff;color:#8A6D2E;border-radius:7px;padding:5px 11px;font-size:11.5px;font-weight:700;cursor:pointer">${t('Show all tenders','عرض كل المنافسات')}</button></div>`:''}
  <div class="card" style="padding:6px 10px">
- <table class="t"><thead><tr><th>${t('Ref','المرجع')}</th><th>${t('Launched','الطرح')}</th><th>${t('Title','العنوان')}</th><th>${t('Client','العميل')}</th><th>${t('Platform','المنصة')}</th><th>${t('Service','الخدمة')}</th><th style="text-align:right">${t('EH value','قيمة EH')}</th><th style="text-align:center">${t('Bidders','المتقدمون')}</th><th>${t('Outcome','النتيجة')}</th><th>${t('Winner','الفائز')}</th></tr></thead>
- <tbody>${rows||'<tr><td colspan="10" style="text-align:center;padding:30px;color:#5F7078">'+t('No tenders match these filters.','لا توجد منافسات مطابقة لهذه الفلاتر.')+'</td></tr>'}</tbody></table></div>`;
+ <table class="t"><thead><tr><th>${t('Ref','المرجع')}</th><th>${t('Launched','الطرح')}</th><th>${t('Submission deadline','آجال تقديم العروض')}</th><th>${t('EH submitted','تاريخ تقديم EH')}</th><th>${t('Title','العنوان')}</th><th>${t('Client','العميل')}</th><th>${t('Platform','المنصة')}</th><th>${t('Service','الخدمة')}</th><th style="text-align:right">${t('EH value','قيمة EH')}</th><th style="text-align:center">${t('Bidders','المتقدمون')}</th><th>${t('Outcome','النتيجة')}</th><th>${t('Winner','الفائز')}</th></tr></thead>
+ <tbody>${rows||'<tr><td colspan="12" style="text-align:center;padding:30px;color:#5F7078">'+t('No tenders match these filters.','لا توجد منافسات مطابقة لهذه الفلاتر.')+'</td></tr>'}</tbody></table></div>`;
 }
 
 // ===================== NOTES & LIMITATIONS =====================

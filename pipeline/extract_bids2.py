@@ -23,6 +23,24 @@ def num(v):
 def dstr(v):
     if isinstance(v,datetime.datetime): return v.strftime('%Y-%m-%d')
     return None
+def subdstr(v):
+    """EH's date of submission: a real date, or text like 11.05.2026 / 11/05/2026 / 2026-05-11. '-' or blank = none."""
+    if isinstance(v,(datetime.datetime,datetime.date)): return v.strftime('%Y-%m-%d')
+    s=str(v or '').strip()
+    mm=re.match(r'^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$',s)
+    if mm:
+        try: return datetime.date(int(mm.group(3)),int(mm.group(2)),int(mm.group(1))).isoformat()
+        except ValueError: return None
+    mm=re.match(r'^(\d{4})-(\d{1,2})-(\d{1,2})',s)
+    if mm:
+        try: return datetime.date(int(mm.group(1)),int(mm.group(2)),int(mm.group(3))).isoformat()
+        except ValueError: return None
+    return None
+def substat(v):
+    s=str(v or '').strip().lower()
+    if s in ('yes','y','نعم','تم','تم التقديم'): return 'Yes'
+    if s in ('no','n','لا','لم يتم'): return 'No'
+    return None
 def mkey(v):
     if isinstance(v,datetime.datetime): return v.strftime('%Y-%m')
     return None
@@ -33,6 +51,8 @@ def colmap(ws,hr):
         h=str(ws.cell(hr,c).value or '').replace('\n',' ').strip()
         if not h: continue
         if h.startswith('SN#') and 'Year' not in h and 'sn' not in m: m['sn']=c
+        elif h.startswith('Date of submission') or h.startswith('تاريخ التقديم'): m['subdate']=c
+        elif h.startswith('Status of submission') or h.startswith('حالة التقديم'): m['substatus']=c
         elif 'Bid launch' in h: m['launch']=c
         elif 'Bid Title' in h: m['title']=c
         elif 'Reference No' in h: m['ref']=c
@@ -101,6 +121,7 @@ for f,yr in [('bids2025.xlsx',2025),('bids2026.xlsx',2026)]:
         b=dict(year=yr, sn=sn,
             launch=dstr(g('launch')), month=mkey(g('launch')),
             submit=dstr(g('submit')), submonth=mkey(g('submit')),
+            subdate=subdstr(g('subdate')), substatus=substat(g('substatus')), subcol=('subdate' in m or 'substatus' in m),
             title=re.sub(r'\s+',' ',unicodedata.normalize('NFKC',str(g('title') or ''))).strip(),   # presentation-form Arabic (تقديم) folds to plain letters; line breaks collapse
             client=str(g('client') or '').strip(),
             platform=str(g('platform') or '').strip(),

@@ -1,4 +1,4 @@
-import json, collections, statistics as st
+import json, collections, re, statistics as st
 raw=json.load(open('bidraw2.json')); _ALLBIDS=raw['bids']
 _ALLR=json.load(open('rosters_all.json'))
 
@@ -365,11 +365,23 @@ def compute(bids, rfull, comp):
         if b['status']=='Not awarded': return 'Not awarded'
         if b['status']=='Cancelled': return 'Cancelled'
         return 'Pending'
+    def substate(b):
+        # Order matters: the tracker's own submission columns first, then the offer evidence, then the reasons.
+        if b.get('subdate'): return 'date'
+        if b.get('substatus')=='Yes': return 'yes'
+        no=b.get('substatus')=='No'
+        if not no and (b.get('eh_won') is True or b.get('ehsub') or b.get('offer')): return 'yes'
+        if re.search(r'reject|رفض', b.get('committee') or '', re.I): return 'rejected'
+        if (b.get('status') or '')=='Cancelled': return 'cancelled'
+        if no: return 'no'
+        if b.get('submit') and b['submit']>=_today.isoformat(): return 'open'
+        return 'none' if b.get('subcol') else 'unrecorded'
     bidlist=[]
     for b in sorted(bids, key=lambda x:(x['year'], x['sn'])):
         win='EH' if b['eh_won'] else (b['winner'] if b['winner'] else '')
         bidlist.append(dict(year=b['year'], sn=b['sn'], date=b['launch'] or '',
             title=b['title'], client=b['client'], platform=b['platform'],
+            deadline=b.get('submit') or None, subdate=b.get('subdate') or None, sub=substate(b),
             value=round(b['value']) if b['value'] else None, nbid=int(b['nbid']) if b['nbid'] else None,
             svc=SVCN2.get(b['svcdept'],''), dur=int(b['dur']) if b['dur'] else None,
             winner=win, outcome=outcome(b), status=(b['status'] or ''),

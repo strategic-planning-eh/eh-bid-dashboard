@@ -1,0 +1,107 @@
+{
+ "generated": "2026-10-08 14:16",
+ "title": "All Tenders — submission deadline and EH date of submission",
+ "failures": [],
+ "changes": [
+  {
+   "file": "extract",
+   "kind": "exact",
+   "category": "data",
+   "note": "parse the date and status of submission",
+   "occurrences": 1,
+   "ok": true,
+   "old": "def mkey(v):\n",
+   "new": "def subdstr(v):\n    \"\"\"EH's date of submission: a real date, or text like 11.05.2026 / 11/05/2026 / 2026-05-11. '-' or blank = none.\"\"\"\n    if isinstance(v,(datetime.datetime,datetime.date)): return v.strftime('%Y-%m-%d')\n    s=str(v or '').strip()\n    mm=re.match(r'^(\\d{1,2})[./-](\\d{1,2})[./-](\\d{4})$',s)\n    if mm:\n        try: return datetime.date(int(mm.group(3)),int(mm.group(2)),int(mm.group"
+  },
+  {
+   "file": "extract",
+   "kind": "exact",
+   "category": "data",
+   "note": "map the tracker columns \"Date of submission\" and \"Status of submission\"",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        if h.startswith('SN#') and 'Year' not in h and 'sn' not in m: m['sn']=c\n",
+   "new": "        if h.startswith('SN#') and 'Year' not in h and 'sn' not in m: m['sn']=c\n        elif h.startswith('Date of submission') or h.startswith('تاريخ التقديم'): m['subdate']=c\n        elif h.startswith('Status of submission') or h.startswith('حالة التقديم'): m['substatus']=c\n"
+  },
+  {
+   "file": "extract",
+   "kind": "exact",
+   "category": "data",
+   "note": "carry the submission fields into bidraw2.json",
+   "occurrences": 1,
+   "ok": true,
+   "old": "            submit=dstr(g('submit')), submonth=mkey(g('submit')),\n",
+   "new": "            submit=dstr(g('submit')), submonth=mkey(g('submit')),\n            subdate=subdstr(g('subdate')), substatus=substat(g('substatus')), subcol=('subdate' in m or 'substatus' in m),\n"
+  },
+  {
+   "file": "analytics",
+   "kind": "exact",
+   "category": "data",
+   "note": "submission state for each tender",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    bidlist=[]\n    for b in sorted(bids, key=lambda x:(x['year'], x['sn'])):\n",
+   "new": "    def substate(b):\n        # Order matters: the tracker's own submission columns first, then the offer evidence, then the reasons.\n        if b.get('subdate'): return 'date'\n        if b.get('substatus')=='Yes': return 'yes'\n        no=b.get('substatus')=='No'\n        if not no and (b.get('eh_won') is True or b.get('ehsub') or b.get('offer')): return 'yes'\n        if re.search(r'reject|رفض', b.g"
+  },
+  {
+   "file": "analytics",
+   "kind": "exact",
+   "category": "data",
+   "note": "deadline and date of submission in bidlist",
+   "occurrences": 1,
+   "ok": true,
+   "old": "            title=b['title'], client=b['client'], platform=b['platform'],\n",
+   "new": "            title=b['title'], client=b['client'], platform=b['platform'],\n            deadline=b.get('submit') or None, subdate=b.get('subdate') or None, sub=substate(b),\n"
+  },
+  {
+   "file": "analytics",
+   "kind": "exact",
+   "category": "data",
+   "note": "import re",
+   "occurrences": 1,
+   "ok": true,
+   "old": "import json, collections, statistics as st\n",
+   "new": "import json, collections, re, statistics as st\n"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "feature",
+   "note": "words for each submission state (EN/AR) and the cell renderer",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function renderTenders(){\n",
+   "new": "const SUBW={yes:['Submitted — date not recorded','قُدِّم العرض — التاريخ غير مسجّل'],\n no:['EH did not submit','لم تقدّم EH عرضاً'],\n rejected:['EH did not submit — the bid committee said no','لم تقدّم EH عرضاً — رفضت لجنة المنافسات المشاركة'],\n cancelled:['EH did not submit — the tender was cancelled','لم تقدّم EH عرضاً — أُلغيت المنافسة'],\n open:['Not submitted yet — the deadline is still open',"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "feature",
+   "note": "two new cells per tender row",
+   "occurrences": 1,
+   "ok": true,
+   "old": "   <td style=\"font-size:10.5px;color:#7B8A92;white-space:nowrap\">${b.date||'\\u2014'}</td>\n",
+   "new": "   <td style=\"font-size:10.5px;color:#7B8A92;white-space:nowrap\">${b.date||'\\u2014'}</td>\n   <td style=\"font-size:10.5px;color:#3A4A52;white-space:nowrap\">${b.deadline||`<span style=\"color:#77868F;font-size:10px;white-space:normal\">${t('No deadline recorded','لا موعد مسجّل')}</span>`}</td>\n   <td>${subCell(b)}</td>\n"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "feature",
+   "note": "two new column headings",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<th>${t('Launched','الطرح')}</th>",
+   "new": "<th>${t('Launched','الطرح')}</th><th>${t('Submission deadline','آجال تقديم العروض')}</th><th>${t('EH submitted','تاريخ تقديم EH')}</th>"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "fix",
+   "note": "empty row spans the new columns",
+   "occurrences": 1,
+   "ok": true,
+   "old": "'<tr><td colspan=\"10\" style=\"text-align:center;padding:30px;color:#5F7078\">'",
+   "new": "'<tr><td colspan=\"12\" style=\"text-align:center;padding:30px;color:#5F7078\">'"
+  }
+ ]
+}

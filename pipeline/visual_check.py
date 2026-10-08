@@ -30,7 +30,7 @@ PAGES = {  # file: minimum expectations {canvases painted, kpi cards, tables, sv
     'saudi_fiscal_monitor_2026.html':  dict(kpi=6, tables=0, svgs=0, canvases=6),
     'pif_intelligence_hub.html':       dict(kpi=5, tables=3, svgs=0, canvases=12),
     'pif_strategy_2026_2030.html':     dict(kpi=6, tables=4, svgs=1, canvases=2),
-    'etimad_tenders.html':             dict(kpi=6, tables=0, svgs=0, nodiff=True),   # content changes with each Sunday capture
+    'etimad_tenders.html':             dict(kpi=6, tables=0, svgs=0, nodiff=True, analyst=True),   # content changes with each Sunday capture
 }
 ALIASES = {'index.html': 'EH_Hub.html'}   # accepted alternative filename when the primary is absent (local runs against hub/)
 THRESHOLD = 0.06   # 6 % of pixels changed vs the last good build → flag (charts with live data move a little every hour)
@@ -92,6 +92,12 @@ def main():
                     for k in ('kpi', 'tables', 'svgs'):
                         if m[k] < want.get(k, 0): probs.append(f"{k} {m[k]} < {want[k]}")
                     if m['words'] < 60: probs.append(f"page nearly empty ({m['words']} words)")
+                    if want.get('analyst'):   # Analyst view: its picture and at least one note, or its stated empty state
+                        av = pg.evaluate("(()=>({flow:!!document.querySelector('#av-flow svg'),notes:document.querySelectorAll('#av .avn').length,"
+                                         "empty:!!document.querySelector('#av .empty-analyst,#av .empty-notes')}))()")
+                        m['analyst'] = av
+                        if not ((av['flow'] and av['notes'] >= 1) or av['empty']):   # empty = no umbrella file, or the notes tab says "searched, none found"
+                            probs.append(f"analyst view incomplete (picture {av['flow']}, notes {av['notes']})")
                     bpath = os.path.join(a.baseline, key + '.png')
                     if have_baseline and os.path.exists(bpath) and not a.update_baseline and not want.get('nodiff'):
                         ch, hr = diff_ratio(shot, bpath); m['diff'] = round(ch, 4); m['height_change'] = round(hr, 3)

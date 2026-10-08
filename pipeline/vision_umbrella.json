@@ -1,0 +1,2175 @@
+{
+ "version": "2026-10-07 v1",
+ "reviewed": "2026-10-07",
+ "review_every_days": 35,
+ "about": {
+  "en": "Levels and links behind the Analyst view of the Government Tenders tab. Every node and link carries its source and that source's date; links marked \"our reading\" are EH interpretation. No Etimad data is stored here: tender counts are worked out at build time from the private sheet.",
+  "ar": "المستويات والروابط التي يقوم عليها قسم «القراءة التحليلية» في تبويب المنافسات الحكومية. لكل عنصر ورابط مصدره وتاريخ ذلك المصدر؛ والروابط الموسومة «قراءتنا» تفسير من آفاق. لا تُحفظ هنا أي بيانات من اعتماد: تُحسب أعداد المنافسات عند البناء من الورقة الخاصة."
+ },
+ "sources": {
+  "S0": {
+   "en": "Ministry of Economy and Planning site — added for this section",
+   "ar": "موقع وزارة الاقتصاد والتخطيط — أضيف لهذا القسم",
+   "as_of": "2026-10-07",
+   "note": "checked 2026-10-07"
+  },
+  "S1": {
+   "en": "Vision 2030 mega-projects page",
+   "ar": "صفحة المشاريع الكبرى لرؤية 2030",
+   "as_of": "2026-08-26",
+   "note": "2026-08-26"
+  },
+  "S2": {
+   "en": "Saudi Government Finances 2026 page (v5.1)",
+   "ar": "صفحة المالية العامة السعودية 2026 (الإصدار 5.1)",
+   "as_of": "2026-10-01",
+   "note": "2026-10-01 (figures to 2026-09-30)"
+  },
+  "S3": {
+   "en": "PIF Strategy 2026–2030 page",
+   "ar": "صفحة استراتيجية صندوق الاستثمارات العامة 2026–2030",
+   "as_of": "2026-09-07",
+   "note": "2026-09-07"
+  },
+  "S4": {
+   "en": "PIF annual reports 2021–2025 page",
+   "ar": "صفحة التقارير السنوية للصندوق 2021–2025",
+   "as_of": "2026-09-07",
+   "note": "FY2025 data; built after 2026-09-07"
+  },
+  "S5": {
+   "en": "PIF annual reports 2023, 2024 and 2025",
+   "ar": "التقارير السنوية للصندوق 2023 و2024 و2025",
+   "as_of": "2026",
+   "note": "FY2025 (report published 2026)"
+  },
+  "S6": {
+   "en": "Environment Fund 2025 page",
+   "ar": "صفحة صندوق البيئة 2025",
+   "as_of": "2026-09-16",
+   "note": "2026-09-16"
+  },
+  "S7": {
+   "en": "Regulatory news monthly brief",
+   "ar": "الموجز الشهري للأخبار التنظيمية",
+   "as_of": "2026-09-27",
+   "note": "2026-09-27"
+  },
+  "S8": {
+   "en": "Saudi Arabia intelligence dashboard",
+   "ar": "لوحة المعلومات الاستخباراتية عن السعودية",
+   "as_of": "2026-08-26",
+   "note": "2026-08-26"
+  },
+  "S9": {
+   "en": "Stakeholder map and workbook",
+   "ar": "خريطة أصحاب المصلحة وملفها",
+   "as_of": "2026-09-03",
+   "note": "2026-09-03"
+  },
+  "S10": {
+   "en": "Bid tracker 2026 and Bid Analysis page",
+   "ar": "جدول متابعة المنافسات 2026 وصفحة تحليل المنافسات",
+   "as_of": "2026-10-07",
+   "note": "tracker 2026-10-07; analysis 2026-08-25"
+  },
+  "S11": {
+   "en": "Etimad capture (EH_Etimad_data sheet)",
+   "ar": "التقاط اعتماد (ورقة EH_Etimad_data)",
+   "as_of": "each capture",
+   "note": ""
+  },
+  "S12": {
+   "en": "EH service taxonomy and company profile",
+   "ar": "تصنيف خدمات آفاق وملف الشركة",
+   "as_of": "v0.2",
+   "note": "taxonomy v0.2"
+  }
+ },
+ "level1_pillars": [
+  {
+   "id": "P1",
+   "en": "A vibrant society",
+   "ar": "مجتمع حيوي",
+   "src": [
+    "S0"
+   ],
+   "basis": "added for this section",
+   "short_en": "Vibrant society",
+   "short_ar": "مجتمع حيوي",
+   "as_of": "2026-10-07"
+  },
+  {
+   "id": "P2",
+   "en": "A thriving economy",
+   "ar": "اقتصاد مزدهر",
+   "src": [
+    "S0"
+   ],
+   "basis": "added for this section",
+   "short_en": "Thriving economy",
+   "short_ar": "اقتصاد مزدهر",
+   "as_of": "2026-10-07"
+  },
+  {
+   "id": "P3",
+   "en": "An ambitious nation",
+   "ar": "وطن طموح",
+   "src": [
+    "S0"
+   ],
+   "basis": "added for this section",
+   "short_en": "Ambitious nation",
+   "short_ar": "وطن طموح",
+   "as_of": "2026-10-07"
+  }
+ ],
+ "level2_goals": [
+  {
+   "id": "waste",
+   "en": "Waste diversion and the circular economy",
+   "ar": "تحويل النفايات عن المرادم والاقتصاد الدائري",
+   "short_en": "Waste & circular economy",
+   "short_ar": "النفايات والاقتصاد الدائري",
+   "pillar": "P1",
+   "pillar_basis": "our reading",
+   "is_newer": true,
+   "newer_en": "newer — named in PIF’s 2026–2030 strategy (2026); MWAN plan year not stated in our sources",
+   "newer_ar": "أحدث — مذكورة في استراتيجية الصندوق 2026–2030 (2026)؛ وسنة خطة المركز الوطني لإدارة النفايات غير مذكورة في مصادرنا",
+   "figures_en": [
+    "MWAN: 848 facilities and 90% landfill diversion by 2040; >$112bn waste investment opportunity (S8)",
+    "PIF ecosystem 5 adds “develop sustainable waste management practices” (S3)",
+    "SIRC reverse-vending machines 70 → 200 (S5)"
+   ],
+   "figures_ar": [
+    "المركز الوطني لإدارة النفايات: 848 منشأة وتحويل 90% من النفايات عن المرادم بحلول 2040؛ وفرص استثمار في النفايات تتجاوز 112 مليار دولار (S8)",
+    "تضيف المنظومة الخامسة للصندوق «تطوير ممارسات مستدامة لإدارة النفايات» (S3)",
+    "آلات الاسترجاع لدى «سرك» من 70 إلى 200 (S5)"
+   ],
+   "regulator_en": "MWAN (National Center for Waste Management)",
+   "regulator_ar": "المركز الوطني لإدارة النفايات",
+   "src": [
+    "S8",
+    "S3",
+    "S5"
+   ],
+   "basis": "stated in source"
+  },
+  {
+   "id": "envcomp",
+   "en": "Environmental compliance and the national environment centres",
+   "ar": "الالتزام البيئي والمراكز البيئية الوطنية",
+   "short_en": "Environmental compliance",
+   "short_ar": "الالتزام البيئي",
+   "pillar": "P1",
+   "pillar_basis": "our reading",
+   "is_newer": true,
+   "newer_en": "newer — Environment Fund created by Council of Ministers resolution 416 (1440 AH); Fund strategy 2026–2030",
+   "newer_ar": "أحدث — صندوق البيئة أُنشئ بقرار مجلس الوزراء 416 (1440هـ)؛ واستراتيجية الصندوق 2026–2030",
+   "figures_en": [
+    "Five centres: NCEC, MWAN, NCW, NCVC, NCM (S6)",
+    "NCEC fee schedules: 14 licences, 34 services, 4 clearances; inspection PPP pre-qualification open (S6, S7)",
+    "Green Factory programme with NCEC under resolution 533 (S8)"
+   ],
+   "figures_ar": [
+    "خمسة مراكز: الرقابة على الالتزام البيئي، وإدارة النفايات، والحياة الفطرية، والغطاء النباتي، والأرصاد (S6)",
+    "جداول رسوم المركز الوطني للرقابة على الالتزام البيئي: 14 ترخيصًا و34 خدمة و4 فسوحات؛ والتأهيل المسبق لشراكة التفتيش مفتوح (S6، S7)",
+    "برنامج المصانع الخضراء مع المركز بموجب القرار 533 (S8)"
+   ],
+   "regulator_en": "Environment Fund; NCEC",
+   "regulator_ar": "صندوق البيئة؛ المركز الوطني للرقابة على الالتزام البيئي",
+   "src": [
+    "S6",
+    "S7",
+    "S8"
+   ],
+   "basis": "stated in source"
+  },
+  {
+   "id": "water",
+   "en": "Water security: desalination and wastewater",
+   "ar": "الأمن المائي: التحلية والصرف",
+   "short_en": "Water & desalination",
+   "short_ar": "المياه والتحلية",
+   "pillar": "P2",
+   "pillar_basis": "our reading",
+   "is_newer": true,
+   "newer_en": "newer element — Year of Water 2027 (Cabinet); SWPC 2024–2030 programme",
+   "newer_ar": "عنصر أحدث — عام المياه 2027 (مجلس الوزراء)؛ وبرنامج الشركة السعودية لشراكات المياه 2024–2030",
+   "figures_en": [
+    "Saudi Water Authority ~11.5 million m³/day desalination (S1)",
+    "Desalination “continues” and is a named bid target (S2)",
+    "PIF ecosystem 5 “continue water desalination effort” (S3)",
+    "MWAN/water: >$80bn water investment opportunity (S8)"
+   ],
+   "figures_ar": [
+    "الهيئة السعودية للمياه: نحو 11.5 مليون م³ يوميًا من التحلية (S1)",
+    "التحلية «مستمرة» وهي هدف منافسات مسمّى (S2)",
+    "المنظومة الخامسة للصندوق «مواصلة جهود تحلية المياه» (S3)",
+    "فرص استثمار في المياه تتجاوز 80 مليار دولار (S8)"
+   ],
+   "regulator_en": "MEWA; Saudi Water Authority; SWPC",
+   "regulator_ar": "وزارة البيئة والمياه والزراعة؛ الهيئة السعودية للمياه؛ الشركة السعودية لشراكات المياه",
+   "src": [
+    "S1",
+    "S2",
+    "S3",
+    "S8"
+   ],
+   "basis": "stated in source"
+  },
+  {
+   "id": "climate",
+   "en": "Saudi Green Initiative, net zero and the circular carbon economy",
+   "ar": "مبادرة السعودية الخضراء والحياد الصفري والاقتصاد الدائري للكربون",
+   "short_en": "Green Initiative & net zero",
+   "short_ar": "السعودية الخضراء والحياد الصفري",
+   "pillar": "P1",
+   "pillar_basis": "our reading",
+   "is_newer": true,
+   "newer_en": "newer — post-2016 commitment; launch year not stated in our sources",
+   "newer_ar": "أحدث — التزام بعد 2016؛ سنة الإطلاق غير مذكورة في مصادرنا",
+   "figures_en": [
+    "Net zero by 2060; ~SAR 705bn announced; 10 billion trees, 600m+ by 2030 (S1)",
+    "Fiscal view: “stretched quietly” (S2)",
+    "PIF aligned with the circular carbon economy and the 278 Mt CO₂e/yr cut; PIF net zero 2050 (S5)",
+    "National compliance carbon-market study (S6)"
+   ],
+   "figures_ar": [
+    "الحياد الصفري بحلول 2060؛ نحو 705 مليارات ريال معلنة؛ 10 مليارات شجرة، منها أكثر من 600 مليون بحلول 2030 (S1)",
+    "نظرة المالية العامة: «تُمدَّد بهدوء» (S2)",
+    "الصندوق منسجم مع الاقتصاد الدائري للكربون وخفض 278 مليون طن مكافئ سنويًا؛ وحياد الصندوق الصفري 2050 (S5)",
+    "دراسة سوق الكربون للالتزام الوطني (S6)"
+   ],
+   "regulator_en": "NCVC; MEWA",
+   "regulator_ar": "المركز الوطني لتنمية الغطاء النباتي؛ وزارة البيئة والمياه والزراعة",
+   "src": [
+    "S1",
+    "S2",
+    "S5",
+    "S6"
+   ],
+   "basis": "stated in source"
+  },
+  {
+   "id": "industry",
+   "en": "Industrial localisation and mining as the third pillar",
+   "ar": "توطين الصناعة والتعدين ركيزةً ثالثة",
+   "short_en": "Industry & mining",
+   "short_ar": "الصناعة والتعدين",
+   "pillar": "P2",
+   "pillar_basis": "our reading",
+   "is_newer": false,
+   "newer_en": "original Vision 2030 aim (our reading); 2026 PIF ecosystems 3 and 4 restate it",
+   "newer_ar": "هدف أصلي في رؤية 2030 (قراءتنا)؛ وتعيد منظومتا الصندوق الثالثة والرابعة لعام 2026 تأكيده",
+   "figures_en": [
+    "RCJY doubling Jubail by 2030 (SAR 67.5bn); Ras Al-Khair >SAR 165bn invested; MODON ~6,500 factories (S1)",
+    "Ma’aden ~$110bn ten-year plan (S8); Ma’aden “continues” (S2)",
+    "Car plants at KAEC “delayed, not dropped” (S2)"
+   ],
+   "figures_ar": [
+    "الهيئة الملكية للجبيل وينبع تضاعف الجبيل بحلول 2030 (67.5 مليار ريال)؛ ورأس الخير أكثر من 165 مليار ريال مستثمرة؛ ومدن نحو 6,500 مصنع (S1)",
+    "خطة معادن لعشر سنوات بنحو 110 مليارات دولار (S8)؛ ومعادن «مستمرة» (S2)",
+    "مصانع السيارات في مدينة الملك عبدالله الاقتصادية «مؤجلة لا ملغاة» (S2)"
+   ],
+   "regulator_en": "Ministry of Industry; RCJY; MODON",
+   "regulator_ar": "وزارة الصناعة؛ الهيئة الملكية للجبيل وينبع؛ مدن",
+   "src": [
+    "S1",
+    "S2",
+    "S3",
+    "S8"
+   ],
+   "basis": "stated in source"
+  },
+  {
+   "id": "energy",
+   "en": "Energy: gas growth and renewables",
+   "ar": "الطاقة: الغاز والطاقة المتجددة",
+   "short_en": "Energy: gas & renewables",
+   "short_ar": "الطاقة: الغاز والمتجددة",
+   "pillar": "P2",
+   "pillar_basis": "our reading",
+   "is_newer": true,
+   "newer_en": "newer targets (our reading); dates not stated",
+   "newer_ar": "أهداف أحدث (قراءتنا)؛ التواريخ غير مذكورة",
+   "figures_en": [
+    "Jafurah 450 mmscfd → 2 bcf/d by 2030 (S1)",
+    "PIF to develop 70% of the renewables target by 2030; ACWA 15 GW financial close (S5)",
+    "SPPC Round 7 5.3 GW + 3 GW storage (S8)"
+   ],
+   "figures_ar": [
+    "الجافورة من 450 مليون قدم مكعب يوميًا إلى 2 مليار بحلول 2030 (S1)",
+    "يطوّر الصندوق 70% من هدف الطاقة المتجددة بحلول 2030؛ وإغلاق مالي لأكوا بـ15 جيجاواط (S5)",
+    "الجولة السابعة للمشتري الرئيس 5.3 جيجاواط + 3 جيجاواط تخزين (S8)"
+   ],
+   "regulator_en": "Ministry of Energy; SPPC",
+   "regulator_ar": "وزارة الطاقة؛ الشركة السعودية لشراء الطاقة",
+   "src": [
+    "S1",
+    "S5",
+    "S8"
+   ],
+   "basis": "stated in source"
+  },
+  {
+   "id": "events",
+   "en": "Expo 2030 and FIFA World Cup 2034",
+   "ar": "إكسبو 2030 وكأس العالم 2034",
+   "short_en": "Expo 2030 & World Cup",
+   "short_ar": "إكسبو 2030 وكأس العالم",
+   "pillar": "P3",
+   "pillar_basis": "our reading",
+   "is_newer": true,
+   "newer_en": "newer — Expo 2030 Riyadh Company set up by PIF in 2025 (S5)",
+   "newer_ar": "أحدث — شركة إكسبو 2030 الرياض أسسها الصندوق في 2025 (S5)",
+   "figures_en": [
+    "Expo and World Cup projects are “protected” / “hard to stop” (S2, S8)",
+    "World Cup stadiums: Qiddiya PMBS, ROSHN, Jeddah Central, New Murabba (S5)"
+   ],
+   "figures_ar": [
+    "مشاريع إكسبو وكأس العالم «محمية» / «يصعب إيقافها» (S2، S8)",
+    "ملاعب كأس العالم: القدية وروشن ووسط جدة والمربع الجديد (S5)"
+   ],
+   "regulator_en": "Expo 2030 Riyadh Co.; Ministry of Sport",
+   "regulator_ar": "شركة إكسبو 2030 الرياض؛ وزارة الرياضة",
+   "src": [
+    "S2",
+    "S5",
+    "S8"
+   ],
+   "basis": "stated in source"
+  },
+  {
+   "id": "tourism",
+   "en": "Tourism, culture and the giga-project destinations",
+   "ar": "السياحة والثقافة ووجهات المشاريع الكبرى",
+   "short_en": "Tourism & destinations",
+   "short_ar": "السياحة والوجهات",
+   "pillar": "P1",
+   "pillar_basis": "our reading",
+   "is_newer": false,
+   "newer_en": "original aim; 150m visitors and 10% of GDP by 2030 (S5)",
+   "newer_ar": "هدف أصلي؛ 150 مليون زائر و10% من الناتج المحلي بحلول 2030 (S5)",
+   "figures_en": [
+    "150 million annual visitors and tourism 10% of GDP by 2030 (S5, AR2024)",
+    "PIF ecosystem 1 (S3)",
+    "Red Sea tourism hit by the Bab el-Mandeb closure (S2)"
+   ],
+   "figures_ar": [
+    "150 مليون زائر سنويًا والسياحة 10% من الناتج المحلي بحلول 2030 (S5، تقرير 2024)",
+    "المنظومة الأولى للصندوق (S3)",
+    "تأثرت سياحة البحر الأحمر بإغلاق باب المندب (S2)"
+   ],
+   "regulator_en": "Ministry of Tourism",
+   "regulator_ar": "وزارة السياحة",
+   "src": [
+    "S5",
+    "S3",
+    "S2"
+   ],
+   "basis": "stated in source"
+  },
+  {
+   "id": "urban",
+   "en": "Housing, municipal services and liveable cities",
+   "ar": "الإسكان والخدمات البلدية والمدن",
+   "short_en": "Housing & cities",
+   "short_ar": "الإسكان والمدن",
+   "pillar": "P1",
+   "pillar_basis": "our reading",
+   "is_newer": false,
+   "newer_en": "original aim; 70% home ownership (S5)",
+   "newer_ar": "هدف أصلي؛ تملّك المساكن 70% (S5)",
+   "figures_en": [
+    "ROSHN: 70% home-ownership goal (S5)",
+    "Municipal services budget SAR 71.84bn, 36% used in Q1 2026 (S2)",
+    "PIF ecosystem 2 (S3)"
+   ],
+   "figures_ar": [
+    "روشن: هدف تملّك 70% (S5)",
+    "ميزانية الخدمات البلدية 71.84 مليار ريال، صُرف منها 36% في الربع الأول 2026 (S2)",
+    "المنظومة الثانية للصندوق (S3)"
+   ],
+   "regulator_en": "MOMAH; amanat",
+   "regulator_ar": "وزارة البلديات والإسكان؛ الأمانات",
+   "src": [
+    "S5",
+    "S2",
+    "S3"
+   ],
+   "basis": "stated in source"
+  },
+  {
+   "id": "logistics",
+   "en": "Logistics hub: ports, airports and transport",
+   "ar": "المركز اللوجستي: الموانئ والمطارات والنقل",
+   "short_en": "Logistics & transport",
+   "short_ar": "الخدمات اللوجستية والنقل",
+   "pillar": "P2",
+   "pillar_basis": "our reading",
+   "is_newer": false,
+   "newer_en": "original aim (our reading)",
+   "newer_ar": "هدف أصلي (قراءتنا)",
+   "figures_en": [
+    "SILZ “expands”; NEOM Port “may gain” (S2)",
+    "PIF ecosystem 4 (S3)"
+   ],
+   "figures_ar": [
+    "المنطقة اللوجستية المتكاملة الخاصة «تتوسع»؛ وميناء نيوم «قد يستفيد» (S2)",
+    "المنظومة الرابعة للصندوق (S3)"
+   ],
+   "regulator_en": "Ministry of Transport; Mawani",
+   "regulator_ar": "وزارة النقل؛ موانئ",
+   "src": [
+    "S1",
+    "S2",
+    "S3"
+   ],
+   "basis": "stated in source"
+  },
+  {
+   "id": "digital",
+   "en": "Digital government and AI",
+   "ar": "الحكومة الرقمية والذكاء الاصطناعي",
+   "short_en": "Digital government & AI",
+   "short_ar": "الحكومة الرقمية والذكاء الاصطناعي",
+   "pillar": "P3",
+   "pillar_basis": "our reading",
+   "is_newer": true,
+   "newer_en": "newer — HUMAIN launched 2025 (S5)",
+   "newer_ar": "أحدث — إطلاق «هيوماين» في 2025 (S5)",
+   "figures_en": [
+    "HUMAIN AI platform (S5)",
+    "“AI infrastructure” named as a Vision 2030 element (S8)"
+   ],
+   "figures_ar": [
+    "منصة «هيوماين» للذكاء الاصطناعي (S5)",
+    "«البنية التحتية للذكاء الاصطناعي» عنصر مذكور في رؤية 2030 (S8)"
+   ],
+   "regulator_en": "SDAIA",
+   "regulator_ar": "الهيئة السعودية للبيانات والذكاء الاصطناعي",
+   "src": [
+    "S5",
+    "S8"
+   ],
+   "basis": "stated in source"
+  }
+ ],
+ "level2_not_linked": {
+  "id": "govops",
+  "en": "Running government: health, defence and security, education, justice",
+  "ar": "تشغيل الجهات الحكومية: الصحة والدفاع والأمن والتعليم والعدل",
+  "short_en": "Running government",
+  "short_ar": "تشغيل الجهات الحكومية",
+  "note_en": "Searched every source page: no Vision 2030 programme for health, defence and security, education or justice is named. Shown, not linked.",
+  "note_ar": "بحثنا في كل الصفحات المصدرية: لا يُذكر أي برنامج من برامج رؤية 2030 للصحة أو الدفاع والأمن أو التعليم أو العدل. يُعرض دون ربط.",
+  "basis": "searched, none found",
+  "as_of": "2026-10-07"
+ },
+ "level3_pif": {
+  "ecosystems": [
+   {
+    "id": "E1",
+    "en": "Tourism, Travel & Entertainment",
+    "companies": "RSG, KSIA, Riyadh Air, Expo 2030 Riyadh, Qiddiya",
+    "goals": [
+     "tourism",
+     "events"
+    ],
+    "ar": "السياحة والسفر والترفيه",
+    "short_en": "Tourism & travel",
+    "short_ar": "السياحة والسفر"
+   },
+   {
+    "id": "E2",
+    "en": "Urban Development & Livability",
+    "companies": "KAFD, ROSHN, New Murabba, Jeddah Central",
+    "goals": [
+     "urban",
+     "events"
+    ],
+    "ar": "التطوير العمراني وجودة الحياة",
+    "short_en": "Urban development",
+    "short_ar": "التطوير العمراني"
+   },
+   {
+    "id": "E3",
+    "en": "Advanced Manufacturing & Innovation",
+    "companies": "HUMAIN, SAMI, Ceer, Lifera, Alat, KAEC",
+    "goals": [
+     "industry",
+     "digital"
+    ],
+    "ar": "التصنيع المتقدم والابتكار",
+    "short_en": "Advanced manufacturing",
+    "short_ar": "التصنيع المتقدم"
+   },
+   {
+    "id": "E4",
+    "en": "Industrials & Logistics",
+    "companies": "Ma’aden, Bahri, Hadeed, Saudi Arabia Railways",
+    "goals": [
+     "industry",
+     "logistics"
+    ],
+    "ar": "الصناعة والخدمات اللوجستية",
+    "short_en": "Industry & logistics",
+    "short_ar": "الصناعة واللوجستيات"
+   },
+   {
+    "id": "E5",
+    "en": "Clean Energy, Water & Renewable Infrastructure",
+    "companies": "ACWA, Badeel, SIRC",
+    "goals": [
+     "energy",
+     "water",
+     "waste",
+     "climate"
+    ],
+    "ar": "الطاقة النظيفة والمياه والبنية التحتية المتجددة",
+    "short_en": "Clean energy & water",
+    "short_ar": "الطاقة النظيفة والمياه"
+   },
+   {
+    "id": "E6",
+    "en": "NEOM",
+    "companies": "Port of NEOM, Oxagon, NEOM Green Hydrogen, AI",
+    "goals": [
+     "logistics",
+     "energy",
+     "tourism"
+    ],
+    "ar": "نيوم",
+    "short_en": "NEOM",
+    "short_ar": "نيوم"
+   }
+  ],
+  "src": [
+   "S3",
+   "S5"
+  ],
+  "as_of": "2026-09-07",
+  "basis": "ecosystems and companies stated in source; ecosystem → goal links are our reading except E5 → waste/water (stated)",
+  "shifts_en": [
+   "Three portfolios (Vision, Strategic, Financial) replace the 2021–25 investment pools",
+   "Waste joins ecosystem 5; water appears in an ecosystem name",
+   "Private operators expected to lead delivery and operations as ecosystems mature",
+   "No fund-wide 2030 target; The Line, Trojena and Magna not mentioned"
+  ],
+  "shifts_ar": [
+   "ثلاث محافظ (الرؤية، الاستراتيجية، المالية) بدل الصناديق الفرعية 2021–2025",
+   "دخول النفايات في المنظومة الخامسة؛ وظهور المياه في اسم منظومة",
+   "يُتوقع أن يقود القطاع الخاص التنفيذ والتشغيل مع نضج المنظومات",
+   "لا هدف شامل للصندوق لعام 2030؛ ولا ذكر لذا لاين وتروجينا وماجنا"
+  ],
+  "sector_weights_pct": {
+   "2023": {
+    "Energy": 23.1,
+    "Real estate": 17.0,
+    "Utilities": 5.5,
+    "Materials": 4.6,
+    "Industrials": 3.1
+   },
+   "2024": {
+    "Energy": 32.3,
+    "Real estate": 13.8,
+    "Utilities": 5.9,
+    "Materials": 4.5,
+    "Industrials": 3.3
+   },
+   "2025": {
+    "Energy": 28,
+    "Real estate": 15,
+    "Utilities": 4,
+    "Materials": 5,
+    "Industrials": 4
+   }
+  },
+  "sector_weights_src": [
+   "S4",
+   "S5"
+  ],
+  "sector_names": {
+   "Energy": "الطاقة",
+   "Real estate": "العقار",
+   "Utilities": "المرافق",
+   "Materials": "المواد",
+   "Industrials": "الصناعات"
+  },
+  "sector_goal_reading": {
+   "Energy": [
+    "energy"
+   ],
+   "Real estate": [
+    "urban",
+    "tourism"
+   ],
+   "Utilities": [
+    "water"
+   ],
+   "Materials": [
+    "industry"
+   ],
+   "Industrials": [
+    "industry",
+    "logistics"
+   ]
+  },
+  "blind_spot_en": "PIF companies and giga-projects appear to buy mainly through their own procurement systems, not Etimad. A low Etimad count for a PIF company is not low activity.",
+  "blind_spot_ar": "يبدو أن شركات الصندوق ومشاريعه الكبرى تشتري أساسًا عبر أنظمتها الخاصة لا عبر اعتماد. قلة منافسات شركة من شركات الصندوق في اعتماد لا تعني قلة نشاطها.",
+  "pif_buyer_names": [
+   [
+    "NEOM",
+    "نيوم|NEOM"
+   ],
+   [
+    "Red Sea Global",
+    "البحر الأحمر الدولية|البحر الأحمر العالمية|RED SEA GLOBAL"
+   ],
+   [
+    "ROSHN",
+    "روشن|ROSHN"
+   ],
+   [
+    "Qiddiya",
+    "القدية|قدية|QIDDIYA"
+   ],
+   [
+    "Diriyah",
+    "الدرعية|DIRIYAH"
+   ],
+   [
+    "New Murabba",
+    "المربع الجديد|MURABBA"
+   ],
+   [
+    "ACWA Power",
+    "أكوا|اكوا|ACWA"
+   ],
+   [
+    "SIRC",
+    "الاستثمار في إعادة التدوير|سرك|SIRC"
+   ],
+   [
+    "Ma'aden",
+    "معادن|MAADEN|MA.ADEN"
+   ],
+   [
+    "Aramco",
+    "أرامكو|ارامكو|ARAMCO"
+   ],
+   [
+    "Saudi Electricity",
+    "الشركة السعودية للكهرباء|SAUDI ELECTRICITY"
+   ],
+   [
+    "National Water Company",
+    "شركة المياه الوطنية|NATIONAL WATER COMPANY"
+   ],
+   [
+    "Saudi Arabia Railways",
+    "الخطوط الحديدية السعودية|SAUDI ARABIA RAILWAYS"
+   ],
+   [
+    "Marafiq",
+    "مرافق الكهرباء والمياه|MARAFIQ"
+   ],
+   [
+    "Ceer",
+    "سير للسيارات|CEER"
+   ]
+  ]
+ },
+ "level4_entities": [
+  {
+   "name": "NEOM",
+   "name_ar": "نيوم",
+   "goals": [
+    "tourism",
+    "energy",
+    "logistics"
+   ],
+   "goals_basis": "our reading",
+   "signal": "slowing",
+   "outlook": "cut back",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "The Line",
+   "name_ar": "ذا لاين",
+   "goals": [
+    "urban"
+   ],
+   "goals_basis": "our reading",
+   "signal": "slowing",
+   "outlook": "shelved",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "Oxagon",
+   "name_ar": "أوكساغون",
+   "goals": [
+    "industry",
+    "logistics"
+   ],
+   "goals_basis": "our reading",
+   "signal": "mixed",
+   "outlook": "cut back",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "Trojena",
+   "name_ar": "تروجينا",
+   "goals": [
+    "tourism"
+   ],
+   "goals_basis": "our reading",
+   "signal": "slowing",
+   "outlook": "shelved",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "Sindalah Island",
+   "name_ar": "سندالة",
+   "goals": [
+    "tourism"
+   ],
+   "goals_basis": "our reading",
+   "signal": "slowing",
+   "outlook": "cut back",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "NEOM Green Hydrogen Company",
+   "name_ar": "شركة نيوم للهيدروجين الأخضر",
+   "goals": [
+    "energy"
+   ],
+   "goals_basis": "our reading",
+   "signal": "mixed",
+   "outlook": "delayed",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "NEOM Port (Oxagon Port)",
+   "name_ar": "ميناء نيوم (أوكساغون)",
+   "goals": [
+    "logistics"
+   ],
+   "goals_basis": "our reading",
+   "signal": "going_ahead",
+   "outlook": "protected",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "Diriyah",
+   "name_ar": "الدرعية",
+   "goals": [
+    "tourism",
+    "events"
+   ],
+   "goals_basis": "our reading",
+   "signal": "going_ahead",
+   "outlook": "protected",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "Qiddiya",
+   "name_ar": "قدية",
+   "goals": [
+    "tourism",
+    "events"
+   ],
+   "goals_basis": "our reading",
+   "signal": "going_ahead",
+   "outlook": "protected",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "Red Sea Global (The Red Sea & AMAALA)",
+   "name_ar": "البحر الأحمر العالمية (البحر الأحمر وأمالا)",
+   "goals": [
+    "tourism"
+   ],
+   "goals_basis": "our reading",
+   "signal": "slowing",
+   "outlook": "cut back",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "King Salman Park",
+   "name_ar": "حديقة الملك سلمان",
+   "goals": [
+    "urban",
+    "climate"
+   ],
+   "goals_basis": "our reading",
+   "signal": "going_ahead",
+   "outlook": "protected",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "New Murabba",
+   "name_ar": "المربع الجديد",
+   "goals": [
+    "urban",
+    "events"
+   ],
+   "goals_basis": "our reading",
+   "signal": "slowing",
+   "outlook": "cut back",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "ROSHN",
+   "name_ar": "روشن",
+   "goals": [
+    "urban"
+   ],
+   "goals_basis": "our reading",
+   "signal": "mixed",
+   "outlook": "delayed",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "Ma'aden Mining Expansion",
+   "name_ar": "توسعة التعدين (معادن)",
+   "goals": [
+    "industry"
+   ],
+   "goals_basis": "our reading",
+   "signal": "going_ahead",
+   "outlook": "protected",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "Ma'aden Aluminium",
+   "name_ar": "معادن للألومنيوم",
+   "goals": [
+    "industry"
+   ],
+   "goals_basis": "our reading",
+   "signal": "going_ahead",
+   "outlook": "protected",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "SABIC",
+   "name_ar": "سابك",
+   "goals": [
+    "industry"
+   ],
+   "goals_basis": "our reading",
+   "signal": "going_ahead",
+   "outlook": "protected",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "SATORP / Amiral Expansion",
+   "name_ar": "ساتورب / أميرال",
+   "goals": [
+    "industry",
+    "energy"
+   ],
+   "goals_basis": "our reading",
+   "signal": "mixed",
+   "outlook": "delayed",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "Saudi Aramco Jafurah Gas Field",
+   "name_ar": "حقل الجافورة للغاز",
+   "goals": [
+    "energy"
+   ],
+   "goals_basis": "our reading",
+   "signal": "going_ahead",
+   "outlook": "protected",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "King Salman Energy Park (SPARK)",
+   "name_ar": "حديقة الملك سلمان للطاقة (سبارك)",
+   "goals": [
+    "industry",
+    "energy"
+   ],
+   "goals_basis": "our reading",
+   "signal": "going_ahead",
+   "outlook": "not mentioned",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "Saudi Water Authority (SWA) Desalination",
+   "name_ar": "برنامج هيئة المياه السعودية للتحلية",
+   "goals": [
+    "water"
+   ],
+   "goals_basis": "our reading",
+   "signal": "going_ahead",
+   "outlook": "protected",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "MODON Industrial Cities",
+   "name_ar": "مدن — المدن الصناعية",
+   "goals": [
+    "industry"
+   ],
+   "goals_basis": "our reading",
+   "signal": "going_ahead",
+   "outlook": "not mentioned",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "Ras Al-Khair Industrial City",
+   "name_ar": "مدينة رأس الخير الصناعية",
+   "goals": [
+    "industry"
+   ],
+   "goals_basis": "our reading",
+   "signal": "going_ahead",
+   "outlook": "protected",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "International Maritime Industries (IMI)",
+   "name_ar": "الصناعات البحرية الدولية (آي إم آي)",
+   "goals": [
+    "industry"
+   ],
+   "goals_basis": "our reading",
+   "signal": "going_ahead",
+   "outlook": "not mentioned",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "King Abdullah Economic City (KAEC)",
+   "name_ar": "مدينة الملك عبدالله الاقتصادية",
+   "goals": [
+    "industry",
+    "urban"
+   ],
+   "goals_basis": "our reading",
+   "signal": "mixed",
+   "outlook": "delayed",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "King Abdullah Port",
+   "name_ar": "ميناء الملك عبدالله",
+   "goals": [
+    "logistics"
+   ],
+   "goals_basis": "our reading",
+   "signal": "unknown",
+   "outlook": "not mentioned",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "Jubail Industrial City II",
+   "name_ar": "مدينة الجبيل الصناعية الثانية",
+   "goals": [
+    "industry"
+   ],
+   "goals_basis": "our reading",
+   "signal": "going_ahead",
+   "outlook": "protected",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "Ceer",
+   "name_ar": "سير",
+   "goals": [
+    "industry"
+   ],
+   "goals_basis": "our reading",
+   "signal": "mixed",
+   "outlook": "delayed",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "Lucid Manufacturing (AMP-2, KAEC)",
+   "name_ar": "لوسيد موتورز — مصنع AMP-2",
+   "goals": [
+    "industry"
+   ],
+   "goals_basis": "our reading",
+   "signal": "mixed",
+   "outlook": "delayed",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "Hyundai-PIF Vehicle Plant (HMMME)",
+   "name_ar": "مصنع هيونداي — صندوق الاستثمارات العامة (HMMME)",
+   "goals": [
+    "industry"
+   ],
+   "goals_basis": "our reading",
+   "signal": "mixed",
+   "outlook": "delayed",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "Saudi Green Initiative (SGI)",
+   "name_ar": "مبادرة السعودية الخضراء",
+   "goals": [
+    "climate"
+   ],
+   "goals_basis": "our reading",
+   "signal": "mixed",
+   "outlook": "delayed",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  },
+  {
+   "name": "Special Integrated Logistics Zone (SILZ)",
+   "name_ar": "المنطقة اللوجستية المتكاملة الخاصة",
+   "goals": [
+    "logistics"
+   ],
+   "goals_basis": "our reading",
+   "signal": "going_ahead",
+   "outlook": "protected",
+   "src": [
+    "S1",
+    "S2"
+   ],
+   "as_of": {
+    "S1": "2026-08-26",
+    "S2": "2026-10-01"
+   }
+  }
+ ],
+ "level5_etimad": {
+  "buyer_rules": [
+   {
+    "goal": "waste",
+    "pattern": "المركز الوطني لإدارة النفايات",
+    "basis": "our reading"
+   },
+   {
+    "goal": "envcomp",
+    "pattern": "المركز الوطني للرقابة على الالتزام البيئي|صندوق البيئة|القوات الخاصة للأمن البيئي|المركز الوطني لتنمية الحياة الفطرية|المركز الوطني للوقاية من الآفات",
+    "basis": "our reading"
+   },
+   {
+    "goal": "climate",
+    "pattern": "المركز الوطني لتنمية الغطاء النباتي|^محمية|KING SALMAN BIN ABDULAZIZ ROYAL",
+    "basis": "our reading"
+   },
+   {
+    "goal": "water",
+    "pattern": "الهيئة السعودية للمياه|تحلية المياه|الهيئة العامة للري|IRRIGATION|وزارة البيئة والمياه والزراعة",
+    "basis": "our reading"
+   },
+   {
+    "goal": "energy",
+    "pattern": "وزارة الطاقة|للطاقة الذرية والمتجددة",
+    "basis": "our reading"
+   },
+   {
+    "goal": "industry",
+    "pattern": "الهيئة الملكية للجبيل|الهيئة الملكية بينبع|رأس الخير|برنامج رأس الخير|مشروع الجبيل|وزارة الصناعة|تنمية الصناعية|المدن والمناطق الأقتصادية|هيئة المساحة الجيولوجية|بنك التصدير|تنمية الصادرات|صناعات العسكرية|التطوير الدفاعي|SPACE AGENCY",
+    "basis": "our reading"
+   },
+   {
+    "goal": "tourism",
+    "pattern": "وزارة السياحة|الهيئة السعودية للسياحة|صندوق التنمية السياحي|الهيئة العامة للترفيه|التنمية الثقافي|RED SEA AUTHORITY|وزارة الرياضة|أكاديمية مهد|نادي سباقات الخيل|نادي الإبل|نادي الصقور|وزارة الحج والعمرة",
+    "basis": "our reading"
+   },
+   {
+    "goal": "urban",
+    "pattern": "^أمانة|^بلدية|MUNICIPALITIES|الشؤون البلدية|صندوق التنمية العقارية|الهيئة العامة للعقار|عقارات الدولة|الهيئة الملكية لمدينة الرياض|^هيئة تطوير|DEVELOPMENT AUTHORITY|مركز مشاريع البنية التحتية|صندوق البنية التحتية|المكتب الاستراتيجي لتطوير|الادارة العامة للشؤون الهندسية|إسكان",
+    "basis": "our reading"
+   },
+   {
+    "goal": "logistics",
+    "pattern": "وزارة النقل|موانىء|^ميناء|طيران المدني|جسر الملك فهد|البريد|ربط الجوي|لتهيئة وصيانة الطائرات",
+    "basis": "our reading"
+   },
+   {
+    "goal": "digital",
+    "pattern": "بيانات والذكاء الاصطناعي|الحكومة الرقمية|وزارة الاتصالات|أمن السيبراني|خدمات الإنترنت|نظم الموارد الحكومية|مركز دعم اتخاذ القرار",
+    "basis": "our reading"
+   },
+   {
+    "goal": "health",
+    "pattern": "مستشفى|مستشفيات|تجمع|الصحي|الصحية|الشؤون الصحیة|وزارة الصحة|الطبية|الطبي|الهلال الأحمر|الصحة العامة|التأمين الصحي|الضمان الصحي|زراعة الأعضاء|القلب|الإخلاء الطبي|المدن الطبية|للعلوم الصحیة",
+    "basis": "our reading"
+   },
+   {
+    "goal": "defence",
+    "pattern": "القوات|حرس الحدود|الحرس الوطني|الحرس الملكي|الدفاع|الأمن العام|المباحث|أمن الدولة|قوة أمن|وزارة الداخلية|سجون|مكافحة المخدرات|جوازات|أحوال المدنية|هيئة الأركان|الأمن|طيران الأمن|الطوارىء|المجاهدين|كلية الملك|الامنية|الجويه|المسافرين|الشؤون الفنية|الصواريخ",
+    "basis": "our reading"
+   },
+   {
+    "goal": "education",
+    "pattern": "جامعة|الجامعة|تدريب التقني|كلية|معهد|تقويم التعليم|التعليم العالي|مكتبة",
+    "basis": "our reading"
+   }
+  ],
+  "basis": "our reading",
+  "note_en": "The buyer decides the goal: the first rule that matches the agency name wins. Anything unmatched counts as \"Running government\". A goal is never taken from a tender title.",
+  "note_ar": "الجهة المشترية تحدد الهدف: أول قاعدة تطابق اسم الجهة تُعتمد. وما لا يطابق يُحتسب «تشغيل الجهات الحكومية». لا يؤخذ الهدف من عنوان المنافسة أبدًا."
+ },
+ "level6_eh_lines": [
+  {
+   "line": 1,
+   "en": "Environmental studies & consultancy",
+   "short_en": "Env. studies",
+   "short_ar": "الدراسات البيئية",
+   "goals": [
+    "envcomp",
+    "tourism",
+    "urban",
+    "events",
+    "industry",
+    "water"
+   ],
+   "src": [
+    "S12"
+   ],
+   "basis": "our reading"
+  },
+  {
+   "line": 2,
+   "en": "Sustainability & ESG",
+   "short_en": "Sustainability",
+   "short_ar": "الاستدامة",
+   "goals": [
+    "climate",
+    "envcomp"
+   ],
+   "src": [
+    "S12"
+   ],
+   "basis": "our reading"
+  },
+  {
+   "line": 3,
+   "en": "Hazardous & industrial waste treatment & disposal",
+   "short_en": "Hazardous waste",
+   "short_ar": "النفايات الخطرة",
+   "goals": [
+    "waste",
+    "industry",
+    "energy"
+   ],
+   "src": [
+    "S12"
+   ],
+   "basis": "our reading"
+  },
+  {
+   "line": 4,
+   "en": "Tank cleaning, oily sludge & hydrocarbon recovery",
+   "short_en": "Tank cleaning",
+   "short_ar": "تنظيف الخزانات",
+   "goals": [
+    "energy",
+    "industry"
+   ],
+   "src": [
+    "S12"
+   ],
+   "basis": "our reading"
+  },
+  {
+   "line": 5,
+   "en": "Industrial wastewater treatment",
+   "short_en": "Industrial wastewater",
+   "short_ar": "الصرف الصناعي",
+   "goals": [
+    "industry",
+    "water"
+   ],
+   "src": [
+    "S12"
+   ],
+   "basis": "our reading"
+  },
+  {
+   "line": 6,
+   "en": "Environmental emergency response",
+   "short_en": "Emergency response",
+   "short_ar": "الطوارئ البيئية",
+   "goals": [
+    "energy",
+    "logistics",
+    "envcomp"
+   ],
+   "src": [
+    "S12"
+   ],
+   "basis": "our reading"
+  },
+  {
+   "line": 7,
+   "en": "Contaminated site rehabilitation",
+   "short_en": "Site rehabilitation",
+   "short_ar": "تأهيل المواقع",
+   "goals": [
+    "industry",
+    "urban",
+    "envcomp"
+   ],
+   "src": [
+    "S12"
+   ],
+   "basis": "our reading"
+  },
+  {
+   "line": 8,
+   "en": "Landfill construction & operation",
+   "short_en": "Landfill",
+   "short_ar": "المرادم",
+   "goals": [
+    "waste"
+   ],
+   "src": [
+    "S12"
+   ],
+   "basis": "our reading"
+  },
+  {
+   "line": 9,
+   "en": "Carbon / fly ash management",
+   "short_en": "Ash management",
+   "short_ar": "إدارة الرماد",
+   "goals": [
+    "energy",
+    "water"
+   ],
+   "src": [
+    "S12"
+   ],
+   "basis": "our reading"
+  },
+  {
+   "line": 10,
+   "en": "Hazardous waste collection & transport",
+   "short_en": "Waste collection",
+   "short_ar": "جمع النفايات",
+   "goals": [
+    "waste",
+    "industry"
+   ],
+   "src": [
+    "S12"
+   ],
+   "basis": "our reading"
+  },
+  {
+   "line": 11,
+   "en": "Air filters",
+   "short_en": "Air filters",
+   "short_ar": "فلاتر الهواء",
+   "goals": [
+    "industry"
+   ],
+   "src": [
+    "S12"
+   ],
+   "basis": "our reading"
+  },
+  {
+   "line": 12,
+   "en": "Asbestos management",
+   "short_en": "Asbestos",
+   "short_ar": "الأسبستوس",
+   "goals": [
+    "urban"
+   ],
+   "src": [
+    "S12"
+   ],
+   "basis": "our reading"
+  },
+  {
+   "line": 13,
+   "en": "Marine services",
+   "short_en": "Marine services",
+   "short_ar": "الخدمات البحرية",
+   "goals": [
+    "tourism",
+    "water",
+    "logistics"
+   ],
+   "src": [
+    "S12"
+   ],
+   "basis": "our reading"
+  },
+  {
+   "line": 14,
+   "en": "Medical waste (collection / treatment only)",
+   "short_en": "Medical waste",
+   "short_ar": "النفايات الطبية",
+   "goals": [
+    "waste",
+    "govops"
+   ],
+   "src": [
+    "S12"
+   ],
+   "basis": "our reading"
+  }
+ ],
+ "watch": [
+  {
+   "key": "PIF",
+   "en": "Public Investment Fund",
+   "ar": "صندوق الاستثمارات العامة",
+   "link_en": "PIF itself",
+   "link_ar": "الصندوق نفسه",
+   "map_names": [
+    "PIF"
+   ],
+   "client_pattern": "Public Investment Fund|صندوق الاستثمارات العامة",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "NEOM",
+   "en": "NEOM",
+   "ar": "نيوم",
+   "link_en": "giga-project (PIF)",
+   "link_ar": "مشروع كبير (الصندوق)",
+   "map_names": [
+    "Neom"
+   ],
+   "client_pattern": "\\bNEOM\\b|(^|\\s)نيوم",
+   "project": "NEOM",
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "RSG",
+   "en": "Red Sea Global (incl. AMAALA)",
+   "ar": "البحر الأحمر العالمية",
+   "link_en": "giga-project (PIF)",
+   "link_ar": "مشروع كبير (الصندوق)",
+   "map_names": [
+    "RED SEA Global"
+   ],
+   "client_pattern": "Red Sea Global|البحر الأحمر الدولية|البحر الأحمر العالمية",
+   "project": "Red Sea Global (The Red Sea & AMAALA)",
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "RSUC",
+   "en": "Red Sea Utilities Consortium",
+   "ar": "اتحاد مرافق البحر الأحمر",
+   "link_en": "RSG subsidiary (per notes)",
+   "link_ar": "تابعة للبحر الأحمر العالمية (حسب الملاحظات)",
+   "map_names": [
+    "Red Sea Utilities Consortium"
+   ],
+   "client_pattern": "Red Sea Utilities|RSUC",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "ROSHN",
+   "en": "ROSHN Group",
+   "ar": "روشن",
+   "link_en": "PIF company (per notes)",
+   "link_ar": "شركة للصندوق (حسب الملاحظات)",
+   "map_names": [
+    "ROSHN Group"
+   ],
+   "client_pattern": "ROSHN|روشن",
+   "project": "ROSHN",
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "QIDDIYA",
+   "en": "Qiddiya",
+   "ar": "القدية",
+   "link_en": "giga-project (PIF)",
+   "link_ar": "مشروع كبير (الصندوق)",
+   "map_names": [
+    "Qiddiya"
+   ],
+   "client_pattern": "Qiddiya|القدية",
+   "project": "Qiddiya",
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "KSP",
+   "en": "King Salman Park",
+   "ar": "حديقة الملك سلمان",
+   "link_en": "Vision 2030 development co.",
+   "link_ar": "شركة تطوير لرؤية 2030",
+   "map_names": [
+    "King Salman Park (KSP)"
+   ],
+   "client_pattern": "King Salman Park|حديقة الملك سلمان",
+   "project": "King Salman Park",
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "SOUDAH",
+   "en": "Soudah Development",
+   "ar": "السودة للتطوير",
+   "link_en": "PIF company (per notes)",
+   "link_ar": "شركة للصندوق (حسب الملاحظات)",
+   "map_names": [
+    "SOUDAH"
+   ],
+   "client_pattern": "Soudah|السودة",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "DOWNTOWN",
+   "en": "Saudi Downtown Co.",
+   "ar": "شركة وسط المدن السعودية",
+   "link_en": "PIF company",
+   "link_ar": "شركة للصندوق",
+   "map_names": [],
+   "client_pattern": "Downtown|وسط المدن",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "SAR",
+   "en": "Saudi Arabia Railways (SAR)",
+   "ar": "الخطوط الحديدية السعودية",
+   "link_en": "PIF company",
+   "link_ar": "شركة للصندوق",
+   "map_names": [],
+   "client_pattern": "^SAR$|Saudi Arabia Railways|الخطوط الحديدية السعودية",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "CRUISE",
+   "en": "Cruise Saudi",
+   "ar": "كروز السعودية",
+   "link_en": "PIF company",
+   "link_ar": "شركة للصندوق",
+   "map_names": [],
+   "client_pattern": "Cruise Saudi|كروز السعودية",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "MAADEN",
+   "en": "Ma'aden (Saudi Arabian Mining Co.)",
+   "ar": "معادن",
+   "link_en": "PIF ~67% (notes: PIF-led)",
+   "link_ar": "الصندوق نحو 67%",
+   "map_names": [
+    "Saudi Arabian Mining Company (Ma'aden)",
+    "شركه التعدين العربيه السعوديه (معادن )"
+   ],
+   "client_pattern": "Ma.?aden(?! ?Rolling)|التعدين العربي|^معادن$",
+   "project": "Ma'aden Mining Expansion",
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "MAADEN-SUB",
+   "en": "Ma'aden affiliates (Barrick copper / Jabal Sayid, Manara, Rolling)",
+   "ar": "شركات معادن التابعة",
+   "link_en": "Ma'aden subsidiary/JV",
+   "link_ar": "تابعة لمعادن / مشروع مشترك",
+   "map_names": [
+    "Jabal Sayid / Barrick-Ma’aden Copper",
+    "شركة معادن وباريك للنحاس",
+    "Manara Minerals",
+    "Maaden Rolling Co.",
+    "شركة معادن للدرفلة"
+   ],
+   "client_pattern": "Jabal Sa[iy]d|Barrick|Manara Minerals|Maaden Rolling|معادن وباريك|معادن للدرفلة",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "ACWA",
+   "en": "ACWA Power",
+   "ar": "أكوا باور",
+   "link_en": "PIF ~44% (notes: PIF-controlled)",
+   "link_ar": "الصندوق نحو 44%",
+   "map_names": [
+    "ACWA Power"
+   ],
+   "client_pattern": "^ACWA|أكوا باور|اكوا باور",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "RABIGH3",
+   "en": "Rabigh 3 IWP",
+   "ar": "رابغ 3 للمياه",
+   "link_en": "ACWA Power SPV (per notes)",
+   "link_ar": "شركة مشروع لأكوا باور",
+   "map_names": [
+    "شركة رابغ الثالثة شركة مساهمة مقفلة"
+   ],
+   "client_pattern": "رابغ الثالثة|Rabigh ?3|Rabigh Three",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "SIRC",
+   "en": "Saudi Investment Recycling Co. (SIRC)",
+   "ar": "الشركة السعودية للاستثمار في إعادة التدوير (سرك)",
+   "link_en": "PIF wholly-owned",
+   "link_ar": "مملوكة بالكامل للصندوق",
+   "map_names": [
+    "Saudi Investment Recycling Company (SIRC)"
+   ],
+   "client_pattern": "^SIRC\\b|الاستثمار في إعادة التدوير|Saudi Investment Recycling",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "SIRC-SUB",
+   "en": "SIRC subsidiaries (MRC, Metal Recycling, Revive, Eada, Akam, SAIL marine, Saudi Daz)",
+   "ar": "شركات سرك التابعة",
+   "link_en": "SIRC subsidiary (per notes)",
+   "link_ar": "تابعة لسرك",
+   "map_names": [
+    "The Metals and Recycling Company (MRC)",
+    "Metal Recycling Company for Environmental Services",
+    "شركة ادارة خدمات البيئة العالمية المحدودة (ريفايفا)",
+    "Eada Recycling Services Co.",
+    "Akam Materials Recycling Environmental Services Co. (One-Person Co.)",
+    "Marine Operations Environmental Services Co. (SAIL)",
+    "Saudi Daz Electronic and Solid Waste Recycling Factory"
+   ],
+   "client_pattern": "Metals and Recycling|\\bMRC\\b|ريفايفا|Revive|Eada|Akam|Marine Operations Environmental|Saudi Daz",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "SAMI",
+   "en": "Saudi Arabian Military Industries (SAMI)",
+   "ar": "الشركة السعودية للصناعات العسكرية",
+   "link_en": "PIF wholly-owned",
+   "link_ar": "مملوكة بالكامل للصندوق",
+   "map_names": [
+    "Saudi Arabian Military Industries"
+   ],
+   "client_pattern": "Saudi Arabian Military Industries|^SAMI\\b|الشركة السعودية للصناعات العسكرية",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "AEC",
+   "en": "Advanced Electronics Co.",
+   "ar": "الشركة المتقدمة للإلكترونيات",
+   "link_en": "SAMI subsidiary (analyst knowledge, not in notes)",
+   "link_ar": "تابعة للشركة السعودية للصناعات العسكرية (معرفة المحلل)",
+   "map_names": [
+    "Advanced Electronics Company"
+   ],
+   "client_pattern": "Advanced Electronics|الإلكترونيات المتقدمة",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "LUCID",
+   "en": "Lucid AMP-2 (KAEC)",
+   "ar": "لوسيد (مصنع AMP-2)",
+   "link_en": "PIF portfolio (Lucid ~60%)",
+   "link_ar": "ضمن محفظة الصندوق (لوسيد نحو 60%)",
+   "map_names": [
+    "Lucid AMP-2 Saudi plant"
+   ],
+   "client_pattern": "\\bLucid\\b",
+   "project": "Lucid Manufacturing (AMP-2, KAEC)",
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "CEER",
+   "en": "Ceer Motors",
+   "ar": "سير",
+   "link_en": "PIF–Foxconn JV",
+   "link_ar": "مشروع مشترك بين الصندوق وفوكسكون",
+   "map_names": [
+    "CEER"
+   ],
+   "client_pattern": "\\bCeer\\b|سير الوطنية",
+   "project": "Ceer",
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "ALAT",
+   "en": "Alat",
+   "ar": "آلات",
+   "link_en": "PIF company",
+   "link_ar": "شركة للصندوق",
+   "map_names": [
+    "Alat"
+   ],
+   "client_pattern": "^Alat\\b",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "STC",
+   "en": "stc",
+   "ar": "stc",
+   "link_en": "PIF ~62%",
+   "link_ar": "الصندوق نحو 62%",
+   "map_names": [
+    "STC"
+   ],
+   "client_pattern": "^STC$|Saudi Telecom",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "ELM",
+   "en": "Elm Co. (+ Emdad)",
+   "ar": "علم (وإمداد)",
+   "link_en": "PIF company (Emdad owned by Elm per notes)",
+   "link_ar": "شركة للصندوق (إمداد مملوكة لعلم)",
+   "map_names": [
+    "Elm Joint Stock Company",
+    "شركة علم شركة مساهمة سعودية",
+    "Emdad Ltd"
+   ],
+   "client_pattern": "^Elm\\b|^شركة علم|Emdad|^إمداد",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "BAHRI",
+   "en": "Bahri",
+   "ar": "البحري",
+   "link_en": "PIF ~23% (analyst knowledge)",
+   "link_ar": "الصندوق نحو 23% (معرفة المحلل)",
+   "map_names": [
+    "Bahri"
+   ],
+   "client_pattern": "\\bBahri\\b",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "NSG",
+   "en": "Neospace Group",
+   "ar": "نيوسبيس",
+   "link_en": "PIF-sponsored (per notes)",
+   "link_ar": "برعاية الصندوق",
+   "map_names": [
+    "Neospace Group (NSG)"
+   ],
+   "client_pattern": "Neospace",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "SEC",
+   "en": "Saudi Electricity Co. (SEC / \"Saudi Energy\")",
+   "ar": "الشركة السعودية للكهرباء",
+   "link_en": "PIF ~74% (per notes)",
+   "link_ar": "الصندوق نحو 74%",
+   "map_names": [
+    "Saudi Electricity Company (SEC)",
+    "Saudi Energy",
+    "Saudi Electricity Project Development Co. (One-Person Co.)"
+   ],
+   "client_pattern": "الشركة السعودية للكهرباء|Saudi Electricity|^Saudi Energy|^SE$|الشركة السعودية للطاقة|Project Development Company \\(PDC\\)",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "NWC",
+   "en": "National Water Company",
+   "ar": "شركة المياه الوطنية",
+   "link_en": "PIF wholly-owned (per notes)",
+   "link_ar": "مملوكة بالكامل للصندوق",
+   "map_names": [
+    "National Water Company"
+   ],
+   "client_pattern": "شركة المياه الوطنية|National Water Company|\\bNWC\\b",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "MARAFIQ",
+   "en": "Marafiq (Jubail & Yanbu power & water)",
+   "ar": "مرافق",
+   "link_en": "PIF/Aramco Power/SABIC/RCJY 24.81% each (per notes)",
+   "link_ar": "الصندوق وأرامكو للطاقة وسابك والهيئة الملكية 24.81% لكل منها",
+   "map_names": [
+    "شركه مرافق الكهرباء والمياه بالجبيل وينبع"
+   ],
+   "client_pattern": "Marafiq|مرافق الكهرباء والمياه",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "RSGT",
+   "en": "Red Sea Gateway Terminal",
+   "ar": "محطة بوابة البحر الأحمر",
+   "link_en": "PIF 20% (per notes)",
+   "link_ar": "الصندوق 20%",
+   "map_names": [
+    "شركة محطة بوابة البحر الأحمر المحدودة"
+   ],
+   "client_pattern": "Red Sea Gateway|بوابة البحر الأحمر",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "ENVISION",
+   "en": "Envision Energy (KSA)",
+   "ar": "إنفجن للطاقة",
+   "link_en": "PIF localization JV (per notes)",
+   "link_ar": "مشروع توطين مشترك مع الصندوق",
+   "map_names": [
+    "شركه انفيجن انيرجي المحدوده شركه شحص واحد"
+   ],
+   "client_pattern": "Envision|انفيجن|إنفجن",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "ARAMCO",
+   "en": "Saudi Aramco",
+   "ar": "أرامكو السعودية",
+   "link_en": "Aramco (PIF ~16% direct)",
+   "link_ar": "أرامكو (الصندوق نحو 16% مباشرة)",
+   "map_names": [
+    "ARAMCO"
+   ],
+   "client_pattern": "^Aramco\\b|^Saudi Aramco|أرامكو السعودية|^أرامكو|^ارامكو",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "ARAMCO-JV",
+   "en": "Aramco JVs/affiliates: SATORP, YASREF, SASREF, Luberef, Petro Rabigh, Sadara, ARO Drilling, JIGPC, SAMREF",
+   "ar": "شركات أرامكو التابعة والمشتركة",
+   "link_en": "Aramco subsidiary/JV",
+   "link_ar": "تابعة لأرامكو / مشروع مشترك",
+   "map_names": [
+    "SATORP",
+    "Yanbu ARAMCO Sinopec Refining Company (YASREF)",
+    "SASREF",
+    "Luberef (Saudi ARAMCO Base Oil Company)",
+    "Petrorabigh",
+    "Sadara Chemical",
+    "ARO Drilling",
+    "شركة جيزان المتكاملة لتحويل الغاز وللطاقة"
+   ],
+   "client_pattern": "SATORP|YASREF|SASREF|SAMREF|Luberef|Petro ?Rabigh|بترورابغ|Sadara|ARO Drilling|جيزان المتكاملة",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "SABIC",
+   "en": "SABIC group (Aramco 70%): SABIC, Agri-Nutrients, SK Nexlene, Hadeed, Saudi Kayan, YANSAB",
+   "ar": "مجموعة سابك",
+   "link_en": "Aramco subsidiary",
+   "link_ar": "تابعة لأرامكو",
+   "map_names": [
+    "Saudi Basic Industries Corporation (SABIC)",
+    "SABIC Agri-Nutrients",
+    "SABIC SK Nexlene",
+    "Hadeed",
+    "Saudi Kayan",
+    "Yanbu National Petrochemical Company (YANSAB)"
+   ],
+   "client_pattern": "SABIC|سابك|Hadeed|حديد|Saudi Kayan|YANSAB|Nexlene",
+   "project": "SABIC",
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "SPARK",
+   "en": "King Salman Energy Park (SPARK)",
+   "ar": "سبارك",
+   "link_en": "Aramco-developed",
+   "link_ar": "طوّرتها أرامكو",
+   "map_names": [
+    "King Salman Energy Park (SPARK)"
+   ],
+   "client_pattern": "\\bSPARK\\b|سبارك|King Salman Energy Park",
+   "project": "King Salman Energy Park (SPARK)",
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "RCJY",
+   "en": "Royal Commission for Jubail & Yanbu",
+   "ar": "الهيئة الملكية للجبيل وينبع",
+   "link_en": "royal commission",
+   "link_ar": "هيئة ملكية",
+   "map_names": [
+    "Royal Commission for Jubail & Yanbu"
+   ],
+   "client_pattern": "Royal Commission for Jubail|الهيئة الملكية للجبيل|الهيئة الملكية بينبع",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "RCU",
+   "en": "Royal Commission for AlUla",
+   "ar": "الهيئة الملكية لمحافظة العلا",
+   "link_en": "royal commission",
+   "link_ar": "هيئة ملكية",
+   "map_names": [
+    "Royal Commission for AlUla (RCU)"
+   ],
+   "client_pattern": "Royal Commission for Al ?Ula|الهيئة الملكية لمحافظة العلا|^RCU$",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  },
+  {
+   "key": "RCRC",
+   "en": "Royal Commission for Riyadh City",
+   "ar": "الهيئة الملكية لمدينة الرياض",
+   "link_en": "royal commission",
+   "link_ar": "هيئة ملكية",
+   "map_names": [
+    "الهيئه الملكيه لمدينه الرياض"
+   ],
+   "client_pattern": "الهيئة الملكية لمدينة الرياض|الهيئه الملكيه لمدينه الرياض|Royal Commission for Riyadh",
+   "project": null,
+   "src": [
+    "S9",
+    "S10"
+   ]
+  }
+ ],
+ "watch_note_method": {
+  "en": "EH record: tenders in the bid tracker (2025–2026) whose client name matches the pattern for this name; our matching, case-insensitive.",
+  "ar": "سجل آفاق: المنافسات في جدول المتابعة (2025–2026) التي يطابق اسم عميلها نمط هذا الاسم؛ مطابقتنا، دون تمييز حالة الأحرف."
+ },
+ "watch_note": {
+  "en": "Suggested for review only. Nothing here is added to the stakeholder map automatically.",
+  "ar": "مقترحة للمراجعة فقط. لا يُضاف شيء من هنا إلى خريطة أصحاب المصلحة تلقائيًا."
+ },
+ "added_for_this_section": [
+  {
+   "fact": "Vision 2030 pillar names",
+   "source": "mep.gov.sa/en/about-us/vision",
+   "checked": "2026-10-07"
+  }
+ ]
+}

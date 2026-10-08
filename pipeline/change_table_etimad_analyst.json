@@ -1,0 +1,137 @@
+{
+ "generated": "2026-10-07 16:08",
+ "title": "Government Tenders — Analyst view (Stage 2)",
+ "failures": [],
+ "changes": [
+  {
+   "file": "build",
+   "kind": "exact",
+   "category": "data",
+   "note": "read_sheet also returns the analyst_notes tab",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    return cards, rows('decisions'), rows('agency_bridge'), rows('counts'), rows('market')\n",
+   "new": "    return cards, rows('decisions'), rows('agency_bridge'), rows('counts'), rows('market'), rows('analyst_notes')\n"
+  },
+  {
+   "file": "build",
+   "kind": "exact",
+   "category": "data",
+   "note": "unpack notes rows",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        cards, decisions, bridge_rows, counts, market = read_sheet(a.sheet)\n",
+   "new": "        cards, decisions, bridge_rows, counts, market, note_rows = read_sheet(a.sheet)\n"
+  },
+  {
+   "file": "build",
+   "kind": "exact",
+   "category": "data",
+   "note": "local mode: no notes",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        cards, decisions, bridge_rows, counts, market = read_raw_dir(a.raw), [], [], [], []\n",
+   "new": "        cards, decisions, bridge_rows, counts, market, note_rows = read_raw_dir(a.raw), [], [], [], [], []\n"
+  },
+  {
+   "file": "build",
+   "kind": "exact",
+   "category": "data",
+   "note": "no input: no notes",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        cards, decisions, bridge_rows, counts, market = [], [], [], [], []\n",
+   "new": "        cards, decisions, bridge_rows, counts, market, note_rows = [], [], [], [], [], []\n"
+  },
+  {
+   "file": "build",
+   "kind": "exact",
+   "category": "feature",
+   "note": "join the Analyst view",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    out['market'] = build_market(market)\n",
+   "new": "    out['market'] = build_market(market)\n    # Analyst view: umbrella (committed, no Etimad data) + market windows + tenders + map + notes (private sheet)\n    from etimad_analyst import analyst\n    out['analyst'] = analyst(market, out['tenders'], a.map, note_rows, bidraw=a.bidraw)\n"
+  },
+  {
+   "file": "build",
+   "kind": "exact",
+   "category": "log",
+   "note": "log the analyst join",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    print(f\"Etimad: {out['count']} tenders ({rel} relevant), last capture {out['last_capture']} → {a.out}\")\n",
+   "new": "    print(f\"Etimad: {out['count']} tenders ({rel} relevant), last capture {out['last_capture']} → {a.out}\")\n    an = out.get('analyst') or {}\n    print(f\"Analyst view: {len(an.get('windows') or [])} market windows, {len(an.get('notes') or [])} notes ({an.get('notes_month')}), reviewed {an.get('reviewed')}\")\n"
+  },
+  {
+   "file": "page",
+   "kind": "exact",
+   "category": "feature",
+   "note": "import the analyst section",
+   "occurrences": 1,
+   "ok": true,
+   "old": "import json, os, sys, collections\n",
+   "new": "import json, os, sys, collections\nsys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))\nimport etimad_analyst as AV\n"
+  },
+  {
+   "file": "page",
+   "kind": "exact",
+   "category": "feature",
+   "note": "analyst CSS",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<style>{CSS}</style></head>",
+   "new": "<style>{CSS}{AV.CSS}</style></head>"
+  },
+  {
+   "file": "page",
+   "kind": "exact",
+   "category": "feature",
+   "note": "analyst card after the Stakeholder view",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"foot\" data-en=\"Built from the private EH Etimad data sheet.",
+   "new": "{AV.HTML}\n<div class=\"foot\" data-en=\"Built from the private EH Etimad data sheet."
+  },
+  {
+   "file": "page",
+   "kind": "exact",
+   "category": "feature",
+   "note": "analyst JS",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<script>{JS}</script>",
+   "new": "<script>{JS}{AV.JS}</script>"
+  },
+  {
+   "file": "page",
+   "kind": "exact",
+   "category": "feature",
+   "note": "render the analyst view with the page",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  renderMarket();\n  document.querySelectorAll('#list th')",
+   "new": "  renderMarket();\n  if(typeof renderAnalyst==='function')renderAnalyst();\n  document.querySelectorAll('#list th')"
+  },
+  {
+   "file": "vcheck",
+   "kind": "exact",
+   "category": "check",
+   "note": "Etimad page: require the analyst section",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    'etimad_tenders.html':             dict(kpi=6, tables=0, svgs=0, nodiff=True),   # content changes with each Sunday capture\n",
+   "new": "    'etimad_tenders.html':             dict(kpi=6, tables=0, svgs=0, nodiff=True, analyst=True),   # content changes with each Sunday capture\n"
+  },
+  {
+   "file": "vcheck",
+   "kind": "exact",
+   "category": "check",
+   "note": "analyst view render check",
+   "occurrences": 1,
+   "ok": true,
+   "old": "                    if m['words'] < 60: probs.append(f\"page nearly empty ({m['words']} words)\")\n",
+   "new": "                    if m['words'] < 60: probs.append(f\"page nearly empty ({m['words']} words)\")\n                    if want.get('analyst'):   # Analyst view: its picture and at least one note, or its stated empty state\n                        av = pg.evaluate(\"(()=>({flow:!!document.querySelector('#av-flow svg'),notes:document.querySelectorAll('#av .avn').length,\"\n                                 "
+  }
+ ]
+}

@@ -254,7 +254,7 @@ def read_sheet(path):
                       'enq': r['enquiry_deadline'][:10], 'open': r['bid_opening'], 'fee': r['document_fee'],
                       'activity': r['activity'], 'agency_raw': r['agency_as_shown'], 'title': r['title_as_shown'],
                       'queries': [q for q in r.get('found_by_search', '').split('|') if q]})
-    return cards, rows('decisions'), rows('agency_bridge'), rows('counts'), rows('market')
+    return cards, rows('decisions'), rows('agency_bridge'), rows('counts'), rows('market'), rows('analyst_notes')
 
 def read_raw_dir(raw_dir):
     """Local / Stage-1 mode: snapshots on disk (etimad/raw/<date>.json or the ‖ text dump)."""
@@ -472,18 +472,23 @@ def main():
     a = ap.parse_args()
     tax = json.load(open(a.taxonomy, encoding='utf-8'))
     if a.sheet and os.path.exists(a.sheet):
-        cards, decisions, bridge_rows, counts, market = read_sheet(a.sheet)
+        cards, decisions, bridge_rows, counts, market, note_rows = read_sheet(a.sheet)
     elif a.raw:
-        cards, decisions, bridge_rows, counts, market = read_raw_dir(a.raw), [], [], [], []
+        cards, decisions, bridge_rows, counts, market, note_rows = read_raw_dir(a.raw), [], [], [], [], []
     else:
-        cards, decisions, bridge_rows, counts, market = [], [], [], [], []
+        cards, decisions, bridge_rows, counts, market, note_rows = [], [], [], [], [], []
     recs = load_map_html(a.map)
     out = build(cards, tax, recs, bridge_from_rows(bridge_rows), load_tracker_files(a.tracker, a.bidraw),
                 decisions, counts, [c['capture'] for c in cards])
     out['market'] = build_market(market)
+    # Analyst view: umbrella (committed, no Etimad data) + market windows + tenders + map + notes (private sheet)
+    from etimad_analyst import analyst
+    out['analyst'] = analyst(market, out['tenders'], a.map, note_rows, bidraw=a.bidraw)
     json.dump(out, open(a.out, 'w', encoding='utf-8'), ensure_ascii=False, default=str)
     rel = sum(1 for t in out['tenders'] if t['relevance'] != 'Not EH')
     print(f"Etimad: {out['count']} tenders ({rel} relevant), last capture {out['last_capture']} → {a.out}")
+    an = out.get('analyst') or {}
+    print(f"Analyst view: {len(an.get('windows') or [])} market windows, {len(an.get('notes') or [])} notes ({an.get('notes_month')}), reviewed {an.get('reviewed')}")
 
 if __name__ == '__main__':
     main()

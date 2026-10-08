@@ -1,3 +1,5 @@
 site/competitors_feed.json
 site/sync_stamp.json
 site/bid_sync_report.json
+__pycache__/
+*.pyc

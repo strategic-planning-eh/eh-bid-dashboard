@@ -7,6 +7,8 @@ it is never committed, because it carries the Etimad data. It follows the hub's 
 through postMessage, like the Environment Fund page.
 """
 import json, os, sys, collections
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import etimad_analyst as AV
 from datetime import date, datetime
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -349,6 +351,7 @@ function render(){
   const WS=AG.filter(([k,a])=>a.n>=2&&!(a.rec&&a.rec['EH Client']==='Yes'));
   $('white').innerHTML=WS.length?`<table class="t"><thead><tr><th>${L('Agency','الجهة')}</th><th>${L('Relevant tenders','منافسات ذات صلة')}</th><th>${L('On the map as','في الخريطة بوصفها')}</th></tr></thead><tbody>`+WS.map(([k,a])=>`<tr><td class="ar" dir="rtl">${esc(k)}</td><td class="num">${a.n}</td><td>${a.rec?esc(a.rec.Name+' · '+catName(a.rec.Category||'')):`<span style="color:var(--muted)">${L('Not on the map — candidate to add after review','غير موجودة في الخريطة — مرشحة للإضافة بعد المراجعة')}</span>`}</td></tr>`).join('')+'</tbody></table>':`<div class="empty">${L('Searched, none found: no agency outside the EH client list issued two or more relevant tenders in this view.','تم البحث، ولا توجد جهة من خارج عملاء آفاق طرحت منافستين أو أكثر ذات صلة في هذا العرض.')}</div>`;
   renderMarket();
+  if(typeof renderAnalyst==='function')renderAnalyst();
   document.querySelectorAll('#list th').forEach(th=>th.onclick=()=>{SORT.dir=(SORT.k===th.dataset.k?-SORT.dir:1);SORT.k=th.dataset.k;render()});
 }
 function renderMarket(){
@@ -414,7 +417,7 @@ HTML = f"""<!doctype html>
 <html lang="en" dir="ltr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Government Tenders (Etimad)</title>
 <link rel="stylesheet" href="eh-shared.css">
-<style>{CSS}</style></head>
+<style>{CSS}{AV.CSS}</style></head>
 <body>
 <header><div><h1 data-en="Government Tenders (Etimad)" data-ar="المنافسات الحكومية (اعتماد)">Government Tenders (Etimad)</h1>
 <div class="sub" data-en="Public tenders on Etimad, sorted by what Environmental Horizons (EH) can bid for, and linked to the stakeholder map and the bid tracker." data-ar="منافسات اعتماد العامة مصنفة حسب ما يمكن لآفاق البيئة التقدم له، ومربوطة بخريطة أصحاب المصلحة وجدول متابعة المنافسات.">Public tenders on Etimad, sorted by what Environmental Horizons (EH) can bid for, and linked to the stakeholder map and the bid tracker.</div></div>
@@ -478,10 +481,11 @@ HTML = f"""<!doctype html>
 <div style="margin-top:12px"><b data-en="Winners of awarded tenders" data-ar="الفائزون بالمنافسات المرساة">Winners of awarded tenders</b>
 <div class="empty" style="margin-top:6px" data-en="Etimad shows every bidder, their price and the winner on each awarded tender's page. These results are not captured yet, so no competitor is added from this tab; the competitor count stays the bid tracker's." data-ar="تعرض منصة اعتماد في صفحة كل منافسة مرساة جميع المتقدمين وأسعارهم والفائز. لم تُلتقط هذه النتائج بعد، لذا لا يُضاف أي منافس من هذه الصفحة، ويبقى عدد المنافسين كما في جدول المنافسات.">Not captured yet.</div></div></section>
 
+{AV.HTML}
 <div class="foot" data-en="Built from the private EH Etimad data sheet. Relevance rules: EH service taxonomy (14 service lines). EH status comes from the bid tracker, which stays the reference whenever the two differ." data-ar="مبنية من ورقة بيانات اعتماد الخاصة بآفاق البيئة. قواعد الصلة: تصنيف خدمات آفاق (14 خط خدمة). حالة آفاق مأخوذة من جدول متابعة المنافسات، وهو المرجع عند أي اختلاف.">Built from the private EH Etimad data sheet.</div>
 </main><div id="tip"></div>
 <script id="ET" type="application/json">{payload}</script>
-<script>{JS}</script>
+<script>{JS}{AV.JS}</script>
 </body></html>"""
 
 os.makedirs(os.path.dirname(os.path.abspath(OUT)), exist_ok=True)

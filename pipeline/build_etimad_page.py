@@ -30,27 +30,27 @@ def notes(D):
     by_line = collections.Counter(i for t in T for i in t['service_lines'])
     if by_line:
         lid, n = by_line.most_common(1)[0]
-        out.append({'en': f"{SL[lid]['en']} is the largest relevant line: {n} of {len(T)} relevant tenders captured.",
-                    'ar': f"«{SL[lid]['ar']}» أكبر خط خدمة: {n} من أصل {len(T)} منافسة ذات صلة.",
+        out.append({'en': f"{SL[lid]['en']} is the EH service with the most tenders: {n} of the {len(T)} tenders EH can bid for.",
+                    'ar': f"«{SL[lid]['ar']}» أكثر خدمات آفاق طلبًا: {n} من أصل {len(T)} منافسة يمكن لآفاق التقدم لها.",
                     'k': 'line'})
     by_ag = collections.Counter(t['agency'] for t in T)
     ag, n = by_ag.most_common(1)[0]
     if n >= 2:
         t0 = next(t for t in T if t['agency'] == ag)
         cl = (t0.get('map') or {}).get('EH Client') == 'Yes'
-        out.append({'en': f"The most frequent requester is {ag} with {n} relevant tenders" + (" — already an EH client." if cl else "."),
+        out.append({'en': f"The buyer with the most tenders EH can bid for is {ag}, with {n}" + (" — already an EH client." if cl else "."),
                     'ar': f"أكثر الجهات طرحًا: {ag} بعدد {n} منافسات ذات صلة" + (" — وهي عميل حالي لآفاق البيئة." if cl else "."),
                     'k': 'agency'})
     dp = [t for t in T if t['type'].startswith('شراء مباشر')]
     if dp:
-        out.append({'en': f"{len(dp)} of {len(T)} relevant tenders ({round(100*len(dp)/len(T))}%) are direct purchases, which often stay open for under two weeks — a weekly capture can miss some of them.",
-                    'ar': f"{len(dp)} من {len(T)} منافسة ذات صلة ({round(100*len(dp)/len(T))}%) شراء مباشر، وكثير منها يبقى مفتوحًا أقل من أسبوعين؛ لذا قد يفوت الالتقاط الأسبوعي بعضها.",
+        out.append({'en': f"{len(dp)} of the {len(T)} tenders EH can bid for ({round(100*len(dp)/len(T))}%) are direct purchases (small, quick orders). They often stay open for under two weeks, so a weekly check can miss some.",
+                    'ar': f"{len(dp)} من {len(T)} منافسة ذات صلة ({round(100*len(dp)/len(T))}%) شراء مباشر، وكثير منها يبقى مفتوحًا أقل من أسبوعين؛ لذا قد تفوت المراجعة الأسبوعية بعضها.",
                     'k': 'direct'})
     op = [t for t in T if t['is_open']]
     ns = [t for t in op if t['eh_status'] == 'Not studied']
     if op:
-        out.append({'en': f"{len(op)} relevant tenders were open at the last capture; {len(ns)} of them are not yet in the bid tracker.",
-                    'ar': f"كانت {len(op)} منافسة ذات صلة مفتوحة عند آخر التقاط، منها {len(ns)} غير مسجلة بعد في جدول متابعة المنافسات.",
+        out.append({'en': f"{len(op)} tenders EH can bid for were open at the last update; {len(ns)} of them are not yet logged in the bid tracker.",
+                    'ar': f"كانت {len(op)} منافسة يمكن لآفاق التقدم لها مفتوحة عند آخر تحديث، منها {len(ns)} غير مسجلة بعد في جدول متابعة المنافسات.",
                     'k': 'open'})
     return out
 
@@ -70,24 +70,24 @@ def market_notes(D):
     out = [{'en': f"{tot:,} tenders were published on Etimad between {de(w['from'])} and {de(w['to'])} — about {round(tot/max(days,1))} per working day.",
             'ar': f"نُشرت {tot:,} منافسة في اعتماد بين {da(w['from'])} و{da(w['to'])} — نحو {round(tot/max(days,1))} منافسة في يوم العمل."}]
     sec = sorted(w['sectors'].items(), key=lambda kv: -kv[1]['n'])[:3]
-    out.append({'en': 'Biggest sectors by number of tenders: ' + '; '.join(f"{SN[k]['en']} {v['n']} ({round(100*v['n']/tot)}%)" for k, v in sec) + '.',
-                'ar': 'أكبر القطاعات بعدد المنافسات: ' + '؛ '.join(f"{SN[k]['ar']} {v['n']} ({round(100*v['n']/tot)}%)" for k, v in sec) + '.'})
+    out.append({'en': 'Biggest types of work by number of tenders: ' + '; '.join(f"{SN[k]['en']} {v['n']} ({round(100*v['n']/tot)}%)" for k, v in sec) + '.',
+                'ar': 'أكبر أنواع العمل بعدد المنافسات: ' + '؛ '.join(f"{SN[k]['ar']} {v['n']} ({round(100*v['n']/tot)}%)" for k, v in sec) + '.'})
     fee_sec = sorted(w['sectors'].items(), key=lambda kv: -kv[1]['fees'])[:2]
     allfees = sum(v['fees'] for v in w['sectors'].values()) or 1
-    out.append({'en': 'By document fees — a rough sign of contract size, not contract value — the largest sectors are ' + ' and '.join(f"{SN[k]['en']} ({round(100*v['fees']/allfees)}% of fees, {round(100*v['n']/tot)}% of tenders)" for k, v in fee_sec) + '.',
-                'ar': 'بحسب قيمة الكراسات — مؤشر تقريبي لحجم العقد وليست قيمته — أكبر القطاعات ' + ' و'.join(f"{SN[k]['ar']} ({round(100*v['fees']/allfees)}% من القيمة، {round(100*v['n']/tot)}% من المنافسات)" for k, v in fee_sec) + '.'})
+    out.append({'en': 'By the price of tender documents (a rough sign of contract size, not the contract value), the biggest types of work are ' + ' and '.join(f"{SN[k]['en']} ({round(100*v['fees']/allfees)}% of document prices, {round(100*v['n']/tot)}% of tenders)" for k, v in fee_sec) + '.',
+                'ar': 'بحسب ثمن وثائق المنافسة (مؤشر تقريبي لحجم العقد وليس قيمته) أكبر أنواع العمل ' + ' و'.join(f"{SN[k]['ar']} ({round(100*v['fees']/allfees)}% من القيمة، {round(100*v['n']/tot)}% من المنافسات)" for k, v in fee_sec) + '.'})
     ty = {r['key']: r for r in w['rows'] if r['dim'] == 'type'}
     dp, pt = ty.get('شراء مباشر'), ty.get('منافسة عامة')
     if dp and pt:
         tf = sum(r['fees'] for r in ty.values()) or 1
-        out.append({'en': f"Direct purchases are {round(100*dp['n']/tot)}% of tenders but only {round(100*dp['fees']/tf)}% of document fees; public tenders carry {round(100*pt['fees']/tf)}%. Large work still goes through public tenders, where EH has time to prepare.",
+        out.append({'en': f"Direct purchases (small, quick orders) are {round(100*dp['n']/tot)}% of tenders but only {round(100*dp['fees']/tf)}% of document prices; public tenders carry {round(100*pt['fees']/tf)}%. Large work still goes through public tenders, where EH has time to prepare.",
                     'ar': f"يمثل الشراء المباشر {round(100*dp['n']/tot)}% من المنافسات و{round(100*dp['fees']/tf)}% فقط من قيمة الكراسات، بينما تحمل المنافسات العامة {round(100*pt['fees']/tf)}%. الأعمال الكبيرة ما زالت تُطرح منافسةً عامة، حيث يتسع الوقت للتحضير."})
     g = sorted(w['agency_groups'].items(), key=lambda kv: -kv[1]['n'])[:3]
     gt = sum(v['n'] for v in w['agency_groups'].values()) or 1
-    out.append({'en': 'Who is buying (top agencies, grouped): ' + '; '.join(f"{GN[k]['en']} {round(100*v['n']/gt)}%" for k, v in g) + '.',
-                'ar': 'من يشتري (أكبر الجهات مجمّعة): ' + '؛ '.join(f"{GN[k]['ar']} {round(100*v['n']/gt)}%" for k, v in g) + '.'})
+    out.append({'en': 'Who is buying: ' + '; '.join(f"{GN[k]['en']} {round(100*v['n']/gt)}%" for k, v in g) + '.',
+                'ar': 'من يشتري: ' + '؛ '.join(f"{GN[k]['ar']} {round(100*v['n']/gt)}%" for k, v in g) + '.'})
     env = w['sectors'].get('env', {'n': 0})
-    out.append({'en': f"Environment & waste is listed as the activity on only {env['n']} tenders ({round(100*env['n']/tot,1)}%). Most EH-relevant work sits under other activities — water, health, consulting — which is why the tab tags tenders by their titles, not by Etimad's activity.",
+    out.append({'en': f"Only {env['n']} tenders ({round(100*env['n']/tot,1)}%) are listed under “Environment & waste”. Most work EH can do is listed under other headings, such as water, health and consulting, so this tab sorts tenders by their titles rather than by Etimad's heading.",
                 'ar': f"نشاط «البيئة والنفايات» مسجل في {env['n']} منافسة فقط ({round(100*env['n']/tot,1)}%). معظم الأعمال المناسبة لآفاق تُطرح تحت أنشطة أخرى — المياه والصحة والاستشارات — لذلك تُصنَّف المنافسات في هذه الصفحة بعناوينها لا بنشاط اعتماد."})
     return out
 
@@ -157,6 +157,7 @@ svg.ch .lbl{fill:var(--ink);font-weight:700}svg.ch .grid{stroke:var(--grid)}svg.
 #tip{position:fixed;pointer-events:none;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:12px;box-shadow:0 4px 14px rgba(0,0,0,.15);display:none;z-index:20;max-width:320px}
 .nts li{margin:0 0 6px;font-size:13px}
 .foot{font-size:11.5px;color:var(--muted);text-align:center;margin-top:20px;line-height:1.6}
+.gloss{font-size:12.5px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin:-6px 0 14px}.gloss summary{cursor:pointer;font-weight:700;color:var(--ink)}.glist{margin:8px 0 2px;padding-inline-start:18px;columns:2;column-gap:28px}.glist li{margin:0 0 5px;break-inside:avoid}@media(max-width:780px){.glist{columns:1}}
 .arrow.up{color:var(--green)}.arrow.down{color:var(--red)}.arrow.flat{color:var(--muted)}
 """
 
@@ -179,8 +180,8 @@ const typeName=s=>LANG==='ar'?s:(TYPE_EN[s]||s);
 const CAT={'EH Clients':'عملاء آفاق البيئة','Clients / Potential Clients':'عملاء / عملاء محتملون','Government Clients & Institutions':'جهات حكومية ومؤسسات','Regulators & Compliance Bodies':'جهات تنظيمية ورقابية','Direct Competitors':'منافسون مباشرون','Active Competitors':'منافسون نشطون','Indirect / Adjacent Competitors':'منافسون غير مباشرين','Potential Collaborators':'شركاء محتملون','EH Partners':'شركاء آفاق','Suppliers / Subcontractors':'موردون / مقاولو باطن','Industry Associations & Academia':'جمعيات وجهات أكاديمية'};
 const catName=c=>LANG==='ar'?(CAT[c]||c):c;
 const STAT={'Won':['Won','فازت'],'Lost':['Lost','خسرت'],'Bid':['Bid submitted','قُدِّم عرض'],'Studied':['Studied','تمت الدراسة'],'Not studied':['Not studied','لم تُدرس']};
-const REL={'Core':['Core','أساسي'],'Adjacent':['Adjacent','مجاور'],'Not EH':['Not EH','خارج نطاق آفاق']};
-const PRI={'tier':['agency is Tier 1 or Government on the stakeholder map','الجهة من الفئة الأولى أو حكومية في خريطة أصحاب المصلحة'],'client':['agency is an EH client','الجهة عميل لآفاق البيئة'],'regulator':['agency is a regulator','الجهة تنظيمية'],'giga':['giga-project or PIF entity','مشروع كبير أو جهة تابعة لصندوق الاستثمارات العامة']};
+const REL={'Core':['Core service','خدمة أساسية'],'Adjacent':['Related','ذات صلة'],'Not EH':['Not for EH','خارج نطاق آفاق']};
+const PRI={'tier':['the buyer is Tier 1 or a government body on the stakeholder map','الجهة من الفئة الأولى أو جهة حكومية في خريطة أصحاب المصلحة'],'client':['the buyer is an EH client','الجهة عميل لآفاق البيئة'],'regulator':['the buyer is a regulator','الجهة تنظيمية'],'giga':['a giga-project or a company owned by the Public Investment Fund (PIF)','مشروع كبير أو شركة مملوكة لصندوق الاستثمارات العامة']};
 
 // ---------- filters
 const F={q:'',rel:'rel',status:'open',line:'',agency:'',tier:'',cat:'',type:'',from:'',to:'',pri:false};
@@ -206,12 +207,12 @@ function passMkt(t){const s=F.status;F.status=(s==='open'?'all':s);const r=pass(
 function opts(id,vals,label,fmt){const el=$(id),cur=el.value;el.innerHTML=`<option value="">${label}</option>`+vals.map(v=>`<option value="${esc(v)}">${esc(fmt?fmt(v):v)}</option>`).join('');el.value=cur}
 function buildFilters(){
   const T=D.tenders;
-  $('f-rel').innerHTML=[['rel',L('Relevant (Core + Adjacent)','ذات صلة (أساسي + مجاور)')],['Core',L('Core only','أساسي فقط')],['Adjacent',L('Adjacent only','مجاور فقط')],['all',L('All captured tenders','كل المنافسات الملتقطة')]].map(([v,l])=>`<option value="${v}">${l}</option>`).join('');$('f-rel').value=F.rel;
+  $('f-rel').innerHTML=[['rel',L('EH can bid for','يمكن لآفاق التقدم لها')],['Core',L('Core services only','الخدمات الأساسية فقط')],['Adjacent',L('Related only','ذات الصلة فقط')],['all',L('All tenders found','كل المنافسات التي وُجدت')]].map(([v,l])=>`<option value="${v}">${l}</option>`).join('');$('f-rel').value=F.rel;
   $('f-status').innerHTML=[['open',L('Open','مفتوحة')],['closed',L('Closed','مغلقة')],['all',L('Open and closed','المفتوحة والمغلقة')]].map(([v,l])=>`<option value="${v}">${l}</option>`).join('');$('f-status').value=F.status;
-  opts('f-line',D.service_lines.map(s=>String(s.id)),L('All service lines','كل خطوط الخدمة'),v=>slName(+v));
-  opts('f-agency',[...new Set(T.map(t=>t.agency))].sort((a,b)=>a.localeCompare(b,'ar')),L('All agencies','كل الجهات'));
-  opts('f-tier',[...new Set(T.map(t=>(t.map||{}).Tier||'none'))].sort(),L('All tiers','كل الفئات'),v=>v==='none'?L('Not on the map','غير موجودة في الخريطة'):v==='GOV'?L('Government','حكومية'):v);
-  opts('f-cat',[...new Set(T.map(t=>(t.map||{}).Category||'none'))].sort(),L('All map categories','كل تصنيفات الخريطة'),v=>v==='none'?L('Not on the map','غير موجودة في الخريطة'):catName(v));
+  opts('f-line',D.service_lines.map(s=>String(s.id)),L('All EH services','كل خدمات آفاق'),v=>slName(+v));
+  opts('f-agency',[...new Set(T.map(t=>t.agency))].sort((a,b)=>a.localeCompare(b,'ar')),L('All buyers','كل الجهات'));
+  opts('f-tier',[...new Set(T.map(t=>(t.map||{}).Tier||'none'))].sort(),L('All stakeholder-map tiers','كل فئات خريطة أصحاب المصلحة'),v=>v==='none'?L('Not on the stakeholder map','غير موجودة في خريطة أصحاب المصلحة'):v==='GOV'?L('Government','حكومية'):v);
+  opts('f-cat',[...new Set(T.map(t=>(t.map||{}).Category||'none'))].sort(),L('All stakeholder-map categories','كل تصنيفات خريطة أصحاب المصلحة'),v=>v==='none'?L('Not on the stakeholder map','غير موجودة في خريطة أصحاب المصلحة'):catName(v));
   opts('f-type',[...new Set(T.map(t=>t.type))].sort(),L('All tender types','كل أنواع المنافسات'),typeName);
 }
 
@@ -258,28 +259,28 @@ function exportPNG(id,name){const svg=$(id).querySelector('svg');if(!svg)return;
 
 // ---------- sections
 let SORT={k:'sub',dir:1};
-function stTag(s,t){const tr=t&&t.tracker;return `<span class="st ${s.replace(' ','')}">${L(...STAT[s])}</span>`+(tr?`<div style="font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap" title="${esc(L('Row number in the bid tracking sheet (EH-WIN-02-F01)','رقم الصف في جدول متابعة المنافسات'))}">${L('Tracker','الجدول')} #${tr.sn} · ${tr.year}</div>`:'')}
+function stTag(s,t){const tr=t&&t.tracker;return `<span class="st ${s.replace(' ','')}">${L(...STAT[s])}</span>`+(tr?`<div style="font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap" title="${esc(L('Row number in the bid tracking sheet (EH-WIN-02-F01)','رقم الصف في جدول متابعة المنافسات'))}">${L('Bid tracker row','صف جدول المنافسات')} ${tr.sn} (${tr.year})</div>`:'')}
 function relTag(t){const terms=(t.matched_terms||[]).map(x=>'«'+x+'»').join('، ');
-  const why=t.decided_by==='you'?L('Set by your review decision','حُدد بقرار المراجعة'):(t.relevance==='Not EH'?L('No EH service term matched','لم تطابق أي عبارة من خدمات آفاق'):L('Matched: ','طابق: ')+terms);
+  const why=t.decided_by==='you'?L('Set by your review decision','حُدد بقرار المراجعة'):(t.relevance==='Not EH'?L('No EH service words found in the title','لم تُوجد في العنوان كلمات من خدمات آفاق'):L('Words found: ','الكلمات المطابقة: ')+terms);
   return `<span class="tag ${t.relevance.replace(' ','')}" data-tip="${esc(why)}">${L(...REL[t.relevance])}</span>`}
 function daysCell(t){const n=daysLeft(t);if(n==null)return '—';if(n<0)return `<span class="days closed">${L('Closed','مغلقة')}</span>`;const c=n<=7?'soon':n<=14?'mid':'';return `<span class="days ${c}">${n===0?L('Today','اليوم'):n+' '+L(n===1?'day':'days',n>=3&&n<=10?'أيام':'يوم')}</span>`}
 function priCell(t){return t.priority?`<span class="pri" data-tip="${esc(t.priority_why.map(k=>L(...PRI[k])).join('<br>'))}">★</span>`:''}
 function table(rows){
   const C={
    title:[L('Tender (as published on Etimad)','المنافسة (كما نُشرت في اعتماد)'),t=>t.title,t=>`<td class="ttl ar" dir="rtl">${esc(t.title)}</td>`],
-   rel:[L('Relevance','الصلة'),t=>t.relevance,t=>`<td>${relTag(t)}</td>`],
+   rel:[L('Fit for EH','الملاءمة لآفاق'),t=>t.relevance,t=>`<td>${relTag(t)}</td>`],
    eh:[L('EH status','حالة آفاق'),t=>t.eh_status,t=>`<td>${stTag(t.eh_status,t)}</td>`],
    days:[L('Days left','الأيام المتبقية'),t=>{const n=daysLeft(t);return n==null?9999:n},t=>`<td>${daysCell(t)}</td>`],
    sub:[L('Submission deadline','آخر موعد للتقديم'),t=>t.sub,t=>`<td class="num">${fmtDT(t.sub)}</td>`],
-   agency:[L('Agency','الجهة'),t=>t.agency,t=>`<td class="ar agc" dir="rtl">${esc(t.agency)}${t.department?`<div style="font-size:11px;color:var(--muted)">${esc(t.department)}</div>`:''}</td>`],
-   line:[L('Service line','خط الخدمة'),t=>slName(t.service_lines[0])||'',t=>`<td>${t.service_lines.map(slName).join('<br>')||'—'}</td>`],
+   agency:[L('Buyer','الجهة'),t=>t.agency,t=>`<td class="ar agc" dir="rtl">${esc(t.agency)}${t.department?`<div style="font-size:11px;color:var(--muted)">${esc(t.department)}</div>`:''}</td>`],
+   line:[L('EH service','خدمة آفاق'),t=>slName(t.service_lines[0])||'',t=>`<td>${t.service_lines.map(slName).join('<br>')||'—'}</td>`],
    type:[L('Type','النوع'),t=>t.type,t=>`<td>${esc(typeName(t.type))}</td>`],
-   fee:[L('Document fee (SAR)','قيمة الكراسة (ريال)'),t=>t.fee_sar??-1,t=>`<td class="num">${t.fee_sar==null?'—':t.fee_sar===0?L('Free','مجانًا'):fmtN(t.fee_sar)}</td>`],
-   enq:[L('Enquiries by','آخر موعد للاستفسارات'),t=>t.enq,t=>`<td class="num">${fmtD(t.enq)}</td>`],
-   open:[L('Bid opening','فتح العروض'),t=>t.open,t=>`<td class="num">${fmtDT(t.open)}</td>`],
-   region:[L('Region','المنطقة'),t=>'',t=>`<td style="color:var(--muted)" data-tip="${esc(L('Region is shown only on each tender\'s own Etimad page and is not captured yet.','تظهر المنطقة في صفحة المنافسة فقط ولم تُلتقط بعد.'))}">${L('Not captured','غير ملتقطة')}</td>`],
-   pri:[L('Priority','أولوية'),t=>t.priority?0:1,t=>`<td style="text-align:center">${priCell(t)}</td>`],
-   ref:[L('Etimad reference','الرقم المرجعي'),t=>t.ref,t=>`<td><span class="ref">${esc(t.ref)}</span><button class="copy" data-ref="${esc(t.ref)}" title="${L('Copy the reference to search on Etimad','انسخ الرقم المرجعي للبحث في اعتماد')}">⧉</button></td>`]};
+   fee:[L('Price of tender documents (SAR)','ثمن وثائق المنافسة (ريال)'),t=>t.fee_sar??-1,t=>`<td class="num">${t.fee_sar==null?'—':t.fee_sar===0?L('Free','مجانًا'):fmtN(t.fee_sar)}</td>`],
+   enq:[L('Questions accepted until','آخر موعد للاستفسارات'),t=>t.enq,t=>`<td class="num">${fmtD(t.enq)}</td>`],
+   open:[L('Bids opened on','فتح العروض'),t=>t.open,t=>`<td class="num">${fmtDT(t.open)}</td>`],
+   region:[L('Region','المنطقة'),t=>'',t=>`<td style="color:var(--muted)" data-tip="${esc(L('Etimad shows the region only on each tender’s own page, which we do not read yet.','يعرض اعتماد المنطقة في صفحة كل منافسة فقط، ولا نقرؤها بعد.'))}">${L('Not available','غير متاحة')}</td>`],
+   pri:[L('Key buyer','جهة مهمة'),t=>t.priority?0:1,t=>`<td style="text-align:center">${priCell(t)}</td>`],
+   ref:[L('Etimad number','رقم المنافسة في اعتماد'),t=>t.ref,t=>`<td><span class="ref">${esc(t.ref)}</span><button class="copy" data-ref="${esc(t.ref)}" title="${L('Copy the reference to search on Etimad','انسخ الرقم المرجعي للبحث في اعتماد')}">⧉</button></td>`]};
   const order=['title','rel','eh','days','sub','agency','line','type','fee','enq','open','pri','region','ref'];
   const k=(C[SORT.k]||C.sub)[1];rows=rows.slice().sort((a,b)=>{const x=k(a),y=k(b);return (x>y?1:x<y?-1:0)*SORT.dir});
   let h=`<table class="t"><thead><tr>${order.map(c=>`<th data-k="${c}" class="${SORT.k===c?'s'+(SORT.dir<0?' up':''):''}">${C[c][0]}</th>`).join('')}</tr></thead><tbody>`;
@@ -290,81 +291,82 @@ function render(){
   document.documentElement.lang=LANG;document.documentElement.dir=LANG==='ar'?'rtl':'ltr';
   document.querySelectorAll('[data-en]').forEach(e=>e.textContent=L(e.dataset.en,e.dataset.ar));
   document.querySelectorAll('[data-ph-en]').forEach(e=>e.placeholder=L(e.dataset.phEn,e.dataset.phAr));
+  document.querySelectorAll('[data-html-en]').forEach(e=>e.innerHTML=L(e.dataset.htmlEn,e.dataset.htmlAr));
   buildFilters();
   const T=D.tenders,REL_T=T.filter(t=>t.relevance!=='Not EH');
   // stamp
   const lc=D.last_capture,age=lc?Math.floor((NOW-new Date(lc+'T08:00:00+03:00'))/864e5):null;
   $('cap').className='cap'+(age==null||age>8?' stale':'');
-  $('cap').textContent=lc?L('Last captured: ','آخر التقاط: ')+fmtD(lc)+(age>8?L(` — ${age} days ago, not live`,` — قبل ${age} يومًا، غير محدّث`):''):L('No capture loaded yet','لم يُحمَّل أي التقاط بعد');
+  $('cap').textContent=lc?L('Updated from Etimad: ','آخر تحديث من اعتماد: ')+fmtD(lc)+(age>8?L(` — ${age} days ago, not live`,` — قبل ${age} يومًا، غير محدّث`):''):L('No Etimad data loaded yet','لم تُحمَّل بيانات من اعتماد بعد');
   // KPIs (always on relevant tenders, independent of the filters, so the strip reads the same for everyone)
   const op=REL_T.filter(isOpen),wk=lc?new Date(new Date(lc)-6*864e5).toISOString().slice(0,10):'';
-  const K=[[op.length,L('Open relevant tenders','منافسات ذات صلة مفتوحة'),''],
+  const K=[[op.length,L('Open now','مفتوحة الآن'),''],
    [op.filter(t=>daysLeft(t)<=7).length,L('Closing within 7 days','تُغلق خلال 7 أيام'),'warn'],
    [op.filter(t=>daysLeft(t)<=14).length,L('Closing within 14 days','تُغلق خلال 14 يومًا'),'warn'],
-   [REL_T.filter(t=>t.first_seen===lc&&(t.pub||'')>=wk).length,L('New relevant this week (published in the 7 days before the last capture)','جديدة ذات صلة هذا الأسبوع (نُشرت خلال 7 أيام قبل آخر التقاط)'),'blue'],
-   [op.filter(t=>t.priority).length,L('Priority tenders open','منافسات ذات أولوية مفتوحة'),''],
-   [op.filter(t=>t.eh_status==='Not studied').length,L('Open and not yet in the bid tracker','مفتوحة وغير مسجلة في جدول المنافسات'),'warn']];
+   [REL_T.filter(t=>t.first_seen===lc&&(t.pub||'')>=wk).length,L('New this week (published in the 7 days before the last update)','جديدة هذا الأسبوع (نُشرت خلال 7 أيام قبل آخر تحديث)'),'blue'],
+   [op.filter(t=>t.priority).length,L('Open, from key buyers ★','مفتوحة من جهات مهمة ★'),''],
+   [op.filter(t=>t.eh_status==='Not studied').length,L('Open, not yet logged in the bid tracker','مفتوحة وغير مسجلة بعد في جدول المنافسات'),'warn']];
   const MW=(D.market&&D.market.windows||[]).slice(-1)[0],cntA=(D.counts||[]).filter(c=>/active/i.test(c.counter)).sort((a,b)=>a.capture_date<b.capture_date?1:-1)[0];
   const KM=[];
   if(MW)KM.push([MW.rows.filter(r=>r.dim==='type').reduce((x,r)=>x+r.n,0),L(`All tenders published on Etimad, ${fmtD(MW.from)} – ${fmtD(MW.to)}`,`كل المنافسات المنشورة في اعتماد، ${fmtD(MW.from)} – ${fmtD(MW.to)}`),'mkt']);
-  KM.push([cntA?+cntA.value:null,L('Active tenders on Etimad today, all sectors (site counter)','المنافسات النشطة في اعتماد اليوم بكل القطاعات (عدّاد المنصة)'),'mkt']);
-  KM.push([T.length,L('Tenders captured by EH searches, any relevance','منافسات التقطتها بحوث آفاق، بكل درجات الصلة'),'mkt']);
-  KM.push([REL_T.length,L('Of which relevant to EH (Core + Adjacent)','منها ذات صلة بآفاق (أساسي + مجاور)'),'mkt']);
+  KM.push([cntA?+cntA.value:null,L('Tenders open on Etimad today, all types of work (Etimad’s own count)','المنافسات المفتوحة في اعتماد اليوم بكل أنواع العمل (عدّاد المنصة)'),'mkt']);
+  KM.push([T.length,L('Tenders found by EH’s searches','منافسات وجدتها بحوث آفاق'),'mkt']);
+  KM.push([REL_T.length,L('Of these, ones EH can bid for','منها ما يمكن لآفاق التقدم له'),'mkt']);
   $('kpism').innerHTML=KM.map(([v,l,c])=>`<div class="kc ${c}"><div class="v">${fmtN(v)}</div><div class="l">${l}</div></div>`).join('');
   $('kpis').innerHTML=K.map(([v,l,c])=>`<div class="kc ${c}"><div class="v">${fmtN(v)}</div><div class="l">${l}</div></div>`).join('');
   // listing
   const rows=T.filter(pass);
-  $('cnt').textContent=L(`${rows.length} of ${T.length} captured tenders shown`,`عرض ${rows.length} من ${T.length} منافسة ملتقطة`);
-  $('list').innerHTML=rows.length?table(rows):`<div class="empty">${L('Searched, none found for these filters','تم البحث، ولا توجد نتائج لهذه المرشحات')}${lc?' — '+L('capture of ','التقاط ')+fmtD(lc):''}.</div>`;
+  $('cnt').textContent=L(`Showing ${rows.length} of ${T.length} tenders found`,`عرض ${rows.length} من ${T.length} منافسة`);
+  $('list').innerHTML=rows.length?table(rows):`<div class="empty">${L('Searched, none found for these filters','تم البحث، ولا توجد نتائج لهذه المرشحات')}${lc?' — '+L('update of ','تحديث ')+fmtD(lc):''}.</div>`;
   // market
   const M=T.filter(t=>passMkt(t)&&t.relevance!=='Not EH');
   const months=[...new Set(T.map(t=>(t.pub||'').slice(0,7)).filter(Boolean))].sort().slice(-12);
   vbars('ch-month',months.map(m=>({label:new Date(m+'-01T00:00:00').toLocaleDateString(LANG==='ar'?'ar-SA-u-ca-gregory-nu-latn':'en-GB',{month:'short',year:'2-digit'})})),
-    [{name:L('Core','أساسي'),color:'var(--core)',vals:months.map(m=>M.filter(t=>t.relevance==='Core'&&t.pub.startsWith(m)).length)},
-     {name:L('Adjacent','مجاور'),color:'var(--adj)',vals:months.map(m=>M.filter(t=>t.relevance==='Adjacent'&&t.pub.startsWith(m)).length)}],{title:L('Relevant tenders by month published','المنافسات ذات الصلة حسب شهر النشر')});
-  const firstPub=T.reduce((m,t)=>t.pub&&t.pub<m?t.pub:m,'9999');$('mcov').textContent=T.length?L(`Covers what has been captured so far (tenders published from ${fmtD(firstPub)}). Older months fill in with the 3-year history load.`,`يغطي ما التُقط حتى الآن (منافسات منشورة منذ ${fmtD(firstPub)}). تكتمل الأشهر الأقدم بعد تحميل سجل السنوات الثلاث.`):'';
+    [{name:L('Core service','خدمة أساسية'),color:'var(--core)',vals:months.map(m=>M.filter(t=>t.relevance==='Core'&&t.pub.startsWith(m)).length)},
+     {name:L('Related','ذات صلة'),color:'var(--adj)',vals:months.map(m=>M.filter(t=>t.relevance==='Adjacent'&&t.pub.startsWith(m)).length)}],{title:L('Tenders EH can bid for, by month published','المنافسات المناسبة لآفاق حسب شهر النشر')});
+  const firstPub=T.reduce((m,t)=>t.pub&&t.pub<m?t.pub:m,'9999');$('mcov').textContent=T.length?L(`Covers tenders found so far (published from ${fmtD(firstPub)}). Earlier months appear once three years of history are loaded.`,`يغطي المنافسات التي وُجدت حتى الآن (منشورة منذ ${fmtD(firstPub)}). تظهر الأشهر الأقدم بعد تحميل سجل السنوات الثلاث.`):'';
   const lineRows=D.service_lines.map(s=>({label:slName(s.id),values:[M.filter(t=>t.relevance==='Core'&&t.service_lines.includes(s.id)).length,M.filter(t=>t.relevance==='Adjacent'&&t.service_lines.includes(s.id)).length]})).filter(r=>r.values[0]+r.values[1]).sort((a,b)=>(b.values[0]+b.values[1])-(a.values[0]+a.values[1]));
   const unl=M.filter(t=>!t.service_lines.length).length;
-  if(unl)lineRows.push({label:L('General waste work (no single line)','أعمال نفايات عامة (دون خط محدد)'),values:[0,unl]});
-  hbars('ch-line',lineRows,{labelW:290,title:L('Relevant tenders by service line','حسب خط الخدمة')});
+  if(unl)lineRows.push({label:L('General waste work (no single EH service)','أعمال نفايات عامة (دون خدمة محددة)'),values:[0,unl]});
+  hbars('ch-line',lineRows,{labelW:290,title:L('Tenders EH can bid for, by EH service','حسب خدمة آفاق')});
   const types=[...new Set(M.map(t=>t.type))];
   hbars('ch-type',types.map(ty=>({label:typeName(ty),values:[M.filter(t=>t.type===ty&&t.relevance==='Core').length,M.filter(t=>t.type===ty&&t.relevance==='Adjacent').length]})).sort((a,b)=>(b.values[0]+b.values[1])-(a.values[0]+a.values[1])),{labelW:200});
-  $('ch-region').innerHTML=`<div class="empty">${L('Region is shown only on each tender\'s own Etimad page, so it is not captured yet. Searched, none found','المنطقة تظهر في صفحة كل منافسة فقط، لذا لم تُلتقط بعد. تم البحث، ولا توجد بيانات')}${lc?' — '+fmtD(lc):''}.</div>`;
+  $('ch-region').innerHTML=`<div class="empty">${L('Etimad shows the region only on each tender’s own page, which we do not read yet, so there is nothing to show','يعرض اعتماد المنطقة في صفحة كل منافسة فقط، ولا نقرؤها بعد، لذا لا توجد بيانات')}${lc?' — '+fmtD(lc):''}.</div>`;
   // growth / new lines need history
   const span=D.captures.length?Math.round((new Date(D.tenders.reduce((m,t)=>t.pub>m?t.pub:m,'0000'))-new Date(D.tenders.reduce((m,t)=>t.pub&&t.pub<m?t.pub:m,'9999')))/864e5/30.4):0;
   $('growth').innerHTML=span>=24?growth(M):`<div class="empty">${L(`Growth compares the last 12 months with the 12 before. The data covers about ${span} months so far, so this view fills in once the 3-year history is loaded.`,`يقارن النمو آخر 12 شهرًا بالـ12 التي قبلها. تغطي البيانات نحو ${span} أشهر حتى الآن، وتكتمل هذه النافذة بعد تحميل سجل السنوات الثلاث.`)}</div>`;
   const cnt=(D.counts||[]).filter(c=>/active/i.test(c.counter)).sort((a,b)=>a.capture_date<b.capture_date?1:-1)[0];
-  $('share').innerHTML=cnt?L(`At the last capture Etimad listed <b>${fmtN(+cnt.value)}</b> active tenders across all sectors; <b>${op.length}</b> of them are relevant to EH (${(100*op.length/+cnt.value).toFixed(1)}%).`,`عند آخر التقاط أدرجت منصة اعتماد <b>${fmtN(+cnt.value)}</b> منافسة نشطة في كل القطاعات، منها <b>${op.length}</b> ذات صلة بآفاق البيئة (${(100*op.length/+cnt.value).toFixed(1)}%).`):`<span class="empty">${L('Searched, none found: no market counter recorded yet.','تم البحث، ولا يوجد عدّاد سوق مسجل بعد.')}</span>`;
-  $('notes').innerHTML=D.notes.length?'<ul class="nts">'+D.notes.map(n=>`<li>${esc(L(n.en,n.ar))}</li>`).join('')+'</ul>'+`<div style="font-size:11.5px;color:var(--muted)">${L('Figures from all captured tenders, not the current filters.','الأرقام من كل المنافسات الملتقطة وليست من المرشحات الحالية.')}</div>`:`<div class="empty">${L('Searched, none found.','تم البحث، ولا توجد نتائج.')}</div>`;
+  $('share').innerHTML=cnt?L(`On the last update Etimad listed <b>${fmtN(+cnt.value)}</b> open tenders of every kind; <b>${op.length}</b> of them are ones EH can bid for (${(100*op.length/+cnt.value).toFixed(1)}%).`,`عند آخر تحديث أدرجت منصة اعتماد <b>${fmtN(+cnt.value)}</b> منافسة مفتوحة من كل الأنواع، منها <b>${op.length}</b> يمكن لآفاق التقدم لها (${(100*op.length/+cnt.value).toFixed(1)}%).`):`<span class="empty">${L('Searched, none found: Etimad’s count of open tenders has not been recorded yet.','تم البحث، ولم يُسجَّل عدّاد المنافسات المفتوحة في اعتماد بعد.')}</span>`;
+  $('notes').innerHTML=D.notes.length?'<ul class="nts">'+D.notes.map(n=>`<li>${esc(L(n.en,n.ar))}</li>`).join('')+'</ul>'+`<div style="font-size:11.5px;color:var(--muted)">${L('These figures cover every tender found, not just the current filters.','تشمل هذه الأرقام كل المنافسات التي وُجدت، لا المرشحات الحالية فقط.')}</div>`:`<div class="empty">${L('Searched, none found.','تم البحث، ولا توجد نتائج.')}</div>`;
   // requesters
   const byA={};M.forEach(t=>{const a=byA[t.agency]=byA[t.agency]||{n:0,fee:0,rec:t.map,first:t.pub,recent:0,prior:0};a.n++;a.fee+=t.fee_sar||0;if(t.pub<a.first)a.first=t.pub;const age=(NOW-new Date(t.pub))/864e5;if(age<=90)a.recent++;else if(age<=180)a.prior++});
   const AG=Object.entries(byA).sort((a,b)=>b[1].n-a[1].n||b[1].fee-a[1].fee);
-  hbars('ch-agency',AG.slice(0,10).map(([k,a])=>({label:k,ar:1,value:a.n,tip:`<b>${esc(k)}</b><br>${L('Relevant tenders','منافسات ذات صلة')}: ${a.n}<br>${L('Document fees (estimate of size, not contract value)','قيمة الكراسات (تقدير للحجم وليست قيمة العقد)')}: ${fmtN(a.fee)} ${L('SAR','ريال')}`})),{labelW:250});
-  $('agtable').innerHTML=AG.length?`<table class="t"><thead><tr><th>${L('Agency','الجهة')}</th><th>${L('Relevant tenders','منافسات ذات صلة')}</th><th>${L('Document fees (SAR, size estimate)','قيمة الكراسات (ريال، تقدير)')}</th><th>${L('Trend: last 90 days vs the 90 before','الاتجاه: آخر 90 يومًا مقابل السابقة')}</th><th>${L('Tier','الفئة')}</th><th>${L('Map category','تصنيف الخريطة')}</th><th>${L('EH client','عميل لآفاق')}</th><th>${L('Client value (SAR)','قيمة العميل (ريال)')}</th></tr></thead><tbody>`+AG.map(([k,a])=>{const r=a.rec||{},tr=a.recent>a.prior?['up','▲']:a.recent<a.prior?['down','▼']:['flat','■'];return `<tr><td class="ar" dir="rtl">${esc(k)}</td><td class="num">${a.n}</td><td class="num">${fmtN(a.fee)}</td><td><span class="arrow ${tr[0]}">${tr[1]}</span> ${a.recent} / ${a.prior}</td><td>${r.Tier?esc(r.Tier==='GOV'?L('Government','حكومية'):r.Tier):`<span style="color:var(--muted)">${L('Not on the map','غير موجودة في الخريطة')}</span>`}</td><td>${esc(r.Category?catName(r.Category):'—')}</td><td>${r['EH Client']==='Yes'?L('Yes','نعم'):r.Name?L('No','لا'):'—'}</td><td class="num">${r['Client Value (SAR)']?fmtN(r['Client Value (SAR)']):'—'}</td></tr>`}).join('')+'</tbody></table>':`<div class="empty">${L('Searched, none found for these filters.','تم البحث، ولا توجد نتائج لهذه المرشحات.')}</div>`;
+  hbars('ch-agency',AG.slice(0,10).map(([k,a])=>({label:k,ar:1,value:a.n,tip:`<b>${esc(k)}</b><br>${L('Tenders EH can bid for','منافسات يمكن لآفاق التقدم لها')}: ${a.n}<br>${L('Price of tender documents (rough size, not the contract value)','ثمن وثائق المنافسات (حجم تقريبي وليس قيمة العقد)')}: ${fmtN(a.fee)} ${L('SAR','ريال')}`})),{labelW:250});
+  $('agtable').innerHTML=AG.length?`<table class="t"><thead><tr><th>${L('Buyer','الجهة')}</th><th>${L('Tenders EH can bid for','منافسات يمكن لآفاق التقدم لها')}</th><th>${L('Document prices (SAR, rough size)','ثمن الوثائق (ريال، حجم تقريبي)')}</th><th>${L('Trend: last 90 days vs the 90 before','الاتجاه: آخر 90 يومًا مقابل السابقة')}</th><th>${L('Stakeholder-map tier','الفئة في الخريطة')}</th><th>${L('Stakeholder-map category','التصنيف في الخريطة')}</th><th>${L('EH client','عميل لآفاق')}</th><th>${L('Client value (SAR)','قيمة العميل (ريال)')}</th></tr></thead><tbody>`+AG.map(([k,a])=>{const r=a.rec||{},tr=a.recent>a.prior?['up','▲']:a.recent<a.prior?['down','▼']:['flat','■'];return `<tr><td class="ar" dir="rtl">${esc(k)}</td><td class="num">${a.n}</td><td class="num">${fmtN(a.fee)}</td><td><span class="arrow ${tr[0]}">${tr[1]}</span> ${a.recent} / ${a.prior}</td><td>${r.Tier?esc(r.Tier==='GOV'?L('Government','حكومية'):r.Tier):`<span style="color:var(--muted)">${L('Not on the stakeholder map','غير موجودة في خريطة أصحاب المصلحة')}</span>`}</td><td>${esc(r.Category?catName(r.Category):'—')}</td><td>${r['EH Client']==='Yes'?L('Yes','نعم'):r.Name?L('No','لا'):'—'}</td><td class="num">${r['Client Value (SAR)']?fmtN(r['Client Value (SAR)']):'—'}</td></tr>`}).join('')+'</tbody></table>':`<div class="empty">${L('Searched, none found for these filters.','تم البحث، ولا توجد نتائج لهذه المرشحات.')}</div>`;
   const sixAgo=new Date(NOW-182*864e5).toISOString().slice(0,10);
-  $('newiss').innerHTML=span>=9?(AG.filter(([k,a])=>a.first>=sixAgo).map(([k])=>`<span class="st ar" style="margin:2px">${esc(k)}</span>`).join('')||`<div class="empty">${L('Searched, none found.','تم البحث، ولا توجد نتائج.')}</div>`):`<div class="empty">${L('"New issuer" means no relevant tender before the last 6 months. With about '+span+' months of data every agency would look new, so this list waits for the history load.','«جهة جديدة» تعني عدم وجود منافسة ذات صلة قبل آخر 6 أشهر. ومع نحو '+span+' أشهر من البيانات ستبدو كل الجهات جديدة، لذا تنتظر هذه القائمة تحميل السجل.')}</div>`;
+  $('newiss').innerHTML=span>=9?(AG.filter(([k,a])=>a.first>=sixAgo).map(([k])=>`<span class="st ar" style="margin:2px">${esc(k)}</span>`).join('')||`<div class="empty">${L('Searched, none found.','تم البحث، ولا توجد نتائج.')}</div>`):`<div class="empty">${L('“New buyer” means a buyer with no tender EH could bid for before the last 6 months. With only about '+span+' months of data every buyer would look new, so this list waits until three years of history are loaded.','«جهة جديدة» تعني عدم وجود منافسة ذات صلة قبل آخر 6 أشهر. ومع نحو '+span+' أشهر من البيانات ستبدو كل الجهات جديدة، لذا تنتظر هذه القائمة تحميل السجل.')}</div>`;
   // priority
   const PR=M.filter(t=>t.priority),po=PR.filter(isOpen),pp=PR.filter(t=>!isOpen(t));
   $('pri-open').innerHTML=po.length?mini(po,true):`<div class="empty">${L('Searched, none found for these filters.','تم البحث، ولا توجد نتائج لهذه المرشحات.')}</div>`;
   $('pri-past').innerHTML=pp.length?mini(pp,false):`<div class="empty">${L('Searched, none found for these filters.','تم البحث، ولا توجد نتائج لهذه المرشحات.')}</div>`;
   // whitespace
   const WS=AG.filter(([k,a])=>a.n>=2&&!(a.rec&&a.rec['EH Client']==='Yes'));
-  $('white').innerHTML=WS.length?`<table class="t"><thead><tr><th>${L('Agency','الجهة')}</th><th>${L('Relevant tenders','منافسات ذات صلة')}</th><th>${L('On the map as','في الخريطة بوصفها')}</th></tr></thead><tbody>`+WS.map(([k,a])=>`<tr><td class="ar" dir="rtl">${esc(k)}</td><td class="num">${a.n}</td><td>${a.rec?esc(a.rec.Name+' · '+catName(a.rec.Category||'')):`<span style="color:var(--muted)">${L('Not on the map — candidate to add after review','غير موجودة في الخريطة — مرشحة للإضافة بعد المراجعة')}</span>`}</td></tr>`).join('')+'</tbody></table>':`<div class="empty">${L('Searched, none found: no agency outside the EH client list issued two or more relevant tenders in this view.','تم البحث، ولا توجد جهة من خارج عملاء آفاق طرحت منافستين أو أكثر ذات صلة في هذا العرض.')}</div>`;
+  $('white').innerHTML=WS.length?`<table class="t"><thead><tr><th>${L('Buyer','الجهة')}</th><th>${L('Tenders EH can bid for','منافسات يمكن لآفاق التقدم لها')}</th><th>${L('On the stakeholder map as','في خريطة أصحاب المصلحة بوصفها')}</th></tr></thead><tbody>`+WS.map(([k,a])=>`<tr><td class="ar" dir="rtl">${esc(k)}</td><td class="num">${a.n}</td><td>${a.rec?esc(a.rec.Name+' · '+catName(a.rec.Category||'')):`<span style="color:var(--muted)">${L('Not on the stakeholder map — suggested for review','غير موجودة في خريطة أصحاب المصلحة — مقترحة للمراجعة')}</span>`}</td></tr>`).join('')+'</tbody></table>':`<div class="empty">${L('Searched, none found: no agency outside the EH client list published two or more tenders EH can bid for in this view.','تم البحث، ولا توجد جهة من خارج عملاء آفاق طرحت منافستين أو أكثر يمكن لآفاق التقدم لها في هذا العرض.')}</div>`;
   renderMarket();
   if(typeof renderAnalyst==='function')renderAnalyst();
   document.querySelectorAll('#list th').forEach(th=>th.onclick=()=>{SORT.dir=(SORT.k===th.dataset.k?-SORT.dir:1);SORT.k=th.dataset.k;render()});
 }
 function renderMarket(){
   const MK=D.market||{windows:[]},W=MK.windows||[],w=W[W.length-1];
-  const none=`<div class="empty">${L('Searched, none found: the full-market capture has not run yet.','تم البحث، ولا توجد بيانات: لم يُشغَّل التقاط السوق الكامل بعد.')}</div>`;
+  const none=`<div class="empty">${L('Searched, none found: the weekly read of all Etimad tenders has not run yet.','تم البحث، ولا توجد بيانات: لم تُشغَّل القراءة الأسبوعية لكل منافسات اعتماد بعد.')}</div>`;
   if(!w){['mk-sector','mk-group','mk-day','mk-agency','mk-type','mk-trend','mk-notes'].forEach(i=>$(i).innerHTML=none);$('mkt-note').textContent='';return}
   const SN=MK.sector_names,GN=MK.group_names,nm=(o)=>L(o.en,o.ar);
   const tot=w.rows.filter(r=>r.dim==='type').reduce((a,r)=>a+r.n,0);
-  $('mkt-note').textContent=L(`Every tender published on Etimad from ${fmtD(w.from)} to ${fmtD(w.to)} (${fmtN(tot)} tenders), whatever its sector — not only what fits EH. Counts only; the filters above do not apply here. Bars split tenders still open at the capture from those already closed.`,`كل منافسة نُشرت في اعتماد من ${fmtD(w.from)} إلى ${fmtD(w.to)} (${fmtN(tot)} منافسة) أيًا كان قطاعها — لا ما يناسب آفاق فقط. أعداد فقط؛ ولا تنطبق المرشحات أعلاه هنا. تفصل الأعمدة المنافسات المفتوحة عند الالتقاط عن المغلقة.`);
+  $('mkt-note').textContent=L(`Every tender published on Etimad from ${fmtD(w.from)} to ${fmtD(w.to)} (${fmtN(tot)} tenders), in every type of work, not only what fits EH. Only counts are shown, and the filters above do not apply here. In each bar, blue is tenders still open when we checked and green is tenders already closed.`,`كل منافسة نُشرت في اعتماد من ${fmtD(w.from)} إلى ${fmtD(w.to)} (${fmtN(tot)} منافسة) في كل أنواع العمل، لا ما يناسب آفاق فقط. تُعرض الأعداد فقط، ولا تنطبق المرشحات أعلاه هنا. في كل عمود: الأزرق منافسات كانت مفتوحة عند المراجعة، والأخضر منافسات أُغلقت.`);
   const S=Object.entries(w.sectors).sort((a,b)=>b[1].n-a[1].n);
-  hbars('mk-sector',S.map(([k,v])=>({label:nm(SN[k]),values:[v.open,v.n-v.open],tip:`<b>${esc(nm(SN[k]))}</b><br>${L('Tenders','منافسات')}: ${v.n} (${(100*v.n/tot).toFixed(1)}%)<br>${L('Open at capture','مفتوحة عند الالتقاط')}: ${v.open}<br>${L('Document fees (size estimate)','قيمة الكراسات (تقدير للحجم)')}: ${fmtN(v.fees)} ${L('SAR','ريال')}<br><span style="color:var(--muted)">${v.acts.slice(0,4).map(a=>esc(a[0])+' '+a[1]).join('<br>')}</span>`})),{labelW:260});
+  hbars('mk-sector',S.map(([k,v])=>({label:nm(SN[k]),values:[v.open,v.n-v.open],tip:`<b>${esc(nm(SN[k]))}</b><br>${L('Tenders','منافسات')}: ${v.n} (${(100*v.n/tot).toFixed(1)}%)<br>${L('Still open when checked','مفتوحة عند المراجعة')}: ${v.open}<br>${L('Price of tender documents (rough sign of size)','ثمن وثائق المنافسات (مؤشر تقريبي للحجم)')}: ${fmtN(v.fees)} ${L('SAR','ريال')}<br><span style="color:var(--muted)">${v.acts.slice(0,4).map(a=>esc(a[0])+' '+a[1]).join('<br>')}</span>`})),{labelW:260});
   const G=Object.entries(w.agency_groups).sort((a,b)=>b[1].n-a[1].n);
-  hbars('mk-group',G.map(([k,v])=>({label:nm(GN[k]),value:v.n,tip:`<b>${esc(nm(GN[k]))}</b><br>${L('Tenders','منافسات')}: ${v.n}<br>${L('Document fees (size estimate)','قيمة الكراسات (تقدير للحجم)')}: ${fmtN(v.fees)} ${L('SAR','ريال')}`})),{labelW:240});
+  hbars('mk-group',G.map(([k,v])=>({label:nm(GN[k]),value:v.n,tip:`<b>${esc(nm(GN[k]))}</b><br>${L('Tenders','منافسات')}: ${v.n}<br>${L('Price of tender documents (rough sign of size)','ثمن وثائق المنافسات (مؤشر تقريبي للحجم)')}: ${fmtN(v.fees)} ${L('SAR','ريال')}`})),{labelW:240});
   // Per day: every window from the latest capture, joined into one continuous day axis (days with no tenders show as 0).
   const dd={};W.filter(x=>x.capture===w.capture).forEach(x=>x.rows.forEach(r=>{if(r.dim!=='date')return;const k=String(r.key).slice(0,10);if(!/^\d{4}-\d{2}-\d{2}$/.test(k)||k<String(x.from).slice(0,10)||k>String(x.to).slice(0,10))return;dd[k]={n:r.n,open:r.open}}));
   const dk=Object.keys(dd).sort(),DY=[];
@@ -372,24 +374,24 @@ function renderMarket(){
   const thin=DY.length>20?Math.ceil(DY.length/14):1,loc=LANG==='ar'?'ar-SA-u-ca-gregory-nu-latn':'en-GB';let lastM=null;
   vbars('mk-day',DY.map((r,i)=>{const d=new Date(r.key+'T00:00:00'),full=d.toLocaleDateString(loc,{weekday:'short',day:'numeric',month:'short'});
       if(i%thin)return {label:'',tip:full};const m=d.getMonth(),lab=m!==lastM?d.toLocaleDateString(loc,{day:'numeric',month:'short'}):String(d.getDate());lastM=m;return {label:lab,tip:full}}),
-    [{name:L('Open at capture','مفتوحة عند الالتقاط'),color:'var(--core)',vals:DY.map(r=>r.open)},{name:L('Closed','مغلقة'),color:'var(--adj)',vals:DY.map(r=>r.n-r.open)}],
+    [{name:L('Still open when checked','مفتوحة عند المراجعة'),color:'var(--core)',vals:DY.map(r=>r.open)},{name:L('Closed','مغلقة'),color:'var(--adj)',vals:DY.map(r=>r.n-r.open)}],
     {legend:true,valueLabels:DY.length<=20,title:L('Tenders published per day','المنافسات المنشورة يوميًا')});
   if(DY.length)$('mk-day').insertAdjacentHTML('beforeend',`<div style="font-size:11.5px;color:var(--muted);margin-top:2px">${L(`${fmtD(DY[0].key)} to ${fmtD(DY[DY.length-1].key)}: ${fmtN(DY.reduce((a,r)=>a+r.n,0))} tenders. Fridays and Saturdays are usually empty because agencies publish on working days.`,`من ${fmtD(DY[0].key)} إلى ${fmtD(DY[DY.length-1].key)}: ${fmtN(DY.reduce((a,r)=>a+r.n,0))} منافسة. تكون الجمعة والسبت فارغة غالبًا لأن الجهات تنشر في أيام العمل.`)}</div>`);
   const AG=w.rows.filter(r=>r.dim==='agency').sort((a,b)=>b.n-a.n).slice(0,15);
-  hbars('mk-agency',AG.map(r=>({label:r.key,ar:1,value:r.n,tip:`<b>${esc(r.key)}</b><br>${L('Tenders','منافسات')}: ${r.n}<br>${L('Document fees (size estimate)','قيمة الكراسات (تقدير للحجم)')}: ${fmtN(r.fees)} ${L('SAR','ريال')}`})),{labelW:260});
+  hbars('mk-agency',AG.map(r=>({label:r.key,ar:1,value:r.n,tip:`<b>${esc(r.key)}</b><br>${L('Tenders','منافسات')}: ${r.n}<br>${L('Price of tender documents (rough sign of size)','ثمن وثائق المنافسات (مؤشر تقريبي للحجم)')}: ${fmtN(r.fees)} ${L('SAR','ريال')}`})),{labelW:260});
   const TY=w.rows.filter(r=>r.dim==='type').sort((a,b)=>b.n-a.n),tf=TY.reduce((a,r)=>a+r.fees,0)||1;
-  $('mk-type').innerHTML=`<table class="t"><thead><tr><th>${L('Tender type','نوع المنافسة')}</th><th>${L('Tenders','منافسات')}</th><th>${L('Share','الحصة')}</th><th>${L('Share of document fees','الحصة من قيمة الكراسات')}</th></tr></thead><tbody>`+TY.map(r=>`<tr><td>${esc(typeName(r.key))}</td><td class="num">${fmtN(r.n)}</td><td class="num">${(100*r.n/tot).toFixed(0)}%</td><td class="num">${(100*r.fees/tf).toFixed(0)}%</td></tr>`).join('')+'</tbody></table>';
+  $('mk-type').innerHTML=`<table class="t"><thead><tr><th>${L('Tender type','نوع المنافسة')}</th><th>${L('Tenders','منافسات')}</th><th>${L('Share','الحصة')}</th><th>${L('Share of document prices (rough size)','الحصة من ثمن الوثائق (حجم تقريبي)')}</th></tr></thead><tbody>`+TY.map(r=>`<tr><td>${esc(typeName(r.key))}</td><td class="num">${fmtN(r.n)}</td><td class="num">${(100*r.n/tot).toFixed(0)}%</td><td class="num">${(100*r.fees/tf).toFixed(0)}%</td></tr>`).join('')+'</tbody></table>';
   if(W.length>=2){const p=W[W.length-2],pt=p.rows.filter(r=>r.dim==='type').reduce((a,r)=>a+r.n,0)||1;
     const ch=Object.keys(SN).map(k=>({k,now:(w.sectors[k]||{n:0}).n/tot*100,before:(p.sectors[k]||{n:0}).n/pt*100})).map(x=>({...x,d:x.now-x.before})).filter(x=>x.now||x.before).sort((a,b)=>b.d-a.d);
-    $('mk-trend').innerHTML=`<table class="t"><thead><tr><th>${L('Sector','القطاع')}</th><th>${L('Share now','الحصة الآن')}</th><th>${L('Share before','الحصة سابقًا')}</th><th>${L('Change (points)','التغير (نقاط)')}</th></tr></thead><tbody>`+ch.map(x=>`<tr><td>${esc(nm(SN[x.k]))}</td><td class="num">${x.now.toFixed(1)}%</td><td class="num">${x.before.toFixed(1)}%</td><td class="num"><span class="arrow ${x.d>0.5?'up':x.d<-0.5?'down':'flat'}">${x.d>0.5?'▲':x.d<-0.5?'▼':'■'}</span> ${x.d>0?'+':''}${x.d.toFixed(1)}</td></tr>`).join('')+`</tbody></table><div style="font-size:11.5px;color:var(--muted);margin-top:4px">${L(`Compares ${fmtD(w.from)}–${fmtD(w.to)} with ${fmtD(p.from)}–${fmtD(p.to)}.`,`مقارنة ${fmtD(w.from)}–${fmtD(w.to)} بـ${fmtD(p.from)}–${fmtD(p.to)}.`)}</div>`}
-  else $('mk-trend').innerHTML=`<div class="empty">${L('Expansion is measured as a change in each sector\'s share between capture windows. One window is on file so far; the comparison appears after the next weekly full-market capture.','يُقاس التوسع بتغيّر حصة كل قطاع بين فترات الالتقاط. توجد فترة واحدة حتى الآن؛ وتظهر المقارنة بعد الالتقاط الأسبوعي التالي للسوق الكامل.')}</div>`;
+    $('mk-trend').innerHTML=`<table class="t"><thead><tr><th>${L('Type of work','نوع العمل')}</th><th>${L('Share, latest period','الحصة، الفترة الأحدث')}</th><th>${L('Share, earlier period','الحصة، الفترة السابقة')}</th><th>${L('Change (percentage points)','التغير (نقاط مئوية)')}</th></tr></thead><tbody>`+ch.map(x=>`<tr><td>${esc(nm(SN[x.k]))}</td><td class="num">${x.now.toFixed(1)}%</td><td class="num">${x.before.toFixed(1)}%</td><td class="num"><span class="arrow ${x.d>0.5?'up':x.d<-0.5?'down':'flat'}">${x.d>0.5?'▲':x.d<-0.5?'▼':'■'}</span> ${x.d>0?'+':''}${x.d.toFixed(1)}</td></tr>`).join('')+`</tbody></table><div style="font-size:11.5px;color:var(--muted);margin-top:4px">${L(`Compares ${fmtD(w.from)}–${fmtD(w.to)} with ${fmtD(p.from)}–${fmtD(p.to)}.`,`مقارنة ${fmtD(w.from)}–${fmtD(w.to)} بـ${fmtD(p.from)}–${fmtD(p.to)}.`)}</div>`}
+  else $('mk-trend').innerHTML=`<div class="empty">${L('Growth is measured as the change in each type of work’s share between two periods. Only one period is on file so far; the comparison appears after the next weekly read of all Etimad tenders.','يُقاس التوسع بتغيّر حصة كل نوع عمل بين فترتين. توجد فترة واحدة حتى الآن؛ وتظهر المقارنة بعد القراءة الأسبوعية التالية لكل منافسات اعتماد.')}</div>`;
   $('mk-notes').innerHTML=(D.market_notes||[]).length?'<ul class="nts">'+D.market_notes.map(n=>`<li>${esc(L(n.en,n.ar))}</li>`).join('')+'</ul>':none;
 }
 function growth(M){const y1=new Date(NOW-365*864e5).toISOString().slice(0,10),y2=new Date(NOW-730*864e5).toISOString().slice(0,10);
   const rows=D.service_lines.map(s=>{const a=M.filter(t=>t.service_lines.includes(s.id)&&t.pub>=y1).length,b=M.filter(t=>t.service_lines.includes(s.id)&&t.pub>=y2&&t.pub<y1).length;return {s,a,b,d:a-b}}).filter(r=>r.a||r.b).sort((x,y)=>y.d-x.d);
   if(!rows.length)return `<div class="empty">${L('Searched, none found.','تم البحث، ولا توجد نتائج.')}</div>`;
-  return `<table class="t"><thead><tr><th>${L('Service line','خط الخدمة')}</th><th>${L('Last 12 months','آخر 12 شهرًا')}</th><th>${L('12 months before','الـ12 شهرًا السابقة')}</th><th>${L('Change','التغير')}</th></tr></thead><tbody>`+rows.map(r=>`<tr><td>${slName(r.s.id)}${!r.b&&r.a?` <span class="st">${L('New','جديد')}</span>`:''}</td><td class="num">${r.a}</td><td class="num">${r.b}</td><td class="num"><span class="arrow ${r.d>0?'up':r.d<0?'down':'flat'}">${r.d>0?'▲':r.d<0?'▼':'■'}</span> ${r.d>0?'+':''}${r.d}</td></tr>`).join('')+'</tbody></table>'}
-function mini(rows,open){rows=rows.slice().sort((a,b)=>open?(a.sub>b.sub?1:-1):(a.sub<b.sub?1:-1));return `<table class="t"><thead><tr><th>${L('Tender','المنافسة')}</th><th>${L('Agency','الجهة')}</th><th>${open?L('Days left','الأيام المتبقية'):L('Closed on','أُغلقت في')}</th><th>${L('EH status','حالة آفاق')}</th><th>${L('Outcome on Etimad','النتيجة في اعتماد')}</th></tr></thead><tbody>`+rows.slice(0,25).map(t=>`<tr><td class="ar" dir="rtl">${esc(t.title)}</td><td class="ar" dir="rtl">${esc(t.agency)}</td><td>${open?daysCell(t):fmtD(t.sub)}</td><td>${stTag(t.eh_status,t)}</td><td style="color:var(--muted)">${open?'—':L('Not captured yet','لم تُلتقط بعد')}</td></tr>`).join('')+'</tbody></table>'+(rows.length>25?`<div style="font-size:11.5px;color:var(--muted);margin-top:6px">${L('Showing 25 of '+rows.length+'; use the filters to narrow.','عرض 25 من '+rows.length+'؛ استخدم المرشحات للتضييق.')}</div>`:'')}
+  return `<table class="t"><thead><tr><th>${L('EH service','خدمة آفاق')}</th><th>${L('Last 12 months','آخر 12 شهرًا')}</th><th>${L('12 months before','الـ12 شهرًا السابقة')}</th><th>${L('Change','التغير')}</th></tr></thead><tbody>`+rows.map(r=>`<tr><td>${slName(r.s.id)}${!r.b&&r.a?` <span class="st">${L('New','جديد')}</span>`:''}</td><td class="num">${r.a}</td><td class="num">${r.b}</td><td class="num"><span class="arrow ${r.d>0?'up':r.d<0?'down':'flat'}">${r.d>0?'▲':r.d<0?'▼':'■'}</span> ${r.d>0?'+':''}${r.d}</td></tr>`).join('')+'</tbody></table>'}
+function mini(rows,open){rows=rows.slice().sort((a,b)=>open?(a.sub>b.sub?1:-1):(a.sub<b.sub?1:-1));return `<table class="t"><thead><tr><th>${L('Tender','المنافسة')}</th><th>${L('Buyer','الجهة')}</th><th>${open?L('Days left','الأيام المتبقية'):L('Closed on','أُغلقت في')}</th><th>${L('EH status','حالة آفاق')}</th><th>${L('Result on Etimad','النتيجة في اعتماد')}</th></tr></thead><tbody>`+rows.slice(0,25).map(t=>`<tr><td class="ar" dir="rtl">${esc(t.title)}</td><td class="ar" dir="rtl">${esc(t.agency)}</td><td>${open?daysCell(t):fmtD(t.sub)}</td><td>${stTag(t.eh_status,t)}</td><td style="color:var(--muted)">${open?'—':L('Not read yet','لم تُقرأ بعد')}</td></tr>`).join('')+'</tbody></table>'+(rows.length>25?`<div style="font-size:11.5px;color:var(--muted);margin-top:6px">${L('Showing 25 of '+rows.length+'; use the filters to narrow.','عرض 25 من '+rows.length+'؛ استخدم المرشحات للتضييق.')}</div>`:'')}
 
 // ---------- wiring
 function setLang(l){LANG=l;render();document.querySelectorAll('.tog.lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===l))}
@@ -424,65 +426,66 @@ HTML = f"""<!doctype html>
 <div class="ctl"><div class="tog lang"><button data-l="en" class="on">EN</button><button data-l="ar">عربي</button></div><div class="tog th"><button data-t="light" class="on">☀</button><button data-t="dark">☾</button></div></div></header>
 <main>
 <div class="stamp"><span id="cap" class="cap"></span>
-{T("Source: Etimad public tender listing, read once a week (Sunday). Titles and agency names are shown exactly as published.","المصدر: قائمة المنافسات العامة في منصة اعتماد، تُقرأ أسبوعيًا (الأحد). العناوين وأسماء الجهات كما نُشرت تمامًا.")}</div>
-<div class="gapnote">{T("Known gap: direct purchases can open and close within 3–15 days, between two Sunday captures, so some are missed. Public tenders (usually 14–30 days) are caught with time to study. To open a tender on Etimad, copy its reference number into Etimad's search.","فجوة معروفة: قد يُطرح الشراء المباشر ويُغلق خلال 3–15 يومًا بين التقاطين، فيفوت بعضه. أما المنافسات العامة (14–30 يومًا عادةً) فتُلتقط في وقت يسمح بدراستها. لفتح منافسة في اعتماد انسخ رقمها المرجعي وابحث به في المنصة.")}</div>
-<div class="klab" data-en="Etimad market" data-ar="سوق اعتماد">Etimad market</div><div class="kstrip" id="kpism"></div>
-<div class="klab" data-en="For EH" data-ar="لآفاق البيئة">For EH</div><div class="kstrip" id="kpis"></div>
+{T("Where this comes from: the public list of tenders on Etimad, the government tendering website, checked every Sunday. Tender titles and buyer names are shown exactly as Etimad publishes them.","المصدر: قائمة المنافسات العامة في منصة اعتماد للمنافسات الحكومية، نراجعها كل أحد. عناوين المنافسات وأسماء الجهات كما ينشرها اعتماد تمامًا.")}</div>
+<div class="gapnote">{T("Please note: direct purchases (small orders placed without a full tender) can open and close within 3–15 days, between two Sunday checks, so some are missed. Public tenders usually stay open 14–30 days, so we see them in time to study them. To open a tender on Etimad, copy its number into Etimad's search box.","تنبيه: قد يُطرح الشراء المباشر (طلبات صغيرة دون منافسة كاملة) ويُغلق خلال 3–15 يومًا بين مراجعتين، فيفوتنا بعضه. أما المنافسات العامة فتبقى مفتوحة عادةً 14–30 يومًا، فنراها في وقت يسمح بدراستها. لفتح منافسة في اعتماد انسخ رقمها وابحث به في المنصة.")}</div>
+<details class="gloss"><summary data-en="Words used on this page" data-ar="كلمات مستخدمة في هذه الصفحة">Words used on this page</summary><ul class="glist" data-html-en="<li><b>Core service:</b> the tender asks for one of EH's 14 services.</li><li><b>Related:</b> the tender is close to EH's work (for example general waste or site services) but not a core service.</li><li><b>Key buyer ★:</b> Tier 1 or a government body on the stakeholder map, an EH client, a regulator, or a giga-project or PIF company.</li><li><b>Direct purchase:</b> a small, quick order placed without a full tender; often open for less than two weeks.</li><li><b>Public tender:</b> an open competition anyone qualified can bid for; usually open 14–30 days.</li><li><b>Price of tender documents:</b> what a bidder pays Etimad for the tender papers; a rough sign of size, never the contract value.</li><li><b>Stakeholder-map tier:</b> how important the buyer is to EH, as recorded on the stakeholder map (Tier 1 = most important).</li><li><b>Bid tracker:</b> EH's own sheet of tenders studied and bid for (EH-WIN-02-F01).</li><li><b>PIF:</b> the Public Investment Fund, which owns NEOM, Red Sea Global, ROSHN and many other companies.</li><li><b>Giga-project:</b> one of the very large Vision 2030 developments, such as NEOM, Qiddiya or Diriyah.</li>" data-html-ar="<li><b>خدمة أساسية:</b> تطلب المنافسة إحدى خدمات آفاق الأربع عشرة.</li><li><b>ذات صلة:</b> قريبة من عمل آفاق (مثل النفايات العامة أو خدمات المواقع) لكنها ليست خدمة أساسية.</li><li><b>جهة مهمة ★:</b> جهة من الفئة الأولى أو حكومية في خريطة أصحاب المصلحة، أو عميل لآفاق، أو جهة تنظيمية، أو مشروع كبير أو شركة للصندوق.</li><li><b>شراء مباشر:</b> طلب صغير وسريع دون منافسة كاملة؛ يبقى مفتوحًا غالبًا أقل من أسبوعين.</li><li><b>منافسة عامة:</b> منافسة مفتوحة لكل مؤهل؛ تبقى مفتوحة عادةً 14–30 يومًا.</li><li><b>ثمن وثائق المنافسة:</b> ما يدفعه المتقدم لاعتماد مقابل وثائق المنافسة؛ مؤشر تقريبي للحجم وليس قيمة العقد.</li><li><b>الفئة في الخريطة:</b> أهمية الجهة لآفاق كما هي مسجلة في خريطة أصحاب المصلحة (الفئة الأولى = الأهم).</li><li><b>جدول المنافسات:</b> جدول آفاق للمنافسات التي درستها أو تقدمت لها (EH-WIN-02-F01).</li><li><b>الصندوق:</b> صندوق الاستثمارات العامة، مالك نيوم والبحر الأحمر الدولية وروشن وشركات كثيرة أخرى.</li><li><b>مشروع كبير:</b> أحد مشاريع رؤية 2030 الضخمة مثل نيوم والقدية والدرعية.</li>"></ul></details>
+<div class="klab" data-en="All government tenders on Etimad" data-ar="كل المنافسات الحكومية في اعتماد">All government tenders on Etimad</div><div class="kstrip" id="kpism"></div>
+<div class="klab" data-en="Tenders EH can bid for" data-ar="منافسات يمكن لآفاق التقدم لها">Tenders EH can bid for</div><div class="kstrip" id="kpis"></div>
 <div class="filters">
-<input id="f-q" type="search" data-ph-en="Search title, agency or reference" data-ph-ar="ابحث في العنوان أو الجهة أو الرقم المرجعي">
+<input id="f-q" type="search" data-ph-en="Search by title, buyer or tender number" data-ph-ar="ابحث بالعنوان أو الجهة أو رقم المنافسة">
 <select id="f-rel"></select><select id="f-status"></select><select id="f-line"></select><select id="f-agency"></select>
 <select id="f-tier"></select><select id="f-cat"></select><select id="f-type"></select>
-<select disabled title="Region is not captured yet · المنطقة غير ملتقطة بعد"><option data-en="Region: not captured yet" data-ar="المنطقة: غير ملتقطة بعد">Region: not captured yet</option></select>
+<select disabled title="Region is not available yet · المنطقة غير متاحة بعد"><option data-en="Region: not available yet" data-ar="المنطقة: غير متاحة بعد">Region: not available yet</option></select>
 <label><span data-en="Published from" data-ar="نُشرت من">Published from</span> <input id="f-from" type="date"></label>
 <label><span data-en="to" data-ar="إلى">to</span> <input id="f-to" type="date"></label>
-<label><input id="f-pri" type="checkbox"> <span data-en="Priority only" data-ar="ذات الأولوية فقط">Priority only</span></label>
+<label><input id="f-pri" type="checkbox"> <span data-en="Key buyers only ★" data-ar="الجهات المهمة فقط ★">Key buyers only ★</span></label>
 <button id="f-reset" class="reset" data-en="Reset" data-ar="إعادة ضبط">Reset</button><span id="cnt" class="cnt"></span></div>
 
 <section class="card"><div class="hd"><h2 data-en="Tenders" data-ar="المنافسات">Tenders</h2></div>
-<div class="note" data-en="Default view: relevant tenders that are still open, soonest deadline first. Click a column to sort. Hover a relevance tag to see the term that matched; hover ★ to see why a tender is Priority." data-ar="العرض الافتراضي: المنافسات ذات الصلة المفتوحة، الأقرب موعدًا أولًا. انقر عنوان العمود للترتيب. مرّر المؤشر على وسم الصلة لرؤية العبارة المطابقة، وعلى ★ لمعرفة سبب الأولوية.">Default view: relevant tenders that are still open, soonest deadline first.</div>
+<div class="note" data-en="Shown first: open tenders EH can bid for, nearest deadline first. Click a column heading to sort. Point at a Core service or Related tag to see the words that matched; point at ★ to see why the buyer is a key buyer." data-ar="يظهر أولًا: المنافسات المفتوحة التي يمكن لآفاق التقدم لها، الأقرب موعدًا أولًا. انقر عنوان العمود للترتيب. مرّر المؤشر على وسم «خدمة أساسية» أو «ذات صلة» لرؤية الكلمات المطابقة، وعلى ★ لمعرفة سبب اعتبار الجهة مهمة.">Shown first: open tenders EH can bid for, nearest deadline first.</div>
 <div class="tw" id="list"></div></section>
 
-<section class="card"><h2 data-en="Where the market is going — relevant to EH" data-ar="إلى أين يتجه السوق — ما يخص آفاق البيئة">Where the market is going — relevant to EH</h2>
-<div class="note" data-en="Charts follow the filters above but include closed tenders, so they show the market rather than only what is open today." data-ar="تتبع الرسوم المرشحات أعلاه لكنها تشمل المنافسات المغلقة، لتعرض السوق لا ما هو مفتوح اليوم فقط.">Charts follow the filters above but include closed tenders.</div>
-<div class="legend"><span><i style="background:var(--core)"></i><span data-en="Core" data-ar="أساسي">Core</span></span><span><i style="background:var(--adj)"></i><span data-en="Adjacent" data-ar="مجاور">Adjacent</span></span></div>
-<div class="g2"><div><div class="hd"><b data-en="Relevant tenders by month published" data-ar="المنافسات ذات الصلة حسب شهر النشر">Relevant tenders by month published</b>{png('ch-month','etimad_by_month')}</div><div id="ch-month"></div><div id="mcov" style="font-size:11.5px;color:var(--muted)"></div></div>
-<div><div class="hd"><b data-en="By service line" data-ar="حسب خط الخدمة">By service line</b>{png('ch-line','etimad_by_service_line')}</div><div id="ch-line"></div></div>
+<section class="card"><h2 data-en="Trends in tenders EH can bid for" data-ar="اتجاهات المنافسات التي يمكن لآفاق التقدم لها">Trends in tenders EH can bid for</h2>
+<div class="note" data-en="These charts follow the filters above but also count closed tenders, so they show the trend, not just what is open today." data-ar="تتبع هذه الرسوم المرشحات أعلاه لكنها تحتسب المنافسات المغلقة أيضًا، لتعرض الاتجاه لا ما هو مفتوح اليوم فقط.">These charts follow the filters above but also count closed tenders.</div>
+<div class="legend"><span><i style="background:var(--core)"></i><span data-en="Core service" data-ar="خدمة أساسية">Core service</span></span><span><i style="background:var(--adj)"></i><span data-en="Related" data-ar="ذات صلة">Related</span></span></div>
+<div class="g2"><div><div class="hd"><b data-en="Tenders EH can bid for, by month published" data-ar="المنافسات المناسبة لآفاق حسب شهر النشر">Tenders EH can bid for, by month published</b>{png('ch-month','etimad_by_month')}</div><div id="ch-month"></div><div id="mcov" style="font-size:11.5px;color:var(--muted)"></div></div>
+<div><div class="hd"><b data-en="By EH service" data-ar="حسب خدمة آفاق">By EH service</b>{png('ch-line','etimad_by_service_line')}</div><div id="ch-line"></div></div>
 <div><div class="hd"><b data-en="By tender type" data-ar="حسب نوع المنافسة">By tender type</b>{png('ch-type','etimad_by_type')}</div><div id="ch-type"></div></div>
 <div><div class="hd"><b data-en="By region" data-ar="حسب المنطقة">By region</b></div><div id="ch-region"></div></div></div>
-<div class="g2" style="margin-top:14px"><div><b data-en="Share of the whole Etimad market" data-ar="الحصة من سوق اعتماد كاملًا">Share of the whole Etimad market</b><p id="share" style="font-size:13px"></p>
-<b data-en="Fastest-growing and shrinking service lines" data-ar="أسرع خطوط الخدمة نموًا وتراجعًا">Fastest-growing and shrinking service lines</b><div id="growth" style="margin-top:6px"></div></div>
+<div class="g2" style="margin-top:14px"><div><b data-en="How much of Etimad fits EH" data-ar="كم من منافسات اعتماد يناسب آفاق">How much of Etimad fits EH</b><p id="share" style="font-size:13px"></p>
+<b data-en="EH services growing and shrinking fastest" data-ar="أسرع خدمات آفاق نموًا وتراجعًا">EH services growing and shrinking fastest</b><div id="growth" style="margin-top:6px"></div></div>
 <div><b data-en="What this means for EH" data-ar="ماذا يعني هذا لآفاق البيئة">What this means for EH</b><div id="notes" style="margin-top:6px"></div></div></div></section>
 
-<section class="card"><h2 data-en="Where the market is going — all Etimad tenders" data-ar="إلى أين يتجه السوق — كل منافسات اعتماد">Where the market is going — all Etimad tenders</h2>
+<section class="card"><h2 data-en="What the Kingdom is buying — every tender on Etimad" data-ar="ما الذي تشتريه المملكة — كل منافسات اعتماد">What the Kingdom is buying — every tender on Etimad</h2>
 <div class="note" id="mkt-note"></div>
-<div class="legend"><span><i style="background:var(--core)"></i><span data-en="Open at capture" data-ar="مفتوحة عند الالتقاط">Open at capture</span></span><span><i style="background:var(--adj)"></i><span data-en="Already closed" data-ar="مغلقة">Already closed</span></span></div>
-<div class="g2"><div><div class="hd"><b data-en="By sector (Etimad activity, grouped)" data-ar="حسب القطاع (نشاط اعتماد مجمّعًا)">By sector</b>{png('mk-sector','etimad_market_by_sector')}</div><div id="mk-sector"></div></div>
-<div><div class="hd"><b data-en="Who is buying (largest agencies, grouped)" data-ar="من يشتري (أكبر الجهات مجمّعة)">Who is buying</b>{png('mk-group','etimad_market_by_buyer')}</div><div id="mk-group"></div></div>
+<div class="legend"><span><i style="background:var(--core)"></i><span data-en="Still open when checked" data-ar="مفتوحة عند المراجعة">Still open when checked</span></span><span><i style="background:var(--adj)"></i><span data-en="Already closed" data-ar="مغلقة">Already closed</span></span></div>
+<div class="g2"><div><div class="hd"><b data-en="By type of work" data-ar="حسب نوع العمل">By type of work</b>{png('mk-sector','etimad_market_by_sector')}</div><div id="mk-sector"></div></div>
+<div><div class="hd"><b data-en="Who is buying (buyers grouped by kind)" data-ar="من يشتري (الجهات مجمّعة حسب نوعها)">Who is buying</b>{png('mk-group','etimad_market_by_buyer')}</div><div id="mk-group"></div></div>
 <div><div class="hd"><b data-en="Tenders published per day" data-ar="المنافسات المنشورة يوميًا">Tenders published per day</b>{png('mk-day','etimad_market_per_day')}</div><div id="mk-day"></div></div>
-<div><div class="hd"><b data-en="Top 15 agencies" data-ar="أعلى 15 جهة">Top 15 agencies</b>{png('mk-agency','etimad_market_top_agencies')}</div><div id="mk-agency"></div></div></div>
+<div><div class="hd"><b data-en="15 biggest buyers" data-ar="أكبر 15 جهة مشترية">15 biggest buyers</b>{png('mk-agency','etimad_market_top_agencies')}</div><div id="mk-agency"></div></div></div>
 <div class="g2" style="margin-top:14px"><div><b data-en="By tender type" data-ar="حسب نوع المنافسة">By tender type</b><div id="mk-type" style="margin-top:6px"></div>
 <b style="display:block;margin-top:12px" data-en="What the Kingdom is expanding" data-ar="ما الذي تتوسع فيه المملكة">What the Kingdom is expanding</b><div id="mk-trend" style="margin-top:6px"></div></div>
 <div><b data-en="What the Kingdom is buying now" data-ar="ما الذي تشتريه المملكة الآن">What the Kingdom is buying now</b><div id="mk-notes" style="margin-top:6px"></div></div></div></section>
 
-<section class="card"><h2 data-en="Biggest requesters" data-ar="أكبر الجهات الطارحة">Biggest requesters</h2>
-<div class="note" data-en="Agencies ranked by relevant tenders. Document fees are the price of the tender documents — a rough sign of size, never the contract value." data-ar="الجهات مرتبة حسب المنافسات ذات الصلة. قيمة الكراسة هي ثمن وثائق المنافسة — مؤشر تقريبي للحجم وليست قيمة العقد.">Agencies ranked by relevant tenders.</div>
-<div class="g2"><div><div class="hd"><b data-en="Top 10 agencies" data-ar="أعلى 10 جهات">Top 10 agencies</b>{png('ch-agency','etimad_top_agencies')}</div><div id="ch-agency"></div></div>
-<div><b data-en="New issuers (last 6 months)" data-ar="جهات جديدة (آخر 6 أشهر)">New issuers (last 6 months)</b><div id="newiss" style="margin-top:6px"></div></div></div>
+<section class="card"><h2 data-en="Biggest buyers" data-ar="أكبر الجهات المشترية">Biggest buyers</h2>
+<div class="note" data-en="Buyers ranked by the number of tenders EH can bid for. The document price is what a bidder pays for the tender papers: a rough sign of size, never the contract value." data-ar="الجهات مرتبة حسب عدد المنافسات التي يمكن لآفاق التقدم لها. ثمن الوثائق هو ما يدفعه المتقدم لشراء وثائق المنافسة: مؤشر تقريبي للحجم وليس قيمة العقد.">Buyers ranked by the number of tenders EH can bid for.</div>
+<div class="g2"><div><div class="hd"><b data-en="10 biggest buyers" data-ar="أكبر 10 جهات">10 biggest buyers</b>{png('ch-agency','etimad_top_agencies')}</div><div id="ch-agency"></div></div>
+<div><b data-en="New buyers (last 6 months)" data-ar="جهات جديدة (آخر 6 أشهر)">New buyers (last 6 months)</b><div id="newiss" style="margin-top:6px"></div></div></div>
 <div class="tw" id="agtable" style="margin-top:12px;max-height:420px"></div></section>
 
-<section class="card"><h2 data-en="Tenders of value or distinction" data-ar="منافسات ذات قيمة أو تميز">Tenders of value or distinction</h2>
-<div class="note" data-en="Priority = the agency is Tier 1 or Government on the stakeholder map, an EH client, a regulator, or a giga-project / PIF entity." data-ar="الأولوية = الجهة من الفئة الأولى أو حكومية في الخريطة، أو عميل لآفاق، أو جهة تنظيمية، أو مشروع كبير / جهة تابعة لصندوق الاستثمارات العامة.">Priority definition</div>
-<div class="g2"><div><b data-en="Open Priority tenders" data-ar="منافسات الأولوية المفتوحة">Open Priority tenders</b><div class="tw" id="pri-open" style="margin-top:6px;max-height:420px"></div></div>
-<div><b data-en="Past Priority tenders and their outcome" data-ar="منافسات الأولوية السابقة ونتيجتها">Past Priority tenders and their outcome</b><div class="tw" id="pri-past" style="margin-top:6px;max-height:420px"></div></div></div></section>
+<section class="card"><h2 data-en="Tenders from key buyers ★" data-ar="منافسات من جهات مهمة ★">Tenders from key buyers ★</h2>
+<div class="note" data-en="A key buyer is Tier 1 or a government body on the stakeholder map, an EH client, a regulator, or a giga-project or company owned by the Public Investment Fund (PIF)." data-ar="الجهة المهمة هي جهة من الفئة الأولى أو جهة حكومية في الخريطة، أو عميل لآفاق، أو جهة تنظيمية، أو مشروع كبير أو شركة مملوكة لصندوق الاستثمارات العامة.">A key buyer is Tier 1 or a government body on the stakeholder map, an EH client, a regulator, or a PIF company.</div>
+<div class="g2"><div><b data-en="Open now" data-ar="مفتوحة الآن">Open now</b><div class="tw" id="pri-open" style="margin-top:6px;max-height:420px"></div></div>
+<div><b data-en="Closed, and how they ended" data-ar="مغلقة، وكيف انتهت">Closed, and how they ended</b><div class="tw" id="pri-past" style="margin-top:6px;max-height:420px"></div></div></div></section>
 
-<section class="card"><h2 data-en="Stakeholder view" data-ar="منظور أصحاب المصلحة">Stakeholder view</h2>
-<div class="note" data-en="Agencies that issue relevant tenders but are not EH clients — where EH could grow. Agencies not on the map are listed for review and are never added automatically." data-ar="جهات تطرح منافسات ذات صلة وليست من عملاء آفاق — مجالات نمو محتملة. الجهات غير الموجودة في الخريطة تُعرض للمراجعة ولا تُضاف تلقائيًا.">Whitespace</div>
+<section class="card"><h2 data-en="Buyers who are not EH clients yet" data-ar="جهات ليست من عملاء آفاق بعد">Buyers who are not EH clients yet</h2>
+<div class="note" data-en="Buyers that publish tenders EH can bid for but are not EH clients yet: room to grow. Buyers missing from the stakeholder map are listed for review and are never added automatically." data-ar="جهات تطرح منافسات يمكن لآفاق التقدم لها وليست من عملائها بعد: مجال للنمو. الجهات غير الموجودة في خريطة أصحاب المصلحة تُعرض للمراجعة ولا تُضاف تلقائيًا.">Buyers that publish tenders EH can bid for but are not EH clients yet.</div>
 <div class="tw" id="white" style="max-height:420px"></div>
-<div style="margin-top:12px"><b data-en="Winners of awarded tenders" data-ar="الفائزون بالمنافسات المرساة">Winners of awarded tenders</b>
-<div class="empty" style="margin-top:6px" data-en="Etimad shows every bidder, their price and the winner on each awarded tender's page. These results are not captured yet, so no competitor is added from this tab; the competitor count stays the bid tracker's." data-ar="تعرض منصة اعتماد في صفحة كل منافسة مرساة جميع المتقدمين وأسعارهم والفائز. لم تُلتقط هذه النتائج بعد، لذا لا يُضاف أي منافس من هذه الصفحة، ويبقى عدد المنافسين كما في جدول المنافسات.">Not captured yet.</div></div></section>
+<div style="margin-top:12px"><b data-en="Who won finished tenders" data-ar="من فاز بالمنافسات المرساة">Who won finished tenders</b>
+<div class="empty" style="margin-top:6px" data-en="Etimad shows every bidder, their price and the winner on each awarded tender's page. We do not read these results yet, so this tab adds no competitors; competitor counts still come from the bid tracker." data-ar="تعرض منصة اعتماد في صفحة كل منافسة مرساة جميع المتقدمين وأسعارهم والفائز. لا نقرأ هذه النتائج بعد، لذا لا تضيف هذه الصفحة أي منافس، وتبقى أعداد المنافسين من جدول المنافسات.">We do not read these results yet.</div></div></section>
 
 {AV.HTML}
-<div class="foot" data-en="Built from the private EH Etimad data sheet. Relevance rules: EH service taxonomy (14 service lines). EH status comes from the bid tracker, which stays the reference whenever the two differ." data-ar="مبنية من ورقة بيانات اعتماد الخاصة بآفاق البيئة. قواعد الصلة: تصنيف خدمات آفاق (14 خط خدمة). حالة آفاق مأخوذة من جدول متابعة المنافسات، وهو المرجع عند أي اختلاف.">Built from the private EH Etimad data sheet.</div>
+<div class="foot" data-en="Built from EH's private Etimad data sheet. Whether a tender fits EH is decided from EH's list of 14 services. EH status comes from the bid tracker, which wins whenever the two disagree." data-ar="مبنية من ورقة بيانات اعتماد الخاصة بآفاق البيئة. تُحدد ملاءمة المنافسة لآفاق من قائمة خدماتها الأربع عشرة. حالة آفاق مأخوذة من جدول متابعة المنافسات، وهو المرجع عند أي اختلاف.">Built from EH's private Etimad data sheet.</div>
 </main><div id="tip"></div>
 <script id="ET" type="application/json">{payload}</script>
 <script>{JS}{AV.JS}</script>

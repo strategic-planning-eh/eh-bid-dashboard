@@ -11,79 +11,105 @@
    "en": "Ministry of Economy and Planning site — added for this section",
    "ar": "موقع وزارة الاقتصاد والتخطيط — أضيف لهذا القسم",
    "as_of": "2026-10-07",
-   "note": "checked 2026-10-07"
+   "note": "checked 2026-10-07",
+   "short_en": "Ministry of Economy site",
+   "short_ar": "موقع وزارة الاقتصاد"
   },
   "S1": {
    "en": "Vision 2030 mega-projects page",
    "ar": "صفحة المشاريع الكبرى لرؤية 2030",
    "as_of": "2026-08-26",
-   "note": "2026-08-26"
+   "note": "2026-08-26",
+   "short_en": "Vision 2030 page",
+   "short_ar": "صفحة رؤية 2030"
   },
   "S2": {
    "en": "Saudi Government Finances 2026 page (v5.1)",
    "ar": "صفحة المالية العامة السعودية 2026 (الإصدار 5.1)",
    "as_of": "2026-10-01",
-   "note": "2026-10-01 (figures to 2026-09-30)"
+   "note": "2026-10-01 (figures to 2026-09-30)",
+   "short_en": "Finance page",
+   "short_ar": "صفحة المالية العامة"
   },
   "S3": {
    "en": "PIF Strategy 2026–2030 page",
    "ar": "صفحة استراتيجية صندوق الاستثمارات العامة 2026–2030",
    "as_of": "2026-09-07",
-   "note": "2026-09-07"
+   "note": "2026-09-07",
+   "short_en": "PIF strategy page",
+   "short_ar": "صفحة استراتيجية الصندوق"
   },
   "S4": {
    "en": "PIF annual reports 2021–2025 page",
    "ar": "صفحة التقارير السنوية للصندوق 2021–2025",
    "as_of": "2026-09-07",
-   "note": "FY2025 data; built after 2026-09-07"
+   "note": "FY2025 data; built after 2026-09-07",
+   "short_en": "PIF reports page",
+   "short_ar": "صفحة تقارير الصندوق"
   },
   "S5": {
    "en": "PIF annual reports 2023, 2024 and 2025",
    "ar": "التقارير السنوية للصندوق 2023 و2024 و2025",
    "as_of": "2026",
-   "note": "FY2025 (report published 2026)"
+   "note": "FY2025 (report published 2026)",
+   "short_en": "PIF annual reports",
+   "short_ar": "التقارير السنوية للصندوق"
   },
   "S6": {
    "en": "Environment Fund 2025 page",
    "ar": "صفحة صندوق البيئة 2025",
    "as_of": "2026-09-16",
-   "note": "2026-09-16"
+   "note": "2026-09-16",
+   "short_en": "Environment Fund page",
+   "short_ar": "صفحة صندوق البيئة"
   },
   "S7": {
    "en": "Regulatory news monthly brief",
    "ar": "الموجز الشهري للأخبار التنظيمية",
    "as_of": "2026-09-27",
-   "note": "2026-09-27"
+   "note": "2026-09-27",
+   "short_en": "Regulatory news brief",
+   "short_ar": "موجز الأخبار التنظيمية"
   },
   "S8": {
    "en": "Saudi Arabia intelligence dashboard",
    "ar": "لوحة المعلومات الاستخباراتية عن السعودية",
    "as_of": "2026-08-26",
-   "note": "2026-08-26"
+   "note": "2026-08-26",
+   "short_en": "Saudi news intelligence page",
+   "short_ar": "صفحة المعلومات الاستخباراتية"
   },
   "S9": {
    "en": "Stakeholder map and workbook",
    "ar": "خريطة أصحاب المصلحة وملفها",
    "as_of": "2026-09-03",
-   "note": "2026-09-03"
+   "note": "2026-09-03",
+   "short_en": "Stakeholder map",
+   "short_ar": "خريطة أصحاب المصلحة"
   },
   "S10": {
    "en": "Bid tracker 2026 and Bid Analysis page",
    "ar": "جدول متابعة المنافسات 2026 وصفحة تحليل المنافسات",
    "as_of": "2026-10-07",
-   "note": "tracker 2026-10-07; analysis 2026-08-25"
+   "note": "tracker 2026-10-07; analysis 2026-08-25",
+   "short_en": "Bid tracker",
+   "short_ar": "جدول المنافسات"
   },
   "S11": {
    "en": "Etimad capture (EH_Etimad_data sheet)",
    "ar": "التقاط اعتماد (ورقة EH_Etimad_data)",
    "as_of": "each capture",
-   "note": ""
+   "note": "",
+   "short_en": "Etimad",
+   "short_ar": "اعتماد"
   },
   "S12": {
    "en": "EH service taxonomy and company profile",
    "ar": "تصنيف خدمات آفاق وملف الشركة",
    "as_of": "v0.2",
-   "note": "taxonomy v0.2"
+   "note": "taxonomy v0.2",
+   "short_en": "EH company profile",
+   "short_ar": "ملف آفاق"
   }
  },
  "level1_pillars": [
@@ -134,19 +160,19 @@
    "pillar": "P1",
    "pillar_basis": "our reading",
    "is_newer": true,
-   "newer_en": "newer — named in PIF’s 2026–2030 strategy (2026); MWAN plan year not stated in our sources",
+   "newer_en": "newer — named in PIF’s 2026–2030 strategy; the year of the waste centre’s plan is not given in our sources",
    "newer_ar": "أحدث — مذكورة في استراتيجية الصندوق 2026–2030 (2026)؛ وسنة خطة المركز الوطني لإدارة النفايات غير مذكورة في مصادرنا",
    "figures_en": [
-    "MWAN: 848 facilities and 90% landfill diversion by 2040; >$112bn waste investment opportunity (S8)",
-    "PIF ecosystem 5 adds “develop sustainable waste management practices” (S3)",
-    "SIRC reverse-vending machines 70 → 200 (S5)"
+    "National Center for Waste Management (MWAN): 848 waste facilities planned and 90% of waste kept out of landfill by 2040; more than $112bn of investment opportunity (S8)",
+    "PIF adds “develop sustainable waste management practices” to its clean energy and water area (S3)",
+    "Saudi Investment Recycling Company (SIRC) bottle-return machines: 70 → 200 (S5)"
    ],
    "figures_ar": [
     "المركز الوطني لإدارة النفايات: 848 منشأة وتحويل 90% من النفايات عن المرادم بحلول 2040؛ وفرص استثمار في النفايات تتجاوز 112 مليار دولار (S8)",
-    "تضيف المنظومة الخامسة للصندوق «تطوير ممارسات مستدامة لإدارة النفايات» (S3)",
-    "آلات الاسترجاع لدى «سرك» من 70 إلى 200 (S5)"
+    "يضيف الصندوق «تطوير ممارسات مستدامة لإدارة النفايات» إلى مجال الطاقة النظيفة والمياه (S3)",
+    "آلات استرجاع العبوات لدى الشركة السعودية للاستثمار في إعادة التدوير (سرك) من 70 إلى 200 (S5)"
    ],
-   "regulator_en": "MWAN (National Center for Waste Management)",
+   "regulator_en": "National Center for Waste Management (MWAN)",
    "regulator_ar": "المركز الوطني لإدارة النفايات",
    "src": [
     "S8",
@@ -164,19 +190,19 @@
    "pillar": "P1",
    "pillar_basis": "our reading",
    "is_newer": true,
-   "newer_en": "newer — Environment Fund created by Council of Ministers resolution 416 (1440 AH); Fund strategy 2026–2030",
+   "newer_en": "newer — the Environment Fund was set up by Cabinet resolution 416 in 1440 AH (2019); its strategy runs 2026–2030",
    "newer_ar": "أحدث — صندوق البيئة أُنشئ بقرار مجلس الوزراء 416 (1440هـ)؛ واستراتيجية الصندوق 2026–2030",
    "figures_en": [
-    "Five centres: NCEC, MWAN, NCW, NCVC, NCM (S6)",
-    "NCEC fee schedules: 14 licences, 34 services, 4 clearances; inspection PPP pre-qualification open (S6, S7)",
-    "Green Factory programme with NCEC under resolution 533 (S8)"
+    "Five national environment centres: environmental compliance, waste management, wildlife, vegetation cover and meteorology (S6)",
+    "The National Center for Environmental Compliance charges for 14 licences, 34 services and 4 clearances; companies can apply to run inspections for it (S6, S7)",
+    "Green Factory programme with the compliance centre, under Cabinet resolution 533 (S8)"
    ],
    "figures_ar": [
     "خمسة مراكز: الرقابة على الالتزام البيئي، وإدارة النفايات، والحياة الفطرية، والغطاء النباتي، والأرصاد (S6)",
     "جداول رسوم المركز الوطني للرقابة على الالتزام البيئي: 14 ترخيصًا و34 خدمة و4 فسوحات؛ والتأهيل المسبق لشراكة التفتيش مفتوح (S6، S7)",
     "برنامج المصانع الخضراء مع المركز بموجب القرار 533 (S8)"
    ],
-   "regulator_en": "Environment Fund; NCEC",
+   "regulator_en": "Environment Fund; National Center for Environmental Compliance",
    "regulator_ar": "صندوق البيئة؛ المركز الوطني للرقابة على الالتزام البيئي",
    "src": [
     "S6",
@@ -194,21 +220,21 @@
    "pillar": "P2",
    "pillar_basis": "our reading",
    "is_newer": true,
-   "newer_en": "newer element — Year of Water 2027 (Cabinet); SWPC 2024–2030 programme",
+   "newer_en": "newer — 2027 is the Year of Water (Cabinet); Saudi Water Partnership Company programme 2024–2030",
    "newer_ar": "عنصر أحدث — عام المياه 2027 (مجلس الوزراء)؛ وبرنامج الشركة السعودية لشراكات المياه 2024–2030",
    "figures_en": [
-    "Saudi Water Authority ~11.5 million m³/day desalination (S1)",
-    "Desalination “continues” and is a named bid target (S2)",
-    "PIF ecosystem 5 “continue water desalination effort” (S3)",
-    "MWAN/water: >$80bn water investment opportunity (S8)"
+    "Saudi Water Authority produces about 11.5 million m³ of desalinated water a day (S1)",
+    "Desalination “continues” and is named as a target for bids (S2)",
+    "PIF: “continue water desalination effort” (S3)",
+    "More than $80bn of water investment opportunity (S8)"
    ],
    "figures_ar": [
     "الهيئة السعودية للمياه: نحو 11.5 مليون م³ يوميًا من التحلية (S1)",
     "التحلية «مستمرة» وهي هدف منافسات مسمّى (S2)",
-    "المنظومة الخامسة للصندوق «مواصلة جهود تحلية المياه» (S3)",
+    "الصندوق: «مواصلة جهود تحلية المياه» (S3)",
     "فرص استثمار في المياه تتجاوز 80 مليار دولار (S8)"
    ],
-   "regulator_en": "MEWA; Saudi Water Authority; SWPC",
+   "regulator_en": "Ministry of Environment, Water and Agriculture; Saudi Water Authority; Saudi Water Partnership Company",
    "regulator_ar": "وزارة البيئة والمياه والزراعة؛ الهيئة السعودية للمياه؛ الشركة السعودية لشراكات المياه",
    "src": [
     "S1",
@@ -227,13 +253,13 @@
    "pillar": "P1",
    "pillar_basis": "our reading",
    "is_newer": true,
-   "newer_en": "newer — post-2016 commitment; launch year not stated in our sources",
+   "newer_en": "newer — committed after 2016; launch year not given in our sources",
    "newer_ar": "أحدث — التزام بعد 2016؛ سنة الإطلاق غير مذكورة في مصادرنا",
    "figures_en": [
-    "Net zero by 2060; ~SAR 705bn announced; 10 billion trees, 600m+ by 2030 (S1)",
-    "Fiscal view: “stretched quietly” (S2)",
-    "PIF aligned with the circular carbon economy and the 278 Mt CO₂e/yr cut; PIF net zero 2050 (S5)",
-    "National compliance carbon-market study (S6)"
+    "Net zero by 2060; about SAR 705bn announced; 10 billion trees, more than 600 million of them by 2030 (S1)",
+    "Finance page: being “stretched quietly” (S2)",
+    "PIF backs the circular carbon economy and a cut of 278 million tonnes of CO₂ a year; PIF itself aims for net zero by 2050 (S5)",
+    "A study of a national carbon market for compliance (S6)"
    ],
    "figures_ar": [
     "الحياد الصفري بحلول 2060؛ نحو 705 مليارات ريال معلنة؛ 10 مليارات شجرة، منها أكثر من 600 مليون بحلول 2030 (S1)",
@@ -241,7 +267,7 @@
     "الصندوق منسجم مع الاقتصاد الدائري للكربون وخفض 278 مليون طن مكافئ سنويًا؛ وحياد الصندوق الصفري 2050 (S5)",
     "دراسة سوق الكربون للالتزام الوطني (S6)"
    ],
-   "regulator_en": "NCVC; MEWA",
+   "regulator_en": "National Center for Vegetation Cover; Ministry of Environment, Water and Agriculture",
    "regulator_ar": "المركز الوطني لتنمية الغطاء النباتي؛ وزارة البيئة والمياه والزراعة",
    "src": [
     "S1",
@@ -260,19 +286,19 @@
    "pillar": "P2",
    "pillar_basis": "our reading",
    "is_newer": false,
-   "newer_en": "original Vision 2030 aim (our reading); 2026 PIF ecosystems 3 and 4 restate it",
-   "newer_ar": "هدف أصلي في رؤية 2030 (قراءتنا)؛ وتعيد منظومتا الصندوق الثالثة والرابعة لعام 2026 تأكيده",
+   "newer_en": "an original Vision 2030 aim (EH’s interpretation); PIF’s 2026 strategy restates it",
+   "newer_ar": "هدف أصلي في رؤية 2030 (تفسير من آفاق)؛ وتعيد منظومتا الصندوق الثالثة والرابعة لعام 2026 تأكيده",
    "figures_en": [
-    "RCJY doubling Jubail by 2030 (SAR 67.5bn); Ras Al-Khair >SAR 165bn invested; MODON ~6,500 factories (S1)",
-    "Ma’aden ~$110bn ten-year plan (S8); Ma’aden “continues” (S2)",
-    "Car plants at KAEC “delayed, not dropped” (S2)"
+    "The Royal Commission for Jubail and Yanbu is doubling Jubail by 2030 (SAR 67.5bn); more than SAR 165bn invested at Ras Al-Khair; about 6,500 factories in MODON industrial cities (S1)",
+    "Ma’aden’s ten-year plan of about $110bn (S8); Ma’aden “continues” (S2)",
+    "Car plants at King Abdullah Economic City are “delayed, not dropped” (S2)"
    ],
    "figures_ar": [
     "الهيئة الملكية للجبيل وينبع تضاعف الجبيل بحلول 2030 (67.5 مليار ريال)؛ ورأس الخير أكثر من 165 مليار ريال مستثمرة؛ ومدن نحو 6,500 مصنع (S1)",
     "خطة معادن لعشر سنوات بنحو 110 مليارات دولار (S8)؛ ومعادن «مستمرة» (S2)",
     "مصانع السيارات في مدينة الملك عبدالله الاقتصادية «مؤجلة لا ملغاة» (S2)"
    ],
-   "regulator_en": "Ministry of Industry; RCJY; MODON",
+   "regulator_en": "Ministry of Industry; Royal Commission for Jubail and Yanbu; MODON (industrial cities)",
    "regulator_ar": "وزارة الصناعة؛ الهيئة الملكية للجبيل وينبع؛ مدن",
    "src": [
     "S1",
@@ -291,19 +317,19 @@
    "pillar": "P2",
    "pillar_basis": "our reading",
    "is_newer": true,
-   "newer_en": "newer targets (our reading); dates not stated",
-   "newer_ar": "أهداف أحدث (قراءتنا)؛ التواريخ غير مذكورة",
+   "newer_en": "newer targets (EH’s interpretation); dates not given",
+   "newer_ar": "أهداف أحدث (تفسير من آفاق)؛ التواريخ غير مذكورة",
    "figures_en": [
-    "Jafurah 450 mmscfd → 2 bcf/d by 2030 (S1)",
-    "PIF to develop 70% of the renewables target by 2030; ACWA 15 GW financial close (S5)",
-    "SPPC Round 7 5.3 GW + 3 GW storage (S8)"
+    "Jafurah gas field: from 450 million to 2 billion cubic feet of gas a day by 2030 (S1)",
+    "PIF to build 70% of the national renewable-energy target by 2030; ACWA Power signed financing for 15 GW (S5)",
+    "Round 7 of the national power buyer: 5.3 GW of plants plus 3 GW of storage (S8)"
    ],
    "figures_ar": [
     "الجافورة من 450 مليون قدم مكعب يوميًا إلى 2 مليار بحلول 2030 (S1)",
     "يطوّر الصندوق 70% من هدف الطاقة المتجددة بحلول 2030؛ وإغلاق مالي لأكوا بـ15 جيجاواط (S5)",
-    "الجولة السابعة للمشتري الرئيس 5.3 جيجاواط + 3 جيجاواط تخزين (S8)"
+    "الجولة السابعة للشركة السعودية لشراء الطاقة 5.3 جيجاواط + 3 جيجاواط تخزين (S8)"
    ],
-   "regulator_en": "Ministry of Energy; SPPC",
+   "regulator_en": "Ministry of Energy; Saudi Power Procurement Company",
    "regulator_ar": "وزارة الطاقة؛ الشركة السعودية لشراء الطاقة",
    "src": [
     "S1",
@@ -321,17 +347,17 @@
    "pillar": "P3",
    "pillar_basis": "our reading",
    "is_newer": true,
-   "newer_en": "newer — Expo 2030 Riyadh Company set up by PIF in 2025 (S5)",
+   "newer_en": "newer — PIF set up the Expo 2030 Riyadh Company in 2025 (S5)",
    "newer_ar": "أحدث — شركة إكسبو 2030 الرياض أسسها الصندوق في 2025 (S5)",
    "figures_en": [
-    "Expo and World Cup projects are “protected” / “hard to stop” (S2, S8)",
-    "World Cup stadiums: Qiddiya PMBS, ROSHN, Jeddah Central, New Murabba (S5)"
+    "Expo and World Cup projects are “protected” and “hard to stop” (S2, S8)",
+    "World Cup stadiums at Qiddiya, ROSHN, Jeddah Central and New Murabba (S5)"
    ],
    "figures_ar": [
     "مشاريع إكسبو وكأس العالم «محمية» / «يصعب إيقافها» (S2، S8)",
     "ملاعب كأس العالم: القدية وروشن ووسط جدة والمربع الجديد (S5)"
    ],
-   "regulator_en": "Expo 2030 Riyadh Co.; Ministry of Sport",
+   "regulator_en": "Expo 2030 Riyadh Company; Ministry of Sport",
    "regulator_ar": "شركة إكسبو 2030 الرياض؛ وزارة الرياضة",
    "src": [
     "S2",
@@ -349,16 +375,16 @@
    "pillar": "P1",
    "pillar_basis": "our reading",
    "is_newer": false,
-   "newer_en": "original aim; 150m visitors and 10% of GDP by 2030 (S5)",
+   "newer_en": "an original aim; 150 million visitors and tourism 10% of the economy by 2030 (S5)",
    "newer_ar": "هدف أصلي؛ 150 مليون زائر و10% من الناتج المحلي بحلول 2030 (S5)",
    "figures_en": [
-    "150 million annual visitors and tourism 10% of GDP by 2030 (S5, AR2024)",
-    "PIF ecosystem 1 (S3)",
+    "150 million visitors a year and tourism 10% of the economy by 2030 (S5)",
+    "PIF’s tourism, travel and entertainment area (S3)",
     "Red Sea tourism hit by the Bab el-Mandeb closure (S2)"
    ],
    "figures_ar": [
-    "150 مليون زائر سنويًا والسياحة 10% من الناتج المحلي بحلول 2030 (S5، تقرير 2024)",
-    "المنظومة الأولى للصندوق (S3)",
+    "150 مليون زائر سنويًا والسياحة 10% من الناتج المحلي بحلول 2030 (S5)",
+    "مجال السياحة والسفر والترفيه في الصندوق (S3)",
     "تأثرت سياحة البحر الأحمر بإغلاق باب المندب (S2)"
    ],
    "regulator_en": "Ministry of Tourism",
@@ -379,19 +405,19 @@
    "pillar": "P1",
    "pillar_basis": "our reading",
    "is_newer": false,
-   "newer_en": "original aim; 70% home ownership (S5)",
+   "newer_en": "an original aim; 70% home ownership (S5)",
    "newer_ar": "هدف أصلي؛ تملّك المساكن 70% (S5)",
    "figures_en": [
-    "ROSHN: 70% home-ownership goal (S5)",
-    "Municipal services budget SAR 71.84bn, 36% used in Q1 2026 (S2)",
-    "PIF ecosystem 2 (S3)"
+    "ROSHN: aim of 70% home ownership (S5)",
+    "Municipal services budget SAR 71.84bn, 36% spent by March 2026 (S2)",
+    "PIF’s urban development area (S3)"
    ],
    "figures_ar": [
     "روشن: هدف تملّك 70% (S5)",
     "ميزانية الخدمات البلدية 71.84 مليار ريال، صُرف منها 36% في الربع الأول 2026 (S2)",
-    "المنظومة الثانية للصندوق (S3)"
+    "مجال التطوير العمراني في الصندوق (S3)"
    ],
-   "regulator_en": "MOMAH; amanat",
+   "regulator_en": "Ministry of Municipalities and Housing; city municipalities",
    "regulator_ar": "وزارة البلديات والإسكان؛ الأمانات",
    "src": [
     "S5",
@@ -409,17 +435,17 @@
    "pillar": "P2",
    "pillar_basis": "our reading",
    "is_newer": false,
-   "newer_en": "original aim (our reading)",
-   "newer_ar": "هدف أصلي (قراءتنا)",
+   "newer_en": "an original aim (EH’s interpretation)",
+   "newer_ar": "هدف أصلي (تفسير من آفاق)",
    "figures_en": [
-    "SILZ “expands”; NEOM Port “may gain” (S2)",
-    "PIF ecosystem 4 (S3)"
+    "Special Integrated Logistics Zone “expands”; NEOM Port “may gain” (S2)",
+    "PIF’s industry and logistics area (S3)"
    ],
    "figures_ar": [
     "المنطقة اللوجستية المتكاملة الخاصة «تتوسع»؛ وميناء نيوم «قد يستفيد» (S2)",
-    "المنظومة الرابعة للصندوق (S3)"
+    "مجال الصناعة والخدمات اللوجستية في الصندوق (S3)"
    ],
-   "regulator_en": "Ministry of Transport; Mawani",
+   "regulator_en": "Ministry of Transport; Saudi Ports Authority (Mawani)",
    "regulator_ar": "وزارة النقل؛ موانئ",
    "src": [
     "S1",
@@ -437,17 +463,17 @@
    "pillar": "P3",
    "pillar_basis": "our reading",
    "is_newer": true,
-   "newer_en": "newer — HUMAIN launched 2025 (S5)",
+   "newer_en": "newer — HUMAIN launched in 2025 (S5)",
    "newer_ar": "أحدث — إطلاق «هيوماين» في 2025 (S5)",
    "figures_en": [
-    "HUMAIN AI platform (S5)",
-    "“AI infrastructure” named as a Vision 2030 element (S8)"
+    "HUMAIN, PIF’s artificial-intelligence company (S5)",
+    "“AI infrastructure” named as part of Vision 2030 (S8)"
    ],
    "figures_ar": [
     "منصة «هيوماين» للذكاء الاصطناعي (S5)",
     "«البنية التحتية للذكاء الاصطناعي» عنصر مذكور في رؤية 2030 (S8)"
    ],
-   "regulator_en": "SDAIA",
+   "regulator_en": "Saudi Data and AI Authority (SDAIA)",
    "regulator_ar": "الهيئة السعودية للبيانات والذكاء الاصطناعي",
    "src": [
     "S5",
@@ -552,15 +578,15 @@
   "as_of": "2026-09-07",
   "basis": "ecosystems and companies stated in source; ecosystem → goal links are our reading except E5 → waste/water (stated)",
   "shifts_en": [
-   "Three portfolios (Vision, Strategic, Financial) replace the 2021–25 investment pools",
-   "Waste joins ecosystem 5; water appears in an ecosystem name",
-   "Private operators expected to lead delivery and operations as ecosystems mature",
-   "No fund-wide 2030 target; The Line, Trojena and Magna not mentioned"
+   "PIF now groups its holdings into three portfolios (Vision, Strategic and Financial) instead of the investment pools used in 2021–25",
+   "Waste is added to PIF’s clean energy and water area, and water now appears in that area’s name",
+   "Private companies are expected to build and run more of the projects as they mature",
+   "No overall 2030 target for the fund; The Line, Trojena and Magna are not mentioned"
   ],
   "shifts_ar": [
-   "ثلاث محافظ (الرؤية، الاستراتيجية، المالية) بدل الصناديق الفرعية 2021–2025",
-   "دخول النفايات في المنظومة الخامسة؛ وظهور المياه في اسم منظومة",
-   "يُتوقع أن يقود القطاع الخاص التنفيذ والتشغيل مع نضج المنظومات",
+   "يجمع الصندوق أصوله الآن في ثلاث محافظ (الرؤية والاستراتيجية والمالية) بدل الصناديق الفرعية في 2021–2025",
+   "أُضيفت النفايات إلى مجال الطاقة النظيفة والمياه، وأصبحت المياه جزءًا من اسمه",
+   "يُتوقع أن تبني الشركات الخاصة مزيدًا من المشاريع وتشغّلها مع نضجها",
    "لا هدف شامل للصندوق لعام 2030؛ ولا ذكر لذا لاين وتروجينا وماجنا"
   ],
   "sector_weights_pct": {
@@ -1327,7 +1353,7 @@
   {
    "line": 1,
    "en": "Environmental studies & consultancy",
-   "short_en": "Env. studies",
+   "short_en": "Environmental studies",
    "short_ar": "الدراسات البيئية",
    "goals": [
     "envcomp",
@@ -1547,7 +1573,7 @@
    "key": "NEOM",
    "en": "NEOM",
    "ar": "نيوم",
-   "link_en": "giga-project (PIF)",
+   "link_en": "PIF giga-project",
    "link_ar": "مشروع كبير (الصندوق)",
    "map_names": [
     "Neom"
@@ -1563,7 +1589,7 @@
    "key": "RSG",
    "en": "Red Sea Global (incl. AMAALA)",
    "ar": "البحر الأحمر العالمية",
-   "link_en": "giga-project (PIF)",
+   "link_en": "PIF giga-project",
    "link_ar": "مشروع كبير (الصندوق)",
    "map_names": [
     "RED SEA Global"
@@ -1579,7 +1605,7 @@
    "key": "RSUC",
    "en": "Red Sea Utilities Consortium",
    "ar": "اتحاد مرافق البحر الأحمر",
-   "link_en": "RSG subsidiary (per notes)",
+   "link_en": "part of Red Sea Global",
    "link_ar": "تابعة للبحر الأحمر العالمية (حسب الملاحظات)",
    "map_names": [
     "Red Sea Utilities Consortium"
@@ -1595,7 +1621,7 @@
    "key": "ROSHN",
    "en": "ROSHN Group",
    "ar": "روشن",
-   "link_en": "PIF company (per notes)",
+   "link_en": "PIF company",
    "link_ar": "شركة للصندوق (حسب الملاحظات)",
    "map_names": [
     "ROSHN Group"
@@ -1611,7 +1637,7 @@
    "key": "QIDDIYA",
    "en": "Qiddiya",
    "ar": "القدية",
-   "link_en": "giga-project (PIF)",
+   "link_en": "PIF giga-project",
    "link_ar": "مشروع كبير (الصندوق)",
    "map_names": [
     "Qiddiya"
@@ -1627,7 +1653,7 @@
    "key": "KSP",
    "en": "King Salman Park",
    "ar": "حديقة الملك سلمان",
-   "link_en": "Vision 2030 development co.",
+   "link_en": "Vision 2030 development company",
    "link_ar": "شركة تطوير لرؤية 2030",
    "map_names": [
     "King Salman Park (KSP)"
@@ -1643,7 +1669,7 @@
    "key": "SOUDAH",
    "en": "Soudah Development",
    "ar": "السودة للتطوير",
-   "link_en": "PIF company (per notes)",
+   "link_en": "PIF company",
    "link_ar": "شركة للصندوق (حسب الملاحظات)",
    "map_names": [
     "SOUDAH"
@@ -1701,7 +1727,7 @@
    "key": "MAADEN",
    "en": "Ma'aden (Saudi Arabian Mining Co.)",
    "ar": "معادن",
-   "link_en": "PIF ~67% (notes: PIF-led)",
+   "link_en": "PIF owns about 67%",
    "link_ar": "الصندوق نحو 67%",
    "map_names": [
     "Saudi Arabian Mining Company (Ma'aden)",
@@ -1718,7 +1744,7 @@
    "key": "MAADEN-SUB",
    "en": "Ma'aden affiliates (Barrick copper / Jabal Sayid, Manara, Rolling)",
    "ar": "شركات معادن التابعة",
-   "link_en": "Ma'aden subsidiary/JV",
+   "link_en": "part of Ma’aden or its joint ventures",
    "link_ar": "تابعة لمعادن / مشروع مشترك",
    "map_names": [
     "Jabal Sayid / Barrick-Ma’aden Copper",
@@ -1738,7 +1764,7 @@
    "key": "ACWA",
    "en": "ACWA Power",
    "ar": "أكوا باور",
-   "link_en": "PIF ~44% (notes: PIF-controlled)",
+   "link_en": "PIF owns about 44%",
    "link_ar": "الصندوق نحو 44%",
    "map_names": [
     "ACWA Power"
@@ -1754,7 +1780,7 @@
    "key": "RABIGH3",
    "en": "Rabigh 3 IWP",
    "ar": "رابغ 3 للمياه",
-   "link_en": "ACWA Power SPV (per notes)",
+   "link_en": "ACWA Power project company",
    "link_ar": "شركة مشروع لأكوا باور",
    "map_names": [
     "شركة رابغ الثالثة شركة مساهمة مقفلة"
@@ -1770,7 +1796,7 @@
    "key": "SIRC",
    "en": "Saudi Investment Recycling Co. (SIRC)",
    "ar": "الشركة السعودية للاستثمار في إعادة التدوير (سرك)",
-   "link_en": "PIF wholly-owned",
+   "link_en": "wholly owned by PIF",
    "link_ar": "مملوكة بالكامل للصندوق",
    "map_names": [
     "Saudi Investment Recycling Company (SIRC)"
@@ -1786,7 +1812,7 @@
    "key": "SIRC-SUB",
    "en": "SIRC subsidiaries (MRC, Metal Recycling, Revive, Eada, Akam, SAIL marine, Saudi Daz)",
    "ar": "شركات سرك التابعة",
-   "link_en": "SIRC subsidiary (per notes)",
+   "link_en": "part of SIRC",
    "link_ar": "تابعة لسرك",
    "map_names": [
     "The Metals and Recycling Company (MRC)",
@@ -1808,7 +1834,7 @@
    "key": "SAMI",
    "en": "Saudi Arabian Military Industries (SAMI)",
    "ar": "الشركة السعودية للصناعات العسكرية",
-   "link_en": "PIF wholly-owned",
+   "link_en": "wholly owned by PIF",
    "link_ar": "مملوكة بالكامل للصندوق",
    "map_names": [
     "Saudi Arabian Military Industries"
@@ -1824,7 +1850,7 @@
    "key": "AEC",
    "en": "Advanced Electronics Co.",
    "ar": "الشركة المتقدمة للإلكترونيات",
-   "link_en": "SAMI subsidiary (analyst knowledge, not in notes)",
+   "link_en": "part of Saudi Arabian Military Industries (not recorded on the map)",
    "link_ar": "تابعة للشركة السعودية للصناعات العسكرية (معرفة المحلل)",
    "map_names": [
     "Advanced Electronics Company"
@@ -1840,7 +1866,7 @@
    "key": "LUCID",
    "en": "Lucid AMP-2 (KAEC)",
    "ar": "لوسيد (مصنع AMP-2)",
-   "link_en": "PIF portfolio (Lucid ~60%)",
+   "link_en": "PIF owns about 60% of Lucid",
    "link_ar": "ضمن محفظة الصندوق (لوسيد نحو 60%)",
    "map_names": [
     "Lucid AMP-2 Saudi plant"
@@ -1856,7 +1882,7 @@
    "key": "CEER",
    "en": "Ceer Motors",
    "ar": "سير",
-   "link_en": "PIF–Foxconn JV",
+   "link_en": "joint venture of PIF and Foxconn",
    "link_ar": "مشروع مشترك بين الصندوق وفوكسكون",
    "map_names": [
     "CEER"
@@ -1888,7 +1914,7 @@
    "key": "STC",
    "en": "stc",
    "ar": "stc",
-   "link_en": "PIF ~62%",
+   "link_en": "PIF owns about 62%",
    "link_ar": "الصندوق نحو 62%",
    "map_names": [
     "STC"
@@ -1904,7 +1930,7 @@
    "key": "ELM",
    "en": "Elm Co. (+ Emdad)",
    "ar": "علم (وإمداد)",
-   "link_en": "PIF company (Emdad owned by Elm per notes)",
+   "link_en": "PIF company (Emdad belongs to Elm)",
    "link_ar": "شركة للصندوق (إمداد مملوكة لعلم)",
    "map_names": [
     "Elm Joint Stock Company",
@@ -1922,7 +1948,7 @@
    "key": "BAHRI",
    "en": "Bahri",
    "ar": "البحري",
-   "link_en": "PIF ~23% (analyst knowledge)",
+   "link_en": "PIF owns about 23% (not recorded on the map)",
    "link_ar": "الصندوق نحو 23% (معرفة المحلل)",
    "map_names": [
     "Bahri"
@@ -1938,7 +1964,7 @@
    "key": "NSG",
    "en": "Neospace Group",
    "ar": "نيوسبيس",
-   "link_en": "PIF-sponsored (per notes)",
+   "link_en": "backed by PIF",
    "link_ar": "برعاية الصندوق",
    "map_names": [
     "Neospace Group (NSG)"
@@ -1954,7 +1980,7 @@
    "key": "SEC",
    "en": "Saudi Electricity Co. (SEC / \"Saudi Energy\")",
    "ar": "الشركة السعودية للكهرباء",
-   "link_en": "PIF ~74% (per notes)",
+   "link_en": "PIF owns about 74%",
    "link_ar": "الصندوق نحو 74%",
    "map_names": [
     "Saudi Electricity Company (SEC)",
@@ -1972,7 +1998,7 @@
    "key": "NWC",
    "en": "National Water Company",
    "ar": "شركة المياه الوطنية",
-   "link_en": "PIF wholly-owned (per notes)",
+   "link_en": "wholly owned by PIF",
    "link_ar": "مملوكة بالكامل للصندوق",
    "map_names": [
     "National Water Company"
@@ -1988,7 +2014,7 @@
    "key": "MARAFIQ",
    "en": "Marafiq (Jubail & Yanbu power & water)",
    "ar": "مرافق",
-   "link_en": "PIF/Aramco Power/SABIC/RCJY 24.81% each (per notes)",
+   "link_en": "PIF, Aramco Power, SABIC and the Royal Commission own 24.81% each",
    "link_ar": "الصندوق وأرامكو للطاقة وسابك والهيئة الملكية 24.81% لكل منها",
    "map_names": [
     "شركه مرافق الكهرباء والمياه بالجبيل وينبع"
@@ -2004,7 +2030,7 @@
    "key": "RSGT",
    "en": "Red Sea Gateway Terminal",
    "ar": "محطة بوابة البحر الأحمر",
-   "link_en": "PIF 20% (per notes)",
+   "link_en": "PIF owns 20%",
    "link_ar": "الصندوق 20%",
    "map_names": [
     "شركة محطة بوابة البحر الأحمر المحدودة"
@@ -2020,7 +2046,7 @@
    "key": "ENVISION",
    "en": "Envision Energy (KSA)",
    "ar": "إنفجن للطاقة",
-   "link_en": "PIF localization JV (per notes)",
+   "link_en": "PIF joint venture to make products locally",
    "link_ar": "مشروع توطين مشترك مع الصندوق",
    "map_names": [
     "شركه انفيجن انيرجي المحدوده شركه شحص واحد"
@@ -2036,7 +2062,7 @@
    "key": "ARAMCO",
    "en": "Saudi Aramco",
    "ar": "أرامكو السعودية",
-   "link_en": "Aramco (PIF ~16% direct)",
+   "link_en": "PIF owns about 16% directly",
    "link_ar": "أرامكو (الصندوق نحو 16% مباشرة)",
    "map_names": [
     "ARAMCO"
@@ -2052,7 +2078,7 @@
    "key": "ARAMCO-JV",
    "en": "Aramco JVs/affiliates: SATORP, YASREF, SASREF, Luberef, Petro Rabigh, Sadara, ARO Drilling, JIGPC, SAMREF",
    "ar": "شركات أرامكو التابعة والمشتركة",
-   "link_en": "Aramco subsidiary/JV",
+   "link_en": "part of Aramco or its joint ventures",
    "link_ar": "تابعة لأرامكو / مشروع مشترك",
    "map_names": [
     "SATORP",
@@ -2075,7 +2101,7 @@
    "key": "SABIC",
    "en": "SABIC group (Aramco 70%): SABIC, Agri-Nutrients, SK Nexlene, Hadeed, Saudi Kayan, YANSAB",
    "ar": "مجموعة سابك",
-   "link_en": "Aramco subsidiary",
+   "link_en": "part of Aramco",
    "link_ar": "تابعة لأرامكو",
    "map_names": [
     "Saudi Basic Industries Corporation (SABIC)",
@@ -2096,7 +2122,7 @@
    "key": "SPARK",
    "en": "King Salman Energy Park (SPARK)",
    "ar": "سبارك",
-   "link_en": "Aramco-developed",
+   "link_en": "developed by Aramco",
    "link_ar": "طوّرتها أرامكو",
    "map_names": [
     "King Salman Energy Park (SPARK)"

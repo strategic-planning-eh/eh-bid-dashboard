@@ -1,0 +1,97 @@
+{
+ "generated": "2026-10-11 16:30",
+ "title": "All Tenders — live analytics, honest sentences and data checks",
+ "failures": [],
+ "changes": [
+  {
+   "file": "app",
+   "kind": "regex",
+   "category": "feature",
+   "note": "All Tenders rebuilt with live analytics, filters, checks and export",
+   "occurrences": 1,
+   "ok": true,
+   "old": "//\\ =====================\\ ALL\\ TENDERS\\ \\(list\\ view\\)\\ =====================\\\n.*?(?=// ===================== NOTES & LIMITATIONS =====================\\n)",
+   "new": "<fn>"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "fix",
+   "note": "Overview: typed \"win rate fell sharply\" (contradicted by the data) replaced by a live sentence",
+   "occurrences": 1,
+   "ok": true,
+   "old": "${t('Tender volume held up but win rate fell sharply — the central competitive concern.','صمد حجم المنافسات لكن نسبة الفوز انخفضت بحدّة — وهو الشاغل التنافسي الأبرز.')}",
+   "new": "${tTrend()}"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "fix",
+   "note": "Notes & Limits: typed headline story replaced by live figures",
+   "occurrences": 1,
+   "ok": true,
+   "old": "${t(' — where EH may be losing, which clients are slipping, where pricing looks exposed — not to settle them with precision. The headline story (declining win rate, high pricing on losses, SEC concentration) is directionally credible; the exact percentages are not. The single highest-leverage fix is upstream: ',' — أين قد يخسر EH، وأي العملاء يتراجعون، وأين يبدو التسعير مكشوفاً — لا لحسمها بدقّة. ",
+   "new": "${t(' — where EH may be losing, which clients are slipping, where pricing looks exposed — not to settle them with precision. ',' — أين قد يخسر EH، وأي العملاء يتراجعون، وأين يبدو التسعير مكشوفاً — لا لحسمها بدقّة. ')}${tHeadline()}${t('Treat the exact percentages as indicative. The single highest-leverage fix is upstream: ','تعامل مع النسب الدقيقة كمؤشرات. وأعلى إصلاح أثراً يقع في المنبع: ')}"
+  },
+  {
+   "file": "app",
+   "kind": "regex",
+   "category": "fix",
+   "note": "Notes & Limits: open-pipeline card built from the submission match",
+   "occurrences": 1,
+   "ok": true,
+   "old": "\\[t\\('Open pipeline is an upper bound'.*?'\\)\\],\\n",
+   "new": "<fn>"
+  },
+  {
+   "file": "app",
+   "kind": "regex",
+   "category": "fix",
+   "note": "Notes & Limits: \"near-complete 2025\" (untrue) replaced by live counts",
+   "occurrences": 1,
+   "ok": true,
+   "old": "\\[t\\('2025 vs 2026 not comparable'.*?'\\)\\],\\n",
+   "new": "<fn>"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "feature",
+   "note": "render the submission-timing card",
+   "occurrences": 1,
+   "ok": true,
+   "old": "rFunnel();renderTenders();",
+   "new": "rFunnel();rTiming();renderTenders();"
+  },
+  {
+   "file": "analytics",
+   "kind": "exact",
+   "category": "fix",
+   "note": "\"EH was cheapest\" counted only lost tenders, so it always read 0",
+   "occurrences": 1,
+   "ok": true,
+   "old": "            wgaps.append(round(100*(ehp-award)/award,1))\n            if rank==1: cheapest_cnt+=1\n",
+   "new": "            wgaps.append(round(100*(ehp-award)/award,1))\n        if has_full and rank==1: cheapest_cnt+=1   # 11 Oct 2026: count every fully priced tender where EH was lowest\n"
+  },
+  {
+   "file": "analytics",
+   "kind": "exact",
+   "category": "fix",
+   "note": "win-rate helper for the watch item",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    # ---------- WATCHLIST (self-contained, regenerated each run) ----------\n",
+   "new": "    def _wilson(k,n,z=1.959964):\n        if not n: return None\n        p=k/n; den=1+z*z/n; c=(p+z*z/(2*n))/den; h=z*((p*(1-p)/n+z*z/(4*n*n))**.5)/den\n        return (c-h, c+h)\n    def _wr_clear(a,b):\n        # a real change only when both years have 10+ results and the likely ranges do not overlap\n        if (a.get('awarded') or 0)<10 or (b.get('awarded') or 0)<10: return False\n        x=_wilson(a"
+  },
+  {
+   "file": "analytics",
+   "kind": "exact",
+   "category": "fix",
+   "note": "\"Win-rate decline\" only when the fall is clear, not noise",
+   "occurrences": 1,
+   "ok": true,
+   "old": "traj[2026]['win_rate']<traj[2025]['win_rate']:\n",
+   "new": "traj[2026]['win_rate']<traj[2025]['win_rate'] and _wr_clear(traj[2025],traj[2026]):\n"
+  }
+ ]
+}

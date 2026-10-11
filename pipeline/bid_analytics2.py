@@ -230,7 +230,7 @@ def compute(bids, rfull, comp):
         # gap of EH's price to the bid that actually WON (competitor wins only)
         if ehp is not None and award and bb and not bb['eh_won'] and wc and wc!='__EH__':
             wgaps.append(round(100*(ehp-award)/award,1))
-            if rank==1: cheapest_cnt+=1
+        if has_full and rank==1: cheapest_cnt+=1   # 11 Oct 2026: count every fully priced tender where EH was lowest
     # tenders with NO roster tab but main-table EH offer + winner + award -> 2-point card
     roster_keys=set((int(k.split('-')[0]),int(k.split('-')[1])) for k in rfull)
     shown=set((r['year'],r['sn']) for r in price_rows)
@@ -312,12 +312,21 @@ def compute(bids, rfull, comp):
             lapsed=(c['b25']>0 and c['b26']==0), isnew=(c['b25']==0 and c['b26']>0)))
     clients.sort(key=lambda x:-x['value'])
 
+    def _wilson(k,n,z=1.959964):
+        if not n: return None
+        p=k/n; den=1+z*z/n; c=(p+z*z/(2*n))/den; h=z*((p*(1-p)/n+z*z/(4*n*n))**.5)/den
+        return (c-h, c+h)
+    def _wr_clear(a,b):
+        # a real change only when both years have 10+ results and the likely ranges do not overlap
+        if (a.get('awarded') or 0)<10 or (b.get('awarded') or 0)<10: return False
+        x=_wilson(a['eh_won'],a['awarded']); y=_wilson(b['eh_won'],b['awarded'])
+        return x[1]<y[0] or y[1]<x[0]
     # ---------- WATCHLIST (self-contained, regenerated each run) ----------
     watchlist=[]
     for c in sorted(competitors_rebuilt, key=lambda x:-x['wins']):
         if c['wins']>0:
             watchlist.append(dict(sev='high', kind='Competitor beating EH', kind_ar='منافس يتغلّب على EH', text=f"{c['name']} has won {c['wins']} tender(s) competing against EH across {c['encounters']} encounters.", text_ar=f"{c['name']} فاز بـ {c['wins']} منافسة بمواجهة EH عبر {c['encounters']} مواجهة."))
-    if 2025 in traj and 2026 in traj and traj[2025]['win_rate'] and traj[2026]['win_rate'] is not None and traj[2026]['win_rate']<traj[2025]['win_rate']:
+    if 2025 in traj and 2026 in traj and traj[2025]['win_rate'] and traj[2026]['win_rate'] is not None and traj[2026]['win_rate']<traj[2025]['win_rate'] and _wr_clear(traj[2025],traj[2026]):
         watchlist.append(dict(sev='high', kind='Win-rate decline', kind_ar='تراجع نسبة الفوز', text=f"EH win rate fell from {traj[2025]['win_rate']}% (2025) to {traj[2026]['win_rate']}% (2026) — investigate pricing/technical scoring.", text_ar=f"تراجعت نسبة فوز EH من {traj[2025]['win_rate']}% (2025) إلى {traj[2026]['win_rate']}% (2026) — راجع التسعير/التقييم الفني."))
     for c in sorted(competitors_rebuilt, key=lambda x:-x['priced_vs']):
         if c['undercut_pct']==100 and c['priced_vs']>=3:
@@ -367,7 +376,7 @@ def compute(bids, rfull, comp):
         return 'Pending'
     def substate(b):
         # Order matters: the tracker's own submission columns first, then the offer evidence, then the reasons.
-        if b.get('subdate'): return 'date'
+        if b.get('ehsubdate') or b.get('subdate'): return 'date'
         if b.get('substatus')=='Yes': return 'yes'
         no=b.get('substatus')=='No'
         if not no and (b.get('eh_won') is True or b.get('ehsub') or b.get('offer')): return 'yes'
@@ -381,7 +390,11 @@ def compute(bids, rfull, comp):
         win='EH' if b['eh_won'] else (b['winner'] if b['winner'] else '')
         bidlist.append(dict(year=b['year'], sn=b['sn'], date=b['launch'] or '',
             title=b['title'], client=b['client'], platform=b['platform'],
-            deadline=b.get('submit') or None, subdate=b.get('subdate') or None, sub=substate(b),
+            deadline=b.get('submit') or None, subdate=(b.get('ehsubdate') or b.get('subdate') or None), sub=substate(b),
+            subsrc=b.get('subsrc'), subgap=b.get('subgap'), awarddate=b.get('awarddate'),
+            submitted=substate(b) in ('date','yes'),
+            deadline_stale=bool(b.get('submit') and (b.get('ehsubdate') or b.get('subdate')) and (b.get('ehsubdate') or b.get('subdate'))>b['submit']),
+            sub_conflict=bool(b.get('substatus')=='No' and (b.get('decided') or b.get('eh_won'))),
             value=round(b['value']) if b['value'] else None, nbid=int(b['nbid']) if b['nbid'] else None,
             svc=SVCN2.get(b['svcdept'],''), dur=int(b['dur']) if b['dur'] else None,
             winner=win, outcome=outcome(b), status=(b['status'] or ''),

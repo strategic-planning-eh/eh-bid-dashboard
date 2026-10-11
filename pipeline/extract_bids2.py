@@ -53,6 +53,10 @@ def colmap(ws,hr):
         if h.startswith('SN#') and 'Year' not in h and 'sn' not in m: m['sn']=c
         elif h.startswith('Date of submission') or h.startswith('تاريخ التقديم'): m['subdate']=c
         elif h.startswith('Status of submission') or h.startswith('حالة التقديم'): m['substatus']=c
+        elif h.startswith('العرض الفني') or h.startswith('Technical Proposal'): m['techprop']=c
+        elif h.startswith('العرض المالي') or h.startswith('Financial Proposal'): m['finprop']=c
+        elif h.startswith('Date of Amendment'): m['amenddate']=c
+        elif h.startswith('تاريخ الترسية') or h.startswith('Award date'): m['awarddate']=c
         elif 'Bid launch' in h: m['launch']=c
         elif 'Bid Title' in h: m['title']=c
         elif 'Reference No' in h: m['ref']=c
@@ -122,6 +126,8 @@ for f,yr in [('bids2025.xlsx',2025),('bids2026.xlsx',2026)]:
             launch=dstr(g('launch')), month=mkey(g('launch')),
             submit=dstr(g('submit')), submonth=mkey(g('submit')),
             subdate=subdstr(g('subdate')), substatus=substat(g('substatus')), subcol=('subdate' in m or 'substatus' in m),
+            techdate=subdstr(g('techprop')), findate=subdstr(g('finprop')),
+            amenddate=subdstr(g('amenddate')), awarddate=subdstr(g('awarddate')),
             title=re.sub(r'\s+',' ',unicodedata.normalize('NFKC',str(g('title') or ''))).strip(),   # presentation-form Arabic (تقديم) folds to plain letters; line breaks collapse
             client=str(g('client') or '').strip(),
             platform=str(g('platform') or '').strip(),
@@ -145,6 +151,14 @@ for f,yr in [('bids2025.xlsx',2025),('bids2026.xlsx',2026)]:
         if b['offer'] is not None and b['offer']<100: b['offer']=None   # sub-100 SAR = data-entry error, not a real bid
         if b['winval'] is not None and b['winval']<100: b['winval']=None
         b['value']=b['winval'] if b['winval'] else b['offer']
+        # EH submission date: the tracker's own date first, else the earlier proposal date (11 Oct 2026)
+        _pd=sorted(x for x in (b['techdate'],b['findate']) if x)
+        b['ehsubdate']=b['subdate'] or (_pd[0] if _pd else None)
+        b['subsrc']='tracker' if b['subdate'] else ('proposal' if _pd else None)
+        b['subgap']=None
+        if b['subdate'] and _pd:
+            _g=(datetime.date.fromisoformat(b['subdate'])-datetime.date.fromisoformat(_pd[0])).days
+            if abs(_g)>3: b['subgap']=dict(proposal=_pd[0], days=_g)
         allbids.append(b)
     # rosters from Bid# sheets
     for sh in wb.sheetnames:

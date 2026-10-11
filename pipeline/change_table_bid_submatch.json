@@ -1,0 +1,57 @@
+{
+ "generated": "2026-10-11 16:30",
+ "title": "Bid tracker — EH submissions matched across all submission columns",
+ "failures": [],
+ "changes": [
+  {
+   "file": "extract",
+   "kind": "exact",
+   "category": "data",
+   "note": "map the proposal-date, amendment-date and award-date columns",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        elif h.startswith('Status of submission') or h.startswith('حالة التقديم'): m['substatus']=c\n",
+   "new": "        elif h.startswith('Status of submission') or h.startswith('حالة التقديم'): m['substatus']=c\n        elif h.startswith('العرض الفني') or h.startswith('Technical Proposal'): m['techprop']=c\n        elif h.startswith('العرض المالي') or h.startswith('Financial Proposal'): m['finprop']=c\n        elif h.startswith('Date of Amendment'): m['amenddate']=c\n        elif h.startswith('تاريخ الترسية') "
+  },
+  {
+   "file": "extract",
+   "kind": "exact",
+   "category": "data",
+   "note": "carry proposal, amendment and award dates into bidraw2.json",
+   "occurrences": 1,
+   "ok": true,
+   "old": "            subdate=subdstr(g('subdate')), substatus=substat(g('substatus')), subcol=('subdate' in m or 'substatus' in m),\n",
+   "new": "            subdate=subdstr(g('subdate')), substatus=substat(g('substatus')), subcol=('subdate' in m or 'substatus' in m),\n            techdate=subdstr(g('techprop')), findate=subdstr(g('finprop')),\n            amenddate=subdstr(g('amenddate')), awarddate=subdstr(g('awarddate')),\n"
+  },
+  {
+   "file": "extract",
+   "kind": "exact",
+   "category": "data",
+   "note": "derive EH submission date, its source and any gap between the two records",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        b['value']=b['winval'] if b['winval'] else b['offer']\n        allbids.append(b)\n",
+   "new": "        b['value']=b['winval'] if b['winval'] else b['offer']\n        # EH submission date: the tracker's own date first, else the earlier proposal date (11 Oct 2026)\n        _pd=sorted(x for x in (b['techdate'],b['findate']) if x)\n        b['ehsubdate']=b['subdate'] or (_pd[0] if _pd else None)\n        b['subsrc']='tracker' if b['subdate'] else ('proposal' if _pd else None)\n        b['subgap']=No"
+  },
+  {
+   "file": "analytics",
+   "kind": "exact",
+   "category": "data",
+   "note": "a proposal date counts as a dated submission",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        if b.get('subdate'): return 'date'\n",
+   "new": "        if b.get('ehsubdate') or b.get('subdate'): return 'date'\n"
+  },
+  {
+   "file": "analytics",
+   "kind": "exact",
+   "category": "data",
+   "note": "bidlist rows carry the submission evidence the All Tenders tab needs",
+   "occurrences": 1,
+   "ok": true,
+   "old": "            deadline=b.get('submit') or None, subdate=b.get('subdate') or None, sub=substate(b),\n",
+   "new": "            deadline=b.get('submit') or None, subdate=(b.get('ehsubdate') or b.get('subdate') or None), sub=substate(b),\n            subsrc=b.get('subsrc'), subgap=b.get('subgap'), awarddate=b.get('awarddate'),\n            submitted=substate(b) in ('date','yes'),\n            deadline_stale=bool(b.get('submit') and (b.get('ehsubdate') or b.get('subdate')) and (b.get('ehsubdate') or b.get('subdate')"
+  }
+ ]
+}

@@ -1,0 +1,10 @@
+{
+ "generated": "2026-10-12 11:36",
+ "title": "Caption and note fixes",
+ "failures": [],
+ "changes": [
+  "Clients: depth-vs-value caption (English) names the right corners",
+  "Clients: depth-vs-value caption (Arabic) names the right corners",
+  "Stakeholder Map: bid-against-EH note rewrites itself on language change"
+ ]
+}

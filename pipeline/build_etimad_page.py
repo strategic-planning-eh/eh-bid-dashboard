@@ -105,6 +105,7 @@ SKIN = r"""
 body,body.dark{--bg:var(--eh-mist);--card:var(--eh-paper);--ink:var(--eh-ink);--muted:var(--eh-ink-2);--line:var(--eh-line);--chip:var(--eh-tint);
   --green:var(--eh-leaf-ink);--blue:var(--eh-sea);--amber:var(--eh-warn);--red:var(--eh-bad);
   --core:var(--eh-c1);--adj:var(--eh-c2);--bar:var(--eh-c1);--bar2:var(--eh-c2);--grid:var(--eh-line);
+  --open:var(--eh-c5);--closed:var(--eh-grey);   /* audit shell-20: open / closed never reuse the Core / Related colours */
   background:var(--eh-mist);color:var(--eh-ink);font-size:14.5px;line-height:var(--eh-lh)}
 /* masthead (standalone): deep navy, contour lines, land-to-sea line along the lower edge */
 header,body.dark header{background:var(--eh-deep);position:relative;isolation:isolate;padding:20px 22px 22px;gap:12px 16px}
@@ -364,7 +365,7 @@ function hbars(id,rows,opt={}){ // rows: [{label, values:[core,adj] | value, tip
   let s=`<svg class="ch" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opt.title||'')}">`;
   rows.forEach((r,i)=>{const y=top+i*rowH;const lab=r.label.length>42?r.label.slice(0,41)+'…':r.label;
     s+=`<text x="${LANG==='ar'?W-4:4}" y="${y+16}" text-anchor="${LANG==='ar'?'end':'start'}" class="${r.ar?'ar':''}">${esc(lab)}</text>`;
-    let x=pad;const vals=stack?r.values:[r.value],cols=stack?['var(--core)','var(--adj)']:['var(--bar)'];
+    let x=pad;const vals=stack?r.values:[r.value],cols=stack?(opt.cols||['var(--core)','var(--adj)']):['var(--bar)'];
     vals.forEach((v,k)=>{if(!v)return;const w=Math.max(2,sx(v)-(k<vals.length-1?2:0));const xx=LANG==='ar'?W-x-w:x;s+=`<rect x="${xx}" y="${y+5}" width="${w}" height="14" rx="3" fill="${cols[k]}"/>`;x+=sx(v)});
     const tot=vals.reduce((a,b)=>a+b,0),tx=LANG==='ar'?W-x-6:x+6;
     s+=`<text x="${tx}" y="${y+16}" class="lbl" text-anchor="${LANG==='ar'?'end':'start'}">${fmtN(tot)}${opt.unit||''}</text>`;
@@ -426,8 +427,9 @@ function table(rows){
    pri:[L('Key buyer','جهة مهمة'),t=>t.priority?0:1,t=>`<td style="text-align:center">${priCell(t)}</td>`],
    ref:[L('Etimad number','رقم المنافسة في اعتماد'),t=>t.ref,t=>`<td><span class="ref">${esc(t.ref)}</span><button class="copy" data-ref="${esc(t.ref)}" title="${L('Copy the reference to search on Etimad','انسخ الرقم المرجعي للبحث في اعتماد')}">⧉</button></td>`]};
   const order=['title','rel','eh','days','sub','agency','line','type','fee','enq','open','pri','region','ref'];
-  const k=(C[SORT.k]||C.sub)[1];rows=rows.slice().sort((a,b)=>{const x=k(a),y=k(b);return (x>y?1:x<y?-1:0)*SORT.dir});
-  let h=`<table class="t"><thead><tr>${order.map(c=>`<th data-k="${c}" class="${SORT.k===c?'s'+(SORT.dir<0?' up':''):''}">${C[c][0]}</th>`).join('')}</tr></thead><tbody>`;
+  const k=(C[SORT.k]||C.sub)[1],cmp=(x,y)=>typeof x==='string'&&typeof y==='string'?x.localeCompare(y,LANG==='ar'?'ar':'en',{numeric:true}):(x>y?1:x<y?-1:0);   // audit shell-20c: "No. 8" before "No. 22"
+  rows=rows.slice().sort((a,b)=>cmp(k(a),k(b))*SORT.dir);
+  let h=`<table class="t"><thead><tr>${order.map(c=>c==='region'?`<th>${C[c][0]}</th>`:`<th data-k="${c}" class="${SORT.k===c?'s'+(SORT.dir<0?' up':''):''}">${C[c][0]}</th>`).join('')}</tr></thead><tbody>`;
   rows.forEach(t=>{h+='<tr>'+order.map(c=>C[c][2](t)).join('')+'</tr>'});
   return h+'</tbody></table>'}
 
@@ -498,7 +500,7 @@ function render(){
   $('white').innerHTML=WS.length?`<table class="t"><thead><tr><th>${L('Buyer','الجهة')}</th><th>${L('Tenders EH can bid for','منافسات يمكن لآفاق التقدم لها')}</th><th>${L('On the stakeholder map as','في خريطة أصحاب المصلحة بوصفها')}</th></tr></thead><tbody>`+WS.map(([k,a])=>`<tr><td class="ar" dir="rtl">${esc(k)}</td><td class="num">${a.n}</td><td>${a.rec?esc(a.rec.Name+' · '+catName(a.rec.Category||'')):`<span style="color:var(--muted)">${L('Not on the stakeholder map — suggested for review','غير موجودة في خريطة أصحاب المصلحة — مقترحة للمراجعة')}</span>`}</td></tr>`).join('')+'</tbody></table>':`<div class="empty">${L('Searched, none found: no agency outside the EH client list published two or more tenders EH can bid for in this view.','تم البحث، ولا توجد جهة من خارج عملاء آفاق طرحت منافستين أو أكثر يمكن لآفاق التقدم لها في هذا العرض.')}</div>`;
   renderMarket();
   if(typeof renderAnalyst==='function')renderAnalyst();
-  document.querySelectorAll('#list th').forEach(th=>th.onclick=()=>{SORT.dir=(SORT.k===th.dataset.k?-SORT.dir:1);SORT.k=th.dataset.k;render()});
+  document.querySelectorAll('#list th[data-k]').forEach(th=>th.onclick=()=>{SORT.dir=(SORT.k===th.dataset.k?-SORT.dir:1);SORT.k=th.dataset.k;render()});
 }
 function renderMarket(){
   const MK=D.market||{windows:[]},W=MK.windows||[],w=W[W.length-1];
@@ -508,7 +510,7 @@ function renderMarket(){
   const tot=w.rows.filter(r=>r.dim==='type').reduce((a,r)=>a+r.n,0);
   $('mkt-note').textContent=L(`Every tender published on Etimad from ${fmtD(w.from)} to ${fmtD(w.to)} (${fmtN(tot)} tenders), in every type of work, not only what fits EH. Only counts are shown, and the filters above do not apply here. In each bar, blue is tenders still open when we checked and green is tenders already closed.`,`كل منافسة نُشرت في اعتماد من ${fmtD(w.from)} إلى ${fmtD(w.to)} (${fmtN(tot)} منافسة) في كل أنواع العمل، لا ما يناسب آفاق فقط. تُعرض الأعداد فقط، ولا تنطبق المرشحات أعلاه هنا. في كل عمود: الأزرق منافسات كانت مفتوحة عند المراجعة، والأخضر منافسات أُغلقت.`);
   const S=Object.entries(w.sectors).sort((a,b)=>b[1].n-a[1].n);
-  hbars('mk-sector',S.map(([k,v])=>({label:nm(SN[k]),values:[v.open,v.n-v.open],tip:`<b>${esc(nm(SN[k]))}</b><br>${L('Tenders','منافسات')}: ${v.n} (${(100*v.n/tot).toFixed(1)}%)<br>${L('Still open when checked','مفتوحة عند المراجعة')}: ${v.open}<br>${L('Price of tender documents (rough sign of size)','ثمن وثائق المنافسات (مؤشر تقريبي للحجم)')}: ${fmtN(v.fees)} ${L('SAR','ريال')}<br><span style="color:var(--muted)">${v.acts.slice(0,4).map(a=>esc(a[0])+' '+a[1]).join('<br>')}</span>`})),{labelW:260});
+  hbars('mk-sector',S.map(([k,v])=>({label:nm(SN[k]),values:[v.open,v.n-v.open],tip:`<b>${esc(nm(SN[k]))}</b><br>${L('Tenders','منافسات')}: ${v.n} (${(100*v.n/tot).toFixed(1)}%)<br>${L('Still open when checked','مفتوحة عند المراجعة')}: ${v.open}<br>${L('Price of tender documents (rough sign of size)','ثمن وثائق المنافسات (مؤشر تقريبي للحجم)')}: ${fmtN(v.fees)} ${L('SAR','ريال')}<br><span style="color:var(--muted)">${v.acts.slice(0,4).map(a=>esc(a[0])+' '+a[1]).join('<br>')}</span>`})),{cols:['var(--open)','var(--closed)'],labelW:260});
   const G=Object.entries(w.agency_groups).sort((a,b)=>b[1].n-a[1].n);
   hbars('mk-group',G.map(([k,v])=>({label:nm(GN[k]),value:v.n,tip:`<b>${esc(nm(GN[k]))}</b><br>${L('Tenders','منافسات')}: ${v.n}<br>${L('Price of tender documents (rough sign of size)','ثمن وثائق المنافسات (مؤشر تقريبي للحجم)')}: ${fmtN(v.fees)} ${L('SAR','ريال')}`})),{labelW:240});
   // Per day: every window from the latest capture, joined into one continuous day axis (days with no tenders show as 0).
@@ -518,7 +520,7 @@ function renderMarket(){
   const thin=DY.length>20?Math.ceil(DY.length/14):1,loc=LANG==='ar'?'ar-SA-u-ca-gregory-nu-latn':'en-GB';let lastM=null;
   vbars('mk-day',DY.map((r,i)=>{const d=new Date(r.key+'T00:00:00'),full=d.toLocaleDateString(loc,{weekday:'short',day:'numeric',month:'short'});
       if(i%thin)return {label:'',tip:full};const m=d.getMonth(),lab=m!==lastM?d.toLocaleDateString(loc,{day:'numeric',month:'short'}):String(d.getDate());lastM=m;return {label:lab,tip:full}}),
-    [{name:L('Still open when checked','مفتوحة عند المراجعة'),color:'var(--core)',vals:DY.map(r=>r.open)},{name:L('Closed','مغلقة'),color:'var(--adj)',vals:DY.map(r=>r.n-r.open)}],
+    [{name:L('Still open when checked','مفتوحة عند المراجعة'),color:'var(--open)',vals:DY.map(r=>r.open)},{name:L('Closed','مغلقة'),color:'var(--closed)',vals:DY.map(r=>r.n-r.open)}],
     {legend:true,valueLabels:DY.length<=20,title:L('Tenders published per day','المنافسات المنشورة يوميًا')});
   if(DY.length)$('mk-day').insertAdjacentHTML('beforeend',`<div style="font-size:11.5px;color:var(--muted);margin-top:2px">${L(`${fmtD(DY[0].key)} to ${fmtD(DY[DY.length-1].key)}: ${fmtN(DY.reduce((a,r)=>a+r.n,0))} tenders. Fridays and Saturdays are usually empty because agencies publish on working days.`,`من ${fmtD(DY[0].key)} إلى ${fmtD(DY[DY.length-1].key)}: ${fmtN(DY.reduce((a,r)=>a+r.n,0))} منافسة. تكون الجمعة والسبت فارغة غالبًا لأن الجهات تنشر في أيام العمل.`)}</div>`);
   const AG=w.rows.filter(r=>r.dim==='agency').sort((a,b)=>b.n-a.n).slice(0,15);
@@ -602,7 +604,7 @@ HTML = f"""<!doctype html>
 
 <section class="card"><h2 data-en="What the Kingdom is buying — every tender on Etimad" data-ar="ما الذي تشتريه المملكة — كل منافسات اعتماد">What the Kingdom is buying — every tender on Etimad</h2>
 <div class="note" id="mkt-note"></div>
-<div class="legend"><span><i style="background:var(--core)"></i><span data-en="Still open when checked" data-ar="مفتوحة عند المراجعة">Still open when checked</span></span><span><i style="background:var(--adj)"></i><span data-en="Already closed" data-ar="مغلقة">Already closed</span></span></div>
+<div class="legend"><span><i style="background:var(--open)"></i><span data-en="Still open when checked" data-ar="مفتوحة عند المراجعة">Still open when checked</span></span><span><i style="background:var(--closed)"></i><span data-en="Already closed" data-ar="مغلقة">Already closed</span></span></div>
 <div class="g2"><div><div class="hd"><b data-en="By type of work" data-ar="حسب نوع العمل">By type of work</b>{png('mk-sector','etimad_market_by_sector')}</div><div id="mk-sector"></div></div>
 <div><div class="hd"><b data-en="Who is buying (buyers grouped by kind)" data-ar="من يشتري (الجهات مجمّعة حسب نوعها)">Who is buying</b>{png('mk-group','etimad_market_by_buyer')}</div><div id="mk-group"></div></div>
 <div><div class="hd"><b data-en="Tenders published per day" data-ar="المنافسات المنشورة يوميًا">Tenders published per day</b>{png('mk-day','etimad_market_per_day')}</div><div id="mk-day"></div></div>

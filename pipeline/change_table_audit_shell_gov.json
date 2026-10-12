@@ -1,0 +1,77 @@
+{
+ "generated": "2026-10-12 14:23",
+ "title": "Regulatory news — audit fixes shell-03/04/19",
+ "failures": [],
+ "changes": [
+  {
+   "file": "gov",
+   "kind": "exact",
+   "category": "code",
+   "note": "shell-04/19: Gregorian dates in Arabic; ages counted from the collection date; collection time in the page language",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const fmtD=iso=>{if(!iso)return L('date n/a','بدون تاريخ');const d=new Date(iso+'T00:00:00');return d.toLocaleDateString(LANG==='ar'?'ar-SA-u-nu-latn':'en-GB',{day:'2-digit',month:'short',year:'numeric'});};\nconst daysAgo=iso=>iso?Math.floor((Date.now()-new Date(iso+'T00:00:00'))/864e5):null;",
+   "new": "const LOC=()=>LANG==='ar'?'ar-SA-u-ca-gregory-nu-latn':'en-GB';   // Gregorian in Arabic too, as on every hub page (audit shell-04)\nconst fmtD=iso=>{if(!iso)return L('date n/a','بدون تاريخ');const d=new Date(iso+'T00:00:00');return d.toLocaleDateString(LOC(),{day:'2-digit',month:'short',year:'numeric'});};\n// ages are counted from the collection date, not the reader's clock (audit shell-19)\nfuncti"
+  },
+  {
+   "file": "gov",
+   "kind": "exact",
+   "category": "code",
+   "note": "shell-04: the September 2026 brief is labelled September 2026 in Arabic, not a Hijri month",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const monthName=m=>{const [y,mo]=m.split('-');return new Date(+y,+mo-1,1).toLocaleDateString(LANG==='ar'?'ar-SA-u-nu-latn':'en-GB',{month:'long',year:'numeric'});};",
+   "new": "const monthName=m=>{const [y,mo]=m.split('-');return new Date(+y,+mo-1,1).toLocaleDateString(LOC(),{month:'long',year:'numeric'});};"
+  },
+  {
+   "file": "gov",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-04: \"Collected\" time in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<span>${L('Collected','تاريخ الجمع')} <b dir=\"ltr\">${esc(FEED.generated_ksa||FEED.generated)}</b></span>",
+   "new": "<span>${L('Collected','تاريخ الجمع')} <b>${esc(fmtGen())}</b></span>"
+  },
+  {
+   "file": "gov",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-04: Arabic week range reads right to left",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<b dir=\"ltr\">${fmtD(FEED.week_from)} – ${fmtD(FEED.week_to)}</b>",
+   "new": "<b>${fmtD(FEED.week_from)} – ${fmtD(FEED.week_to)}</b>"
+  },
+  {
+   "file": "gov",
+   "kind": "exact",
+   "category": "code",
+   "note": "shell-03: search box keeps focus while typing",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<input placeholder=\"${L('Search headlines…','ابحث في العناوين…')}\" value=\"${esc(S.q)}\" oninput=\"S.q=this.value;render()\">",
+   "new": "<input id=\"gq\" placeholder=\"${L('Search headlines…','ابحث في العناوين…')}\" value=\"${esc(S.q)}\" oninput=\"S.q=this.value;qRender(this)\">"
+  },
+  {
+   "file": "gov",
+   "kind": "exact",
+   "category": "code",
+   "note": "shell-03: qRender() restores focus and caret",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function render(){\n document.querySelectorAll('#lang button')",
+   "new": "// redraw the list without losing the search box's cursor (audit shell-03)\nfunction qRender(el){const a=el.selectionStart,b=el.selectionEnd;render();const q=$('gq');if(q){q.focus();try{q.setSelectionRange(a,b);}catch(e){}}}\nfunction render(){\n document.querySelectorAll('#lang button')"
+  },
+  {
+   "file": "gov",
+   "kind": "exact",
+   "category": "data",
+   "note": "shell-19: stories dated after the collection are treated as undated",
+   "occurrences": 1,
+   "ok": true,
+   "old": "fetch('gov_news.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(j=>{FEED=j;render();})",
+   "new": "fetch('gov_news.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(j=>{FEED=j;\n  const g=genDay();(FEED.items||[]).forEach(it=>{if(it.date&&FEED.generated&&it.date>g){it.date_after_collection=it.date;it.date=null;}});   // a date after the collection cannot be right: treat as undated (audit shell-19)\n  render();})"
+  }
+ ]
+}

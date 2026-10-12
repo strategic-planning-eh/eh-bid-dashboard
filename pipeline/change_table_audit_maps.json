@@ -1,0 +1,907 @@
+{
+ "generated": "2026-10-12 14:31",
+ "title": "Audit round 2 — Stakeholder Map and Client Bubble Map fixes",
+ "failures": [],
+ "changes": [
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "layout",
+   "note": "maps-17/18/19: proportional licence bars, button close mark, phone wrapping",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</head>",
+   "new": "<style id=\"eh-audit-maps\">.sat-lbl{flex:none}.sat-bar{flex:none;max-width:calc(100% - 150px)}.sat-txt{flex:1 1 0;min-width:0}.modal button.x{background:none;border:0;font:inherit;font-size:20px;line-height:1;padding:6px 10px;min-width:44px;min-height:44px;cursor:pointer;color:var(--eh-ink-2)}.modal button.x:hover{color:var(--eh-sea)}@media(max-width:480px){.hd-actions .btn{white-space:normal !impo"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-11: header no longer calls the records \"verified\" (the count is set live at load)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<p>Afaq Al Beeah · 4,195 verified organizations across KSA &amp; GCC · HQ Jeddah · Branch Rabigh · v2.7 — full regional granularity</p>",
+   "new": "<p>Afaq Al Beeah · 4,195 organisations across KSA &amp; GCC · HQ Jeddah · Branch Rabigh · v2.7 — full regional granularity</p>"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: \"Filters & search\" follows the language",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<span id=\"mfiltLbl\">Filters &amp; search</span>",
+   "new": "<span id=\"mfiltLbl\" class=\"tr\">Filters &amp; search</span>"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: \"Bid against EH only\"",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<input type=\"checkbox\" id=\"fBid\"> Bid against EH only</label>",
+   "new": "<input type=\"checkbox\" id=\"fBid\"> <span class=\"tr\">Bid against EH only</span></label>"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: \"Tier 1 only\"",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<input type=\"checkbox\" id=\"fT1\"> Tier 1 only</label>",
+   "new": "<input type=\"checkbox\" id=\"fT1\"> <span class=\"tr\">Tier 1 only</span></label>"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: \"Minimum number of sites\"",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<label style=\"font-size:11.5px;color:var(--ink-soft)\">Minimum number of sites: <b id=\"siteVal\">Any</b></label>",
+   "new": "<label style=\"font-size:11.5px;color:var(--ink-soft)\"><span class=\"tr\">Minimum number of sites:</span> <b id=\"siteVal\">Any</b></label>"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: range \"Any\"",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"range-l\"><span>Any</span><span>10+</span></div>",
+   "new": "<div class=\"range-l\"><span class=\"tr\">Any</span><span>10+</span></div>"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: Arabic for the side panel, zoom hint and Regional View headings",
+   "occurrences": 1,
+   "ok": true,
+   "old": "\r\n];\r\nwindow.addEventListener('message',function(e){\r\n  var d=e.data||{};\r\n  if(d.ehhub==='lang'",
+   "new": "\r\n ['Filters & search','الفلاتر والبحث'],\r\n ['Holds licence','يحمل ترخيصاً'],\r\n ['Any licence','أي ترخيص'],\r\n ['Bid against EH only','من تقدّم ضد EH فقط'],\r\n ['Tier 1 only','الفئة 1 فقط'],\r\n ['Minimum number of sites:','الحد الأدنى لعدد المواقع:'],\r\n ['Any','أي عدد'],\r\n ['High = 5+ bids · Medium = 3–4 · Low = 1–2. Threat weights frequency, so single-job bidders are not High threat.','مرتفع = 5 عطا"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: language sweep also covers wrapped labels, zoom hint and Regional View headings",
+   "occurrences": 1,
+   "ok": true,
+   "old": "document.querySelectorAll('h1,h3,p,.btn,.tab,.kpi .l,label,option,.empty,.note').forEach(",
+   "new": "document.querySelectorAll('h1,h3,p,.btn,.tab,.kpi .l,label,option,.empty,.note,.tr,.zoomhint,#regView h4').forEach("
+  },
+  {
+   "file": "stake",
+   "kind": "block",
+   "category": "copy",
+   "note": "maps-11: header count computed from the map (was 1,951 \"verified\" in Arabic and after AR→EN)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  var hp=document.querySelector('header .titles p'); if(hp)hp.textContent=hdrText();\r\n  var de=document.querySelector('#",
+   "new": "hdrText()"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: sites value, Dark/Light button and company-type options follow the language",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  // dynamic re-labels\r\n  document.querySelectorAll('#catFilters .catlbl')",
+   "new": "  var _sv=document.getElementById('siteVal'); if(_sv)_sv.textContent=(typeof state!=='undefined'&&state.sites)||t('Any','أي عدد');\r\n  var _db=document.getElementById('darkBtn'); if(_db){var _on=root.classList.contains('dark'),_ic=_db.querySelector('svg');_db.innerHTML=(_ic?_ic.outerHTML:'')+(_on?t('Light','فاتح'):t('Dark','داكن'));}\r\n  document.querySelectorAll('#fType option[data-typ]').forEach(f"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: Licence Map redrawn on language change",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  if(curTab==='geo')buildGeoMap();\r\n  if(window.__cursel)showDetail(window.__cursel);",
+   "new": "  if(curTab==='geo')buildGeoMap();\r\n  if(curTab==='lic')buildLicenceMap();\r\n  if(window.__cursel)showDetail(window.__cursel);"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-07/11: \"Region not recorded\" label; header text counted from the map",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function regL(r){return LNG==='ar'?(AR_REG[r]||r):r;}",
+   "new": "function regL(r){if(r==='\\u2014'||r==='')return t('Region not recorded','\\u0627\\u0644\\u0645\\u0646\\u0637\\u0642\\u0629 \\u063a\\u064a\\u0631 \\u0645\\u0633\\u062c\\u0644\\u0629');return LNG==='ar'?(AR_REG[r]||r):r;}\r\nfunction hdrText(){var c=NODES.length.toLocaleString('en-US');return t('Afaq Al Beeah \\u00b7 '+c+' organisations across KSA & GCC \\u00b7 HQ Jeddah \\u00b7 Branch Rabigh \\u00b7 v2.7 \\u2014 full re"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "bug",
+   "note": "maps-07: companies with no recorded region get their own wheel slice / Regional View bar / region chip",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const REGIONS = ['Jeddah','Makkah City','Rabigh','Other Makkah Region','Madinah Region','Riyadh','Qassim Region','Eastern Province','Tabuk Region','Hail Region','Al Jawf Region','Northern Borders Region','Southern Region','GCC / International'];",
+   "new": "const REGIONS = ['Jeddah','Makkah City','Rabigh','Other Makkah Region','Madinah Region','Riyadh','Qassim Region','Eastern Province','Tabuk Region','Hail Region','Al Jawf Region','Northern Borders Region','Southern Region','GCC / International','\\u2014'];   // '\\u2014' = region not recorded: its own slice, never hidden (patch_audit_maps.py)"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-07: wheel rim label for the new slice",
+   "occurrences": 1,
+   "ok": true,
+   "old": "'Eastern Province':'Eastern','Southern Region':'Southern','GCC / International':\"GCC / Int'l\"};",
+   "new": "'Eastern Province':'Eastern','Southern Region':'Southern','GCC / International':\"GCC / Int'l\",'\\u2014':'Region not recorded'};"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "bug",
+   "note": "collaboration badge no longer given because the region is unknown (data says \"—\", code checked \"Unknown\")",
+   "occurrences": 1,
+   "ok": true,
+   "old": "&&!['Jeddah','Makkah City','Rabigh','Other Makkah Region','Riyadh','Unknown'].includes(n.rg));",
+   "new": "&&!['Jeddah','Makkah City','Rabigh','Other Makkah Region','Riyadh','Unknown','\\u2014'].includes(n.rg));"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: \"Top region\" KPI in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "document.getElementById('kTop').textContent=top?top[0]:'—';",
+   "new": "document.getElementById('kTop').textContent=top?regL(top[0]):'—';"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: wheel hover label in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "tip.innerHTML='<b dir=\"auto\">'+esc(n.n)+'</b><br>'+(n.cat)+' · '+(n.rg)+(n.tier?' · '+n.tier:'')+(n.bc>0?' · '+n.bc+'× bid'+(n.threat?' · '+n.threat+' threat':''):'');",
+   "new": "tip.innerHTML='<b dir=\"auto\">'+esc(n.n)+'</b><br>'+esc(catS(n.cat))+' · '+esc(regL(n.rg))+(n.tier?' · '+esc(tierL(n.tier)):'')+(n.bc>0?' · '+n.bc+t('× bid',' عطاء')+(n.threat?' · '+thrL(n.threat)+t(' threat',' تهديد'):''):'');"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-22: the ledger count is called \"ledger lines\" (it was labelled \"Projects\")",
+   "occurrences": 1,
+   "ok": true,
+   "old": "'<div class=\"drow\"><span class=\"k\">'+t('Projects','\\u0627\\u0644\\u0645\\u0634\\u0627\\u0631\\u064a\\u0639')+'</span><span class=\"v\">'+c.proj+'</span></div>'+",
+   "new": "'<div class=\"drow\"><span class=\"k\">'+t('Ledger lines','\\u0628\\u0646\\u0648\\u062f \\u0627\\u0644\\u0633\\u062c\\u0644')+'</span><span class=\"v\">'+c.proj+'</span></div>'+"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "bug",
+   "note": "maps-09: score breakdown only when it adds up",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function showDetail(n){window.__cursel=n;",
+   "new": "/* patch_audit_maps.py (maps-09): the breakdown is printed only when capability + backing (+15 for a bidder) equals the total */\r\nfunction scoreText(n,noCf){\r\n  var cap=Math.round((n.cap||0)*10)/10, bk=n.bk||0, bd=n.bid?15:0, sc=Math.round(n.sc*10)/10, s=String(sc);\r\n  if(Math.abs(Math.round((cap+bk+bd)*10)/10-sc)<0.15) s+=t('  =  capability ','  =  القدرة ')+cap+t(' + backing ',' + الإسناد ')+bk+"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "bug",
+   "note": "maps-09: detail panel uses the reconciling score text",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  else rows.push([t('Total Score','\\u0627\\u0644\\u062f\\u0631\\u062c\\u0629 \\u0627\\u0644\\u0643\\u0644\\u064a\\u0629'),n.sc!=null?(Math.round(n.sc*10)/10)+t('  =  capability ','  =  \\u0627\\u0644\\u0642\\u062f\\u0631\\u0629 ')+(Math.round((n.cap||0)*10)/10)+t(' + backing ',' + \\u0627\\u0644\\u0625\\u0633\\u0646\\u0627\\u062f ')+(n.bk||0)+(n.bid?t(' + bids 15',' + \\u0627\\u0644\\u0639\\u0637\\u0627\\u0621\\u0627\\u062a 15')",
+   "new": "  else rows.push([t('Total Score','\\u0627\\u0644\\u062f\\u0631\\u062c\\u0629 \\u0627\\u0644\\u0643\\u0644\\u064a\\u0629'),n.sc!=null?scoreText(n):t('Not scored','\\u063a\\u064a\\u0631 \\u0645\\u064f\\u0642\\u064a\\u0651\\u0645')]);"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: detail Category in Arabic (category names, not company-type names)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const rows=[[t('Category','\\u0627\\u0644\\u0641\\u0626\\u0629'),catL(n.cat)]];",
+   "new": "const rows=[[t('Category','\\u0627\\u0644\\u0641\\u0626\\u0629'),catS(n.cat)]];"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: detail Company type in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "rows.push([t('Company type','\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0634\\u0631\\u0643\\u0629'),n.typ||'\\u2014']);",
+   "new": "rows.push([t('Company type','\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0634\\u0631\\u0643\\u0629'),n.typ?catL(n.typ):'\\u2014']);"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "bug",
+   "note": "maps-02: phone detail sheet keeps its close button after a company is opened",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  document.getElementById('detail').innerHTML='<h3>'+t('Company detail','\\u062a\\u0641\\u0627\\u0635\\u064a\\u0644 \\u0627\\u0644\\u0634\\u0631\\u0643\\u0629')+'</h3>'+",
+   "new": "  document.getElementById('detail').innerHTML='<button class=\"dclose\" type=\"button\" aria-label=\"'+t('Close details','\\u0625\\u063a\\u0644\\u0627\\u0642 \\u0627\\u0644\\u062a\\u0641\\u0627\\u0635\\u064a\\u0644')+'\" onclick=\"document.getElementById(\\'detail\\').classList.remove(\\'has\\')\">&times;</button>'+   // maps-02: the phone sheet keeps its close button\r\n    '<h3>'+t('Company detail','\\u062a\\u0641\\u0627\\u06"
+  },
+  {
+   "file": "stake",
+   "kind": "block",
+   "category": "bug",
+   "note": "maps-10: \"As a client\" reads the tracker client record by name (was always 0/0), bilingual",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  if(n.cl){const d=n.cl;\r\n    h+='<div style=\"margin:10px 14px 2px;padding:9px 11px;background:#F2FAF4 … function licBlock(n){",
+   "new": "  const bc=clientBA(n);   // maps-10: the bid tracker's own figures for this client (BANALYTICS), not the ledger record\r\n  if(bc){\r\n    h+='<div style=\"margin:10px 14px 2px;padding:9px 11px;background:#F2FAF4;border:1px solid #CFE8D6;border-radius:8px\">'+\r\n      '<div class=\"k\" style=\"font-size:11px"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: company-type options can be shown in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "types.forEach(t=>document.getElementById('fType').insertAdjacentHTML('beforeend','<option>'+esc(t)+'</option>'));",
+   "new": "types.forEach(ty=>document.getElementById('fType').insertAdjacentHTML('beforeend','<option value=\"'+esc(ty)+'\" data-typ=\"1\">'+esc(catL(ty))+'</option>'));"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: sites value",
+   "occurrences": 1,
+   "ok": true,
+   "old": "document.getElementById('siteVal').textContent=state.sites||'Any';recompute()};",
+   "new": "document.getElementById('siteVal').textContent=state.sites||t('Any','أي عدد');recompute()};"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "bug",
+   "note": "maps-13: Reset filters shows every company type (boxes ticked and filter agree)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  state.cats=new Set();document.querySelectorAll('#catFilters input').forEach(i=>i.checked=false);state.regs.clear();",
+   "new": "  state.cats=new Set(CATS.map(c=>c.id));   // maps-13: reset shows everything (every type box is ticked below)\r\n  state.regs.clear();"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: sites value after reset",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  document.getElementById('fSites').value=0;document.getElementById('siteVal').textContent='Any';",
+   "new": "  document.getElementById('fSites').value=0;document.getElementById('siteVal').textContent=t('Any','أي عدد');"
+  },
+  {
+   "file": "stake",
+   "kind": "block",
+   "category": "bug",
+   "note": "maps-08: wheel legend shows the stakeholder-category colours the dots use (Arabic labels too)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function buildLegendBar(){ …   '<span class=\"it\"><span class=\"star\">",
+   "new": "function buildLegendBar(){\r\n/* patch_audit_maps.py (maps-08): the dots are filled by stakeholder category (CAT_COL), so the legend lists those colours */\r\nconst present=Object.keys(CAT_COL).filter(c=>NODES.some(n=>n.cat===c));\r\ndocument.getElementById('legend').innerHTML =\r\n  '<b style=\"color:#1C2B3"
+  },
+  {
+   "file": "stake",
+   "kind": "block",
+   "category": "i18n",
+   "note": "maps-07/14: Regional View shows the \"Region not recorded\" bar and follows the language",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function buildRegional(){ … // ---------- tabs & modal",
+   "new": "function buildRegional(){\r\n  /* patch_audit_maps.py: includes the \"Region not recorded\" bar (maps-07); labels follow the language (maps-14) */\r\n  const rc={};VIS.forEach(n=>rc[n.rg]=(rc[n.rg]||0)+1);\r\n  const ordered=REGIONS.filter(r=>rc[r]);\r\n  const mx=Math.max(1,...ordered.map(r=>rc[r]));\r\n  docu"
+  },
+  {
+   "file": "stake",
+   "kind": "block",
+   "category": "bug",
+   "note": "maps-17/14: Licence Map bars proportional, \"most exposed\" sentence computed, Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function buildLicenceMap(){ … function selByName(",
+   "new": "function buildLicenceMap(){\r\n  /* patch_audit_maps.py: bars proportional to the largest count shown (maps-17); sentences computed; language-aware (maps-14) */\r\n  const L=BA.licenses, all=L.eh_portfolio.concat(L.most_crowded), maxComp=Math.max(1,...all.map(r=>r[1]));\r\n  const bar=(n,col)=>'<div class"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: schematic province tooltips",
+   "occurrences": 1,
+   "ok": true,
+   "old": "PROV.forEach(function(p){ inner+='<path d=\"'+p.d+'\" fill=\"#F6F1E2\" stroke=\"#C9B98E\" stroke-width=\"1.4\"><title>'+p.n+' Province</title></path>'; });",
+   "new": "PROV.forEach(function(p){ inner+='<path d=\"'+p.d+'\" fill=\"#F6F1E2\" stroke=\"#C9B98E\" stroke-width=\"1.4\"><title>'+t(p.n+' Province','منطقة '+provL(p.n))+'</title></path>'; });"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: schematic province labels",
+   "occurrences": 1,
+   "ok": true,
+   "old": "font-weight=\"600\" fill=\"#9A8C66\" style=\"pointer-events:none\">'+p.n+'</text>'; });",
+   "new": "font-weight=\"600\" fill=\"#9A8C66\" style=\"pointer-events:none\">'+provL(p.n)+'</text>'; });"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: schematic city labels",
+   "occurrences": 1,
+   "ok": true,
+   "old": "fill=\"#8A7A50\" style=\"pointer-events:none\">'+c+'</text>'; });",
+   "new": "fill=\"#8A7A50\" style=\"pointer-events:none\">'+cityL(c)+'</text>'; });"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: schematic empty-region labels",
+   "occurrences": 1,
+   "ok": true,
+   "old": "font-size=\"10.5\" fill=\"#9A8C66\">'+rg+' · 0</text>'; return; }",
+   "new": "font-size=\"10.5\" fill=\"#9A8C66\">'+regL(rg)+' · 0</text>'; return; }"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: schematic bubble tooltips",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<title>'+rg+' — '+g.opps+' tender(s) delivered here'+(g.opp_value?', SAR '+Math.round(g.opp_value).toLocaleString():'')+(wr!=null?'; EH win rate '+wr+'%':'')+'\\n('+g.competitors+' competitors, '+g.clients+' clients based in region)</title>",
+   "new": "<title>'+regL(rg)+' — '+t(g.opps+' tender(s) delivered here'+(g.opp_value?', SAR '+Math.round(g.opp_value).toLocaleString():'')+(wr!=null?'; EH win rate '+wr+'%':'')+'\\n('+g.competitors+' competitors, '+g.clients+' clients based in region)',g.opps+' منافسة تُنفَّذ هنا'+(g.opp_value?'، '+Math.round(g.opp_value).toLocaleString()+' ريال':'')+(wr!=null?'؛ نسبة فوز EH '+wr+'%':'')+'\\n('+g.competitors+'"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: schematic bubble labels",
+   "occurrences": 1,
+   "ok": true,
+   "old": "font-weight=\"700\" fill=\"#2A3A45\">'+rg+'</text></g>';",
+   "new": "font-weight=\"700\" fill=\"#2A3A45\">'+regL(rg)+'</text></g>';"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: schematic EH markers",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  inner+=ehMark(39.0,22.75,'Rabigh','EH branch');\r\n  inner+=ehMark(39.18,21.5,'Jeddah','EH headquarters');\r\n  inner+=ehMark(46.72,24.63,'Riyadh','EH admin office');",
+   "new": "  inner+=ehMark(39.0,22.75,cityL('Rabigh'),t('EH branch','فرع EH'));\r\n  inner+=ehMark(39.18,21.5,cityL('Jeddah'),t('EH headquarters','المقر الرئيسي لـ EH'));\r\n  inner+=ehMark(46.72,24.63,cityL('Riyadh'),t('EH admin office','المكتب الإداري لـ EH'));"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: schematic HQ pin tooltips",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<title>'+esc(n.n)+' \\u2014 '+n.tier+(n.sc!=null?' \\u00b7 score '+(Math.round(n.sc*10)/10):'')+(n.typ?' \\u00b7 '+esc(n.typ):'')+'\\n'+(L.approx?'Region-level position (city not recorded): '+esc(n.rg):'HQ: '+esc(k))+(n.bid?'\\nBids against EH':'')+'</title>",
+   "new": "<title>'+esc(n.n)+' \\u2014 '+tierL(n.tier)+(n.sc!=null?t(' \\u00b7 score ',' \\u00b7 الدرجة ')+(Math.round(n.sc*10)/10):'')+(n.typ?' \\u00b7 '+esc(catL(n.typ)):'')+'\\n'+(L.approx?t('Region-level position (city not recorded): ','موقع على مستوى المنطقة (المدينة غير مسجلة): ')+esc(regL(n.rg)):t('HQ: ','المقر: ')+esc(cityL(k)))+(n.bid?t('\\nBids against EH','\\nتقدّم ضد EH'):'')+'</title>"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: schematic \"outside map\" list",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    if(ok2.length) geoOutside=ok2.map(function(k){return k+' '+outs[k];}).join(' \\u00b7 ');",
+   "new": "    if(ok2.length) geoOutside=ok2.map(function(k){return regL(cityL(k))+' '+outs[k];}).join(' \\u00b7 ');"
+  },
+  {
+   "file": "stake",
+   "kind": "block",
+   "category": "copy",
+   "note": "maps-15a/14: schematic map — \"N of M tenders\" computed from the split; cards, legend and table in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  let h='<div class=\"biz-sec\">Saudi map — tender delivery + Tier 1/2 headquarters</div>'; …   document.getElementById('geoModeWrap').innerHTML=h;",
+   "new": "  /* patch_audit_maps.py: the national-vs-regional sentence is computed from this split (maps-15a); text follows the language (maps-14) */\r\n  const natwr=NAT.awarded?Math.round(100*NAT.eh_won/NAT.awarded):null, regOpps=Object.values(R).reduce((a,g)=>a+g.opps,0), allOpps=NAT.opps+regOpps;\r\n  let h='<"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: Arabic province and city names for the schematic map",
+   "occurrences": 1,
+   "ok": true,
+   "old": "let geoV={k:1,x:0,y:0}, geoEl=null, geoDrag=null;",
+   "new": "const AR_PROV={'Eastern':'الشرقية','Northern Borders':'الحدود الشمالية','Al-Jowf':'الجوف','Najran':'نجران',\"'Asir\":'عسير','Jazan':'جازان','Tabuk':'تبوك','Al Madinah':'المدينة المنورة','Makkah':'مكة المكرمة','Riyadh':'الرياض','Al-Qassim':'القصيم',\"Ha'il\":'حائل','Al-Baha':'الباحة'};\r\nconst AR_CITY={'Riyadh':'الرياض','Jeddah':'جدة','Dammam':'الدمام','Jubail':'الجبيل','Khobar':'الخبر','Al-Khobar':'الخ"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: List View count sentence in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "let h='<div class=\"lcount\"><b>'+rows.length.toLocaleString()+'</b> companies shown — ranked by <b>Total Score (v2)</b> = capability 0–100 + strategic backing 0–25 + bids-vs-EH +15; for EH Clients the Score column shows the <b>EH Relationship Score</b> instead (“—” = not a scored/licensed company; low-confidence rows are floored, never neutral-filled) · click any row for detail · click a column to ",
+   "new": "let h='<div class=\"lcount\">'+t('<b>'+rows.length.toLocaleString()+'</b> companies shown — ranked by <b>Total Score (v2)</b> = capability 0–100 + strategic backing 0–25 + bids-vs-EH +15; for EH Clients the Score column shows the <b>EH Relationship Score</b> instead (“—” = not a scored/licensed company; low-confidence rows are floored, never neutral-filled) · click any row for detail · click a colum"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: List View company type in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "     '<td>'+esc(n.typ||'—')+'</td>'+",
+   "new": "     '<td>'+esc(n.typ?catL(n.typ):'—')+'</td>'+"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "a11y",
+   "note": "maps-18: modal close mark is a keyboard-reachable button",
+   "occurrences": 5,
+   "ok": true,
+   "old": "<span class=\"x\" onclick=\"closeModal()\">✕</span>",
+   "new": "<button type=\"button\" class=\"x\" onclick=\"closeModal()\" aria-label=\"Close / إغلاق\">✕</button>"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-07: guide mentions the \"Region not recorded\" slice",
+   "occurrences": 1,
+   "ok": true,
+   "old": "covering all Saudi administrative regions where stakeholders are present — Jeddah, Makkah City, Rabigh, Other Makkah, Madinah, Riyadh, Qassim, Eastern Province, Tabuk, Hail, Al Jawf, Northern Borders and Southern regions — plus GCC/International.",
+   "new": "covering all Saudi administrative regions where stakeholders are present — Jeddah, Makkah City, Rabigh, Other Makkah, Madinah, Riyadh, Qassim, Eastern Province, Tabuk, Hail, Al Jawf, Northern Borders and Southern regions — plus GCC/International, and a <b>Region not recorded</b> slice for companies whose region is not yet known."
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-07: Arabic guide mentions the \"Region not recorded\" slice",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<p>كل شريحة منطقة سعودية (أو الخليج/دولي).",
+   "new": "<p>كل شريحة منطقة سعودية (أو الخليج/دولي)، وهناك شريحة «المنطقة غير مسجلة» للشركات التي لم تُعرف منطقتها بعد."
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-07: the 226-record removal is described as an earlier clean-up",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Companies whose category could not be identified, and companies whose location could not be verified, were <b>removed from the map</b> (226 records,",
+   "new": "In an earlier clean-up, companies whose category could not be identified, and companies whose location could not be verified, were <b>removed from the map</b> (226 records,"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-07: Methodology no longer claims there is no unknown-region group; states the live count",
+   "occurrences": 1,
+   "ok": true,
+   "old": "National government bodies without a recorded location were assigned to Riyadh (federal headquarters convention). The map contains no \"Unknown\" region group. Duplicated company records were merged.",
+   "new": "National government bodies without a recorded location were assigned to Riyadh (federal headquarters convention). Companies that remain without a recorded region are kept: they count in every total and are drawn in their own <b>“Region not recorded”</b> slice of the wheel and bar of the Regional View (<span data-live=\"norg\"></span> companies at present). Duplicated company records were merged."
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-12: Methodology names the current top challengers from the data",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Bid counts were derived from the EH bid log; the top challengers are Evara Earth (10), Environmental Experts Contracting and ESCO (7 each).",
+   "new": "Bid counts come from the EH bid tracker and are refreshed at each publish; the most frequent challengers at present are <span data-live=\"topch\"></span>."
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-12: Arabic Methodology describes the current (v2) capability weights",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<br><b>القدرة:</b> اتساع الخدمات حتى 30 · القوى العاملة 0–25 · المواقع 0–25 · المشاريع الكبرى +10 · متعددة الجنسيات +10، بسقف 100.",
+   "new": "<br><b>القدرة (الإصدار الثاني، سبتمبر 2026):</b> تداخل الخدمات مع خدمات EH 35 · مرات المواجهة مع EH في العطاءات 25 · الإسناد الاستراتيجي 15 · فئة القوى العاملة 10 · المشاريع الكبرى 7 · المواقع 5 · العمليات متعددة الجنسيات 3، بسقف 100."
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-12: Arabic Methodology no longer says missing data is neutral-filled",
+   "occurrences": 1,
+   "ok": true,
+   "old": "البيانات المفقودة تُملأ بقيم محايدة مع مؤشر موثوقية (مرتفع/متوسط/منخفض).",
+   "new": "لا تُملأ البيانات المفقودة بقيم محايدة: حين تكون موثوقية البيانات منخفضة لا يُحتسب إلا ما ثبت بالدليل (مرات المواجهة في العطاءات وسجلات التراخيص)، ويبقى الباقي عند الحد الأدنى للشركات الصغيرة. ويظهر مؤشر الموثوقية (مرتفع/متوسط/منخفض) في كل ملف."
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-07/12: Arabic Methodology states the region-not-recorded count and current top challengers",
+   "occurrences": 1,
+   "ok": true,
+   "old": "تصنيف <b>منافس نشط</b> يشترط ترخيصاً واحداً مشتركاً على الأقل مع EH.</p>",
+   "new": "تصنيف <b>منافس نشط</b> يشترط ترخيصاً واحداً مشتركاً على الأقل مع EH.</p><h4>المناطق وأكثر المنافسين تكراراً</h4><p>تبقى الشركات التي لا تُسجَّل لها منطقة ضمن الخريطة: تُحتسب في جميع المجاميع وتظهر في شريحة خاصة باسم «المنطقة غير مسجلة» في العجلة وفي العرض الإقليمي (<span data-live=\"norg\"></span> شركة حالياً). وتُستمد أعداد العطاءات من متتبع عطاءات EH وتُحدَّث عند كل نشر؛ وأكثر المنافسين تقدّماً حا"
+  },
+  {
+   "file": "stake",
+   "kind": "block",
+   "category": "a11y",
+   "note": "maps-18/07/12: Escape closes modals; live counts filled into the Methodology",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function openModal(k){ … \r\ndocument.getElementById('modal').addEventListener('click'",
+   "new": "function liveFill(el){   // patch_audit_maps.py: numbers in the Methodology are counted from the map, not typed\r\n  el.querySelectorAll('[data-live]').forEach(function(s){var k=s.getAttribute('data-live');\r\n    if(k==='norg')s.textContent=NODES.filter(function(n){return n.rg==='\\u2014';}).length.toLo"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "i18n",
+   "note": "maps-14: Dark/Light button in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</svg>Light':'<svg style=\"width:14px;height:14px;vertical-align:-2px;margin-inline-end:5px\" aria-hidden=\"true\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z\"/></svg>Dark';",
+   "new": "</svg>'+t('Light','فاتح'):'<svg style=\"width:14px;height:14px;vertical-align:-2px;margin-inline-end:5px\" aria-hidden=\"true\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z\"/></svg>'+t('Dark','داكن');"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-11: header count set from the data at load",
+   "occurrences": 1,
+   "ok": true,
+   "old": "resize();recompute();\r\nif(document.fonts",
+   "new": "resize();recompute();\r\ntry{var _hp=document.querySelector('header .titles p');if(_hp)_hp.textContent=hdrText();}catch(e){}   // maps-11: counted at load (the sync step can add companies)\r\nif(document.fonts"
+  },
+  {
+   "file": "stake",
+   "kind": "block",
+   "category": "data",
+   "note": "maps-01: the frozen Leaflet company copy is replaced by a position lookup (2807 names)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const LSTAKE={… 2,808 frozen features, 1143796 bytes}",
+   "new": "const LGEO={… positions only, 181765 bytes}"
+  },
+  {
+   "file": "stake",
+   "kind": "block",
+   "category": "bug",
+   "note": "maps-01: Leaflet features built from NODES at runtime (GEO_SITES still corrects positions)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "(function(){\r\n  var byName={}; LSTAKE.features.forEach( … const LPROV=",
+   "new": "const LREGC={'Jeddah':[39.2,21.5],'Makkah City':[39.86,21.42],'Rabigh':[39.0,22.75],'Other Makkah Region':[41.3,20.4],'Madinah Region':[39.6,24.6],'Riyadh':[46.7,24.7],'Qassim Region':[43.97,26.33],'Eastern Province':[49.9,26.4],'Tabuk Region':[36.6,28.4],'Hail Region':[41.7,27.5],'Al Jawf Region':["
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "bug",
+   "note": "maps-16: Leaflet tier filter covers every tier",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const LF={prov:'all',t1:true,t2:true,cats:null,bidOnly:false,minSc:0,confs:null};",
+   "new": "const LF={prov:'all',tiers:null,cats:null,bidOnly:false,minSc:0,confs:null};   // tiers: every tier present (maps-16)"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-16: Leaflet title no longer says \"Tier 1/2\" (all tiers are pinned)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "t('Saudi map \\u2014 Tier 1/2 stakeholders, roads & regions','خريطة السعودية — أطراف الفئتين 1/2، الطرق والمناطق')",
+   "new": "t('Saudi map \\u2014 stakeholders, roads & regions','خريطة السعودية — الأطراف والطرق والمناطق')"
+  },
+  {
+   "file": "stake",
+   "kind": "block",
+   "category": "copy",
+   "note": "maps-01/16/14: Leaflet header, unpinned count and About computed from the live data; Arabic About",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function leafShell(){ … function loadLeaflet(ok,fail){",
+   "new": "function leafShell(){\r\n  leafBuild();   // maps-01: same live data as the rest of the page\r\n  var FS=LSTAKE.features, nTot=FS.length, cnt=function(re){return FS.filter(function(f){return re.test(f.properties.pos);}).length;};\r\n  var nHQ=cnt(/^(HQ|Verified)/), nCity=cnt(/^City/), nEst=cnt(/^Estimated"
+  },
+  {
+   "file": "stake",
+   "kind": "block",
+   "category": "bug",
+   "note": "maps-01/14/16: Leaflet filters, legend and popups use the live company record, category colours, all tiers, Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function leafSidebar(){ … function leafStart(){",
+   "new": "function leafSidebar(){\r\n  var provs={},cats={},tiers={};LSTAKE.features.forEach(function(f){var p=f.properties;provs[p.rg||'\\u2014']=1;cats[p.cat]=1;tiers[p.tier||'']=1;});\r\n  if(!LF.cats){LF.cats={};Object.keys(cats).forEach(function(c){LF.cats[c]=true;});}\r\n  if(!LF.confs){LF.confs={'High':true,'"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "bug",
+   "note": "maps-01/08: Leaflet markers coloured by stakeholder category (CMAP is keyed by company type, so every pin was grey)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    var m=L.circleMarker([p.lat,p.lng],{radius:p.tier==='Tier 1'?9:7,fillColor:CMAP[p.cat]?CMAP[p.cat].c:'#999',fillOpacity:est?0.55:0.92,color:p.bid?'#C0392B':'#fff',weight:p.bid?2.5:1.5,opacity:1});\r\n    m.bindTooltip(p.n+(est?' (approx.)':''),{direction:'top'});",
+   "new": "    var m=L.circleMarker([p.lat,p.lng],{radius:p.tier==='Tier 1'?9:7,fillColor:CAT_COL[p.cat]||'#7A8A99',fillOpacity:est?0.55:0.92,color:p.bid?'#C0392B':'#fff',weight:p.bid?2.5:1.5,opacity:1});\r\n    m.bindTooltip(p.n+(est?t(' (approx.)',' (تقريبي)'):''),{direction:'top'});"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "copy",
+   "note": "Leaflet shown-count formatted like the total",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  var c=document.getElementById('leafCount'); if(c)c.textContent=shown;",
+   "new": "  var c=document.getElementById('leafCount'); if(c)c.textContent=shown.toLocaleString('en-US');"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "bug",
+   "note": "maps-16: Leaflet reset restores every tier",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function leafReset(){LF.prov='all';LF.t1=LF.t2=true;LF.cats=null;",
+   "new": "function leafReset(){LF.prov='all';LF.tiers=null;LF.cats=null;"
+  },
+  {
+   "file": "stake",
+   "kind": "block",
+   "category": "copy",
+   "note": "maps-12/14: \"Ask the map\" answers computed from the live data (v2 score, EH score, region conclusion, competitors only) and in the page language",
+   "occurrences": 1,
+   "ok": true,
+   "old": "/* ===================== ASK THE MAP … </script>\r\n<script>/* default view",
+   "new": "/* ===================== ASK THE MAP — guided chat (in-browser, no API) =====================\r\n   patch_audit_maps.py (12 Oct 2026, maps-12/14): every answer is computed from the live map data and is written in the\r\n   page language. */\r\nconst ASKQS=[\r\n ['topdirect','Who are the top direct competito"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-11: note counts the map (AR)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ألغِ خيار «تقدّم ضد EH فقط» في الفلاتر لعرض الجميع (4,195 جهة).",
+   "new": "ألغِ خيار «تقدّم ضد EH فقط» في الفلاتر لعرض الجميع ('+NODES.length.toLocaleString('en-US')+' جهة)."
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-11: note counts the map (EN)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Untick “Bid against EH only” in Filters to see all 4,195.",
+   "new": "Untick “Bid against EH only” in Filters to see all '+NODES.length.toLocaleString('en-US')+'."
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-13: comment matches the new reset behaviour",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<script>/* default view (visual upgrade 07/09): Tier 1 shown on open, with a note; Reset filters shows the old empty gate */",
+   "new": "<script>/* default view (visual upgrade 07/09): bidders shown on open, with a note; Reset filters shows every company (patch_audit_maps.py, maps-13) */"
+  },
+  {
+   "file": "bub",
+   "kind": "data",
+   "category": "data",
+   "note": "maps-21/23: the 28 branch / project rows DATA already merged are merged in DETAIL and HEAT too (panel = bubble, heatmap sector = legend)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "DETAIL / HEAT with 28 branch keys",
+   "new": "branches merged into 12 parents"
+  },
+  {
+   "file": "bub",
+   "kind": "data",
+   "category": "copy",
+   "note": "maps-22/28/29 (AR): \"ledger lines\" vs \"projects\"; quadrant caption; footer developer note removed",
+   "occurrences": 1,
+   "ok": true,
+   "old": "BUB_I18N",
+   "new": "lines_lbl / q_x / kpis / footer / svgQuad caption"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-22: header counts projects (DATA p)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<span><b id=\"kProj\">–</b>project lines</span>",
+   "new": "<span><b id=\"kProj\">–</b>projects</span>"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-22: bubble tooltip says projects",
+   "occurrences": 1,
+   "ok": true,
+   "old": "${BUB_LANG===\"ar\" ? bCount(proj(d.data),\"line\") : proj(d.data)+bT(\"proj_line_s\")+(proj(d.data)>1?\"s\":\"\")}",
+   "new": "${BUB_LANG===\"ar\" ? bCount(proj(d.data),\"proj\") : proj(d.data)+\" project\"+(proj(d.data)>1?\"s\":\"\")}"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-22: company panel says ledger lines",
+   "occurrences": 1,
+   "ok": true,
+   "old": "`<b>${fmt(d3.sum(priced, l => l.v))}</b> across <b>${d3.sum(lines, l => l.n)}</b> line${d3.sum(lines,l=>l.n)>1?\"s\":\"\"}`",
+   "new": "`<b>${fmt(d3.sum(priced, l => l.v))}</b> across <b>${d3.sum(lines, l => l.n)}</b> ledger line${d3.sum(lines,l=>l.n)>1?\"s\":\"\"}`"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-22: heatmap cell panel says ledger lines",
+   "occurrences": 1,
+   "ok": true,
+   "old": "`<b>${fmt(hv(c))}</b> across <b>${hn(c)}</b> lines · <b>${cos.length}</b> client${cos.length>1?\"s\":\"\"}`",
+   "new": "`<b>${fmt(hv(c))}</b> across <b>${hn(c)}</b> ledger lines · <b>${cos.length}</b> client${cos.length>1?\"s\":\"\"}`"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-22: quadrant name list says projects",
+   "occurrences": 1,
+   "ok": true,
+   "old": "(BUB_LANG===\"ar\"?bCount(d.p,\"proj\"):d.p+' jobs')",
+   "new": "(BUB_LANG===\"ar\"?bCount(d.p,\"proj\"):d.p+' projects')"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-22: quadrant intro says projects",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Right = gives EH <b>many jobs</b>;",
+   "new": "Right = gives EH <b>many projects</b>;"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-22: quadrant legend",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</span> — many jobs <i>and</i> big money: protect these relationships.",
+   "new": "</span> — many projects <i>and</i> big money: protect these relationships."
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-22: quadrant legend",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</span> — big money from only a few jobs: one lost contract hurts, deepen the relationship.",
+   "new": "</span> — big money from only a few projects: one lost contract hurts, deepen the relationship."
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-22: quadrant legend",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</span> — many small jobs: efficient to serve, best cross-sell targets.",
+   "new": "</span> — many small projects: efficient to serve, best cross-sell targets."
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-22: quadrant legend",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</span> — few small jobs.",
+   "new": "</span> — few small projects."
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-28: caption no longer says \"only one or two jobs\" (the group has 1–4 projects, below the median)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "\"svgQuad\": \"Top right is the ideal — clients who give EH many jobs and spend a lot; top left are big spenders who give EH only one or two jobs and could buy more; bottom right give EH many small jobs.\"",
+   "new": "\"svgQuad\": \"Top right is the ideal — clients who give EH many projects and spend a lot; top left are big spenders who give EH fewer projects than the middle of the group and could buy more; bottom right give EH many small projects.\""
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "maps-29: developer note removed from the footer",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  Sectors auto-derived from company names — override in the build script as needed.\n",
+   "new": "  Sectors auto-derived from company names.\n"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "bug",
+   "note": "maps-26: header KPIs computed by updHeader() (from the bubbles shown)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  document.getElementById(\"kComp\").textContent = rows.length;\n  document.getElementById(\"kVal\").textContent  = fmt(d3.sum(rows, val));\n  document.getElementById(\"kProj\").textContent = d3.sum(rows, proj);\n",
+   "new": "  updHeader();\n"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "bug",
+   "note": "maps-24/26: updHeader()",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function render(){\n",
+   "new": "/* patch_audit_maps.py (maps-24/26): header KPIs follow the year in every view, and the sectors shown in the Bubble view */\nfunction updHeader(){\n  const rows = DATA.filter(d => val(d) > 0);\n  const base = (typeof viewMode === \"undefined\" || viewMode === \"bubbles\") ? rows.filter(d => !hidden.has(d.sector)) : rows;\n  document.getElementById(\"kComp\").textContent = base.length;\n  document.getElementB"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "bug",
+   "note": "maps-24: the year sets the Executive card toggles and the header in every view",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    yearMode = b.dataset.y;\n    if (viewMode === \"heat\") renderHeat();",
+   "new": "    yearMode = b.dataset.y;\n    quadYear = dealYear = wsYear = yearMode;   // maps-24: the Executive cards follow the page year (their own toggles still work)\n    [\"ytogQuad\",\"ytogDeal\",\"ytogWs\"].forEach(id => { const el = document.getElementById(id); if (el) el.querySelectorAll(\"button\").forEach(x => x.classList.toggle(\"on\", x.dataset.y === yearMode)); });\n    updHeader();\n    if (viewMode === \"h"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "bug",
+   "note": "maps-26: header follows the view (sector hiding applies to the Bubble view)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  closePanel();\n  if (v === \"heat\") renderHeat();",
+   "new": "  closePanel();\n  updHeader();\n  if (v === \"heat\") renderHeat();"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "bug",
+   "note": "maps-27: \"Show all 60 names\" no longer calls the PNG export (JS error per click)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "document.querySelectorAll(\".ecard .png\").forEach(b =>\n  b.addEventListener(\"click\", () => dlPNG(b.dataset.svg)));",
+   "new": "document.querySelectorAll(\".ecard .png[data-svg]\").forEach(b =>   // maps-27: \"Show all 60 names\" is not an export button\n  b.addEventListener(\"click\", () => dlPNG(b.dataset.svg)));"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "meta",
+   "note": "applied marker",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<title>EH Client Portfolio — Packed Bubble Map</title>",
+   "new": "<title>EH Client Portfolio — Packed Bubble Map</title><!-- patch_audit_maps.py -->"
+  }
+ ]
+}

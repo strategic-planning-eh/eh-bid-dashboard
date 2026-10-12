@@ -1,0 +1,357 @@
+{
+ "generated": "2026-10-12 14:24",
+ "title": "Audit fixes — Vision 2030 (macro)",
+ "failures": [],
+ "changes": [
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-04: KAP review note — 30th in the 2023 index, not \"world's most efficient (2024)\"",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Handled 2.93 million shipping containers in 2023. Ranked world's most efficient container port (World Bank port-efficiency ranking, 2024).",
+   "new": "Handled 2.93 million shipping containers in 2023. Once ranked the world's most efficient container port by the World Bank; 30th in the World Bank's container port performance index for 2023 (published 2024)."
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-04: KAP description",
+   "occurrences": 1,
+   "ok": true,
+   "old": "desc:\"The Kingdom's first fully privately developed port — now the world's most efficient container port in the World Bank's ranking (2024). Phase 2 targets capacity of ~6 million containers a year.\"",
+   "new": "desc:\"The Kingdom's first fully privately developed port. The World Bank once ranked it the world's most efficient container port; in the 2023 index (published 2024) it ranked 30th. Phase 2 targets capacity of ~6 million containers a year.\""
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-06: Arabic descriptions, review notes, lead entities, partner names, completion values (31 projects)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function arName(p){ return AR_NAMES[p.name]||p.name; }",
+   "new": "function arName(p){ return AR_NAMES[p.name]||p.name; }\n/* audit 12/10 (macro-06): Arabic texts for every project (EH translations) — description, review note, lead entity;\n   partner names and completion values. English stays in PROJECTS; the Arabic tab reads from here. */\nconst AR_TXT = {\n\"NEOM\": {\n\"lead\": \"شركة نيوم\",\n\"desc\": \"المنطقة الرائدة لصندوق الاستثمارات العامة في منطقة تبوك، ويُعاد النظر"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-06: Arabic card description and completion",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"desc\">${p.desc}</div>\n      <div class=\"c-meta\">\n        <span class=\"status-pill\"><span class=\"dot\" style=\"background:${STATUS_HEX[p.status]}\"></span>${AR_STATUS[p.status]}</span>\n        <div class=\"figs\"><b>${arFmtInv(p.investment)}</b>${p.completion}",
+   "new": "<div class=\"desc\">${arTxt(p,'desc')}</div>\n      <div class=\"c-meta\">\n        <span class=\"status-pill\"><span class=\"dot\" style=\"background:${STATUS_HEX[p.status]}\"></span>${AR_STATUS[p.status]}</span>\n        <div class=\"figs\"><b>${arFmtInv(p.investment)}</b>${arCompletion(p.completion)}"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-06: Arabic table lead entity and completion",
+   "occurrences": 1,
+   "ok": true,
+   "old": "      <td style=\"color:var(--ink-soft)\">${p.lead}</td>\n      <td><span class=\"mini-dot\"><span class=\"dot\" style=\"background:${STATUS_HEX[p.status]}\"></span>${AR_STATUS[p.status]}</span></td>\n      <td class=\"num\">${p.completion}</td>",
+   "new": "      <td style=\"color:var(--ink-soft)\">${arTxt(p,'lead')}</td>\n      <td><span class=\"mini-dot\"><span class=\"dot\" style=\"background:${STATUS_HEX[p.status]}\"></span>${AR_STATUS[p.status]}</span></td>\n      <td class=\"num\">${arCompletion(p.completion)}</td>"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-06: Arabic investment unit",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function arFmtInv(v){ return v==null?\"—\":\"$\"+(Number.isInteger(v)?v:v.toFixed(1))+\"B\"; }",
+   "new": "function arFmtInv(v){ return v==null?\"—\":(Number.isInteger(v)?v:v.toFixed(1))+\" مليار $\"; }   // audit 12/10 (macro-06): Arabic unit, as in the KPI"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-06: Arabic drawer lead entity",
+   "occurrences": 1,
+   "ok": true,
+   "old": "document.getElementById(\"arDLead\").textContent=p.lead;",
+   "new": "document.getElementById(\"arDLead\").textContent=arTxt(p,'lead');"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-06: Arabic drawer review note",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div><strong>ملاحظة المراجعة:</strong> ${p.note}</div>",
+   "new": "<div><strong>ملاحظة المراجعة:</strong> ${arTxt(p,'note')}</div>"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-06: Arabic drawer description",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    <div class=\"d-section\"><div class=\"d-desc\">${p.desc}</div></div>\n    ${noteHtml}\n    <div class=\"d-section\"><h3>الحقائق الأساسية</h3>",
+   "new": "    <div class=\"d-section\"><div class=\"d-desc\">${arTxt(p,'desc')}</div></div>\n    ${noteHtml}\n    <div class=\"d-section\"><h3>الحقائق الأساسية</h3>"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-06: Arabic drawer completion",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"fact\"><div class=\"fl\">الاكتمال المتوقع</div><div class=\"fv num\">${p.completion}</div></div>",
+   "new": "<div class=\"fact\"><div class=\"fl\">الاكتمال المتوقع</div><div class=\"fv num\">${arCompletion(p.completion)}</div></div>"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-06: first tab label can switch language",
+   "occurrences": 1,
+   "ok": true,
+   "old": "      Strategic Dashboard\n    </button>",
+   "new": "      <span id=\"tabDashLbl\">Strategic Dashboard</span>\n    </button>"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-06: Arabic tab name made grammatical",
+   "occurrences": 1,
+   "ok": true,
+   "old": "      التقرير التحقق — عربي\n",
+   "new": "      تقرير التحقق — عربي\n"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-06: first tab label in Arabic while the Arabic tab is open",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function switchTab(tab){document.documentElement.lang=(tab==='arabic'?'ar':'en');",
+   "new": "function switchTab(tab){document.documentElement.lang=(tab==='arabic'?'ar':'en');\n  { const l=document.getElementById('tabDashLbl'); if(l) l.textContent=(tab==='arabic'?'اللوحة الاستراتيجية (بالإنجليزية)':'Strategic Dashboard'); }   // audit 12/10 (macro-06)"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-08/19c: remainder-slice and review-month helpers",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function confOf(p){ return CONF[p.confidence || CONF_OVERRIDE[p.name] || \"Medium\"]; }",
+   "new": "function confOf(p){ return CONF[p.confidence || CONF_OVERRIDE[p.name] || \"Medium\"]; }\n/* audit 12/10 (macro-08): when disclosed stakes add up to less than 100%, the rest is its own grey slice */\nconst OTHER_HEX = \"#AEB9CE\";\nfunction stakeParts(p){ const sum=p.partners.reduce((a,pt)=>a+(pt.s||0),0); const parts=p.partners.map((pt,i)=>({n:pt.n,s:pt.s,c:SECTOR_HEX[i%SECTOR_HEX.length]}));\n  if(sum<99"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-08: EN legend lists the remainder",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        <div class=\"jv-legend\">${p.partners.map((pt,i)=>`\n          <div class=\"jv-item\"><span class=\"dot\" style=\"background:${SECTOR_HEX[i%SECTOR_HEX.length]}\"></span>\n          <span class=\"jn\">${pt.n}</span><span class=\"js\">${pt.s}%</span></div>`).join(\"\")}</div>",
+   "new": "        <div class=\"jv-legend\">${stakeParts(p).map(pt=>`\n          <div class=\"jv-item\"><span class=\"dot\" style=\"background:${pt.c}\"></span>\n          <span class=\"jn\">${pt.n}</span><span class=\"js\">${pt.s}%</span></div>`).join(\"\")}</div>"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-08: EN doughnut draws the remainder",
+   "occurrences": 1,
+   "ok": true,
+   "old": "      data:{labels:p.partners.map(pt=>pt.n),datasets:[{data:p.partners.map(pt=>pt.s),backgroundColor:p.partners.map((_,i)=>SECTOR_HEX[i%SECTOR_HEX.length]),borderColor:ehTok(\"--eh-paper\",\"#fff\"),borderWidth:3}]},\n      options:{responsive:true,maintainAspectRatio:false,cutout:\"60%\",\n        plugins:",
+   "new": "      data:{labels:stakeParts(p).map(pt=>pt.n),datasets:[{data:stakeParts(p).map(pt=>pt.s),backgroundColor:stakeParts(p).map(pt=>pt.c),borderColor:ehTok(\"--eh-paper\",\"#fff\"),borderWidth:3}]},\n      options:{responsive:true,maintainAspectRatio:false,cutout:\"60%\",\n        plugins:"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-08/06: AR legend lists the remainder, partner names in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"jv-legend\">${p.partners.map((pt,i)=>`<div class=\"jv-item\"><span class=\"dot\" style=\"background:${SECTOR_HEX[i%SECTOR_HEX.length]}\"></span><span class=\"jn\">${pt.n}</span><span class=\"js\">${pt.s}%</span></div>`).join(\"\")}</div></div>`;",
+   "new": "<div class=\"jv-legend\">${stakeParts(p).map(pt=>`<div class=\"jv-item\"><span class=\"dot\" style=\"background:${pt.c}\"></span><span class=\"jn\">${arPartner(pt.n)}</span><span class=\"js\">${pt.s}%</span></div>`).join(\"\")}</div></div>`;"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-06: AR partner names (undisclosed stakes)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"jv-bar-top\"><span class=\"jn\">${pt.n}</span><span class=\"js\">${pt.s!=null?pt.s+\"%\":\"غير معلن\"}</span>",
+   "new": "<div class=\"jv-bar-top\"><span class=\"jn\">${arPartner(pt.n)}</span><span class=\"js\">${pt.s!=null?pt.s+\"%\":\"غير معلن\"}</span>"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-08: AR doughnut draws the remainder",
+   "occurrences": 1,
+   "ok": true,
+   "old": "      data:{labels:p.partners.map(pt=>pt.n),datasets:[{data:p.partners.map(pt=>pt.s),backgroundColor:p.partners.map((_,i)=>SECTOR_HEX[i%SECTOR_HEX.length]),borderColor:ehTok(\"--eh-paper\",\"#fff\"),borderWidth:3}]},\n      options:{responsive:true,maintainAspectRatio:false,cutout:\"60%\",plugins:",
+   "new": "      data:{labels:stakeParts(p).map(pt=>arPartner(pt.n)),datasets:[{data:stakeParts(p).map(pt=>pt.s),backgroundColor:stakeParts(p).map(pt=>pt.c),borderColor:ehTok(\"--eh-paper\",\"#fff\"),borderWidth:3}]},\n      options:{responsive:true,maintainAspectRatio:false,cutout:\"60%\",plugins:"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-19b: EN status chips only for statuses in use",
+   "occurrences": 1,
+   "ok": true,
+   "old": "makeChips(document.getElementById(\"statusChips\"),ALL_STATUS,state.status,false);",
+   "new": "makeChips(document.getElementById(\"statusChips\"),ALL_STATUS.filter(s=>PROJECTS.some(p=>p.status===s)),state.status,false);   // audit 12/10 (macro-19b): no chips that match nothing"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-19b: EN confidence chips only for levels in use",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  [\"High\",\"Medium\",\"Low\"].forEach(level=>{\n    const c=document.createElement(\"button\");\n    c.className=\"conf-chip\";\n    c.innerHTML=`<span class=\"cdot\" style=\"background:${CONF[level].hex}\"></span>${level}`;",
+   "new": "  [\"High\",\"Medium\",\"Low\"].filter(l=>PROJECTS.some(p=>confOf(p).label===l)).forEach(level=>{\n    const c=document.createElement(\"button\");\n    c.className=\"conf-chip\";\n    c.innerHTML=`<span class=\"cdot\" style=\"background:${CONF[level].hex}\"></span>${level}`;"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-19b: AR status chips only for statuses in use",
+   "occurrences": 1,
+   "ok": true,
+   "old": "arMakeChips(document.getElementById(\"arStatusChipsF\"),ALL_STATUS,arState.status,'status');",
+   "new": "arMakeChips(document.getElementById(\"arStatusChipsF\"),ALL_STATUS.filter(s=>PROJECTS.some(p=>p.status===s)),arState.status,'status');"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-19b: AR confidence chips only for levels in use",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  [\"High\",\"Medium\",\"Low\"].forEach(level=>{\n    const c=document.createElement(\"button\");\n    c.className=\"conf-chip\";\n    c.innerHTML=`<span class=\"cdot\" style=\"background:${CONF[level].hex}\"></span>${AR_CONF[level]}`;",
+   "new": "  [\"High\",\"Medium\",\"Low\"].filter(l=>PROJECTS.some(p=>confOf(p).label===l)).forEach(level=>{\n    const c=document.createElement(\"button\");\n    c.className=\"conf-chip\";\n    c.innerHTML=`<span class=\"cdot\" style=\"background:${CONF[level].hex}\"></span>${AR_CONF[level]}`;"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-19c: EN last-reviewed month per project",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"fact\"><div class=\"fl\">Last Reviewed</div><div class=\"fv\" style=\"font-size:13px\">${LAST_REVIEWED}</div></div>",
+   "new": "<div class=\"fact\"><div class=\"fl\">Last Reviewed</div><div class=\"fv\" style=\"font-size:13px\">${reviewedOf(p,false)}</div></div>"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-19c: AR last-reviewed month per project",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"fact\"><div class=\"fl\">آخر مراجعة</div><div class=\"fv\" style=\"font-size:13px\">أغسطس 2026</div></div>",
+   "new": "<div class=\"fact\"><div class=\"fl\">آخر مراجعة</div><div class=\"fv\" style=\"font-size:13px\">${reviewedOf(p,true)}</div></div>"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-20: EN cards focusable",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    return `<div class=\"card\" data-idx=\"${idx}\">\n      <div class=\"c-top\">\n        <div class=\"c-name\">${p.name}</div>",
+   "new": "    return `<div class=\"card\" data-idx=\"${idx}\" tabindex=\"0\" role=\"button\">\n      <div class=\"c-top\">\n        <div class=\"c-name\">${p.name}</div>"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-20: EN rows focusable",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    return `<tr data-idx=\"${idx}\">\n      <td><span class=\"tname\">${p.name}</span>",
+   "new": "    return `<tr data-idx=\"${idx}\" tabindex=\"0\">\n      <td><span class=\"tname\">${p.name}</span>"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-20: AR cards focusable",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    return `<div class=\"card\" data-idx=\"${idx}\">\n      <div class=\"c-top\"><div class=\"c-name\">${arName(p)}</div>",
+   "new": "    return `<div class=\"card\" data-idx=\"${idx}\" tabindex=\"0\" role=\"button\">\n      <div class=\"c-top\"><div class=\"c-name\">${arName(p)}</div>"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-20: AR rows focusable",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    return `<tr data-idx=\"${idx}\">\n      <td><span class=\"tname\">${arName(p)}</span>",
+   "new": "    return `<tr data-idx=\"${idx}\" tabindex=\"0\">\n      <td><span class=\"tname\">${arName(p)}</span>"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-20: closed AR drawer inert",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<aside class=\"drawer panel ar-drawer\" id=\"arDrawer\" data-eh-noreveal dir=\"rtl\" aria-hidden=\"true\">",
+   "new": "<aside class=\"drawer panel ar-drawer\" id=\"arDrawer\" data-eh-noreveal dir=\"rtl\" aria-hidden=\"true\" inert>"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-20: closed EN drawer inert",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<aside class=\"drawer panel\" id=\"drawer\" data-eh-noreveal aria-hidden=\"true\">",
+   "new": "<aside class=\"drawer panel\" id=\"drawer\" data-eh-noreveal aria-hidden=\"true\" inert>"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-20: EN drawer focus in",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  document.getElementById(\"scrim\").classList.add(\"open\");\n  document.getElementById(\"drawer\").classList.add(\"open\");\n  document.getElementById(\"drawer\").setAttribute(\"aria-hidden\",\"false\");",
+   "new": "  ehDrawerOpen(\"drawer\",\"drawerClose\");\n  document.getElementById(\"scrim\").classList.add(\"open\");\n  document.getElementById(\"drawer\").classList.add(\"open\");\n  document.getElementById(\"drawer\").setAttribute(\"aria-hidden\",\"false\");"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-20: EN drawer focus out; Enter/Space opens the focused card or row",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function closeDrawer(){\n  document.getElementById(\"scrim\").classList.remove(\"open\");",
+   "new": "/* audit 12/10 (macro-20): drawers are inert while closed; focus moves to the close button and back to the card */\nlet ehLastFocus=null;\nfunction ehDrawerOpen(id,closeId){ const d=document.getElementById(id); if(!d.classList.contains(\"open\")) ehLastFocus=document.activeElement; d.inert=false;\n  setTimeout(()=>{ try{ document.getElementById(closeId).focus({preventScroll:true}); }catch(e){} },0); }\n"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-20: AR drawer focus in",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  document.getElementById(\"arScrim\").classList.add(\"open\");\n  document.getElementById(\"arDrawer\").classList.add(\"open\");",
+   "new": "  ehDrawerOpen(\"arDrawer\",\"arDrawerClose\");\n  document.getElementById(\"arScrim\").classList.add(\"open\");\n  document.getElementById(\"arDrawer\").classList.add(\"open\");"
+  },
+  {
+   "file": "v",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-20: AR drawer focus out",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function arCloseDrawer(){\n  document.getElementById(\"arScrim\").classList.remove(\"open\");",
+   "new": "function arCloseDrawer(){\n  ehDrawerClosed(\"arDrawer\");\n  document.getElementById(\"arScrim\").classList.remove(\"open\");"
+  }
+ ]
+}

@@ -1,0 +1,114 @@
+{
+ "as_of": "2026-10-11",
+ "years": [
+  2025,
+  2026
+ ],
+ "rows": [
+  {
+   "key": "fund",
+   "tenders": 1,
+   "value": 0,
+   "submitted": 0,
+   "open": 0,
+   "declined": 0,
+   "cancelled": 1,
+   "nosub": 0,
+   "won": 0,
+   "lost": 0,
+   "open_list": []
+  },
+  {
+   "key": "ncec",
+   "tenders": 10,
+   "value": 0,
+   "submitted": 0,
+   "open": 0,
+   "declined": 5,
+   "cancelled": 1,
+   "nosub": 4,
+   "won": 0,
+   "lost": 0,
+   "open_list": []
+  },
+  {
+   "key": "ncvc",
+   "tenders": 17,
+   "value": 0,
+   "submitted": 0,
+   "open": 0,
+   "declined": 1,
+   "cancelled": 2,
+   "nosub": 14,
+   "won": 0,
+   "lost": 0,
+   "open_list": []
+  },
+  {
+   "key": "mwan",
+   "tenders": 2,
+   "value": 0,
+   "submitted": 0,
+   "open": 1,
+   "declined": 0,
+   "cancelled": 0,
+   "nosub": 1,
+   "won": 0,
+   "lost": 0,
+   "open_list": [
+    {
+     "year": 2026,
+     "sn": 123,
+     "deadline": "2026-11-01",
+     "title": "تشغيل وتطبيق آليات الرصد والتفتيش والرقابة"
+    }
+   ]
+  },
+  {
+   "key": "ncw",
+   "tenders": 1,
+   "value": 0,
+   "submitted": 0,
+   "open": 1,
+   "declined": 0,
+   "cancelled": 0,
+   "nosub": 0,
+   "won": 0,
+   "lost": 0,
+   "open_list": [
+    {
+     "year": 2026,
+     "sn": 120,
+     "deadline": "2026-10-18",
+     "title": "ازالة الواح الاسبستوس من المظلات القائمة في مسيجات مركز الملك خالد لأبحاث الحياة الفطرية و"
+    }
+   ]
+  },
+  {
+   "key": "ncm",
+   "tenders": 2,
+   "value": 0,
+   "submitted": 0,
+   "open": 0,
+   "declined": 1,
+   "cancelled": 0,
+   "nosub": 1,
+   "won": 0,
+   "lost": 0,
+   "open_list": []
+  },
+  {
+   "key": "mewa",
+   "tenders": 2,
+   "value": 0,
+   "submitted": 0,
+   "open": 0,
+   "declined": 0,
+   "cancelled": 1,
+   "nosub": 1,
+   "won": 0,
+   "lost": 0,
+   "open_list": []
+  }
+ ]
+}

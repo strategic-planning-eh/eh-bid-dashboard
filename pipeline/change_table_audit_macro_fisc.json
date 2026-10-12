@@ -1,0 +1,297 @@
+{
+ "generated": "2026-10-12 14:19",
+ "title": "Audit fixes — Saudi Government Finances (macro)",
+ "failures": [],
+ "changes": [
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-13: KPI \"Size of the economy\" shows a growth rate — renamed \"Economic growth, 2026\"",
+   "occurrences": 1,
+   "ok": true,
+   "old": "{label:'Size of the economy, 2026', val:'\\u22123.6'",
+   "new": "{label:'Economic growth, 2026', val:'\\u22123.6'"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-13: debt KPI cites the report the figure comes from",
+   "occurrences": 1,
+   "ok": true,
+   "old": "src:'Ministry of Finance \\u00b7 borrowing plan for 2027 due by year-end'}",
+   "new": "src:'Ministry of Finance \\u00b7 budget performance report for April\\u2013June 2026 (30/07)'}"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-13: chart E reference line is EH's proxy, not a Ministry assumption",
+   "occurrences": 1,
+   "ok": true,
+   "old": "{label:'Price the budget assumed ($69.9, 2025 average)', data:budgetRef",
+   "new": "{label:'EH reference: 2025 average price ($69.9) \\u2014 the Ministry publishes no oil-price assumption', data:budgetRef"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "data",
+   "note": "macro-14: Jan–Jun 2025 income = Ministry figures (oil 301.54, other 263.67, total 565.21)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "{label:'Jan–Jun 2025', data:[301.5,264.6,566.1]",
+   "new": "{label:'Jan–Jun 2025', data:[301.5,263.7,565.2]"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-14: chart A source cites the published 2025 figures",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"csrc\"><span class=\"tag off\">Source</span> Ministry of Finance — budget performance report for April–June 2026 (30/07/2026). The 2025 figures are worked back from the percentage changes the Ministry published.</div>",
+   "new": "<div class=\"csrc\"><span class=\"tag off\">Source</span> Ministry of Finance — budget performance reports for April–June 2026 (30/07/2026) and April–June 2025 (January–June 2025 figures).</div>"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-11: language helper for tooltips and markers",
+   "occurrences": 1,
+   "ok": true,
+   "old": "/* vertical event-marker plugin (no external dep) */",
+   "new": "/* audit 12/10 (macro-11): Arabic tooltips and marker labels — the page language decides at draw time */\nconst EH_AR_TIP=()=>document.documentElement.lang==='ar';\nconst L=(en,ar)=>EH_AR_TIP()?ar:en;\n/* vertical event-marker plugin (no external dep) */"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-11: markers draw their Arabic label in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ctx.fillText(m.label, xp+(m.align==='right'?-6:6), top+(m.yOff||12));",
+   "new": "ctx.fillText((EH_AR_TIP()&&m.ar)||m.label, xp+(m.align==='right'?-6:6), top+(m.yOff||12));"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-11: chart A tooltip in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "label:c=>`${c.dataset.label}: SAR ${FMT(c.parsed.y)} billion`,\n      afterBody:(items)=>{const ch=['Oil: +9% (Apr–Jun alone: +22%)','Other: +2%','Total: +6%'];return '\\nChange on a year earlier → '+ch[items[0].dataIndex];}",
+   "new": "label:c=>L(`${c.dataset.label}: SAR ${FMT(c.parsed.y)} billion`,`${c.dataset.label}: ${FMT(c.parsed.y)} مليار ريال`),\n      afterBody:(items)=>{const ch=L(['Oil: +9% (Apr–Jun alone: +22%)','Other: +2%','Total: +6%'],['النفط: +9% (أبريل–يونيو وحده: +22%)','الدخل الآخر: +2%','الإجمالي: +6%']);return L('\\nChange on a year earlier → ','\\nالتغير عن العام السابق: ')+ch[items[0].dataIndex];}"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-11: chart B tooltip value in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "label:c=>`${c.dataset.label}: SAR ${FMT(c.parsed.x)} billion`,\n      afterBody:(items)=>{const q1=",
+   "new": "label:c=>L(`${c.dataset.label}: SAR ${FMT(c.parsed.x)} billion`,`${c.dataset.label}: ${FMT(c.parsed.x)} مليار ريال`),\n      afterBody:(items)=>{const q1="
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-11: chart B tooltip comparison in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "let s='\\nJan–Mar vs a year earlier: '+q1[i];if(q2[i]!==undefined)s+='  ·  Apr–Jun: '+q2[i];return s;}",
+   "new": "let s=L('\\nJan–Mar vs a year earlier: ','\\nيناير–مارس مقارنة بالعام السابق: ')+q1[i];if(q2[i]!==undefined)s+=L('  ·  Apr–Jun: ','  ·  أبريل–يونيو: ')+q2[i];return s;}"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-11: chart C tooltip in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "label:c=>`Gap: SAR ${FMT(Math.abs(c.parsed.y))} billion`,\n        afterLabel:c=>{const p=['Before the war · oil $75, OPEC+ holding back production','Before the war · normal quarter','War, Jan–Mar · record gap; spending +20%','War, Apr–Jun · higher oil income arrives; spending +11%'];return p[c.dataIndex];}",
+   "new": "label:c=>L(`Gap: SAR ${FMT(Math.abs(c.parsed.y))} billion`,`الفجوة: ${FMT(Math.abs(c.parsed.y))} مليار ريال`),\n        afterLabel:c=>{const p=L(['Before the war · oil $75, OPEC+ holding back production','Before the war · normal quarter','War, Jan–Mar · record gap; spending +20%','War, Apr–Jun · higher oil income arrives; spending +11%'],['قبل الحرب · النفط 75 دولارًا وأوبك+ تقيّد الإنتاج','قبل الح"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-11: chart D tooltip in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "label:c=>`${c.dataset.label}: SAR ${FMT(c.parsed.x)} billion`,\n      afterBody:items=>{const i=items[0].dataIndex;return `\\nJan–Mar vs a year earlier: ${secYoY[i]}  ·  Jan–Mar used ${secPct[i]} of the year's budget (Ministry of Finance)`;} }}},",
+   "new": "label:c=>L(`${c.dataset.label}: SAR ${FMT(c.parsed.x)} billion`,`${c.dataset.label}: ${FMT(c.parsed.x)} مليار ريال`),\n      afterBody:items=>{const i=items[0].dataIndex;return L(`\\nJan–Mar vs a year earlier: ${secYoY[i]}  ·  Jan–Mar used ${secPct[i]} of the year's budget (Ministry of Finance)`,`\\nيناير–مارس مقارنة بالعام السابق: ${secYoY[i]}  ·  استُخدم في يناير–مارس ${secPct[i]} من ميزانية السنة "
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-11: chart E tooltip in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "tooltip:{callbacks:{label:c=>c.parsed.y==null?null:`${c.dataset.label}: $${c.parsed.y} a barrel`}},",
+   "new": "tooltip:{callbacks:{label:c=>c.parsed.y==null?null:L(`${c.dataset.label}: $${c.parsed.y} a barrel`,`${c.dataset.label}: ${c.parsed.y} دولارًا للبرميل`)}},"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-11: Arabic marker labels; last marker moved left of its line and one row down (no collision)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        {x:1.5,label:'War · 28 Feb',color:C.red},\n        {x:3.2,label:'Ceasefire · 8 Apr',color:C.greyd,yOff:26},\n        {x:4.4,label:'UAE exits OPEC · May',color:C.blued,yOff:12},\n        {x:6.2,label:'Fighting restarts · 8 Jul',color:C.red,yOff:26},\n        {x:6.8,label:'Red Sea attacks · 25 Jul',color:'#8B0000',yOff:42},\n        {x:8.3,label:'Pipeline hit · Houthis take Bab el-Mandeb · 10–11 ",
+   "new": "        {x:1.5,label:'War · 28 Feb',ar:'الحرب · 28 فبراير',color:C.red},\n        {x:3.2,label:'Ceasefire · 8 Apr',ar:'وقف إطلاق النار · 8 أبريل',color:C.greyd,yOff:26},\n        {x:4.4,label:'UAE exits OPEC · May',ar:'الإمارات تغادر أوبك · مايو',color:C.blued,yOff:12},\n        {x:6.2,label:'Fighting restarts · 8 Jul',ar:'استئناف القتال · 8 يوليو',color:C.red,yOff:26},\n        {x:6.8,label:'Red Sea "
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-11: chart F tooltip in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "label:c=>c.parsed.y==null?null:`${c.dataset.label}: SAR ${FMT(Math.abs(c.parsed.y))} billion so far this year`,\n        footer:items=>{const i=items[0].dataIndex; return i<=1?'Official Ministry of Finance figure':(i===3?'Year-end: Ministry estimate, or the middle of the range for an EH path':'End of September: EH illustration');}",
+   "new": "label:c=>c.parsed.y==null?null:L(`${c.dataset.label}: SAR ${FMT(Math.abs(c.parsed.y))} billion so far this year`,`${c.dataset.label}: ${FMT(Math.abs(c.parsed.y))} مليار ريال منذ بداية العام`),\n        footer:items=>{const i=items[0].dataIndex; return i<=1?L('Official Ministry of Finance figure','رقم رسمي من وزارة المالية'):(i===3?L('Year-end: Ministry estimate, or the middle of the range for an EH"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-11: chart G tooltip in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "tooltip:{callbacks:{label:c=>c.parsed.y==null?null:`${c.dataset.label}: ${c.parsed.y>0?'surplus':'gap'} SAR ${FMT(Math.abs(c.parsed.y))} billion`}} },",
+   "new": "tooltip:{callbacks:{label:c=>c.parsed.y==null?null:L(`${c.dataset.label}: ${c.parsed.y>0?'surplus':'gap'} SAR ${FMT(Math.abs(c.parsed.y))} billion`,`${c.dataset.label}: ${c.parsed.y>0?'فائض':'فجوة'} ${FMT(Math.abs(c.parsed.y))} مليار ريال`)}} },"
+  },
+  {
+   "file": "fisc",
+   "kind": "dict",
+   "category": "copy",
+   "note": "macro-13: AR label \"Economic growth, 2026\"",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<span class=\"klabel\">Size of the economy, 2026</span>",
+   "new": "<span class=\"klabel\">Economic growth, 2026</span> => <span class=\"klabel\">النمو الاقتصادي، 2026</span>"
+  },
+  {
+   "file": "fisc",
+   "kind": "dict",
+   "category": "copy",
+   "note": "macro-13: AR debt source",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Ministry of Finance · borrowing plan for 2027 due by year-end",
+   "new": "Ministry of Finance · budget performance report for April–June 2026 (30/07) => وزارة المالية · تقرير أداء الميزانية لشهور أبريل–يونيو 2026 (30/07)"
+  },
+  {
+   "file": "fisc",
+   "kind": "dict",
+   "category": "copy",
+   "note": "macro-14: AR chart A source",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<span class=\"tag off\">Source</span> Ministry of Finance — budget performance report for April–June 2026 (30/07/2026). The 2025 figures are worked back from the percentage changes the Ministry published.",
+   "new": "<span class=\"tag off\">Source</span> Ministry of Finance — budget performance reports for April–June 2026 (30/07/2026) and April–June 2025 (January–June 2025 figures). => <span class=\"tag off\">المصدر</span> وزارة المالية — تقريرا أداء الميزانية لشهور أبريل–يونيو 2026 (30/07/2026) وأبريل–يونيو 2025 (أرقام يناير–يونيو 2025)."
+  },
+  {
+   "file": "fisc",
+   "kind": "dict",
+   "category": "copy",
+   "note": "macro-05: AR history cell with the right-to-left arrow",
+   "occurrences": 0,
+   "ok": true,
+   "old": "1,172 → 1,259",
+   "new": "1,172 ← 1,259"
+  },
+  {
+   "file": "fisc",
+   "kind": "dict",
+   "category": "copy",
+   "note": "macro-05: AR history cell with the right-to-left arrow",
+   "occurrences": 0,
+   "ok": true,
+   "old": "1,251 → 1,375 <b>(+9.9%)</b>",
+   "new": "1,251 ← 1,375 <b>(+9.9%)</b>"
+  },
+  {
+   "file": "fisc",
+   "kind": "dict",
+   "category": "copy",
+   "note": "macro-05: AR history cell with the right-to-left arrow",
+   "occurrences": 0,
+   "ok": true,
+   "old": "−79 → −116",
+   "new": "−79 ← −116"
+  },
+  {
+   "file": "fisc",
+   "kind": "dict",
+   "category": "copy",
+   "note": "macro-05: AR history cell with the right-to-left arrow",
+   "occurrences": 0,
+   "ok": true,
+   "old": "1,184 → 1,112",
+   "new": "1,184 ← 1,112"
+  },
+  {
+   "file": "fisc",
+   "kind": "dict",
+   "category": "copy",
+   "note": "macro-05: AR history cell with the right-to-left arrow",
+   "occurrences": 0,
+   "ok": true,
+   "old": "1,285 → 1,388 <b>(+8.0%)</b>",
+   "new": "1,285 ← 1,388 <b>(+8.0%)</b>"
+  },
+  {
+   "file": "fisc",
+   "kind": "dict",
+   "category": "copy",
+   "note": "macro-05: AR history cell with the right-to-left arrow",
+   "occurrences": 0,
+   "ok": true,
+   "old": "−101 → −277",
+   "new": "−101 ← −277"
+  },
+  {
+   "file": "fisc",
+   "kind": "dict",
+   "category": "copy",
+   "note": "macro-12: AR KPI unit \"مليار ريال\"",
+   "occurrences": 0,
+   "ok": true,
+   "old": "245<span class=\"kunit\">B</span>",
+   "new": "245<span class=\"kunit\">مليار ريال</span>"
+  },
+  {
+   "file": "fisc",
+   "kind": "dict",
+   "category": "copy",
+   "note": "macro-12: AR KPI unit \"مليار ريال\"",
+   "occurrences": 0,
+   "ok": true,
+   "old": "191<span class=\"kunit\">B</span>",
+   "new": "191<span class=\"kunit\">مليار ريال</span>"
+  },
+  {
+   "file": "fisc",
+   "kind": "dict",
+   "category": "copy",
+   "note": "macro-12: AR KPI unit \"مليار ريال\"",
+   "occurrences": 0,
+   "ok": true,
+   "old": "1,685<span class=\"kunit\">B</span>",
+   "new": "1,685<span class=\"kunit\">مليار ريال</span>"
+  },
+  {
+   "file": "fisc",
+   "kind": "dict",
+   "category": "code",
+   "note": "macro-12: \"~10\" kept left to right in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "~10<span class=\"kunit\">days shut</span>",
+   "new": "<bdi dir=\"ltr\">~10</bdi>…"
+  }
+ ]
+}

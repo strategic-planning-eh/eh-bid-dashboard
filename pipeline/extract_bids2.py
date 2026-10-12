@@ -41,6 +41,30 @@ def substat(v):
     if s in ('yes','y','نعم','تم','تم التقديم'): return 'Yes'
     if s in ('no','n','لا','لم يتم'): return 'No'
     return None
+def dur_months(v):
+    """Project length in months, one decimal (12 Oct 2026, audit data-12). Numbers are months; text such as «10 ايام»,
+    «3 اسابيع», «2.5 سنتين ونصف», «شهرين» or «Annual» is converted. None when no length can be read («مرة واحدة»)."""
+    if v is None: return None
+    if isinstance(v,(int,float)): return round(float(v),1) if (v==v and v>0) else None
+    s=unicodedata.normalize('NFKC',str(v)).strip().lower().translate(str.maketrans('٠١٢٣٤٥٦٧٨٩٫','0123456789.'))
+    s=re.sub(r'[\u0640\u064b-\u0652]','',s)
+    for a,b in (('أ','ا'),('إ','ا'),('آ','ا'),('ة','ه'),('ى','ي')): s=s.replace(a,b)
+    if not s: return None
+    m=re.search(r'\d+(?:[.,]\d+)?',s); n=float(m.group(0).replace(',','.')) if m else None
+    tail=s[m.end():m.end()+14] if m else s          # the unit word right after the number decides
+    def unit(x):
+        if re.search(r'يوم|ايام|day',x): return 1/30
+        if re.search(r'اسبوع|اسابيع|week',x): return 7/30
+        if re.search(r'شهر|اشهر|month',x): return 1
+        if re.search(r'سنه|سنو|سنين|سنتين|سنوات|عام|اعوام|year|annual',x): return 12
+        return None
+    u=unit(tail) or unit(s)
+    if n is None:
+        if re.search(r'سنتين|عامين|شهرين|اسبوعين|يومين',s): n=2
+        elif u: n=1
+        else: return None
+    if u is None: u=1                                # a bare number means months
+    return round(n*u,1) if n>0 else None
 def mkey(v):
     if isinstance(v,datetime.datetime): return v.strftime('%Y-%m')
     return None
@@ -61,6 +85,7 @@ def colmap(ws,hr):
         elif 'Bid Title' in h: m['title']=c
         elif 'Reference No' in h: m['ref']=c
         elif 'Project Duration (Month)' in h: m['dur']=c
+        elif h.startswith('Project Duration'): m['dur2']=c          # text duration (col 7), used when col 6 is empty
         elif 'Client/Proponent' in h: m['client']=c
         elif 'Platform' in h: m['platform']=c
         elif 'Submission Deadline' in h: m['submit']=c
@@ -75,6 +100,7 @@ def colmap(ws,hr):
         elif 'Bid Committee decision' in h: m['committee']=c
         elif 'Comment' in h or 'ملاحظ' in h: m['comments']=c
         elif 'قيمة العرض المالي المقدم (بدون' in h: m['offer']=c
+        elif 'قيمة العرض المالي المقدم (+' in h: m['offer_vat']=c     # with VAT — the basis of Etimad roster and award prices
         elif 'Discount Request' in h: m['disc']=c
         elif 'قيمة الضمان البنكي' in h: m['bankval']=c
         elif h.startswith('عدد الشركات'): m['nbid']=c
@@ -131,11 +157,12 @@ for f,yr in [('bids2025.xlsx',2025),('bids2026.xlsx',2026)]:
             title=re.sub(r'\s+',' ',unicodedata.normalize('NFKC',str(g('title') or ''))).strip(),   # presentation-form Arabic (تقديم) folds to plain letters; line breaks collapse
             client=str(g('client') or '').strip(),
             platform=str(g('platform') or '').strip(),
-            dur=num(g('dur')),
+            dur=(dur_months(g('dur')) if dur_months(g('dur')) is not None else dur_months(g('dur2'))),
             svcdept=str(g('svcdept') or '').strip(),
             committee=str(g('committee') or '').strip(),
             comments=str(g('comments') or '').strip(),
             offer=num(g('offer')),
+            offer_vat=num(g('offer_vat')),
             ehsub=bidflag(g('offer')),
             discount=str(g('disc') or '').strip(),
             bankval=num(g('bankval')),
@@ -191,7 +218,9 @@ for f,yr in [('bids2025.xlsx',2025),('bids2026.xlsx',2026)]:
 OVERRIDES={(2026,16): dict(value=20000000, offer=20000000, winval=20000000)}  # ZATCA framework agreement won by EH at SAR 20M
 for _b in allbids:
     _o=OVERRIDES.get((_b['year'],_b['sn']))
-    if _o: _b.update(_o)
+    if _o:
+        _b.update(_o)
+        if 'offer' in _o and 'offer_vat' not in _o: _b['offer_vat']=None   # re-derived below
 # ---- corrections.json: field updates and added rows confirmed by the bid team (see the file's _note) ----
 import os as _os
 _cp=_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),'corrections.json')
@@ -200,12 +229,17 @@ if _os.path.exists(_cp):
     for _k,_fields in (_c.get('updates') or {}).items():
         if _k in _byk:
             _b=_byk[_k]; _b.update(_fields); _nu+=1
+            if 'offer' in _fields and 'offer_vat' not in _fields: _b['offer_vat']=None   # re-derived below
             if 'offer' in _fields or 'winval' in _fields: _b['value']=_b['winval'] if _b.get('winval') else _b.get('offer')
     for _row in (_c.get('additions') or []):
         _k=f"{_row['year']}-{_row['sn']}"
         if _k not in _byk: allbids.append(_row); _byk[_k]=_row; _na+=1
     print(f'corrections.json applied: {_nu} rows updated, {_na} rows added')
 
+# offer with VAT: the tracker's own figure where it is a number, else the pre-VAT offer × 1.15 (12 Oct 2026, audit bids-03)
+for _b in allbids:
+    if not _b.get('offer'): _b['offer_vat']=None
+    elif not _b.get('offer_vat') or _b['offer_vat']<100: _b['offer_vat']=round(_b['offer']*1.15,2)
 json.dump({'bids':allbids,'rosters':rosters}, open('bidraw2.json','w'), ensure_ascii=False)
 print('bids:',len(allbids),'| with launch date:',sum(1 for b in allbids if b['month']))
 print('with platform:',sum(1 for b in allbids if b['platform']),'| with duration:',sum(1 for b in allbids if b['dur']))

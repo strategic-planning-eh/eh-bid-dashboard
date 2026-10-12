@@ -1,11 +1,81 @@
 #!/usr/bin/env python3
 """build_ef_page.py — renders hub/environment_fund_2025.html from pipeline/ef_report_2025.json.
-Re-run after editing the JSON. The page is self-contained apart from eh-shared.css / eh-shared.js."""
-import json, os, sys
+Re-run after editing the JSON. The page is self-contained apart from eh-shared.css / eh-shared.js.
+
+"EH's own record with the Fund" is computed from the Bid & Tender app's data each time the page is built
+(patch_audit_shell_ef.py, 12 Oct 2026): --bids FILE, or by default pipeline/bidanalytics2.json then pipeline/bidraw2.json
+(both written by run_pipeline.py). The result is also saved to ef_xref_snapshot.json; when no bid data is present the
+page uses that snapshot and shows its age.
+Usage: python3 build_ef_page.py [ef_report_2025.json] [out.html] [--bids FILE] [--asof YYYY-MM-DD]"""
+import json, os, sys, re, argparse, datetime as dt
 HERE = os.path.dirname(os.path.abspath(__file__))
-SRC = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, 'ef_report_2025.json')
-OUT = sys.argv[2] if len(sys.argv) > 2 else os.path.join(HERE, '..', 'hub', 'environment_fund_2025.html')
+_ap = argparse.ArgumentParser()
+_ap.add_argument('src', nargs='?', default=os.path.join(HERE, 'ef_report_2025.json'))
+_ap.add_argument('out', nargs='?', default=os.path.join(HERE, '..', 'hub', 'environment_fund_2025.html'))
+_ap.add_argument('--bids', default=None, help='bidanalytics2.json or bidraw2.json (default: whichever exists in pipeline/)')
+_ap.add_argument('--asof', default=None, help='date of the bid data (default: today in Riyadh)')
+_ap.add_argument('--snapshot', default=os.path.join(HERE, 'ef_xref_snapshot.json'))
+_a = _ap.parse_args()
+SRC, OUT = _a.src, _a.out
 EF = json.load(open(SRC, encoding='utf-8'))
+
+# ---- EH's own record with the Fund and the national centres: from the bid tracker, at build time -------------------
+def _sub_raw(b, today):
+    """Same order as bid_analytics2.substate(): the tracker's submission columns, then offer evidence, then reasons."""
+    if b.get('ehsubdate') or b.get('subdate'): return 'date'
+    if b.get('substatus') == 'Yes': return 'yes'
+    no = b.get('substatus') == 'No'
+    if not no and (b.get('eh_won') is True or b.get('ehsub') or b.get('offer')): return 'yes'
+    if re.search(r'reject|رفض', b.get('committee') or '', re.I): return 'rejected'
+    if (b.get('status') or '') == 'Cancelled': return 'cancelled'
+    if no: return 'no'
+    if b.get('submit') and b['submit'] >= today: return 'open'
+    return 'none' if b.get('subcol') else 'unrecorded'
+
+def _bid_row(b, today):
+    if 'outcome' in b:                                   # bid_analytics2.py bid list (what the Bid app shows)
+        out, sub, dl = b.get('outcome') or 'Pending', b.get('sub'), b.get('deadline')
+        if sub is None:                                  # older bid data without a submission state
+            sub = ('rejected' if re.search(r'reject|رفض', b.get('committee') or '', re.I) else
+                   'cancelled' if out == 'Cancelled' else 'open' if dl and dl >= today else 'unrecorded')
+    else:                                                # extract_bids2.py raw rows
+        st = b.get('status') or ''
+        out = 'Won' if b.get('eh_won') is True else 'Lost' if b.get('eh_won') is False else 'Cancelled' if st == 'Cancelled' else 'Pending'
+        sub, dl = _sub_raw(b, today), b.get('submit')
+    if sub in ('date', 'yes'): state = 'submitted'
+    elif sub == 'cancelled' or out == 'Cancelled': state = 'cancelled'
+    elif sub == 'rejected': state = 'declined'
+    elif sub == 'open': state = 'open'
+    else: state = 'nosub'
+    return {'year': b.get('year'), 'sn': b.get('sn'), 'client': b.get('client') or '', 'title': b.get('title') or '',
+            'deadline': dl, 'state': state, 'outcome': out, 'value': (b.get('value') or 0) if state == 'submitted' else 0}
+
+def _xref(bids, today):
+    rows, years = [], sorted({b.get('year') for b in bids if b.get('year')})
+    for r in EF['xref']['rows']:
+        hit = [_bid_row(b, today) for b in bids if re.search(r['match'], str(b.get('client') or ''), re.I)]
+        c = {k: sum(1 for h in hit if h['state'] == k) for k in ('submitted', 'open', 'declined', 'cancelled', 'nosub')}
+        rows.append(dict(key=r['key'], tenders=len(hit), value=round(sum(h['value'] for h in hit)), **c,
+                         won=sum(1 for h in hit if h['state'] == 'submitted' and h['outcome'] == 'Won'),
+                         lost=sum(1 for h in hit if h['state'] == 'submitted' and h['outcome'] in ('Lost', 'Not awarded')),
+                         open_list=[{'year': h['year'], 'sn': h['sn'], 'deadline': h['deadline'], 'title': h['title'][:90]}
+                                    for h in sorted(hit, key=lambda h: h['deadline'] or '') if h['state'] == 'open']))
+    return {'as_of': today, 'years': years, 'rows': rows}
+
+_bids_path = _a.bids or next((p for p in (os.path.join(HERE, 'bidanalytics2.json'), os.path.join(HERE, 'bidraw2.json')) if os.path.exists(p)), None)
+_today = _a.asof or dt.datetime.now(dt.timezone(dt.timedelta(hours=3))).date().isoformat()
+if _bids_path and os.path.exists(_bids_path):
+    _j = json.load(open(_bids_path, encoding='utf-8'))
+    _x = _xref(_j['both'].get('bidlist', []) if 'both' in _j else _j.get('bids', []), _today)
+    json.dump(_x, open(_a.snapshot, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    EF['xref']['live'] = dict(_x, source='live')
+    print('EH record with the Fund: computed from', os.path.basename(_bids_path), 'as of', _today)
+elif os.path.exists(_a.snapshot):
+    EF['xref']['live'] = dict(json.load(open(_a.snapshot, encoding='utf-8')), source='snapshot')
+    print('EH record with the Fund: no bid data found — using the snapshot of', EF['xref']['live']['as_of'])
+else:
+    EF['xref']['live'] = None
+    print('EH record with the Fund: no bid data and no snapshot — the section says so')
 payload = json.dumps(EF, ensure_ascii=False).replace('</', '<\\/')
 
 CSS = r"""
@@ -40,7 +110,7 @@ table.t{width:100%;border-collapse:collapse;font-size:12.5px}table.t th{text-ali
 .png{font:600 11px inherit;background:var(--chip);border:1px solid var(--line);color:var(--green);border-radius:7px;padding:5px 10px;cursor:pointer}
 svg.pm text{font-family:var(--eh-font,"Segoe UI",Tahoma,Arial,sans-serif)}
 .foot{font-size:11.5px;color:var(--muted);text-align:center;margin-top:20px;line-height:1.6}
-.xr td.num{text-align:center;font-variant-numeric:tabular-nums}.xr .zero{color:var(--red);font-weight:700}
+.xr td.num{text-align:center;font-variant-numeric:tabular-nums}.xr .zero{color:var(--red);font-weight:700}.xr td:first-child{min-width:150px}.xr td:last-child{min-width:260px}
 .read{font-size:13px;padding:10px 12px;background:var(--chip);border-radius:8px;border-inline-start:3px solid var(--amber);margin-top:10px}
 [dir=rtl] .gap .how{text-align:start}
 """
@@ -155,7 +225,9 @@ const EF=JSON.parse(document.getElementById('EF').textContent);
 let LANG=(localStorage.getItem('ef.lang')||'en'), DARK=false, GROUP='money';
 const L=(en,ar)=>LANG==='ar'?ar:en, $=id=>document.getElementById(id), esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const P=p=>`<span class="pg" title="${esc(L('Annual Report 2025, page','التقرير السنوي 2025، صفحة'))} ${p}">${L('p.','ص')} ${p}</span>`;
-const fmtM=v=>v>=1e6?(v/1e6).toFixed(1).replace(/\.0$/,'')+' M':v>=1e3?(v/1e3).toFixed(0)+' K':String(v);
+const fmtM=v=>v>=1e6?(v/1e6).toFixed(1).replace(/\.0$/,'')+L(' M',' مليون'):v>=1e3?(v/1e3).toFixed(0)+L(' K',' ألف'):String(v);
+const fmtDay=iso=>{const d=new Date(String(iso||'')+'T12:00:00');return isNaN(d)?String(iso||''):d.toLocaleDateString(LANG==='ar'?'ar-SA-u-ca-gregory-nu-latn':'en-GB',{day:'numeric',month:'short',year:'numeric'});};   // Gregorian in both languages, as across the hub
+const CAT={ppp:['Partnerships & privatisation','الشراكة والتخصيص'],grantees:['Grant recipients','المستفيدون من المنح'],finance:['Finance','المالية'],impact:['Impact investment','استثمارات الأثر'],shared:['Shared services','الخدمات المشتركة'],grants:['Grants','المنح'],portfolio:['Portfolio','المحفظة'],fees:['Fees','المقابل المالي'],carbon:['Carbon','الكربون'],mandate:['Mandate','المهام'],products:['Products','المنتجات'],esg:['Sustainability reporting','تقارير الاستدامة'],people:['People','الموارد البشرية'],strategy:['Strategy','الاستراتيجية'],digital:['Digital','التحول الرقمي'],comms:['Communications','الاتصال'],headline:['Headline figure','رقم رئيسي']};
 const OWN_EN={'BD':'Business Development','Consulting/EIA':'Consulting / environmental studies'};
 const OWN={'BD':'تطوير الأعمال','Finance':'المالية','Operations':'العمليات','Consulting/EIA':'الاستشارات/دراسات الأثر','Training':'التدريب'};
 const HOR={'Now':'الآن','2026':'2026','2027+':'2027+'};
@@ -167,17 +239,14 @@ function render(){
  $('title').textContent=L('Environment Fund — 2025 Annual Report: what it means for EH','صندوق البيئة — التقرير السنوي 2025: ماذا يعني لآفاق البيئة');
  $('sub').textContent=L(m.source_en,m.source_ar)+' · '+L('read as a map of where EH\'s clients\' money, rules and tenders will come from in 2026–2030','قراءةٌ لمصادر تمويل عملاء آفاق البيئة وقواعدهم ومنافساتهم في 2026–2030');
  document.querySelectorAll('#lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===LANG));
- $('stamp').innerHTML=`<span>${L('Source','المصدر')}: <b>${esc(L(m.source_en,m.source_ar))}</b> (${m.pages} ${L('pages','صفحة')})</span><span>·</span><span>${L('extracted','تاريخ الاستخراج')} <b dir="ltr">${m.extracted}</b></span><span>·</span><span>${L('checked against EH\'s bid tracker on','مطابقة جدول العطاءات حتى')} <b dir="ltr">${m.tracker_xref_as_of}</b></span>`;
+ const XL=EF.xref.live;
+ $('stamp').innerHTML=`<span>${L('Source','المصدر')}: <b>${esc(L(m.source_en,m.source_ar))}</b> (${m.pages} ${L('pages','صفحة')})</span><span>·</span><span>${L('extracted','تاريخ الاستخراج')} <b>${fmtDay(m.extracted)}</b></span>${XL?`<span>·</span><span>${XL.source==='live'?L('EH\'s bid tracker read on','قُرئ جدول العطاءات في'):L('EH\'s bid tracker as of','جدول العطاءات حتى')} <b>${fmtDay(XL.as_of)}</b></span>`:''}`;
  /* NAMES_LINE: every agency in full once per page (agreed 30 Sep 2026), then the short form */
  (function(){let el=document.getElementById('names');if(!el){el=document.createElement('div');el.id='names';el.className='note';el.style.cssText='margin:-4px 0 12px;font-size:12px';$('kstrip').parentNode.insertBefore(el,$('kstrip'));}
   el.innerHTML=L('<b>Names used on this page:</b> NCEC — National Center for Environmental Compliance · MWAN — National Center for Waste Management · NCVC — National Center for Vegetation Cover &amp; Combating Desertification · NCW — National Center for Wildlife · NCM — National Center for Meteorology · MEWA — Ministry of Environment, Water &amp; Agriculture · EXPRO — Expenditure &amp; Projects Efficiency Authority (checks government spending and projects) · Etimad — the government tendering portal · Kafalah — the state loan-guarantee programme for small businesses','<b>الأسماء المستخدمة في هذه الصفحة:</b> المركز الوطني للرقابة على الالتزام البيئي · المركز الوطني لإدارة النفايات (موان) · المركز الوطني لتنمية الغطاء النباتي ومكافحة التصحر · المركز الوطني لتنمية الحياة الفطرية · المركز الوطني للأرصاد · وزارة البيئة والمياه والزراعة · هيئة كفاءة الإنفاق والمشروعات الحكومية (إكسبرو) · اعتماد — بوابة المنافسات الحكومية · كفالة — برنامج ضمان تمويل المنشآت الصغيرة');})();
  $('kstrip').innerHTML=EF.headline.map(h=>`<div class="kc"><div class="v" dir="ltr">${esc(L(h.value,h.ar_value))}</div><div class="l">${esc(L(h.en,h.ar))} ${P(h.page)}</div></div>`).join('');
- // xref
- const x=EF.xref;
- $('xref').innerHTML=`<h2>${L("EH's own record with the Fund and the national centres","سجل آفاق البيئة مع الصندوق والمراكز الوطنية")}</h2><div class="note">${esc(L(x.note_en,x.note_ar))}</div>
- <table class="t xr"><thead><tr><th>${L('Client','الجهة')}</th><th style="text-align:center">${L('Tenders','منافسات')}</th><th style="text-align:center">${L('Value (SAR)','القيمة (ريال)')}</th><th style="text-align:center">${L('Pending','قيد الانتظار')}</th><th style="text-align:center">${L('Cancelled','ملغاة')}</th><th style="text-align:center">${L('Decided','محسومة')}</th><th>${L('Note','ملاحظة')}</th></tr></thead><tbody>
- ${x.rows.map(r=>`<tr><td><b>${esc(L(r.client_en,r.client_ar))}</b></td><td class="num">${r.tenders}</td><td class="num" dir="ltr">${r.value?fmtM(r.value):'—'}</td><td class="num">${r.pending}</td><td class="num">${r.cancelled}</td><td class="num ${r.tenders&&!r.decided?'zero':''}">${r.decided}</td><td style="color:var(--muted)">${esc(L(r.note_en,r.note_ar))}</td></tr>`).join('')}</tbody></table>
- <div class="read">${esc(L(x.reading_en,x.reading_ar))} ${P(87)}</div>`;
+ // xref — computed from the bid tracker when the page is built (build_ef_page.py; audit shell-01/02, 12 Oct 2026)
+ $('xref').innerHTML=xrefHTML();
  // opportunities
  $('h-opp').textContent=L('What it means for EH — grouped by question, with when it matters and who at EH acts','ماذا يعني لآفاق البيئة — مصنَّف بحسب السؤال، ومعلَّم بالأفق والجهة المسؤولة');
  const G=[['money',L('Money EH can access','تمويل يمكن لآفاق البيئة الوصول إليه')],['tenders',L('Tenders EH will see','منافسات ستراها آفاق البيئة')],['rules',L('Rules and costs that shift','قواعد وتكاليف تتغير')],['competitors',L('Competitors and partners the Fund is funding','منافسون وشركاء يموّلهم الصندوق')]];
@@ -195,8 +264,44 @@ function render(){
  ${EF.events.map(e=>`<tr><td><b>${esc(L(e.en,e.ar))}</b></td><td style="white-space:nowrap;color:var(--muted)">${esc(L(e.when_en,e.when_ar))}</td><td>${esc(L(e.why_en,e.why_ar))}</td><td>${P(e.page)}</td></tr>`).join('')}</tbody></table>`;
  $('gaps').innerHTML=`<h2>${L("What we don't know","ما لا نعرفه")}</h2><div class="note">${L('The report does not say — and how to find out.','لا يذكره التقرير — وكيف نعرفه.')}</div>${EF.gaps.map(g=>`<div class="gap"><div>${esc(L(g.en,g.ar))}</div><div class="how">→ ${esc(L(g.how_en,g.how_ar))}</div></div>`).join('')}`;
  // facts ledger (collapsible)
- $('facts').innerHTML=`<summary style="cursor:pointer;font-weight:700">${L('Every figure and the page it comes from','سجل الاستخراج — كل رقم بصفحته')} (${EF.facts.length})</summary><table class="t" style="margin-top:10px"><tbody>${EF.facts.map(f=>`<tr><td style="white-space:nowrap">${P(f.page)}</td><td style="color:var(--muted);white-space:nowrap">${esc(f.cat)}</td><td>${esc(L(f.en,f.ar))}</td></tr>`).join('')}</tbody></table>`;
+ $('facts').innerHTML=`<summary style="cursor:pointer;font-weight:700">${L('Every figure and the page it comes from','سجل الاستخراج — كل رقم بصفحته')} (${EF.facts.length})</summary><table class="t" style="margin-top:10px"><tbody>${EF.facts.map(f=>`<tr><td style="white-space:nowrap">${P(f.page)}</td><td style="color:var(--muted);white-space:nowrap">${esc(L(...(CAT[f.cat]||[f.cat,f.cat])))}</td><td>${esc(L(f.en,f.ar))}</td></tr>`).join('')}</tbody></table>`;
  $('foot').innerHTML=esc(L(m.method_en,m.method_ar));
+}
+// "EH's own record with the Fund": a tender logged in the tracker is not an EH bid — the columns say what happened to each
+function xrefHTML(){
+ const x=EF.xref, X=x.live, h=`<h2>${L("EH's own record with the Fund and the national centres","سجل آفاق البيئة مع الصندوق والمراكز الوطنية")}</h2>`;
+ if(!X||!X.rows)return h+`<div class="note">${L('The bid tracker was not available when this page was built, so this record cannot be shown here. The Bid & Tender tab has every tender.','لم يكن جدول العطاءات متاحاً عند بناء هذه الصفحة، فلا يمكن عرض هذا السجل هنا. تبويب المناقصات والعطاءات يعرض كل المنافسات.')}</div>`;
+ const R=X.rows.map(r=>Object.assign({},x.rows.find(d=>d.key===r.key)||{},r)), K=['tenders','submitted','open','declined','cancelled','nosub','value'];
+ const T={};K.forEach(k=>T[k]=R.reduce((a,r)=>a+(r[k]||0),0));
+ const yrs='⁦'+((X.years||[]).length>1?X.years[0]+'–'+X.years[X.years.length-1]:String((X.years||[''])[0]))+'⁩';   // isolated so Arabic keeps 2025–2026 in order
+ const age=Math.floor((Date.now()-new Date(X.as_of+'T12:00:00+03:00'))/864e5);
+ const when=X.source==='live'?L(`Read from the tracker on ${fmtDay(X.as_of)}.`,`قُرئ من الجدول في ${fmtDay(X.as_of)}.`)
+   :L(`Snapshot of the tracker taken on ${fmtDay(X.as_of)}${age>1?` — ${age} days old`:''}.`,`لقطة من الجدول بتاريخ ${fmtDay(X.as_of)}${age>1?` — مضى عليها ${age} يوماً`:''}.`);
+ const sn=o=>`${o.sn}/${String(o.year).slice(2)}`;
+ const ltr=h=>h.replace(/⁦(.*?)⁩/g,'<span dir="ltr">$1</span>');   // Chromium ignores isolate characters in text: use a real LTR span
+ const openTxt=o=>L(`${sn(o)} closes ${fmtDay(o.deadline)}`,`رقم ${sn(o)} يُغلق ${fmtDay(o.deadline)}`);
+ const note=r=>{const a=[];if(r.submitted)a.push(L(`Submitted: ${[r.won?r.won+' won':'',r.lost?r.lost+' lost':'',r.submitted-r.won-r.lost?(r.submitted-r.won-r.lost)+' awaiting a result':''].filter(Boolean).join(', ')}`,`قُدِّم: ${[r.won?r.won+' فازت':'',r.lost?r.lost+' لم تُرسَ':'',r.submitted-r.won-r.lost?(r.submitted-r.won-r.lost)+' بانتظار النتيجة':''].filter(Boolean).join('، ')}`));
+  if(r.open_list&&r.open_list.length)a.push(L('Open: ','مفتوحة: ')+r.open_list.map(openTxt).join(L('; ','؛ ')));
+  if(!r.tenders)a.push(L('No tenders logged','لا منافسات مسجَّلة'));else if(r.note_en)a.push(L(r.note_en,r.note_ar));return esc(a.join(L(' · ',' · ')));};
+ const th=(en,ar,c)=>`<th${c?' style="text-align:center"':''}>${L(en,ar)}</th>`, td=v=>`<td class="num">${v}</td>`;
+ // the reading: every number comes from the table above it
+ const was=(n,en1,enN)=>n===1?en1:enN;
+ const ow=[];if(T.declined)ow.push(L(`${T.declined} ${was(T.declined,'was','were')} declined by EH's bid committee`,`رفضت لجنة العطاءات في آفاق البيئة ${T.declined}`));
+ if(T.cancelled)ow.push(L(`${T.cancelled} ${was(T.cancelled,'was','were')} cancelled`,`أُلغيت ${T.cancelled}`));
+ if(T.nosub)ow.push(L(`${T.nosub} passed ${was(T.nosub,'its','their')} deadline with no decision or submission recorded`,`انقضى موعد ${T.nosub} دون تسجيل قرار أو تقديم`));
+ const join=a=>a.length<2?(a[0]||''):a.slice(0,-1).join(L(', ','، '))+L(' and ','، و')+a[a.length-1];
+ const opens=R.flatMap(r=>(r.open_list||[]).map(o=>L(`${r.client_en} ${openTxt(o)}`,`${r.client_ar} ${openTxt(o)}`)));
+ const rd=[L(`${T.tenders} tenders from the Fund and the national centres are logged in EH's bid tracker (${yrs}).`,`${T.tenders} منافسة من الصندوق والمراكز الوطنية مسجَّلة في جدول تتبع العطاءات لآفاق البيئة (${yrs}).`),
+  T.submitted?L(`EH submitted an offer on ${T.submitted} of them.`,`قدّمت آفاق البيئة عرضاً في ${T.submitted} منها.`)
+   :L('EH submitted an offer on none of them, so there is no EH bid here waiting for a decision.','لم تقدّم آفاق البيئة عرضاً في أيٍّ منها، فلا يوجد هنا عطاء لآفاق البيئة ينتظر قراراً.'),
+  ow.length?(s=>s.charAt(0).toUpperCase()+s.slice(1))(join(ow))+L('.','.'):'',
+  opens.length?L(`Still open: ${opens.join('; ')}. Decide whether to bid before ${was(opens.length,'it closes','they close')}.`,`ما تزال مفتوحة: ${opens.join('؛ ')}. يلزم تقرير التقدّم من عدمه قبل الإغلاق.`):'',
+  T.nosub?L(`Ask the bid team to record the committee decision and the submission status on the ${T.nosub} without one, so this record stays accurate.`,`يُرجى أن يسجّل فريق العطاءات قرار اللجنة وحالة التقديم في ${T.nosub} منافسة ينقصها ذلك، ليبقى هذا السجل دقيقاً.`):''].filter(Boolean).join(' ');
+ return h+`<div class="note">${ltr(esc(L(`Every tender from the Fund and the national centres that is logged in EH's bid tracker (EH-WIN-02-F01), ${yrs}. A tender is logged when EH looks at it — that does not mean EH bid. "Submitted" follows the same rule as the Bid & Tender tab.`,`كل منافسة من الصندوق والمراكز الوطنية مسجَّلة في جدول تتبع العطاءات لآفاق البيئة (EH-WIN-02-F01)، ${yrs}. تُسجَّل المنافسة عندما تطّلع عليها آفاق البيئة — ولا يعني ذلك أنها تقدّمت لها. «قُدِّم» وفق القاعدة نفسها في تبويب المناقصات والعطاءات.`)))} ${esc(when)}</div>
+ <table class="t xr"><thead><tr>${th('Client','الجهة')}${th('Logged','مسجَّلة',1)}${th('EH submitted','قدّمت آفاق البيئة',1)}${th('Open now','مفتوحة الآن',1)}${th('Declined by EH','رفضتها لجنة آفاق البيئة',1)}${th('Cancelled','ملغاة',1)}${th('No submission recorded','لا تقديم مسجَّل',1)}${th("Value of EH's offers (SAR)",'قيمة عروض آفاق البيئة (ريال)',1)}${th('Note','ملاحظة')}</tr></thead><tbody>
+ ${R.map(r=>`<tr><td><b>${esc(L(r.client_en,r.client_ar))}</b></td>${td(r.tenders)}${td(r.submitted)}${td(r.open?`<b>${r.open}</b>`:0)}${td(r.declined)}${td(r.cancelled)}${td(r.nosub)}<td class="num" dir="ltr">${r.value?fmtM(r.value):'—'}</td><td style="color:var(--muted)">${note(r)}</td></tr>`).join('')}
+ <tr><td><b>${L('Total','المجموع')}</b></td>${['tenders','submitted','open','declined','cancelled','nosub'].map(k=>td(`<b>${T[k]}</b>`)).join('')}<td class="num" dir="ltr"><b>${T.value?fmtM(T.value):'—'}</b></td><td></td></tr></tbody></table>
+ <div class="read">${ltr(esc(rd))}</div>`;
 }
 // EH design system v2 (patch_design_ef.py): brand palette (land → sea) for the colours stored in the report data
 const BCM={'#2A3F80':'#3B57B8','#E8862E':'#C98A1B','#1F7A4C':'#54AB5D','#C0504D':'#B23F2B','#1A5FAB':'#0072BB','#2E9E8E':'#00A0E0','#5F7078':'#5E6B80','#7B4FA6':'#8E6BB8','#9AABB5':'#9DABC5'};
@@ -231,7 +336,7 @@ function chart(c){
  const scale=v=>c.log?Math.log10(v+1)/Math.log10(max+1)*iw:v/max*iw;
  let s=`<svg id="${c.id}" class="pm" viewBox="0 0 ${W} ${H}" width="100%" xmlns="http://www.w3.org/2000/svg" dir="ltr">${head}`;
  c.rows.forEach((r,i)=>{const y=56+i*rowH,w=Math.max(scale(r.v),2);const col=r.c||c.color;
-  s+=`<text x="${L0-12}" y="${y+19}" text-anchor="end" font-size="12" fill="${ink}">${esc(L(r.en,r.ar))}</text><rect x="${L0}" y="${y+5}" width="${w.toFixed(1)}" height="22" rx="3" fill="${col}"/><text x="${L0+w+8}" y="${y+20}" font-size="12.5" font-weight="700" fill="${ink}">${r.v.toLocaleString('en-US')}${c.pct?'%':c.unit==='t'?' t':''}</text><text x="${W-40}" y="${y+20}" text-anchor="end" font-size="10" fill="${mut}">${L('p.','ص')} ${r.p}</text>`;});
+  s+=`<text x="${L0-12}" y="${y+19}" text-anchor="end" font-size="12" fill="${ink}">${esc(L(r.en,r.ar))}</text><rect x="${L0}" y="${y+5}" width="${w.toFixed(1)}" height="22" rx="3" fill="${col}"/><text x="${L0+w+8}" y="${y+20}" font-size="12.5" font-weight="700" fill="${ink}">${r.v.toLocaleString('en-US')}${c.pct?'%':c.unit==='t'?L(' t',' طن'):''}</text><text x="${W-40}" y="${y+20}" text-anchor="end" font-size="10" fill="${mut}">${L('p.','ص')} ${r.p}</text>`;});
  if(c.log)s+=`<text x="${L0}" y="${H-4}" font-size="10" fill="${mut}">${esc(L('compressed scale so large and small numbers fit — bar lengths are not to scale','مقياس لوغاريتمي — أطوال الأشرطة غير تناسبية'))}</text>`;
  return s+'</svg>';
 }
@@ -239,16 +344,16 @@ function programmeMap(){
  const pm=EF.programme_map, W=1100, rowH=40, top=56;
  const prods=pm.products, cen=pm.centres, ehl=pm.eh_lines;
  const H=top+Math.max(prods.length,cen.length,ehl.length)*rowH+30;
- const xP=40,xC=W/2-40,xE=W-300, bw=[310,150,200];   // EH design v2: programme and centre boxes wide enough for the longest label (English and Arabic) in the brand font
+ const xC=40,xP=W/2-155,xE=W-240, bw=[310,150,200];   // audit shell-09: centres | programmes | EH lines — every line is a link the report states, none crosses a box
  const yP=i=>top+i*rowH+ (Math.max(prods.length,cen.length,ehl.length)-prods.length)*rowH/2;
  const yC=i=>top+i*rowH+(Math.max(prods.length,cen.length,ehl.length)-cen.length)*rowH/2;
  const yE=i=>top+i*rowH+(Math.max(prods.length,cen.length,ehl.length)-ehl.length)*rowH/2;
  const col={grants:'#2E7A37',loansup:'#3B57B8',guar:'#0072BB',impact:'#8E6BB8',ppp:'#C98A1B',fees:'#B23F2B',shared:'#5E6B80',carbon:'#00A0E0'};   // EH brand palette
  let s=`<svg id="ex-pm" class="pm" viewBox="0 0 ${W} ${H}" width="100%" xmlns="http://www.w3.org/2000/svg" dir="ltr">
- <text x="${xP}" y="24" font-size="15" font-weight="800" fill="var(--eh-ink)">${esc(L("Environment Fund programmes → national centres they touch → EH service lines they concern","برامج الصندوق ← المراكز الوطنية التي تمسّها ← خطوط خدمات آفاق البيئة المعنية"))}</text>
- <text x="${xP}" y="42" font-size="11" fill="var(--eh-ink-3)">${esc(L('Source: Annual Report 2025, pages cited on each programme · a line means the report links them explicitly','المصدر: التقرير السنوي 2025، الصفحات مذكورة على كل برنامج · الخط يعني أن التقرير يربطهما صراحةً'))}</text>`;
- prods.forEach((p,i)=>{p.centres.forEach(c=>{const j=cen.findIndex(x=>x[0]===c);if(j<0)return;s+=`<path d="M${xP+bw[0]} ${yP(i)+14} C ${xP+bw[0]+90} ${yP(i)+14}, ${xC-90} ${yC(j)+14}, ${xC} ${yC(j)+14}" stroke="${col[p.id]}" stroke-width="2" fill="none" opacity=".55"/>`;});
-  p.eh.forEach(e=>{const j=ehl.findIndex(x=>x[0]===e);if(j<0)return;const x0=p.centres.length?xC+bw[1]:xP+bw[0];const y0=p.centres.length?yC(cen.findIndex(x=>x[0]===p.centres[0]))+14:yP(i)+14;s+=`<path d="M${x0} ${y0} C ${x0+90} ${y0}, ${xE-90} ${yE(j)+14}, ${xE} ${yE(j)+14}" stroke="${col[p.id]}" stroke-width="2" fill="none" opacity=".55"/>`;});});
+ <text x="${xC}" y="24" font-size="15" font-weight="800" fill="var(--eh-ink)">${esc(L("National centres → the Environment Fund programmes that touch them → EH service lines they concern","المراكز الوطنية ← برامج الصندوق التي تمسّها ← خطوط خدمات آفاق البيئة المعنية"))}</text>
+ <text x="${xC}" y="42" font-size="11" fill="var(--eh-ink-3)">${esc(L('Source: Annual Report 2025, pages cited on each programme · a line means the report links them explicitly','المصدر: التقرير السنوي 2025، الصفحات مذكورة على كل برنامج · الخط يعني أن التقرير يربطهما صراحةً'))}</text>`;
+ prods.forEach((p,i)=>{p.centres.forEach(c=>{const j=cen.findIndex(x=>x[0]===c);if(j<0)return;const x0=xC+bw[1],x1=xP;s+=`<path d="M${x0} ${yC(j)+14} C ${x0+80} ${yC(j)+14}, ${x1-80} ${yP(i)+14}, ${x1} ${yP(i)+14}" stroke="${col[p.id]}" stroke-width="2" fill="none" opacity=".55"/>`;});
+  p.eh.forEach(e=>{const j=ehl.findIndex(x=>x[0]===e);if(j<0)return;const x0=xP+bw[0];s+=`<path d="M${x0} ${yP(i)+14} C ${x0+70} ${yP(i)+14}, ${xE-70} ${yE(j)+14}, ${xE} ${yE(j)+14}" stroke="${col[p.id]}" stroke-width="2" fill="none" opacity=".55"/>`;});});
  prods.forEach((p,i)=>{s+=`<rect x="${xP}" y="${yP(i)}" width="${bw[0]}" height="28" rx="6" fill="${col[p.id]}"/><text x="${xP+10}" y="${yP(i)+19}" font-size="12.5" font-weight="700" fill="${onFill(col[p.id])}">${esc(L(p.en,p.ar))}</text><text x="${xP+bw[0]-8}" y="${yP(i)+19}" font-size="10.5" fill="${onFill(col[p.id])}" text-anchor="end" opacity=".85">${L('p.','ص')} ${p.page}</text>`;});
  cen.forEach((c,i)=>{s+=`<rect x="${xC}" y="${yC(i)}" width="${bw[1]}" height="28" rx="6" fill="var(--eh-tint)" stroke="var(--eh-line)"/><text x="${xC+bw[1]/2}" y="${yC(i)+18}" font-size="12" font-weight="700" fill="var(--eh-ink)" text-anchor="middle">${esc(L(c[0],c[1]))}</text>`;});
  ehl.forEach((e,i)=>{s+=`<rect x="${xE}" y="${yE(i)}" width="${bw[2]}" height="28" rx="6" fill="var(--eh-paper)" stroke="var(--eh-leaf-ink)" stroke-width="1.5"/><text x="${xE+10}" y="${yE(i)+18}" font-size="12.5" font-weight="700" fill="var(--eh-leaf-ink)">EH · ${esc(L(e[0],e[1]))}</text>`;});

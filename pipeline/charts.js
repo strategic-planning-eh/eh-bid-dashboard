@@ -30,7 +30,7 @@ function barChart(data, o={}){
 // horizontal bars (ranked) with value label
 function hbar(data, o={}){
   o=Object.assign({val:d=>d.v,lab:d=>d.l,sub:null,fmt:v=>v,color:C.blue,rh:26,maxlab:30},o);
-  const W=wd, n=data.length, H=n*o.rh+14, labw=240, barx=labw+8, iw=W-barx-90;
+  const W=o.W||wd, n=data.length, H=n*o.rh+14, labw=o.labw||240, barx=labw+8, iw=W-barx-(o.vr||90);   // o.W / o.labw / o.vr (room for the value label): half-width cards keep readable labels
   const max=Math.max(...data.map(o.val),1);
   let s=`<svg viewBox="0 0 ${W} ${H}" class="ch">`;
   const RTL=document.documentElement.dir==='rtl', X=x=>RTL?W-x:x, A=a=>RTL?(a==='end'?'start':'end'):a;   // Arabic: mirror the chart

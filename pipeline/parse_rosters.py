@@ -15,10 +15,24 @@ def is_amt(v): return isinstance(v,(int,float)) and 1000<=v<1e11
 DQ=['غير مطابق','مستبعد','لم يجتاز','غير متطابق','مستبعده','غير ﻣﻄﺎﺑﻖ']
 def is_dq(v): return isinstance(v,str) and any(d in norm_ar(v) or d in str(v) for d in DQ)
 HEADERW=['bidder name','اسم المورد','اسم الشركه','supplier','description','rfx','total amount','وصف','رقم','الرقم','remarks','status','date','اسم العارض','المورد','قيمه','الشركات','بيانات','م','no','sn','open','time','response','بند','اجمالي','vat','ضريبه','قائمه الموردين','تاريخ']
+def clip_name(v):
+    """A name cell over 90 characters (the name pasted twice, or a long legal suffix) is cut to one name (12 Oct 2026)."""
+    t=re.sub(r'\s+',' ',str(v)).strip()
+    if len(t)<=90: return t
+    w=t.split()
+    for i in range(2,len(w)-1):
+        if w[i:i+2]==w[0:2] or w[i:i+2]==w[1:3]: return ' '.join(w[:i])      # second copy starts here
+    out=''
+    for x in w:
+        if len(out)+len(x)+1>90: break
+        out=(out+' '+x).strip()
+    return out
+LONG_OK=['شركه','مؤسسه','مكتب','مجموعه','مصنع','مركز','معهد','جامعه','company','the']   # a cut name must open like a firm
 def is_name(v):
     if not isinstance(v,str): return False
-    t=v.strip()
-    if len(t)<6 or len(t)>90: return False
+    t=clip_name(v)
+    if len(t)<6: return False
+    if len(v.strip())>90 and (norm_ar(t).split() or [''])[0] not in LONG_OK: return False   # long titles stay out
     if is_amt(v): return False
     if not looks_like_company(t): return False
     cn=norm_ar(t)
@@ -37,13 +51,16 @@ def parse(rs):
     grid=[[rs.cell(r+1,c+1).value for c in range(maxc)] for r in range(maxr)]
     # name column: 1) header match ('Bidder Name'/'اسم المورد')  2) most name-like cells (excl description)
     DESC=['description','وصف','rfx','بيان المنافسه','specification']
-    nc=None
+    # 12 Oct 2026 (audit bids-07): award-report sheets (Bid#25, Bid#27) carry two bidder-name headers, the award table and the
+    # applicant list; the column with the most company names is the roster.
+    nc=None; hcols=[]
     for c in range(maxc):
         for r in range(min(12,maxr)):
             h=norm_ar(grid[r][c])
             if any(k in h for k in ['bidder name','اسم المورد','اسم الشركه','supplier','اسم العارض','المورد']) and not any(d in h for d in DESC):
-                nc=c; break
-        if nc is not None: break
+                hcols.append(c); break
+    if hcols:
+        nc=max(hcols, key=lambda c:(sum(1 for row in grid if is_name(row[c])), -c))
     if nc is None:
         nscore={c:sum(1 for row in grid if is_name(row[c]) and not any(b in norm_ar(row[c]) for b in ['قيمه','total amount']+DESC)) for c in range(maxc)}
         # exclude columns whose header marks them as description
@@ -73,6 +90,7 @@ def parse(rs):
     for row in grid:
         nm=row[nc]
         if not is_name(nm): continue
+        nm=clip_name(nm)
         k=canon(nm)[:40]
         if k in seen or not k: continue
         pv=row[pc] if pc is not None else None
@@ -101,7 +119,7 @@ def tech_scores(rs):
         else:
             m=re.search(r'(\d{1,3}(?:[.,]\d+)?)\s*[%٪]',str(nt))
             sc=float(m.group(1).replace(',','.')) if m else None
-        if sc is not None and 0<=sc<=100: out[str(nm).strip()]=sc
+        if sc is not None and 0<=sc<=100: out[clip_name(nm)]=sc
     return out
 
 if __name__=='__main__':

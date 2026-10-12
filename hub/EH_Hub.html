@@ -297,24 +297,34 @@ nav.mtabs,body.dark .mtabs{background:var(--eh-paper);border-top-color:var(--eh-
   html:not([data-eh-motion="off"]) main>iframe.on,html:not([data-eh-motion="off"]) #newswrap iframe.vis{animation:ehViewIn var(--eh-dur-2) var(--eh-ease) both}
   html:not([data-eh-motion="off"]) .tab{transition:background-color var(--eh-dur-1) var(--eh-ease),color var(--eh-dur-1) var(--eh-ease)}
 }
+/* audit shell-06: on portrait phones the News area ends above the fixed bottom tab bar */
+@media(max-width:640px) and (min-height:521px){#newswrap{bottom:calc(56px + env(safe-area-inset-bottom)) !important}}
+/* audit shell-17: the Protected chip and the description show the hub's language only (mixed runs read out of order) */
+html:not([lang=ar]) .conf [lang=ar],html:not([lang=ar]) .desc [lang=ar],.conf .dsep,.desc .dsep{display:none !important}
+html[lang=ar] .conf [dir=ltr],html[lang=ar] .desc [dir=ltr]{display:none !important}
+html[lang=ar] .conf span[lang=ar]{display:inline}
+/* audit shell-18: tablets — one-line brand block and footer so the views keep their height */
+@media(min-width:821px) and (max-width:1100px){.brand small,.brand .desc{display:none !important}.brand h1,body.dark .brand h1{font-size:17px}.foot{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+/* audit shell-21: the result picked with the arrow keys */
+#qdrop .qh.act{background:var(--eh-tint) !important}
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content · تجاوز إلى المحتوى</a>
 <header data-eh-contour="8">
   <img class="logo" src="data:image/png;base64,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" alt="Environmental Horizons logo">
-  <div class="brand"><h1>Strategic Intelligence <b>Hub</b></h1><small>Environmental Horizons — شركة آفاق البيئة</small><span class="conf" role="note" title="Restricted — access authorised by EH management only">
+  <div class="brand"><h1><span class="tl" data-en="Strategic Intelligence &lt;b&gt;Hub&lt;/b&gt;" data-ar="منصة &lt;b&gt;الاستخبارات الاستراتيجية&lt;/b&gt;">Strategic Intelligence <b>Hub</b></span></h1><small>Environmental Horizons — شركة آفاق البيئة</small><span class="conf" role="note" title="Restricted — access authorised by EH management only" data-tt-en="Restricted — access authorised by EH management only" data-tt-ar="مقيّد — الوصول بإذن إدارة آفاق البيئة فقط">
 <svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;margin-inline-end:4px;vertical-align:-1px"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span dir="ltr">Protected</span><span class="dsep"> · </span><span dir="rtl" lang="ar">محمي</span><a href="#" class="lockbtn" onclick="ehLock();return false;" title="Sign out on this device — the passphrase will be asked again · تسجيل الخروج من هذا الجهاز"><span dir="ltr">Lock this device</span><span class="dsep"> · </span><span dir="rtl" lang="ar">قفل هذا الجهاز</span></a></span><span class="desc"><span dir="ltr">Five live views of EH's market — competitors, bids, government tenders, clients &amp; Saudi news</span><span class="dsep"> · </span><span dir="rtl" lang="ar">خمس لوحات حيّة: المنافسون والمناقصات والمنافسات الحكومية والعملاء والأخبار</span></span></div>
-  <div class="fresh" id="fresh" hidden><span class="tl" data-en="Data refreshed" data-ar="آخر تحديث للبيانات">Data refreshed</span> <b dir="ltr" id="freshv"></b></div>
+  <div class="fresh" id="fresh" hidden><span class="tl" data-en="Data refreshed" data-ar="آخر تحديث للبيانات">Data refreshed</span> <b id="freshv"></b></div>
   <div class="hsearch" id="hsearch" style="display:none;position:relative">
-    <input id="q" type="search" placeholder="Find a company… / ابحث عن شركة" autocomplete="off" aria-label="Global company search"
+    <input id="q" type="search" placeholder="Find a company… / ابحث عن شركة" autocomplete="off" aria-label="Global company search" data-al-en="Find a company across the hub" data-al-ar="ابحث عن شركة في المنصة" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="qdrop"
       style="width:230px;padding:7px 12px;border:1px solid var(--line);border-radius:8px;font-size:12.5px">
-    <div id="qdrop" style="display:none;position:absolute;top:36px;left:0;width:320px;max-height:300px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(28,43,51,.12);z-index:50"></div>
+    <div id="qdrop" role="listbox" aria-label="Companies" style="display:none;position:absolute;top:36px;left:0;width:320px;max-height:300px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(28,43,51,.12);z-index:50"></div>
   </div>
-  <button id="wnbtn" class="hbtn" onclick="wnOpen()" aria-haspopup="dialog" aria-controls="wnpanel" aria-expanded="false" title="What's New" style="position:relative"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-inline-end:0"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="tl wnlbl" data-en="What&#39;s New" data-ar="ما الجديد">What's New</span><span id="wnbadge" class="wnbadge" hidden></span></button>
-  <button id="themebtn" class="hbtn" onclick="hubTheme()" title="Toggle dark theme across all views" aria-label="Toggle dark theme">🌙</button>
-  <button id="langbtn" onclick="hubLang()" title="Switch language across all views" style="padding:7px 13px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:12.5px;font-weight:700">عربي</button>
-  <button onclick="hubFS()" title="Presentation mode (fullscreen)" aria-label="Fullscreen current view" style="padding:7px 11px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:13px"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button>
+  <button id="wnbtn" class="hbtn" onclick="wnOpen()" aria-haspopup="dialog" aria-controls="wnpanel" aria-expanded="false" title="What's New" data-tt-en="What's New" data-tt-ar="ما الجديد" style="position:relative"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-inline-end:0"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="tl wnlbl" data-en="What&#39;s New" data-ar="ما الجديد">What's New</span><span id="wnbadge" class="wnbadge" hidden></span></button>
+  <button id="themebtn" class="hbtn" onclick="hubTheme()" title="Toggle dark theme across all views" aria-label="Toggle dark theme" data-tt-en="Switch every view between light and dark" data-tt-ar="التبديل بين الوضع الفاتح والداكن في كل اللوحات" data-al-en="Switch light or dark theme" data-al-ar="تبديل الوضع الفاتح أو الداكن">🌙</button>
+  <button id="langbtn" onclick="hubLang()" title="Switch language across all views" data-tt-en="Switch every view to Arabic" data-tt-ar="تحويل كل اللوحات إلى الإنجليزية" style="padding:7px 13px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:12.5px;font-weight:700">عربي</button>
+  <button onclick="hubFS()" title="Presentation mode (fullscreen)" aria-label="Fullscreen current view" data-tt-en="Presentation mode (full screen)" data-tt-ar="وضع العرض (ملء الشاشة)" data-al-en="Show the current view full screen" data-al-ar="عرض اللوحة الحالية بملء الشاشة" style="padding:7px 11px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:13px"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button>
   <nav aria-label="Hub sections — أقسام المنصة"><div class="tabs" role="tablist">
     <button class="tab on" role="tab" data-f="stake" data-t="Stakeholder Map" aria-pressed="true" onclick="go(this)"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3z"/><path d="M9 3v15M15 6v15"/></svg><span class="tl" data-en="Stakeholder &amp; Competitive Map" data-ar="خريطة أصحاب المصلحة والمنافسة">Stakeholder &amp; Competitive Map</span></button>
     <button class="tab" role="tab" data-f="bids" data-t="Bid Intelligence" aria-pressed="false" onclick="go(this)"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 21h18M7 17V9M12 21V5M17 17v-6"/></svg><span class="tl" data-en="Bid &amp; Tender Intelligence" data-ar="تحليلات المناقصات والعطاءات">Bid &amp; Tender Intelligence</span></button>
@@ -338,10 +348,10 @@ nav.mtabs,body.dark .mtabs{background:var(--eh-paper);border-top-color:var(--eh-
       <button class="nsub on" data-n="v2030"><span class="tl" data-en="Vision 2030 Dashboard" data-ar="لوحة رؤية 2030">Vision 2030 Dashboard</span></button>
       <button class="nsub" data-n="fiscal"><span class="tl" data-en="Saudi Government Finances 2026" data-ar="مالية الحكومة السعودية 2026">Saudi Government Finances 2026</span></button>
       <button class="nsub" data-n="corp"><span class="tl" data-en="Corporate &amp; Government News" data-ar="أخبار الشركات والحكومة">Corporate &amp; Government News</span></button>
-      <button class="nsub" data-n="gov" title="Weekly official releases from MEWA, MWAN, NCEC, the Royal Commissions and the Ministry of Municipalities · إعلانات الجهات التنظيمية الأسبوعية"><span class="tl" data-en="Regulatory news" data-ar="الأخبار التنظيمية">Regulatory news</span><span class="newb" data-new-until="2026-10-13" aria-label="New">New</span></button>
+      <button class="nsub" data-n="gov" title="Weekly official releases from MEWA, MWAN, NCEC, the Royal Commissions and the Ministry of Municipalities · إعلانات الجهات التنظيمية الأسبوعية"><span class="tl" data-en="Regulatory news" data-ar="الأخبار التنظيمية">Regulatory news</span><span class="newb tl" data-new-until="2026-10-13" data-en="New" data-ar="جديد">New</span></button>
       <button class="nsub" data-n="pif"><span class="tl" data-en="PIF Intelligence Hub" data-ar="مركز استخبارات صندوق الاستثمارات">PIF Intelligence Hub</span></button>
-      <button class="nsub" data-n="strat" title="PIF Strategy 2026–2030 — what changed, and what it means for EH · استراتيجية صندوق الاستثمارات العامة 2026–2030 — ما الذي تغيّر وماذا يعني لآفاق البيئة"><span class="tl" data-en="PIF Strategy 2026–2030" data-ar="استراتيجية صندوق الاستثمارات العامة 2026–2030">PIF Strategy 2026–2030</span><span class="newb" data-new-until="2026-10-06" aria-label="New">New</span></button>
-      <button class="nsub" data-n="ef2025" title="Environment Fund 2025 Annual Report — what it means for EH · التقرير السنوي لصندوق البيئة 2025 — ماذا يعني لآفاق البيئة"><span class="tl" data-en="Environment Fund 2025 Report" data-ar="تقرير صندوق البيئة 2025">Environment Fund 2025 Report</span><span class="newb" data-new-until="2026-10-06" aria-label="New">New</span></button>
+      <button class="nsub" data-n="strat" title="PIF Strategy 2026–2030 — what changed, and what it means for EH · استراتيجية صندوق الاستثمارات العامة 2026–2030 — ما الذي تغيّر وماذا يعني لآفاق البيئة"><span class="tl" data-en="PIF Strategy 2026–2030" data-ar="استراتيجية صندوق الاستثمارات العامة 2026–2030">PIF Strategy 2026–2030</span><span class="newb tl" data-new-until="2026-10-06" data-en="New" data-ar="جديد">New</span></button>
+      <button class="nsub" data-n="ef2025" title="Environment Fund 2025 Annual Report — what it means for EH · التقرير السنوي لصندوق البيئة 2025 — ماذا يعني لآفاق البيئة"><span class="tl" data-en="Environment Fund 2025 Report" data-ar="تقرير صندوق البيئة 2025">Environment Fund 2025 Report</span><span class="newb tl" data-new-until="2026-10-06" data-en="New" data-ar="جديد">New</span></button>
     </div>
     <div style="position:relative;flex:1">
       <div class="skel on" id="sk-v2030"><div class="in"><div class="spin"></div><span class="tl" data-en="Loading Vision 2030…" data-ar="جارٍ تحميل رؤية 2030…">Loading Vision 2030…</span></div></div>
@@ -365,7 +375,7 @@ nav.mtabs,body.dark .mtabs{background:var(--eh-paper);border-top-color:var(--eh-
 <aside id="wnpanel" role="dialog" aria-modal="true" aria-labelledby="wnttl" tabindex="-1">
   <div class="wnhd"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg>
     <h2 id="wnttl"><span class="tl" data-en="What&#39;s New" data-ar="ما الجديد">What's New</span></h2>
-    <button class="wnx" onclick="wnClose()" aria-label="Close What's New">✕</button></div>
+    <button class="wnx" onclick="wnClose()" aria-label="Close What's New" data-al-en="Close What's New" data-al-ar="إغلاق ما الجديد">✕</button></div>
   <div class="wnfresh" id="wnfresh"></div>
   <div class="wnmonths" id="wnmonths" aria-label="Months"></div>
   <div class="wnweeks" id="wnweeks" role="tablist" aria-label="Weeks"></div>
@@ -384,7 +394,7 @@ nav.mtabs,body.dark .mtabs{background:var(--eh-paper);border-top-color:var(--eh-
   <button class="mtab" data-f="bubbles" role="tab" onclick="go(document.querySelector('.tab[data-f=bubbles]'))"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><path d="M16 4.6a3.2 3.2 0 0 1 0 6.8M17.5 15.2c2 .5 3.1 2 3.5 4.8"/></svg><span class="tl" data-en="Clients" data-ar="العملاء">Clients</span></button>
   <button class="mtab" data-f="news" role="tab" onclick="go(document.querySelector('.tab[data-f=news]'))"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h13v14H6a2 2 0 0 1-2-2V5z"/><path d="M17 8h3v9a2 2 0 0 1-2 2h-1M7 9h7M7 13h7M7 17h4"/></svg><span class="tl" data-en="News" data-ar="الأخبار">News</span></button>
 </nav>
-<div class="foot">One link · three integrated views · bid data auto-refreshes hourly from the live tracker · stakeholder &amp; client data rebuilt from source workbooks on commit</div>
+<div class="foot"><span class="tl" data-en="Five live views · bids refresh hourly from the live tracker · stakeholder and client data update when their source workbooks do" data-ar="خمس لوحات حيّة · تُحدَّث العطاءات كل ساعة من جدول التتبع · وتُحدَّث بيانات أصحاب المصلحة والعملاء عند تحديث مصنّفاتها">Five live views · bids refresh hourly from the live tracker · stakeholder and client data update when their source workbooks do</span></div>
 <script>
 function $(id){return document.getElementById(id)}
 function go(btn){
@@ -397,11 +407,13 @@ function go(btn){
     if(on&&!f.src&&f.dataset.src){f.src=f.dataset.src;$('sk-'+btn.dataset.f).classList.add('on');}
     f.classList.toggle('on',on);
   });
-  if(isNews) nGo(document.querySelector('.nsub.on')||document.querySelector('.nsub'));
   document.querySelectorAll('.skel').forEach(s=>s.style.zIndex=(s.id==='sk-'+btn.dataset.f)?4:-1);
-  document.title='EH Hub — '+btn.dataset.t;
+  hubTitle();
   try{history.replaceState(null,'','#'+btn.dataset.f);localStorage.setItem('ehhub.tab',btn.dataset.f);}catch(e){}
+  if(isNews) nGo(document.querySelector('.nsub.on')||document.querySelector('.nsub'));   // after the skeleton reset, so the sub-tab spinner stays on top
 }
+// browser-tab title in the hub's language (audit shell-17)
+function hubTitle(){var b=document.querySelector('.tab.on'),t=b&&b.querySelector('.tl');document.title=L('EH Hub — ','منصة آفاق البيئة — ')+(t?(hubL==='ar'?t.dataset.ar:t.dataset.en):'');}
 // skeleton removal + failure overlay
 document.querySelectorAll('iframe').forEach(f=>{
   const key=f.id.slice(2);
@@ -413,15 +425,24 @@ document.querySelectorAll('iframe').forEach(f=>{
 function hubErr(f){
   var d=document.createElement('div');
   d.style.cssText='position:absolute;inset:0;display:grid;place-items:center;background:#fff;font:600 14px system-ui;color:#B23A3A;z-index:5';
-  d.textContent='This view failed to load — check that its file is published in the site build.';
+  d.textContent=L('This view failed to load — check that its file is published in the site build.','تعذّر تحميل هذه اللوحة — تأكّد من نشر ملفها في بناء الموقع.');
   f.parentElement.appendChild(d); f.addEventListener('load',()=>d.remove(),{once:true});
 }
 // deep link / last tab
+// #bids, #news, #news/<sub-tab> or a bare sub-tab id such as #gov or #ef2025 (audit shell-13)
+function hubRoute(h){
+  h=String(h||'').replace(/^#/,''); if(!h) return false;
+  var p=h.split('/'), sub=document.querySelector('.nsub[data-n="'+(p[1]||p[0])+'"]');
+  if(sub){ document.querySelectorAll('.nsub').forEach(function(x){x.classList.toggle('on',x===sub);}); go(document.querySelector('.tab[data-f="news"]')); return true; }
+  var b=document.querySelector('.tab[data-f="'+p[0]+'"]'); if(b){ go(b); return true; } return false;
+}
 (function(){
-  var want=(location.hash||'').replace('#','')||null;
-  try{ want=want||localStorage.getItem('ehhub.tab'); }catch(e){}
-  if(want&&want!=='stake'){ var b=document.querySelector('.tab[data-f="'+want+'"]'); if(b) go(b); }
+  var want=(location.hash||'').replace('#','')||null, st=null, ss=null;
+  try{ st=localStorage.getItem('ehhub.tab'); ss=localStorage.getItem('ehhub.sub'); }catch(e){}
+  if(!want&&st) want=(st==='news'&&ss)?'news/'+ss:st;
+  if(want&&want!=='stake') hubRoute(want);
 })();
+window.addEventListener('hashchange',function(){ hubRoute(location.hash); });
 // freshness chip (hosted only) — legacy block; What's New's setFresh() renders the chip when changelog.json is present
 fetch('build_info.json',{cache:'no-store'}).then(r=>r.json()).then(j=>{ if(typeof setFresh==='function'){ setFresh(j.built_iso||j.built); return; }
   var fd=new Date(j.built), fok=!isNaN(fd);
@@ -483,7 +504,7 @@ var qT=setInterval(function(){ if(qInit()) clearInterval(qT); },900);
 var qEl=document.getElementById('q'), qD=document.getElementById('qdrop');
 qEl.addEventListener('input',function(){
   var v=qEl.value.trim().toLowerCase();
-  if(!v||!QN){ qD.style.display='none'; return; }
+  if(!v||!QN){ qHide(); return; }
   var hits=[], rest=[], i;
   for(i=0;i<QN.length;i++){
     if(QN[i].n.toLowerCase().indexOf(v)>-1){ if(hits.length<8) hits.push(QN[i].n); }
@@ -491,13 +512,24 @@ qEl.addEventListener('input',function(){
     if(hits.length>=8) break;
   }
   hits=hits.concat(rest).slice(0,8);
-  if(!hits.length){ qD.style.display='none'; return; }
-  qD.innerHTML=hits.map(function(n){return '<div class="qh" tabindex="0" onkeydown="if(event.keyCode===13){this.click()}" style="padding:8px 12px;cursor:pointer;font-size:12.5px;border-bottom:1px solid #F0F4F7" onclick="qGo(this.textContent)">'+n.replace(/</g,'&lt;')+'</div>';}).join('');
-  qD.style.display='block';
+  if(!hits.length){ qHide(); return; }
+  qD.innerHTML=hits.map(function(n,i){return '<div class="qh" id="qopt'+i+'" role="option" aria-selected="false" tabindex="-1" style="padding:8px 12px;cursor:pointer;font-size:12.5px;border-bottom:1px solid #F0F4F7" onclick="qGo(this.textContent)">'+n.replace(/</g,'&lt;')+'</div>';}).join('');
+  qD.style.display='block'; qEl.setAttribute('aria-expanded','true'); qIdx=-1; qEl.removeAttribute('aria-activedescendant');
 });
-document.addEventListener('click',function(e){ if(!e.target.closest('#hsearch')) qD.style.display='none'; });
+// combobox keys: Up/Down move through the results, Enter opens one, Escape closes the list (audit shell-21)
+var qIdx=-1;
+function qHide(){ qD.style.display='none'; qEl.setAttribute('aria-expanded','false'); qEl.removeAttribute('aria-activedescendant'); qIdx=-1; }
+function qSet(i){ var o=qD.querySelectorAll('.qh'); if(!o.length) return; qIdx=(i+o.length)%o.length;
+  o.forEach(function(x,j){ x.classList.toggle('act',j===qIdx); x.setAttribute('aria-selected',j===qIdx?'true':'false'); });
+  qEl.setAttribute('aria-activedescendant',o[qIdx].id); if(o[qIdx].scrollIntoView) o[qIdx].scrollIntoView({block:'nearest'}); }
+qEl.addEventListener('keydown',function(e){ var open=qD.style.display==='block';
+  if(e.key==='ArrowDown'&&open){ qSet(qIdx+1); e.preventDefault(); }
+  else if(e.key==='ArrowUp'&&open){ qSet(qIdx<0?-1:qIdx-1); e.preventDefault(); }
+  else if(e.key==='Enter'&&open&&qIdx>-1){ qGo(qD.querySelectorAll('.qh')[qIdx].textContent); e.preventDefault(); }
+  else if(e.key==='Escape'&&open){ qHide(); e.preventDefault(); } });
+document.addEventListener('click',function(e){ if(!e.target.closest('#hsearch')) qHide(); });
 function qGo(name){
-  qD.style.display='none'; qEl.value=name;
+  qHide(); qEl.value=name;
   go(document.querySelector('.tab[data-f="stake"]'));
   try{ document.getElementById('f-stake').contentWindow.selByName(name); }catch(e){}
 }
@@ -514,14 +546,26 @@ function hubFS(){
 // Accepts the weekly format {weeks:[{week,from,to,built,fixes,data,sources}]} and, as a fallback, the older
 // bid-digest format {entries:[{d,type,txt}]} (grouped into ISO weeks so nothing published is lost).
 var WN=null, wnWeek=0, wnKind='fixes', wnMonth=null, FRESH_ISO=null;
-var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], MONAR=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+function mon(i){return hubL==='ar'?MONAR[i]:MON[i];}
 function L(en,ar){return hubL==='ar'?ar:en;}
 var APPS={stake:['Stakeholder & Competitive Map','خريطة أصحاب المصلحة والمنافسة'],bids:['Bid & Tender Intelligence','تحليلات المنافسات والعطاءات'],clients:['Clients & Revenue','العملاء والإيرادات'],news:['News & Intelligence','الأخبار والمستجدات'],hub:['Hub','المنصة']};
-var APPTAB={stake:'stake',map:'stake',bids:'bids',clients:'bubbles',news:'news',hub:null};
+var APPTAB={stake:'stake',map:'stake',bids:'bids',tenders:'tenders',clients:'bubbles',news:'news',hub:null};
+APPS.tenders=['Government Tenders','المنافسات الحكومية'];
+// a What's New "view" names a top tab or a News sub-tab by its English label (older names kept as aliases) — audit shell-07
+var VIEWALIAS={'saudi fiscal monitor 2026':'fiscal','fiscal monitor':'fiscal','saudi government finances':'fiscal','government news':'gov','regulatory news':'gov','corporate news':'corp','pif strategy':'strat','pif hub':'pif','environment fund':'ef2025','environment fund 2025 report':'ef2025','etimad':'tenders','government tenders':'tenders','vision 2030':'v2030','client bubble map':'bubbles','clients':'bubbles','stakeholder map':'stake','bid intelligence':'bids'};
+function wnView(v){ v=String(v||'').trim().toLowerCase(); if(!v) return null; var hit=null;
+  document.querySelectorAll('.nsub,nav[aria-label] .tab').forEach(function(b){ var t=b.querySelector('.tl'); if(!hit&&t&&t.dataset.en.toLowerCase()===v) hit=b; });
+  if(!hit){ var k=Object.keys(VIEWALIAS).find(function(a){return v===a||v.indexOf(a)===0;}); if(k) hit=document.querySelector('.nsub[data-n="'+VIEWALIAS[k]+'"]')||document.querySelector('nav[aria-label] .tab[data-f="'+VIEWALIAS[k]+'"]'); }
+  return hit; }
+// view names inside an app, in the words each app already uses in Arabic
+var VIEWAR={'executive summary':'الملخّص التنفيذي','executive':'الملخّص التنفيذي','pricing intelligence':'تحليل الأسعار','bid turnaround':'مدة اتخاذ القرار','all tenders':'جميع المنافسات','overview':'نظرة عامة','regional view':'العرض الإقليمي','methodology':'المنهجية','data':'البيانات','header':'رأس الصفحة','filters':'المرشحات',"what's new":'ما الجديد','all views':'كل اللوحات','ios':'أجهزة iOS','mobile':'الهاتف','dark mode':'الوضع الداكن','scoring':'التقييم','revenue bridge':'جسر الإيرادات','bid view':'عرض العطاءات','map':'الخريطة','bid & tender':'المناقصات والعطاءات'};
+function viewName(v){ var b=wnView(v), t=b&&b.querySelector('.tl'); if(t) return hubL==='ar'?t.dataset.ar:t.dataset.en; return hubL==='ar'?(VIEWAR[String(v).trim().toLowerCase()]||v):v; }
 function appName(a){var x=APPS[a]||APPS.hub;return L(x[0],x[1]);}
-function fmtFresh(iso){var d=new Date(iso);if(isNaN(d))return String(iso||'').slice(0,16);var _r=fmtFresh0(d);return _r?_r+' KSA':_r;}
-function fmtFresh0(d){var f=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Riyadh',day:'numeric',month:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(d),o={};f.forEach(function(x){o[x.type]=x.value;});return (+o.day)+' '+MON[+o.month-1]+' \u00b7 '+o.hour+':'+o.minute;}
-function fmtD(x){var d=new Date(x+'T12:00:00');return isNaN(d)?x:d.getUTCDate()+' '+MON[d.getUTCMonth()];}
+function fmtFresh(iso){var d=new Date(iso);if(isNaN(d))return String(iso||'').slice(0,16);var _r=fmtFresh0(d);return _r?_r+L(' KSA',' بتوقيت السعودية'):_r;}
+function fmtFresh0(d){var f=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Riyadh',day:'numeric',month:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(d),o={};f.forEach(function(x){o[x.type]=x.value;});return (+o.day)+' '+mon(+o.month-1)+' \u00b7 '+o.hour+':'+o.minute;}
+function fmtD(x){var d=new Date(x+'T12:00:00');return isNaN(d)?x:d.getUTCDate()+' '+mon(d.getUTCMonth());}
+function wkName(w){return hubL==='ar'?'الأسبوع '+(+String(w).split('-W')[1]||w):w;}
 function setFresh(iso){ if(!iso)return; FRESH_ISO=iso; var v=$('freshv'); if(v){v.textContent=fmtFresh(iso); $('fresh').hidden=false;} wnRenderFresh(); }
 function isoWeekOf(ds){var d=new Date(ds+'T12:00:00Z');var day=(d.getUTCDay()+6)%7;d.setUTCDate(d.getUTCDate()-day+3);var fy=new Date(Date.UTC(d.getUTCFullYear(),0,4));var w=1+Math.round(((d-fy)/86400000-3+((fy.getUTCDay()+6)%7))/7);var mon=new Date(ds+'T12:00:00Z');mon.setUTCDate(mon.getUTCDate()-day);var sun=new Date(mon);sun.setUTCDate(mon.getUTCDate()+6);return {week:d.getUTCFullYear()+'-W'+String(w).padStart(2,'0'),from:mon.toISOString().slice(0,10),to:sun.toISOString().slice(0,10)};}
 function fromEntries(j){ var m={}; (j.entries||[]).forEach(function(e){ if(!e.d)return; var w=isoWeekOf(e.d); var k=w.week; if(!m[k])m[k]={week:k,from:w.from,to:w.to,built:e.d,fixes:[],data:{},sources:[]}; var app=/bid|tender|منافس/i.test(e.txt)?'bids':/stakeholder|map|خريطة/i.test(e.txt)?'stake':/client|عميل/i.test(e.txt)?'clients':/PIF|Vision|Fiscal|News|صندوق|رؤية/i.test(e.txt)?'news':'hub'; m[k].fixes.push({app:app,severity:e.type==='new'?'new':e.type==='decision'?'major':'minor',view:e.type,en:e.txt,ar:e.txt}); if(e.d>m[k].built)m[k].built=e.d; }); return {weeks:Object.values(m).sort(function(a,b){return b.week<a.week?-1:1;}),retention_weeks:53}; }
@@ -544,23 +588,26 @@ document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&$('wnpanel
 function wnTab(k){ wnKind=k; document.querySelectorAll('.wntab').forEach(function(b){b.setAttribute('aria-selected',b.dataset.k===k?'true':'false');}); wnRenderBody(); }
 document.querySelector('.wntabs').addEventListener('keydown',function(e){ var ks=['fixes','companies','bids','sources'],i=ks.indexOf(wnKind); if(e.key==='ArrowRight'||e.key==='ArrowLeft'){var d=(e.key==='ArrowRight')!==(hubL==='ar')?1:-1; wnTab(ks[(i+d+4)%4]); document.querySelector('.wntab[data-k="'+wnKind+'"]').focus(); e.preventDefault();} });
 var SYNC_STAMP=null;
-function wnRenderFresh(){ var el=$('wnfresh'); if(!el)return; el.innerHTML=(FRESH_ISO?(L('Data refreshed','آخر تحديث للبيانات')+' <b dir="ltr">'+fmtFresh(FRESH_ISO)+'</b>'):'')+(SYNC_STAMP?((FRESH_ISO?' · ':'')+L('Competitors','المنافسون')+' <b dir="ltr">'+Number(SYNC_STAMP.competitors).toLocaleString('en-US')+'</b> · '+L('tracker as of','وفق جدول العطاءات حتى')+' <b dir="ltr">'+(SYNC_STAMP.tracker_as_of||'')+'</b>'):''); }
+function wnRenderFresh(){ var el=$('wnfresh'); if(!el)return; el.innerHTML=(FRESH_ISO?(L('Data refreshed','آخر تحديث للبيانات')+' <b>'+fmtFresh(FRESH_ISO)+'</b>'):'')+(SYNC_STAMP?((FRESH_ISO?' · ':'')+L('Competitors','المنافسون')+' <b dir="ltr">'+Number(SYNC_STAMP.competitors).toLocaleString('en-US')+'</b> · '+L('tracker as of','وفق جدول العطاءات حتى')+' <b dir="ltr">'+(SYNC_STAMP.tracker_as_of||'')+'</b>'):''); }
 fetch('sync_stamp.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){ if(j&&j.competitors){ SYNC_STAMP=j; wnRenderFresh(); } }).catch(function(){});
 function wnEsc(x){return String(x==null?'':x).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 function wnRender(){ wnRenderFresh();
   if(!WN.weeks.length){ $('wnmonths').innerHTML=''; $('wnweeks').innerHTML=''; $('wnbody').innerHTML='<div class="wnempty">'+(WN.offline?L('The change log could not be loaded. It is created by the site build (changelog.json), so it only shows on the published site \u2014 not when this file is opened from disk.','تعذّر تحميل سجل التغييرات. يُنشئه بناء الموقع (changelog.json)، لذا يظهر فقط على الموقع المنشور — لا عند فتح هذا الملف من الجهاز.'):L('No changes have been recorded yet this year.','لم تُسجَّل تغييرات هذا العام بعد.'))+'</div>'; return; }
   var months=[]; WN.weeks.forEach(function(w){ var m=w.from.slice(0,7); if(months.indexOf(m)<0)months.push(m); });
-  $('wnmonths').innerHTML=months.map(function(m){ var y=m.slice(0,4), mi=+m.slice(5,7)-1; var n=WN.weeks.filter(function(w){return w.from.slice(0,7)===m;}).reduce(function(s,w){return s+wnCount(w);},0); return '<button class="wnmonth'+(m===wnMonth?' on':'')+'" onclick="wnMonth=\''+m+'\';wnWeek=WN.weeks.findIndex(function(w){return w.from.slice(0,7)===\''+m+'\';});wnRender()"><span dir="ltr">'+MON[mi]+' '+y+'</span>'+(n?' \u00b7 <span dir="ltr">'+n+'</span>':'')+'</button>'; }).join('');
+  $('wnmonths').innerHTML=months.map(function(m){ var y=m.slice(0,4), mi=+m.slice(5,7)-1; var n=WN.weeks.filter(function(w){return w.from.slice(0,7)===m;}).reduce(function(s,w){return s+wnCount(w);},0); return '<button class="wnmonth'+(m===wnMonth?' on':'')+'" onclick="wnMonth=\''+m+'\';wnWeek=WN.weeks.findIndex(function(w){return w.from.slice(0,7)===\''+m+'\';});wnRender()"><span>'+mon(mi)+' <span dir="ltr">'+y+'</span></span>'+(n?' \u00b7 <span dir="ltr">'+n+'</span>':'')+'</button>'; }).join('');
   var vis=WN.weeks.map(function(w,i){return {w:w,i:i};}).filter(function(x){return !wnMonth||x.w.from.slice(0,7)===wnMonth;});
-  $('wnweeks').innerHTML=vis.map(function(x){ var w=x.w,i=x.i,n=wnCount(w); return '<button class="wnweek'+(i===wnWeek?' on':'')+'" role="tab" aria-selected="'+(i===wnWeek)+'" onclick="wnWeek='+i+';wnRender()"><span dir="ltr">'+wnEsc(w.week)+'</span> \u00b7 <span dir="ltr">'+wnEsc(fmtD(w.from))+'\u2013'+wnEsc(fmtD(w.to))+'</span>'+(n?'<span class="n" dir="ltr">'+n+'</span>':'')+'</button>'; }).join('');
+  $('wnweeks').innerHTML=vis.map(function(x){ var w=x.w,i=x.i,n=wnCount(w); return '<button class="wnweek'+(i===wnWeek?' on':'')+'" role="tab" aria-selected="'+(i===wnWeek)+'" onclick="wnWeek='+i+';wnRender()"><span>'+wnEsc(wkName(w.week))+'</span> \u00b7 <span>'+wnEsc(fmtD(w.from))+' \u2013 '+wnEsc(fmtD(w.to))+'</span>'+(n?'<span class="n" dir="ltr">'+n+'</span>':'')+'</button>'; }).join('');
   var on=$('wnweeks').querySelector('.wnweek.on'); if(on&&on.scrollIntoView)on.scrollIntoView({block:'nearest',inline:'center'});
   wnRenderBody(); }
 function coLink(n){return '<button class="lnk" onclick="wnGoCo(this.textContent)">'+wnEsc(n)+'</button>';}
 function wnGoCo(name){ wnClose(); go(document.querySelector('.tab[data-f="stake"]')); try{ $('f-stake').contentWindow.selByName(name); }catch(e){} }
-function wnGoApp(a){ wnClose(); var t=APPTAB[a]; if(t) go(document.querySelector('.tab[data-f="'+t+'"]')); }
+function wnGoApp(a,i){ wnClose(); var f=(i!=null&&WN&&WN.weeks[wnWeek])?(WN.weeks[wnWeek].fixes||[])[i]:null, b=f&&f.view?wnView(f.view):null;
+  if(b&&b.classList.contains('nsub')){ hubRoute('news/'+b.dataset.n); return; }
+  if(b){ go(b); return; }
+  var t=APPTAB[a]; if(t) go(document.querySelector('.tab[data-f="'+t+'"]')); }
 function wnRenderBody(){ var w=WN.weeks[wnWeek]; if(!w){$('wnbody').innerHTML='';return;} var d=w.data||{}, h='';
   if(wnKind==='fixes'){
-    h=(w.fixes||[]).map(function(f){return '<div class="wnitem '+wnEsc(f.severity||'')+'"><button class="lnk app" onclick="wnGoApp(\''+wnEsc(f.app)+'\')">'+wnEsc(appName(f.app))+(f.view&&f.view!==f.severity?' \u203a '+wnEsc(f.view):'')+'</button><br>'+wnEsc(hubL==='ar'?(f.ar||f.en):(f.en||f.ar))+'</div>';}).join('')
+    h=(w.fixes||[]).map(function(f,i){return '<div class="wnitem '+wnEsc(f.severity||'')+'"><button class="lnk app" onclick="wnGoApp(\''+wnEsc(f.app)+'\','+i+')">'+wnEsc(appName(f.app))+(f.view&&f.view!==f.severity?' \u203a '+wnEsc(viewName(f.view)):'')+'</button><br>'+wnEsc(hubL==='ar'?(f.ar||f.en):(f.en||f.ar))+'</div>';}).join('')
       ||'<div class="wnempty">'+L('No fixes or features recorded for this week.','لا إصلاحات أو ميزات مسجّلة لهذا الأسبوع.')+'</div>';
   } else if(wnKind==='companies'){
     var t=d.totals||{};
@@ -579,9 +626,9 @@ function wnRenderBody(){ var w=WN.weeks[wnWeek]; if(!w){$('wnbody').innerHTML=''
     if((b.lost||[]).length) h+='<div class="wnh">'+L('Lost','خسارة')+'</div>'+b.lost.map(function(x){return '<div class="wnitem major"><button class="lnk app" onclick="wnGoApp(\'bids\')">'+appName('bids')+'</button><br><span dir="auto">'+wnEsc(x.title||x)+'</span>'+(x.winner?' \u00b7 '+L('won by','فاز بها')+' <span dir="auto">'+wnEsc(x.winner)+'</span>':'')+'</div>';}).join('');
     if(h.indexOf('wnitem')<0) h+='<div class="wnempty">'+L('No award decisions recorded this week.','لا قرارات ترسية مسجّلة هذا الأسبوع.')+'</div>';
   } else {
-    h=(w.sources||[]).map(function(x){return '<div class="wnitem"><b>'+wnEsc(x.name)+'</b><br>'+L('Refreshed','آخر تحديث')+' <span dir="ltr">'+wnEsc(x.refreshed?fmtFresh(x.refreshed):'\u2014')+'</span>'+(x.note?' \u00b7 '+wnEsc(x.note):'')+'</div>';}).join('')
+    h=(w.sources||[]).map(function(x){var nt=L(x.note,x.note_ar||x.note);return '<div class="wnitem"><b>'+wnEsc(L(x.name,x.name_ar||x.name))+'</b><br>'+(x.refreshed?L('Refreshed','آخر تحديث')+' <span>'+wnEsc(/^\d{4}-\d{2}-\d{2}$/.test(x.refreshed)?fmtD(x.refreshed):fmtFresh(x.refreshed))+'</span>':'')+(nt?(x.refreshed?' \u00b7 ':'')+wnEsc(nt):'')+'</div>';}).join('')
       ||'<div class="wnempty">'+L('No source information for this week.','لا معلومات مصادر لهذا الأسبوع.')+'</div>';
-    h+='<div class="wnempty" style="font-size:11.5px">'+L('Built','بُني')+' <span dir="ltr">'+wnEsc(w.built?fmtFresh(w.built):'')+'</span></div>';
+    h+='<div class="wnempty" style="font-size:11.5px">'+L('Built','بُني')+' <span>'+wnEsc(w.built?fmtFresh(w.built):'')+'</span></div>';
   }
   $('wnbody').innerHTML=h; }
 
@@ -611,9 +658,11 @@ applyHubTheme();
 function nGo(btn){
   document.querySelectorAll('.nsub').forEach(x=>x.classList.toggle('on',x===btn));
   const id=btn.dataset.n;
+  try{history.replaceState(null,'','#news/'+id);localStorage.setItem('ehhub.sub',id);}catch(e){}   // audit shell-13: shareable link, remembered on this device
   ['v2030','fiscal','corp','gov','pif','strat','ef2025'].forEach(k=>{
     const f=$('f-'+k);
     const on=k===id;
+    const sk=$('sk-'+k); if(sk) sk.style.zIndex=on?4:-1;   // audit shell-12: the loading spinner sits above the blank page
     if(on&&!f.src&&f.dataset.src){f.src=f.dataset.src;$('sk-'+k).classList.add('on');
       f.addEventListener('load',function(){$('sk-'+k).classList.remove('on'); if(hubT==='dark') setTimeout(applyHubTheme,500); if(hubL!=='en') setTimeout(bcastLang,500);},{once:true});
     }
@@ -633,6 +682,10 @@ function relabel(){
   document.querySelectorAll('.tl').forEach(el=>{
     el.innerHTML=hubL==='ar'?el.dataset.ar:el.dataset.en;
   });
+  document.querySelectorAll('[data-tt-en]').forEach(el=>{el.title=hubL==='ar'?el.dataset.ttAr:el.dataset.ttEn;});      // tooltips (audit shell-17)
+  document.querySelectorAll('[data-al-en]').forEach(el=>{el.setAttribute('aria-label',hubL==='ar'?el.dataset.alAr:el.dataset.alEn);});
+  if(typeof hubTitle==='function'&&document.querySelector('.tab.on')) hubTitle();
+  if(typeof FRESH_ISO!=='undefined'&&FRESH_ISO&&$('freshv')) $('freshv').textContent=fmtFresh(FRESH_ISO);
   if(typeof WN!=='undefined'&&WN){ wnBadge(); if($('wnpanel').classList.contains('on')) wnRender(); }
 }
 </script>

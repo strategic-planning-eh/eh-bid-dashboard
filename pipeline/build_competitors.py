@@ -1,6 +1,46 @@
 import json, collections
 from parse_rosters import norm_ar, canon, is_eh
 
+# ---- one firm under two spellings / two firms that look alike (12 Oct 2026, audit bids-19 / data-17) ----
+SAME_FIRM={canon('شركة الدكتور على الدهيمان للاستشارات البيئية'): canon('شركة د علي صالح الدهيمان للاستشارات البيئية')}
+KEEP_APART=[['رواد الاستدامه','رائدات الاستدامه','رموز الاستدامه']]   # distinct firms: never merged by the fuzzy step
+def ckey(name):
+    c=canon(name); return SAME_FIRM.get(c,c)
+def _apart(name):
+    c=canon(name)
+    for gi,grp in enumerate(KEEP_APART):
+        for j,p in enumerate(grp):
+            if canon(p) in c: return (gi,j)
+    return None
+
+def eh_price_vat(b):
+    """EH's offer on the Etimad basis, VAT included: the tracker's «(+ ضريبة القيمة المضافة)» column, else offer × 1.15.
+    Roster prices and award values on Etimad include VAT, so every comparison uses this figure (12 Oct 2026, audit bids-03)."""
+    if not b: return None
+    if b.get('offer_vat'): return b['offer_vat']
+    return round(b['offer']*1.15,2) if b.get('offer') else None
+
+def fill_roster(bidders, b, wc):
+    """The roster with the prices the tracker knows filled in: EH's offer (VAT included) on EH's row, the award value on the
+    winner's row, and the named winner appended when missing from the roster. Rows: [name, price, dq, is_eh, appended].
+    Used by the pricing cards (bid_analytics2) and by the competitor undercut counts below, so both agree."""
+    eh_offer=eh_price_vat(b); award=(b or {}).get('winval'); winner=(b or {}).get('winner')
+    def is_w(nm,e):
+        if wc=='__EH__': return bool(e)
+        if wc: return ckey(nm)==wc
+        return False
+    work=[[n,a,dq,e,False] for n,a,dq,e in bidders]
+    for row in work:
+        if row[3] and row[1] is None and not row[2] and eh_offer: row[1]=eh_offer
+    present=False
+    for row in work:
+        if is_w(row[0],row[3]):
+            present=True
+            if row[1] is None and not row[2] and award: row[1]=award
+    if winner and award and not present and not is_eh(winner):
+        work.append([winner,award,False,False,True])
+    return work, is_w
+
 def build(bids, rosters):
     bidx={(b['year'],b['sn']):b for b in bids}
 
@@ -13,7 +53,7 @@ def build(bids, rosters):
         for nm,a,dq,e in bidders:
             ov=len(wt & toks(nm))
             if ov>bestov: bestov=ov; best=nm
-        return canon(best) if bestov>=2 else None
+        return ckey(best) if bestov>=2 else None
 
     # ----- winner per tender (ACTUAL winner, not lowest) -----
     winner_canon={}   # key -> canon of winning bidder (or 'EH')
@@ -31,11 +71,13 @@ def build(bids, rosters):
     comp=collections.defaultdict(lambda:{'enc':0,'wins':0,'dq':0,'under':0,'priced_vs':0,'prices':[],'names':collections.Counter()})
     for key,bidders in rosters.items():
         if not any(x[3] for x in bidders): continue   # EH must be present
-        ehp=next((a for nm,a,dq,e in bidders if e and a and not dq), None)
+        yr,sn=key.split('-'); b=bidx.get((int(yr),int(sn)))
         wc=winner_canon.get(key)
-        for nm,a,dq,e in bidders:
-            if e: continue   # skip EH itself
-            c=canon(nm)
+        work,_=fill_roster(bidders, b, wc)            # same filled-in prices as the pricing cards (12 Oct 2026, audit bids-08)
+        ehp=next((a for nm,a,dq,e,ad in work if e and a and not dq), None)
+        for nm,a,dq,e,added in work:
+            if e or added: continue   # skip EH itself; an appended winner is not a roster encounter
+            c=ckey(nm)
             if not c: continue
             d=comp[c]; d['enc']+=1; d['names'][nm.strip()]+=1
             if dq: d['dq']+=1
@@ -69,6 +111,8 @@ def build(bids, rosters):
         grp=[k]; dn=dispname(k)
         for k2 in keys:
             if k2==k or k2 in merged_into: continue
+            _a,_b=_apart(dn),_apart(dispname(k2))
+            if _a and _b and _a!=_b: continue      # listed as different firms
             if sim(dn, dispname(k2))>=0.85:
                 merged_into[k2]=k; grp.append(k2)
         groups.append(grp)

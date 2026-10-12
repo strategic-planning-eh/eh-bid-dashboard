@@ -8,7 +8,7 @@ def _tcanon(s):
     for a,b in (('أ','ا'),('إ','ا'),('آ','ا'),('ة','ه'),('ى','ي'),('','')): t=t.replace(a,b)
     return ' '.join(re.sub(r'[^\w\u0600-\u06FF ]',' ',t).split())
 
-def compute(bids, rfull, comp):
+def compute(bids, rfull, comp, wcanon=None):
     EH=['افاق البيئة','آفاق البيئة','افاق البيئه','آفاق البيئه','environmental horizon','environmental horizons']
     def is_eh(s): s=str(s or '').lower(); return any(t in s for t in EH)
     def wr(won,aw): return round(100*won/aw) if aw else None
@@ -70,7 +70,9 @@ def compute(bids, rfull, comp):
     winloss=dict(
      awarded_eh=sum(1 for b in awarded if b['eh_won']),
      awarded_other=sum(1 for b in awarded if not b['eh_won']),
-     not_awarded=sum(1 for b in bids if b['status']=='Not awarded'),
+     # «لم تتم الترسية» rows are EH's losses and already sit in awarded_other; only an undecided one is 'not awarded'
+     not_awarded=sum(1 for b in bids if b['status']=='Not awarded' and not b['decided']),   # 12 Oct 2026, audit bids-04
+     pending=sum(1 for b in bids if not b['decided'] and b['status'] not in ('Cancelled','Not awarded')),
      cancelled=sum(1 for b in bids if b['status']=='Cancelled'),
      in_progress=sum(1 for b in bids if b['status']=='In progress'),
      no_status=sum(1 for b in bids if not b['status']),
@@ -117,12 +119,12 @@ def compute(bids, rfull, comp):
 
     # ---------- DURATION ----------
     durs=[b['dur'] for b in bids if b['dur']]
-    dur_bands=[('≤3 mo',0,3),('4–6 mo',4,6),('7–12 mo',7,12),('13–24 mo',13,24),('25+ mo',25,999)]
+    dur_bands=[('≤3 mo',0,3),('4–6 mo',3,6),('7–12 mo',6,12),('13–24 mo',12,24),('25+ mo',24,999)]   # months may be decimal (12 Oct 2026)
     duration=[]
     for lbl,lo,hi in dur_bands:
-        bb=[b for b in bids if b['dur'] and lo<=b['dur']<=hi]
+        bb=[b for b in bids if b['dur'] and lo<b['dur']<=hi]
         duration.append(dict(band=lbl,count=len(bb),value=round(sum(val(bb)))))
-    dur_stats=dict(median=round(st.median(durs)) if durs else 0, mean=round(st.mean(durs),1) if durs else 0, max=int(max(durs)) if durs else 0)
+    dur_stats=dict(median=round(st.median(durs),1) if durs else 0, mean=round(st.mean(durs),1) if durs else 0, max=round(max(durs),1) if durs else 0)
 
     # ---------- QUALIFICATION FUNNEL (internal dept approvals) ----------
     deps=['ceo','fin','tech','bd','pm','admin','legal']
@@ -159,7 +161,7 @@ def compute(bids, rfull, comp):
 
     # ---------- PRICING POSITIONING (full bidder breakdown, robust parser) ----------
     # rfull is passed in per scope (see driver at the bottom)
-    winner_canon=json.load(open('winner_canon.json'))
+    winner_canon=wcanon if wcanon is not None else json.load(open('winner_canon.json'))   # 12 Oct 2026: in memory, never a stale file
     competitors_rebuilt=comp
     # value each competitor took off EH: join winner_canon (tender key → canon of the winning bidder) to tender values
     _bykey={f"{b['year']}-{b['sn']}":b for b in bids}
@@ -181,27 +183,12 @@ def compute(bids, rfull, comp):
     for key,bidders in rfull.items():
         yr,sn=key.split('-'); yr=int(yr); sn=int(sn)
         bb=bidx.get((yr,sn))
-        eh_offer=(bb['offer'] if bb else None)     # قيمة العرض
-        award=(bb['winval'] if bb else None)        # قيمة الترسية
-        winner=(bb['winner'] if bb else None)
+        award=(bb['winval'] if bb else None)        # قيمة الترسية (Etimad award value, VAT included)
         wc=winner_canon.get(key)                    # '__EH__', canon string, or None
-        def _is_w(nm,e,wc=wc):
-            if wc=='__EH__': return bool(e)
-            if wc: return _canon(nm)==wc
-            return False
-        work=[[n,a,dq,e] for n,a,dq,e in bidders]
-        # fill EH's price from the main table if EH is on the roster but unpriced
-        for row in work:
-            if row[3] and row[1] is None and not row[2] and eh_offer: row[1]=eh_offer
-        # assign the award value to the winner if present & unpriced; note if winner is on the roster
-        winner_present=False
-        for row in work:
-            if _is_w(row[0],row[3]):
-                winner_present=True
-                if row[1] is None and not row[2] and award: row[1]=award
-        # winner named in main table but not on the roster -> add them with the award value
-        if winner and award and not winner_present and not _is_eh_name(winner):
-            work.append([winner, award, False, False])
+        # One VAT basis (12 Oct 2026, audit bids-03): roster and award prices include VAT, so EH's tracker offer is taken from
+        # the «(+ ضريبة القيمة المضافة)» column. build_competitors.fill_roster is shared with the competitor undercut counts.
+        _w5,_is_w=_BC.fill_roster(bidders, bb, wc)
+        work=[[n,a,dq,e] for n,a,dq,e,_ad in _w5]
         if len(work)<2: continue                    # need >=2 bidders (names) to show a card
         priced=[r for r in work if r[1] is not None and r[1]>=100 and not r[2]]
         undisc=[r for r in work if (r[1] is None or r[1]<100) and not r[2]]
@@ -210,13 +197,13 @@ def compute(bids, rfull, comp):
         ehrow=next((r for r in priced if r[3]), None)
         ehp=ehrow[1] if ehrow else None
         n_priced=len(prices)
-        rank=(prices.index(ehp)+1) if ehp is not None else None
+        rank=(prices.index(ehp)+1) if (ehp is not None and n_priced>=2) else None   # no rank against an unknown field (audit bids-13)
         lo=min(prices) if prices else None; hi=max(prices) if prices else None
         avg=st.mean(prices) if prices else None
-        gap=round(100*(ehp-lo)/lo,1) if (ehp is not None and lo) else None
+        gap=round(100*(ehp-lo)/lo,1) if (ehp is not None and lo and n_priced>=2) else None
         blist=[]
         for i2,(n,a,dq,e) in enumerate(sorted(priced,key=lambda x:x[1])):
-            blist.append(dict(name=('Environmental Horizons (EH)' if e else n),price=round(a),dq=False,undisclosed=False,eh=bool(e),rank=i2+1,lowest=(i2==0 and n_priced>1),won=_is_w(n,e)))
+            blist.append(dict(name=('Environmental Horizons (EH)' if e else n),price=round(a),dq=False,undisclosed=False,eh=bool(e),rank=(i2+1 if n_priced>1 else None),lowest=(i2==0 and n_priced>1),won=_is_w(n,e)))
         for n,a,dq,e in undisc:
             blist.append(dict(name=('Environmental Horizons (EH)' if e else n),price=None,dq=False,undisclosed=True,eh=bool(e),rank=None,lowest=False,won=_is_w(n,e)))
         for n,a,dq,e in dqd:
@@ -254,7 +241,7 @@ def compute(bids, rfull, comp):
     for bb in bids:
         yr2,sn2=bb['year'],bb['sn']
         if (yr2,sn2) in shown or (yr2,sn2) in roster_keys: continue
-        offer=bb['offer']; wv=bb['winval']; wn=bb['winner']
+        offer=_BC.eh_price_vat(bb); wv=bb['winval']; wn=bb['winner']     # VAT included, like the award value
         if not (offer and wv and wn) or bb['eh_won'] is True: continue
         ehp=round(offer); wvr=round(wv)
         pts=[('Environmental Horizons (EH)',ehp,True,False),(wn,wvr,False,True)]
@@ -263,7 +250,7 @@ def compute(bids, rfull, comp):
         gap=round(100*(ehp-lo)/lo,1) if lo else 0
         blist=[dict(name=nm,price=pr,dq=False,undisclosed=False,eh=e,rank=i3+1,lowest=(i3==0),won=w) for i3,(nm,pr,e,w) in enumerate(comp)]
         price_rows.append(dict(sn=sn2,year=yr2,eh=ehp,low=round(lo),high=round(hi),avg=round(avg),
-            rank=rank,n=2,n_priced=2,gap=gap,won=False,has_winner=True,win_price=wvr,status=bb['status'],reason=(bb.get('reason') or None),
+            rank=rank,n=(int(bb['nbid']) if bb.get('nbid') else None),n_priced=2,gap=gap,won=False,has_winner=True,win_price=wvr,status=bb['status'],reason=(bb.get('reason') or None),
             title=bb['title'],client=bb['client'],bidders=blist,dq_count=0,undisc_count=0,level='partial'))
     # ---------- decided bids invisible to both builders -> single-point cards ----------
     shown2=set((r['year'],r['sn']) for r in price_rows)
@@ -273,16 +260,16 @@ def compute(bids, rfull, comp):
         if not bb.get('decided') or (bb.get('status') or '')=='Cancelled': continue
         nb=int(bb['nbid']) if bb.get('nbid') else None
         if bb.get('eh_won') is True and (bb.get('winval') or bb.get('offer')):
-            ehp=round(bb.get('winval') or bb.get('offer'))
-            blist=[dict(name='Environmental Horizons (EH)',price=ehp,dq=False,undisclosed=False,eh=True,rank=1,lowest=True,won=True)]
+            ehp=round(_BC.eh_price_vat(bb) or bb.get('winval'))   # EH's offer with VAT; the award value only when no offer
+            blist=[dict(name='Environmental Horizons (EH)',price=ehp,dq=False,undisclosed=False,eh=True,rank=None,lowest=False,won=True)]
             price_rows.append(dict(sn=sn3,year=yr3,eh=ehp,low=ehp,high=ehp,avg=ehp,
-                rank=1,n=(nb or 1),n_priced=1,gap=0,won=True,has_winner=True,win_price=ehp,status=bb['status'],reason=None,
+                rank=None,n=nb,n_priced=1,gap=None,won=True,has_winner=True,win_price=ehp,status=bb['status'],reason=None,
                 title=bb['title'],client=bb['client'],bidders=blist,dq_count=0,undisc_count=0,level='partial',ehin=True))
         elif bb.get('eh_won') is False and bb.get('winval') and not bb.get('offer') and bb.get('winner'):
             wvr=round(bb['winval'])
-            blist=[dict(name=bb['winner'],price=wvr,dq=False,undisclosed=False,eh=False,rank=1,lowest=True,won=True)]
+            blist=[dict(name=bb['winner'],price=wvr,dq=False,undisclosed=False,eh=False,rank=None,lowest=False,won=True)]
             price_rows.append(dict(sn=sn3,year=yr3,eh=None,low=wvr,high=wvr,avg=wvr,
-                rank=None,n=(nb or 1),n_priced=1,gap=None,won=False,has_winner=True,win_price=wvr,status=bb['status'],reason=(bb.get('reason') or None),
+                rank=None,n=nb,n_priced=1,gap=None,won=False,has_winner=True,win_price=wvr,status=bb['status'],reason=(bb.get('reason') or None),
                 title=bb['title'],client=bb['client'],bidders=blist,dq_count=0,undisc_count=0,level='partial',ehin=True))
     # ---------- text-flagged submissions (offer cell says BID/submitted) with no other pricing presence ----------
     shown3=set((r['year'],r['sn']) for r in price_rows)
@@ -294,7 +281,7 @@ def compute(bids, rfull, comp):
         nb4=int(bb['nbid']) if bb.get('nbid') else None
         blist=[dict(name='Environmental Horizons (EH)',price=None,dq=False,undisclosed=True,eh=True,rank=None,lowest=False,won=bool(bb.get('eh_won')))]
         price_rows.append(dict(sn=sn4,year=yr4,eh=None,low=None,high=None,avg=None,
-            rank=None,n=(nb4 or 1),n_priced=0,gap=None,won=bool(bb.get('eh_won')),has_winner=bool(bb.get('winner')),win_price=None,
+            rank=None,n=nb4,n_priced=0,gap=None,won=bool(bb.get('eh_won')),has_winner=bool(bb.get('winner')),win_price=None,
             status=bb['status'],reason=(bb.get('reason') or None),
             title=bb['title'],client=bb['client'],bidders=blist,dq_count=0,undisc_count=1,level='partial',ehin=True))
     price_rows.sort(key=lambda x:(x['year'],x['sn']))
@@ -306,6 +293,8 @@ def compute(bids, rfull, comp):
         median_gap=round(st.median(gaps),1) if gaps else 0,
         median_win_gap=(round(st.median(wgaps),1) if wgaps else None), win_gap_n=len(wgaps),
         total_bidders=sum(r['n_priced'] for r in price_rows),
+        basis='vat_incl',                                                    # every price on the cards includes 15% VAT
+        eh_rosters=sum(1 for v in rfull.values() if any(x[3] for x in v)),   # bid sheets that list EH (shared tenders)
         total_names=sum(len(r['bidders']) for r in price_rows)))
 
     # ---------- CLIENTS (self-contained, with English aliases) ----------
@@ -316,17 +305,23 @@ def compute(bids, rfull, comp):
     for b in bids:
         if not b['client']: continue
         c=cacc[cl_name(b['client'])]
-        if b['year']==2025: c['b25']+=1; c['v25']+=b['value'] or 0
-        else: c['b26']+=1; c['v26']+=b['value'] or 0
+        # EH's own offer (pre-VAT tracker column), never the winner's price on a lost tender (12 Oct 2026, audit bids-11)
+        if b['year']==2025: c['b25']+=1; c['v25']+=b['offer'] or 0
+        else: c['b26']+=1; c['v26']+=b['offer'] or 0
         if b['decided']:
             c['aw']+=1
             if b['eh_won']: c['won']+=1
+    # new / lapsed are judged across every tracking year, whatever the scope (12 Oct 2026, audit bids-10)
+    _cyrs=collections.defaultdict(set)
+    for b in _ALLBIDS:
+        if b['client']: _cyrs[cl_name(b['client'])].add(b['year'])
+    _ylast=max((b['year'] for b in _ALLBIDS), default=None)
     clients=[]
     for nm,c in cacc.items():
         clients.append(dict(name=nm, bids=c['b25']+c['b26'], value=round(c['v25']+c['v26']),
             bids25=c['b25'], value25=round(c['v25']), bids26=c['b26'], value26=round(c['v26']),
             win_rate=(round(100*c['won']/c['aw']) if c['aw'] else None), eh_won=c['won'], awarded=c['aw'],
-            lapsed=(c['b25']>0 and c['b26']==0), isnew=(c['b25']==0 and c['b26']>0)))
+            lapsed=((_ylast-1) in _cyrs[nm] and _ylast not in _cyrs[nm]), isnew=(_cyrs[nm]=={_ylast})))
     clients.sort(key=lambda x:-x['value'])
 
     def _wilson(k,n,z=1.959964):
@@ -413,7 +408,7 @@ def compute(bids, rfull, comp):
             deadline_stale=bool(b.get('submit') and (b.get('ehsubdate') or b.get('subdate')) and (b.get('ehsubdate') or b.get('subdate'))>b['submit']),
             sub_conflict=bool(b.get('substatus')=='No' and (b.get('decided') or b.get('eh_won'))),
             value=round(b['value']) if b['value'] else None, nbid=int(b['nbid']) if b['nbid'] else None,
-            svc=SVCN2.get(b['svcdept'],''), dur=int(b['dur']) if b['dur'] else None,
+            svc=SVCN2.get(b['svcdept'],''), dur=round(b['dur'],1) if b['dur'] else None,
             winner=win, outcome=outcome(b), status=(b['status'] or ''),
             committee=b['committee'], reason=b['comments'], lossreason=(b.get('reason') or None),
             window=_days(b['launch'],b['submit']) if (b['launch'] and b['submit']) else None,
@@ -447,7 +442,7 @@ def scope(y=None):
     B=[b for b in _ALLBIDS if y is None or b['year']==y]
     RF={k:v for k,v in _ALLR.items() if y is None or int(k.split('-')[0])==y}
     comp,_wc=_BC.build(B, RF)
-    return compute(B, RF, comp)
+    return compute(B, RF, comp, _wc)
 
 OUT=dict(both=scope(), y2025=scope(2025), y2026=scope(2026))
 json.dump(OUT, open('bidanalytics2.json','w'), ensure_ascii=False, indent=1)

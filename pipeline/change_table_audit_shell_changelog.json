@@ -1,0 +1,67 @@
+{
+ "generated": "2026-10-12 14:26",
+ "title": "What's New builder — audit fixes shell-07/10",
+ "failures": [],
+ "changes": [
+  {
+   "file": "cl",
+   "kind": "exact",
+   "category": "code",
+   "note": "shell-10: subprocess for the workbook date",
+   "occurrences": 1,
+   "ok": true,
+   "old": "import argparse, json, re, sys, os, datetime as dt, unicodedata",
+   "new": "import argparse, json, re, sys, os, subprocess, datetime as dt, unicodedata"
+  },
+  {
+   "file": "cl",
+   "kind": "exact",
+   "category": "code",
+   "note": "shell-10: sources read their own dates; no developer note; new name; four more sources; Arabic names",
+   "occurrences": 1,
+   "ok": true,
+   "old": "NEWS = [('vision2030_dashboard.html', 'Vision 2030 Dashboard', [r'Last reviewed <strong>([^<]+)</strong>', r'const LAST_REVIEWED = \"([^\"]+)\"']),\n        ('saudi_fiscal_monitor_2026.html', 'Saudi Fiscal Monitor 2026', [r'(v\\d+ · \\d{2}/\\d{2}/\\d{4})']),\n        ('eh_news_intelligence.html', 'Corporate & Government News', [r'<title>[^<]*?·\\s*([^<·]+Update)</title>', r'Generated</[^>]+>\\s*<[^>]+>([^<]+",
+   "new": "# (file, name EN, name AR, version pattern, note prefix EN/AR, date pattern (dd/mm/yyyy or yyyy-mm-dd), fixed note EN/AR)\nNEWS = [('vision2030_dashboard.html', 'Vision 2030 Dashboard', 'لوحة رؤية 2030', None, None,\n         r'Last reviewed <strong>(\\d{2}/\\d{2}/\\d{4})', ('date of the last review', 'تاريخ آخر مراجعة')),\n        ('saudi_fiscal_monitor_2026.html', 'Saudi Government Finances 2026', 'ما"
+  },
+  {
+   "file": "cl",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-10: the workbook is no longer stamped with the build time; Arabic names",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        {'name': 'EH stakeholder workbook (EH_Stakeholder_Competitive_Map.xlsx)', 'refreshed': now.isoformat(timespec='minutes')},\n        {'name': 'Bid tracker (Google Sheets 2025 / 2026)', 'refreshed': now.isoformat(timespec='minutes')},\n        {'name': 'MWAN licence register', 'refreshed': None, 'note': 'refresh date recorded in the workbook'}]",
+   "new": "        workbook_source(now),\n        {'name': 'Bid tracker (Google Sheets 2025 / 2026)', 'name_ar': 'جدول تتبع العطاءات (Google Sheets 2025 / 2026)', 'refreshed': now.isoformat(timespec='minutes'),\n         'note': 'read every hour', 'note_ar': 'يُقرأ كل ساعة'},\n        {'name': 'MWAN licence register', 'name_ar': 'سجل تراخيص المركز الوطني لإدارة النفايات', 'refreshed': None,\n         'note': 're"
+  },
+  {
+   "file": "cl",
+   "kind": "exact",
+   "category": "code",
+   "note": "shell-07: `tenders` is an app code (Government Tenders tab)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "LINE = re.compile(r'^\\s*(?P<app>stake|bids|clients|news|hub)\\s*\\|",
+   "new": "LINE = re.compile(r'^\\s*(?P<app>stake|bids|tenders|clients|news|hub)\\s*\\|"
+  },
+  {
+   "file": "cl",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-07: usage note lists the app codes",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  --changes FILE       CHANGES.md   (app | severity | view? | EN | AR, one fix per line under a ## week heading)",
+   "new": "  --changes FILE       CHANGES.md   (app | severity | view? | EN | AR, one fix per line under a ## week heading;\n                       app = stake | bids | tenders | clients | news | hub)"
+  },
+  {
+   "file": "cl",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-07: error message lists the app codes",
+   "occurrences": 1,
+   "ok": true,
+   "old": "print('CHANGES.md malformed (app | severity | [view |] EN | AR):",
+   "new": "print('CHANGES.md malformed (app | severity | [view |] EN | AR; app = stake|bids|tenders|clients|news|hub):"
+  }
+ ]
+}

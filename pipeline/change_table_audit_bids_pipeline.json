@@ -1,0 +1,377 @@
+{
+ "generated": "2026-10-12 14:35",
+ "title": "Audit fixes (J1) — bid pipeline",
+ "failures": [],
+ "changes": [
+  {
+   "file": "nc",
+   "kind": "exact",
+   "category": "data",
+   "note": "roster labels and sheet titles are not company names (single guard)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "def looks_like_company(s):\n    t = _n(s)\n    return bool(t) and 3 <= len(t) <= 120 and not is_reason_text(t) and not is_tender_title(t) and bool(re.search(r'[a-z\\u0600-\\u06ff]{3,}', t))\n",
+   "new": "# Etimad award-report labels and roster headings that sit in the bidder-name column (12 Oct 2026, audit bids-06 / data-15)\nLABEL_PHRASES = ['حالة الترسية', 'مستبعد من الترسية', 'سبب الاستبعاد', 'سبب عدم الترسية', 'تقرير الترسية', 'تقرير الموردين', 'تقرير فتح العروض',\n                 'قائمة الموردين', 'عدد الموردين', 'اسم المورد', 'قيمة الترسية', 'نوع الترسية', 'ترسية كاملة', 'ترسية جزئية',\n      "
+  },
+  {
+   "file": "rost",
+   "kind": "exact",
+   "category": "data",
+   "note": "over-long names are cut to one name instead of dropped",
+   "occurrences": 1,
+   "ok": true,
+   "old": "def is_name(v):\n    if not isinstance(v,str): return False\n    t=v.strip()\n    if len(t)<6 or len(t)>90: return False\n",
+   "new": "def clip_name(v):\n    \"\"\"A name cell over 90 characters (the name pasted twice, or a long legal suffix) is cut to one name (12 Oct 2026).\"\"\"\n    t=re.sub(r'\\s+',' ',str(v)).strip()\n    if len(t)<=90: return t\n    w=t.split()\n    for i in range(2,len(w)-1):\n        if w[i:i+2]==w[0:2] or w[i:i+2]==w[1:3]: return ' '.join(w[:i])      # second copy starts here\n    out=''\n    for x in w:\n        if le"
+  },
+  {
+   "file": "rost",
+   "kind": "exact",
+   "category": "data",
+   "note": "pick the applicant list, not the award table",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    nc=None\n    for c in range(maxc):\n        for r in range(min(12,maxr)):\n            h=norm_ar(grid[r][c])\n            if any(k in h for k in ['bidder name','اسم المورد','اسم الشركه','supplier','اسم العارض','المورد']) and not any(d in h for d in DESC):\n                nc=c; break\n        if nc is not None: break\n",
+   "new": "    # 12 Oct 2026 (audit bids-07): award-report sheets (Bid#25, Bid#27) carry two bidder-name headers, the award table and the\n    # applicant list; the column with the most company names is the roster.\n    nc=None; hcols=[]\n    for c in range(maxc):\n        for r in range(min(12,maxr)):\n            h=norm_ar(grid[r][c])\n            if any(k in h for k in ['bidder name','اسم المورد','اسم الشركه','"
+  },
+  {
+   "file": "rost",
+   "kind": "exact",
+   "category": "data",
+   "note": "store the clipped name",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        nm=row[nc]\n        if not is_name(nm): continue\n        k=canon(nm)[:40]\n",
+   "new": "        nm=row[nc]\n        if not is_name(nm): continue\n        nm=clip_name(nm)\n        k=canon(nm)[:40]\n"
+  },
+  {
+   "file": "rost",
+   "kind": "exact",
+   "category": "data",
+   "note": "technical scores keyed by the same clipped name",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        if sc is not None and 0<=sc<=100: out[str(nm).strip()]=sc\n",
+   "new": "        if sc is not None and 0<=sc<=100: out[clip_name(nm)]=sc\n"
+  },
+  {
+   "file": "comp",
+   "kind": "exact",
+   "category": "data",
+   "note": "shared roster fill (VAT basis), same-firm alias and keep-apart list",
+   "occurrences": 1,
+   "ok": true,
+   "old": "from parse_rosters import norm_ar, canon, is_eh\n",
+   "new": "from parse_rosters import norm_ar, canon, is_eh\n\n# ---- one firm under two spellings / two firms that look alike (12 Oct 2026, audit bids-19 / data-17) ----\nSAME_FIRM={canon('شركة الدكتور على الدهيمان للاستشارات البيئية'): canon('شركة د علي صالح الدهيمان للاستشارات البيئية')}\nKEEP_APART=[['رواد الاستدامه','رائدات الاستدامه','رموز الاستدامه']]   # distinct firms: never merged by the fuzzy step\ndef "
+  },
+  {
+   "file": "comp",
+   "kind": "exact",
+   "category": "data",
+   "note": "winner key uses the same-firm alias",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        return canon(best) if bestov>=2 else None\n",
+   "new": "        return ckey(best) if bestov>=2 else None\n"
+  },
+  {
+   "file": "comp",
+   "kind": "exact",
+   "category": "data",
+   "note": "undercut / priced-vs-EH counted on the filled-in rows",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        if not any(x[3] for x in bidders): continue   # EH must be present\n        ehp=next((a for nm,a,dq,e in bidders if e and a and not dq), None)\n        wc=winner_canon.get(key)\n        for nm,a,dq,e in bidders:\n            if e: continue   # skip EH itself\n            c=canon(nm)\n",
+   "new": "        if not any(x[3] for x in bidders): continue   # EH must be present\n        yr,sn=key.split('-'); b=bidx.get((int(yr),int(sn)))\n        wc=winner_canon.get(key)\n        work,_=fill_roster(bidders, b, wc)            # same filled-in prices as the pricing cards (12 Oct 2026, audit bids-08)\n        ehp=next((a for nm,a,dq,e,ad in work if e and a and not dq), None)\n        for nm,a,dq,e,added i"
+  },
+  {
+   "file": "comp",
+   "kind": "exact",
+   "category": "data",
+   "note": "keep-apart list honoured by the fuzzy merge",
+   "occurrences": 1,
+   "ok": true,
+   "old": "            if k2==k or k2 in merged_into: continue\n            if sim(dn, dispname(k2))>=0.85:\n",
+   "new": "            if k2==k or k2 in merged_into: continue\n            _a,_b=_apart(dn),_apart(dispname(k2))\n            if _a and _b and _a!=_b: continue      # listed as different firms\n            if sim(dn, dispname(k2))>=0.85:\n"
+  },
+  {
+   "file": "ext",
+   "kind": "exact",
+   "category": "data",
+   "note": "duration parser: days / weeks / years to months",
+   "occurrences": 1,
+   "ok": true,
+   "old": "def mkey(v):\n",
+   "new": "def dur_months(v):\n    \"\"\"Project length in months, one decimal (12 Oct 2026, audit data-12). Numbers are months; text such as «10 ايام»,\n    «3 اسابيع», «2.5 سنتين ونصف», «شهرين» or «Annual» is converted. None when no length can be read («مرة واحدة»).\"\"\"\n    if v is None: return None\n    if isinstance(v,(int,float)): return round(float(v),1) if (v==v and v>0) else None\n    s=unicodedata.normalize"
+  },
+  {
+   "file": "ext",
+   "kind": "exact",
+   "category": "data",
+   "note": "read the text duration column",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        elif 'Project Duration (Month)' in h: m['dur']=c\n",
+   "new": "        elif 'Project Duration (Month)' in h: m['dur']=c\n        elif h.startswith('Project Duration'): m['dur2']=c          # text duration (col 7), used when col 6 is empty\n"
+  },
+  {
+   "file": "ext",
+   "kind": "exact",
+   "category": "data",
+   "note": "read the offer-with-VAT column",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        elif 'قيمة العرض المالي المقدم (بدون' in h: m['offer']=c\n",
+   "new": "        elif 'قيمة العرض المالي المقدم (بدون' in h: m['offer']=c\n        elif 'قيمة العرض المالي المقدم (+' in h: m['offer_vat']=c     # with VAT — the basis of Etimad roster and award prices\n"
+  },
+  {
+   "file": "ext",
+   "kind": "exact",
+   "category": "data",
+   "note": "duration in months from either duration column",
+   "occurrences": 1,
+   "ok": true,
+   "old": "            dur=num(g('dur')),\n",
+   "new": "            dur=(dur_months(g('dur')) if dur_months(g('dur')) is not None else dur_months(g('dur2'))),\n"
+  },
+  {
+   "file": "ext",
+   "kind": "exact",
+   "category": "data",
+   "note": "offer with VAT",
+   "occurrences": 1,
+   "ok": true,
+   "old": "            offer=num(g('offer')),\n",
+   "new": "            offer=num(g('offer')),\n            offer_vat=num(g('offer_vat')),\n"
+  },
+  {
+   "file": "ext",
+   "kind": "exact",
+   "category": "data",
+   "note": "override keeps the VAT figure consistent",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    _o=OVERRIDES.get((_b['year'],_b['sn']))\n    if _o: _b.update(_o)\n",
+   "new": "    _o=OVERRIDES.get((_b['year'],_b['sn']))\n    if _o:\n        _b.update(_o)\n        if 'offer' in _o and 'offer_vat' not in _o: _b['offer_vat']=None   # re-derived below\n"
+  },
+  {
+   "file": "ext",
+   "kind": "exact",
+   "category": "data",
+   "note": "corrections keep the VAT figure consistent",
+   "occurrences": 1,
+   "ok": true,
+   "old": "            _b=_byk[_k]; _b.update(_fields); _nu+=1\n",
+   "new": "            _b=_byk[_k]; _b.update(_fields); _nu+=1\n            if 'offer' in _fields and 'offer_vat' not in _fields: _b['offer_vat']=None   # re-derived below\n"
+  },
+  {
+   "file": "ext",
+   "kind": "exact",
+   "category": "data",
+   "note": "fill offer_vat",
+   "occurrences": 1,
+   "ok": true,
+   "old": "json.dump({'bids':allbids,'rosters':rosters}, open('bidraw2.json','w'), ensure_ascii=False)\n",
+   "new": "# offer with VAT: the tracker's own figure where it is a number, else the pre-VAT offer × 1.15 (12 Oct 2026, audit bids-03)\nfor _b in allbids:\n    if not _b.get('offer'): _b['offer_vat']=None\n    elif not _b.get('offer_vat') or _b['offer_vat']<100: _b['offer_vat']=round(_b['offer']*1.15,2)\njson.dump({'bids':allbids,'rosters':rosters}, open('bidraw2.json','w'), ensure_ascii=False)\n"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "winner list passed in memory",
+   "occurrences": 1,
+   "ok": true,
+   "old": "def compute(bids, rfull, comp):\n",
+   "new": "def compute(bids, rfull, comp, wcanon=None):\n"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "win/loss slices no longer double-count losses",
+   "occurrences": 1,
+   "ok": true,
+   "old": "     not_awarded=sum(1 for b in bids if b['status']=='Not awarded'),\n",
+   "new": "     # «لم تتم الترسية» rows are EH's losses and already sit in awarded_other; only an undecided one is 'not awarded'\n     not_awarded=sum(1 for b in bids if b['status']=='Not awarded' and not b['decided']),   # 12 Oct 2026, audit bids-04\n     pending=sum(1 for b in bids if not b['decided'] and b['status'] not in ('Cancelled','Not awarded')),\n"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "duration bands accept decimal months",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    durs=[b['dur'] for b in bids if b['dur']]\n    dur_bands=[('≤3 mo',0,3),('4–6 mo',4,6),('7–12 mo',7,12),('13–24 mo',13,24),('25+ mo',25,999)]\n    duration=[]\n    for lbl,lo,hi in dur_bands:\n        bb=[b for b in bids if b['dur'] and lo<=b['dur']<=hi]\n",
+   "new": "    durs=[b['dur'] for b in bids if b['dur']]\n    dur_bands=[('≤3 mo',0,3),('4–6 mo',3,6),('7–12 mo',6,12),('13–24 mo',12,24),('25+ mo',24,999)]   # months may be decimal (12 Oct 2026)\n    duration=[]\n    for lbl,lo,hi in dur_bands:\n        bb=[b for b in bids if b['dur'] and lo<b['dur']<=hi]\n"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "duration stats keep one decimal",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    dur_stats=dict(median=round(st.median(durs)) if durs else 0, mean=round(st.mean(durs),1) if durs else 0, max=int(max(durs)) if durs else 0)\n",
+   "new": "    dur_stats=dict(median=round(st.median(durs),1) if durs else 0, mean=round(st.mean(durs),1) if durs else 0, max=round(max(durs),1) if durs else 0)\n"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "use the winner list built in this run",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    winner_canon=json.load(open('winner_canon.json'))\n",
+   "new": "    winner_canon=wcanon if wcanon is not None else json.load(open('winner_canon.json'))   # 12 Oct 2026: in memory, never a stale file\n"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "pricing cards use the shared VAT-basis fill",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        eh_offer=(bb['offer'] if bb else None)     # قيمة العرض\n        award=(bb['winval'] if bb else None)        # قيمة الترسية\n        winner=(bb['winner'] if bb else None)\n        wc=winner_canon.get(key)                    # '__EH__', canon string, or None\n        def _is_w(nm,e,wc=wc):\n            if wc=='__EH__': return bool(e)\n            if wc: return _canon(nm)==wc\n            return Fa",
+   "new": "        award=(bb['winval'] if bb else None)        # قيمة الترسية (Etimad award value, VAT included)\n        wc=winner_canon.get(key)                    # '__EH__', canon string, or None\n        # One VAT basis (12 Oct 2026, audit bids-03): roster and award prices include VAT, so EH's tracker offer is taken from\n        # the «(+ ضريبة القيمة المضافة)» column. build_competitors.fill_roster is sha"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "rank only with two or more prices",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        rank=(prices.index(ehp)+1) if ehp is not None else None\n",
+   "new": "        rank=(prices.index(ehp)+1) if (ehp is not None and n_priced>=2) else None   # no rank against an unknown field (audit bids-13)\n"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "gap only with two or more prices",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        gap=round(100*(ehp-lo)/lo,1) if (ehp is not None and lo) else None\n",
+   "new": "        gap=round(100*(ehp-lo)/lo,1) if (ehp is not None and lo and n_priced>=2) else None\n"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "bidder rank only with two or more prices",
+   "occurrences": 1,
+   "ok": true,
+   "old": "            blist.append(dict(name=('Environmental Horizons (EH)' if e else n),price=round(a),dq=False,undisclosed=False,eh=bool(e),rank=i2+1,lowest=(i2==0 and n_priced>1),won=_is_w(n,e)))\n",
+   "new": "            blist.append(dict(name=('Environmental Horizons (EH)' if e else n),price=round(a),dq=False,undisclosed=False,eh=bool(e),rank=(i2+1 if n_priced>1 else None),lowest=(i2==0 and n_priced>1),won=_is_w(n,e)))\n"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "2-point cards on the VAT basis",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        offer=bb['offer']; wv=bb['winval']; wn=bb['winner']\n",
+   "new": "        offer=_BC.eh_price_vat(bb); wv=bb['winval']; wn=bb['winner']     # VAT included, like the award value\n"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "2-point cards: field size from the tracker or unknown",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        price_rows.append(dict(sn=sn2,year=yr2,eh=ehp,low=round(lo),high=round(hi),avg=round(avg),\n            rank=rank,n=2,n_priced=2,gap=gap,",
+   "new": "        price_rows.append(dict(sn=sn2,year=yr2,eh=ehp,low=round(lo),high=round(hi),avg=round(avg),\n            rank=rank,n=(int(bb['nbid']) if bb.get('nbid') else None),n_priced=2,gap=gap,"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "single-price won cards: no invented rank, gap or bidder count",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        if bb.get('eh_won') is True and (bb.get('winval') or bb.get('offer')):\n            ehp=round(bb.get('winval') or bb.get('offer'))\n            blist=[dict(name='Environmental Horizons (EH)',price=ehp,dq=False,undisclosed=False,eh=True,rank=1,lowest=True,won=True)]\n            price_rows.append(dict(sn=sn3,year=yr3,eh=ehp,low=ehp,high=ehp,avg=ehp,\n                rank=1,n=(nb or 1),n_priced=",
+   "new": "        if bb.get('eh_won') is True and (bb.get('winval') or bb.get('offer')):\n            ehp=round(_BC.eh_price_vat(bb) or bb.get('winval'))   # EH's offer with VAT; the award value only when no offer\n            blist=[dict(name='Environmental Horizons (EH)',price=ehp,dq=False,undisclosed=False,eh=True,rank=None,lowest=False,won=True)]\n            price_rows.append(dict(sn=sn3,year=yr3,eh=ehp,l"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "single-price lost cards: no invented bidder count",
+   "occurrences": 1,
+   "ok": true,
+   "old": "            blist=[dict(name=bb['winner'],price=wvr,dq=False,undisclosed=False,eh=False,rank=1,lowest=True,won=True)]\n            price_rows.append(dict(sn=sn3,year=yr3,eh=None,low=wvr,high=wvr,avg=wvr,\n                rank=None,n=(nb or 1),",
+   "new": "            blist=[dict(name=bb['winner'],price=wvr,dq=False,undisclosed=False,eh=False,rank=None,lowest=False,won=True)]\n            price_rows.append(dict(sn=sn3,year=yr3,eh=None,low=wvr,high=wvr,avg=wvr,\n                rank=None,n=nb,"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "text-flagged cards: no invented bidder count",
+   "occurrences": 1,
+   "ok": true,
+   "old": "            rank=None,n=(nb4 or 1),n_priced=0,",
+   "new": "            rank=None,n=nb4,n_priced=0,"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "VAT basis flag and shared-tender count",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        total_bidders=sum(r['n_priced'] for r in price_rows),\n",
+   "new": "        total_bidders=sum(r['n_priced'] for r in price_rows),\n        basis='vat_incl',                                                    # every price on the cards includes 15% VAT\n        eh_rosters=sum(1 for v in rfull.values() if any(x[3] for x in v)),   # bid sheets that list EH (shared tenders)\n"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "client value = EH offers only",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        if b['year']==2025: c['b25']+=1; c['v25']+=b['value'] or 0\n        else: c['b26']+=1; c['v26']+=b['value'] or 0\n",
+   "new": "        # EH's own offer (pre-VAT tracker column), never the winner's price on a lost tender (12 Oct 2026, audit bids-11)\n        if b['year']==2025: c['b25']+=1; c['v25']+=b['offer'] or 0\n        else: c['b26']+=1; c['v26']+=b['offer'] or 0\n"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "client years from all data",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    clients=[]\n    for nm,c in cacc.items():\n",
+   "new": "    # new / lapsed are judged across every tracking year, whatever the scope (12 Oct 2026, audit bids-10)\n    _cyrs=collections.defaultdict(set)\n    for b in _ALLBIDS:\n        if b['client']: _cyrs[cl_name(b['client'])].add(b['year'])\n    _ylast=max((b['year'] for b in _ALLBIDS), default=None)\n    clients=[]\n    for nm,c in cacc.items():\n"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "new / lapsed flags independent of scope",
+   "occurrences": 1,
+   "ok": true,
+   "old": "            lapsed=(c['b25']>0 and c['b26']==0), isnew=(c['b25']==0 and c['b26']>0)))\n",
+   "new": "            lapsed=((_ylast-1) in _cyrs[nm] and _ylast not in _cyrs[nm]), isnew=(_cyrs[nm]=={_ylast})))\n"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "bid list keeps decimal months",
+   "occurrences": 1,
+   "ok": true,
+   "old": "            svc=SVCN2.get(b['svcdept'],''), dur=int(b['dur']) if b['dur'] else None,\n",
+   "new": "            svc=SVCN2.get(b['svcdept'],''), dur=round(b['dur'],1) if b['dur'] else None,\n"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "pass the winner list in memory",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    comp,_wc=_BC.build(B, RF)\n    return compute(B, RF, comp)\n",
+   "new": "    comp,_wc=_BC.build(B, RF)\n    return compute(B, RF, comp, _wc)\n"
+  }
+ ]
+}

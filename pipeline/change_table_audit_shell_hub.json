@@ -1,0 +1,317 @@
+{
+ "generated": "2026-10-12 14:46",
+ "title": "Hub shell — audit fixes shell-06/07/11/12/13/17/18/21",
+ "failures": [],
+ "changes": [
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "css",
+   "note": "shell-06/17/18/21: News area above the phone bar; one-language chip; tablet header; active search result",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  html:not([data-eh-motion=\"off\"]) .tab{transition:background-color var(--eh-dur-1) var(--eh-ease),color var(--eh-dur-1) var(--eh-ease)}\n}\n</style>",
+   "new": "  html:not([data-eh-motion=\"off\"]) .tab{transition:background-color var(--eh-dur-1) var(--eh-ease),color var(--eh-dur-1) var(--eh-ease)}\n}\n/* audit shell-06: on portrait phones the News area ends above the fixed bottom tab bar */\n@media(max-width:640px) and (min-height:521px){#newswrap{bottom:calc(56px + env(safe-area-inset-bottom)) !important}}\n/* audit shell-17: the Protected chip and the descri"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-17: hub title in Arabic (same name as the sign-in page)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"brand\"><h1>Strategic Intelligence <b>Hub</b></h1>",
+   "new": "<div class=\"brand\"><h1><span class=\"tl\" data-en=\"Strategic Intelligence &lt;b&gt;Hub&lt;/b&gt;\" data-ar=\"منصة &lt;b&gt;الاستخبارات الاستراتيجية&lt;/b&gt;\">Strategic Intelligence <b>Hub</b></span></h1>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-17: Protected chip tooltip in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<span class=\"conf\" role=\"note\" title=\"Restricted — access authorised by EH management only\">",
+   "new": "<span class=\"conf\" role=\"note\" title=\"Restricted — access authorised by EH management only\" data-tt-en=\"Restricted — access authorised by EH management only\" data-tt-ar=\"مقيّد — الوصول بإذن إدارة آفاق البيئة فقط\">"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "a11y",
+   "note": "shell-17/21: search box is a combobox with a bilingual label",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<input id=\"q\" type=\"search\" placeholder=\"Find a company… / ابحث عن شركة\" autocomplete=\"off\" aria-label=\"Global company search\"",
+   "new": "<input id=\"q\" type=\"search\" placeholder=\"Find a company… / ابحث عن شركة\" autocomplete=\"off\" aria-label=\"Global company search\" data-al-en=\"Find a company across the hub\" data-al-ar=\"ابحث عن شركة في المنصة\" role=\"combobox\" aria-autocomplete=\"list\" aria-expanded=\"false\" aria-controls=\"qdrop\""
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "a11y",
+   "note": "shell-21: result list is a listbox",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div id=\"qdrop\" style=\"display:none;",
+   "new": "<div id=\"qdrop\" role=\"listbox\" aria-label=\"Companies\" style=\"display:none;"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-17: What's New tooltip",
+   "occurrences": 1,
+   "ok": true,
+   "old": "title=\"What's New\" style=\"position:relative\">",
+   "new": "title=\"What's New\" data-tt-en=\"What's New\" data-tt-ar=\"ما الجديد\" style=\"position:relative\">"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-17: theme button tooltip and label in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<button id=\"themebtn\" class=\"hbtn\" onclick=\"hubTheme()\" title=\"Toggle dark theme across all views\" aria-label=\"Toggle dark theme\">",
+   "new": "<button id=\"themebtn\" class=\"hbtn\" onclick=\"hubTheme()\" title=\"Toggle dark theme across all views\" aria-label=\"Toggle dark theme\" data-tt-en=\"Switch every view between light and dark\" data-tt-ar=\"التبديل بين الوضع الفاتح والداكن في كل اللوحات\" data-al-en=\"Switch light or dark theme\" data-al-ar=\"تبديل الوضع الفاتح أو الداكن\">"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-17: language button tooltip",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<button id=\"langbtn\" onclick=\"hubLang()\" title=\"Switch language across all views\"",
+   "new": "<button id=\"langbtn\" onclick=\"hubLang()\" title=\"Switch language across all views\" data-tt-en=\"Switch every view to Arabic\" data-tt-ar=\"تحويل كل اللوحات إلى الإنجليزية\""
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-17: full-screen button tooltip and label",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<button onclick=\"hubFS()\" title=\"Presentation mode (fullscreen)\" aria-label=\"Fullscreen current view\"",
+   "new": "<button onclick=\"hubFS()\" title=\"Presentation mode (fullscreen)\" aria-label=\"Fullscreen current view\" data-tt-en=\"Presentation mode (full screen)\" data-tt-ar=\"وضع العرض (ملء الشاشة)\" data-al-en=\"Show the current view full screen\" data-al-ar=\"عرض اللوحة الحالية بملء الشاشة\""
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "a11y",
+   "note": "shell-17: close button label",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<button class=\"wnx\" onclick=\"wnClose()\" aria-label=\"Close What's New\">",
+   "new": "<button class=\"wnx\" onclick=\"wnClose()\" aria-label=\"Close What's New\" data-al-en=\"Close What's New\" data-al-ar=\"إغلاق ما الجديد\">"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-17: \"New\" badge in Arabic (Regulatory news)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<span class=\"newb\" data-new-until=\"2026-10-13\" aria-label=\"New\">New</span>",
+   "new": "<span class=\"newb tl\" data-new-until=\"2026-10-13\" data-en=\"New\" data-ar=\"جديد\">New</span>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-17: \"New\" badges in Arabic (PIF Strategy, EF report)",
+   "occurrences": 2,
+   "ok": true,
+   "old": "<span class=\"newb\" data-new-until=\"2026-10-06\" aria-label=\"New\">New</span>",
+   "new": "<span class=\"newb tl\" data-new-until=\"2026-10-06\" data-en=\"New\" data-ar=\"جديد\">New</span>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-17: the refresh time reads in Arabic order (it is now written in Arabic)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<b dir=\"ltr\" id=\"freshv\"></b>",
+   "new": "<b id=\"freshv\"></b>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-17: same in the What's New panel",
+   "occurrences": 1,
+   "ok": true,
+   "old": "L('Data refreshed','آخر تحديث للبيانات')+' <b dir=\"ltr\">'+fmtFresh(FRESH_ISO)+'</b>'",
+   "new": "L('Data refreshed','آخر تحديث للبيانات')+' <b>'+fmtFresh(FRESH_ISO)+'</b>'"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-11: footer counts five views and is translated",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"foot\">One link · three integrated views · bid data auto-refreshes hourly from the live tracker · stakeholder &amp; client data rebuilt from source workbooks on commit</div>",
+   "new": "<div class=\"foot\"><span class=\"tl\" data-en=\"Five live views · bids refresh hourly from the live tracker · stakeholder and client data update when their source workbooks do\" data-ar=\"خمس لوحات حيّة · تُحدَّث العطاءات كل ساعة من جدول التتبع · وتُحدَّث بيانات أصحاب المصلحة والعملاء عند تحديث مصنّفاتها\">Five live views · bids refresh hourly from the live tracker · stakeholder and client data update wh"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "code",
+   "note": "shell-12/13/17: News sub-tab chosen after the skeleton reset; title follows the language",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  if(isNews) nGo(document.querySelector('.nsub.on')||document.querySelector('.nsub'));\n  document.querySelectorAll('.skel').forEach(s=>s.style.zIndex=(s.id==='sk-'+btn.dataset.f)?4:-1);\n  document.title='EH Hub — '+btn.dataset.t;\n  try{history.replaceState(null,'','#'+btn.dataset.f);localStorage.setItem('ehhub.tab',btn.dataset.f);}catch(e){}\n}",
+   "new": "  document.querySelectorAll('.skel').forEach(s=>s.style.zIndex=(s.id==='sk-'+btn.dataset.f)?4:-1);\n  hubTitle();\n  try{history.replaceState(null,'','#'+btn.dataset.f);localStorage.setItem('ehhub.tab',btn.dataset.f);}catch(e){}\n  if(isNews) nGo(document.querySelector('.nsub.on')||document.querySelector('.nsub'));   // after the skeleton reset, so the sub-tab spinner stays on top\n}\n// browser-tab ti"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-17: error message in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  d.textContent='This view failed to load — check that its file is published in the site build.';",
+   "new": "  d.textContent=L('This view failed to load — check that its file is published in the site build.','تعذّر تحميل هذه اللوحة — تأكّد من نشر ملفها في بناء الموقع.');"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "code",
+   "note": "shell-13: deep links to News sub-tabs, remembered sub-tab, address-bar changes",
+   "occurrences": 1,
+   "ok": true,
+   "old": "(function(){\n  var want=(location.hash||'').replace('#','')||null;\n  try{ want=want||localStorage.getItem('ehhub.tab'); }catch(e){}\n  if(want&&want!=='stake'){ var b=document.querySelector('.tab[data-f=\"'+want+'\"]'); if(b) go(b); }\n})();",
+   "new": "// #bids, #news, #news/<sub-tab> or a bare sub-tab id such as #gov or #ef2025 (audit shell-13)\nfunction hubRoute(h){\n  h=String(h||'').replace(/^#/,''); if(!h) return false;\n  var p=h.split('/'), sub=document.querySelector('.nsub[data-n=\"'+(p[1]||p[0])+'\"]');\n  if(sub){ document.querySelectorAll('.nsub').forEach(function(x){x.classList.toggle('on',x===sub);}); go(document.querySelector('.tab[data-"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "a11y",
+   "note": "shell-21: one place closes the list",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  if(!v||!QN){ qD.style.display='none'; return; }",
+   "new": "  if(!v||!QN){ qHide(); return; }"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "a11y",
+   "note": "shell-21: combobox keyboard pattern",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  if(!hits.length){ qD.style.display='none'; return; }\n  qD.innerHTML=hits.map(function(n){return '<div class=\"qh\" tabindex=\"0\" onkeydown=\"if(event.keyCode===13){this.click()}\" style=\"padding:8px 12px;cursor:pointer;font-size:12.5px;border-bottom:1px solid #F0F4F7\" onclick=\"qGo(this.textContent)\">'+n.replace(/</g,'&lt;')+'</div>';}).join('');\n  qD.style.display='block';\n});\ndocument.addEventListen",
+   "new": "  if(!hits.length){ qHide(); return; }\n  qD.innerHTML=hits.map(function(n,i){return '<div class=\"qh\" id=\"qopt'+i+'\" role=\"option\" aria-selected=\"false\" tabindex=\"-1\" style=\"padding:8px 12px;cursor:pointer;font-size:12.5px;border-bottom:1px solid #F0F4F7\" onclick=\"qGo(this.textContent)\">'+n.replace(/</g,'&lt;')+'</div>';}).join('');\n  qD.style.display='block'; qEl.setAttribute('aria-expanded','true"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-17: Arabic month names for What's New",
+   "occurrences": 1,
+   "ok": true,
+   "old": "var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];",
+   "new": "var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], MONAR=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];\nfunction mon(i){return hubL==='ar'?MONAR[i]:MON[i];}"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "code",
+   "note": "shell-07: tenders app; view names resolve to a tab or News sub-tab",
+   "occurrences": 1,
+   "ok": true,
+   "old": "var APPTAB={stake:'stake',map:'stake',bids:'bids',clients:'bubbles',news:'news',hub:null};",
+   "new": "var APPTAB={stake:'stake',map:'stake',bids:'bids',tenders:'tenders',clients:'bubbles',news:'news',hub:null};\nAPPS.tenders=['Government Tenders','المنافسات الحكومية'];\n// a What's New \"view\" names a top tab or a News sub-tab by its English label (older names kept as aliases) — audit shell-07\nvar VIEWALIAS={'saudi fiscal monitor 2026':'fiscal','fiscal monitor':'fiscal','saudi government finances':'f"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-17: dates and times in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function fmtFresh(iso){var d=new Date(iso);if(isNaN(d))return String(iso||'').slice(0,16);var _r=fmtFresh0(d);return _r?_r+' KSA':_r;}\nfunction fmtFresh0(d){var f=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Riyadh',day:'numeric',month:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(d),o={};f.forEach(function(x){o[x.type]=x.value;});return (+o.day)+' '+MON[+o.month-1]+' \\",
+   "new": "function fmtFresh(iso){var d=new Date(iso);if(isNaN(d))return String(iso||'').slice(0,16);var _r=fmtFresh0(d);return _r?_r+L(' KSA',' بتوقيت السعودية'):_r;}\nfunction fmtFresh0(d){var f=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Riyadh',day:'numeric',month:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(d),o={};f.forEach(function(x){o[x.type]=x.value;});return (+o.day)+'"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-17: month chips in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<span dir=\"ltr\">'+MON[mi]+' '+y+'</span>",
+   "new": "<span>'+mon(mi)+' <span dir=\"ltr\">'+y+'</span></span>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-17: week chips in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<span dir=\"ltr\">'+wnEsc(w.week)+'</span> \\u00b7 <span dir=\"ltr\">'+wnEsc(fmtD(w.from))+'\\u2013'+wnEsc(fmtD(w.to))+'</span>",
+   "new": "<span>'+wnEsc(wkName(w.week))+'</span> \\u00b7 <span>'+wnEsc(fmtD(w.from))+' \\u2013 '+wnEsc(fmtD(w.to))+'</span>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "code",
+   "note": "shell-07: a fix link opens the view it names",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function wnGoApp(a){ wnClose(); var t=APPTAB[a]; if(t) go(document.querySelector('.tab[data-f=\"'+t+'\"]')); }",
+   "new": "function wnGoApp(a,i){ wnClose(); var f=(i!=null&&WN&&WN.weeks[wnWeek])?(WN.weeks[wnWeek].fixes||[])[i]:null, b=f&&f.view?wnView(f.view):null;\n  if(b&&b.classList.contains('nsub')){ hubRoute('news/'+b.dataset.n); return; }\n  if(b){ go(b); return; }\n  var t=APPTAB[a]; if(t) go(document.querySelector('.tab[data-f=\"'+t+'\"]')); }"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "code",
+   "note": "shell-07/17: fix links carry their view; view names in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "h=(w.fixes||[]).map(function(f){return '<div class=\"wnitem '+wnEsc(f.severity||'')+'\"><button class=\"lnk app\" onclick=\"wnGoApp(\\''+wnEsc(f.app)+'\\')\">'+wnEsc(appName(f.app))+(f.view&&f.view!==f.severity?' \\u203a '+wnEsc(f.view):'')+'</button>",
+   "new": "h=(w.fixes||[]).map(function(f,i){return '<div class=\"wnitem '+wnEsc(f.severity||'')+'\"><button class=\"lnk app\" onclick=\"wnGoApp(\\''+wnEsc(f.app)+'\\','+i+')\">'+wnEsc(appName(f.app))+(f.view&&f.view!==f.severity?' \\u203a '+wnEsc(viewName(f.view)):'')+'</button>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-10/17: source names and notes in Arabic; no \"Refreshed —\" line without a date",
+   "occurrences": 1,
+   "ok": true,
+   "old": "h=(w.sources||[]).map(function(x){return '<div class=\"wnitem\"><b>'+wnEsc(x.name)+'</b><br>'+L('Refreshed','آخر تحديث')+' <span dir=\"ltr\">'+wnEsc(x.refreshed?fmtFresh(x.refreshed):'\\u2014')+'</span>'+(x.note?' \\u00b7 '+wnEsc(x.note):'')+'</div>';}).join('')",
+   "new": "h=(w.sources||[]).map(function(x){var nt=L(x.note,x.note_ar||x.note);return '<div class=\"wnitem\"><b>'+wnEsc(L(x.name,x.name_ar||x.name))+'</b><br>'+(x.refreshed?L('Refreshed','آخر تحديث')+' <span>'+wnEsc(/^\\d{4}-\\d{2}-\\d{2}$/.test(x.refreshed)?fmtD(x.refreshed):fmtFresh(x.refreshed))+'</span>':'')+(nt?(x.refreshed?' \\u00b7 ':'')+wnEsc(nt):'')+'</div>';}).join('')"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-17: build time reads in Arabic order",
+   "occurrences": 1,
+   "ok": true,
+   "old": "+L('Built','بُني')+' <span dir=\"ltr\">'+wnEsc(w.built?fmtFresh(w.built):'')+'</span></div>';",
+   "new": "+L('Built','بُني')+' <span>'+wnEsc(w.built?fmtFresh(w.built):'')+'</span></div>';"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "code",
+   "note": "shell-12/13: spinner visible while a sub-page loads; sub-tab in the address and remembered",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  const id=btn.dataset.n;\n  ['v2030','fiscal','corp','gov','pif','strat','ef2025'].forEach(k=>{\n    const f=$('f-'+k);\n    const on=k===id;\n    if(on&&!f.src&&f.dataset.src){f.src=f.dataset.src;$('sk-'+k).classList.add('on');",
+   "new": "  const id=btn.dataset.n;\n  try{history.replaceState(null,'','#news/'+id);localStorage.setItem('ehhub.sub',id);}catch(e){}   // audit shell-13: shareable link, remembered on this device\n  ['v2030','fiscal','corp','gov','pif','strat','ef2025'].forEach(k=>{\n    const f=$('f-'+k);\n    const on=k===id;\n    const sk=$('sk-'+k); if(sk) sk.style.zIndex=on?4:-1;   // audit shell-12: the loading spinner si"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "copy",
+   "note": "shell-17: tooltips, labels, tab title and refresh time follow the language",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  document.querySelectorAll('.tl').forEach(el=>{\n    el.innerHTML=hubL==='ar'?el.dataset.ar:el.dataset.en;\n  });",
+   "new": "  document.querySelectorAll('.tl').forEach(el=>{\n    el.innerHTML=hubL==='ar'?el.dataset.ar:el.dataset.en;\n  });\n  document.querySelectorAll('[data-tt-en]').forEach(el=>{el.title=hubL==='ar'?el.dataset.ttAr:el.dataset.ttEn;});      // tooltips (audit shell-17)\n  document.querySelectorAll('[data-al-en]').forEach(el=>{el.setAttribute('aria-label',hubL==='ar'?el.dataset.alAr:el.dataset.alEn);});\n  if"
+  }
+ ]
+}

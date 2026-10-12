@@ -1,0 +1,287 @@
+{
+ "generated": "2026-10-12 14:31",
+ "title": "Audit fixes — News Intelligence (macro)",
+ "failures": [],
+ "changes": [
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-02: Aramco pricing story — Brent ~$92 on 24/08, ~$87 close on 25/08",
+   "occurrences": 1,
+   "ok": true,
+   "old": "then climbed back to about $90–91 by 25 August when the talks failed.\"",
+   "new": "then climbed back to about $92 by 24 August when the talks failed, before closing at about $87 on 25 August.\""
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-02: Aramco pricing key numbers",
+   "occurrences": 1,
+   "ok": true,
+   "old": "World oil price about $90–91 on 25 August.\"",
+   "new": "World oil price about $87 at the close on 25 August (about $92 the day before).\""
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-02/01: regional-security oil path and its own key number",
+   "occurrences": 1,
+   "ok": true,
+   "old": "→ about $90–91 (25 August, after talks failed).\",\"partners\":\"Oman",
+   "new": "→ about $92 (24 August, after talks failed) → about $87 (25 August close).\",\"keyNumber\":\"Oil price: about $87 (25 August close)\",\"partners\":\"Oman"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-02: oil card = 25/08 close (~$87), not \"today\"",
+   "occurrences": 1,
+   "ok": true,
+   "old": "{accent:'#dc2626', num:'~$91', lab:'Oil price today (Brent, 25/08)', note:'Was ~$80 in early Aug when peace looked close · rose as talks failed and attacks spread'},",
+   "new": "{accent:'#dc2626', num:'~$87', lab:'Oil price (Brent), close on 25/08', note:'About $92 on 24/08 as talks failed · ~$80 in early Aug when peace looked close', noteAr:'نحو 92 دولارًا في 24/08 مع فشل المحادثات · ونحو 80 دولارًا مطلع أغسطس حين بدا السلام قريبًا'},"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-02: Arabic Aramco pricing story",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ثم عاد إلى 90–91 دولارًا بحلول 25 أغسطس مع فشل المحادثات.",
+   "new": "ثم عاد إلى نحو 92 دولارًا بحلول 24 أغسطس مع فشل المحادثات، قبل أن يُغلق عند نحو 87 دولارًا في 25 أغسطس."
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-02: Arabic summary oil figure",
+   "occurrences": 1,
+   "ok": true,
+   "old": "نفط برنت اليوم <b>~91$</b> (كان ~80$ مطلع أغسطس حين بدا السلام قريبًا، وارتفع مع انهيار المحادثات واتساع الهجمات).",
+   "new": "سعر إغلاق برنت في 25/08 <b>~87$</b> (كان ~80$ مطلع أغسطس حين بدا السلام قريبًا، ونحو 92$ في 24/08 مع انهيار المحادثات)."
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-03: Webuild headline — €3.8bn of contracts, part of $8.4bn cancelled",
+   "occurrences": 1,
+   "ok": true,
+   "old": "\"headline\":\"NEOM cancelled both contracts with Italy's Webuild — over $8 billion of planned construction gone\"",
+   "new": "\"headline\":\"NEOM cancelled both contracts with Italy's Webuild (about €3.8 billion) — part of more than $8.4 billion of NEOM construction called off\""
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-03: Arabic Webuild headline",
+   "occurrences": 1,
+   "ok": true,
+   "old": "نيوم ألغت عقدَي «ويبيلد» الإيطالية كليهما — تبخّر أكثر من 8 مليارات دولار من الإنشاءات المخططة",
+   "new": "نيوم ألغت عقدَي «ويبيلد» الإيطالية كليهما (نحو 3.8 مليارات يورو) — ضمن أكثر من 8.4 مليارات دولار من إنشاءات نيوم الملغاة"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-15: organisation and theme counts derived from the stories",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const DEAL_FLOW = 6.5; // USD bn, in-window new awards / reported frameworks (see chart foot)",
+   "new": "const DEAL_FLOW = 6.5; // USD bn, in-window new awards / reported frameworks (see chart foot)\n/* audit 12/10 (macro-15): stories about regional themes (not organisations) are told apart by their group */\nconst THEME_GROUPS = ['Macro & Security','Environment & Marine'];\nconst themeCount = DATA.filter(d=>THEME_GROUPS.includes(d.group)).length;\nconst orgCount   = new Set(DATA.filter(d=>!THEME_GROUPS."
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-07: Arabic note (watchlist card)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "{accent:'#2563eb', num:META.monitored_total, lab:'Companies & bodies we track', note:'Our full watchlist of Saudi organisations'},",
+   "new": "{accent:'#2563eb', num:META.monitored_total, lab:'Companies & bodies we track', note:'Our full watchlist of Saudi organisations', noteAr:'قائمتنا الكاملة للمنظمات السعودية'},"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-15/07: stories card counts organisations and themes from the data (EN + AR)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "{accent:'#14b8a6', num:verifiedItems, sub:' items', lab:'News stories verified', note:META.verified_entity_count+' organisations covered · '+corpItems+' company / '+govItems+' government'},",
+   "new": "{accent:'#14b8a6', num:verifiedItems, sub:' items', subAr:' خبرًا', lab:'News stories verified', note:orgCount+' organisations and '+themeCount+' regional themes · '+corpItems+' company / '+govItems+' government', noteAr:'الجهات: '+orgCount+' · المحاور الإقليمية: '+themeCount+' · شركات: '+corpItems+' / حكومة: '+govItems},"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-07: Arabic note (watch card)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "{accent:'#ef4444', num:flaggedItems, lab:'🔴 Items to watch', note:'Big projects, infrastructure and security stories'},",
+   "new": "{accent:'#ef4444', num:flaggedItems, lab:'🔴 Items to watch', note:'Big projects, infrastructure and security stories', noteAr:'مشاريع كبرى وبنية تحتية وأمن'},"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-07: Arabic note (new-money card)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "note:'New deals this period (one $5.3 billion item unconfirmed) · cancellations not counted'},",
+   "new": "note:'New deals this period (one $5.3 billion item unconfirmed) · cancellations not counted', noteAr:'صفقات جديدة في هذه الفترة (منها بند بقيمة 5.3 مليارات دولار غير مؤكد) · لا تُحتسب الإلغاءات'},"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-07: Arabic unit under the stories count",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"k-num\">${k.num}${k.sub?`<small>${k.sub}</small>`:''}</div>",
+   "new": "<div class=\"k-num\">${k.num}${k.sub?`<small${k.subAr?` data-eh-ar=\"${k.subAr}\"`:''}>${k.sub}</small>`:''}</div>"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-07: KPI notes carry their Arabic twin",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"k-note\">${k.note}</div>",
+   "new": "<div class=\"k-note\"${k.noteAr?` data-eh-ar=\"${k.noteAr}\"`:''}>${k.note}</div>"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-07: chart note has an Arabic twin",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"chart-foot\">Note: the $5.3 billion HUMAIN figure",
+   "new": "<div class=\"chart-foot\" data-eh-ar=\"ملاحظة: رقم HUMAIN البالغ 5.3 مليارات دولار مصدره تقرير صحفي واحد وغير مؤكد. يحتسب هذا الرسم الصفقات الجديدة المعلنة في الفترة فقط — لا العقود الملغاة ولا البرامج الممتدة ولا نتائج الشركات.\">Note: the $5.3 billion HUMAIN figure"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-15: methodology names the report it re-checks (19 July), not \"January–March\"",
+   "occurrences": 1,
+   "ok": true,
+   "old": "(every material January–March claim re-verified, with per-claim verdicts above)",
+   "new": "(every material claim from our 19 July report re-verified, with per-claim verdicts above)"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "copy",
+   "note": "macro-15: coverage footer arithmetic adds up (overlap and others named); \"Q1 claims\" → 19 July report",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  const pct = Math.round(META.verified_entity_count/META.monitored_total*100);\n  document.getElementById('cov-block').innerHTML = `\n    <div style=\"font-size:12.5px;color:var(--ink-soft);margin-top:4px\">\n      <strong>${META.verified_entity_count}</strong> priority entities verified of <strong>${META.monitored_total}</strong> monitored\n      (<strong>${META.on_watchlist_count}</strong> direct watc",
+   "new": "  /* audit 12/10 (macro-15): every count from the lists themselves; overlap and others named so the sum adds up */\n  const vN = META.verified_entities.length, wl = new Set(META.on_watchlist), nb = new Set(META.national_bodies);\n  const inBoth = META.verified_entities.filter(v=>wl.has(v)&&nb.has(v)), others = META.verified_entities.filter(v=>!wl.has(v)&&!nb.has(v));\n  const pct = Math.round(vN/META"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-15: list count from the list",
+   "occurrences": 1,
+   "ok": true,
+   "old": "document.getElementById('vsub').textContent = `${META.verified_entity_count} entities",
+   "new": "document.getElementById('vsub').textContent = `${vN} entities"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-16: period options with no stories removed",
+   "occurrences": 1,
+   "ok": true,
+   "old": "cats.forEach(c=>cSel.insertAdjacentHTML('beforeend',`<option value=\"${c}\">${c}</option>`));",
+   "new": "cats.forEach(c=>cSel.insertAdjacentHTML('beforeend',`<option value=\"${c}\">${c}</option>`));\n/* audit 12/10 (macro-16): drop period options that no story carries (\"Policy frame\" always returned nothing) */\n[...document.getElementById('f-period').options].forEach(o=>{ if(o.value!=='all' && !DATA.some(d=>d.period===o.value)) o.remove(); });"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-17: Date column sorts by dateISO",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    if(k==='flagged'){va=a.flagged?1:0; vb=b.flagged?1:0;}",
+   "new": "    if(k==='flagged'){va=a.flagged?1:0; vb=b.flagged?1:0;}\n    if(k==='date'){va=a.dateISO; vb=b.dateISO;}   // audit 12/10 (macro-17): sort by the date, not its display text"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-01: key number keeps decimals and units",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const val = (d.financials && !/^not /i.test(d.financials)) ? d.financials.split(/[.;(]/)[0].trim() : 'Not disclosed';",
+   "new": "/* audit 12/10 (macro-01): never cut inside a number (\"$5.3\"); an item may name its own key number */\n    const val = d.keyNumber ? d.keyNumber : (d.financials && !/^not /i.test(d.financials)) ? d.financials.split(/;\\s|\\s\\(|\\.(?=\\s|$)/)[0].trim() : 'Not disclosed';"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-09: sector and category charts — sorted bars, all labels, height follows bar count",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const secData=countBy('group');\nnew Chart(document.getElementById('chartSector'),{\n  type:'doughnut',\n  data:{labels:secData.map(x=>x[0]), datasets:[{data:secData.map(x=>x[1]), backgroundColor:PALETTE, borderColor:'#fff', borderWidth:2}]},\n  options:{cutout:'60%', plugins:{legend:{position:'right', labels:{boxWidth:9, boxHeight:9, usePointStyle:true, pointStyle:'circle', padding:9, font:{size:12}}",
+   "new": "/* audit 12/10 (macro-09): both count charts are sorted horizontal bars with every label shown (long ones on two lines);\n   the chart grows with the number of bars (the doughnut's legend was cut off, the bar chart skipped half its labels) */\nconst ehBarBox=(id,n)=>{ const b=document.getElementById(id).parentElement; b.style.height=Math.max(230, n*28+44)+'px'; };\nconst ehWrap=s=>{ if(s.length<=22) "
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-20: story cards focusable",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"card ${gov?'gov':''}\" data-id=\"${d.id}\">",
+   "new": "<div class=\"card ${gov?'gov':''}\" data-id=\"${d.id}\" tabindex=\"0\" role=\"button\">"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-20: table rows focusable",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const rows = list.map(d=>`<tr data-id=\"${d.id}\">",
+   "new": "const rows = list.map(d=>`<tr data-id=\"${d.id}\" tabindex=\"0\">"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-20: Items-to-Watch rows focusable",
+   "occurrences": 1,
+   "ok": true,
+   "old": "return `<div class=\"flag-row\" data-id=\"${d.id}\">",
+   "new": "return `<div class=\"flag-row\" data-id=\"${d.id}\" tabindex=\"0\" role=\"button\">"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-20: closed panel is inert (its close button leaves the Tab order)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<aside class=\"panel\" id=\"panel\" aria-hidden=\"true\" data-eh-noreveal>",
+   "new": "<aside class=\"panel\" id=\"panel\" aria-hidden=\"true\" data-eh-noreveal inert>"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "code",
+   "note": "macro-20: panel focus in/out; Enter/Space opens a story",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  overlay.classList.add('open'); panel.classList.add('open'); panel.setAttribute('aria-hidden','false');\n}\nfunction closeDetail(){overlay.classList.remove('open'); panel.classList.remove('open'); panel.setAttribute('aria-hidden','true');}",
+   "new": "  if(!panel.classList.contains('open')) ehLastFocus=document.activeElement;\n  overlay.classList.add('open'); panel.classList.add('open'); panel.setAttribute('aria-hidden','false'); panel.inert=false;\n  setTimeout(()=>{ try{ document.getElementById('panel-close').focus({preventScroll:true}); }catch(e){} },0);\n}\nlet ehLastFocus=null;\nfunction closeDetail(){ const was=panel.classList.contains('open')"
+  }
+ ]
+}

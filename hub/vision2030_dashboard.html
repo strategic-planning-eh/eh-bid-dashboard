@@ -426,11 +426,11 @@ canvas{max-width:100% !important}
   <div class="tab-nav-inner">
     <button class="tab-btn active" id="tabDash" onclick="switchTab('dashboard')">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      Strategic Dashboard
+      <span id="tabDashLbl">Strategic Dashboard</span>
     </button>
     <button class="tab-btn" id="tabAr" onclick="switchTab('arabic')">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-      التقرير التحقق — عربي
+      تقرير التحقق — عربي
     </button>
   </div>
 </nav>
@@ -721,7 +721,7 @@ canvas{max-width:100% !important}
 
 <!-- ARABIC DRAWER -->
 <div class="scrim" id="arScrim"></div>
-<aside class="drawer panel ar-drawer" id="arDrawer" data-eh-noreveal dir="rtl" aria-hidden="true">
+<aside class="drawer panel ar-drawer" id="arDrawer" data-eh-noreveal dir="rtl" aria-hidden="true" inert>
   <div class="drawer-head">
     <button class="close" id="arDrawerClose" aria-label="إغلاق">&times;</button>
     <div class="d-name" id="arDName"></div>
@@ -733,7 +733,7 @@ canvas{max-width:100% !important}
 
 <!-- DRAWER -->
 <div class="scrim" id="scrim"></div>
-<aside class="drawer panel" id="drawer" data-eh-noreveal aria-hidden="true">
+<aside class="drawer panel" id="drawer" data-eh-noreveal aria-hidden="true" inert>
   <div class="drawer-head">
     <button class="close" id="drawerClose" aria-label="Close">&times;</button>
     <div class="d-name" id="dName"></div>
@@ -822,8 +822,8 @@ const PROJECTS = [
    note:"Verified (Jun 2026): PIF now holds 55.5% majority stake (raised from ~25% by converting SAR 2.8 billion of loans it was owed into shares). Revitalised as a Special Economic Zone and King Salman Automotive Cluster hosting Ceer, Lucid AMP-2 and Hyundai HMMME plants. EEC remains listed on the Saudi stock exchange.",
    desc:"A Red Sea economic city now revitalised as an special economic zone and automotive manufacturing hub. PIF holds a 55.5% majority stake in Emaar, The Economic City, which is listed on the Saudi stock exchange."},
   {name:"King Abdullah Port",sectors:["Logistics"],ownership:"Joint Venture",lead:"Ports Development Company (PDC)",partners:[{n:"Emaar, The Economic City",s:null},{n:"Huta Marine (Binladin Group)",s:null}],status:"Operational",completion:"Ongoing",investment:null,confidence:"High",
-   note:"Verified (Jun 2026): Kingdom's first fully privately owned, developed and operated commercial port. Handled 2.93 million shipping containers in 2023. Ranked world's most efficient container port (World Bank port-efficiency ranking, 2024). Phase 2 targets ~6 million containers a year. Exact stake split between PDC partners not publicly disclosed.",
-   desc:"The Kingdom's first fully privately developed port — now the world's most efficient container port in the World Bank's ranking (2024). Phase 2 targets capacity of ~6 million containers a year."},
+   note:"Verified (Jun 2026): Kingdom's first fully privately owned, developed and operated commercial port. Handled 2.93 million shipping containers in 2023. Once ranked the world's most efficient container port by the World Bank; 30th in the World Bank's container port performance index for 2023 (published 2024). Phase 2 targets ~6 million containers a year. Exact stake split between PDC partners not publicly disclosed.",
+   desc:"The Kingdom's first fully privately developed port. The World Bank once ranked it the world's most efficient container port; in the 2023 index (published 2024) it ranked 30th. Phase 2 targets capacity of ~6 million containers a year."},
   {name:"Jubail Industrial City II",sectors:["Industrial","Manufacturing"],ownership:"Government",lead:"Royal Commission for Jubail & Yanbu (RCJY)",partners:[],status:"Operational",completion:"Ongoing",investment:null,confidence:"High",
    note:"Verified (Jun 2026): SAR 67.5 billion (~$18 billion) has been allocated to double Jubail's area by 2030. New chemical plants by UK firm INEOS (~SAR 7 billion) were added in 2024. US engineering firm Bechtel manages the ~$6 billion expansion programme. Hosts the Amiral complex (SATORP). University planned ~2026.",
    desc:"The expansion of Saudi Arabia's flagship petrochemical industrial city on the Gulf coast. The Royal Commission is doubling Jubail's area by 2030 with SAR 67.5 billion (~$18 billion) committed."},
@@ -871,6 +871,14 @@ const CONF_OVERRIDE = {
   "SABIC":"High","MODON Industrial Cities":"High","Jubail Industrial City II":"High"
 };
 function confOf(p){ return CONF[p.confidence || CONF_OVERRIDE[p.name] || "Medium"]; }
+/* audit 12/10 (macro-08): when disclosed stakes add up to less than 100%, the rest is its own grey slice */
+const OTHER_HEX = "#AEB9CE";
+function stakeParts(p){ const sum=p.partners.reduce((a,pt)=>a+(pt.s||0),0); const parts=p.partners.map((pt,i)=>({n:pt.n,s:pt.s,c:SECTOR_HEX[i%SECTOR_HEX.length]}));
+  if(sum<99.5) parts.push({n:"Other shareholders / public float",s:+(100-sum).toFixed(1),c:OTHER_HEX,other:true}); return parts; }
+/* audit 12/10 (macro-19c): the review month comes from each project's own note */
+const MONTHS = {Jan:"January",Feb:"February",Mar:"March",Apr:"April",May:"May",Jun:"June",Jul:"July",Aug:"August",Sep:"September",Oct:"October",Nov:"November",Dec:"December"};
+const AR_MONTHS = {Jan:"يناير",Feb:"فبراير",Mar:"مارس",Apr:"أبريل",May:"مايو",Jun:"يونيو",Jul:"يوليو",Aug:"أغسطس",Sep:"سبتمبر",Oct:"أكتوبر",Nov:"نوفمبر",Dec:"ديسمبر"};
+function reviewedOf(p,ar){ const m=/^Verified \((\w{3}) (\d{4})\)/.exec(p.note||""); if(!m) return ar?"أغسطس 2026":LAST_REVIEWED; return (ar?AR_MONTHS[m[1]]:MONTHS[m[1]])+" "+m[2]; }
 function isVerified(p){ return !!(p.note && p.note.indexOf("Verified")===0); }
 
 const state = {sectors:new Set(),own:new Set(),status:new Set(),conf:new Set(),downscaled:false,search:"",view:"card",sortKey:null,sortDir:1};
@@ -895,12 +903,12 @@ function makeChips(container, items, set, isOwn){
 }
 makeChips(document.getElementById("sectorChips"),ALL_SECTORS,state.sectors,false);
 makeChips(document.getElementById("ownChips"),ALL_OWN,state.own,true);
-makeChips(document.getElementById("statusChips"),ALL_STATUS,state.status,false);
+makeChips(document.getElementById("statusChips"),ALL_STATUS.filter(s=>PROJECTS.some(p=>p.status===s)),state.status,false);   // audit 12/10 (macro-19b): no chips that match nothing
 
 // confidence chips (with colored dot)
 (function(){
   const wrap=document.getElementById("confChips");
-  ["High","Medium","Low"].forEach(level=>{
+  ["High","Medium","Low"].filter(l=>PROJECTS.some(p=>confOf(p).label===l)).forEach(level=>{
     const c=document.createElement("button");
     c.className="conf-chip";
     c.innerHTML=`<span class="cdot" style="background:${CONF[level].hex}"></span>${level}`;
@@ -977,7 +985,7 @@ function renderCards(rows){
     const tags=p.sectors.map(s=>`<span class="tag">${s}</span>`).join("")+
       (p.downscaled?`<span class="ds-pill">⚠ Downscaled</span>`:"")+
       (isVerified(p)?`<span class="vf-pill">✓ Verified</span>`:"");
-    return `<div class="card" data-idx="${idx}">
+    return `<div class="card" data-idx="${idx}" tabindex="0" role="button">
       <div class="c-top">
         <div class="c-name">${p.name}</div>
         ${ownBadge(p.ownership)}
@@ -1017,7 +1025,7 @@ function renderTable(rows){
   const body=rows.map(p=>{
     const idx=PROJECTS.indexOf(p);
     const c=confOf(p);
-    return `<tr data-idx="${idx}">
+    return `<tr data-idx="${idx}" tabindex="0">
       <td><span class="tname">${p.name}</span>${p.downscaled?`<div style="margin-top:3px"><span class="ds-pill">⚠ Downscaled</span></div>`:""}</td>
       <td>${p.sectors.join(", ")}</td>
       <td><span class="mini-badge" style="background:${OWN_HEX[p.ownership]}">${p.ownership.replace('Joint Venture','Joint venture')}</span></td>
@@ -1117,8 +1125,8 @@ function openDrawer(idx){
     // donut + legend
     ownerSection=`<div class="jv-wrap">
         <div class="jv-chart"><canvas id="jvChart"></canvas></div>
-        <div class="jv-legend">${p.partners.map((pt,i)=>`
-          <div class="jv-item"><span class="dot" style="background:${SECTOR_HEX[i%SECTOR_HEX.length]}"></span>
+        <div class="jv-legend">${stakeParts(p).map(pt=>`
+          <div class="jv-item"><span class="dot" style="background:${pt.c}"></span>
           <span class="jn">${pt.n}</span><span class="js">${pt.s}%</span></div>`).join("")}</div>
       </div>`;
   } else if(p.partners.length){
@@ -1152,12 +1160,13 @@ function openDrawer(idx){
         <div class="fact"><div class="fl">Expected Completion</div><div class="fv num">${p.completion}</div></div>
         <div class="fact"><div class="fl">Investment</div><div class="fv num">${fmtInv(p.investment)}</div></div>
         <div class="fact"><div class="fl">Data Confidence</div><div class="fv" style="font-size:13px;display:flex;align-items:center;gap:7px"><span class="conf-dot" style="background:${c.hex}"></span>${c.label}</div><div style="font-size:10.5px;color:var(--ink-faint);margin-top:2px">${c.desc}</div></div>
-        <div class="fact"><div class="fl">Last Reviewed</div><div class="fv" style="font-size:13px">${LAST_REVIEWED}</div></div>
+        <div class="fact"><div class="fl">Last Reviewed</div><div class="fv" style="font-size:13px">${reviewedOf(p,false)}</div></div>
       </div></div>
     <div class="d-section"><h3>Ownership &amp; Partners</h3>${ownerSection}</div>
     <div class="d-section"><h3>Sectors</h3><div class="tags">${p.sectors.map(s=>`<span class="tag">${s}</span>`).join("")}</div></div>
   `;
 
+  ehDrawerOpen("drawer","drawerClose");
   document.getElementById("scrim").classList.add("open");
   document.getElementById("drawer").classList.add("open");
   document.getElementById("drawer").setAttribute("aria-hidden","false");
@@ -1166,13 +1175,21 @@ function openDrawer(idx){
   if(p.partners.length && hasStakes){
     jvChart=new Chart(document.getElementById("jvChart"),{
       type:"doughnut",
-      data:{labels:p.partners.map(pt=>pt.n),datasets:[{data:p.partners.map(pt=>pt.s),backgroundColor:p.partners.map((_,i)=>SECTOR_HEX[i%SECTOR_HEX.length]),borderColor:ehTok("--eh-paper","#fff"),borderWidth:3}]},
+      data:{labels:stakeParts(p).map(pt=>pt.n),datasets:[{data:stakeParts(p).map(pt=>pt.s),backgroundColor:stakeParts(p).map(pt=>pt.c),borderColor:ehTok("--eh-paper","#fff"),borderWidth:3}]},
       options:{responsive:true,maintainAspectRatio:false,cutout:"60%",
         plugins:{legend:{display:false},tooltip:{backgroundColor:"#15224D",padding:9,cornerRadius:8,callbacks:{label:(c)=>` ${c.label}: ${c.parsed}%`}}}}
     });
   }
 }
+/* audit 12/10 (macro-20): drawers are inert while closed; focus moves to the close button and back to the card */
+let ehLastFocus=null;
+function ehDrawerOpen(id,closeId){ const d=document.getElementById(id); if(!d.classList.contains("open")) ehLastFocus=document.activeElement; d.inert=false;
+  setTimeout(()=>{ try{ document.getElementById(closeId).focus({preventScroll:true}); }catch(e){} },0); }
+function ehDrawerClosed(id){ const d=document.getElementById(id); const was=d.classList.contains("open"); d.inert=true;
+  if(was&&ehLastFocus&&ehLastFocus.isConnected){ try{ ehLastFocus.focus({preventScroll:true}); }catch(e){} } }
+document.addEventListener("keydown",e=>{ const t=e.target; if((e.key==="Enter"||e.key===" ")&&t&&t.matches&&t.matches(".card[data-idx],tbody tr[data-idx]")){ e.preventDefault(); t.click(); } });
 function closeDrawer(){
+  ehDrawerClosed("drawer");
   document.getElementById("scrim").classList.remove("open");
   document.getElementById("drawer").classList.remove("open");
   document.getElementById("drawer").setAttribute("aria-hidden","true");
@@ -1233,6 +1250,7 @@ apply();
 
 /* ─────────────────────── Tab switching ─────────────────────── */
 function switchTab(tab){document.documentElement.lang=(tab==='arabic'?'ar':'en');
+  { const l=document.getElementById('tabDashLbl'); if(l) l.textContent=(tab==='arabic'?'اللوحة الاستراتيجية (بالإنجليزية)':'Strategic Dashboard'); }   // audit 12/10 (macro-06)
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   if(tab==='dashboard'){
@@ -1276,6 +1294,171 @@ const AR_NAMES = {
   "Saudi Green Initiative (SGI)":"مبادرة السعودية الخضراء","Special Integrated Logistics Zone (SILZ)":"المنطقة اللوجستية المتكاملة الخاصة"
 };
 function arName(p){ return AR_NAMES[p.name]||p.name; }
+/* audit 12/10 (macro-06): Arabic texts for every project (EH translations) — description, review note, lead entity;
+   partner names and completion values. English stays in PROJECTS; the Arabic tab reads from here. */
+const AR_TXT = {
+"NEOM": {
+"lead": "شركة نيوم",
+"desc": "المنطقة الرائدة لصندوق الاستثمارات العامة في منطقة تبوك، ويُعاد النظر فيها جذرياً: تتحول من مفهوم المدينة المستقبلية إلى البنية التحتية للذكاء الاصطناعي ومراكز البيانات والاستخدامات الصناعية، بعد تجاوز التكاليف والضغوط المالية.",
+"note": "تحقّق (أغسطس 2026): تركّز استراتيجية صندوق الاستثمارات العامة الجديدة للفترة 2026–2030 (أغسطس 2026) على رأس المال الخاص والعوائد؛ وخُفّضت ميزانيات نيوم بنسبة تصل إلى 60% في بعض المشاريع، ويُتوقع أن ينخفض إجمالي الإنفاق الرأسمالي للصندوق بنحو 15% في 2026. ويُقدَّر ما أُنفق على نيوم حتى مطلع 2026 بنحو 40–60 مليار دولار مقابل الرقم المعلن البالغ 500 مليار دولار. وسجّل الصندوق خسارة في القيمة بنحو 8 مليارات دولار على المشاريع الكبرى في تقريره السنوي لعام 2024، ولم تعد هذه المشاريع تمثل سوى 6% من إجمالي أصوله. ويجري التحول نحو الذكاء الاصطناعي ومراكز البيانات والاستخدام الصناعي."
+},
+"The Line": {
+"lead": "شركة نيوم",
+"desc": "صُمّمت في الأصل مدينةً ذكية خطية بطول 170 كم لتسعة ملايين نسمة. عُلّق الإنشاء في سبتمبر 2025 ولم يُنجز سوى نحو 2.4 كم، وتأجّل التسليم النهائي إلى ما بعد 2030 بكثير.",
+"note": "تحقّق (أغسطس 2026): استُبعدت كلياً من وثيقة استراتيجية صندوق الاستثمارات العامة 2026–2030 (أغسطس 2026). عُلّق الإنشاء في 16 سبتمبر 2025 وتوقف حتى ما بعد 2030 على الأقل (سيمافور، مايو 2026)؛ وخُفّضت القوى العاملة 35% منذ أبريل 2025 ونُقل أكثر من 1,000 موظف إلى الرياض. ولم يُنجز سوى نحو 2.4 كم من أصل 170 كم، وخُفّض المستهدف السكاني من 1.5 مليون إلى أقل من 300,000 نسمة."
+},
+"Oxagon": {
+"lead": "شركة نيوم / أوكساغون",
+"desc": "المجمّع الصناعي والمينائي العائم في نيوم، وقد أصبح العقدة ذات الأولوية في البرنامج مع التركيز على مراكز بيانات الذكاء الاصطناعي والتصنيع المتقدم والخدمات اللوجستية في البحر الأحمر. والعمليات المينائية جارية.",
+"note": "تحقّق (أغسطس 2026): تعهّدت نيوم بتخصيص 3 مليارات دولار لأوكساغون (يونيو 2026)، ويُتوقع أن يبدأ إنشاء حرم داتافولت لمراكز بيانات الذكاء الاصطناعي بقيمة 5 مليارات دولار خلال أشهر (أغسطس 2026). وتعزّز دوره الاستراتيجي مع اضطراب الملاحة في مضيق هرمز، إذ يُتوقع أن يؤسس لطرق تجارة جديدة عبر البحر الأحمر. وبُسّط التصميم من مفهوم المثمّن العائم الأصلي إلى منطقة صناعية ساحلية تقليدية. وبلغت نسبة إنجاز الميناء نحو 68%، ويستهدف طاقة استيعابية تبلغ 1.5 مليون حاوية سنوياً بحلول 2030."
+},
+"Trojena": {
+"lead": "شركة نيوم",
+"desc": "وجهة مخططة للسياحة الجبلية والتزلج ضمن نيوم. فقدت حق استضافة دورة الألعاب الآسيوية الشتوية 2029 (مُنحت لألماتي في فبراير 2026)، وتأجّلت إلى ما بعد 2030 بكثير.",
+"note": "تحقّق (أغسطس 2026): أنهت نيوم ثلاثة عقود رئيسة في تروجينا تتجاوز قيمتها 6 مليارات دولار في مارس 2026، وتروجينا مستبعدة من استراتيجية صندوق الاستثمارات العامة 2026–2030 (أغسطس 2026). وفقدت دورة الألعاب الآسيوية الشتوية 2029، إذ أجّلها المجلس الأولمبي الآسيوي في 24 يناير 2026 وسُمّيت ألماتي مستضيفةً في 2 فبراير 2026. والجدول الزمني الجديد غير واضح، وربما يكون نحو 2033."
+},
+"Sindalah Island": {
+"lead": "شركة نيوم / البحر الأحمر العالمية",
+"desc": "منتجع جزيرة في البحر الأحمر تابع لنيوم، افتُتح رسمياً في أكتوبر 2024 لكنه لا يعمل في معظمه. وتشير تجاوزات التكلفة (نحو ثلاثة أضعاف الميزانية) ونقل الإدارة إلى البحر الأحمر العالمية إلى صعوبات في التنفيذ.",
+"note": "تحقّق (يونيو 2026): افتتاح رسمي في أكتوبر 2024، لكن المرسى والفنادق لم تُفتتح في معظمها؛ وتفيد التقارير بأن التكلفة بلغت نحو ثلاثة أضعاف التقدير الأولي (نحو 4 مليارات دولار). وتفيد التقارير كذلك بنقل الإدارة من نيوم إلى البحر الأحمر العالمية (فايننشال تايمز، سبتمبر 2025)، ويُقرأ ذلك مؤشراً على تراجع الثقة. ويُتوقع افتتاح فندق فور سيزونز نحو 2028."
+},
+"NEOM Green Hydrogen Company": {
+"lead": "شركة نيوم للهيدروجين الأخضر",
+"desc": "منشأة للهيدروجين الأخضر بقيمة 8.4 مليارات دولار في أوكساغون، على نطاق عالمي، مملوكة بالتساوي لنيوم وأكوا باور وإير برودكتس، والتزمت إير برودكتس بشراء كامل الإنتاج لمدة 30 عاماً. والإنتاج مستهدف الآن في 2027.",
+"note": "تحقّق (أغسطس 2026): تأخّر مستهدف الإنتاج إلى 2027 (بدلاً من نهاية 2026) وفق تقارير منتصف 2026، ويظل أكثر مكونات نيوم تقدماً. وتأكدت الحصص المتساوية (الثلث لكل شريك) في إفصاح إير برودكتس الرسمي لدى هيئة الأوراق المالية الأمريكية (مايو 2023)؛ وحصل المشروع على قروض بقيمة 6.1 مليارات دولار من 23 مصرفاً؛ ووافقت إير برودكتس على شراء كامل الإنتاج لمدة 30 عاماً (نحو 600 طن من الهيدروجين يومياً، يُشحن على هيئة أمونيا خضراء)."
+},
+"NEOM Port (Oxagon Port)": {
+"lead": "ميناء نيوم / أوكساغون",
+"desc": "ميناء مؤتمت في المياه العميقة بأوكساغون، وهو الأول في المملكة برافعات مؤتمتة بالكامل يُتحكم بها عن بُعد، ويستهدف طاقة استيعابية تبلغ 1.5 مليون حاوية سنوياً بحلول 2030.",
+"note": "تحقّق (يونيو 2026): نسبة الإنجاز نحو 68% (نوفمبر 2025)، ويستهدف محطة حاويات مؤتمتة بالكامل بحلول 2026. وفيه أول رافعات مؤتمتة بالكامل يُتحكم بها عن بُعد في المملكة. ويستهدف طاقة استيعابية تبلغ 1.5 مليون حاوية سنوياً بحلول 2030. وتكلفة المرحلة الأولى نحو 7.5 مليارات ريال (نحو 2 مليار دولار)."
+},
+"Diriyah": {
+"lead": "شركة الدرعية",
+"desc": "حيّ للثقافة ونمط الحياة حول موقع الطريف المسجّل في قائمة اليونسكو قرب الرياض، وهو من أفضل مشاريع رؤية 2030 الرائدة تقدماً، وقد افتُتحت فيه عدة مرافق، ويُقدَّر البرنامج بنحو 63 مليار دولار.",
+"note": "تحقّق (يونيو 2026): من أفضل المشاريع الكبرى تقدماً. حي الطريف ومطل البجيري وفندق باب سمحان مفتوحة، وساحة الدرعية قيد الإنشاء. وتأخّر الإنجاز من 2027 إلى 2030. وتقدّر شركة الاستشارات العقارية نايت فرانك البرنامج الكامل ب63 مليار دولار، منها نحو 14.5 مليار دولار متعاقد عليها فعلياً حتى الآن. وتجاوزت العقود المرساة منذ بدء المشروع 100 مليار ريال (نحو 27 مليار دولار)."
+},
+"Qiddiya": {
+"lead": "شركة القدية للاستثمار",
+"desc": "مدينة للترفيه والرياضة والثقافة جنوب غرب الرياض. افتُتحت مدينة سيكس فلاغز القدية في ديسمبر 2025، إيذاناً ببدء افتتاح مرحلي لنحو 70 منشأة، منها ملعب كأس العالم 2034.",
+"note": "تحقّق (يونيو 2026): افتُتحت مدينة سيكس فلاغز القدية (وفيها أسرع قطار أفعواني وأطوله في العالم، «فالكونز فلايت») في 31 ديسمبر 2025، وهي الأولى من نحو 70 منشأة مخططة. ولا يزال استاد الأمير محمد بن سلمان (أحد ملاعب كأس العالم 2034) ومركز الفنون الأدائية وحلبة السرعة قيد الإنشاء. ويُقدَّر البرنامج بنحو 40 مليار دولار."
+},
+"Red Sea Global (The Red Sea & AMAALA)": {
+"lead": "البحر الأحمر العالمية",
+"desc": "وجهة سياحية فاخرة على الساحل الغربي للمملكة. تعمل وجهة البحر الأحمر منذ 2023، وأعلنت أمالا (مكوّن العافية فائق الفخامة) افتتاحها في نوفمبر 2025.",
+"note": "تحقّق (يونيو 2026): تستقبل وجهة البحر الأحمر الضيوف منذ 2023 (نحو 9 فنادق)، وافتُتح منتجع ثول الخاص في 2024، وأُعلن افتتاح «الخلجان الثلاثة» في أمالا في نوفمبر 2025 (نحو 13.6 مليار دولار مستثمرة في المرحلة الأولى، وتأمين تمويل جديد بقيمة 1.73 مليار دولار في أكتوبر 2025). وأُعيد تصنيفها ضمن السياحة والترفيه فقط، فالتوجه التجديدي سمة للمشروع لا قطاع."
+},
+"King Salman Park": {
+"lead": "مؤسسة حديقة الملك سلمان",
+"desc": "أكبر حديقة حضرية في العالم (16.6 كم²) في الرياض، تحت مظلة الهيئة الملكية لمدينة الرياض. مشروع حكومي (لا يتبع صندوق الاستثمارات العامة)، والمرحلة الأولى مستهدفة في 2026.",
+"note": "تحقّق (يونيو 2026): تصحيح الملكية: تتبع الهيئة الملكية لمدينة الرياض / مؤسسة حديقة الملك سلمان (جهة حكومية، لا صندوق الاستثمارات العامة). وافتتاح المرحلة الأولى مستهدف في 2026 (بعد أن كان مقرراً في 2025). وأُسس صندوق استثمار خاص بقيمة 3.8 مليارات ريال (نحو مليار دولار) في نوفمبر 2025 مع أجدان العقارية وسدكو كابيتال. وستكون أكبر حديقة حضرية في العالم (16.6 كم²)."
+},
+"New Murabba": {
+"lead": "شركة تطوير المربع الجديد",
+"desc": "وسط مدينة جديد للرياض يتمحور حول مبنى المكعب. بعد توقف في يناير 2026 استُؤنفت أعمال أساسات المكعب بحلول أغسطس 2026، ويُسلَّم الحي على مراحل حتى 2040، والمرحلة الأولى مستهدفة لإكسبو 2030.",
+"note": "تحقّق (أغسطس 2026): استُؤنفت أعمال المكعب: أعمال الأساسات جارية (شركة HSSG لمقاولات الأساسات) ونسبة الحفر نحو 86% (أُزيل أكثر من 10 ملايين متر مكعب من التربة)، وموعد تقديم العطاءات للأساسات الخرسانية الرئيسة 20 أكتوبر 2026 (ميد، 20 أغسطس 2026). ويأتي ذلك بعد التعليق الذي أوردته رويترز في يناير 2026 بانتظار مراجعة التمويل. ويُنفَّذ الحي على مراحل حتى 2040: المرحلة الأولى بحلول 2030 لإكسبو، ومراحل لاحقة مرتبطة بكأس العالم 2034، ثم 2035 و2040."
+},
+"ROSHN": {
+"lead": "مجموعة روشن",
+"desc": "المطوّر الوطني للمجتمعات السكنية التابع لصندوق الاستثمارات العامة. سُلّم مشروع سدرة في الرياض قبل موعده، ما جعل روشن من المشاريع الكبرى القليلة التي حققت إنجازاً رئيساً مبكراً.",
+"note": "تحقّق (يونيو 2026): سُلّم مشروع سدرة (مجتمع سكني بمساحة 20 مليون م² في الرياض) قبل موعده، وهو أول مشروع كبير يسلّم منازل للعملاء. والمستهدف 400,000 منزل بحلول 2030، وتملك المجموعة أكثر من 200 مليون م² من الأراضي للبناء مستقبلاً. وجرى ترتيب تسهيل ائتماني بقيمة 10 مليارات ريال (نحو 2.7 مليار دولار). والرئيس التنفيذي ديفيد غروفر."
+},
+"Ma'aden Mining Expansion": {
+"lead": "شركة التعدين العربية السعودية (معادن)",
+"desc": "بطل التعدين الوطني في المملكة، ومن أقوى المشاريع أداءً في رؤية 2030، إذ ارتفع صافي ربحه 91% في 2025. وتوسعة الفوسفات 3 على المسار لعام 2027.",
+"note": "تحقّق (يونيو 2026): توسع قوي: بلغت نسبة إنجاز توسعة الفوسفات 3 نحو 50% وهي على الجدول لبدء الإنتاج في 2027. وارتفع صافي الربح 91% في الأشهر التسعة الأولى من 2025. وتُقدَّم بوصفها «الركيزة الثالثة» للاقتصاد السعودي، ومن أبرز المتفوقين في محفظة رؤية 2030."
+},
+"Ma'aden Aluminium": {
+"lead": "معادن (تملك 100% منذ يوليو 2025)",
+"desc": "مجمّع متكامل من البوكسيت إلى الألومنيوم في رأس الخير. كان مشروعاً مشتركاً بين معادن وألكوا، وخرجت ألكوا بالكامل في يوليو 2025، فباتت معادن تملكه بنسبة 100%.",
+"note": "تحقّق (يونيو 2026): تصحيح رئيس: خرجت ألكوا بالكامل في 1 يوليو 2025 ببيع حصتها البالغة 25.1% لمعادن مقابل 1.35 مليار دولار (150 مليون دولار نقداً إضافةً إلى أسهم في معادن)، وتأكد ذلك في إفصاحات ألكوا الرسمية لدى هيئة الأوراق المالية الأمريكية. لم يعد مشروعاً مشتركاً، وأُعيد تصنيفه من مشروع مشترك إلى مختلط (شركة مدرجة)، وحُذفت بيانات المشروع المشترك."
+},
+"SABIC": {
+"lead": "الشركة السعودية للصناعات الأساسية (سابك)",
+"desc": "شركة عالمية عملاقة للبتروكيماويات، مملوكة لأرامكو السعودية بنسبة 70%. وهي ركيزة أساسية في محور التصنيع ضمن رؤية 2030، وتحقق إيرادات كبيرة غير نفطية.",
+"note": "تحقّق (يونيو 2026): تملك أرامكو 70%، وتُتداول ال30% المتبقية في السوق المالية السعودية (استحوذت أرامكو على الحصة من صندوق الاستثمارات العامة مقابل 259.125 مليار ريال / 69.1 مليار دولار في 2020، وتسدد للصندوق على أقساط حتى 2028). وقلّصت ذراع الأسمدة في سابك خطط مصنع أمونيا منخفضة الكربون مطلع 2026."
+},
+"SATORP / Amiral Expansion": {
+"lead": "ساتورب",
+"desc": "مجمّع أميرال للبتروكيماويات المتكامل مع مصفاة ساتورب في الجبيل (مصفاة أرامكو وتوتال إنرجيز): أرامكو (62.5%) / توتال إنرجيز (37.5%). على المسار لعام 2027، وسيكون أكبر منتج للإيثيلين في الخليج، وهو مادة أساسية في صناعة البلاستيك.",
+"note": "تحقّق (يونيو 2026): أُرسيت عقود الإنشاء الرئيسة في يونيو 2023، والتشغيل التجاري مستهدف في 2027. وتأكدت قيمة 11 مليار دولار (إفصاح مباشر من توتال إنرجيز). وسينتج 1.65 مليون طن سنوياً من الإيثيلين (مادة أساسية في صناعة البلاستيك)، وهو أكبر مصنع من نوعه في الخليج، إضافةً إلى وحدتين للبلاستيك بطاقة 500,000 طن لكل منهما. وهو على المسار وفق التقارير المشتركة لأرامكو وتوتال إنرجيز."
+},
+"Saudi Aramco Jafurah Gas Field": {
+"lead": "أرامكو السعودية",
+"desc": "بدأ إنتاج المرحلة الأولى من أكبر مشروع للغاز الصخري خارج الولايات المتحدة في ديسمبر 2025. ويستهدف ملياري قدم مكعبة من الغاز يومياً بحلول 2030، وهو محوري في استراتيجية أرامكو لنمو الغاز.",
+"note": "تحقّق (يونيو 2026): بدأ إنتاج المرحلة الأولى في ديسمبر 2025 بمعدل 450 مليون قدم مكعبة من الغاز يومياً، وأكدت ذلك وزارة المالية في بيان ميزانية 2026. والمستهدف ملياري قدم مكعبة يومياً بحلول 2030. وجمعت أرامكو 11 مليار دولار في 2025 بتأجير معامل معالجة الغاز لمجموعة مستثمرين بقيادة بلاك روك، وهو ترتيب تمويلي تحتفظ فيه أرامكو بالملكية. وتتجاوز قيمة دورة حياة المشروع 100 مليار دولار."
+},
+"King Salman Energy Park (SPARK)": {
+"lead": "أرامكو السعودية (سبارك)",
+"desc": "مدينة صناعية للطاقة قرب الدمام، مملوكة بالكامل لأرامكو السعودية. اكتملت المرحلة الأولى وهي تعمل بسبعة مصانع، والمستهدف أكثر من 300 منشأة عند اكتمالها (نحو 2035).",
+"note": "تحقّق (يونيو 2026): 7 مصانع عاملة و14 قيد الإنشاء حتى 2025. واكتملت المرحلة الأولى في 2021، وهي أول مدينة صناعية تنال شهادة LEED الفضية الدولية للمباني الخضراء. والمخطط أكثر من 300 منشأة عند الاكتمال (نحو 2035). وتُدار محطة حاويات برية بالشراكة مع هتشيسون بورتس. ويُتوقع أن تضيف نحو 6 مليارات دولار سنوياً إلى الاقتصاد عند اكتمالها."
+},
+"Saudi Water Authority (SWA) Desalination": {
+"lead": "الهيئة السعودية للمياه (المؤسسة العامة لتحلية المياه المالحة سابقاً)",
+"desc": "أكبر منتج للمياه المحلاة في العالم، وتديره الهيئة السعودية للمياه التي حلّت رسمياً محل المؤسسة العامة لتحلية المياه المالحة في 2024. وتتنامى الطاقة الإنتاجية عبر عقود طويلة الأجل مع شركات المياه الخاصة.",
+"note": "تحقّق (يونيو 2026): تصحيح اسم الجهة: أصبحت المؤسسة العامة لتحلية المياه المالحة الهيئةَ السعودية للمياه في 2024. وتنتج نحو 11.5 مليون متر مكعب من مياه الشرب يومياً، وهو الأكبر بين جميع الجهات في العالم. وتُبنى المحطات الجديدة وتُشغَّل بواسطة شركات خاصة (مثل أكوا باور) بموجب عقود حكومية طويلة الأجل."
+},
+"MODON Industrial Cities": {
+"lead": "الهيئة السعودية للمدن الصناعية ومناطق التقنية (مدن)",
+"desc": "شبكة وطنية تضم أكثر من 35 مدينة صناعية توفّر أراضي مطوَّرة لنحو 6,500 مصنع و517,000 عامل، وتدعم توطين التصنيع في رؤية 2030.",
+"note": "تحقّق (يونيو 2026): نحو 35–36 مدينة صناعية (منها 6 واحات صناعية) تحتضن نحو 6,500 مصنع ونحو 517,000 موظف. وأُرسيت عقود جديدة بقيمة 266 مليون ريال في 2024. وتعمل تحت مظلة وزارة الصناعة والثروة المعدنية."
+},
+"Ras Al-Khair Industrial City": {
+"lead": "الهيئة الملكية للجبيل وينبع",
+"desc": "مركز للتعدين والصناعات البحرية والصناعة على ساحل الخليج تديره الهيئة الملكية للجبيل وينبع. ويضم حوض الصناعات البحرية الدولية ومجمّع معادن للألومنيوم ومحطة تحلية الهيئة السعودية للمياه. ويتجاوز إجمالي الاستثمار 165 مليار ريال (نحو 44 مليار دولار).",
+"note": "تحقّق (يونيو 2026): تجاوز إجمالي الاستثمار 165 مليار ريال (نحو 44 مليار دولار) بنهاية 2025، أكثر من 90% منه من شركات خاصة (واس/عرب نيوز، مايو 2026). ويضم حوض الصناعات البحرية الدولية ومصهر معادن للألومنيوم ومحطة تحلية الهيئة السعودية للمياه. واستقطبت منطقته الاقتصادية الخاصة نحو 27 مليار ريال من الاستثمارات (منها 12 مليار ريال من مستثمرين أجانب) بنهاية 2025. وتديره الهيئة الملكية للجبيل وينبع، لا هيئة «مدن»."
+},
+"International Maritime Industries (IMI)": {
+"lead": "الصناعات البحرية الدولية",
+"desc": "أكبر حوض بحري متكامل الخدمات في الخليج، في رأس الخير. يبني منصات الحفر البحرية والسفن ويصونها، ويشمل أول عقد كبير لبناء السفن في المملكة ست سفن شحن لصالح البحري (التسليم 2028–2029).",
+"note": "تحقّق (يونيو 2026): الحصص وفق التقرير السنوي للبحري لعام 2018 والإعلان التأسيسي (رويترز/أرامكو): أرامكو 50.1%، ولامبريل 20%، والبحري 19.9%، وهيونداي للصناعات الثقيلة 10% (تذكر بعض المصادر الثانوية أرامكو 40% وهيونداي 20%، واعتُمد إفصاح البحري مصدراً أساسياً). وأول طلبية كبيرة لبناء السفن في المملكة: ست سفن شحن كبيرة للبحري (762 مليون ريال، التسليم 2028–2029). وضمنت أرامكو والبحري أعمالاً بنحو 10 مليارات دولار على مدى 10 سنوات."
+},
+"King Abdullah Economic City (KAEC)": {
+"lead": "إعمار المدينة الاقتصادية",
+"desc": "مدينة اقتصادية على البحر الأحمر أُعيد تنشيطها منطقةً اقتصادية خاصة ومركزاً لتصنيع السيارات. ويملك صندوق الاستثمارات العامة حصة أغلبية بنسبة 55.5% في إعمار المدينة الاقتصادية، المدرجة في السوق المالية السعودية.",
+"note": "تحقّق (يونيو 2026): يملك صندوق الاستثمارات العامة الآن حصة أغلبية بنسبة 55.5% (ارتفعت من نحو 25% بتحويل قروض مستحقة له بقيمة 2.8 مليار ريال إلى أسهم). وأُعيد تنشيطها منطقةً اقتصادية خاصة وتجمّعاً للسيارات باسم «تجمّع الملك سلمان للسيارات» يضم مصانع سير ولوسيد AMP-2 وهيونداي HMMME. ولا تزال إعمار المدينة الاقتصادية مدرجة في السوق المالية السعودية."
+},
+"King Abdullah Port": {
+"lead": "شركة تطوير الموانئ",
+"desc": "أول ميناء في المملكة يطوّره القطاع الخاص بالكامل. صنّفه البنك الدولي سابقاً أكفأ ميناء حاويات في العالم، وجاء في المرتبة 30 في مؤشر 2023 (المنشور في 2024). وتستهدف المرحلة الثانية طاقة استيعابية تبلغ نحو 6 ملايين حاوية سنوياً.",
+"note": "تحقّق (يونيو 2026): أول ميناء تجاري في المملكة مملوك ومطوَّر ومُشغَّل بالكامل من القطاع الخاص. تعامل مع 2.93 مليون حاوية في 2023. صنّفه البنك الدولي سابقاً أكفأ ميناء حاويات في العالم، وجاء في المرتبة 30 في مؤشر البنك الدولي لأداء موانئ الحاويات لعام 2023 (المنشور في 2024). وتستهدف المرحلة الثانية نحو 6 ملايين حاوية سنوياً. والتوزيع الدقيق للحصص بين شركاء شركة تطوير الموانئ غير معلن."
+},
+"Jubail Industrial City II": {
+"lead": "الهيئة الملكية للجبيل وينبع",
+"desc": "توسعة المدينة الصناعية الرائدة للبتروكيماويات في المملكة على ساحل الخليج. وتضاعف الهيئة الملكية مساحة الجبيل بحلول 2030 بالتزام قدره 67.5 مليار ريال (نحو 18 مليار دولار).",
+"note": "تحقّق (يونيو 2026): خُصص 67.5 مليار ريال (نحو 18 مليار دولار) لمضاعفة مساحة الجبيل بحلول 2030. وأُضيفت مصانع كيميائية جديدة لشركة إنيوس البريطانية (نحو 7 مليارات ريال) في 2024. وتدير شركة بكتل الأمريكية للهندسة برنامج التوسعة البالغ نحو 6 مليارات دولار. وتحتضن المدينة مجمّع أميرال (ساتورب)، والجامعة مخططة نحو 2026."
+},
+"Ceer": {
+"lead": "سير موتورز",
+"desc": "أول علامة سعودية للسيارات الكهربائية، وهي مشروع مشترك بين صندوق الاستثمارات العامة وفوكسكون بتقنية BMW. وأولى المركبات مستهدفة في أكتوبر–ديسمبر 2026 من مصنع مدينة الملك عبدالله الاقتصادية بقيمة 1.3 مليار دولار، والطاقة الكاملة 240,000 مركبة سنوياً.",
+"note": "تحقّق (يونيو 2026): الإنتاج في أكتوبر–ديسمبر 2026 (بعد أن كان مقرراً في 2025). مصنع بقيمة 1.3 مليار دولار في مدينة الملك عبدالله الاقتصادية (240,000 مركبة سنوياً بالطاقة الكاملة). ويستخدم تقنية BMW المرخّصة، وستورّد هيونداي ترانسيس أنظمة الدفع (صفقة بقيمة 8.2 مليارات ريال). وتوزيع الملكية بين الصندوق وفوكسكون غير معلن. ويستهدف تصنيع 45% من القطع محلياً وإضافة 8 مليارات دولار إلى الاقتصاد بحلول 2034."
+},
+"Lucid Manufacturing (AMP-2, KAEC)": {
+"lead": "مجموعة لوسيد (يملك صندوق الاستثمارات العامة نحو 60%)",
+"desc": "مصنع لوسيد AMP-2 في مدينة الملك عبدالله الاقتصادية، أول مصنع سيارات في المملكة، افتُتح في سبتمبر 2023. ويملك صندوق الاستثمارات العامة نحو 60% من مجموعة لوسيد. ويُبنى حالياً مصنع سيارات متكامل بجوار مصنع التجميع.",
+"note": "تحقّق (يونيو 2026): تصحيح الاسم: هذا مصنع لوسيد AMP-2، أما AMP-1 فهو منشأة لوسيد في أريزونا (الولايات المتحدة). افتُتح AMP-2 في سبتمبر 2023 بوصفه أول مصنع سيارات في المملكة. وتجمّع المرحلة الأولى نحو 5,000 سيارة سنوياً من مجموعات قطع تُشحن من الولايات المتحدة، ويُبنى مصنع متكامل بجواره (155,000 سيارة سنوياً عند اكتماله). والتزم الصندوق والصناديق التابعة له بنحو 9.5 مليارات دولار للوسيد منذ 2018."
+},
+"Hyundai-PIF Vehicle Plant (HMMME)": {
+"lead": "هيونداي موتور للتصنيع في الشرق الأوسط (HMMME)",
+"desc": "أول مصنع لهيونداي في الشرق الأوسط، وهو مشروع مشترك بين صندوق الاستثمارات العامة (70%) وهيونداي موتور (30%). وُضع حجر الأساس في مايو 2025 في مدينة الملك عبدالله الاقتصادية، وأول مركبة مستهدفة في أكتوبر–ديسمبر 2026.",
+"note": "تحقّق (يونيو 2026): حصص الصندوق 70% وهيونداي 30% مؤكدة في البيانات الرسمية للصندوق وهيونداي. وُضع حجر الأساس في 14 مايو 2025 في تجمّع الملك سلمان للسيارات بمدينة الملك عبدالله الاقتصادية. وأول مركبة في أكتوبر–ديسمبر 2026، وسينتج المصنع 50,000 مركبة سنوياً (بنزين وكهرباء)، والاستثمار يتجاوز 500 مليون دولار."
+},
+"Saudi Green Initiative (SGI)": {
+"lead": "اللجنة العليا لمبادرة السعودية الخضراء / وزارة البيئة والمياه والزراعة / المركز الوطني لتنمية الغطاء النباتي",
+"desc": "برنامج وطني يستهدف الحياد الصفري بحلول 2060 وزراعة 10 مليارات شجرة. أُعلن عن استثمارات تتجاوز 186 مليار دولار، وزُرعت نحو 159 مليون شجرة حتى مطلع 2026، وتتسارع مستهدفات الطاقة المتجددة.",
+"note": "تحقّق (يونيو 2026): استثمارات معلنة تتجاوز 186–188 مليار دولار (705 مليارات ريال) وفق الموقع الرسمي للمبادرة. وزُرعت نحو 159 مليون شجرة حتى مطلع 2026، والمستهدف الوطني 10 مليارات شجرة، وأُعيد تأهيل أكثر من مليون هكتار من الأراضي. والمستهدف المرحلي أكثر من 600 مليون شجرة بحلول 2030، والالتزام بالحياد الصفري بحلول 2060."
+},
+"Special Integrated Logistics Zone (SILZ)": {
+"lead": "شركة المنطقة اللوجستية المتكاملة الخاصة (بإشراف الهيئة العامة للطيران المدني)",
+"desc": "منطقة جمركية خاصة في مطار الرياض، تخزّن فيها الشركات العالمية البضائع وتعالجها وتعيد تصديرها بإجراءات جمركية مبسطة، وتعمل منذ 2022. ومن أبرز المستأجرين أبل ولينوفو (مصنع بمساحة 200,000 م² يُفتتح في 2026) والمركز الإقليمي لشركة DHL.",
+"note": "تحقّق (يونيو 2026): أُطلقت في أكتوبر 2022، وهي تعمل وتتوسع. ومن المستأجرين المؤكدين: أبل (أول شاغل)، ولينوفو (وضع حجر الأساس 2025، منشأة بمساحة 200,000 م²، والإنتاج 2026)، وDHL (مركز إقليمي بقيمة 130 مليون يورو، نوفمبر 2025)، ونوكيا، وشلهوب، وشي إن، وآلات/سافاير."
+}
+};
+const AR_PARTNER = {"NEOM": "نيوم", "ACWA Power": "أكوا باور", "Air Products": "إير برودكتس", "Ajdan Real Estate": "أجدان العقارية", "SEDCO Capital": "سدكو كابيتال", "Saudi Aramco": "أرامكو السعودية", "Public float": "أسهم متداولة للعموم", "TotalEnergies": "توتال إنرجيز", "GIP/BlackRock consortium (midstream financing)": "تحالف GIP / بلاك روك (تمويل مرافق المعالجة والنقل)", "Hutchison Ports (inland cargo terminal)": "هتشيسون بورتس (محطة الحاويات البرية)", "Lamprell": "لامبريل", "Bahri": "البحري", "Hyundai Heavy Industries": "هيونداي للصناعات الثقيلة", "PIF (majority shareholder)": "صندوق الاستثمارات العامة (مساهم أغلبية)", "Emaar, The Economic City": "إعمار المدينة الاقتصادية", "Huta Marine (Binladin Group)": "هوتا مارين (مجموعة بن لادن)", "PIF": "صندوق الاستثمارات العامة", "Foxconn (Hon Hai)": "فوكسكون (هون هاي)", "PIF (parent stake in Lucid Group)": "صندوق الاستثمارات العامة (حصة في الشركة الأم، مجموعة لوسيد)", "Hyundai Motor": "هيونداي موتور", "Other shareholders / public float": "مساهمون آخرون / أسهم متداولة"};
+const AR_COMPLETION = {"2030+ (revised)": "بعد 2030 (معدَّل)", "Post-2030": "بعد 2030", "Ongoing": "مستمر"};
+function arTxt(p,k){ const t=AR_TXT[p.name]; return (t&&t[k])||p[k]; }
+function arPartner(n){ return AR_PARTNER[n]||n; }
+function arCompletion(c){ return AR_COMPLETION[c]||c; }
+
 
 /* ─────────────────────── Arabic dashboard state ─────────────────────── */
 const arState = {sectors:new Set(),own:new Set(),status:new Set(),conf:new Set(),downscaled:false,search:"",view:"card",sortKey:null,sortDir:1};
@@ -1304,7 +1487,7 @@ function arConfChipsInit(){
   const wrap=document.getElementById("arConfChips");
   if(!wrap) return;
   wrap.innerHTML="";
-  ["High","Medium","Low"].forEach(level=>{
+  ["High","Medium","Low"].filter(l=>PROJECTS.some(p=>confOf(p).label===l)).forEach(level=>{
     const c=document.createElement("button");
     c.className="conf-chip";
     c.innerHTML=`<span class="cdot" style="background:${CONF[level].hex}"></span>${AR_CONF[level]}`;
@@ -1328,7 +1511,7 @@ function arFiltered(){
     return true;
   });
 }
-function arFmtInv(v){ return v==null?"—":"$"+(Number.isInteger(v)?v:v.toFixed(1))+"B"; }
+function arFmtInv(v){ return v==null?"—":(Number.isInteger(v)?v:v.toFixed(1))+" مليار $"; }   // audit 12/10 (macro-06): Arabic unit, as in the KPI
 function arFmtTotalInv(v){ const r=Math.round(v); return r>=1000 ? "≈ "+(r/1000).toFixed(1)+" تريليون $" : "≈ "+r+" مليار $"; }
 
 /* KPIs — computed from the SAME data and the SAME way as the English dashboard */
@@ -1361,13 +1544,13 @@ function arRenderCards(rows){
     const tags=p.sectors.map(s=>`<span class="tag">${AR_SECTOR[s]||s}</span>`).join("")
       +(p.downscaled?`<span class="ds-pill">⚠ مُقلَّص</span>`:"")
       +(isVerified(p)?`<span class="vf-pill">✓ موثَّق</span>`:"");
-    return `<div class="card" data-idx="${idx}">
+    return `<div class="card" data-idx="${idx}" tabindex="0" role="button">
       <div class="c-top"><div class="c-name">${arName(p)}</div><span class="badge" style="background:${OWN_HEX[p.ownership]}">${AR_OWN[p.ownership]}</span></div>
       <div class="tags">${tags}</div>
-      <div class="desc">${p.desc}</div>
+      <div class="desc">${arTxt(p,'desc')}</div>
       <div class="c-meta">
         <span class="status-pill"><span class="dot" style="background:${STATUS_HEX[p.status]}"></span>${AR_STATUS[p.status]}</span>
-        <div class="figs"><b>${arFmtInv(p.investment)}</b>${p.completion}<span class="conf-inline" style="margin-top:4px;display:flex;justify-content:flex-start"><span class="conf-dot" style="background:${c.hex}"></span>${AR_CONF[c.label]}</span></div>
+        <div class="figs"><b>${arFmtInv(p.investment)}</b>${arCompletion(p.completion)}<span class="conf-inline" style="margin-top:4px;display:flex;justify-content:flex-start"><span class="conf-dot" style="background:${c.hex}"></span>${AR_CONF[c.label]}</span></div>
       </div>
     </div>`;
   }).join("");
@@ -1391,13 +1574,13 @@ function arRenderTable(rows){
   }).join("");
   const body=rows.map(p=>{
     const idx=PROJECTS.indexOf(p);const c=confOf(p);
-    return `<tr data-idx="${idx}">
+    return `<tr data-idx="${idx}" tabindex="0">
       <td><span class="tname">${arName(p)}</span>${p.downscaled?`<div style="margin-top:3px"><span class="ds-pill">⚠ مُقلَّص</span></div>`:""}</td>
       <td>${p.sectors.map(s=>AR_SECTOR[s]||s).join("، ")}</td>
       <td><span class="mini-badge" style="background:${OWN_HEX[p.ownership]}">${AR_OWN[p.ownership]}</span></td>
-      <td style="color:var(--ink-soft)">${p.lead}</td>
+      <td style="color:var(--ink-soft)">${arTxt(p,'lead')}</td>
       <td><span class="mini-dot"><span class="dot" style="background:${STATUS_HEX[p.status]}"></span>${AR_STATUS[p.status]}</span></td>
-      <td class="num">${p.completion}</td>
+      <td class="num">${arCompletion(p.completion)}</td>
       <td class="num" style="font-weight:600">${arFmtInv(p.investment)}</td>
       <td><span class="mini-dot"><span class="dot" style="background:${c.hex}"></span>${AR_CONF[c.label]}</span></td>
     </tr>`;
@@ -1458,7 +1641,7 @@ let arJvChart;
 function arOpenDrawer(idx){
   const p=PROJECTS[idx];const c=confOf(p);
   document.getElementById("arDName").textContent=arName(p);
-  document.getElementById("arDLead").textContent=p.lead;
+  document.getElementById("arDLead").textContent=arTxt(p,'lead');
   document.getElementById("arDBadges").innerHTML=
     `<span class="badge" style="background:${OWN_HEX[p.ownership]}">${AR_OWN[p.ownership]}</span>`+
     `<span class="badge" style="background:${STATUS_HEX[p.status]}">${AR_STATUS[p.status]}</span>`+
@@ -1470,40 +1653,42 @@ function arOpenDrawer(idx){
   let ownerSection;
   if(p.partners.length && hasStakes){
     ownerSection=`<div class="jv-wrap"><div class="jv-chart"><canvas id="arJvChart"></canvas></div>
-      <div class="jv-legend">${p.partners.map((pt,i)=>`<div class="jv-item"><span class="dot" style="background:${SECTOR_HEX[i%SECTOR_HEX.length]}"></span><span class="jn">${pt.n}</span><span class="js">${pt.s}%</span></div>`).join("")}</div></div>`;
+      <div class="jv-legend">${stakeParts(p).map(pt=>`<div class="jv-item"><span class="dot" style="background:${pt.c}"></span><span class="jn">${arPartner(pt.n)}</span><span class="js">${pt.s}%</span></div>`).join("")}</div></div>`;
   } else if(p.partners.length){
-    ownerSection=`<div class="jv-bars">${p.partners.map((pt,i)=>`<div class="jv-bar-row"><div class="jv-bar-top"><span class="jn">${pt.n}</span><span class="js">${pt.s!=null?pt.s+"%":"غير معلن"}</span></div><div class="jv-track"><div class="jv-fill" style="width:${pt.s!=null?pt.s:50}%;background:${SECTOR_HEX[i%SECTOR_HEX.length]};opacity:${pt.s!=null?1:.4}"></div></div></div>`).join("")}<div class="jv-none" style="margin-top:4px">النسب الدقيقة غير معلنة بالكامل.</div></div>`;
+    ownerSection=`<div class="jv-bars">${p.partners.map((pt,i)=>`<div class="jv-bar-row"><div class="jv-bar-top"><span class="jn">${arPartner(pt.n)}</span><span class="js">${pt.s!=null?pt.s+"%":"غير معلن"}</span></div><div class="jv-track"><div class="jv-fill" style="width:${pt.s!=null?pt.s:50}%;background:${SECTOR_HEX[i%SECTOR_HEX.length]};opacity:${pt.s!=null?1:.4}"></div></div></div>`).join("")}<div class="jv-none" style="margin-top:4px">النسب الدقيقة غير معلنة بالكامل.</div></div>`;
   } else {
     const label=p.ownership==="PIF"?"مملوك بالكامل لصندوق الاستثمارات العامة":p.ownership==="Government"?"جهة حكومية — لا يوجد شركاء في مشروع مشترك":p.ownership==="Mixed"?"مملوك للدولة ومُدرَج في السوق المالية":"ملكية لجهة واحدة";
     ownerSection=`<div class="jv-none">${label}.</div>`;
   }
-  const noteHtml = p.note ? `<div class="d-section"><div class="note-box ${p.downscaled?'alert':''}"><div><strong>ملاحظة المراجعة:</strong> ${p.note}</div></div></div>` : "";
+  const noteHtml = p.note ? `<div class="d-section"><div class="note-box ${p.downscaled?'alert':''}"><div><strong>ملاحظة المراجعة:</strong> ${arTxt(p,'note')}</div></div></div>` : "";
 
   document.getElementById("arDrawerBody").innerHTML=`
-    <div class="d-section"><div class="d-desc">${p.desc}</div></div>
+    <div class="d-section"><div class="d-desc">${arTxt(p,'desc')}</div></div>
     ${noteHtml}
     <div class="d-section"><h3>الحقائق الأساسية</h3><div class="facts">
       <div class="fact"><div class="fl">الملكية</div><div class="fv">${AR_OWN[p.ownership]}</div></div>
       <div class="fact"><div class="fl">الحالة</div><div class="fv" style="font-size:13px">${AR_STATUS[p.status]}</div></div>
-      <div class="fact"><div class="fl">الاكتمال المتوقع</div><div class="fv num">${p.completion}</div></div>
+      <div class="fact"><div class="fl">الاكتمال المتوقع</div><div class="fv num">${arCompletion(p.completion)}</div></div>
       <div class="fact"><div class="fl">الاستثمار</div><div class="fv num">${arFmtInv(p.investment)}</div></div>
       <div class="fact"><div class="fl">موثوقية البيانات</div><div class="fv" style="font-size:13px;display:flex;align-items:center;gap:7px"><span class="conf-dot" style="background:${c.hex}"></span>${AR_CONF[c.label]}</div><div style="font-size:10.5px;color:var(--ink-faint);margin-top:2px">${c.label==='High'?'مؤكدة / موثقة':c.label==='Medium'?'تقارير متطورة':'تقدير إرشادي'}</div></div>
-      <div class="fact"><div class="fl">آخر مراجعة</div><div class="fv" style="font-size:13px">أغسطس 2026</div></div>
+      <div class="fact"><div class="fl">آخر مراجعة</div><div class="fv" style="font-size:13px">${reviewedOf(p,true)}</div></div>
     </div></div>
     <div class="d-section"><h3>هيكل الملكية والشركاء</h3>${ownerSection}</div>
     <div class="d-section"><h3>القطاعات</h3><div class="tags">${p.sectors.map(s=>`<span class="tag">${AR_SECTOR[s]||s}</span>`).join("")}</div></div>`;
 
+  ehDrawerOpen("arDrawer","arDrawerClose");
   document.getElementById("arScrim").classList.add("open");
   document.getElementById("arDrawer").classList.add("open");
   document.getElementById("arDrawer").setAttribute("aria-hidden","false");
   if(arJvChart){arJvChart.destroy();arJvChart=null;}
   if(p.partners.length && hasStakes){
     arJvChart=new Chart(document.getElementById("arJvChart"),{type:"doughnut",
-      data:{labels:p.partners.map(pt=>pt.n),datasets:[{data:p.partners.map(pt=>pt.s),backgroundColor:p.partners.map((_,i)=>SECTOR_HEX[i%SECTOR_HEX.length]),borderColor:ehTok("--eh-paper","#fff"),borderWidth:3}]},
+      data:{labels:stakeParts(p).map(pt=>arPartner(pt.n)),datasets:[{data:stakeParts(p).map(pt=>pt.s),backgroundColor:stakeParts(p).map(pt=>pt.c),borderColor:ehTok("--eh-paper","#fff"),borderWidth:3}]},
       options:{responsive:true,maintainAspectRatio:false,cutout:"60%",plugins:{legend:{display:false},tooltip:{backgroundColor:"#15224D",padding:9,cornerRadius:8,callbacks:{label:(ctx)=>` ${ctx.label}: ${ctx.parsed}%`}}}}});
   }
 }
 function arCloseDrawer(){
+  ehDrawerClosed("arDrawer");
   document.getElementById("arScrim").classList.remove("open");
   document.getElementById("arDrawer").classList.remove("open");
   document.getElementById("arDrawer").setAttribute("aria-hidden","true");
@@ -1529,7 +1714,7 @@ function arInit(){
   arInited=true;
   arMakeChips(document.getElementById("arSectorChips"),ALL_SECTORS,arState.sectors,'sector');
   arMakeChips(document.getElementById("arOwnChips"),ALL_OWN,arState.own,'own');
-  arMakeChips(document.getElementById("arStatusChipsF"),ALL_STATUS,arState.status,'status');
+  arMakeChips(document.getElementById("arStatusChipsF"),ALL_STATUS.filter(s=>PROJECTS.some(p=>p.status===s)),arState.status,'status');
   arConfChipsInit();
   const as=document.getElementById("arSearchInput");
   if(as) as.addEventListener("input",e=>{arState.search=e.target.value;arApply();});

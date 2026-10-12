@@ -1,0 +1,77 @@
+{
+ "generated": "2026-10-12 14:24",
+ "title": "Government Tenders — audit fix shell-20",
+ "failures": [],
+ "changes": [
+  {
+   "file": "et",
+   "kind": "exact",
+   "category": "css",
+   "note": "shell-20a: own colour pair for open / closed",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  --core:var(--eh-c1);--adj:var(--eh-c2);--bar:var(--eh-c1);--bar2:var(--eh-c2);--grid:var(--eh-line);",
+   "new": "  --core:var(--eh-c1);--adj:var(--eh-c2);--bar:var(--eh-c1);--bar2:var(--eh-c2);--grid:var(--eh-line);\n  --open:var(--eh-c5);--closed:var(--eh-grey);   /* audit shell-20: open / closed never reuse the Core / Related colours */"
+  },
+  {
+   "file": "et",
+   "kind": "exact",
+   "category": "code",
+   "note": "shell-20a: stacked bars accept their own colours",
+   "occurrences": 1,
+   "ok": true,
+   "old": "cols=stack?['var(--core)','var(--adj)']:['var(--bar)'];",
+   "new": "cols=stack?(opt.cols||['var(--core)','var(--adj)']):['var(--bar)'];"
+  },
+  {
+   "file": "et",
+   "kind": "exact",
+   "category": "code",
+   "note": "shell-20a: published-per-day chart uses the open / closed pair",
+   "occurrences": 1,
+   "ok": true,
+   "old": "[{name:L('Still open when checked','مفتوحة عند المراجعة'),color:'var(--core)',vals:DY.map(r=>r.open)},{name:L('Closed','مغلقة'),color:'var(--adj)',vals:DY.map(r=>r.n-r.open)}]",
+   "new": "[{name:L('Still open when checked','مفتوحة عند المراجعة'),color:'var(--open)',vals:DY.map(r=>r.open)},{name:L('Closed','مغلقة'),color:'var(--closed)',vals:DY.map(r=>r.n-r.open)}]"
+  },
+  {
+   "file": "et",
+   "kind": "exact",
+   "category": "code",
+   "note": "shell-20a: market legend uses the open / closed pair",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"legend\"><span><i style=\"background:var(--core)\"></i><span data-en=\"Still open when checked\" data-ar=\"مفتوحة عند المراجعة\">Still open when checked</span></span><span><i style=\"background:var(--adj)\"></i><span data-en=\"Already closed\" data-ar=\"مغلقة\">Already closed</span></span></div>",
+   "new": "<div class=\"legend\"><span><i style=\"background:var(--open)\"></i><span data-en=\"Still open when checked\" data-ar=\"مفتوحة عند المراجعة\">Still open when checked</span></span><span><i style=\"background:var(--closed)\"></i><span data-en=\"Already closed\" data-ar=\"مغلقة\">Already closed</span></span></div>"
+  },
+  {
+   "file": "et",
+   "kind": "exact",
+   "category": "code",
+   "note": "shell-20b/c: Region not sortable; text sorts numbers by value",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  const k=(C[SORT.k]||C.sub)[1];rows=rows.slice().sort((a,b)=>{const x=k(a),y=k(b);return (x>y?1:x<y?-1:0)*SORT.dir});\n  let h=`<table class=\"t\"><thead><tr>${order.map(c=>`<th data-k=\"${c}\" class=\"${SORT.k===c?'s'+(SORT.dir<0?' up':''):''}\">${C[c][0]}</th>`).join('')}</tr></thead><tbody>`;",
+   "new": "  const k=(C[SORT.k]||C.sub)[1],cmp=(x,y)=>typeof x==='string'&&typeof y==='string'?x.localeCompare(y,LANG==='ar'?'ar':'en',{numeric:true}):(x>y?1:x<y?-1:0);   // audit shell-20c: \"No. 8\" before \"No. 22\"\n  rows=rows.slice().sort((a,b)=>cmp(k(a),k(b))*SORT.dir);\n  let h=`<table class=\"t\"><thead><tr>${order.map(c=>c==='region'?`<th>${C[c][0]}</th>`:`<th data-k=\"${c}\" class=\"${SORT.k===c?'s'+(SORT.di"
+  },
+  {
+   "file": "et",
+   "kind": "exact",
+   "category": "code",
+   "note": "shell-20b: only sortable headings get a click handler",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  document.querySelectorAll('#list th').forEach(th=>th.onclick=()=>{SORT.dir=(SORT.k===th.dataset.k?-SORT.dir:1);SORT.k=th.dataset.k;render()});",
+   "new": "  document.querySelectorAll('#list th[data-k]').forEach(th=>th.onclick=()=>{SORT.dir=(SORT.k===th.dataset.k?-SORT.dir:1);SORT.k=th.dataset.k;render()});"
+  },
+  {
+   "file": "et",
+   "kind": "exact",
+   "category": "code",
+   "note": "shell-20a: by type of work — open / closed colours",
+   "occurrences": 1,
+   "ok": true,
+   "old": "{labelW:260});",
+   "new": "{cols:['var(--open)','var(--closed)'],labelW:260});"
+  }
+ ]
+}

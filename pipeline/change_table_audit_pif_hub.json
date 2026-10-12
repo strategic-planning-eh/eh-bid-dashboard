@@ -1,0 +1,817 @@
+{
+ "generated": "2026-10-12 14:29",
+ "title": "Audit fixes — PIF annual reports page (12 Oct 2026)",
+ "failures": [],
+ "changes": [
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-01/02/03/04/13/25a: chart captions worked out from the page data (EN+AR)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "\"cStaff\": [\"Headcount has more than doubled in four years; PIF is building its own capacity to run assets, not only to fund them.\", \"تضاعف عدد الموظفين أكثر من مرتَين في أربع سنوات؛ يبني الصندوق قدرته على إدارة الأصول لا تمويلها فقط.\"]};\n",
+   "new": "\"cStaff\": [\"Headcount has more than doubled in four years; PIF is building its own capacity to run assets, not only to fund them.\", \"تضاعف عدد الموظفين أكثر من مرتَين في أربع سنوات؛ يبني الصندوق قدرته على إدارة الأصول لا تمويلها فقط.\"]};\n/* EH_CAPS_LIVE (patch_audit_pif_hub.py, 12 Oct 2026): the captions below are worked out from D, so they always say what the\n   chart shows. Arabic number runs ar"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-02: section 7 return sentence (EN, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "It has fallen every year on that measure.",
+   "new": "On that measure it rose from 8% (2022) to 8.7% (2023), then fell two years running to 5.8% (2025)."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-02: section 7 return sentence (EN, page body)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "It has fallen every year on that measure.",
+   "new": "On that measure it rose from 8% (2022) to 8.7% (2023), then fell two years running to 5.8% (2025)."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-02: section 7 return sentence (AR, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "وقد انخفض كل عام بهذا المقياس.",
+   "new": "وبهذا المقياس ارتفع من 8% (2022) إلى 8.7% (2023)، ثم انخفض عامين متتاليين إلى 5.8% (2025)."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-02: findings f2 return sentence (EN, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "The average yearly return since 2017 has gone down every year it has been reported the same way: 8% (2022), 8.7% (2023), 7.2% (2024), 5.8% (2025).",
+   "new": "The average yearly return since 2017 fell for a second year running, to 5.8% (7.2% in 2024; it had risen from 8% to 8.7% in 2023)."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-02: findings f2 return sentence (EN, page body)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "The average yearly return since 2017 has gone down every year it has been reported the same way: 8% (2022), 8.7% (2023), 7.2% (2024), 5.8% (2025).",
+   "new": "The average yearly return since 2017 fell for a second year running, to 5.8% (7.2% in 2024; it had risen from 8% to 8.7% in 2023)."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-02: findings f2 return sentence (AR, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "تراجع متوسط العائد السنوي منذ 2017 في كل سنة أُبلغ عنها بالطريقة نفسها: 8% (2022)، 8.7% (2023)، 7.2% (2024)، 5.8% (2025).",
+   "new": "وانخفض متوسط العائد السنوي منذ 2017 للعام الثاني على التوالي إلى 5.8% (7.2% في 2024؛ وكان قد ارتفع من 8% إلى 8.7% في 2023)."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-02: analysis an1 return sentence (EN, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Its return has been falling since the reports first measured it consistently.",
+   "new": "Its average return rose to 8.7% in 2023 and has fallen in both years since, to 5.8%."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-02: analysis an1 return sentence (EN, page body)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Its return has been falling since the reports first measured it consistently.",
+   "new": "Its average return rose to 8.7% in 2023 and has fallen in both years since, to 5.8%."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-02: analysis an1 return sentence (AR, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "وعائده في تراجع منذ أن بدأت التقارير قياسه بطريقة متسقة.",
+   "new": "وارتفع متوسط عائده إلى 8.7% في 2023 ثم انخفض في العامين التاليين إلى 5.8%."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-05: 2024 waste row — wastewater reuse is Qiddiya; four page numbers corrected (EN)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "SIRC installed 70 reverse vending machines in Riyadh; 1.25 million bottles, 30,000 cans, 15,000 users (2024 report p.96). SIRC listed among companies making up the ~2% of assets under management in climate solutions (2024 report p.95). PIF audited water and waste at its own properties and drafted a waste reduction strategy (2024 report p.89). Red Sea Global: \\\"sustainable waste management\\\" (2024 ",
+   "new": "SIRC installed 70 reverse vending machines in Riyadh; 1.25 million bottles, 30,000 cans, 15,000 users (2024 report p.89). SIRC listed among companies making up the ~2% of assets under management in climate solutions (2024 report p.88). PIF audited energy, water and waste at its own properties and drafted a waste reduction strategy (2024 report p.85). Red Sea Global: \\\"sustainable waste management\\"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-05: 2024 waste row — wastewater reuse is Qiddiya; four page numbers corrected (AR)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "(تقرير 2024 ص96). \\\"سرك\\\" مدرجة ضمن الشركات التي تشكل نحو 2% من الأصول في الحلول المناخية (تقرير 2024 ص95). راجع الصندوق المياه والنفايات في منشآته الخاصة ووضع مسودة استراتيجية لتقليل النفايات (تقرير 2024 ص89). البحر الأحمر الدولية: \\\"إدارة مستدامة للنفايات\\\" (تقرير 2024 ص70). نيوم: \\\"إعادة استخدام كامل لمياه الصرف\\\" (تقرير 2024 ص72).",
+   "new": "(تقرير 2024 ص89). \\\"سرك\\\" مدرجة ضمن الشركات التي تشكل نحو 2% من الأصول في الحلول المناخية (تقرير 2024 ص88). راجع الصندوق الطاقة والمياه والنفايات في منشآته الخاصة ووضع مسودة استراتيجية لتقليل النفايات (تقرير 2024 ص85). البحر الأحمر الدولية: \\\"إدارة مستدامة للنفايات\\\" (تقرير 2024 ص69). القدية: \\\"إعادة استخدام كامل لمياه الصرف\\\" (تقرير 2024 ص71)."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-06 + pif-14: 2025 project count marked \"identified\"; 2024 page p.90 → p.86",
+   "occurrences": 1,
+   "ok": true,
+   "old": "projects:{2023:{v:35,src:\"2023 report p.98\"},2024:{v:91,src:\"2024 report p.90\"},2025:{v:146,src:\"2025 report p.92\"}}",
+   "new": "projects:{2023:{v:35,src:\"2023 report p.98\"},2024:{v:91,src:\"2024 report p.86\"},2025:{v:146,kind:\"identified\",note:\"projects with eligible spending identified, not projects funded\",src:\"2025 report p.92\"}}"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-06: 2025 CO2 note no longer says \"allocated projects\"",
+   "occurrences": 1,
+   "ok": true,
+   "old": "co2:{2023:{v:10.6,note:\"expected, eligible pipeline, Mt CO2e\",src:\"2023 report p.98\"},2025:{v:5.1,note:\"expected, allocated projects, Mt CO2\",src:\"2025 report p.92\"}}",
+   "new": "co2:{2023:{v:10.6,note:\"expected, eligible pipeline, Mt CO2e\",src:\"2023 report p.98\"},2025:{v:5.1,note:\"expected from these investments (allocated or identified: PIF does not say), Mt CO2\",src:\"2025 report p.92\"}}"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-06: 2025 wastewater note no longer says \"allocated projects\"",
+   "occurrences": 1,
+   "ok": true,
+   "old": "wastewater:{2023:{v:49.4,note:\"expected, eligible pipeline, million m3\",src:\"2023 report p.98\"},2025:{v:4,note:\"expected, allocated projects, million m3\",src:\"2025 report p.92\"}}",
+   "new": "wastewater:{2023:{v:49.4,note:\"expected, eligible pipeline, million m3\",src:\"2023 report p.98\"},2025:{v:4,note:\"expected from these investments (allocated or identified: PIF does not say), million m3\",src:\"2025 report p.92\"}}"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "code",
+   "note": "pif-06: 2025 project point drawn hollow with a dashed join (a different measure)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "{type:'line',label:t('c_proj'),data:gr.map(y=>gv(G.projects,y)),borderColor:C.gold,backgroundColor:C.gold,yAxisID:'y2',pointRadius:5}",
+   "new": "{type:'line',label:t('c_proj'),data:gr.map(y=>gv(G.projects,y)),borderColor:C.gold,backgroundColor:C.gold,pointBackgroundColor:gr.map(y=>G.projects[y]&&G.projects[y].kind==='identified'?'transparent':C.gold),pointBorderWidth:gr.map(y=>G.projects[y]&&G.projects[y].kind==='identified'?2:1),segment:{borderDash:s=>{const o=G.projects[gr[s.p1DataIndex]];return o&&o.kind==='identified'?[5,4]:undefined}}"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-06: chart legend explains the hollow point",
+   "occurrences": 1,
+   "ok": true,
+   "old": "\"c_proj\": [\"Projects funded\", \"المشاريع الممولة\"]",
+   "new": "\"c_proj\": [\"Projects funded (hollow point: only identified)\", \"المشاريع الممولة (النقطة المفرغة: محددة فقط)\"]"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-06: section 6 text explains the hollow point (EN, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Line: the number of projects funded.",
+   "new": "Line: the number of projects funded; the 2025 point is hollow because it counts projects with eligible spending identified, not projects funded."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-06: section 6 text explains the hollow point (EN, page body)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Line: the number of projects funded.",
+   "new": "Line: the number of projects funded; the 2025 point is hollow because it counts projects with eligible spending identified, not projects funded."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-06: section 6 text explains the hollow point (AR, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "الخط: عدد المشاريع الممولة.",
+   "new": "الخط: عدد المشاريع الممولة؛ ونقطة 2025 مفرغة لأنها تعدّ المشاريع التي حُدد لها إنفاق مؤهل، لا المشاريع الممولة."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-06: impact table header (drawn by the script only) (EN, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "2025 report (funded projects, 2025)",
+   "new": "2025 report (146 projects with eligible spending identified)"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-06: impact table header (drawn by the script only) (AR, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "تقرير 2025 (المشاريع الممولة، 2025)",
+   "new": "تقرير 2025 (146 مشروعاً حُدد لها إنفاق مؤهل)"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-06: findings f1 project count (EN, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "and the number of green projects funded (35, then 91, then 146).",
+   "new": "and the number of green projects funded (35, then 91; the 2025 report counts something different: 146 projects with eligible spending identified)."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-06: findings f1 project count (EN, page body)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "and the number of green projects funded (35, then 91, then 146).",
+   "new": "and the number of green projects funded (35, then 91; the 2025 report counts something different: 146 projects with eligible spending identified)."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-06: findings f1 project count (AR, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "وعدد المشاريع الخضراء الممولة (35 ثم 91 ثم 146).",
+   "new": "وعدد المشاريع الخضراء الممولة (35 ثم 91؛ ويعدّ تقرير 2025 شيئاً مختلفاً: 146 مشروعاً حُدد لها إنفاق مؤهل)."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-06: green bond note (EN, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "The 2023 numbers describe every project that could qualify; the 2025 numbers describe only the projects that have been given money. They measure different things, so the drop from 49.4 to 4 million cubic metres is not a fall in activity.",
+   "new": "The 2023 figures describe every project that could qualify (USD 11.7 billion of eligible spending). The 2025 report says its figures come from \\\"these investments\\\": SAR 33.75 billion already allocated and SAR 67.5 billion of eligible spending identified across 146 projects. It does not say which of the two, so the drop from 49.4 to 4 million cubic metres cannot be called a change of definition; i"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-06: green bond note (EN, page body)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "The 2023 numbers describe every project that could qualify; the 2025 numbers describe only the projects that have been given money. They measure different things, so the drop from 49.4 to 4 million cubic metres is not a fall in activity.",
+   "new": "The 2023 figures describe every project that could qualify (USD 11.7 billion of eligible spending). The 2025 report says its figures come from \"these investments\": SAR 33.75 billion already allocated and SAR 67.5 billion of eligible spending identified across 146 projects. It does not say which of the two, so the drop from 49.4 to 4 million cubic metres cannot be called a change of definition; it "
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-06: green bond note (AR, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "أرقام 2023 تصف كل مشروع يمكن أن يكون مؤهلاً؛ وأرقام 2025 تصف فقط المشاريع التي أُعطيت أموالاً. إنها تقيس أشياء مختلفة، لذا فإن الانخفاض من 49.4 إلى 4 ملايين متر مكعب ليس تراجعاً في النشاط.",
+   "new": "تصف أرقام 2023 كل مشروع يمكن أن يكون مؤهلاً (11.7 مليار دولار من الإنفاق المؤهل). ويقول تقرير 2025 إن أرقامه تأتي من «هذه الاستثمارات»: 33.75 مليار ريال خُصصت فعلاً، و67.5 مليار ريال من الإنفاق المؤهل حُددت عبر 146 مشروعاً. ولا يحدد أيهما يقصد، لذا لا يمكن وصف الانخفاض من 49.4 إلى 4 ملايين متر مكعب بأنه تغيير في التعريف؛ فقد يكون تراجعاً حقيقياً في مياه الصرف المتوقع أن تعالجها السندات."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-06: analysis an5 (EN, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Second, the green bond impact figures changed what they measure between 2023 and 2025; the drop from 49.4 to 4 million cubic metres of wastewater is a change of definition, not of activity.",
+   "new": "Second, PIF does not say which investments the 2025 green bond impact figures cover (SAR 33.75 billion allocated or SAR 67.5 billion identified across 146 projects), so the drop from 49.4 to 4 million cubic metres of wastewater cannot be put down to a change of definition; it may be a real fall."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-06: analysis an5 (EN, page body)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Second, the green bond impact figures changed what they measure between 2023 and 2025; the drop from 49.4 to 4 million cubic metres of wastewater is a change of definition, not of activity.",
+   "new": "Second, PIF does not say which investments the 2025 green bond impact figures cover (SAR 33.75 billion allocated or SAR 67.5 billion identified across 146 projects), so the drop from 49.4 to 4 million cubic metres of wastewater cannot be put down to a change of definition; it may be a real fall."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-06: analysis an5 (AR, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ثانياً، غيّرت أرقام أثر السندات الخضراء ما تقيسه بين 2023 و2025؛ فالانخفاض من 49.4 إلى 4 ملايين متر مكعب من مياه الصرف تغيير في التعريف لا في النشاط.",
+   "new": "ثانياً، لا يحدد الصندوق الاستثمارات التي تشملها أرقام أثر السندات الخضراء لعام 2025 (33.75 مليار ريال مخصصة أم 67.5 مليار ريال محددة عبر 146 مشروعاً)، لذا لا يمكن عزو الانخفاض من 49.4 إلى 4 ملايين متر مكعب من مياه الصرف إلى تغيير في التعريف؛ فقد يكون تراجعاً حقيقياً."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-06: changed-numbers row (EN)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "\"4 million m³, funded projects only (2025 report p.92)\",\"Different measures; shown in a table, not as a trend.\"",
+   "new": "\"4 million m³, from \\\"these investments\\\": SAR 33.75 billion allocated and SAR 67.5 billion identified across 146 projects; PIF does not say which (2025 report p.92)\",\"PIF does not say what the 2025 figure covers, so the fall cannot be put down to a change of definition; shown in a table, not as a trend.\""
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-06: changed-numbers row (AR)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "\"4 ملايين م³، المشاريع الممولة فقط (تقرير 2025 ص92)\",\"مقياسان مختلفان؛ يُعرضان في جدول لا كاتجاه.\"",
+   "new": "\"4 ملايين م³، من «هذه الاستثمارات»: 33.75 مليار ريال مخصصة و67.5 مليار ريال محددة عبر 146 مشروعاً؛ ولا يحدد الصندوق أيهما (تقرير 2025 ص92)\",\"لا يحدد الصندوق ما يشمله رقم 2025، لذا لا يمكن عزو الانخفاض إلى تغيير في التعريف؛ يُعرض الرقمان في جدول لا كاتجاه.\""
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-14: green bonds raised 2024 p.90 → p.86",
+   "occurrences": 1,
+   "ok": true,
+   "old": "2024:{v:9,src:\"2024 report p.90\"}",
+   "new": "2024:{v:9,src:\"2024 report p.86\"}"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-14: green bonds allocated 2024 p.90 → p.86",
+   "occurrences": 1,
+   "ok": true,
+   "old": "2024:{v:5.2,note:\"as of 30 Jun 2024\",src:\"2024 report p.90\"}",
+   "new": "2024:{v:5.2,note:\"as of 30 Jun 2024\",src:\"2024 report p.86\"}"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-14: green eligible spending 2024 p.90 → p.86",
+   "occurrences": 1,
+   "ok": true,
+   "old": "2024:{v:19.4,src:\"2024 report p.90\"}",
+   "new": "2024:{v:19.4,src:\"2024 report p.86\"}"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-14: green bonds source line (EN, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "2024 report p.90",
+   "new": "2024 report p.86"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-14: green bonds source line (EN, page body)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "2024 report p.90",
+   "new": "2024 report p.86"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-14: green bonds source line (AR, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "تقرير 2024 ص90",
+   "new": "تقرير 2024 ص86"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-14: Saudi staff 2024 p.92 → p.20",
+   "occurrences": 1,
+   "ok": true,
+   "old": "2024:{v:84.5,src:\"2024 report p.92\"}",
+   "new": "2024:{v:84.5,src:\"2024 report p.20\"}"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-14: new hires 2023 p.102 → p.100",
+   "occurrences": 1,
+   "ok": true,
+   "old": "2023:{v:812,src:\"2023 report p.102\"}",
+   "new": "2023:{v:812,src:\"2023 report p.100\"}"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-14: \"200-plus\" companies p.12 → p.14",
+   "occurrences": 1,
+   "ok": true,
+   "old": "src:\"2023 report p.12 (\\\"200-plus\\\")\"",
+   "new": "src:\"2023 report p.14 (\\\"200-plus\\\")\""
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-14: money abroad 2023 is on p.14",
+   "occurrences": 1,
+   "ok": true,
+   "old": "2023:{i:586,l:2194,t:72, src:\"2023 report p.43\"}",
+   "new": "2023:{i:586,l:2194,t:72, src:\"2023 report p.14 (abroad), p.43 (cash)\"}"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-14: Saudi/abroad source line (EN, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "2023 report p.43 ·",
+   "new": "2023 report p.14 (abroad), p.43 (cash) ·"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-14: Saudi/abroad source line (EN, page body)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "2023 report p.43 ·",
+   "new": "2023 report p.14 (abroad), p.43 (cash) ·"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-14: Saudi/abroad source line (AR, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "تقرير 2023 ص43 ·",
+   "new": "تقرير 2023 ص14 (الخارج)، ص43 (النقد) ·"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-14: fund size 2022 is not in the 2025 report; 2024 report p.42",
+   "occurrences": 1,
+   "ok": true,
+   "old": "2022:\"2025 report p.46\", 2023:\"2025 report p.46\"",
+   "new": "2022:\"2024 report p.42 (also 2023 report p.42)\", 2023:\"2025 report p.46\""
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "code",
+   "note": "pif-16: Arabic amounts (\"مليار ريال\") and Arabic source notes for tooltips",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const usd=v=>'≈$'+(v/FX).toFixed(v<100?1:0)+' bn';const fmt=n=>n==null?'?':n.toLocaleString('en-US');",
+   "new": "const usd=v=>LANG==='ar'?'≈'+(v/FX).toFixed(v<100?1:0)+' مليار دولار':'≈$'+(v/FX).toFixed(v<100?1:0)+' bn';const fmt=n=>n==null?'?':n.toLocaleString('en-US');\n// Arabic (patch_audit_pif_hub.py, 12 Oct 2026): amounts in words, and source notes in Arabic (\"تقرير 2024 ص86\"); any English left is isolated LTR.\nconst sarbn=v=>LANG==='ar'?fmt(v)+' مليار ريال':'SAR '+fmt(v)+' bn';\nconst usdB=x=>LANG==='ar"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "code",
+   "note": "pif-16: tooltip amounts in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "if(unit==='sarbn')s+='SAR '+fmt(v)+' bn ('+usd(v)+')'",
+   "new": "if(unit==='sarbn')s+=sarbn(v)+' ('+usd(v)+')'"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "code",
+   "note": "pif-16: tooltip sources in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "afterLabel:c=>srcFn?srcFn(c):''",
+   "new": "afterLabel:c=>srcFn?srcL(srcFn(c)):''"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "code",
+   "note": "pif-16: KPI fund size in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "[t('k1'),'SAR '+fmt(A[2025])+' bn',",
+   "new": "[t('k1'),sarbn(A[2025]),"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "code",
+   "note": "pif-16: KPI target in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "[t('k3'),'SAR 4,000 billion',",
+   "new": "[t('k3'),sarB(fmt(D.aum.target)),"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "code",
+   "note": "pif-16: green bond tooltip amounts, notes and sources in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "return c.dataset.label+': '+(c.datasetIndex<2?'$'+o.v+' bn':o.v)+' '+glyph(o.g)+(o.note?' · '+o.note:'')},afterLabel:c=>{const o=[G.raised,G.allocated,G.projects][c.datasetIndex][gr[c.dataIndex]];return o?o.src:''}",
+   "new": "return c.dataset.label+': '+(c.datasetIndex<2?(LANG==='ar'?o.v+' مليار دولار':'$'+o.v+' bn'):o.v)+' '+glyph(o.g)+(o.note?' · '+srcL(o.note):'')},afterLabel:c=>{const o=[G.raised,G.allocated,G.projects][c.datasetIndex][gr[c.dataIndex]];return o?srcL(o.src):''}"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "code",
+   "note": "pif-16: impact table amounts in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<td class=\"n\">$11.7 billion</td><td class=\"n\">$19.4 billion</td><td class=\"n\">≈$18.0 billion (SAR 67.5 billion)</td>",
+   "new": "<td class=\"n\">${usdB('11.7')}</td><td class=\"n\">${usdB('19.4')}</td><td class=\"n\">≈${usdB('18.0')} (${sarB('67.5')})</td>"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "code",
+   "note": "pif-16: Private Sector Hub amounts in Arabic (1)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<td class=\"n\">SAR 40+ billion ✓</td>",
+   "new": "<td class=\"n\">${sarB('40+')} ✓</td>"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "code",
+   "note": "pif-16: Private Sector Hub amounts in Arabic (2)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<td class=\"n\">20 (SAR 6.1 billion) ✓</td>",
+   "new": "<td class=\"n\">20 (${sarB('6.1')}) ✓</td>"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "code",
+   "note": "pif-16: Private Sector Hub amounts in Arabic (3)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<td class=\"n\">30 (SAR 11+ billion) ✓</td>",
+   "new": "<td class=\"n\">30 (${sarB('11+')}) ✓</td>"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "code",
+   "note": "pif-16: Private Sector Hub amounts in Arabic (4)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<td class=\"n\">140+ (SAR 15+ billion) ✓</td>",
+   "new": "<td class=\"n\">${plusL('140+')} (${sarB('15+')}) ✓</td>"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-16: 2024 column header in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "\"t6_c2\": [\"2024 report\", \"2024 report\"]",
+   "new": "\"t6_c2\": [\"2024 report\", \"تقرير 2024\"]"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-17: neutral heading — borrowing rising is not an improvement (EN, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Improved every year",
+   "new": "Rose every year"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-17: neutral heading — borrowing rising is not an improvement (EN, page body)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Improved every year",
+   "new": "Rose every year"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-17: neutral heading — borrowing rising is not an improvement (AR, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "تحسّن كل عام",
+   "new": "ارتفع كل عام"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-18: sustainability growth measured per 10,000 words (EN, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "The sustainability sections have grown more than sevenfold since 2021 (\\\"sustainab-\\\" appears 21 times in the 2021 report and 158 times in 2025)",
+   "new": "The sustainability sections have more than tripled since 2021 when measured per 10,000 words (\\\"sustainab-\\\" goes from 17 to 56 mentions per 10,000 words; 21 to 158 raw mentions, partly because the reports grew longer)"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-18: sustainability growth measured per 10,000 words (EN, page body)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "The sustainability sections have grown more than sevenfold since 2021 (\"sustainab-\" appears 21 times in the 2021 report and 158 times in 2025)",
+   "new": "The sustainability sections have more than tripled since 2021 when measured per 10,000 words (\"sustainab-\" goes from 17 to 56 mentions per 10,000 words; 21 to 158 raw mentions, partly because the reports grew longer)"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-18: sustainability growth measured per 10,000 words (AR, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "نمت أقسام الاستدامة أكثر من سبعة أضعاف منذ 2021 (كلمة \\\"sustainab-\\\" تظهر 21 مرة في تقرير 2021 و158 مرة في 2025)",
+   "new": "تضاعفت أقسام الاستدامة أكثر من ثلاث مرات منذ 2021 مقيسةً لكل 10,000 كلمة (من 17 إلى 56 ذكراً لكلمة \\\"sustainab-\\\" لكل 10,000 كلمة؛ ومن 21 إلى 158 مرة في العدّ الخام، جزئياً لأن التقارير صارت أطول)"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-19: AI mentions 2023 recounted 5 → 7",
+   "occurrences": 1,
+   "ok": true,
+   "old": "2023:[1,0,0,4,0,1,2,6,5,2,25,2,63,7,8],",
+   "new": "2023:[1,0,0,4,0,1,2,6,7,2,25,2,63,7,8],"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-19: AI mentions 2024 recounted 30 → 63",
+   "occurrences": 1,
+   "ok": true,
+   "old": "2024:[5,1,4,11,0,1,3,12,30,0,35,3,126,10,18],",
+   "new": "2024:[5,1,4,11,0,1,3,12,63,0,35,3,126,10,18],"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-19: AI mentions 2025 recounted 38 → 55",
+   "occurrences": 1,
+   "ok": true,
+   "old": "2025:[7,5,1,8,2,2,4,6,38,3,33,53,158,8,18]}",
+   "new": "2025:[7,5,1,8,2,2,4,6,55,3,33,53,158,8,18]}"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "data",
+   "note": "pif-19: counting rule noted in the data comment",
+   "occurrences": 1,
+   "ok": true,
+   "old": "mentions: { // whole-text keyword counts per report (case-insensitive substring match on pdftotext output).",
+   "new": "mentions: { // whole-text keyword counts per report (case-insensitive substring match on pdftotext output; AI 2023-2025 = whole word \"AI\" or \"artificial intelligence\", once when both appear together, recounted 12 Oct 2026; SIRC = short or full name)."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-19: heat map footnote says how AI and SIRC are counted (drawn by the script only) (EN, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "\\\"AI\\\" is under-counted where it appears as \\\"A.I.\\\" or inside compound words.",
+   "new": "\\\"AI\\\" for 2023–2025 counts the word \\\"AI\\\" or \\\"artificial intelligence\\\" (once where both appear together); 2021–2022 use the earlier, simpler count, which can miss some mentions. \\\"SIRC\\\" counts the short name or the full company name."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-19: heat map footnote says how AI and SIRC are counted (drawn by the script only) (AR, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "كلمة \\\"AI\\\" مُحصاة بأقل من الواقع حيث ترد \\\"A.I.\\\" أو داخل كلمات مركبة.",
+   "new": "تشمل \\\"AI\\\" في 2023–2025 كلمة \\\"AI\\\" أو عبارة \\\"artificial intelligence\\\" (مرة واحدة حين تردان معاً)؛ وتعتمد 2021–2022 العدّ الأبسط السابق، وقد يفوته بعض المرات. وتشمل \\\"SIRC\\\" الاسم المختصر أو الاسم الكامل للشركة."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-20: local content score is printed (2025 report p.104) — ✓ not ≈",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<td class=\"n\">53% ≈</td><td class=\"n\">57% ≈</td>",
+   "new": "<td class=\"n\">53% ✓</td><td class=\"n\">57% ✓</td>"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-20: local spend 2020 is printed — ✓ not ≈",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<td class=\"n\">62 ≈</td>",
+   "new": "<td class=\"n\">62 ✓</td>"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-20: local spend 2024 is printed — ✓ not ≈",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<td class=\"n\">207 ≈</td>",
+   "new": "<td class=\"n\">207 ✓</td>"
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-20: local supplier note (EN, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "The local supplier figures appear only in the 2025 report, looking back, hence ≈.",
+   "new": "The local supplier figures appear only in the 2025 report (p.104), looking back; they are printed there, hence ✓."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-20: local supplier note (EN, page body)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "The local supplier figures appear only in the 2025 report, looking back, hence ≈.",
+   "new": "The local supplier figures appear only in the 2025 report (p.104), looking back; they are printed there, hence ✓."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-20: local supplier note (AR, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "أرقام الموردين المحليين تظهر فقط في تقرير 2025 بأثر رجعي، ومن هنا علامة ≈.",
+   "new": "أرقام الموردين المحليين تظهر فقط في تقرير 2025 (ص104) بأثر رجعي، وهي مطبوعة فيه، ومن هنا علامة ✓."
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-25b: f4 no longer says the cash-flow table started in 2023 (EN, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "a cash-flow table (from 2023), ",
+   "new": ""
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-25b: f4 no longer says the cash-flow table started in 2023 (EN, page body)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "a cash-flow table (from 2023), ",
+   "new": ""
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-25b: f4 no longer says the cash-flow table started in 2023 (AR, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "وجدول التدفقات النقدية (منذ 2023)، ",
+   "new": ""
+  },
+  {
+   "file": "pif",
+   "kind": "exact",
+   "category": "copy",
+   "note": "pif-25c: English f4 gets the strategy-page sentence the Arabic (and the page body) already had (EN, script)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Renewables Infrastructure\\\" ecosystem (2025).",
+   "new": "Renewables Infrastructure\\\" ecosystem (2025). The strategy document itself, published 2026, is analysed in the companion dashboard <a href=\\\"pif_strategy_2026_2030.html\\\">PIF Strategy 2026–2030</a>; it spells the ecosystem \\\"Clean Energy, Water & Renewable Infrastructure\\\", which is treated as canonical there."
+  }
+ ]
+}

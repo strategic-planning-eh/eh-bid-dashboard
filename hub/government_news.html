@@ -72,8 +72,13 @@ const STL={ok:['Fetched','تم الجلب'],empty:['Reachable, nothing found','�
 function setLang(l){LANG=l;try{localStorage.setItem('gov.lang',l)}catch(e){};document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';render();}
 function setDark(d){DARK=d;document.body.classList.toggle('dark',d);}
 window.addEventListener('message',e=>{const d=e.data||{};if(d.ehhub==='lang'&&(d.lang==='ar'||d.lang==='en'))setLang(d.lang);if(d.ehhub==='theme')setDark(d.theme==='dark');});
-const fmtD=iso=>{if(!iso)return L('date n/a','بدون تاريخ');const d=new Date(iso+'T00:00:00');return d.toLocaleDateString(LANG==='ar'?'ar-SA-u-nu-latn':'en-GB',{day:'2-digit',month:'short',year:'numeric'});};
-const daysAgo=iso=>iso?Math.floor((Date.now()-new Date(iso+'T00:00:00'))/864e5):null;
+const LOC=()=>LANG==='ar'?'ar-SA-u-ca-gregory-nu-latn':'en-GB';   // Gregorian in Arabic too, as on every hub page (audit shell-04)
+const fmtD=iso=>{if(!iso)return L('date n/a','بدون تاريخ');const d=new Date(iso+'T00:00:00');return d.toLocaleDateString(LOC(),{day:'2-digit',month:'short',year:'numeric'});};
+// ages are counted from the collection date, not the reader's clock (audit shell-19)
+function genDay(){return FEED&&/^\d{4}-\d{2}-\d{2}/.test(FEED.generated||'')?FEED.generated.slice(0,10):new Date().toISOString().slice(0,10);}
+const daysAgo=iso=>iso?Math.floor((new Date(genDay()+'T00:00:00')-new Date(iso+'T00:00:00'))/864e5):null;
+function fmtGen(){const g=FEED.generated||'';const d=new Date(g);if(!g||isNaN(d))return FEED.generated_ksa==='not yet run'?L('not yet run','لم يُشغَّل بعد'):(FEED.generated_ksa||g);
+ return d.toLocaleString(LOC(),{timeZone:'Asia/Riyadh',day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:false})+L(' (KSA)',' بتوقيت السعودية');}
 function bodyOf(id){return ((FEED&&FEED.bodies)||[]).find(b=>b.id===id)||{id,en:id,ar:id,short:id.toUpperCase()};}
 function bodyState(b,cnt){ // "ok" only if a source delivered AND something is on file; finds that all fell outside the window are "stale"
  const ss=b.sources||[];if(!ss.length)return 'skipped';
@@ -85,7 +90,7 @@ function inWeek(it){return it.date?(it.date>=FEED.week_from&&it.date<=FEED.week_
 function inPeriod(it){if(S.period==='all')return true;if(S.period==='week')return inWeek(it);const n=daysAgo(it.date||it.first_seen);return n!=null&&n<=30;}
 function filtered(){const k=it=>(it.date||it.first_seen||'');return (FEED.items||[]).filter(it=>(S.body==='all'||it.body===S.body)&&inPeriod(it)&&(S.tag==='all'||(it.tags||[]).includes(S.tag))&&(S.src==='all'||it.source===S.src)&&(!S.q||it.title.toLowerCase().includes(S.q.toLowerCase()))).sort((a,b)=>S.sort==='asc'?k(a).localeCompare(k(b)):k(b).localeCompare(k(a)));}
 const KINDL={risk:['Risk','مخاطر'],opportunity:['Opportunity','فرصة'],licensing:['Licensing & compliance','ترخيص والتزام'],tender:['Tenders & investment','منافسات واستثمار'],watch:['Watch','متابعة']};
-const monthName=m=>{const [y,mo]=m.split('-');return new Date(+y,+mo-1,1).toLocaleDateString(LANG==='ar'?'ar-SA-u-nu-latn':'en-GB',{month:'long',year:'numeric'});};
+const monthName=m=>{const [y,mo]=m.split('-');return new Date(+y,+mo-1,1).toLocaleDateString(LOC(),{month:'long',year:'numeric'});};
 function refLinks(refs){if(!FEED)return '';const by=Object.fromEntries((FEED.items||[]).map(it=>[it.id,it]));return (refs||[]).map((id,i)=>{const it=by[id];return it?`<a href="${esc(it.url)}" target="_blank" rel="noopener" title="${esc(it.title)}" class="ref">${i+1}</a>`:`<span class="ref miss" title="${esc(L('story no longer on file','القصة لم تعد على السجل'))}">${i+1}</span>`;}).join('');}
 function renderBrief(){
  const el=$('brief'); if(!BRIEF||!(BRIEF.briefs||[]).length){el.innerHTML=`<h2>${L('Monthly brief','الخلاصة الشهرية')}</h2><div class="note">${L('Written on the first Sunday of each month by Business Development from that month\'s announcements, with a section on what it means for EH. No brief has been published yet.','تكتبها إدارة تطوير الأعمال أول أحد من كل شهر من إعلانات ذلك الشهر، مع قسم عن دلالاتها لآفاق البيئة. لم تُنشر خلاصة بعد.')}</div>`;return;}
@@ -101,6 +106,8 @@ function renderBrief(){
    <div><h3>${L('What it means for EH','ماذا تعني لآفاق البيئة')}</h3>${(b.for_eh||[]).map(x=>`<div class="bb"><span class="chip kind-${esc(x.kind)}">${esc(L(...(KINDL[x.kind]||[x.kind,x.kind])))}</span> <span dir="auto">${esc(L(x.en,x.ar))}</span> ${refLinks(x.refs)}</div>`).join('')}</div>
   </div>
   <div class="bmeta">${L('Written','كُتبت')} <span dir="ltr">${esc(b.written||'')}</span> · ${esc(L(b.author_en,b.author_ar))}</div>`).join('')}`;}
+// redraw the list without losing the search box's cursor (audit shell-03)
+function qRender(el){const a=el.selectionStart,b=el.selectionEnd;render();const q=$('gq');if(q){q.focus();try{q.setSelectionRange(a,b);}catch(e){}}}
 function render(){
  document.querySelectorAll('#lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===LANG));
  $('title').textContent=L('Regulatory news — what the regulators announced','الأخبار التنظيمية — ما أعلنته الجهات التنظيمية');
@@ -110,7 +117,7 @@ function render(){
  const all=FEED.items||[], items=S.body==='all'?all:all.filter(it=>it.body===S.body), wk=items.filter(inWeek);
  const m30=items.filter(it=>{const n=daysAgo(it.date||it.first_seen);return n!=null&&n<=30;});
  const bodies=FEED.bodies||[], reporting=bodies.filter(b=>all.some(it=>it.body===b.id)).length, problems=bodies.reduce((n,b)=>n+(b.sources||[]).filter(s=>s.status==='error').length,0);
- $('stamp').innerHTML=`<span>${L('Collected','تاريخ الجمع')} <b dir="ltr">${esc(FEED.generated_ksa||FEED.generated)}</b></span><span>·</span><span>${L('Feed week','أسبوع التغذية')} <b dir="ltr">${fmtD(FEED.week_from)} – ${fmtD(FEED.week_to)}</b></span><span>·</span><span>${L('keeps','الاحتفاظ')} <b>${FEED.retention_days}</b> ${L('days','يوماً')}</span>`;
+ $('stamp').innerHTML=`<span>${L('Collected','تاريخ الجمع')} <b>${esc(fmtGen())}</b></span><span>·</span><span>${L('Feed week','أسبوع التغذية')} <b>${fmtD(FEED.week_from)} – ${fmtD(FEED.week_to)}</b></span><span>·</span><span>${L('keeps','الاحتفاظ')} <b>${FEED.retention_days}</b> ${L('days','يوماً')}</span>`;
  $('kstrip').innerHTML=[[wk.length,L('Announcements this collection week','إعلانات في أسبوع التغذية')+(S.body!=='all'?' — '+esc(bodyOf(S.body).short):'')],[m30.length,L('In the last 30 days','خلال 30 يوماً')],[`${reporting} / ${bodies.length}`,L('Bodies with at least one item on file','جهات لديها عنصر واحد على الأقل')],[problems,L('Sources that failed on the last run','مصادر فشلت في آخر تشغيل')]].map(([v,l])=>`<div class="kc"><div class="v" dir="ltr">${v}</div><div class="l">${l}</div></div>`).join('');
  // bodies with freshness
  $('bodies').innerHTML=`<h2>${L('Bodies followed — click one to filter','الجهات المتابَعة — انقر للتصفية')}</h2><div class="note">${L('Green: items on file. Amber: sources reachable but nothing found. Red: a fetch failed. Grey: not fetched yet. Stories older than 90 days are kept only as each body\'s newest five and marked "archive".','أخضر: عناصر على السجل. كهرماني: المصادر متاحة دون عناصر. أحمر: فشل جلب. رمادي: لم يُجلب بعد. تُحفظ القصص الأقدم من 90 يوماً كأحدث خمس لكل جهة فقط وتُعلَّم «أرشيف».')}</div>
@@ -123,7 +130,7 @@ function render(){
  <div class="fl"><div class="tabs">${[['week',L('This feed week','هذا الأسبوع')],['30',L('Last 30 days','آخر 30 يوماً')],['all',L('Everything on file','كل السجل')]].map(([k,l])=>`<button class="${S.period===k?'on':''}" onclick="S.period='${k}';render()">${l}</button>`).join('')}</div>
   <select onchange="S.tag=this.value;render()"><option value="all">${L('All topics','كل المواضيع')}</option>${tags.map(t=>`<option value="${t}" ${S.tag===t?'selected':''}>${esc(L(...(TAGL[t]||[t,t])))}</option>`).join('')}</select>
   <select onchange="S.src=this.value;render()"><option value="all">${L('Official + SPA','رسمي + واس')}</option><option value="official" ${S.src==='official'?'selected':''}>${L('Official sites only','المواقع الرسمية فقط')}</option><option value="spa" ${S.src==='spa'?'selected':''}>${L('SPA only','واس فقط')}</option></select>
-  <input placeholder="${L('Search headlines…','ابحث في العناوين…')}" value="${esc(S.q)}" oninput="S.q=this.value;render()">
+  <input id="gq" placeholder="${L('Search headlines…','ابحث في العناوين…')}" value="${esc(S.q)}" oninput="S.q=this.value;qRender(this)">
   <select onchange="S.sort=this.value;render()" title="${L('Order by date','الترتيب حسب التاريخ')}"><option value="desc" ${S.sort==='desc'?'selected':''}>${L('Newest first','الأحدث أولاً')}</option><option value="asc" ${S.sort==='asc'?'selected':''}>${L('Oldest first','الأقدم أولاً')}</option></select>
   ${S.body!=='all'?`<button class="chip body" style="cursor:pointer;border:0" onclick="S.body='all';render()">${esc(bodyOf(S.body).short)} ✕</button>`:''}</div>
  ${list.length?list.map(it=>`<div class="it"><div class="d" dir="ltr">${fmtD(it.date)}${!it.date?`<small>${L('seen','رُصد')} ${fmtD(it.first_seen)}</small>`:''}</div><div><div class="t" dir="auto" lang="${it.lang}"><a href="${esc(it.url)}" target="_blank" rel="noopener">${esc(it.title)}</a></div><div class="meta"><span class="chip body">${esc(bodyOf(it.body).short)}</span><span class="chip src-${it.source}">${it.source==='official'?L('Official','رسمي'):L('SPA','واس')}</span><span class="chip lang">${it.lang==='ar'?'AR':'EN'}</span>${(it.tags||[]).map(t=>`<span class="chip tag">${esc(L(...(TAGL[t]||[t,t])))}</span>`).join('')}${(()=>{const n=daysAgo(it.date||it.first_seen);return n!=null&&n>FEED.retention_days?`<span class="chip lang" title="${esc(L('Kept because it is one of this body\'s newest stories on file','محفوظة لأنها من أحدث قصص هذه الجهة على السجل'))}">${L('archive','أرشيف')}</span>`:'';})()}</div></div></div>`).join('')
@@ -137,7 +144,9 @@ function render(){
 }
 document.documentElement.lang=LANG;document.documentElement.dir=LANG==='ar'?'rtl':'ltr';render();
 fetch('reg_brief.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{BRIEF=j;render();}).catch(()=>{});
-fetch('gov_news.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(j=>{FEED=j;render();}).catch(e=>{LOADERR=String(e);render();});
+fetch('gov_news.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(j=>{FEED=j;
+  const g=genDay();(FEED.items||[]).forEach(it=>{if(it.date&&FEED.generated&&it.date>g){it.date_after_collection=it.date;it.date=null;}});   // a date after the collection cannot be right: treat as undated (audit shell-19)
+  render();}).catch(e=>{LOADERR=String(e);render();});
 </script>
 <script src="eh-shared.js" defer></script>
 </body></html>

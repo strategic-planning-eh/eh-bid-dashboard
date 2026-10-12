@@ -47,6 +47,18 @@ def is_tender_title(s):
     t = _n(s); w = t.split()
     return bool(w) and w[0] in _TITLE_STARTS and not any(m in t for m in _MRK)
 
+# Etimad award-report labels and roster headings that sit in the bidder-name column (12 Oct 2026, audit bids-06 / data-15)
+LABEL_PHRASES = ['حالة الترسية', 'مستبعد من الترسية', 'سبب الاستبعاد', 'سبب عدم الترسية', 'تقرير الترسية', 'تقرير الموردين', 'تقرير فتح العروض',
+                 'قائمة الموردين', 'عدد الموردين', 'اسم المورد', 'قيمة الترسية', 'نوع الترسية', 'ترسية كاملة', 'ترسية جزئية',
+                 'الاعلى سعرا', 'الادنى سعرا', 'العرض الاول', 'العرض الثاني', 'العرض الثالث', 'رقم المنافسة', 'تاريخ فتح العروض']
+_LAB = [_n(p) for p in LABEL_PHRASES]
+_TITLE_ALWAYS = [_n(w) for w in ['منافسة', 'مشروع']]   # «منافسة مكتب استشارات…» is a tender title even though it names an office type
+
+def is_label_text(s):
+    """True when the cell is a roster label (award status, exclusion reason, list heading) or a sheet title, not a bidder."""
+    t = _n(s); w = t.split()
+    return bool(w) and (any(p in t for p in _LAB) or w[0] in _TITLE_ALWAYS)
+
 def looks_like_company(s):
     t = _n(s)
-    return bool(t) and 3 <= len(t) <= 120 and not is_reason_text(t) and not is_tender_title(t) and bool(re.search(r'[a-z\u0600-\u06ff]{3,}', t))
+    return bool(t) and 3 <= len(t) <= 120 and not is_reason_text(t) and not is_tender_title(t) and not is_label_text(t) and bool(re.search(r'[a-z\u0600-\u06ff]{3,}', t))

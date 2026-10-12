@@ -6,8 +6,7 @@
   "pages": 112,
   "extracted": "2026-09-16",
   "method_en": "Hand-extracted from the PDF; every figure carries its printed page number. Figures are the Fund's own account and are not independently verified. Items marked PLAN are stated intentions with the Fund's own dates.",
-  "method_ar": "مستخرج يدوياً من ملف PDF؛ كل رقم يحمل رقم الصفحة المطبوع. الأرقام رواية الصندوق نفسه ولم تُدقَّق بشكل مستقل. العناصر المعلَّمة «خطة» نوايا مُعلنة بتواريخ الصندوق.",
-  "tracker_xref_as_of": "2026-09-15"
+  "method_ar": "مستخرج يدوياً من ملف PDF؛ كل رقم يحمل رقم الصفحة المطبوع. الأرقام رواية الصندوق نفسه ولم تُدقَّق بشكل مستقل. العناصر المعلَّمة «خطة» نوايا مُعلنة بتواريخ الصندوق."
  },
  "headline": [
   {
@@ -409,6 +408,20 @@
    "cat": "comms",
    "en": "Social reach: 99,691 followers (50,952 new), 3.22 M impressions, 502 posts; LinkedIn 81,422 followers; X 15,756; first issue of the bilingual magazine «رؤى بيئية»",
    "ar": "إجمالي المتابعين 99,691 (50,952 جدد)، 3.22 مليون ظهور، 502 منشور؛ لينكدإن 81,422 متابعاً؛ إكس 15,756؛ إطلاق عددين من مجلة «رؤى بيئية» بالعربية والإنجليزية"
+  },
+  {
+   "id": "f51",
+   "page": 18,
+   "cat": "headline",
+   "en": "SAR 362.3 million — Income from investing its cash, financial year 1446/47 (measured to international investment-reporting standards)",
+   "ar": "362.3 مليون ريال — العوائد النقدية الاستثمارية للعام المالي 1446/1447هـ (وفق معايير المعايير الدولية لقياس أداء الاستثمار)"
+  },
+  {
+   "id": "f52",
+   "page": 20,
+   "cat": "headline",
+   "en": "24 initiatives supported in 13 regions, SAR 17 million+ in grants",
+   "ar": "24 مبادرة مدعومة في 13 منطقة، و+17 مليون ريال من المنح"
   }
  ],
  "opportunities": [
@@ -564,78 +577,65 @@
   }
  ],
  "xref": {
-  "note_en": "EH's own record with the Fund and the national centres, from the bid tracker (EH-WIN-02-F01) as of 15 Sep 2026.",
-  "note_ar": "سجل آفاق البيئة مع الصندوق والمراكز الوطنية، من جدول تتبع العطاءات (EH-WIN-02-F01) حتى 15 سبتمبر 2026.",
+  "how_en": "Counts are computed from the bid tracker each time the page is built (build_ef_page.py); a row matches a tender by the client name pattern in 'match'.",
   "rows": [
    {
+    "key": "fund",
     "client_en": "Environment Fund",
     "client_ar": "صندوق البيئة",
-    "tenders": 1,
-    "value": 0,
-    "pending": 0,
-    "cancelled": 1,
-    "decided": 0,
-    "note_en": "Bid 17/26 — sustainability consulting for the national centres — cancelled",
-    "note_ar": "المنافسة 17/26 — خدمات استشارية للمعايير البيئية والاجتماعية للمراكز — أُلغيت"
+    "match": "صندوق البيئة|Environment(al)? Fund",
+    "note_en": "Tender 17/26 — sustainability consulting for the national centres",
+    "note_ar": "المنافسة 17/26 — خدمات استشارية للمعايير البيئية والاجتماعية للمراكز"
    },
    {
+    "key": "ncec",
     "client_en": "NCEC (Environmental Compliance)",
     "client_ar": "المركز الوطني للرقابة على الالتزام البيئي",
-    "tenders": 10,
-    "value": 16905000,
-    "pending": 9,
-    "cancelled": 1,
-    "decided": 0,
+    "match": "المركز الوطني للرقابة|الالتزام البيئي|NCEC",
     "note_en": "Incl. sample-analysis framework, Abu Ali island coastal remediation",
     "note_ar": "منها اتفاقية إطارية لتحليل العينات، والمعالجة الساحلية لجزيرة أبو علي"
    },
    {
+    "key": "ncvc",
     "client_en": "NCVC (Vegetation Cover)",
     "client_ar": "المركز الوطني لتنمية الغطاء النباتي",
-    "tenders": 17,
-    "value": 11658600,
-    "pending": 15,
-    "cancelled": 2,
-    "decided": 0,
+    "match": "الغطاء النباتي|NCVC",
     "note_en": "Incl. forest rehabilitation Al-Baha, tech-enabled monitoring services",
     "note_ar": "منها إعادة تأهيل غابات الباحة، وخدمات الرقابة والحماية بالتقنية"
    },
    {
+    "key": "mwan",
     "client_en": "MWAN (Waste Management)",
     "client_ar": "المركز الوطني لإدارة النفايات",
-    "tenders": 1,
-    "value": 0,
-    "pending": 1,
-    "cancelled": 0,
-    "decided": 0,
-    "note_en": "National digital waste-management platform (29/26)",
-    "note_ar": "المنصة الرقمية الوطنية لإدارة النفايات (29/26)"
+    "match": "المركز الوطني لإدارة النفايات|موان|MWAN",
+    "note_en": "Incl. the national digital waste-management platform (29/26)",
+    "note_ar": "منها المنصة الرقمية الوطنية لإدارة النفايات (29/26)"
    },
    {
-    "client_en": "NCW (Wildlife) · NCM (Meteorology)",
-    "client_ar": "المركز الوطني لتنمية الحياة الفطرية · المركز الوطني للأرصاد",
-    "tenders": 0,
-    "value": 0,
-    "pending": 0,
-    "cancelled": 0,
-    "decided": 0,
-    "note_en": "No tenders recorded",
-    "note_ar": "لا منافسات مسجَّلة"
+    "key": "ncw",
+    "client_en": "NCW (Wildlife)",
+    "client_ar": "المركز الوطني لتنمية الحياة الفطرية",
+    "match": "الحياة الفطرية|NCW",
+    "note_en": "",
+    "note_ar": ""
    },
    {
+    "key": "ncm",
+    "client_en": "NCM (Meteorology)",
+    "client_ar": "المركز الوطني للأرصاد",
+    "match": "[اأ]رصاد|NCM",
+    "note_en": "",
+    "note_ar": ""
+   },
+   {
+    "key": "mewa",
     "client_en": "MEWA",
     "client_ar": "وزارة البيئة والمياه والزراعة",
-    "tenders": 2,
-    "value": 0,
-    "pending": 1,
-    "cancelled": 1,
-    "decided": 0,
+    "match": "وزارة البيئة|MEWA",
     "note_en": "",
     "note_ar": ""
    }
-  ],
-  "reading_en": "31 tenders, about SAR 28.6 million, and not one decided. Every one of EH's bids into the Fund's ecosystem is still open or was cancelled — consistent with the centres' procurement being in transition to the shared-services programme (p. 87). Follow up on the nine NCEC and fifteen NCVC pending tenders before assuming they are dead.",
-  "reading_ar": "31 منافسة بنحو 28.6 مليون ريال، ولم يُحسم منها واحدة. كل عطاءات آفاق البيئة في منظومة الصندوق ما تزال مفتوحة أو أُلغيت — وهو ما يتفق مع انتقال مشتريات المراكز إلى برنامج الخدمات المشتركة (ص 87). يُستحسن متابعة المنافسات التسع لدى مركز الالتزام والخمس عشرة لدى مركز الغطاء النباتي قبل افتراض انتهائها."
+  ]
  },
  "stakeholders": [
   {
@@ -1184,13 +1184,12 @@
   {
    "id": "c-activity",
    "type": "hbar",
-   "title_en": "Where the 123 opportunities sit — by activity, and by the centre seeking private investors",
-   "title_ar": "أين تقع الفرص الـ123 — حسب النشاط، وحسب المركز الجاذب للمستثمرين",
-   "sub_en": "Waste is two-thirds of the pipeline, yet MWAN lists only 4 opportunities to attract private investors — most waste opportunities sit with other centres or in the Fund's own studies",
-   "sub_ar": "النفايات ثلثا الخط، لكن المركز الوطني لإدارة النفايات يدرج 4 فرص جذب فقط — أغلب فرص النفايات لدى مراكز أخرى أو في دراسات الصندوق",
+   "title_en": "Where the 123 opportunities sit — by activity",
+   "title_ar": "أين تقع الفرص الـ123 — حسب النشاط",
+   "sub_en": "Waste is two-thirds of the 123 investment opportunities the Fund reviewed; the report does not list them",
+   "sub_ar": "النفايات ثلثا الفرص الاستثمارية الـ123 التي استعرضها الصندوق؛ ولا يسرد التقرير هذه الفرص",
    "pages": [
-    83,
-    76
+    83
    ],
    "color": "#E8862E",
    "rows": [
@@ -1214,37 +1213,48 @@
      "v": 10,
      "p": 83,
      "c": "#E8862E"
-    },
+    }
+   ]
+  },
+  {
+   "id": "c-investors",
+   "type": "hbar",
+   "title_en": "Opportunities to attract private investors — by centre",
+   "title_ar": "فرص جذب المستثمرين من القطاع الخاص — حسب المركز",
+   "sub_en": "45 opportunities listed by three centres. This is a different list from the 123 above, and the report does not say how the two overlap",
+   "sub_ar": "45 فرصة أدرجتها ثلاثة مراكز. هذه قائمة مختلفة عن الفرص الـ123 أعلاه، ولا يذكر التقرير كيف تتداخل القائمتان",
+   "pages": [
+    76
+   ],
+   "color": "#1F7A4C",
+   "rows": [
     {
-     "en": "— opportunities to attract private investors at NCVC",
-     "ar": "— فرص جذب لدى الغطاء النباتي",
+     "en": "NCVC (Vegetation Cover)",
+     "ar": "المركز الوطني لتنمية الغطاء النباتي",
      "v": 25,
-     "p": 76,
-     "c": "#1F7A4C"
+     "p": 76
     },
     {
-     "en": "— opportunities to attract private investors at NCW",
-     "ar": "— فرص جذب لدى الحياة الفطرية",
+     "en": "NCW (Wildlife)",
+     "ar": "المركز الوطني لتنمية الحياة الفطرية",
      "v": 16,
-     "p": 76,
-     "c": "#1F7A4C"
+     "p": 76
     },
     {
-     "en": "— opportunities to attract private investors at MWAN",
-     "ar": "— فرص جذب لدى إدارة النفايات",
+     "en": "MWAN (Waste Management)",
+     "ar": "المركز الوطني لإدارة النفايات",
      "v": 4,
-     "p": 76,
-     "c": "#1F7A4C"
+     "p": 76
     }
    ]
   },
   {
    "id": "c-waste",
    "type": "hbar",
-   "title_en": "Waste tonnage the Fund's 2025 grants put in motion",
-   "title_ar": "أطنان النفايات التي حرّكتها منح الصندوق في 2025",
-   "sub_en": "Three private projects plus one public initiative; company names not disclosed in the report",
-   "sub_ar": "ثلاثة مشاريع خاصة ومبادرة عامة؛ أسماء الشركات غير مذكورة في التقرير",
+   "title_en": "What the Fund's 2025 grants put in motion — tonnes of waste, and CO₂ avoided",
+   "title_ar": "ما حرّكته منح الصندوق في 2025 — أطنان النفايات، والانبعاثات المخفَّضة",
+   "sub_en": "Three private projects plus one public initiative; company names not disclosed in the report. Whole-programme totals and a yearly rate are shown together — each label says which",
+   "sub_ar": "ثلاثة مشاريع خاصة ومبادرة عامة؛ أسماء الشركات غير مذكورة في التقرير. تُعرض الإجماليات ومعدل سنوي معاً — وكل تسمية توضّح أيّهما",
    "pages": [
     61,
     70,
@@ -1338,8 +1348,8 @@
   {
    "id": "c-grants",
    "type": "hbar",
-   "title_en": "Grant programme reach in 2025 — people the Fund's initiatives touched",
-   "title_ar": "مدى وصول برنامج المنح في 2025 — من طالتهم مبادرات الصندوق",
+   "title_en": "Grant programme reach in 2025 — people, schools and factories the Fund's initiatives touched",
+   "title_ar": "مدى وصول برنامج المنح في 2025 — الأفراد والمدارس والمصانع التي طالتها مبادرات الصندوق",
    "sub_en": "SAR 17 million+ across 24 initiatives in 13 regions; awareness initiatives dominate the count",
    "sub_ar": "+17 مليون ريال عبر 24 مبادرة في 13 منطقة؛ مبادرات التوعية هي الأكثر عدداً",
    "pages": [
@@ -1402,8 +1412,8 @@
    "type": "compare",
    "title_en": "The Fund is getting faster and bigger — 2024 vs 2025",
    "title_ar": "الصندوق يكبر ويتسارع — 2024 مقابل 2025",
-   "sub_en": "A counterpart that closes procurement in 83 days and doubled its digital score will run the centres' tenders differently from how they ran before",
-   "sub_ar": "جهة تُنجز المشتريات في 83 يوماً وضاعفت نتيجتها الرقمية ستدير منافسات المراكز بطريقة مختلفة عمّا سبق",
+   "sub_en": "A counterpart that closes procurement in 83 days and raised its digital score by three-quarters (45 % → 79 %) will run the centres' tenders differently from how they ran before",
+   "sub_ar": "جهة تُنجز المشتريات في 83 يوماً ورفعت نتيجتها الرقمية بنحو ثلاثة أرباع (من 45% إلى 79%) ستدير منافسات المراكز بطريقة مختلفة عمّا سبق",
    "pages": [
     94,
     95,

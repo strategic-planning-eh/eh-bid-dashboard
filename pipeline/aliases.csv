@@ -49,4 +49,6 @@ alkayan alamthel,Kayan Al Amthal,core-fuzzy 0.94,approved,Sep 2026
 ESCO for Environmental Consultation,ESCO Environmental Consulting Co. (One-Person Co.),core,approved,Sep 2026
 شركة ركائز المعمار للاستشارات المهنية مهنية شخص واحد,Rakaez Al-Ma’mar Professional Consulting Co. (One-Person Professional Co.),twin,approved,Sep 2026
 شركة طاقات الانجاز للاستشارات البيئية,Taqat El Injaz Environmental Consulting,twin,approved,Sep 2026
-مكتب الدعم البيئي للاستشارات البيئية,شركة الدعم للخدمات البيئية,core-subset,auto,Oct 2026
+مكتب الدعم البيئي للاستشارات البيئية,شركة الدعم للخدمات البيئية,core-subset,rejected,Oct 2026
+شركة رائدات الاستدامة للاستشارات البيئية,شركة الإستدامة البيئية للخدمات البيئية,core-subset,auto,Oct 2026
+مكتب الدعم البيئي للاستشارات البيئية,الداعم البيئي للخدمات البيئية,twin,auto,Oct 2026

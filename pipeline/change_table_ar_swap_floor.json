@@ -1,0 +1,37 @@
+{
+ "generated": "2026-10-12 11:23",
+ "title": "Arabic swap ignores the reading-floor font size",
+ "failures": [],
+ "changes": [
+  {
+   "file": "ar",
+   "kind": "exact",
+   "category": "fix",
+   "note": "style-insensitive lookup table",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  var normH=function(h){ return String(h).replace(/\\s+/g,' ').trim(); };\n",
+   "new": "  var normH=function(h){ return String(h).replace(/\\s+/g,' ').trim(); };\n  /* 12 Oct 2026: match a block even when the reading floor has added an inline font size (style attributes ignored) */\n  var noSt=function(h){ return normH(String(h).replace(/\\s+style=\"[^\"]*\"/g,'')); };\n  var FULLN=null; if(FULL){ FULLN={}; for(var fk in FULL){ if(fk.indexOf('#text:')!==0) FULLN[noSt(fk)]=FULL[fk]; } }\n"
+  },
+  {
+   "file": "ar",
+   "kind": "exact",
+   "category": "fix",
+   "note": "fall back to the style-insensitive match",
+   "occurrences": 1,
+   "ok": true,
+   "old": "var k=normH(el.innerHTML); var v=FULL[k];",
+   "new": "var k=normH(el.innerHTML); var v=FULL[k]; if(v==null&&FULLN) v=FULLN[noSt(el.innerHTML)];"
+  },
+  {
+   "file": "ar",
+   "kind": "exact",
+   "category": "fix",
+   "note": "Arabic label for Other in chart B",
+   "occurrences": 1,
+   "ok": true,
+   "old": "'Salaries':'الرواتب',",
+   "new": "'Salaries':'الرواتب','Other':'أخرى',"
+  }
+ ]
+}

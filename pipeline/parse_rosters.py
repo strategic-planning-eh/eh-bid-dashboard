@@ -81,15 +81,42 @@ def parse(rs):
         seen.add(k); out.append([str(nm).strip(), amt, dq, is_eh(nm)])
     return out if len(out)>=2 else None
 
+TECHH=['ملاحظات','الملاحظات','remarks','notes','note','النتيجه الفنيه','التقييم الفني','technical']
+def tech_scores(rs):
+    """Each bidder's technical result from the notes column, e.g. «حاصل على نسبة (87%)» → 87.0 (12 Oct 2026)."""
+    maxr=min(rs.max_row,500); maxc=rs.max_column
+    grid=[[rs.cell(r+1,c+1).value for c in range(maxc)] for r in range(maxr)]
+    nc=tc=None
+    for r in range(min(15,maxr)):
+        for c in range(maxc):
+            h=norm_ar(grid[r][c]).strip()
+            if nc is None and any(k in h for k in ['bidder name','اسم المورد','اسم الشركه','supplier','اسم العارض']): nc=c
+            if tc is None and h and any(h==k or h.startswith(k) for k in TECHH): tc=c
+    if nc is None or tc is None: return {}
+    out={}
+    for row in grid:
+        nm,nt=row[nc],row[tc]
+        if not is_name(nm) or nt is None: continue
+        if isinstance(nt,(int,float)) and 0<nt<=1: sc=round(nt*100,1)            # a cell formatted as 87%
+        else:
+            m=re.search(r'(\d{1,3}(?:[.,]\d+)?)\s*[%٪]',str(nt))
+            sc=float(m.group(1).replace(',','.')) if m else None
+        if sc is not None and 0<=sc<=100: out[str(nm).strip()]=sc
+    return out
+
 if __name__=='__main__':
-    allr={}
+    allr={}; tech={}
     for f,yr in [('bids2025.xlsx',2025),('bids2026.xlsx',2026)]:
         wb=openpyxl.load_workbook(f, data_only=True)
         for sh in [s for s in wb.sheetnames if __import__('re').match(r'\s*bid\s*#\s*\d+\s*$', s, __import__('re').I)]:
             sn=__import__('re').match(r'\s*bid\s*#\s*(\d+)', sh, __import__('re').I).group(1)
             r=parse(wb[sh])
             if r: allr[f'{yr}-{sn}']=r
+            ts=tech_scores(wb[sh])
+            if ts: tech[f'{yr}-{sn}']=ts
     json.dump(allr, open('rosters_all.json','w'), ensure_ascii=False)
+    json.dump(tech, open('techscores.json','w'), ensure_ascii=False)   # 12 Oct 2026: technical scores by tender and bidder
+    print('Technical scores:', {k: len(v) for k, v in tech.items()} or 'none recorded')
     npriced=sum(1 for v in allr.values() if sum(1 for x in v if x[1]) >=2)
     eh_rosters=sum(1 for v in allr.values() if any(x[3] for x in v))
     print('Total rosters (incl names-only):',len(allr),'| with >=2 prices:',npriced,'| with EH present:',eh_rosters)

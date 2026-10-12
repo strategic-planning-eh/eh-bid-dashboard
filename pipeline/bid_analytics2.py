@@ -1,6 +1,12 @@
 import json, collections, re, statistics as st
 raw=json.load(open('bidraw2.json')); _ALLBIDS=raw['bids']
 _ALLR=json.load(open('rosters_all.json'))
+import os as _os2
+_TECH=json.load(open('techscores.json')) if _os2.path.exists('techscores.json') else {}   # 12 Oct 2026
+def _tcanon(s):
+    t=str(s or '').strip().lower()
+    for a,b in (('أ','ا'),('إ','ا'),('آ','ا'),('ة','ه'),('ى','ي'),('','')): t=t.replace(a,b)
+    return ' '.join(re.sub(r'[^\w\u0600-\u06FF ]',' ',t).split())
 
 def compute(bids, rfull, comp):
     EH=['افاق البيئة','آفاق البيئة','افاق البيئه','آفاق البيئه','environmental horizon','environmental horizons']
@@ -215,6 +221,15 @@ def compute(bids, rfull, comp):
             blist.append(dict(name=('Environmental Horizons (EH)' if e else n),price=None,dq=False,undisclosed=True,eh=bool(e),rank=None,lowest=False,won=_is_w(n,e)))
         for n,a,dq,e in dqd:
             blist.append(dict(name=('Environmental Horizons (EH)' if e else n),price=None,dq=True,undisclosed=False,eh=bool(e),rank=None,lowest=False,won=_is_w(n,e)))
+        # technical scores from the bid sheet's notes column (12 Oct 2026); matched by bidder name as written
+        _ts={_tcanon(k):v for k,v in (_TECH.get(key) or {}).items()}
+        if _ts:
+            _rawn=None
+            for bl in blist:
+                src=next((n for n,a,dq,e in work if (('Environmental Horizons (EH)' if e else n)==bl['name'])),bl['name'])
+                bl['tech']=_ts.get(_tcanon(src))
+        _sc=[bl['tech'] for bl in blist if bl.get('tech') is not None]
+        _eht=next((bl['tech'] for bl in blist if bl['eh'] and bl.get('tech') is not None),None)
         has_full=(ehp is not None and n_priced>=2)
         price_rows.append(dict(sn=sn,year=yr,
             eh=(round(ehp) if ehp is not None else None),
@@ -224,7 +239,9 @@ def compute(bids, rfull, comp):
         reason=((bb.get('reason') or None) if bb else None),
             win_price=(round(award) if award else None),
             title=(bb['title'] if bb else ''),client=(bb['client'] if bb else ''),
-            bidders=blist,dq_count=len(dqd),undisc_count=len(undisc),level=('full' if has_full else 'partial')))
+            bidders=blist,dq_count=len(dqd),undisc_count=len(undisc),level=('full' if has_full else 'partial'),
+            tech_eh=_eht,tech_best=(max(_sc) if _sc else None),tech_n=len(_sc),
+            tech_rank=(1+sum(1 for x in _sc if x>_eht) if _eht is not None else None)))
         if has_full:
             ranks.append(rank/n_priced); gaps.append(gap)
         # gap of EH's price to the bid that actually WON (competitor wins only)

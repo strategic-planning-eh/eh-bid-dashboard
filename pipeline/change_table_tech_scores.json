@@ -1,0 +1,127 @@
+{
+ "generated": "2026-10-12 11:20",
+ "title": "Bid sheets — technical scores (2026 #87)",
+ "failures": [],
+ "changes": [
+  {
+   "file": "rost",
+   "kind": "exact",
+   "category": "data",
+   "note": "read technical scores from the notes column of each bid sheet",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    return out if len(out)>=2 else None\n",
+   "new": "    return out if len(out)>=2 else None\n\nTECHH=['ملاحظات','الملاحظات','remarks','notes','note','النتيجه الفنيه','التقييم الفني','technical']\ndef tech_scores(rs):\n    \"\"\"Each bidder's technical result from the notes column, e.g. «حاصل على نسبة (87%)» → 87.0 (12 Oct 2026).\"\"\"\n    maxr=min(rs.max_row,500); maxc=rs.max_column\n    grid=[[rs.cell(r+1,c+1).value for c in range(maxc)] for r in range(maxr)"
+  },
+  {
+   "file": "rost",
+   "kind": "exact",
+   "category": "data",
+   "note": "collect technical scores per tender",
+   "occurrences": 1,
+   "ok": true,
+   "old": "            r=parse(wb[sh])\n            if r: allr[f'{yr}-{sn}']=r\n",
+   "new": "            r=parse(wb[sh])\n            if r: allr[f'{yr}-{sn}']=r\n            ts=tech_scores(wb[sh])\n            if ts: tech[f'{yr}-{sn}']=ts\n"
+  },
+  {
+   "file": "rost",
+   "kind": "exact",
+   "category": "data",
+   "note": "technical score store",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    allr={}\n    for f,yr in",
+   "new": "    allr={}; tech={}\n    for f,yr in"
+  },
+  {
+   "file": "rost",
+   "kind": "exact",
+   "category": "data",
+   "note": "write techscores.json",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    json.dump(allr, open('rosters_all.json','w'), ensure_ascii=False)\n",
+   "new": "    json.dump(allr, open('rosters_all.json','w'), ensure_ascii=False)\n    json.dump(tech, open('techscores.json','w'), ensure_ascii=False)   # 12 Oct 2026: technical scores by tender and bidder\n    print('Technical scores:', {k: len(v) for k, v in tech.items()} or 'none recorded')\n"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "load technical scores",
+   "occurrences": 1,
+   "ok": true,
+   "old": "_ALLR=json.load(open('rosters_all.json'))\n",
+   "new": "_ALLR=json.load(open('rosters_all.json'))\nimport os as _os2\n_TECH=json.load(open('techscores.json')) if _os2.path.exists('techscores.json') else {}   # 12 Oct 2026\ndef _tcanon(s):\n    t=str(s or '').strip().lower()\n    for a,b in (('أ','ا'),('إ','ا'),('آ','ا'),('ة','ه'),('ى','ي'),('','')): t=t.replace(a,b)\n    return ' '.join(re.sub(r'[^\\w\\u0600-\\u06FF ]',' ',t).split())\n"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "attach technical scores to each bidder",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        has_full=(ehp is not None and n_priced>=2)\n",
+   "new": "        # technical scores from the bid sheet's notes column (12 Oct 2026); matched by bidder name as written\n        _ts={_tcanon(k):v for k,v in (_TECH.get(key) or {}).items()}\n        if _ts:\n            _rawn=None\n            for bl in blist:\n                src=next((n for n,a,dq,e in work if (('Environmental Horizons (EH)' if e else n)==bl['name'])),bl['name'])\n                bl['tech']=_ts"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "data",
+   "note": "EH technical score, best score and place per tender",
+   "occurrences": 1,
+   "ok": true,
+   "old": "            bidders=blist,dq_count=len(dqd),undisc_count=len(undisc),level=('full' if has_full else 'partial')))\n",
+   "new": "            bidders=blist,dq_count=len(dqd),undisc_count=len(undisc),level=('full' if has_full else 'partial'),\n            tech_eh=_eht,tech_best=(max(_sc) if _sc else None),tech_n=len(_sc),\n            tech_rank=(1+sum(1 for x in _sc if x>_eht) if _eht is not None else None)))\n"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "feature",
+   "note": "Technical column in the tender row",
+   "occurrences": 1,
+   "ok": true,
+   "old": "       <div style=\"text-align:center\"><div style=\"font-size:9px;color:#5F7078;text-transform:uppercase\">${t('vs Low','مقابل الأدنى')}</div>",
+   "new": "       ${r.tech_n?`<div style=\"text-align:center\" title=\"${esc(t('EH technical score and place among the '+r.tech_n+' scored bidders; best score '+r.tech_best+'%','الدرجة الفنية ل EH وترتيبها بين '+r.tech_n+' متقدمين لهم درجة؛ أعلى درجة '+r.tech_best+'%'))}\"><div style=\"font-size:9px;color:#5F7078;text-transform:uppercase\">${t('Technical','الفني')}</div><div style=\"font-weight:700;font-size:12.5px"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "feature",
+   "note": "technical score helper for bidder lines",
+   "occurrences": 1,
+   "ok": true,
+   "old": "   const bars=r.bidders.map(b=>{\n",
+   "new": "   const tch=b=>b.tech!=null?` <span title=\"${esc(t('Technical score','الدرجة الفنية'))}\" style=\"font-size:10.5px;font-weight:600;color:${b.tech>=(r.tech_best||101)?'#2E7D46':'#5F7078'};white-space:nowrap\">${t('tech ','فني ')}<span dir=\"ltr\">${b.tech}%</span></span>`:'';\n   const bars=r.bidders.map(b=>{\n"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "feature",
+   "note": "score beside each priced bidder",
+   "occurrences": 1,
+   "ok": true,
+   "old": "${b.lowest?'\\u25bc ':''}${esc(b.name)}</div>",
+   "new": "${b.lowest?'\\u25bc ':''}${esc(b.name)}</div>${b.tech!=null?`<div style=\"min-width:58px\">${tch(b)}</div>`:(r.tech_n?'<div style=\"min-width:58px\"></div>':'')}"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "feature",
+   "note": "score beside each bidder whose price was not disclosed",
+   "occurrences": 1,
+   "ok": true,
+   "old": "white-space:nowrap\" dir=\"auto\">${esc(b.name)}</div><div style=\"flex:1;height:15px;background:repeating-linear-gradient(90deg",
+   "new": "white-space:nowrap\" dir=\"auto\">${esc(b.name)}</div>${r.tech_n?`<div style=\"min-width:58px\">${tch(b)}</div>`:''}<div style=\"flex:1;height:15px;background:repeating-linear-gradient(90deg"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "feature",
+   "note": "score beside a disqualified bidder",
+   "occurrences": 1,
+   "ok": true,
+   "old": "text-align:right\" dir=\"auto\">${esc(b.name)}</div><div style=\"flex:1;height:15px;background:repeating-linear-gradient(45deg",
+   "new": "text-align:right\" dir=\"auto\">${esc(b.name)}</div>${r.tech_n?`<div style=\"min-width:58px\">${tch(b)}</div>`:''}<div style=\"flex:1;height:15px;background:repeating-linear-gradient(45deg"
+  }
+ ]
+}

@@ -179,14 +179,15 @@ function renderPricing(){
    const gapcol=r.gap>50?'#C0504D':r.gap>5?'#E8862E':'#2E7D46';
    const oc=r.status=='Cancelled'?'<span class="tag" style="background:#8A99A3">'+t('CANCELLED','ملغاة')+'</span>':(r.won==null?'<span style="color:#5F7078;font-weight:700">'+t('PENDING','قيد الدراسة')+'</span>':(r.won?'<span class="tag" style="background:#2E7D46">'+t('EH WON','فاز EH')+'</span>':'<span class="tag" style="background:#C0504D">'+t('LOST','خسارة')+'</span>'));
    // full bidder bars (shown when open)
+   const tch=b=>b.tech!=null?` <span title="${esc(t('Technical score','الدرجة الفنية'))}" style="font-size:10.5px;font-weight:600;color:${b.tech>=(r.tech_best||101)?'#2E7D46':'#5F7078'};white-space:nowrap">${t('tech ','فني ')}<span dir="ltr">${b.tech}%</span></span>`:'';
    const bars=r.bidders.map(b=>{
-     if(b.dq){return `<div style="display:flex;align-items:center;gap:8px;margin:3px 0;opacity:.6"><div style="width:230px;font-size:10.5px;color:#8A99A3;text-align:right" dir="auto">${esc(b.name)}</div><div style="flex:1;height:15px;background:repeating-linear-gradient(45deg,#EEE,#EEE 4px,#E0E0E0 4px,#E0E0E0 8px);border-radius:3px;max-width:60px"></div><div style="font-size:10px;color:#B23A3A;font-weight:700">${t('DQ — non-compliant','مستبعد — غير مطابق')}</div></div>`;}
-     if(b.undisclosed){return `<div style="display:flex;align-items:center;gap:8px;margin:3px 0;opacity:.85"><div style="width:230px;font-size:10.5px;color:${b.eh?'#1A5FAB':'#5A6A72'};font-weight:${b.eh?'700':'500'};text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" dir="auto">${esc(b.name)}</div><div style="flex:1;height:15px;background:repeating-linear-gradient(90deg,#EFF2F4,#EFF2F4 6px,#E4E8EB 6px,#E4E8EB 12px);border-radius:3px;max-width:80px"></div><div style="font-size:10px;color:#5F7078;font-style:italic;white-space:nowrap">${t('undisclosed value','قيمة غير معلنة')}${b.won?' <span style="color:#2E7D46;font-weight:700;font-style:normal">★ '+t('won','فائز')+'</span>':''}</div></div>`;}
+     if(b.dq){return `<div style="display:flex;align-items:center;gap:8px;margin:3px 0;opacity:.6"><div style="width:230px;font-size:10.5px;color:#8A99A3;text-align:right" dir="auto">${esc(b.name)}</div>${r.tech_n?`<div style="min-width:58px">${tch(b)}</div>`:''}<div style="flex:1;height:15px;background:repeating-linear-gradient(45deg,#EEE,#EEE 4px,#E0E0E0 4px,#E0E0E0 8px);border-radius:3px;max-width:60px"></div><div style="font-size:10px;color:#B23A3A;font-weight:700">${t('DQ — non-compliant','مستبعد — غير مطابق')}</div></div>`;}
+     if(b.undisclosed){return `<div style="display:flex;align-items:center;gap:8px;margin:3px 0;opacity:.85"><div style="width:230px;font-size:10.5px;color:${b.eh?'#1A5FAB':'#5A6A72'};font-weight:${b.eh?'700':'500'};text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" dir="auto">${esc(b.name)}</div>${r.tech_n?`<div style="min-width:58px">${tch(b)}</div>`:''}<div style="flex:1;height:15px;background:repeating-linear-gradient(90deg,#EFF2F4,#EFF2F4 6px,#E4E8EB 6px,#E4E8EB 12px);border-radius:3px;max-width:80px"></div><div style="font-size:10px;color:#5F7078;font-style:italic;white-space:nowrap">${t('undisclosed value','قيمة غير معلنة')}${b.won?' <span style="color:#2E7D46;font-weight:700;font-style:normal">★ '+t('won','فائز')+'</span>':''}</div></div>`;}
      const w=Math.max(b.price/maxp*100,2);
      const col=b.eh?'#1A5FAB':(b.won?'#2E7D46':'#9AABB5');
      const isWin=b.won;
      return `<div style="display:flex;align-items:center;gap:8px;margin:3px 0">
-       <div style="width:230px;font-size:10.5px;color:${b.eh?'#1A5FAB':'#3A4A52'};font-weight:${b.eh?'700':'500'};text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" dir="auto">${b.lowest?'\u25bc ':''}${esc(b.name)}</div>
+       <div style="width:230px;font-size:10.5px;color:${b.eh?'#1A5FAB':'#3A4A52'};font-weight:${b.eh?'700':'500'};text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" dir="auto">${b.lowest?'\u25bc ':''}${esc(b.name)}</div>${b.tech!=null?`<div style="min-width:58px">${tch(b)}</div>`:(r.tech_n?'<div style="min-width:58px"></div>':'')}
        <div style="flex:1"><div style="width:${w}%;height:15px;background:${col};border-radius:3px;min-width:3px"></div></div>
        <div style="font-size:10.5px;color:#1C2B33;font-weight:${b.eh?'700':'500'};white-space:nowrap;min-width:150px;text-align:left">${fmtSAR(b.price)}${isWin?' <span style="color:#2E7D46;font-weight:700">★ '+t('won','فائز')+'</span>':''}</div></div>`;
    }).join('');
@@ -196,6 +197,7 @@ function renderPricing(){
        <div style="flex:1;min-width:200px"><div dir="auto" style="font-size:11.5px;color:#1C2B33;font-weight:600;line-height:1.3">${esc(r.title)||'<span style=\'color:#aaa\'>'+t('(untitled tender)','(منافسة بلا عنوان)')+'</span>'}</div><div dir="auto" style="font-size:10px;color:#5F7078;margin-top:1px">${esc(r.client)}</div></div>
        <div style="text-align:right"><div style="font-size:9px;color:#5F7078;text-transform:uppercase;letter-spacing:.3px">${t('EH bid','عرض EH')}</div><div style="font-weight:700;font-size:12.5px;color:#1A5FAB">${r.eh!=null?fmtSAR(r.eh):((r.bidders&&r.bidders.some(b=>b.eh))||r.ehin?'<span style="color:#7A93B5;font-weight:600;font-size:10px;font-style:italic">'+t('bid submitted — undisclosed','عرض مقدَّم — غير معلن')+'</span>':'<span style="color:#6E7A82;font-weight:600;font-size:10px">'+t('no EH bid','لا عرض من EH')+'</span>')}</div></div>
        <div style="text-align:center"><div style="font-size:9px;color:#5F7078;text-transform:uppercase">${t('Rank','الترتيب')}</div><div style="font-weight:700;font-size:12.5px">${r.rank!=null?r.rank+'/'+r.n_priced:'\u2014'}</div></div>
+       ${r.tech_n?`<div style="text-align:center" title="${esc(t('EH technical score and place among the '+r.tech_n+' scored bidders; best score '+r.tech_best+'%','الدرجة الفنية ل EH وترتيبها بين '+r.tech_n+' متقدمين لهم درجة؛ أعلى درجة '+r.tech_best+'%'))}"><div style="font-size:9px;color:#5F7078;text-transform:uppercase">${t('Technical','الفني')}</div><div style="font-weight:700;font-size:12.5px">${r.tech_eh!=null?'<span dir="ltr">'+r.tech_eh+'%</span>':'\u2014'}${r.tech_rank!=null?` <span style="font-weight:500;color:#5F7078">· ${r.tech_rank}/${r.tech_n}</span>`:''}</div></div>`:''}
        <div style="text-align:center"><div style="font-size:9px;color:#5F7078;text-transform:uppercase">${t('vs Low','مقابل الأدنى')}</div><div style="font-weight:700;font-size:12.5px;color:${gapcol}">${r.gap!=null?(r.gap>0?'+'+r.gap+'%':r.gap+'%'):'\u2014'}</div></div>
        <div style="min-width:78px;text-align:center">${oc}</div>
        <div style="font-size:13px;color:#5F7078;transform:rotate(${open?'90':'0'}deg);transition:.15s">\u25b8</div>
@@ -579,7 +581,9 @@ function exData(B){
 }
 function exDelta(cur,prev,unit,goodUp){ if(cur==null||prev==null)return ''; const d=cur-prev; if(!d)return `<span class="exd">${t('unchanged vs prior year','دون تغيير عن العام السابق')}</span>`;
  const good=goodUp?d>0:d<0; return `<span class="exd ${good?'up':'down'}">${d>0?'▲':'▼'} ${unit==='pt'?Math.abs(d)+' '+t('pts','نقطة'):unit==='M'?'SAR '+fmtM(Math.abs(d)):Math.round(Math.abs(d)*10)/10} ${t('vs prior year','عن العام السابق')}</span>`; }
-function exSvgHead(W,title,sub){ return `<text x="14" y="20" class="exT">${esc(title)}</text>${sub?`<text x="14" y="36" class="exS">${esc(sub)}</text>`:''}`; }
+// Arabic: mirror x positions and swap text anchors (12 Oct 2026)
+function exRTL(W){const R=document.documentElement.dir==='rtl';return {R:R,X:x=>R?W-x:x,A:a=>R?(a==='end'?'start':a==='start'?'end':a):a,B:(x,w)=>R?W-x-w:x};}
+function exSvgHead(W,title,sub){ const m=exRTL(W); return `<text x="${m.X(14)}" y="20" text-anchor="${m.A('start')}" class="exT">${esc(title)}</text>${sub?`<text x="${m.X(14)}" y="36" text-anchor="${m.A('start')}" class="exS">${esc(sub)}</text>`:''}`; }
 function exScopeLabel(){ return SCOPE==='both'?YRS:SCOPE.slice(1); }
 function exBtn(id,name){ return `<button class="png" onclick="exPNG('${id}','${name}')" title="${t('Download this chart as a PNG image','تنزيل هذا الرسم كصورة PNG')}">${t('Export PNG','تصدير PNG')}</button>`; }
 function exGo(tab,filters){ if(filters){Object.keys(filters).forEach(kk=>{TF[kk]=filters[kk];}); renderTenders();} go(tab); }
@@ -588,13 +592,13 @@ function exGo(tab,filters){ if(filters){Object.keys(filters).forEach(kk=>{TF[kk]
 function exFunnel(d){
  const stages=[[t('Tracked','متتبَّعة'),d.total],[t('Committee reviewed','راجعتها اللجنة'),d.reviewed],[t('Committee accepted','قبلتها اللجنة'),d.accepted],[t('Submitted','قُدّمت'),d.submitted],[t('Decided','حُسمت'),d.decided],[t('Won','فاز EH'),d.wonN]];
  const W=wd,H=56+stages.length*40,x0=230,iw=W-x0-140,max=Math.max(stages[0][1],1);
- let leak=null,leakI=-1;
+ let leak=null,leakI=-1; const m=exRTL(W);
  let s=`<svg id="ex-funnel" viewBox="0 0 ${W} ${H}" class="ch exsvg">${exSvgHead(W,t('From tracked to won','من المتابعة إلى الفوز'),t('Scope','النطاق')+': '+exScopeLabel())}`;
  stages.forEach(([l,v],i)=>{const y=52+i*40,w=Math.max(v/max*iw,2);const prev=i?stages[i-1][1]:null;const drop=prev?Math.round(100*(prev-v)/prev):null;
   if(prev&&(prev-v)>(leak||0)){leak=prev-v;leakI=i;}
   const col=i===stages.length-1?EXC.won:(i===stages.length-2?EXC.pend:C.blue);
-  s+=`<text x="${x0-10}" y="${y+20}" text-anchor="end" class="chl">${esc(l)}</text><rect x="${x0}" y="${y+4}" width="${w.toFixed(1)}" height="26" rx="4" fill="${col}" fill-opacity="${0.55+0.45*(i/(stages.length-1))}"><title>${esc(l)}: ${v}</title></rect>`;
-  s+=`<text x="${x0+w+8}" y="${y+22}" class="chv">${v}</text>${drop!=null?`<text x="${x0+w+8+String(v).length*9+10}" y="${y+22}" class="chs">−${drop}%</text>`:''}`;});
+  s+=`<text x="${m.X(x0-10)}" y="${y+20}" text-anchor="${m.A('end')}" class="chl">${esc(l)}</text><rect x="${m.B(x0,w).toFixed(1)}" y="${y+4}" width="${w.toFixed(1)}" height="26" rx="4" fill="${col}" fill-opacity="${0.55+0.45*(i/(stages.length-1))}"><title>${esc(l)}: ${v}</title></rect>`;
+  s+=`<text x="${m.X(x0+w+8)}" y="${y+22}" text-anchor="${m.A('start')}" class="chv">${v}</text>${drop!=null?`<text x="${m.X(x0+w+8+String(v).length*9+10)}" y="${y+22}" text-anchor="${m.A('start')}" class="chs" direction="ltr">−${drop}%</text>`:''}`;});
  s+='</svg>';
  const leakTxt=leakI>0?t(`Largest leak: ${stages[leakI-1][0]} → ${stages[leakI][0]}, ${leak} tenders`,`أكبر تسرّب: ${stages[leakI-1][0]} ← ${stages[leakI][0]}، ${leak} منافسة`):'';
  return `<div class="card exc"><div class="exh"><h3>${t('Tender funnel — from tracked to won','قمع المنافسات — من المتابعة إلى الفوز')}</h3>${exBtn('ex-funnel','funnel')}</div>
@@ -604,10 +608,11 @@ function exFunnel(d){
 // ---- 3. where we win (decided vs won by band / service)
 function exWinBars(id,rows,lab,title,sub,note){
  const W=620,rh=34,H=52+rows.length*rh+8,x0=190,iw=W-x0-150,max=Math.max(...rows.map(r=>r.awarded||0),1);
+ const m=exRTL(W);
  let s=`<svg id="${id}" viewBox="0 0 ${W} ${H}" class="ch exsvg">${exSvgHead(W,title,t('Scope','النطاق')+': '+exScopeLabel())}`;
  rows.forEach((r,i)=>{const y=50+i*rh,wa=Math.max((r.awarded||0)/max*iw,2),ww=(r.won||0)/max*iw;const wr=r.awarded?Math.round(100*r.won/r.awarded):null;
-  s+=`<text x="${x0-10}" y="${y+19}" text-anchor="end" class="chl">${esc(lab(r))}</text><rect x="${x0}" y="${y+5}" width="${wa.toFixed(1)}" height="22" rx="3" fill="${r.grey?EXC.grey:C.line}" ${r.grey?'fill-opacity=".5"':''}/><rect x="${x0}" y="${y+5}" width="${ww.toFixed(1)}" height="22" rx="3" fill="${r.grey?EXC.grey:EXC.won}"><title>${esc(lab(r))}: ${r.won}/${r.awarded}</title></rect>`;
-  s+=`<text x="${x0+wa+8}" y="${y+21}" class="chv">${r.won||0}/${r.awarded||0}</text><text x="${x0+wa+8+String((r.won||0)+'/'+(r.awarded||0)).length*9+8}" y="${y+21}" class="chs">${wr==null?'—':wr+'%'} · ${r.count} ${t('bid','منافسة')}</text>`;});
+  s+=`<text x="${m.X(x0-10)}" y="${y+19}" text-anchor="${m.A('end')}" class="chl">${esc(lab(r))}</text><rect x="${m.B(x0,wa).toFixed(1)}" y="${y+5}" width="${wa.toFixed(1)}" height="22" rx="3" fill="${r.grey?EXC.grey:C.line}" ${r.grey?'fill-opacity=".5"':''}/><rect x="${m.B(x0,ww).toFixed(1)}" y="${y+5}" width="${ww.toFixed(1)}" height="22" rx="3" fill="${r.grey?EXC.grey:EXC.won}"><title>${esc(lab(r))}: ${r.won}/${r.awarded}</title></rect>`;
+  s+=`<text x="${m.X(x0+wa+8)}" y="${y+21}" text-anchor="${m.A('start')}" class="chv" direction="ltr">${r.won||0}/${r.awarded||0}</text><text x="${m.X(x0+wa+8+String((r.won||0)+'/'+(r.awarded||0)).length*9+8)}" y="${y+21}" text-anchor="${m.A('start')}" class="chs">${wr==null?'—':wr+'%'} · ${r.count} ${t('bid','منافسة')}</text>`;});
  s+='</svg>';
  return `<div class="card exc"><div class="exh"><h3>${title}</h3>${exBtn(id,id.replace('ex-',''))}</div><div class="note">${note}</div>${s}<div class="exfoot">${sub}</div></div>`;
 }

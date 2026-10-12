@@ -1,0 +1,557 @@
+{
+ "generated": "2026-10-12 11:13",
+ "title": "Arabic version — Client Bubble Map",
+ "failures": [],
+ "changes": [
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "RTL styles: panel slides from the inline end, zoom buttons and notes mirror",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</style>\n</head>",
+   "new": "</style>\n<style id=\"eh-bub-ar\">\n/* Arabic / right-to-left (patch_bubble_arabic.py) */\nhtml[dir=rtl] #execWrap svg{direction:ltr}            /* chart anchors stay put; Arabic phrases inside are RTL isolates */\nhtml[dir=rtl] .zctl{right:auto;left:10px}\nhtml[lang=ar] .kcard .kv{font-size:22px}\nhtml[lang=ar] td.hc{width:88px;min-width:88px}\nhtml[lang=ar] td.hc small{white-space:nowrap}\nhtml[dir=rtl] ."
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "the dictionary and ehBubbleLang(), before the page script",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</aside>\n\n<script>\nconst DATA = [",
+   "new": "</aside>\n\n<script id=\"bub-i18n\">\n/* Arabic version (patch_bubble_arabic.py, 12 Oct 2026). BUB_I18N is the page's one dictionary:\n   ui = [English exactly as the page always wrote it, Arabic] ({0},{1} are filled in), sec/svc/deal/step = names,\n   pl = Arabic counted nouns, cap = Arabic chart captions, st = Arabic for the static page text (its English is the\n   markup itself, read back when switchin"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "amounts in Arabic: «12 مليون ريال», Western digits, isolated",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const fmt = v => {\n  if (v >= 1e6)",
+   "new": "const fmt = v => {\n  if (BUB_LANG === \"ar\") return bubFmtAr(v, \"\", true);\n  if (v >= 1e6)"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "bubble tooltip: sector and line count",
+   "occurrences": 1,
+   "ok": true,
+   "old": "        <div class=\"s\">${d.data.sector}</div>\n        <div>${fmt(val(d.data))} · ${proj(d.data)} project line${proj(d.data)>1?\"s\":\"\"}</div>",
+   "new": "        <div class=\"s\">${bTS(d.data.sector)}</div>\n        <div>${fmt(val(d.data))} · ${BUB_LANG===\"ar\" ? bCount(proj(d.data),\"line\") : proj(d.data)+bT(\"proj_line_s\")+(proj(d.data)>1?\"s\":\"\")}</div>"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "tooltip opens to the left of the pointer in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "` : \"\"}`;\n    })\n    .on(\"mouseleave\"",
+   "new": "` : \"\"}`;\n      if (BUB_LANG===\"ar\") tip.style.left = Math.max(8, e.clientX-14-tip.offsetWidth) + \"px\";\n    })\n    .on(\"mouseleave\""
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "legend sector names",
+   "occurrences": 1,
+   "ok": true,
+   "old": "lgAll.select(\".nm\").text(d => d[0]);",
+   "new": "lgAll.select(\".nm\").text(d => bTS(d[0]));"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "detail panel sector",
+   "occurrences": 1,
+   "ok": true,
+   "old": "document.getElementById(\"psec\").textContent = comp.sector;",
+   "new": "document.getElementById(\"psec\").textContent = bTS(comp.sector);"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "detail panel total line",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  document.getElementById(\"ptot\").innerHTML =\n    `<b>${fmt(d3.sum(priced, l => l.v))}</b> across",
+   "new": "  document.getElementById(\"ptot\").innerHTML = BUB_LANG===\"ar\" ?\n    `<b>${fmt(d3.sum(priced, l => l.v))}</b> · ${bT(\"lines_lbl\")} <b>${d3.sum(lines, l => l.n)}</b>` +\n    (lines.length > priced.length ? ` · ${bT(\"unpriced_lbl\")} ${lines.length - priced.length}` : \"\") :\n    `<b>${fmt(d3.sum(priced, l => l.v))}</b> across"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "detail panel empty state",
+   "occurrences": 1,
+   "ok": true,
+   "old": "`<div class=\"pline\"><span class=\"sv\">No lines in this year scope.</span></div>`;",
+   "new": "`<div class=\"pline\"><span class=\"sv\">${bT(\"no_lines\")}</span></div>`;"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "PNG export error",
+   "occurrences": 1,
+   "ok": true,
+   "old": "img.onerror = () => alert(\"PNG export failed — please report this.\");",
+   "new": "img.onerror = () => alert(bT(\"png_fail\"));"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "Executive KPI tiles",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    [\"Total book 25+26\", fmt(tAll), null],\n    [\"2026 revenue\", fmt(t26), (yoy>=0?\"▲ \":\"▼ \") + Math.round(Math.abs(yoy)*100) + \"% vs 2025\", yoy>=0],\n    [\"Active clients 2026\", c26.length, (c26.length>=c25.length?\"▲ \":\"▼ \") + Math.abs(c26.length-c25.length) + \" vs 2025\", c26.length>=c25.length],\n    [\"Client retention\", Math.round(100*ret.length/c25.length) + \"%\", ret.length + \" of \" + c25.length ",
+   "new": "    [bT(\"k_total\"), fmt(tAll), null],\n    [bT(\"k_rev26\"), fmt(t26), (yoy>=0?\"▲ \":\"▼ \") + Math.round(Math.abs(yoy)*100) + \"%\" + bT(\"vs25\"), yoy>=0],\n    [bT(\"k_active\"), c26.length, (c26.length>=c25.length?\"▲ \":\"▼ \") + Math.abs(c26.length-c25.length) + bT(\"vs25\"), c26.length>=c25.length],\n    [bT(\"k_ret\"), Math.round(100*ret.length/c25.length) + \"%\", bF(\"kept\", ret.length, c25.length), true],\n    ["
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "Executive year-scope note",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    : 'Showing <b>'+yearMode+'</b> only — Depth vs Value, Deal-Size and Whitespace are scoped to '+yearMode+\n      '; the Bridge, Retention and Sector-Shift cards always compare 2025 → 2026. &nbsp;';",
+   "new": "    : bF(\"scope\", yearMode);"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "depth vs value: money axis in Arabic units",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const axY=root.select(\".qax-y\").call(d3.axisLeft(py).ticks(6,\"~s\").tickSizeOuter(0));",
+   "new": "const _fq=py.tickFormat(6,\"~s\");\n  const axY=root.select(\".qax-y\").call(BUB_LANG===\"ar\" ? d3.axisLeft(py).ticks(6).tickFormat(v=>_fq(v)?bubAmt(v,false,false):\"\").tickSizeOuter(0) : d3.axisLeft(py).ticks(6,\"~s\").tickSizeOuter(0));"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "depth vs value: x-axis title",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function t_axis(){return \"How many jobs the client gives EH \\u2192 (log scale)\";}",
+   "new": "function t_axis(){return bidiAr(bT(\"q_x\"));}"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "depth vs value: y-axis title",
+   "occurrences": 1,
+   "ok": true,
+   "old": ".text(\"Contract value with EH \\u2192 (SAR, log scale)\");",
+   "new": ".text(bidiAr(bT(\"q_y\")));"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "median guide label (projects)",
+   "occurrences": 1,
+   "ok": true,
+   "old": ".text(\"median \"+medP+\" projects\")",
+   "new": ".text(BUB_LANG===\"ar\" ? bidiAr(bT(\"median\")+\" \"+bCount(medP,\"proj\")) : \"median \"+medP+\" projects\")"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "median guide label (value)",
+   "occurrences": 1,
+   "ok": true,
+   "old": ".text(\"median \"+fmt(medV))",
+   "new": ".text(bidiAr(bT(\"median\")+\" \"+fmt(medV)))"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "quadrant headings",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  const QL=[[\"Strategic accounts (\"+QN.S+\")\",W-M.r-6,M.t+14,\"end\",\"S\"],\n            [\"Concentrated bets (\"+QN.C+\")\",M.l+10,M.t+14,\"start\",\"C\"],\n            [\"Transactional volume (\"+QN.T+\")\",W-M.r-6,H-M.b-10,\"end\",\"T\"],\n            [\"Smaller accounts (\"+QN.X+\")\",M.l+10,H-M.b-10,\"start\",\"X\"]];",
+   "new": "  const QL=[[bidiAr(bT(\"qS\")+\" (\"+QN.S+\")\"),W-M.r-6,M.t+14,\"end\",\"S\"],\n            [bidiAr(bT(\"qC\")+\" (\"+QN.C+\")\"),M.l+10,M.t+14,\"start\",\"C\"],\n            [bidiAr(bT(\"qT\")+\" (\"+QN.T+\")\"),W-M.r-6,H-M.b-10,\"end\",\"T\"],\n            [bidiAr(bT(\"qX\")+\" (\"+QN.X+\")\"),M.l+10,H-M.b-10,\"start\",\"X\"]];"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "dot hover title",
+   "occurrences": 1,
+   "ok": true,
+   "old": "d3.select(this).select(\"title\").text(d.n+\"\\n\"+d.p+\" projects \\u00b7 \"+fmt(d.v));",
+   "new": "d3.select(this).select(\"title\").text(d.n+\"\\n\"+(BUB_LANG===\"ar\"?bCount(d.p,\"proj\"):d.p+\" projects\")+\" \\u00b7 \"+fmt(d.v));"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "dot name labels read in their own script",
+   "occurrences": 1,
+   "ok": true,
+   "old": "      .attr(\"fill\",TXT).attr(\"stroke\",HALO)\n      .text(o=>o.nm)",
+   "new": "      .attr(\"fill\",TXT).attr(\"stroke\",HALO)\n      .text(o=>bidiName(o.nm))"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "full name list headings",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const QTITLE={S:\"Strategic accounts\",C:\"Concentrated bets\",T:\"Transactional volume\",X:\"Smaller accounts\"};",
+   "new": "const QTITLE={S:bT(\"qS\"),C:bT(\"qC\"),T:bT(\"qT\"),X:bT(\"qX\")};"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "full name list counts",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<span style=\"opacity:.65\">\\u2014 '+d.p+' jobs \\u00b7 '+fmt(d.v)+'</span>",
+   "new": "<span style=\"opacity:.65\">\\u2014 '+(BUB_LANG===\"ar\"?bCount(d.p,\"proj\"):d.p+' jobs')+' \\u00b7 '+fmt(d.v)+'</span>"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "show/hide names button",
+   "occurrences": 1,
+   "ok": true,
+   "old": "b.textContent=show?\"Hide names\":\"Show all 60 names\";",
+   "new": "b.textContent=bT(show?\"hide_names\":\"show_names\");"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "deal-size bucket names",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const axX=root.select(\".deal-ax-x\").call(d3.axisBottom(x).tickSizeOuter(0));",
+   "new": "const axX=root.select(\".deal-ax-x\").call(d3.axisBottom(x).tickSizeOuter(0).tickFormat(k=>BUB_LANG===\"ar\"?bidiAr(bMap(\"deal\",k)):k));"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "deal-size note (right-aligned in Arabic)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "root.select(\".deal-note\").attr(\"fill\",SUB).text(\"bars = client count · label % = share of total book value in that bucket\");",
+   "new": "root.select(\".deal-note\").attr(\"fill\",SUB).attr(\"x\",BUB_LANG===\"ar\"?W-M.r:M.l).attr(\"text-anchor\",BUB_LANG===\"ar\"?\"end\":null).text(bidiAr(bT(\"deal_note\")));"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "deal-size bar hover",
+   "occurrences": 1,
+   "ok": true,
+   "old": "bAll.select(\"title\").text(a=>a.c+\" clients · \"+fmt(a.val)+\" (\"+pct(a)+\"% of book)\");",
+   "new": "bAll.select(\"title\").text(a=>(BUB_LANG===\"ar\"?bCount(a.c,\"client\"):a.c+\" clients\")+\" · \"+fmt(a.val)+\" (\"+bF(\"of_book\",pct(a))+\")\");"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "whitespace table headings (aligned to the start side)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "   '<thead><tr style=\"text-align:left;color:#5F7078\"><th style=\"padding:6px 8px\">Client</th><th style=\"padding:6px 8px\">Value</th><th style=\"padding:6px 8px\">Top services (by value)</th><th style=\"padding:6px 8px\">Not yet bought (whitespace)</th></tr></thead><tbody>'+",
+   "new": "   '<thead><tr style=\"text-align:start;color:#5F7078\"><th style=\"padding:6px 8px\">'+bT(\"ws_client\")+'</th><th style=\"padding:6px 8px\">'+bT(\"ws_value\")+'</th><th style=\"padding:6px 8px\">'+bT(\"ws_top\")+'</th><th style=\"padding:6px 8px\">'+bT(\"ws_missing\")+'</th></tr></thead><tbody>'+"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "whitespace top services",
+   "occurrences": 1,
+   "ok": true,
+   "old": "font-style:italic\">project descriptions not classifiable</span>')+r.top.map(t=>chip(t[0]+' \\u00b7 '+Math.round(100*t[1]/r.val)+'%',",
+   "new": "font-style:italic\">'+bT(\"ws_unclass\")+'</span>')+r.top.map(t=>chip(bTV(t[0])+' \\u00b7 '+bPct(Math.round(100*t[1]/r.val)),"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "whitespace services not yet bought",
+   "occurrences": 1,
+   "ok": true,
+   "old": "r.missing.slice(0,4).map(c=>chip(c,'#EFF6F1','#D5E6DA','#1F7A4C')).join('')+(r.missing.length>4?' <span style=\"color:#8A99A3\">+'+(r.missing.length-4)+' more</span>':'')",
+   "new": "r.missing.slice(0,4).map(c=>chip(bTV(c),'#EFF6F1','#D5E6DA','#1F7A4C')).join('')+(r.missing.length>4?' <span style=\"color:#8A99A3\">'+bF(\"more\",r.missing.length-4)+'</span>':'')"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "bridge axis: millions",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  const svg = svgBase(\"svgBridge\");\n  svg.append(\"g\").attr(\"transform\",`translate(${m.l},0)`).call(d3.axisLeft(y).ticks(6).tickFormat(v=>(v/1e6).toFixed(0)+\"M\"))",
+   "new": "  const svg = svgBase(\"svgBridge\");\n  svg.append(\"g\").attr(\"transform\",`translate(${m.l},0)`).call(d3.axisLeft(y).ticks(6).tickFormat(bubMTick))"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "bridge click-through panel",
+   "occurrences": 1,
+   "ok": true,
+   "old": "          .map(d => ({name: d.name, meta: p.l===\"New clients\"?\"\":`${fmt(d.v2025)} → ${fmt(d.v2026)}`,\n                      amt: (p.key(d)>=0?\"+\":\"−\") + fmt(Math.abs(p.key(d)))}));\n        showListPanel(p.l, `${p.items.length} clients · net ${p.v>=0?\"+\":\"−\"}${fmt(Math.abs(p.v))}`, p.c,\n          `<b>${p.v>=0?\"+\":\"−\"}${fmt(Math.abs(p.v))}</b> impact on 2026 revenue`, its);",
+   "new": "          .map(d => ({name: d.name, meta: p.l===\"New clients\"?\"\":`${fmt(d.v2025)} → ${fmt(d.v2026)}`,\n                      amt: bubAmt(p.key(d), true, true)}));\n        showListPanel(bMap(\"step\",p.l), BUB_LANG===\"ar\" ? `${bCount(p.items.length,\"client\")} · ${bT(\"net\")} ${bubAmt(p.v,true,true)}` : `${p.items.length} clients · net ${p.v>=0?\"+\":\"−\"}${fmt(Math.abs(p.v))}`, p.c,\n          `<b>${bubAmt"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "bridge bar values",
+   "occurrences": 1,
+   "ok": true,
+   "old": "      .text((p.abs?\"\":(p.v>=0?\"+\":\"−\")) + fmt(Math.abs(p.v)).replace(\"SAR \",\"\"));",
+   "new": "      .text(bubAmt(p.v, !p.abs, false));"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "bridge step names",
+   "occurrences": 1,
+   "ok": true,
+   "old": ".attr(\"text-anchor\",\"middle\").attr(\"font-size\",\"12.5px\").attr(\"fill\",\"#5E6B80\").text(p.l);",
+   "new": ".attr(\"text-anchor\",\"middle\").attr(\"font-size\",\"12.5px\").attr(\"fill\",\"#5E6B80\").text(bidiAr(bMap(\"step\",p.l)));"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "concentration subtitle",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    `Top 1 = ${Math.round(top1*100)}% · Top 5 = ${Math.round(top5*100)}% · Top 10 = ${Math.round(top10*100)}% of the two-year book — click a bar for that client's ledger`;",
+   "new": "    bF(\"pareto_sub\", Math.round(top1*100), Math.round(top5*100), Math.round(top10*100));"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "concentration: mirrored order in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  const W=960, H=440, m={t:24,r:60,b:112,l:78};\n  const x = d3.scaleBand().domain(top.map(d=>d.name)).range([m.l, W-m.r]).padding(0.25);",
+   "new": "  const RT=BUB_LANG===\"ar\", W=960, H=440, m=RT?{t:24,r:78,b:112,l:60}:{t:24,r:60,b:112,l:78};\n  const x = d3.scaleBand().domain(top.map(d=>d.name)).range(RT?[W-m.r, m.l]:[m.l, W-m.r]).padding(0.25);"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "concentration: axes swap sides in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  svg.append(\"g\").attr(\"transform\",`translate(${m.l},0)`).call(d3.axisLeft(y).ticks(6).tickFormat(v=>(v/1e6).toFixed(0)+\"M\"))\n     .attr(\"font-size\",\"12px\").attr(\"color\",\"#5E6B80\");\n  svg.append(\"g\").attr(\"transform\",`translate(${W-m.r},0)`).call(d3.axisRight(yp).ticks(5).tickFormat(v=>v+\"%\"))",
+   "new": "  svg.append(\"g\").attr(\"transform\",`translate(${RT?W-m.r:m.l},0)`).call((RT?d3.axisRight(y):d3.axisLeft(y)).ticks(6).tickFormat(bubMTick))\n     .attr(\"font-size\",\"12px\").attr(\"color\",\"#5E6B80\");\n  svg.append(\"g\").attr(\"transform\",`translate(${RT?m.l:W-m.r},0)`).call((RT?d3.axisLeft(yp):d3.axisRight(yp)).ticks(5).tickFormat(v=>v+\"%\"))"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "concentration: client names slant the other way in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "      .attr(\"transform\", `translate(${x(d.name)+x.bandwidth()/2+4},${H-m.b+8}) rotate(34)`)\n      .attr(\"font-size\",\"11px\").attr(\"fill\",\"#46546F\").attr(\"text-anchor\",\"start\")\n      .text(short.length > 20 ? short.slice(0,19)+\"…\" : short);",
+   "new": "      .attr(\"transform\", RT ? `translate(${x(d.name)+x.bandwidth()/2-4},${H-m.b+8}) rotate(-34)` : `translate(${x(d.name)+x.bandwidth()/2+4},${H-m.b+8}) rotate(34)`)\n      .attr(\"font-size\",\"11px\").attr(\"fill\",\"#46546F\").attr(\"text-anchor\",RT?\"end\":\"start\")\n      .text(bidiName(short.length > 20 ? short.slice(0,19)+\"…\" : short));"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "concentration: cumulative label",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  svg.append(\"text\").attr(\"x\", x(pts[pts.length-1].name)-10).attr(\"y\", yp(pts[pts.length-1].cum)-10)\n     .attr(\"font-size\",\"12px\").attr(\"fill\",\"#15224D\").attr(\"font-weight\",\"600\")\n     .text(Math.round(pts[pts.length-1].cum) + \"% cumulative\");",
+   "new": "  svg.append(\"text\").attr(\"x\", RT ? x(pts[pts.length-1].name)+x.bandwidth()/2-4 : x(pts[pts.length-1].name)-10).attr(\"y\", yp(pts[pts.length-1].cum)-10)\n     .attr(\"font-size\",\"12px\").attr(\"fill\",\"#15224D\").attr(\"font-weight\",\"600\")\n     .text(bidiAr(bF(\"cum\", Math.round(pts[pts.length-1].cum))));"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "retention: bars start from the right in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  const W=960, H=300, m={t:24,r:220,b:14,l:180};\n  const y = d3.scaleBand().domain(rows.map(r=>r.l)).range([m.t, H-m.b]).padding(0.34);\n  const x = d3.scaleLinear().domain([0, d3.max(rows,r=>r.v)*1.05]).range([m.l, W-m.r]);",
+   "new": "  const RT=BUB_LANG===\"ar\", W=960, H=300, m={t:24,r:220,b:14,l:180}, x0=RT?W-m.l:m.l;\n  const y = d3.scaleBand().domain(rows.map(r=>r.l)).range([m.t, H-m.b]).padding(0.34);\n  const x = d3.scaleLinear().domain([0, d3.max(rows,r=>r.v)*1.05]).range(RT?[W-m.l, m.r]:[m.l, W-m.r]);\n  const bx = r => RT ? Math.min(x(r.v), x0-4) : m.l;"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "retention bars and click-through panel",
+   "occurrences": 1,
+   "ok": true,
+   "old": "      .attr(\"x\", m.l).attr(\"y\", y(r.l)).attr(\"height\", y.bandwidth())\n      .attr(\"width\", Math.max(4, x(r.v)-m.l)).attr(\"rx\",6).attr(\"fill\", r.c)\n      .on(\"click\", () => showListPanel(r.l, `${r.n} clients · ${r.note}`, r.c,\n          `<b>${fmt(r.v)}</b> across <b>${r.n}</b> clients`,",
+   "new": "      .attr(\"x\", bx(r)).attr(\"y\", y(r.l)).attr(\"height\", y.bandwidth())\n      .attr(\"width\", Math.max(4, Math.abs(x(r.v)-x0))).attr(\"rx\",6).attr(\"fill\", r.c)\n      .on(\"click\", () => showListPanel(bMap(\"step\",r.l), BUB_LANG===\"ar\" ? `${bCount(r.n,\"client\")} · ${bMap(\"step\",r.note)}` : `${r.n} clients · ${r.note}`, r.c,\n          BUB_LANG===\"ar\" ? `<b>${fmt(r.v)}</b> · ${bT(\"clients_lbl\")} <b>${r.n"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "retention labels",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    svg.append(\"text\").attr(\"x\", m.l-10).attr(\"y\", y(r.l)+y.bandwidth()/2+5)\n       .attr(\"text-anchor\",\"end\").attr(\"font-size\",\"14px\").attr(\"fill\",\"#15224D\").attr(\"font-weight\",\"600\").text(r.l);\n    svg.append(\"text\").attr(\"x\", Math.max(4, x(r.v))+10).attr(\"y\", y(r.l)+y.bandwidth()/2+5)\n       .attr(\"font-size\",\"12.5px\").attr(\"fill\",\"#5E6B80\")\n       .text(`${r.n} clients · ${fmt(r.v)}`);",
+   "new": "    svg.append(\"text\").attr(\"x\", RT ? x0+10 : m.l-10).attr(\"y\", y(r.l)+y.bandwidth()/2+5)\n       .attr(\"text-anchor\",RT?\"start\":\"end\").attr(\"font-size\",\"14px\").attr(\"fill\",\"#15224D\").attr(\"font-weight\",\"600\").text(bidiAr(bMap(\"step\",r.l)));\n    svg.append(\"text\").attr(\"x\", RT ? bx(r)-10 : Math.max(4, x(r.v))+10).attr(\"y\", y(r.l)+y.bandwidth()/2+5)\n       .attr(\"text-anchor\",RT?\"end\":null).attr(\"fo"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "sector shift: wider value margin in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  const W=960, H=Math.max(360, 64 + rows.length*32), m={t:46,b:30,l:230,r:150};",
+   "new": "  const RT=BUB_LANG===\"ar\", W=960, H=Math.max(360, 64 + rows.length*32), m={t:46,b:30,l:230,r:RT?185:150};"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "sector shift: mirrored share axis in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  const x = d3.scaleLinear().domain([0, d3.max(rows,r=>Math.max(r.p25,r.p26))*1.1]).range([m.l, W-m.r]);",
+   "new": "  const x = d3.scaleLinear().domain([0, d3.max(rows,r=>Math.max(r.p25,r.p26))*1.1]).range(RT?[W-m.l, m.r]:[m.l, W-m.r]);"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "sector shift legend",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  svg.append(\"circle\").attr(\"cx\",m.l+4).attr(\"cy\",14).attr(\"r\",5).attr(\"fill\",\"#fff\").attr(\"stroke\",\"#7D8AA0\").attr(\"stroke-width\",2);\n  svg.append(\"text\").attr(\"x\",m.l+14).attr(\"y\",18).attr(\"font-size\",\"11.5px\").attr(\"fill\",\"#5E6B80\").text(\"2025 share\");\n  svg.append(\"circle\").attr(\"cx\",m.l+110).attr(\"cy\",14).attr(\"r\",5.5).attr(\"fill\",\"#0072BB\");\n  svg.append(\"text\").attr(\"x\",m.l+120).attr(\"y\",18",
+   "new": "  const lx = d => RT ? W-16-d : m.l+d;\n  svg.append(\"circle\").attr(\"cx\",lx(4)).attr(\"cy\",14).attr(\"r\",5).attr(\"fill\",\"#fff\").attr(\"stroke\",\"#7D8AA0\").attr(\"stroke-width\",2);\n  svg.append(\"text\").attr(\"x\",lx(14)).attr(\"y\",18).attr(\"text-anchor\",RT?\"end\":null).attr(\"font-size\",\"11.5px\").attr(\"fill\",\"#5E6B80\").text(bidiAr(bT(\"share25\")));\n  svg.append(\"circle\").attr(\"cx\",lx(110)).attr(\"cy\",14).attr(\""
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "sector shift: sector names",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    const sn = r.s.length > 28 ? r.s.slice(0,27)+\"…\" : r.s;\n    svg.append(\"text\").attr(\"x\", m.l-12).attr(\"y\", cy+4.5).attr(\"text-anchor\",\"end\")\n       .attr(\"font-size\",\"12.5px\").attr(\"fill\",\"#15224D\").attr(\"font-weight\",\"600\").text(sn);",
+   "new": "    const sl = bTS(r.s), sn = sl.length > 28 ? sl.slice(0,27)+\"…\" : sl;\n    svg.append(\"text\").attr(\"x\", RT ? W-m.l+12 : m.l-12).attr(\"y\", cy+4.5).attr(\"text-anchor\",RT?\"start\":\"end\")\n       .attr(\"font-size\",\"12.5px\").attr(\"fill\",\"#15224D\").attr(\"font-weight\",\"600\").text(bidiAr(sn));"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "sector shift: values and change",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    svg.append(\"text\").attr(\"x\", W-m.r+12).attr(\"y\", cy+4.5)\n       .attr(\"font-size\",\"12px\").attr(\"fill\",\"#46546F\")\n       .text(`${r.p25.toFixed(1)} → ${r.p26.toFixed(1)}%`);\n    svg.append(\"text\").attr(\"x\", W-14).attr(\"y\", cy+4.5).attr(\"text-anchor\",\"end\")\n       .attr(\"font-size\",\"12px\").attr(\"font-weight\",\"700\")\n       .attr(\"fill\", up ? \"#2E7A37\" : \"#B23F2B\")\n       .text((up?\"+\":\"−\") + Math",
+   "new": "    svg.append(\"text\").attr(\"x\", RT ? m.r-12 : W-m.r+12).attr(\"y\", cy+4.5).attr(\"text-anchor\",RT?\"end\":null)\n       .attr(\"font-size\",\"12px\").attr(\"fill\",\"#46546F\")\n       .text(`${r.p25.toFixed(1)} → ${r.p26.toFixed(1)}%`);\n    svg.append(\"text\").attr(\"x\", RT ? 14 : W-14).attr(\"y\", cy+4.5).attr(\"text-anchor\",RT?\"start\":\"end\")\n       .attr(\"font-size\",\"12px\").attr(\"font-weight\",\"700\")\n       .attr"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "heatmap sector headings",
+   "occurrences": 1,
+   "ok": true,
+   "old": "secs.map(s => `<th class=\"col\">${s}</th>`).join(\"\")",
+   "new": "secs.map(s => `<th class=\"col\">${bTS(s)}</th>`).join(\"\")"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "heatmap service headings",
+   "occurrences": 1,
+   "ok": true,
+   "old": "h += `<tr><th class=\"row\" title=\"${cat}\">${cat}</th>`;",
+   "new": "h += `<tr><th class=\"row\" title=\"${bTV(cat)}\">${bTV(cat)}</th>`;"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "heatmap empty-cell hover",
+   "occurrences": 1,
+   "ok": true,
+   "old": "h += `<td class=\"hc empty\" title=\"Whitespace: no ${cat} sales into ${sec}\">–</td>`;",
+   "new": "h += `<td class=\"hc empty\" title=\"${bF(\"ws_title\", bTV(cat), bTS(sec))}\">–</td>`;"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "heatmap cells",
+   "occurrences": 1,
+   "ok": true,
+   "old": "                 title=\"${sec} × ${cat}\">${v>0?fmt(v).replace(\"SAR \",\"\"):\"0\"}<small>${n} ln · ${c.co.length} co</small></td>`;",
+   "new": "                 title=\"${bTS(sec)} × ${bTV(cat)}\">${v>0?bubAmt(v,false,false):\"0\"}<small>${bF(\"cell_n\", n, c.co.length)}</small></td>`;"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "heatmap cell panel title",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  document.getElementById(\"pco\").textContent = cat;\n  document.getElementById(\"psec\").textContent = sec;",
+   "new": "  document.getElementById(\"pco\").textContent = bTV(cat);\n  document.getElementById(\"psec\").textContent = bTS(sec);"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "heatmap cell panel total",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    `<b>${fmt(hv(c))}</b> across <b>${hn(c)}</b> lines · <b>${cos.length}</b> client${cos.length>1?\"s\":\"\"}`;",
+   "new": "    (BUB_LANG===\"ar\" ? `<b>${fmt(hv(c))}</b> · ${bT(\"lines_lbl\")} <b>${hn(c)}</b> · ${bT(\"clients_lbl\")} <b>${cos.length}</b>` :\n    `<b>${fmt(hv(c))}</b> across <b>${hn(c)}</b> lines · <b>${cos.length}</b> client${cos.length>1?\"s\":\"\"}`);"
+  },
+  {
+   "file": "bub",
+   "kind": "exact",
+   "category": "arabic",
+   "note": "chart captions",
+   "occurrences": 1,
+   "ok": true,
+   "old": "cap.textContent=EH_BUB_CAPS[id];",
+   "new": "cap.textContent=bubCap(id);"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "cleanup",
+   "note": "remove the out-of-date comment: the bubble page now follows the hub language",
+   "occurrences": 1,
+   "ok": true,
+   "old": "bcastLang();\n// note: the bubble chart is a static English artifact and keeps its labels.\n",
+   "new": "bcastLang();\n"
+  },
+  {
+   "file": "changes",
+   "kind": "exact",
+   "category": "changelog",
+   "note": "one W42 line for the Arabic client portfolio page",
+   "occurrences": 1,
+   "ok": true,
+   "old": "\n\n## 2026-W41\n",
+   "new": "\nclients | major | Clients & Revenue | New: the client portfolio page is now fully in Arabic when the hub is in Arabic — the bubble map, the sector × service heatmap, every Executive chart, the KPI tiles, hover boxes, the client detail panel and the notes. Company names stay as recorded, amounts read in riyals with Western digits, and the page reads right to left: the legend and detail panel sit o"
+  }
+ ]
+}

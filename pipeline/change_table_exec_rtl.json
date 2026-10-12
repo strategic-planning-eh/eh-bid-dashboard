@@ -1,0 +1,87 @@
+{
+ "generated": "2026-10-12 11:21",
+ "title": "Executive Summary charts mirror in Arabic",
+ "failures": [],
+ "changes": [
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "rtl",
+   "note": "chart titles sit top-right in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function exSvgHead(W,title,sub){ return `<text x=\"14\" y=\"20\" class=\"exT\">${esc(title)}</text>${sub?`<text x=\"14\" y=\"36\" class=\"exS\">${esc(sub)}</text>`:''}`; }",
+   "new": "// Arabic: mirror x positions and swap text anchors (12 Oct 2026)\nfunction exRTL(W){const R=document.documentElement.dir==='rtl';return {R:R,X:x=>R?W-x:x,A:a=>R?(a==='end'?'start':a==='start'?'end':a):a,B:(x,w)=>R?W-x-w:x};}\nfunction exSvgHead(W,title,sub){ const m=exRTL(W); return `<text x=\"${m.X(14)}\" y=\"20\" text-anchor=\"${m.A('start')}\" class=\"exT\">${esc(title)}</text>${sub?`<text x=\"${m.X(14)}"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "rtl",
+   "note": "funnel mirror helper",
+   "occurrences": 1,
+   "ok": true,
+   "old": " let leak=null,leakI=-1;\n let s=`<svg id=\"ex-funnel\"",
+   "new": " let leak=null,leakI=-1; const m=exRTL(W);\n let s=`<svg id=\"ex-funnel\""
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "rtl",
+   "note": "funnel labels and bars mirror",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  s+=`<text x=\"${x0-10}\" y=\"${y+20}\" text-anchor=\"end\" class=\"chl\">${esc(l)}</text><rect x=\"${x0}\" y=\"${y+4}\" width=\"${w.toFixed(1)}\" height=\"26\" rx=\"4\" fill=\"${col}\"",
+   "new": "  s+=`<text x=\"${m.X(x0-10)}\" y=\"${y+20}\" text-anchor=\"${m.A('end')}\" class=\"chl\">${esc(l)}</text><rect x=\"${m.B(x0,w).toFixed(1)}\" y=\"${y+4}\" width=\"${w.toFixed(1)}\" height=\"26\" rx=\"4\" fill=\"${col}\""
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "rtl",
+   "note": "funnel counts and drops mirror",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  s+=`<text x=\"${x0+w+8}\" y=\"${y+22}\" class=\"chv\">${v}</text>${drop!=null?`<text x=\"${x0+w+8+String(v).length*9+10}\" y=\"${y+22}\" class=\"chs\">−${drop}%</text>`:''}`;});",
+   "new": "  s+=`<text x=\"${m.X(x0+w+8)}\" y=\"${y+22}\" text-anchor=\"${m.A('start')}\" class=\"chv\">${v}</text>${drop!=null?`<text x=\"${m.X(x0+w+8+String(v).length*9+10)}\" y=\"${y+22}\" text-anchor=\"${m.A('start')}\" class=\"chs\" direction=\"ltr\">−${drop}%</text>`:''}`;});"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "rtl",
+   "note": "win-bars mirror helper",
+   "occurrences": 1,
+   "ok": true,
+   "old": " let s=`<svg id=\"${id}\" viewBox=\"0 0 ${W} ${H}\" class=\"ch exsvg\">${exSvgHead(W,title,t('Scope','النطاق')+': '+exScopeLabel())}`;\n rows.forEach((r,i)=>{const y=50+i*rh,",
+   "new": " const m=exRTL(W);\n let s=`<svg id=\"${id}\" viewBox=\"0 0 ${W} ${H}\" class=\"ch exsvg\">${exSvgHead(W,title,t('Scope','النطاق')+': '+exScopeLabel())}`;\n rows.forEach((r,i)=>{const y=50+i*rh,"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "rtl",
+   "note": "win-bars labels and decided bars mirror",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  s+=`<text x=\"${x0-10}\" y=\"${y+19}\" text-anchor=\"end\" class=\"chl\">${esc(lab(r))}</text><rect x=\"${x0}\" y=\"${y+5}\" width=\"${wa.toFixed(1)}\"",
+   "new": "  s+=`<text x=\"${m.X(x0-10)}\" y=\"${y+19}\" text-anchor=\"${m.A('end')}\" class=\"chl\">${esc(lab(r))}</text><rect x=\"${m.B(x0,wa).toFixed(1)}\" y=\"${y+5}\" width=\"${wa.toFixed(1)}\""
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "rtl",
+   "note": "win-bars won bars mirror",
+   "occurrences": 1,
+   "ok": true,
+   "old": "/><rect x=\"${x0}\" y=\"${y+5}\" width=\"${ww.toFixed(1)}\" height=\"22\" rx=\"3\" fill=\"${r.grey?EXC.grey:EXC.won}\">",
+   "new": "/><rect x=\"${m.B(x0,ww).toFixed(1)}\" y=\"${y+5}\" width=\"${ww.toFixed(1)}\" height=\"22\" rx=\"3\" fill=\"${r.grey?EXC.grey:EXC.won}\">"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "rtl",
+   "note": "win-bars counts mirror",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  s+=`<text x=\"${x0+wa+8}\" y=\"${y+21}\" class=\"chv\">${r.won||0}/${r.awarded||0}</text><text x=\"${x0+wa+8+String((r.won||0)+'/'+(r.awarded||0)).length*9+8}\" y=\"${y+21}\" class=\"chs\">",
+   "new": "  s+=`<text x=\"${m.X(x0+wa+8)}\" y=\"${y+21}\" text-anchor=\"${m.A('start')}\" class=\"chv\" direction=\"ltr\">${r.won||0}/${r.awarded||0}</text><text x=\"${m.X(x0+wa+8+String((r.won||0)+'/'+(r.awarded||0)).length*9+8)}\" y=\"${y+21}\" text-anchor=\"${m.A('start')}\" class=\"chs\">"
+  }
+ ]
+}

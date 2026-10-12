@@ -1,0 +1,77 @@
+{
+ "generated": "2026-10-12 10:12",
+ "title": "Design system v2 — Government Tenders (Etimad) page (generator)",
+ "failures": [],
+ "changes": [
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "design",
+   "note": "page skin (land and sea): tokens, panels, status as word + shape, sentence-case labels",
+   "occurrences": 1,
+   "ok": true,
+   "old": "CSS = r\"\"\"\n:root{--bg:#F4F7F5;",
+   "new": "# EH design system v2 (patch_design_etimad.py): page skin, placed after the page CSS so it wins\nSKIN = r\"\"\"\n/* EH design system v2 — Government Tenders skin (patch_design_etimad.py). Tokens and fonts come from eh-shared.css. */\nbody,body.dark{--bg:var(--eh-mist);--card:var(--eh-paper);--ink:var(--eh-ink);--muted:var(--eh-ink-2);--line:var(--eh-line);--chip:var(--eh-tint);\n  --green:var(--eh-leaf-i"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "design",
+   "note": "skin linked after the page styles",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<style>{CSS}{AV.CSS}</style></head>",
+   "new": "<style>{CSS}{AV.CSS}</style><style id=\"eh-skin\">{SKIN}</style></head>"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "design",
+   "note": "standalone masthead contour lines",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<header><div><h1 data-en=\"Government Tenders (Etimad)\"",
+   "new": "<header data-eh-contour=\"7\"><div><h1 data-en=\"Government Tenders (Etimad)\""
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "motion",
+   "note": "shared behaviour layer: motion, text floor, embedded-mode detection",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<script>{JS}{AV.JS}</script>\n</body></html>",
+   "new": "<script>{JS}{AV.JS}</script>\n<script src=\"eh-shared.js\" defer></script>\n</body></html>"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "rtl",
+   "note": "time charts keep a left-to-right time axis in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const ord=LANG==='ar'?cats.length-1-i:i,x=gx(ord)-bw/2;",
+   "new": "const ord=i,x=gx(ord)-bw/2;   // EH design v2: time runs left to right in Arabic too"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "design",
+   "note": "PNG export: light colours, waits for the embedded brand fonts",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function exportPNG(id,name){const svg=$(id).querySelector('svg');if(!svg)return;const cs=getComputedStyle(document.body);",
+   "new": "// brand fonts for exported PNGs: fetched once, embedded as data URIs so the image renders them (12 Oct 2026)\nlet EXFONTS=null;\nfunction exFonts(){ if(EXFONTS!==null)return Promise.resolve(EXFONTS);\n const F=[['EH Sans','vendor/fonts/encode-sans-latin-var.woff2','100 900'],['EH Sans','vendor/fonts/plex-sans-arabic-400.woff2','100 549'],['EH Sans','vendor/fonts/plex-sans-arabic-600.woff2','550 900'"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "design",
+   "note": "PNG export in the brand font",
+   "occurrences": 1,
+   "ok": true,
+   "old": "src=src.replace('<svg ','<svg style=\"font-family:Segoe UI,Tahoma,Arial,sans-serif\" ')",
+   "new": "src=src.replace('<svg ','<svg style=\"font-family:EH Sans,Segoe UI,Tahoma,Arial,sans-serif\" ').replace(/(<svg[^>]*>)/,m=>m+'<style>'+(EXFONTS||'')+'</style>')"
+  }
+ ]
+}

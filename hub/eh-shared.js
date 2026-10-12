@@ -1,4 +1,4 @@
-/* eh-shared.js — EH Hub shared behaviour layer · v1.1.0 · 2026-09-08
+/* eh-shared.js — EH Hub shared behaviour layer · v2.0.0 · 2026-10-12 (v1.1.0 2026-09-08)
    Include with <script src="eh-shared.js" defer></script> after the page's own scripts.
    1. Embedded mode: adds html.eh-embedded (+ html.eh-page-<id>) when the page is inside the hub.
    2. Hub bridge: one listener for {ehhub:'lang'|'theme'} that calls whatever the page exposes,
@@ -12,7 +12,7 @@
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var motion=!reduce&&html.getAttribute('data-eh-motion')!=='off';
   var file=(location.pathname.split('/').pop()||'').toLowerCase();
-  var PAGE=/stakeholder/.test(file)?'stake':/bid_analysis/.test(file)?'bids':/bubble/.test(file)?'bub':/news_intelligence/.test(file)?'news':/vision2030/.test(file)?'v2030':/fiscal/.test(file)?'fisc':/pif_strategy/.test(file)?'strat':/pif_intelligence/.test(file)?'pif':'other';
+  var PAGE=/stakeholder/.test(file)?'stake':/bid_analysis/.test(file)?'bids':/bubble/.test(file)?'bub':/news_intelligence/.test(file)?'news':/vision2030/.test(file)?'v2030':/fiscal/.test(file)?'fisc':/pif_strategy/.test(file)?'strat':/pif_intelligence/.test(file)?'pif':/eh_hub|^index|^$/.test(file)?'hub':'other';
   html.classList.add('eh-page-'+PAGE,'eh-floor');
 
   /* 1. embedded mode (D-B1) */
@@ -56,7 +56,7 @@
   chartGuard(); window.addEventListener('load',chartGuard);
 
   /* 3b. KPI count-up, once per page per session */
-  var KPI_SEL='.kpi .v,.kc .v,.metric .mv,.kval,.k-num,.a-num,.rnum,.value.num,.biz-kpi .v,.kpis .v,.kpi .val';
+  var KPI_SEL='.eh-kpi-v,.kpi .v,.kc .v,.metric .mv,.kval,.k-num,.a-num,.rnum,.value.num,.biz-kpi .v,.kpis .v,.kpi .val';
   function parseNum(s){ var m=s.replace(/[\u2066\u2069]/g,'').match(/^([^\d\-]*)(-?\d[\d,]*\.?\d*)(.*)$/); if(!m)return null; var n=parseFloat(m[2].replace(/,/g,'')); if(isNaN(n))return null; return {pre:m[1],n:n,post:m[3],dec:(m[2].split('.')[1]||'').length,comma:/,/.test(m[2])}; }
   function fmt(n,p){ var s=n.toFixed(p.dec); if(p.comma){ var parts=s.split('.'); parts[0]=parts[0].replace(/\B(?=(\d{3})+(?!\d))/g,','); s=parts.join('.'); } return s; }
   function countUp(){
@@ -119,8 +119,92 @@
         requestAnimationFrame(function(){ flipCards(rects,sec); sec.querySelectorAll('.card').forEach(function(c,i){ var h=c.getBoundingClientRect().height; if(wasOpen[i]!=null&&h>wasOpen[i]+20){ var body=c.children[1]||c; body.classList.add('eh-expand'); growBars(c); } }); }); return r; }; window[name].__eh=true; }
     wrapPx('togglePx'); wrapPx('pxAll');
   }
+
+  /* ---------- 5. Motion system v2 (12 Oct 2026) — every layer, once, direction-aware ----------
+     a. reveal: panels, cards and KPI tiles rise in as they first enter the viewport; those visible at load go in a
+        short stagger (the page-load moment). Elements rendered later by filters are not re-revealed — they morph.
+     b. chart marks: SVG bars inside a revealed panel grow from their baseline (horizontal bars from the reading-start
+        edge); Chart.js and D3 pages keep their own first-paint animation (3a).
+     c. tables: the first 18 rows of each table step in once.
+     d. language: when the page direction or language changes, the content settles in from the new reading side.
+     e. theme: colours ease between light and dark instead of flashing.
+     f. masthead contours: any element with data-eh-contour gets thin bathymetric lines that draw once.
+     All of it is skipped under prefers-reduced-motion or html[data-eh-motion="off"]. */
+  var REVEAL_SEL='.card,.panel,.eh-panel,.kc,.kpi,.metric,.kcard,.box,.section-card,.chart-card,.tile,.wli,.ansbox,.av-card';
+  var revealIO=null;
+  function markChartsIn(root){
+    if(!motion)return; var i=0;
+    root.querySelectorAll('svg rect').forEach(function(r){
+      if(r.closest('.eh-contour,defs,clipPath,pattern,marker,mask'))return;
+      var w=+r.getAttribute('width')||0,h=+r.getAttribute('height')||0; if(w<2||h<2)return;
+      var f=(r.getAttribute('fill')||'').toLowerCase(); if(f==='none'||f==='transparent'||f==='#fff'||f==='#ffffff')return;
+      if(r.classList.contains('eh-mark-in'))return; if(i>80)return;
+      r.classList.add('eh-mark-in'); if(w>h*1.6)r.classList.add('h'); r.style.setProperty('--eh-d',(Math.min(i,24)*18)+'ms'); i++;
+      r.addEventListener('animationend',function(){ r.classList.remove('eh-mark-in','h'); r.style.removeProperty('--eh-d'); },{once:true});
+    });
+  }
+  function revealSetup(){
+    if(!motion||!('IntersectionObserver' in window))return;
+    var vh=window.innerHeight||900, k=0, n=0;
+    revealIO=new IntersectionObserver(function(ents){ ents.forEach(function(e){ if(!e.isIntersecting)return; var el=e.target; revealIO.unobserve(el);
+      el.classList.add('eh-in'); markChartsIn(el);
+      setTimeout(function(){ el.classList.remove('eh-rv','eh-in'); el.style.removeProperty('--eh-d'); },900); }); },{rootMargin:'0px 0px -6% 0px',threshold:0.04});
+    var els=[].slice.call(document.querySelectorAll(REVEAL_SEL));
+    els.forEach(function(el){
+      if(n>260)return; if(el.closest('.eh-rv'))return;             /* reveal the outer panel only */
+      if(el.closest('svg,table,.leaflet-container,[data-eh-noreveal]'))return;
+      var r=el.getBoundingClientRect(); if(r.width===0&&r.height===0&&el.offsetParent===null&&getComputedStyle(el).position!=='fixed'){ /* in a hidden tab: revealed when shown */ }
+      el.classList.add('eh-rv'); n++;
+      if(r.top<vh&&r.bottom>0&&r.width>0){ el.style.setProperty('--eh-d',(Math.min(k,10)*parseInt(getComputedStyle(html).getPropertyValue('--eh-stagger')||45,10))+'ms'); k++; }
+      revealIO.observe(el);
+    });
+    /* safety: anything still hidden after 6 s (an observer that never fires) is shown */
+    setTimeout(function(){ document.querySelectorAll('.eh-rv:not(.eh-in)').forEach(function(el){ var r=el.getBoundingClientRect(); if(r.top<(window.innerHeight||900)&&r.bottom>0){ el.classList.add('eh-in'); } }); },6000);
+  }
+  function rowsIn(){
+    if(!motion)return;
+    document.querySelectorAll('table').forEach(function(t){ if(t.closest('[data-eh-noreveal]'))return; var rows=t.tBodies[0]?t.tBodies[0].rows:[]; for(var i=0;i<rows.length&&i<18;i++){ (function(tr,i){ tr.style.setProperty('--eh-d',(i*28)+'ms'); tr.classList.add('eh-row-in'); tr.addEventListener('animationend',function(){ tr.classList.remove('eh-row-in'); tr.style.removeProperty('--eh-d'); },{once:true}); })(rows[i],i); } });
+  }
+  function contentRoots(){
+    var main=document.querySelector('main,#main,#app,.wrap,.page,.container,#content');
+    if(main)return [main];
+    return [].filter.call(document.body.children,function(c){ if(/^(SCRIPT|STYLE|LINK|TEMPLATE)$/.test(c.tagName))return false; var p=getComputedStyle(c).position; return p!=='fixed'&&p!=='sticky'&&c.getBoundingClientRect().height>40; });
+  }
+  function settle(cls){ if(!motion)return; contentRoots().forEach(function(el){ el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); el.addEventListener('animationend',function(){ el.classList.remove(cls); },{once:true}); }); }
+  function watchLangTheme(){
+    var last={dir:html.dir,lang:html.lang,ar:document.body.classList.contains('ar')||document.body.classList.contains('ar-mode'),
+              dark:html.classList.contains('dark')||document.body.classList.contains('dark')||html.getAttribute('data-theme')==='dark'};
+    var t=null;
+    function check(){
+      var now={dir:html.dir,lang:html.lang,ar:document.body.classList.contains('ar')||document.body.classList.contains('ar-mode'),
+               dark:html.classList.contains('dark')||document.body.classList.contains('dark')||html.getAttribute('data-theme')==='dark'};
+      if(now.dir!==last.dir||now.lang!==last.lang||now.ar!==last.ar){ clearTimeout(t); t=setTimeout(function(){ settle('eh-lang-in'); },0); }
+      if(now.dark!==last.dark&&motion){ html.classList.add('eh-theming'); setTimeout(function(){ html.classList.remove('eh-theming'); },420); }
+      last=now;
+    }
+    try{ var mo=new MutationObserver(check); mo.observe(html,{attributes:true,attributeFilter:['dir','lang','class','data-theme']}); mo.observe(document.body,{attributes:true,attributeFilter:['class','dir']}); }catch(e){}
+  }
+  /* f. contour lines: deterministic curves (same picture every load), mirrored in Arabic by CSS */
+  function contour(host){
+    if(!host||host.querySelector(':scope > .eh-contour'))return;
+    var W=1200,H=Math.max(120,Math.min(320,host.getBoundingClientRect().height||200)),N=+host.getAttribute('data-eh-contour')||9,seed=7;
+    function rnd(){ seed=(seed*9301+49297)%233280; return seed/233280; }
+    var ph=[rnd()*6,rnd()*6,rnd()*6], paths='';
+    for(var i=0;i<N;i++){ var y0=H*(0.18+0.74*i/(N-1)), d='';
+      for(var x=0;x<=W;x+=24){ var y=y0+Math.sin(x/170+ph[0]+i*0.35)*14+Math.sin(x/61+ph[1]-i*0.2)*5+Math.sin(x/420+ph[2])*22*(i/N); d+=(x?'L':'M')+x+' '+y.toFixed(1); }
+      paths+='<path d="'+d+'" style="opacity:'+(0.18+0.5*(i/N)).toFixed(2)+';--eh-d:'+(i*55)+'ms"/>'; }
+    var svg=document.createElementNS('http://www.w3.org/2000/svg','svg'); svg.setAttribute('class','eh-contour'); svg.setAttribute('viewBox','0 0 '+W+' '+H); svg.setAttribute('preserveAspectRatio','none'); svg.setAttribute('aria-hidden','true'); svg.innerHTML=paths;
+    if(getComputedStyle(host).position==='static')host.style.position='relative';
+    host.insertBefore(svg,host.firstChild);
+    if(motion){ svg.querySelectorAll('path').forEach(function(p){ var L=Math.ceil(p.getTotalLength?p.getTotalLength():1400); p.style.strokeDasharray=L; p.style.setProperty('--eh-len',L); }); svg.classList.add('eh-draw');
+      setTimeout(function(){ svg.classList.remove('eh-draw'); svg.querySelectorAll('path').forEach(function(p){ p.style.strokeDasharray=''; }); },(+getComputedStyle(html).getPropertyValue('--eh-dur-3').replace('ms','')||720)+N*55+120); }
+  }
+  function contours(){ document.querySelectorAll('[data-eh-contour]').forEach(contour); }
+  window.ehContour=contour;
+  /* public: a page that swaps a whole view (a tab) can call EH_SHARED.viewIn(el) */
+  function viewIn(el){ if(!motion||!el)return; el.classList.remove('eh-view-in'); void el.offsetWidth; el.classList.add('eh-view-in'); el.addEventListener('animationend',function(){ el.classList.remove('eh-view-in'); },{once:true}); }
   function ready(fn){ if(document.readyState==='complete')setTimeout(fn,60); else window.addEventListener('load',function(){setTimeout(fn,60);}); }
-  ready(function(){ stagger(); countUp(); floorText(); wrapBids(); setTimeout(floorText,1500); });
+  ready(function(){ contours(); revealSetup(); rowsIn(); countUp(); floorText(); wrapBids(); watchLangTheme(); setTimeout(floorText,1500); });
   // ---- one stamp for every app: "Competitors: N · tracker as of D Mon YYYY" from sync_stamp.json (written by
   //      pipeline/sync_bids_to_apps.py on each publish). Also rendered when embedded in the hub — the hub's own header
   //      hides chips, so the app header inside the iframe is where the reader sees it.
@@ -132,7 +216,7 @@
       if(!j||!j.competitors)return;
       var n=Number(j.competitors).toLocaleString('en-US'), d=j.tracker_as_of||'';
       var st=document.createElement('style');
-      st.textContent='.eh-syncstamp{font-size:11px;color:#6B7C86;background:#F0F5F2;border:1px solid #DCE8DF;border-radius:20px;padding:4px 12px;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;align-self:center;margin-inline-start:auto;font-family:inherit}.eh-syncstamp b{color:#1F7A4C;font-weight:700}body.dark .eh-syncstamp{background:rgba(31,122,76,.18);border-color:rgba(31,122,76,.4);color:#B9C6CC}.eh-syncstamp [data-l]{display:none}.eh-syncstamp [data-l].on{display:inline}@media print{.eh-syncstamp{display:none!important}}@media(max-width:640px){.eh-syncstamp{font-size:10px;padding:3px 8px}}';
+      st.textContent='.eh-syncstamp{font-size:12px;color:var(--eh-ink-2);background:var(--eh-paper);border:1px solid var(--eh-line);border-radius:999px;padding:4px 12px;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;align-self:center;margin-inline-start:auto;font-family:inherit}.eh-syncstamp b{color:var(--eh-leaf-ink);font-weight:600}header .eh-syncstamp{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.82)}header .eh-syncstamp b{color:#A8E3AD}html.eh-embedded header .eh-syncstamp,html.inframe header .eh-syncstamp{background:var(--eh-paper);border-color:var(--eh-line);color:var(--eh-ink-2)}html.eh-embedded header .eh-syncstamp b,html.inframe header .eh-syncstamp b{color:var(--eh-leaf-ink)}.eh-syncstamp [data-l]{display:none}.eh-syncstamp [data-l].on{display:inline}@media print{.eh-syncstamp{display:none!important}}@media(max-width:640px){.eh-syncstamp{font-size:11.5px;padding:3px 9px}}';
       document.head.appendChild(st);
       var el=document.createElement('div'); el.className='eh-syncstamp'; el.id='ehSyncStamp'; el.title='Competitor counts on every EH app come from the bid tracker (EH-WIN-02-F01) — the single source for bid data.';
       el.innerHTML='<span data-l="en">Competitors <b>'+n+'</b> · tracker as of <b dir="ltr">'+d+'</b></span><span data-l="ar" dir="rtl">المنافسون <b>'+n+'</b> · وفق جدول العطاءات حتى <b dir="ltr">'+d+'</b></span>';
@@ -148,5 +232,5 @@
     });
   }
   ready(syncStamp);
-  window.EH_SHARED={version:'1.2.0',page:PAGE,embedded:embedded,motion:motion,floorText:floorText};
+  window.EH_SHARED={version:'2.0.0',page:PAGE,embedded:embedded,motion:motion,floorText:floorText,viewIn:viewIn,contour:contour,markChartsIn:markChartsIn};
 })();

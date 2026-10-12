@@ -99,6 +99,140 @@ for t in D['tenders']:   # slim the payload
         t.pop(k, None)
 payload = json.dumps(D, ensure_ascii=False, default=str).replace('</', '<\\/')
 
+# EH design system v2 (patch_design_etimad.py): page skin, placed after the page CSS so it wins
+SKIN = r"""
+/* EH design system v2 — Government Tenders skin (patch_design_etimad.py). Tokens and fonts come from eh-shared.css. */
+body,body.dark{--bg:var(--eh-mist);--card:var(--eh-paper);--ink:var(--eh-ink);--muted:var(--eh-ink-2);--line:var(--eh-line);--chip:var(--eh-tint);
+  --green:var(--eh-leaf-ink);--blue:var(--eh-sea);--amber:var(--eh-warn);--red:var(--eh-bad);
+  --core:var(--eh-c1);--adj:var(--eh-c2);--bar:var(--eh-c1);--bar2:var(--eh-c2);--grid:var(--eh-line);
+  background:var(--eh-mist);color:var(--eh-ink);font-size:14.5px;line-height:var(--eh-lh)}
+/* masthead (standalone): deep navy, contour lines, land-to-sea line along the lower edge */
+header,body.dark header{background:var(--eh-deep);position:relative;isolation:isolate;padding:20px 22px 22px;gap:12px 16px}
+body.dark header{background:#0A1230}
+header>.eh-contour{color:#6FB6EA;opacity:.5;z-index:-1}
+header::after{content:"";position:absolute;inset-inline:0;bottom:0;height:3px;background:linear-gradient(90deg,var(--eh-leaf),var(--eh-sea) 70%,var(--eh-cyan))}
+[dir=rtl] header::after{background:linear-gradient(270deg,var(--eh-leaf),var(--eh-sea) 70%,var(--eh-cyan))}
+header>div:first-child{min-width:0;flex:1 1 320px}
+header h1{font:600 23px/1.25 var(--eh-display);letter-spacing:-.005em}
+header .sub{font-size:13.5px;opacity:.8;margin-top:4px;line-height:1.5}
+.tog{border-color:rgba(255,255,255,.32);border-radius:var(--eh-r-ctl)}
+.tog button{font:600 12.5px var(--eh-font);color:rgba(255,255,255,.85);padding:7px 13px}
+.tog button.on{background:#fff;color:var(--eh-deep)}
+/* inside the hub the masthead belongs to the hub: this header becomes a quiet toolbar on the page colour */
+html.eh-embedded header,body.embedded header,html.eh-embedded body.dark header,body.embedded.dark header{background:transparent;color:var(--eh-ink);padding:16px 22px 4px}
+html.eh-embedded header::after,body.embedded header::after,html.eh-embedded header>.eh-contour,body.embedded header>.eh-contour{display:none}
+html.eh-embedded header h1,body.embedded header h1{font-size:21px}
+html.eh-embedded header .sub,body.embedded header .sub{color:var(--eh-ink-2);opacity:1}
+main{padding:18px 22px 44px}
+/* source line, notes, glossary */
+.stamp{font-size:13px;color:var(--eh-ink-2);gap:8px 14px}
+.stamp .cap,#av .stamp-rv{font:600 12.5px var(--eh-font);color:var(--eh-ink);background:var(--eh-tint);border:0;border-radius:var(--eh-r-chip);padding:3px 11px}
+.stamp .cap.stale,body.dark .stamp .cap.stale,#av .stamp-rv.stale,body.dark #av .stamp-rv.stale{background:var(--eh-warn-bg);color:var(--eh-warn);border:0}
+.gapnote,#av .warnline{font-size:13px;color:var(--eh-ink);background:var(--eh-warn-bg);border:0;border-inline-start:3px solid #C98A1B;border-radius:9px;padding:10px 14px}
+.gloss{font-size:13px;background:var(--eh-paper);border:1px solid var(--eh-line);border-radius:var(--eh-r-panel);padding:10px 14px;box-shadow:var(--eh-shadow)}
+.gloss summary{font-weight:600;color:var(--eh-ink)}.glist li{color:var(--eh-ink-2)}.glist b{color:var(--eh-ink);font-weight:600}
+/* KPI tiles: no coloured edges; numbers lead; group labels in sentence case */
+.klab{font:600 13.5px var(--eh-font);text-transform:none;letter-spacing:0;color:var(--eh-ink-2);margin:4px 0 8px}
+.kstrip{gap:12px;margin-bottom:18px}
+.kc,body.dark .kc,.kc.warn,.kc.blue,.kc.mkt{background:var(--eh-paper);border:1px solid var(--eh-line);border-top:1px solid var(--eh-line);border-radius:12px;padding:15px 16px 14px;box-shadow:var(--eh-shadow)}
+.kc.mkt{background:var(--eh-tint);box-shadow:none;border-color:transparent}
+.kc .v{font:600 26px/1.12 var(--eh-display);color:var(--eh-ink)}
+.kc .l{font-size:13px;color:var(--eh-ink-2);margin-top:7px;line-height:1.45}
+/* filter bar: sits on the page colour */
+.filters{background:var(--eh-mist);border-bottom:1px solid var(--eh-line);gap:8px;padding:10px 0 12px}
+.filters select,.filters input,body.dark .filters select,body.dark .filters input{font:13px var(--eh-font);color:var(--eh-ink);background:var(--eh-paper);border:1px solid var(--eh-line);border-radius:var(--eh-r-ctl);padding:6px 9px}
+.filters input[type=checkbox]{accent-color:var(--eh-sea);padding:0}
+.filters label{font-size:13px;color:var(--eh-ink-2)}
+.filters .reset{font:600 13px var(--eh-font);background:transparent;border:1px solid var(--eh-line);color:var(--eh-sea);border-radius:var(--eh-r-ctl);padding:6px 12px}
+.filters .reset:hover{background:var(--eh-info-bg)}
+.filters .cnt{font-size:13px;color:var(--eh-ink-2);font-variant-numeric:tabular-nums}
+/* panels and headings */
+.card,body.dark .card{background:var(--eh-paper);border:1px solid var(--eh-line);border-radius:var(--eh-r-panel);padding:18px 20px;margin-bottom:16px;box-shadow:var(--eh-shadow);color:var(--eh-ink)}
+.card h2{font:600 21px/1.3 var(--eh-display);color:var(--eh-ink);gap:8px}
+.card h2::before{display:none}
+.card .note,#av .lede{font-size:13.5px;color:var(--eh-ink-2);line-height:1.6;margin-bottom:12px;max-width:110ch}
+.card .hd>b,.card .g2 b:not(table b){font:600 15px/1.4 var(--eh-display);color:var(--eh-ink)}
+.hd{gap:10px 14px;margin-bottom:4px}
+/* grid columns may shrink below their widest table (the table then scrolls inside, the page does not) */
+.g2>*,.g3>*{min-width:0}
+/* tables */
+.tw{border:1px solid var(--eh-line);border-radius:11px}
+table.t{font-size:13px;font-variant-numeric:tabular-nums}
+table.t th{font:600 12.5px var(--eh-font);letter-spacing:0;text-transform:none;color:var(--eh-ink-2);background:var(--eh-tint);padding:8px 9px;border-bottom:1px solid var(--eh-line)}
+table.t th:hover{color:var(--eh-ink)}
+table.t td{padding:8px 9px;border-bottom-color:var(--eh-line)}
+table.t tbody tr:hover td{background:var(--eh-tint)}
+.ar,.ref{font-family:var(--eh-font)}
+.ref{font-size:12.5px;font-variant-numeric:tabular-nums;unicode-bidi:isolate;direction:ltr}
+.copy{font:600 12px var(--eh-font);color:var(--eh-sea);border-color:var(--eh-line);border-radius:6px;padding:0 6px}
+/* fit for EH: a word plus a shape */
+.tag{display:inline-flex;align-items:center;gap:5px;font:600 12px/1.5 var(--eh-font);border-radius:var(--eh-r-chip);padding:1px 9px 1px 8px}
+.tag::before{content:"";width:7px;height:7px;flex:none;background:currentColor;border-radius:50%}
+.tag.Core{background:var(--eh-info-bg);color:var(--eh-info)}
+.tag.Adjacent{background:var(--eh-good-bg);color:var(--eh-good)}.tag.Adjacent::before{background:none;border:1.5px solid currentColor}
+.tag.NotEH{background:var(--eh-muted-bg);color:var(--eh-muted);border:0}.tag.NotEH::before{height:2px;border-radius:0}
+/* EH status: a word plus a shape */
+.st,body.dark .st{display:inline-flex;align-items:center;gap:5px;font:600 12px/1.5 var(--eh-font);border:0;border-radius:var(--eh-r-chip);padding:1px 9px 1px 8px;background:var(--eh-muted-bg);color:var(--eh-muted)}
+.st::before{content:"";width:7px;height:7px;flex:none;background:currentColor;border-radius:1px}
+.st.Won,body.dark .st.Won{background:var(--eh-good-bg);color:var(--eh-good)}.st.Won::before{border-radius:50%}
+.st.Lost,body.dark .st.Lost{background:var(--eh-bad-bg);color:var(--eh-bad)}.st.Lost::before{transform:rotate(45deg);width:6px;height:6px}
+.st.Bid,body.dark .st.Bid{background:var(--eh-info-bg);color:var(--eh-info)}.st.Bid::before{background:none;border:1.5px solid currentColor;border-radius:50%}
+.st.Studied{background:var(--eh-tint);color:var(--eh-ink)}
+.st.Notstudied{background:transparent;color:var(--eh-ink-2);box-shadow:inset 0 0 0 1px var(--eh-line)}.st.Notstudied::before{height:2px;border-radius:0}
+#newiss .st::before{display:none}
+.pri{color:#C98A1B}
+.days.soon{color:var(--eh-bad)}.days.mid{color:var(--eh-warn)}.days.closed{color:var(--eh-ink-3)}
+.arrow.up{color:var(--eh-good)}.arrow.down{color:var(--eh-bad)}.arrow.flat{color:var(--eh-ink-3)}
+.empty,#av .empty{font-size:13px;color:var(--eh-ink-2);background:var(--eh-tint);border:1px dashed var(--eh-line);border-radius:9px;padding:12px 14px}
+/* charts */
+svg.ch text{font-family:var(--eh-font);fill:var(--eh-ink-3);font-size:11.5px}
+svg.ch .lbl{fill:var(--eh-ink);font-family:var(--eh-display);font-weight:600}
+svg.ch .grid{stroke:var(--eh-line)}
+/* the charts place every label in page coordinates (they mirror themselves in Arabic), so the drawing direction is
+   always left to right; without this the horizontal bar labels ran off the panel in Arabic */
+svg.ch{direction:ltr}
+.legend{font-size:12.5px;color:var(--eh-ink-2);gap:16px}.legend i{border-radius:50%}
+.lgd{font-size:12.5px !important;color:var(--eh-ink-2) !important}
+.png,body.dark .png{font:600 12px var(--eh-font);background:transparent;border:1px solid var(--eh-line);color:var(--eh-sea);border-radius:var(--eh-r-ctl);padding:6px 11px}
+.png:hover{background:var(--eh-info-bg)}
+#tip{background:var(--eh-paper);color:var(--eh-ink);border:1px solid var(--eh-line);border-radius:10px;box-shadow:var(--eh-shadow);font-size:12.5px;line-height:1.5;padding:8px 11px}
+.nts li{font-size:13.5px;line-height:1.6;color:var(--eh-ink)}
+.foot{font-size:12px;color:var(--eh-ink-3);line-height:1.65;max-width:130ch;margin:24px auto 0}
+/* Analyst view (ids and classes kept: #av, #av-flow, .avn) */
+#av h3{font:600 17px/1.35 var(--eh-display);color:var(--eh-ink);margin:26px 0 6px}
+#av h3 .n{background:var(--eh-deep);color:#fff;font:600 12px var(--eh-display)}
+body.dark #av h3 .n{background:var(--eh-sea);color:#0D1736}
+#av .brief{background:var(--eh-tint);border:0;border-inline-start:3px solid var(--eh-sea);border-radius:9px;padding:13px 16px}
+#av .brief b.t{font:600 14px var(--eh-display);color:var(--eh-ink)}#av .brief li{font-size:13.5px}
+#av .howto{font-size:12.5px;color:var(--eh-ink-2)}
+#av .gcard{background:var(--eh-paper);border:1px solid var(--eh-line);border-radius:12px;padding:14px 16px}
+#av .gcard .gt{font:600 15px var(--eh-display);color:var(--eh-ink)}#av .gcard ul,#av .gcard .row{font-size:13px}
+#av .avn{border-inline-start:3px solid var(--eh-sea);padding-inline-start:14px}
+#av .avn .h{font:600 14.5px var(--eh-display);color:var(--eh-ink)}#av .avn .f,#av .avn .m,#av .avn .x{font-size:13px}
+#av .avn .s,#av .src{font-size:12px;color:var(--eh-ink-3)}
+#av .chipr{background:var(--eh-tint);border:0;border-radius:var(--eh-r-chip);font-size:12px;padding:1px 9px}
+#av .pst{font-size:12px;background:var(--eh-paper);border:1px solid var(--eh-line);border-inline-start-width:3px;border-radius:7px}
+#av .pst.good{border-inline-start-color:var(--eh-good)}#av .pst.warn{border-inline-start-color:#C98A1B}#av .pst.bad{border-inline-start-color:var(--eh-bad)}
+#av .sig.up{color:var(--eh-good)}#av .sig.down{color:var(--eh-bad)}#av .sig.mix{color:var(--eh-ink-3)}
+#av .flag{color:var(--eh-warn)}
+#av table.av2 tr.clash td{background:var(--eh-warn-bg)}
+#av details.more summary{color:var(--eh-sea)}
+#av-flow svg text{fill:var(--eh-ink-2)}
+/* Arabic */
+html[dir=rtl] .kc,html[dir=rtl] .card{text-align:start}
+html[dir=rtl] .card h2,html[dir=rtl] #av h3{line-height:1.55}
+/* phone: wide tables outside the scrolling lists scroll inside their panel, never the page */
+@media(max-width:760px){
+  header{padding:16px 16px 18px}header h1{font-size:19px}
+  main{padding:14px 12px 36px}
+  .card{padding:15px 14px}.card h2{font-size:18px}
+  .kc .v{font-size:22px}
+  div:not(.tw)>table.t{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .filters{position:static}
+  .filters select,.filters input[type=search]{max-width:100%;flex:1 1 150px}
+}
+"""
+
 CSS = r"""
 :root{--bg:#F4F7F5;--card:#fff;--ink:#16333F;--muted:#5F7078;--line:#E3EAE5;--green:#1F7A4C;--blue:#1A5FAB;--amber:#E8862E;--red:#C0504D;--chip:#F0F5F2;
 --core:#1A5FAB;--adj:#2E7D46;--bar:#1A5FAB;--bar2:#2E7D46;--grid:#E8EEEA}
@@ -242,17 +376,27 @@ function vbars(id,cats,series,opt={}){ // series: [{name,color,vals[]}] stacked
   const raw=max/4,mag=Math.pow(10,Math.floor(Math.log10(raw))),step=Math.max(1,[1,2,5,10].map(m=>m*mag).find(v=>v>=raw)),top=step*4,bw=Math.min(36,iw/cats.length*0.62),gx=i=>pl+iw*(i+0.5)/cats.length;
   let s=`<svg class="ch" viewBox="0 0 ${W} ${H}" direction="ltr" role="img" aria-label="${esc(opt.title||'')}">`;
   for(let k=0;k<=4;k++){const y=pt+ih-ih*k/4;s+=`<line class="grid" x1="${pl}" x2="${W-6}" y1="${y}" y2="${y}"/><text x="${pl-6}" y="${y+4}" text-anchor="end">${step*k}</text>`}
-  cats.forEach((c,i)=>{let y=pt+ih;const ord=LANG==='ar'?cats.length-1-i:i,x=gx(ord)-bw/2;
+  cats.forEach((c,i)=>{let y=pt+ih;const ord=i,x=gx(ord)-bw/2;   // EH design v2: time runs left to right in Arabic too
     series.forEach((se,k)=>{const v=se.vals[i];if(!v)return;const h=ih*v/top;s+=`<rect x="${x}" y="${y-h+(k?0:0)}" width="${bw}" height="${Math.max(1,h-2)}" rx="3" fill="${se.color}"/>`;y-=h});
     if(tot[i]&&opt.valueLabels!==false)s+=`<text x="${gx(ord)}" y="${y-4}" text-anchor="middle" class="lbl">${tot[i]}</text>`;
     s+=`<text x="${gx(ord)}" y="${H-14}" text-anchor="middle">${esc(c.label)}</text>`;
     s+=`<rect class="hit" x="${gx(ord)-iw/cats.length/2}" y="${pt}" width="${iw/cats.length}" height="${ih}" data-tip="${esc('<b>'+(c.tip||c.label)+'</b><br>'+series.map((se,k)=>se.name+': '+se.vals[i]).join('<br>')+(series.length>1?'<br>'+L('Total','المجموع')+': '+tot[i]:''))}"/>`});
   const lg=opt.legend&&series.length>1?`<div class="lgd" style="display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:4px">${series.map(se=>`<span style="display:inline-flex;align-items:center;gap:6px"><i style="width:10px;height:10px;border-radius:2px;background:${se.color};display:inline-block"></i>${esc(se.name)}</span>`).join('')}</div>`:'';
   $(id).innerHTML=s+'</svg>'+lg}
-function exportPNG(id,name){const svg=$(id).querySelector('svg');if(!svg)return;const cs=getComputedStyle(document.body);
+// brand fonts for exported PNGs: fetched once, embedded as data URIs so the image renders them (12 Oct 2026)
+let EXFONTS=null;
+function exFonts(){ if(EXFONTS!==null)return Promise.resolve(EXFONTS);
+ const F=[['EH Sans','vendor/fonts/encode-sans-latin-var.woff2','100 900'],['EH Sans','vendor/fonts/plex-sans-arabic-400.woff2','100 549'],['EH Sans','vendor/fonts/plex-sans-arabic-600.woff2','550 900'],['EH Display','vendor/fonts/montserrat-latin-var.woff2','100 900'],['EH Display','vendor/fonts/alexandria-arabic-var.woff2','100 900']];
+ return Promise.all(F.map(f=>fetch(f[1]).then(r=>r.ok?r.blob():null).then(b=>b?new Promise(res=>{const fr=new FileReader();fr.onload=()=>res(`@font-face{font-family:'${f[0]}';src:url(${fr.result}) format('woff2');font-weight:${f[2]}}`);fr.readAsDataURL(b);}):'').catch(()=>''))).then(a=>EXFONTS=a.join(''));}
+function exportPNG(id,name){ exFonts().then(()=>exportPNG2(id,name)); }
+function exportPNG2(id,name){const svg=$(id).querySelector('svg');if(!svg)return;
+  // colours as the light theme draws them, so the PNG is ink on white in either theme
+  const dk=document.body.classList.contains('dark');if(dk)document.body.classList.remove('dark');const lv={},bs=getComputedStyle(document.body);
+  ['--core','--adj','--bar','--bar2','--grid','--muted','--ink','--card'].forEach(v=>lv[v]=bs.getPropertyValue(v).trim());if(dk)document.body.classList.add('dark');
+  const cs={getPropertyValue:v=>lv[v]||''};
   let src=new XMLSerializer().serializeToString(svg);
   ['--core','--adj','--bar','--bar2','--grid','--muted','--ink'].forEach(v=>{src=src.split('var('+v+')').join(cs.getPropertyValue(v).trim())});
-  src=src.replace('<svg ','<svg style="font-family:Segoe UI,Tahoma,Arial,sans-serif" ').replace(/class="grid"/g,`stroke="${cs.getPropertyValue('--grid').trim()}"`).replace(/<text /g,`<text fill="${cs.getPropertyValue('--muted').trim()}" font-size="11" `).replace(/class="hit"[^/]*\/>/g,'/>');
+  src=src.replace('<svg ','<svg style="font-family:EH Sans,Segoe UI,Tahoma,Arial,sans-serif" ').replace(/(<svg[^>]*>)/,m=>m+'<style>'+(EXFONTS||'')+'</style>').replace(/class="grid"/g,`stroke="${cs.getPropertyValue('--grid').trim()}"`).replace(/<text /g,`<text fill="${cs.getPropertyValue('--muted').trim()}" font-size="11" `).replace(/class="hit"[^/]*\/>/g,'/>');
   const vb=svg.viewBox.baseVal,img=new Image(),c=document.createElement('canvas');c.width=vb.width*2;c.height=vb.height*2;
   img.onload=()=>{const x=c.getContext('2d');x.fillStyle=cs.getPropertyValue('--card').trim()||'#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(img,0,0,c.width,c.height);const a=document.createElement('a');a.download=name+'.png';a.href=c.toDataURL('image/png');a.click()};
   img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(src)}
@@ -419,9 +563,9 @@ HTML = f"""<!doctype html>
 <html lang="en" dir="ltr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Government Tenders (Etimad)</title>
 <link rel="stylesheet" href="eh-shared.css">
-<style>{CSS}{AV.CSS}</style></head>
+<style>{CSS}{AV.CSS}</style><style id="eh-skin">{SKIN}</style></head>
 <body>
-<header><div><h1 data-en="Government Tenders (Etimad)" data-ar="المنافسات الحكومية (اعتماد)">Government Tenders (Etimad)</h1>
+<header data-eh-contour="7"><div><h1 data-en="Government Tenders (Etimad)" data-ar="المنافسات الحكومية (اعتماد)">Government Tenders (Etimad)</h1>
 <div class="sub" data-en="Public tenders on Etimad, sorted by what Environmental Horizons (EH) can bid for, and linked to the stakeholder map and the bid tracker." data-ar="منافسات اعتماد العامة مصنفة حسب ما يمكن لآفاق البيئة التقدم له، ومربوطة بخريطة أصحاب المصلحة وجدول متابعة المنافسات.">Public tenders on Etimad, sorted by what Environmental Horizons (EH) can bid for, and linked to the stakeholder map and the bid tracker.</div></div>
 <div class="ctl"><div class="tog lang"><button data-l="en" class="on">EN</button><button data-l="ar">عربي</button></div><div class="tog th"><button data-t="light" class="on">☀</button><button data-t="dark">☾</button></div></div></header>
 <main>
@@ -489,6 +633,7 @@ HTML = f"""<!doctype html>
 </main><div id="tip"></div>
 <script id="ET" type="application/json">{payload}</script>
 <script>{JS}{AV.JS}</script>
+<script src="eh-shared.js" defer></script>
 </body></html>"""
 
 os.makedirs(os.path.dirname(os.path.abspath(OUT)), exist_ok=True)

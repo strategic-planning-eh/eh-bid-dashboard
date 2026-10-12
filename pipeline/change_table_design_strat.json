@@ -1,0 +1,87 @@
+{
+ "generated": "2026-10-12 10:07",
+ "title": "Design system v2 — PIF Strategy 2026–2030",
+ "failures": [],
+ "changes": [
+  {
+   "file": "strat",
+   "kind": "exact",
+   "category": "design",
+   "note": "page skin straight after the shared design system",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<link rel=\"stylesheet\" href=\"eh-shared.css\">",
+   "new": "<link rel=\"stylesheet\" href=\"eh-shared.css\">\n<style id=\"eh-skin\">\n/* EH design system v2 — PIF Strategy 2026–2030 skin (patch_design_strat.py). Tokens and fonts come from eh-shared.css. */\n/* the page's own colour variables, mapped onto the shared tokens (light and dark both follow eh-shared.css) */\n:root,html[data-theme=dark]{--g:var(--eh-c2);--b:var(--eh-c1);--ink:var(--eh-ink);--grey:var(--eh-i"
+  },
+  {
+   "file": "strat",
+   "kind": "exact",
+   "category": "design",
+   "note": "standalone masthead contour lines",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<header><img src=\"data:image/jpeg",
+   "new": "<header data-eh-contour=\"7\"><img src=\"data:image/jpeg"
+  },
+  {
+   "file": "strat",
+   "kind": "exact",
+   "category": "motion",
+   "note": "sections join the shared reveal-on-scroll (eh-panel)",
+   "occurrences": 10,
+   "ok": true,
+   "old": "<section id=\"",
+   "new": "<section class=\"eh-panel\" id=\""
+  },
+  {
+   "file": "strat",
+   "kind": "exact",
+   "category": "design",
+   "note": "chart red and amber from the shared tokens",
+   "occurrences": 1,
+   "ok": true,
+   "old": "red:THEME==='dark'?'#E0655A':'#C0392B',gold:THEME==='dark'?'#E0B865':'#C9A24A'",
+   "new": "red:g('--eh-c8'),gold:g('--eh-c5')"
+  },
+  {
+   "file": "strat",
+   "kind": "exact",
+   "category": "design",
+   "note": "chart text in the brand font and secondary ink",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Chart.defaults.color=C.ink;Chart.defaults.borderColor=C.grid;Chart.defaults.font.family=getComputedStyle(document.body).fontFamily;",
+   "new": "Chart.defaults.color=getComputedStyle(document.documentElement).getPropertyValue('--eh-ink-2').trim()||C.ink;Chart.defaults.borderColor=C.grid;Chart.defaults.font.family=getComputedStyle(document.documentElement).getPropertyValue('--eh-font').trim()||getComputedStyle(document.body).fontFamily;"
+  },
+  {
+   "file": "strat",
+   "kind": "exact",
+   "category": "design",
+   "note": "grey \"required pace\" bar in the shared muted ink",
+   "occurrences": 1,
+   "ok": true,
+   "old": "(THEME==='dark'?'rgba(160,175,185,.35)':'rgba(96,115,125,.25)')",
+   "new": "(THEME==='dark'?'rgba(157,171,197,.32)':'rgba(94,107,128,.22)')"
+  },
+  {
+   "file": "strat",
+   "kind": "exact",
+   "category": "rtl",
+   "note": "axis colours; horizontal bar charts mirror in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "cfg.options=o;charts[id]=new Chart(",
+   "new": "// EH design system v2 (patch_design_strat.py): axis text in the footnote ink, hairline grid; Arabic: horizontal bars start from the right\n  {const cs=getComputedStyle(document.documentElement),tk=cs.getPropertyValue('--eh-ink-3').trim(),ln=cs.getPropertyValue('--eh-line').trim(),rtl=LANG==='ar';\n   if(o.scales){for(const ax of Object.values(o.scales)){ax.ticks=Object.assign({color:tk},ax.ticks||{"
+  },
+  {
+   "file": "strat",
+   "kind": "exact",
+   "category": "design",
+   "note": "repaint chart text once the brand fonts have loaded",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<script src=\"eh-shared.js\" defer></script>",
+   "new": "<script>\n/* EH design system v2 (patch_design_strat.py): chart text is painted on canvas, which cannot swap fonts by itself. When the brand\n   fonts finish loading (first visit, or the Arabic glyphs after a language switch) the charts re-measure and repaint. */\n(function(){ if(!document.fonts||!document.fonts.addEventListener)return; var tm=null;\n  function repaint(){ clearTimeout(tm); tm=setTimeo"
+  }
+ ]
+}

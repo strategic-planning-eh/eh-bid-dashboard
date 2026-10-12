@@ -1,7 +1,8 @@
 // ===== Lightweight self-contained SVG chart library (theme-aware) =====
-const C={green:'#3FA34D',blue:'#1A5FAB',ink:'#1C2B33',soft:'#6B7C86',line:'#E3EAE5',mist:'#F4F8F5',
- red:'#C0504D',orange:'#E8862E',teal:'#2A9D8F',purple:'#7B6BA8',gold:'#D4A92E',
- pal:['#1A5FAB','#3FA34D','#E8862E','#7B6BA8','#2A9D8F','#C0504D','#D4A92E','#5A95C8','#8FB339','#B5651D']};
+// EH design system v2: land → sea palette from the logo and the EH profile; readable on light and dark panels
+const C={green:'#54AB5D',blue:'#0072BB',ink:'#15224D',soft:'#5E6B80',line:'#D9E3DF',mist:'#F2F6F4',
+ red:'#B23F2B',orange:'#C98A1B',teal:'#00A0E0',purple:'#8E6BB8',gold:'#C98A1B',
+ pal:['#0072BB','#54AB5D','#3B57B8','#00A0E0','#C98A1B','#8E6BB8','#A6CE39','#B23F2B','#5E9FD6','#7FB685']};
 const fmtM=v=>v==null?'—':(Math.abs(v)>=1e6?(v/1e6).toFixed(1)+'M':Math.abs(v)>=1e3?(v/1e3).toFixed(0)+'K':Math.round(v));
 const fmtSAR=v=>v==null?'—':'SAR '+Math.round(v).toLocaleString();
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -32,10 +33,11 @@ function hbar(data, o={}){
   const W=wd, n=data.length, H=n*o.rh+14, labw=240, barx=labw+8, iw=W-barx-90;
   const max=Math.max(...data.map(o.val),1);
   let s=`<svg viewBox="0 0 ${W} ${H}" class="ch">`;
+  const RTL=document.documentElement.dir==='rtl', X=x=>RTL?W-x:x, A=a=>RTL?(a==='end'?'start':'end'):a;   // Arabic: mirror the chart
   data.forEach((d,i)=>{const v=o.val(d);const w=Math.max(v/max*iw,1);const y=7+i*o.rh;
-    s+=`<text x="${labw}" y="${y+o.rh/2+1}" text-anchor="end" class="chl">${esc(String(o.lab(d)).slice(0,o.maxlab))}</text>`;
-    s+=`<rect x="${barx}" y="${y+3}" width="${w.toFixed(1)}" height="${o.rh-9}" rx="2.5" fill="${typeof o.color==='function'?o.color(d):o.color}"><title>${esc(o.lab(d))}: ${esc(o.fmt(v))}</title></rect>`;
-    s+=`<text x="${barx+w+6}" y="${y+o.rh/2+1}" class="chv">${esc(o.fmt(v))}${o.sub?'  <tspan class="chs">'+esc(o.sub(d))+'</tspan>':''}</text>`;});
+    s+=`<text x="${X(labw)}" y="${y+o.rh/2+1}" text-anchor="${A('end')}" class="chl">${esc(String(o.lab(d)).slice(0,o.maxlab))}</text>`;
+    s+=`<rect x="${(RTL?W-barx-w:barx).toFixed(1)}" y="${y+3}" width="${w.toFixed(1)}" height="${o.rh-9}" rx="2.5" fill="${typeof o.color==='function'?o.color(d):o.color}"><title>${esc(o.lab(d))}: ${esc(o.fmt(v))}</title></rect>`;
+    s+=`<text x="${X(barx+w+6)}" y="${y+o.rh/2+1}" text-anchor="${A('start')}" class="chv">${esc(o.fmt(v))}${o.sub?'  <tspan class="chs">'+esc(o.sub(d))+'</tspan>':''}</text>`;});
   return s+'</svg>';
 }
 
@@ -49,7 +51,7 @@ function donut(segs, o={}){
     const big=(a2-ang)>Math.PI?1:0;const col=g.c||C.pal[i%C.pal.length];
     if(g.v>0)s+=`<path d="M${x1.toFixed(1)} ${y1.toFixed(1)} A${R} ${R} 0 ${big} 1 ${x2.toFixed(1)} ${y2.toFixed(1)} L${xi2.toFixed(1)} ${yi2.toFixed(1)} A${r} ${r} 0 ${big} 0 ${xi1.toFixed(1)} ${yi1.toFixed(1)} Z" fill="${col}"><title>${esc(g.l)}: ${g.v}</title></path>`;
     ang=a2;});
-  if(o.center)s+=`<text x="${cx}" y="${cy-4}" text-anchor="middle" style="font:800 26px Segoe UI;fill:${C.ink}">${o.center}</text><text x="${cx}" y="${cy+14}" text-anchor="middle" style="font:600 10px Segoe UI;fill:${C.soft};letter-spacing:.5px">${esc(o.csub||'')}</text>`;
+  if(o.center)s+=`<text x="${cx}" y="${cy-4}" text-anchor="middle" class="eh-dc" style="font-family:var(--eh-display);font-weight:600;font-size:26px;fill:var(--eh-ink)">${o.center}</text><text x="${cx}" y="${cy+15}" text-anchor="middle" style="font-family:var(--eh-font);font-weight:500;font-size:11.5px;fill:var(--eh-ink-3)">${esc(o.csub||'')}</text>`;
   return s+'</svg>';
 }
 function legend(segs){return '<div class="leg">'+segs.map((g,i)=>`<span class="lgi"><span class="lgd" style="background:${g.c||C.pal[i%C.pal.length]}"></span>${esc(g.l)} <b>${g.v}</b></span>`).join('')+'</div>';}

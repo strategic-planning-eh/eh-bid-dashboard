@@ -1,0 +1,197 @@
+{
+ "generated": "2026-10-12 10:17",
+ "title": "Design system v2 — Environment Fund 2025 page (generator)",
+ "failures": [],
+ "changes": [
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "design",
+   "note": "page skin (land and sea): tokens, panels, chips with word + shape, sentence-case labels",
+   "occurrences": 1,
+   "ok": true,
+   "old": "\"\"\"\n\nJS = r\"\"\"\n",
+   "new": "\"\"\"\n\n# EH design system v2 (patch_design_ef.py): page skin, placed after the page CSS so it wins\nSKIN = r\"\"\"\n/* EH design system v2 — Environment Fund skin (patch_design_ef.py). Tokens and fonts come from eh-shared.css. */\nbody,body.dark{--bg:var(--eh-mist);--card:var(--eh-paper);--ink:var(--eh-ink);--muted:var(--eh-ink-2);--line:var(--eh-line);--chip:var(--eh-tint);\n  --green:var(--eh-leaf-ink);-"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "design",
+   "note": "skin linked after the page styles",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<link rel=\"stylesheet\" href=\"eh-shared.css\">\n<style>{CSS}</style>\n",
+   "new": "<link rel=\"stylesheet\" href=\"eh-shared.css\">\n<style>{CSS}</style>\n<style id=\"eh-skin\">{SKIN}</style>\n"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "design",
+   "note": "standalone masthead contour lines",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<header>\n <div><h1 id=\"title\"></h1>",
+   "new": "<header data-eh-contour=\"7\">\n <div><h1 id=\"title\"></h1>"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "design",
+   "note": "chart text in token colours, series in the brand palette, label column fits the longest label",
+   "occurrences": 1,
+   "ok": true,
+   "old": " const W=1100, rowH=34, L0=430, iw=W-L0-190, ink=DARK?'#E6EDF1':'#16333F', mut='#6B7C86';\n",
+   "new": " const W=1100, rowH=34, L0=EF_L0(), iw=W-L0-190, ink='var(--eh-ink)', mut='var(--eh-ink-3)';   // EH design v2: token colours follow the theme\n c=Object.assign({},c,{color:BC(c.color),colors:(c.colors||[]).map(BC),rows:c.rows.map(r=>r.c?Object.assign({},r,{c:BC(r.c)}):r)});\n"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "design",
+   "note": "better / worse marks in the shared status colours",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<tspan fill=\"${better?'#1F7A4C':'#C0504D'}\">",
+   "new": "<tspan fill=\"${better?'var(--eh-good)':'var(--eh-bad)'}\">"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "rtl",
+   "note": "helpers: palette map, shared label column, Arabic mirroring, label contrast",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function chart(c){\n",
+   "new": "// EH design system v2 (patch_design_ef.py): brand palette (land → sea) for the colours stored in the report data\nconst BCM={'#2A3F80':'#3B57B8','#E8862E':'#C98A1B','#1F7A4C':'#54AB5D','#C0504D':'#B23F2B','#1A5FAB':'#0072BB','#2E9E8E':'#00A0E0','#5F7078':'#5E6B80','#7B4FA6':'#8E6BB8','#9AABB5':'#9DABC5'};\nconst BC=x=>BCM[String(x||'').toUpperCase()]||x;\n// one label column for every chart, wide en"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "rtl",
+   "note": "charts mirrored in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "${chart(c)}</div>`).join('');",
+   "new": "${mir(chart(c))}</div>`).join('');"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "rtl",
+   "note": "programme map mirrored in Arabic (reads right to left, like its Arabic title)",
+   "occurrences": 1,
+   "ok": true,
+   "old": " $('pmwrap').innerHTML=programmeMap();",
+   "new": " $('pmwrap').innerHTML=mir(programmeMap());"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "design",
+   "note": "programme map in the brand palette",
+   "occurrences": 1,
+   "ok": true,
+   "old": " const col={grants:'#1F7A4C',loansup:'#2A3F80',guar:'#1A5FAB',impact:'#7B4FA6',ppp:'#E8862E',fees:'#C0504D',shared:'#5F7078',carbon:'#2E9E8E'};",
+   "new": " const col={grants:'#2E7A37',loansup:'#3B57B8',guar:'#0072BB',impact:'#8E6BB8',ppp:'#C98A1B',fees:'#B23F2B',shared:'#5E6B80',carbon:'#00A0E0'};   // EH brand palette"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "design",
+   "note": "programme map title in the token ink",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<text x=\"${xP}\" y=\"24\" font-size=\"15\" font-weight=\"800\" fill=\"${DARK?'#E6EDF1':'#16333F'}\">",
+   "new": "<text x=\"${xP}\" y=\"24\" font-size=\"15\" font-weight=\"800\" fill=\"var(--eh-ink)\">"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "design",
+   "note": "programme map source line in the token footnote colour",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<text x=\"${xP}\" y=\"42\" font-size=\"11\" fill=\"#6B7C86\">",
+   "new": "<text x=\"${xP}\" y=\"42\" font-size=\"11\" fill=\"var(--eh-ink-3)\">"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "design",
+   "note": "programme labels readable on every box colour",
+   "occurrences": 1,
+   "ok": true,
+   "old": "font-size=\"12.5\" font-weight=\"700\" fill=\"#fff\">${esc(L(p.en,p.ar))}</text><text x=\"${xP+bw[0]-8}\" y=\"${yP(i)+19}\" font-size=\"10\" fill=\"#fff\"",
+   "new": "font-size=\"12.5\" font-weight=\"700\" fill=\"${onFill(col[p.id])}\">${esc(L(p.en,p.ar))}</text><text x=\"${xP+bw[0]-8}\" y=\"${yP(i)+19}\" font-size=\"10.5\" fill=\"${onFill(col[p.id])}\""
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "design",
+   "note": "centre boxes in token colours",
+   "occurrences": 1,
+   "ok": true,
+   "old": "fill=\"${DARK?'#1E2830':'#F0F5F2'}\" stroke=\"${DARK?'#3A4B55':'#DCE8DF'}\"/><text x=\"${xC+bw[1]/2}\" y=\"${yC(i)+18}\" font-size=\"12\" font-weight=\"700\" fill=\"${DARK?'#E6EDF1':'#16333F'}\"",
+   "new": "fill=\"var(--eh-tint)\" stroke=\"var(--eh-line)\"/><text x=\"${xC+bw[1]/2}\" y=\"${yC(i)+18}\" font-size=\"12\" font-weight=\"700\" fill=\"var(--eh-ink)\""
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "design",
+   "note": "EH service boxes in token colours",
+   "occurrences": 1,
+   "ok": true,
+   "old": "fill=\"${DARK?'#1E2830':'#fff'}\" stroke=\"#1F7A4C\" stroke-width=\"1.5\"/><text x=\"${xE+10}\" y=\"${yE(i)+18}\" font-size=\"12.5\" font-weight=\"700\" fill=\"${DARK?'#E6EDF1':'#1F7A4C'}\">",
+   "new": "fill=\"var(--eh-paper)\" stroke=\"var(--eh-leaf-ink)\" stroke-width=\"1.5\"/><text x=\"${xE+10}\" y=\"${yE(i)+18}\" font-size=\"12.5\" font-weight=\"700\" fill=\"var(--eh-leaf-ink)\">"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "design",
+   "note": "programme boxes fit their longest label",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const xP=40,xC=W/2-40,xE=W-300, bw=[250,120,200];",
+   "new": "const xP=40,xC=W/2-40,xE=W-300, bw=[310,150,200];   // EH design v2: programme and centre boxes wide enough for the longest label (English and Arabic) in the brand font"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "design",
+   "note": "PNG export waits for the embedded brand fonts",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function exPNG(id,name){const svg=$(id);if(!svg)return;",
+   "new": "// brand fonts for exported PNGs: fetched once, embedded as data URIs so the image renders them (12 Oct 2026)\nlet EXFONTS=null;\nfunction exFonts(){ if(EXFONTS!==null)return Promise.resolve(EXFONTS);\n const F=[['EH Sans','vendor/fonts/encode-sans-latin-var.woff2','100 900'],['EH Sans','vendor/fonts/plex-sans-arabic-400.woff2','100 549'],['EH Sans','vendor/fonts/plex-sans-arabic-600.woff2','550 900'"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "design",
+   "note": "PNG export: light colours and brand fonts",
+   "occurrences": 1,
+   "ok": true,
+   "old": " cl.querySelectorAll('text').forEach(t=>t.setAttribute('font-family',\"'Segoe UI',Tahoma,Arial,sans-serif\"));\n",
+   "new": " // read every colour as the light theme draws it, so the PNG is ink on white in either theme\n const dk=document.body.classList.contains('dark');if(dk)document.body.classList.remove('dark');\n const se=[...svg.querySelectorAll('*')],ce=[...cl.querySelectorAll('*')];\n se.forEach((e,i)=>{const d=ce[i];if(!d||!/^(text|tspan|rect|path|line|circle)$/.test(e.tagName))return;const cs=getComputedStyle(e);d"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "design",
+   "note": "PNG export background always white",
+   "occurrences": 1,
+   "ok": true,
+   "old": "bg.setAttribute('fill',DARK?'#151C21':'#fff');",
+   "new": "bg.setAttribute('fill','#fff');"
+  },
+  {
+   "file": "gen",
+   "kind": "exact",
+   "category": "motion",
+   "note": "opportunity tabs use the shared view transition",
+   "occurrences": 1,
+   "ok": true,
+   "old": "onclick=\"GROUP='${k}';render()\"",
+   "new": "onclick=\"GROUP='${k}';render();window.EH_SHARED&&EH_SHARED.viewIn($('opps'))\""
+  }
+ ]
+}

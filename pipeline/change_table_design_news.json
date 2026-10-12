@@ -1,0 +1,207 @@
+{
+ "generated": "2026-10-12 10:07",
+ "title": "Design system v2 — Corporate & Government News",
+ "failures": [],
+ "changes": [
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "design",
+   "note": "page skin after the shared design system",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<link rel=\"stylesheet\" href=\"eh-shared.css\">",
+   "new": "<link rel=\"stylesheet\" href=\"eh-shared.css\">\n<style id=\"eh-skin\">\n/* EH design system v2 — Corporate & Government News skin (patch_design_news.py). Tokens and fonts come from eh-shared.css. */\n/* the page's own variables, mapped to the shared tokens (declared on body so body.dark re-resolves them) */\nbody,body.dark{--eh-green:var(--eh-leaf);--eh-blue:var(--eh-sea);--eh-green-d:var(--eh-leaf-ink);-"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "design",
+   "note": "standalone masthead contour lines",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<header class=\"masthead\">",
+   "new": "<header class=\"masthead\" data-eh-contour=\"7\">"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "motion",
+   "note": "fact-check panel joins the reveal",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"audit-wrap\">",
+   "new": "<div class=\"audit-wrap eh-panel\">"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "motion",
+   "note": "watch-list panel joins the reveal",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"flag-wrap\">",
+   "new": "<div class=\"flag-wrap eh-panel\">"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "motion",
+   "note": "big-picture panel joins the reveal",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"highlights\">",
+   "new": "<div class=\"highlights eh-panel\">"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "motion",
+   "note": "story panel kept out of the reveal (it flashed open on load)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<aside class=\"panel\" id=\"panel\" aria-hidden=\"true\">",
+   "new": "<aside class=\"panel\" id=\"panel\" aria-hidden=\"true\" data-eh-noreveal>"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "motion",
+   "note": "Table view slides in",
+   "occurrences": 1,
+   "ok": true,
+   "old": "document.getElementById('v-card').classList.remove('active'); render();});",
+   "new": "document.getElementById('v-card').classList.remove('active'); render(); ehViewSwap();});"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "motion",
+   "note": "Cards view slides in",
+   "occurrences": 1,
+   "ok": true,
+   "old": "document.getElementById('v-table').classList.remove('active'); render();});",
+   "new": "document.getElementById('v-table').classList.remove('active'); render(); ehViewSwap();});\nfunction ehViewSwap(){ if(window.EH_SHARED&&EH_SHARED.viewIn){ document.querySelectorAll('#sec-corp .scope-block,#sec-gov .scope-block').forEach(function(el){ EH_SHARED.viewIn(el); }); } }"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "design",
+   "note": "brand chart palette",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const PALETTE=['#2563eb','#0ea5e9','#06b6d4','#14b8a6','#10b981','#22c55e','#84cc16','#eab308','#f59e0b','#f97316','#ef4444','#f43f5e','#ec4899','#a855f7','#6366f1'];",
+   "new": "// EH design system v2: land → sea palette from the logo and the EH profile\nconst PALETTE=['#0072BB','#54AB5D','#3B57B8','#00A0E0','#C98A1B','#8E6BB8','#A6CE39','#B23F2B','#5E9FD6','#7FB685'];"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "design",
+   "note": "chart text in the brand font, axis colour from the tokens",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Chart.defaults.font.family=\"'Plus Jakarta Sans',sans-serif\";\nChart.defaults.font.size=11;\nChart.defaults.color='#64748b';",
+   "new": "Chart.defaults.font.family=\"'EH Sans','Encode Sans','Segoe UI',Tahoma,Arial,sans-serif\";\nChart.defaults.font.size=12;\nChart.defaults.color='#5E6B80';\nChart.defaults.borderColor='#D9E3DF';\nconst EH_RTL=()=>document.documentElement.dir==='rtl';"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "design",
+   "note": "sector donut legend readable",
+   "occurrences": 1,
+   "ok": true,
+   "old": "backgroundColor:PALETTE, borderColor:'#fff', borderWidth:2}]},\n  options:{cutout:'58%', plugins:{legend:{position:'right', labels:{boxWidth:10, padding:8, font:{size:10}}}}}",
+   "new": "backgroundColor:PALETTE, borderColor:'#fff', borderWidth:2}]},\n  options:{cutout:'60%', plugins:{legend:{position:'right', labels:{boxWidth:9, boxHeight:9, usePointStyle:true, pointStyle:'circle', padding:9, font:{size:12}}}}}"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "design",
+   "note": "news-category bars in one brand colour; mirrored in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "backgroundColor:catData.map((_,i)=>colorFor(i)), borderRadius:5, barThickness:14}]},\n  options:{indexAxis:'y', plugins:{legend:{display:false}},\n    scales:{x:{beginAtZero:true, ticks:{precision:0, stepSize:1}, grid:{color:'#eceff3'}}, y:{grid:{display:false}, ticks:{font:{size:10}}}}}",
+   "new": "backgroundColor:catData.map(()=>'#0072BB'), borderRadius:4, barThickness:14}]},\n  options:{indexAxis:'y', plugins:{legend:{display:false}},\n    scales:{x:{beginAtZero:true, reverse:EH_RTL(), ticks:{precision:0, stepSize:1}, grid:{color:'#D9E3DF'}}, y:{position:EH_RTL()?'right':'left', grid:{display:false}, ticks:{font:{size:12}}}}}"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "design",
+   "note": "new-money bars in brand colours",
+   "occurrences": 1,
+   "ok": true,
+   "old": "backgroundColor:['#2563eb','#06b6d4','#f59e0b'], borderRadius:5, barThickness:30}]},",
+   "new": "backgroundColor:['#0072BB','#00A0E0','#C98A1B'], borderRadius:4, barThickness:30}]},"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "design",
+   "note": "new-money axis readable",
+   "occurrences": 1,
+   "ok": true,
+   "old": "scales:{y:{beginAtZero:true, grid:{color:'#eceff3'}, ticks:{callback:v=>'$'+v+'bn'}}, x:{grid:{display:false}, ticks:{font:{size:10}}}}}",
+   "new": "scales:{y:{beginAtZero:true, grid:{color:'#D9E3DF'}, ticks:{callback:v=>'$'+v+'bn'}}, x:{grid:{display:false}, ticks:{font:{size:12}}}}}"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "rtl",
+   "note": "brand fonts redraw; horizontal bars mirror in Arabic",
+   "occurrences": 1,
+   "ok": true,
+   "old": "/* ----- init ----- */\nrender();\nrenderFlagged();",
+   "new": "/* ----- init ----- */\nrender();\nrenderFlagged();\n/* EH design system v2: redraw once the brand fonts are in; mirror the horizontal bar chart when the page turns Arabic */\n(function(){\n  const all=()=>Object.values(Chart.instances||{});\n  if(document.fonts&&document.fonts.load){ Promise.all([document.fonts.load(\"500 12px 'EH Sans'\"),document.fonts.load(\"500 12px 'EH Sans'\",'\\u0639\\u0631\\u0628\\u064"
+  },
+  {
+   "file": "news",
+   "kind": "regex",
+   "category": "dark",
+   "note": "old dark-mode block replaced by token rules",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<style id=\"ehDark\">\\nbody\\.dark\\{--eh-green-l:.*?body\\.dark \\.blue\\{color:#7FB4E8 !important\\}\\n",
+   "new": "<fn>"
+  },
+  {
+   "file": "news",
+   "kind": "regex",
+   "category": "dark",
+   "note": "language bar from the tokens",
+   "occurrences": 1,
+   "ok": true,
+   "old": "#ehLangBar\\{position:fixed;top:10px;left:12px;z-index:9999;display:flex;gap:0;border:1px solid rgba\\(128,148,160,\\.4\\);border-radius:8px;overflow:hidden;font-family:inherit\\}\\n.*?body\\.dark #ehLangBar button\\.on\\{background:#0E5A9E;color:#fff\\}\\n",
+   "new": "<fn>"
+  },
+  {
+   "file": "news",
+   "kind": "regex",
+   "category": "design",
+   "note": "Arabic report: token surfaces, no coloured bar before headings",
+   "occurrences": 1,
+   "ok": true,
+   "old": "#ehArView\\{display:none;max-width:1040px.*?body\\.dark #ehArView \\.avnote\\{color:#93A6B2\\}\\n",
+   "new": "<fn>"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "dark",
+   "note": "chart axis/grid colours from the tokens",
+   "occurrences": 1,
+   "ok": true,
+   "old": "var c=dark?'#C9D4DB':'#666', g=dark?'#2C3A43':'#E5E5E5';",
+   "new": "var cs=getComputedStyle(document.body), c=(cs.getPropertyValue('--eh-ink-3')||'').trim()||(dark?'#9DABC5':'#5E6B80'), g=(cs.getPropertyValue('--eh-line')||'').trim()||(dark?'#2A3A6B':'#D9E3DF');\n    var DK={'#0072BB':'#4EB0EE','#54AB5D':'#7CCB82','#3B57B8':'#A9B6E8','#00A0E0':'#38C6F4','#C98A1B':'#E8B04A','#8E6BB8':'#B79BDB','#A6CE39':'#C2E06A','#B23F2B':'#F0907D','#5E9FD6':'#8CC0EC','#7FB685':'#A"
+  },
+  {
+   "file": "news",
+   "kind": "exact",
+   "category": "dark",
+   "note": "brand series colours switch to their dark-theme twins (arrays included)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "      var p=pl(x); if(!p) return x;",
+   "new": "      if(Array.isArray(x)) return x.map(lift);\n      if(typeof x==='string'&&DK[x.toUpperCase()]) return DK[x.toUpperCase()];\n      var p=pl(x); if(!p) return x;"
+  }
+ ]
+}

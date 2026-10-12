@@ -1,0 +1,297 @@
+{
+ "generated": "2026-10-12 10:05",
+ "title": "Design system v2 — Stakeholder & Competitive Map",
+ "failures": [],
+ "changes": [
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "page skin after the shared design system",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<link rel=\"stylesheet\" href=\"eh-shared.css\">",
+   "new": "<link rel=\"stylesheet\" href=\"eh-shared.css\"><style id=\"eh-skin\">\n/* EH design system v2 — Stakeholder Map skin (patch_design_stake.py). Tokens and fonts come from eh-shared.css. */\n:root,html.dark{--paper:var(--eh-paper);--mist:var(--eh-mist);--ink:var(--eh-ink);--ink-soft:var(--eh-ink-2);--line:var(--eh-line);--eh-blue-d:var(--eh-deep)}\nbody,html.dark body{background:var(--eh-mist);color:var(--eh"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "standalone masthead contour lines",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<header>\n  <div class=\"logo\">",
+   "new": "<header data-eh-contour=\"7\">\n  <div class=\"logo\">"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "regional-view panels join the shared panel style and reveal",
+   "occurrences": 2,
+   "ok": true,
+   "old": "<div class=\"heatwrap\">",
+   "new": "<div class=\"heatwrap eh-panel\">"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "motion",
+   "note": "view switch uses the shared view-in motion",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  if(t==='lic')buildLicenceMap();\n}\nlet listSort=",
+   "new": "  if(t==='lic')buildLicenceMap();\n  if(window.EH_SHARED&&EH_SHARED.viewIn)EH_SHARED.viewIn(document.getElementById(t==='map'?'mapView':t+'View'));   // EH design v2: view change motion\n}\nlet listSort="
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "wheel ring guides on the brand hairline",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ctx.strokeStyle=(DKM?'#243039':'#E4ECE6');ctx.lineWidth=1;",
+   "new": "ctx.strokeStyle=(DKM?'#2A3A6B':'#D9E3DF');ctx.lineWidth=1;"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "threat-band tints from the brand status set",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const BANDS=[[0.155,0.235,'26,95,171',0.045],[0.245,0.475,'214,69,69',0.05],[0.485,0.665,'201,162,39',0.045],[0.675,0.975,'63,163,77',0.035]];",
+   "new": "const BANDS=[[0.155,0.235,'0,114,187',0.045],[0.245,0.475,'178,63,43',0.05],[0.485,0.665,'201,138,27',0.045],[0.675,0.975,'84,171,93',0.035]];   // EH status set"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "region dividers on the brand hairline",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ctx.strokeStyle=(DKM?'#202B33':'#EAF1EC');ctx.beginPath();",
+   "new": "ctx.strokeStyle=(DKM?'#22305E':'#E3EBE7');ctx.beginPath();"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "wheel region labels in sentence case (were capitals)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const SHORTRG={'Other Makkah Region':'OTHER MAKKAH','Makkah City':'MAKKAH','Madinah Region':'MADINAH','Qassim Region':'QASSIM','Tabuk Region':'TABUK','Hail Region':'HAIL','Al Jawf Region':'AL JAWF','Northern Borders Region':'N. BORDERS','Eastern Province':'EASTERN','Southern Region':'SOUTHERN','GCC / International':\"GCC / INT'L\"};",
+   "new": "const SHORTRG={'Other Makkah Region':'Other Makkah','Makkah City':'Makkah','Madinah Region':'Madinah','Qassim Region':'Qassim','Tabuk Region':'Tabuk','Hail Region':'Hail','Al Jawf Region':'Al Jawf','Northern Borders Region':'N. Borders','Eastern Province':'Eastern','Southern Region':'Southern','GCC / International':\"GCC / Int'l\"};"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "wheel region labels not forced to capitals",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const lab=(LNG==='ar'?regL(r):(SHORTRG[r]||r.toUpperCase()));",
+   "new": "const lab=(LNG==='ar'?regL(r):(SHORTRG[r]||r));"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "label leader ticks on the brand hairline",
+   "occurrences": 1,
+   "ok": true,
+   "old": "if(tier){ctx.strokeStyle=(DKM?'#22303A':'#E3EAE5');",
+   "new": "if(tier){ctx.strokeStyle=(DKM?'#2A3A6B':'#D9E3DF');"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "wheel region labels in the brand font, readable size",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ctx.font=(lab.length>9?'600 8.5px':'600 10px')+' Segoe UI, sans-serif';",
+   "new": "ctx.font=(lab.length>9?'600 10px':'600 11px')+' \"EH Sans\",\"Segoe UI\",sans-serif';"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "wheel region labels in ink-3 (AA) in both themes",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ctx.fillStyle='#8A99A3';ctx.textAlign='center';ctx.fillText(lab,0,0);",
+   "new": "ctx.fillStyle=(DKM?'#9DABC5':'#5E6B80');ctx.textAlign='center';ctx.fillText(lab,0,0);"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "EH centre disc on the panel colour",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ctx.fillStyle=(DKM?'#151C21':'#fff');ctx.fill();",
+   "new": "ctx.fillStyle=(DKM?'#15214A':'#fff');ctx.fill();"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "EH centre ring in logo green",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ctx.lineWidth=3.5;ctx.strokeStyle='#3FA34D';",
+   "new": "ctx.lineWidth=3.5;ctx.strokeStyle='#54AB5D';"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "EH centre fallback text in the brand display font",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ctx.fillStyle=(DKM?'#E6EDF1':'#1C2B33');ctx.font='800 13px Segoe UI,sans-serif';",
+   "new": "ctx.fillStyle=(DKM?'#E9EEF7':'#15224D');ctx.font='700 13px \"EH Display\",\"Segoe UI\",sans-serif';"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "EH centre caption in brand font and ink-2",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ctx.font='600 10px Segoe UI,sans-serif';ctx.fillStyle=(DKM?'#9FB3BE':'#51626D');",
+   "new": "ctx.font='600 11px \"EH Sans\",\"Segoe UI\",sans-serif';ctx.fillStyle=(DKM?'#B8C4DA':'#46546F');"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "threat ring pills: sentence case, brand status colours readable in both themes",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const PILLS=[[0.195,t('REGULATORY','تنظيمي'),'#1A5FAB'],[0.36,t('HIGH THREAT','تهديد مرتفع'),'#B23A3A'],[0.575,t('MEDIUM','متوسط'),'#9A7A1A'],[0.84,t('LOW','منخفض'),'#2E7D3C']];",
+   "new": "const PILLS=[[0.195,t('Regulatory','تنظيمي'),(DKM?'#7CC3F2':'#0072BB')],[0.36,t('High threat','تهديد مرتفع'),(DKM?'#F0907D':'#B23F2B')],[0.575,t('Medium','متوسط'),(DKM?'#F0C26B':'#8F5C0A')],[0.84,t('Low','منخفض'),(DKM?'#7CCB82':'#2E7A37')]];   // EH status set, sentence case"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "ring pills in the brand font",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ctx.font='700 10px Segoe UI,sans-serif';ctx.textAlign='center';",
+   "new": "ctx.font='600 11px \"EH Sans\",\"Segoe UI\",sans-serif';ctx.textAlign='center';"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "ring pill fill on the panel colour",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ctx.fillStyle=(DKM?'rgba(15,21,25,0.85)':'rgba(255,255,255,0.88)');ctx.fill();",
+   "new": "ctx.fillStyle=(DKM?'rgba(21,33,74,0.94)':'rgba(255,255,255,0.94)');ctx.fill();"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "zoomed company names in the brand font and ink-2",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ctx.font='600 9.5px Segoe UI,sans-serif';ctx.fillStyle=(DKM?'#C2D2DB':'#3A4A54');",
+   "new": "ctx.font='500 10.5px \"EH Sans\",\"Segoe UI\",sans-serif';ctx.fillStyle=(DKM?'#B8C4DA':'#46546F');"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "regulator ring in deep navy, visible in dark mode",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ctx.lineWidth=1.6;ctx.strokeStyle='#0E3B6F';",
+   "new": "ctx.lineWidth=1.6;ctx.strokeStyle=(document.documentElement.classList.contains('dark')?'#A9B6E8':'#1B2A6E');"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "selected-node ring in brand ink",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ctx.strokeStyle=(DKM?'#E6EDF1':'#1C2B33');ctx.beginPath();ctx.arc(x,y,r+4",
+   "new": "ctx.strokeStyle=(DKM?'#E9EEF7':'#15224D');ctx.beginPath();ctx.arc(x,y,r+4"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "wheel redrawn once the brand fonts have loaded",
+   "occurrences": 1,
+   "ok": true,
+   "old": "window.addEventListener('resize',resize);\nresize();recompute();\n",
+   "new": "window.addEventListener('resize',resize);\nresize();recompute();\nif(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){try{draw();}catch(e){}});   // EH design v2: redraw once the brand fonts are in\n"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "legend wording in sentence case (were capitals)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Rings = competitive threat (HIGH inner → LOW outer)",
+   "new": "Rings = competitive threat (High inner → Low outer)"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "guide: ring names in sentence case to match the wheel",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<b style=\"color:#1A5FAB\">REGULATORY</b>",
+   "new": "<b style=\"color:#1A5FAB\">Regulatory</b>"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "guide: ring names in sentence case to match the wheel",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<b style=\"color:#B23A3A\">HIGH THREAT</b>",
+   "new": "<b style=\"color:#B23A3A\">High threat</b>"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "guide: ring names in sentence case to match the wheel",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<b style=\"color:#9A7A1A\">MEDIUM</b>",
+   "new": "<b style=\"color:#9A7A1A\">Medium</b>"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "guide: ring names in sentence case to match the wheel",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<b style=\"color:#2E7D3C\">LOW</b>",
+   "new": "<b style=\"color:#2E7D3C\">Low</b>"
+  },
+  {
+   "file": "stake",
+   "kind": "exact",
+   "category": "design",
+   "note": "schematic map province labels in sentence case",
+   "occurrences": 1,
+   "ok": true,
+   "old": "font-weight=\"700\" fill=\"#B3A47C\" letter-spacing=\"1.5\" style=\"text-transform:uppercase;pointer-events:none\">'+p.n.toUpperCase()+'</text>",
+   "new": "font-weight=\"600\" fill=\"#9A8C66\" style=\"pointer-events:none\">'+p.n+'</text>"
+  }
+ ]
+}

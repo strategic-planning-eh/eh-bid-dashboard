@@ -42,6 +42,18 @@ def _log(alias, kind, old, new, category, note, n, ok):
     if not ok:
         FAILURES.append({'file': alias, 'note': note, 'old': old[:200]})
 
+def css_min(s):
+    """Minify the CSS inside <style> blocks of a snippet (or a bare CSS string): drop comments, collapse spaces.
+    Used by the design patches to keep page growth small (12 Oct 2026)."""
+    def _m(css):
+        css = re.sub(r'/\*.*?\*/', '', css, flags=re.S)
+        css = re.sub(r'\s+', ' ', css)
+        css = re.sub(r'\s*([{};])\s*', r'\1', css)
+        return css.replace(';}', '}').strip()
+    if '<style' in s:
+        return re.sub(r'(<style[^>]*>)(.*?)(</style>)', lambda m: m.group(1) + _m(m.group(2)) + m.group(3), s, flags=re.S)
+    return _m(s)
+
 def rep(alias, old, new, category, note, count=1):
     s = FILES[alias]; n = s.count(old); new = nfkc(new)   # inserted text is normalised; the rest of the file is not
     ok = (n == count)

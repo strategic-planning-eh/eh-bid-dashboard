@@ -1,0 +1,27 @@
+{
+ "generated": "2026-10-12 10:35",
+ "title": "Design system v2 — Regulatory news",
+ "failures": [],
+ "changes": [
+  {
+   "file": "gov",
+   "kind": "exact",
+   "category": "design",
+   "note": "page skin after the shared design system",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<link rel=\"stylesheet\" href=\"eh-shared.css\">",
+   "new": "<link rel=\"stylesheet\" href=\"eh-shared.css\">\n<style id=\"eh-skin\">html body,html body.dark{--bg:var(--eh-mist);--card:var(--eh-paper);--ink:var(--eh-ink);--muted:var(--eh-ink-2);--line:var(--eh-line);--chip:var(--eh-tint);--gov:var(--eh-sea);--blue:var(--eh-sea);--green:var(--eh-leaf);--amber:#C98A1B;--red:var(--eh-bad);background:var(--eh-mist);color:var(--eh-ink);font-size:14.5px;line-height:var("
+  },
+  {
+   "file": "gov",
+   "kind": "exact",
+   "category": "design",
+   "note": "standalone masthead contour lines",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<header>\n <div><h1 id=\"title\"></h1>",
+   "new": "<header data-eh-contour=\"6\">\n <div><h1 id=\"title\"></h1>"
+  }
+ ]
+}

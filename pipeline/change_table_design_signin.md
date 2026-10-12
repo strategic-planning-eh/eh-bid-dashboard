@@ -1,0 +1,24 @@
+# Design system v2 — sign-in card
+
+Generated 2026-10-12 10:49 · 1 edits · 0 failures
+
+| # | File | Kind | Category | Note | Occurrences | OK |
+|---|---|---|---|---|---|---|
+| 1 | enc | exact | design | sign-in card in the EH design system | 1 | ✓ |
+
+## Edit detail
+
+### 1. enc — sign-in card in the EH design system
+
+**Old**
+```
+:root{--bg:#F4F7F5;--card:#fff;--ink:#16333F;--muted:#5F7078;--line:#E3EAE5;--green:#1F7A4C;--blue:#1A5FAB;--red:#C0504D}
+@media(prefers-color-scheme:dark){:root{--bg:#0F1519;--card:#151C21;--ink:#E6EDF1;--muted:#9FB3BE;--line:#2C3A43}}
+html,body{margin:0;height:100%}body{font-family:"Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);display:flex;align-items:center;justify-co
+```
+**New**
+```
+/* EH design system v2 sign-in (patch_design_signin.py) */
+@font-face{font-family:"EH Display";src:url("vendor/fonts/montserrat-latin-var.woff2") format("woff2");font-weight:100 900;font-display:swap;unicode-range:U+0000-00FF,U+2000-206F}
+@font-face{font-family:"EH Display";src:url("vendor/fonts/alexandria-arabic-var.woff2") format("woff2");font-weight:100 900;font-display:swap;unicode-range:U+060
+```

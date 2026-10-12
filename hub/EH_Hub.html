@@ -213,12 +213,97 @@ body.dark .wnitem{color:#CFE3F2}body.dark .wnweek{background:var(--d-soft);borde
 @media(prefers-reduced-motion:no-preference){#wnpanel.on{animation:wnin .18s ease-out}@keyframes wnin{from{transform:translateX(var(--wnx,30px));opacity:.6}to{transform:none;opacity:1}}}
 html[dir=rtl] #wnpanel{--wnx:-30px}@media(max-width:640px){#wnpanel{width:100%}}
 </style>
+<link rel="stylesheet" href="eh-shared.css">
+<style id="eh-skin">
+/* EH design system v2 — hub shell skin (patch_design_hub.py). Tokens come from eh-shared.css. */
+body,body.dark{background:var(--eh-mist);color:var(--eh-ink)}
+header,body.dark header{background:var(--eh-deep);border-bottom:0;padding:12px 22px 0;color:#fff;position:relative;isolation:isolate;align-items:center}
+@media(min-width:821px) and (min-height:521px){
+  header{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto auto auto auto auto;column-gap:10px;row-gap:4px;align-items:center}
+  header>img.logo{grid-row:1;grid-column:1}
+  .brand{grid-row:1;grid-column:2;min-width:0}
+  .fresh{grid-row:1;grid-column:3}
+  #hsearch{grid-row:1;grid-column:4}
+  #wnbtn{grid-row:1;grid-column:5}
+  #themebtn{grid-row:1;grid-column:6}
+  #langbtn{grid-row:1;grid-column:7}
+  header>button[onclick*="hubFS"]{grid-row:1;grid-column:8}
+  .tabs{grid-row:2;grid-column:1/-1;margin-inline-start:-6px;justify-content:flex-start}
+  .brand .desc{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+}
+body.dark header{background:#0A1230}
+header>.eh-contour{color:#6FB6EA;z-index:-1;opacity:.55}
+header::after{content:"";position:absolute;inset-inline:0;bottom:0;height:3px;background:linear-gradient(90deg,var(--eh-leaf),var(--eh-sea) 70%,var(--eh-cyan));z-index:1;pointer-events:none}
+[dir=rtl] header::after{background:linear-gradient(270deg,var(--eh-leaf),var(--eh-sea) 70%,var(--eh-cyan))}
+header>img.logo{height:44px;background:#fff;border-radius:11px;padding:4px 6px;margin-block:2px 12px;box-shadow:0 2px 10px -4px rgba(0,0,0,.4)}
+.brand{color:#fff;margin-bottom:10px;line-height:1.3}
+@media(min-width:641px){.brand small{display:inline !important;margin-inline-end:10px}}
+.brand h1,body.dark .brand h1{font:300 21px/1.2 var(--eh-display);color:#fff;letter-spacing:-.005em;display:block}
+.brand h1 b{font-weight:700}
+.brand small,body.dark .brand small{color:rgba(255,255,255,.72);font-weight:500;font-size:11.5px;letter-spacing:0}
+.brand .desc,body.dark .brand .desc{color:rgba(255,255,255,.7)}
+.conf,body.dark .conf{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#FFD9CF;text-transform:none;letter-spacing:0;font-weight:600;font-size:11px;border-radius:999px;padding:2px 10px}
+.fresh,body.dark .fresh{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.8);margin-bottom:10px}
+.fresh b,body.dark .fresh b{color:#A8E3AD}
+header #langbtn,header #wnbtn,header #themebtn,header .hbtn,header button:not(.tab),
+body.dark header #langbtn,body.dark header #wnbtn,body.dark header #themebtn,body.dark header button:not(.tab){background:transparent !important;border:1px solid rgba(255,255,255,.28) !important;color:#fff !important;border-radius:var(--eh-r-ctl) !important;margin-bottom:10px}
+header button:not(.tab):hover,body.dark header button:not(.tab):hover{background:rgba(255,255,255,.1) !important}
+header #q,body.dark header #q{background:rgba(255,255,255,.1) !important;border:1px solid rgba(255,255,255,.26) !important;color:#fff !important;border-radius:var(--eh-r-ctl) !important;margin-bottom:10px}
+header #q::placeholder{color:rgba(255,255,255,.66)}
+#qdrop{background:var(--eh-paper) !important;border-color:var(--eh-line) !important;color:var(--eh-ink)}
+#qdrop .qh{color:var(--eh-ink);border-bottom-color:var(--eh-line) !important}
+#qdrop .qh:hover,#qdrop .qh:focus{background:var(--eh-tint) !important}
+.tabs{align-self:flex-end;gap:2px}
+.tab,body.dark .tab{color:rgba(255,255,255,.78);border:0;border-radius:11px 11px 0 0;box-shadow:none;font:600 13.5px var(--eh-font);padding:11px 18px 12px}
+.tab:hover:not(.on),body.dark .tab:hover:not(.on){background:rgba(255,255,255,.09);color:#fff}
+.tab.on,body.dark .tab.on{background:var(--eh-mist);color:var(--eh-ink);box-shadow:none}
+body.dark header .tab{background:transparent !important;border:0 !important;color:rgba(255,255,255,.78) !important}
+body.dark header .tab:hover:not(.on){background:rgba(255,255,255,.09) !important;color:#fff !important}
+body.dark header .tab.on{background:var(--eh-mist) !important;color:var(--eh-ink) !important}
+.tab.on .ic{color:var(--eh-leaf-ink)}
+#kpis{background:var(--eh-paper);border-color:var(--eh-line);color:var(--eh-ink-2)}
+#kpis b{color:var(--eh-ink)}
+iframe,body.dark iframe{background:var(--eh-mist)}
+.skel,body.dark .skel{background:var(--eh-mist)}
+.skel .in{color:var(--eh-ink-2)}
+.spin{border-color:var(--eh-line);border-top-color:var(--eh-sea)}
+.foot,body.dark .foot{background:var(--eh-paper);border-color:var(--eh-line);color:var(--eh-ink-3)}
+#newsbar,body.dark #newsbar{background:var(--eh-mist) !important;border-bottom:1px solid var(--eh-line) !important;padding:10px 16px !important;gap:6px}
+.nsub,body.dark .nsub{background:transparent !important;border:1px solid var(--eh-line) !important;color:var(--eh-ink-2) !important;border-radius:var(--eh-r-chip);font:600 12.5px var(--eh-font);padding:7px 14px}
+.nsub:hover:not(.on){background:var(--eh-tint) !important;color:var(--eh-ink) !important}
+.nsub.on,body.dark .nsub.on{background:var(--eh-sea) !important;border-color:var(--eh-sea) !important;color:#fff !important}
+.nsub .newb,.wnbadge{background:var(--eh-leaf-ink)}
+nav.mtabs,body.dark .mtabs{background:var(--eh-paper);border-top-color:var(--eh-line)}
+.mtab,body.dark .mtab{color:var(--eh-ink-2)}
+.mtab.on,body.dark .mtab.on{color:var(--eh-sea);box-shadow:inset 0 3px 0 var(--eh-sea)}
+#wnpanel,body.dark #wnpanel{background:var(--eh-paper);color:var(--eh-ink)}
+.wnhd,.wnweeks,.wntabs,body.dark .wnhd,body.dark .wnweeks,body.dark .wntabs{border-color:var(--eh-line)}
+.wnhd h2,body.dark .wnhd h2{font:600 19px var(--eh-display);color:var(--eh-ink)}
+.wnx,body.dark .wnx{background:transparent !important;border-color:var(--eh-line) !important;color:var(--eh-ink-2) !important}
+.wnfresh,.wnh,.wntot,.wnempty{color:var(--eh-ink-2)}.wnfresh b{color:var(--eh-leaf-ink)}.wntot b{color:var(--eh-ink)}
+.wnh{text-transform:none;letter-spacing:0;font-size:12.5px}
+.wnitem,body.dark .wnitem{color:var(--eh-ink);border-inline-start-color:var(--eh-line);font-size:13.5px;line-height:1.6}
+.wnitem.major{border-inline-start-color:var(--eh-sea)}.wnitem.minor{border-inline-start-color:var(--eh-leaf)}
+.wnitem .app{color:var(--eh-sea-ink);text-transform:none;letter-spacing:0;font-size:11.5px}
+.wnitem a,.wnitem button.lnk{color:var(--eh-sea)}
+.wnweek,body.dark .wnweek{background:transparent;border-color:var(--eh-line);color:var(--eh-ink-2)}
+.wnweek.on,body.dark .wnweek.on{background:var(--eh-sea);border-color:var(--eh-sea);color:#fff}
+.wnweek .n{background:var(--eh-good-bg);color:var(--eh-good)}
+.wntab{color:var(--eh-ink-2)}.wntab[aria-selected="true"]{color:var(--eh-ink);box-shadow:inset 0 -3px 0 var(--eh-sea)}
+.wnmonth{color:var(--eh-ink-2);text-transform:none;letter-spacing:0}
+#wnov{background:rgba(13,23,54,.5)}
+@media(max-width:640px){nav.mtabs{grid-template-columns:repeat(5,1fr)}.mtab{font-size:11.5px}.brand h1,body.dark .brand h1{font-size:15px;display:block}header{padding:8px 10px}header>img.logo{height:30px;margin:0;padding:3px 4px;border-radius:8px}.brand{margin:0}.brand h1{font-size:15px}header button,header #q{margin-bottom:0}.tab{border-radius:9px}}
+@media (prefers-reduced-motion:no-preference){
+  html:not([data-eh-motion="off"]) main>iframe.on,html:not([data-eh-motion="off"]) #newswrap iframe.vis{animation:ehViewIn var(--eh-dur-2) var(--eh-ease) both}
+  html:not([data-eh-motion="off"]) .tab{transition:background-color var(--eh-dur-1) var(--eh-ease),color var(--eh-dur-1) var(--eh-ease)}
+}
+</style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content · تجاوز إلى المحتوى</a>
-<header>
+<header data-eh-contour="8">
   <img class="logo" src="data:image/png;base64,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" alt="Environmental Horizons logo">
-  <div class="brand"><h1>Strategic Intelligence Hub</h1><small>Environmental Horizons — شركة آفاق البيئة</small><span class="conf" role="note" title="Restricted — access authorised by EH management only">
+  <div class="brand"><h1>Strategic Intelligence <b>Hub</b></h1><small>Environmental Horizons — شركة آفاق البيئة</small><span class="conf" role="note" title="Restricted — access authorised by EH management only">
 <svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;margin-inline-end:4px;vertical-align:-1px"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span dir="ltr">Protected</span><span class="dsep"> · </span><span dir="rtl" lang="ar">محمي</span><a href="#" class="lockbtn" onclick="ehLock();return false;" title="Sign out on this device — the passphrase will be asked again · تسجيل الخروج من هذا الجهاز"><span dir="ltr">Lock this device</span><span class="dsep"> · </span><span dir="rtl" lang="ar">قفل هذا الجهاز</span></a></span><span class="desc"><span dir="ltr">Five live views of EH's market — competitors, bids, government tenders, clients &amp; Saudi news</span><span class="dsep"> · </span><span dir="rtl" lang="ar">خمس لوحات حيّة: المنافسون والمناقصات والمنافسات الحكومية والعملاء والأخبار</span></span></div>
   <div class="fresh" id="fresh" hidden><span class="tl" data-en="Data refreshed" data-ar="آخر تحديث للبيانات">Data refreshed</span> <b dir="ltr" id="freshv"></b></div>
   <div class="hsearch" id="hsearch" style="display:none;position:relative">
@@ -552,5 +637,6 @@ function relabel(){
   if(typeof WN!=='undefined'&&WN){ wnBadge(); if($('wnpanel').classList.contains('on')) wnRender(); }
 }
 </script>
+<script src="eh-shared.js" defer></script>
 </body>
 </html>

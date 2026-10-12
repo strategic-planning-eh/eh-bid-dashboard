@@ -1,19 +1,106 @@
-/* eh-shared.css — EH Hub shared visual layer · v1.1.0 · 2026-09-08
-   Loaded by every page in hub/. One source of truth for: font stack, embedded-mode header collapse,
-   readable minimum text size, shared patterns (KPI card, chip, source popover, not-published state),
-   and the moderate motion layer. Motion is wrapped in prefers-reduced-motion and can be disabled
-   globally by setting html[data-eh-motion="off"]. */
+/* eh-shared.css — EH Hub design system · v2.0.0 · 2026-10-12
+   Loaded by every page in hub/ (and the generated bid, Environment Fund and Government Tenders pages).
+   One source of truth for: brand fonts, colour and type tokens, Arabic tuning, shared components, the motion
+   system, and embedded-mode header collapse. Page-specific styling lives in each page's <style id="eh-skin">.
 
-/* ---------- 1. Typography: one stack for all nine pages (D-B5). Swap --eh-font when EH's brand
-   typeface is supplied; nothing else needs to change. ---------- */
+   Concept — "land and sea". EH's own profile splits its work between land (waste, industry: leaf green) and sea
+   (marine and coastal survey: EH blue and deep navy), and draws both with sweeping curves and the contour lines of
+   its bathymetric surveys. The hub uses those three things only: the two logo colours, the deep navy, and the
+   contour line (in the hub masthead, drawn once on load). Everything else stays quiet so the numbers lead.
+
+   Colour sources: leaf #54AB5D and sea #0072BB are the medians of the logo's green and blue pixels (logo.jpg);
+   deep navy and cyan come from the marine spreads of the EH company profile (pp. 13–24). Text colours are darker
+   variants chosen to pass WCAG AA on their backgrounds (checked by pipeline/check_contrast.py).
+   Fonts (all SIL Open Font License, self-hosted in vendor/fonts/): Montserrat (EH profile headings) and Encode Sans
+   (EH profile body, variable width) for Latin; Alexandria (headings) and IBM Plex Sans Arabic (body) for Arabic.
+   Each pair shares one family name split by unicode-range, so mixed Arabic/English text needs no extra CSS. */
+
+/* ---------- 0. Brand fonts ---------- */
+@font-face{font-family:"EH Display";src:url("vendor/fonts/montserrat-latin-var.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap;
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-200B,U+2010-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"EH Display";src:url("vendor/fonts/alexandria-arabic-var.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap;size-adjust:96%;
+  unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200F,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
+@font-face{font-family:"EH Sans";src:url("vendor/fonts/encode-sans-latin-var.woff2") format("woff2");font-weight:100 900;font-stretch:75% 125%;font-style:normal;font-display:swap;
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-200B,U+2010-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"EH Sans";src:url("vendor/fonts/plex-sans-arabic-400.woff2") format("woff2");font-weight:100 449;font-display:swap;size-adjust:106%;unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200F,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
+@font-face{font-family:"EH Sans";src:url("vendor/fonts/plex-sans-arabic-500.woff2") format("woff2");font-weight:450 549;font-display:swap;size-adjust:106%;unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200F,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
+@font-face{font-family:"EH Sans";src:url("vendor/fonts/plex-sans-arabic-600.woff2") format("woff2");font-weight:550 649;font-display:swap;size-adjust:106%;unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200F,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
+@font-face{font-family:"EH Sans";src:url("vendor/fonts/plex-sans-arabic-700.woff2") format("woff2");font-weight:650 900;font-display:swap;size-adjust:106%;unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200F,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
+
+/* ---------- 1. Tokens ---------- */
 :root{
-  --eh-font:"Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Roboto,"Noto Sans Arabic",Tahoma,Arial,sans-serif;
-  --eh-green:#2BAE68; --eh-blue:#027DC3; --eh-amber:#E8862E; --eh-red:#C0392B; --eh-grey:#5F7078;
-  --eh-motion-fast:180ms; --eh-motion:420ms; --eh-motion-slow:600ms;
+  /* brand */
+  --eh-leaf:#54AB5D;      /* logo green — fills, marks, never small text */
+  --eh-leaf-ink:#2E7A37;  /* green for text and thin lines (AA on paper and mist) */
+  --eh-sea:#0072BB;       /* logo blue — primary action, links, focus */
+  --eh-sea-ink:#00609E;   /* blue for small text on tinted backgrounds */
+  --eh-deep:#1B2A6E;      /* deep navy (profile marine spreads) — masthead, headings */
+  --eh-abyss:#0D1736;     /* darkest navy — dark-mode page */
+  --eh-cyan:#00A0E0;      /* profile accent — highlights on navy only */
+  --eh-lime:#A6CE39;      /* cover leaf pattern — decoration only */
+  /* surfaces and text */
+  --eh-mist:#F2F6F4;      /* page */
+  --eh-paper:#FFFFFF;     /* panels */
+  --eh-tint:#E9F1EE;      /* quiet fills: table head, chips, hover */
+  --eh-line:#D9E3DF;      /* hairlines */
+  --eh-ink:#15224D;       /* text — deep navy, not black */
+  --eh-ink-2:#46546F;     /* secondary text */
+  --eh-ink-3:#5E6B80;     /* footnotes (AA at 12px on paper) */
+  /* meaning (always paired with a word or shape, never colour alone) */
+  --eh-good:#2E7A37; --eh-good-bg:#E4F2E5;
+  --eh-bad:#B23F2B;  --eh-bad-bg:#F9E6E1;
+  --eh-warn:#8F5C0A; --eh-warn-bg:#FBEFD6;
+  --eh-info:#00609E; --eh-info-bg:#E2EFF9;
+  --eh-muted:#5E6B80; --eh-muted-bg:#ECEFF3;
+  /* chart series: land → sea, then supporting hues; checked for red–green colour blindness */
+  --eh-c1:#0072BB; --eh-c2:#54AB5D; --eh-c3:#1B2A6E; --eh-c4:#00A0E0; --eh-c5:#C98A1B; --eh-c6:#8E6BB8; --eh-c7:#A6CE39; --eh-c8:#B23F2B;
+  /* type */
+  --eh-display:"EH Display","Montserrat","Segoe UI",Tahoma,Arial,sans-serif;
+  --eh-font:"EH Sans","Encode Sans","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Noto Sans Arabic",Tahoma,Arial,sans-serif;
+  --eh-fs-xs:12px; --eh-fs-s:13px; --eh-fs-m:14.5px; --eh-fs-l:17px; --eh-fs-h3:16px; --eh-fs-h2:21px; --eh-fs-h1:30px; --eh-fs-kpi:28px;
+  --eh-lh:1.55; --eh-lh-ar:1.75;
+  /* shape */
+  --eh-r-panel:14px; --eh-r-ctl:9px; --eh-r-chip:999px; --eh-gap:16px;
+  --eh-shadow:0 1px 0 rgba(21,34,77,.04),0 6px 18px -12px rgba(21,34,77,.18);
+  /* motion */
+  --eh-dur-1:160ms;  /* answer to a click or hover */
+  --eh-dur-2:340ms;  /* reveal, tab and language change */
+  --eh-dur-3:720ms;  /* the one orchestrated moment: masthead contours, count-up */
+  --eh-ease:cubic-bezier(.2,.7,.2,1); --eh-ease-io:cubic-bezier(.65,0,.35,1);
+  --eh-rise:8px; --eh-stagger:45ms; --eh-dir:1;
+  /* legacy names kept so older page CSS still resolves */
+  --eh-green:var(--eh-leaf); --eh-blue:var(--eh-sea); --eh-amber:#C98A1B; --eh-red:var(--eh-bad); --eh-grey:var(--eh-ink-3);
+  --eh-motion-fast:var(--eh-dur-1); --eh-motion:var(--eh-dur-2); --eh-motion-slow:var(--eh-dur-3);
 }
+[dir=rtl]{--eh-dir:-1}
+html.dark,body.dark,[data-theme=dark]{
+  --eh-mist:#0D1736; --eh-paper:#15214A; --eh-tint:#1C2A58; --eh-line:#2A3A6B;
+  --eh-ink:#E9EEF7; --eh-ink-2:#B8C4DA; --eh-ink-3:#9DABC5;
+  --eh-leaf-ink:#7CCB82; --eh-sea:#4EB0EE; --eh-sea-ink:#7CC3F2; --eh-deep:#0A1230;
+  --eh-good:#7CCB82; --eh-good-bg:rgba(84,171,93,.16); --eh-bad:#F0907D; --eh-bad-bg:rgba(178,63,43,.22);
+  --eh-warn:#F0C26B; --eh-warn-bg:rgba(201,138,27,.2); --eh-info:#7CC3F2; --eh-info-bg:rgba(0,114,187,.22); --eh-muted:#AEB9CE; --eh-muted-bg:rgba(157,171,197,.14);
+  --eh-c1:#4EB0EE; --eh-c2:#7CCB82; --eh-c3:#A9B6E8; --eh-c4:#38C6F4; --eh-c5:#E8B04A; --eh-c6:#B79BDB; --eh-c7:#C2E06A; --eh-c8:#F0907D;
+  --eh-shadow:0 1px 0 rgba(0,0,0,.2),0 10px 24px -14px rgba(0,0,0,.6);
+}
+
+/* ---------- 1b. Typography: one system for every page ---------- */
 html,body,button,input,select,textarea,h1,h2,h3,h4,.tab-btn,nav a,.pill,.chip,.kc,.kpi,.metric{font-family:var(--eh-font) !important}
+h1,h2,.sech,.eh-display{font-family:var(--eh-display) !important;letter-spacing:-.005em}
+h3,h4{font-family:var(--eh-display) !important;letter-spacing:0}
+body{font-feature-settings:"kern" 1;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+p,.note,.secsub,.eh-prose{font-stretch:108%}
+td,th,.kc .v,.kpi .v,.kpi .val,.metric .mv,.num,.eh-num,[class*=kpi] [class*=val],[class*=kpi] [class*=num]{font-variant-numeric:tabular-nums lining-nums}
+.kc .v,.kpi .v,.kpi .val,.metric .mv,.eh-kpi-v{font-family:var(--eh-display) !important;font-weight:600 !important;letter-spacing:-.01em}
+/* Arabic: more air, no tracking, no capitals; weights read as heavy as the English */
+html[lang=ar] body,html[dir=rtl] body,body.ar,body.ar-mode,[dir=rtl] .eh-ar{line-height:var(--eh-lh-ar)}
+html[dir=rtl] *,body.ar *,body.ar-mode *,[dir=rtl] *{letter-spacing:0 !important;text-transform:none !important}
+html[dir=rtl] h1,html[dir=rtl] h2,html[dir=rtl] h3,body.ar h1,body.ar h2,body.ar h3{line-height:1.4}
+/* numbers, money and references stay left-to-right inside Arabic text */
+.eh-ltr,bdi.eh-ltr{direction:ltr;unicode-bidi:isolate}
 /* readable floor for body copy on desktop: nothing that carries meaning below 12px */
 html.eh-floor .sub,html.eh-floor .tiny,html.eh-floor .src,html.eh-floor .muted,html.eh-floor small,html.eh-floor .l,html.eh-floor .ml,html.eh-floor .d,html.eh-floor .note,html.eh-floor .cap,html.eh-floor .foot,html.eh-floor footer,html.eh-floor .legend,html.eh-floor .lg,html.eh-floor td,html.eh-floor th,html.eh-floor li{font-size:max(12px,1em)}
+::selection{background:rgba(0,114,187,.22)}
+:focus-visible{outline:2px solid var(--eh-sea) !important;outline-offset:2px;border-radius:4px}
 
 /* ---------- 2. Embedded mode (D-B1): when a page is inside the hub, its own header, logo and
    language/theme controls disappear; in-page navigation and toolbars stay. Selectors are per page. ---------- */
@@ -42,43 +129,94 @@ html.eh-embedded.eh-page-fisc .topnav .brand,html.eh-embedded.eh-page-fisc #ehLa
 
 /* ---------- 2b. Arabic dashboards (N1): explainer blocks moved under their charts; the rest of the Arabic report follows the charts ---------- */
 .eh-ar-cap{display:none;margin-top:12px;padding-top:10px;border-top:1px dashed rgba(95,112,120,.35);font-size:13px;line-height:1.65}
-body.ar-mode .eh-ar-cap{display:block}.eh-ar-title{font-weight:800;margin-bottom:4px;color:var(--eh-blue)}
+body.ar-mode .eh-ar-cap{display:block}.eh-ar-title{font-weight:700;margin-bottom:4px;color:var(--eh-sea)}
 body.ar-mode #ehArView.eh-ar-rest{display:block}body:not(.ar-mode) #ehArView.eh-ar-rest{display:none !important}
 body.ar-mode .kpi .kdelta,body.ar-mode .kpi .ksrc,body.ar-mode .kpi .k-note{direction:ltr;text-align:start;unicode-bidi:plaintext}
 
 /* ---------- 3. Shared patterns ---------- */
 .eh-chip{display:inline-block;font-size:11.5px;font-weight:600;border-radius:12px;padding:2px 9px;white-space:nowrap;border:1px solid transparent;line-height:1.5}
-.eh-chip.grey{background:rgba(95,112,120,.12);color:#5F7078}.eh-chip.blue{background:rgba(2,125,195,.12);color:#027DC3}.eh-chip.green{background:rgba(43,174,104,.14);color:#1F8A4C}.eh-chip.red{background:rgba(192,57,43,.12);color:#C0392B}.eh-chip.amber{background:rgba(232,134,46,.16);color:#9A5A17}
-body.dark .eh-chip.green,[data-theme=dark] .eh-chip.green{color:#7BD9A3}body.dark .eh-chip.red,[data-theme=dark] .eh-chip.red{color:#E0655A}body.dark .eh-chip.amber,[data-theme=dark] .eh-chip.amber{color:#E0B865}
-.eh-none{display:inline-block;border:1.5px dashed #8A9AA3;color:#5F7078;border-radius:6px;padding:2px 8px;font-weight:600;font-size:12.5px}
-.eh-caption{font-size:12.5px;color:#37474F;margin:6px 0 2px;line-height:1.45}body.dark .eh-caption,[data-theme=dark] .eh-caption{color:#C8D3DA}
-.eh-note{border-inline-start:3px solid var(--eh-blue);background:rgba(2,125,195,.07);padding:8px 12px;border-radius:0 8px 8px 0;font-size:12.5px;margin:8px 0}
-[dir=rtl] .eh-note{border-radius:8px 0 0 8px}
+.eh-chip.grey{background:var(--eh-muted-bg);color:var(--eh-muted)}.eh-chip.blue{background:var(--eh-info-bg);color:var(--eh-info)}.eh-chip.green{background:var(--eh-good-bg);color:var(--eh-good)}.eh-chip.red{background:var(--eh-bad-bg);color:var(--eh-bad)}.eh-chip.amber{background:var(--eh-warn-bg);color:var(--eh-warn)}
+
+.eh-none{display:inline-block;border:1.5px dashed var(--eh-ink-3);color:var(--eh-ink-2);border-radius:6px;padding:2px 8px;font-weight:600;font-size:12.5px}
+.eh-caption{font-size:13px;color:var(--eh-ink-2);margin:6px 0 2px;line-height:1.5}
+.eh-note{border-inline-start:3px solid var(--eh-sea);background:var(--eh-info-bg);padding:9px 13px;border-start-end-radius:8px;border-end-end-radius:8px;font-size:13px;margin:8px 0}
 .eh-hero .v,.kc.eh-hero .v{font-size:34px !important}
 .kc.eh-hero,.eh-hero{grid-column:span 2;border-width:2px !important}
 .eh-cite{border-bottom:1px dotted var(--eh-blue);cursor:pointer}
 
-/* ---------- 4. Moderate motion layer (D-B7: always on, OS reduced-motion turns it off) ---------- */
+
+/* ---------- 3b. Brand components (opt-in classes; pages map their own markup onto these in their skin) ---------- */
+.eh-panel{background:var(--eh-paper);border:1px solid var(--eh-line);border-radius:var(--eh-r-panel);box-shadow:var(--eh-shadow)}
+.eh-label{font-size:var(--eh-fs-s);color:var(--eh-ink-2);font-weight:500}
+.eh-btn{font:600 13px/1 var(--eh-font);color:var(--eh-sea);background:transparent;border:1px solid currentColor;border-radius:var(--eh-r-ctl);padding:8px 13px;cursor:pointer;transition:background-color var(--eh-dur-1) var(--eh-ease),color var(--eh-dur-1) var(--eh-ease)}
+.eh-btn:hover{background:var(--eh-info-bg)}
+.eh-btn.solid{background:var(--eh-sea);border-color:var(--eh-sea);color:#fff}
+/* masthead contour lines: one SVG of thin bathymetric curves; drawn once on load by eh-shared.js */
+.eh-contour{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:hidden}
+.eh-contour path{fill:none;stroke:currentColor;stroke-width:1;vector-effect:non-scaling-stroke}
+[dir=rtl] .eh-contour{transform:scaleX(-1)}
+/* status words — colour plus text, never colour alone */
+.eh-st{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;border-radius:var(--eh-r-chip);padding:2px 9px;white-space:nowrap}
+.eh-st::before{content:"";width:7px;height:7px;flex:none}
+.eh-st.won{color:var(--eh-good);background:var(--eh-good-bg)}.eh-st.won::before{background:currentColor;border-radius:50%}
+.eh-st.lost{color:var(--eh-bad);background:var(--eh-bad-bg)}.eh-st.lost::before{background:currentColor;transform:rotate(45deg)}
+.eh-st.wait{color:var(--eh-info);background:var(--eh-info-bg)}.eh-st.wait::before{border:1.5px solid currentColor;border-radius:50%}
+.eh-st.off{color:var(--eh-muted);background:var(--eh-muted-bg)}.eh-st.off::before{height:2px;background:currentColor}
+/* scrollbars that belong to the page, not the OS */
+*{scrollbar-width:thin;scrollbar-color:rgba(70,84,111,.35) transparent}
+
+/* ---------- 4. Motion system (every layer; all of it off under reduced motion or html[data-eh-motion="off"]) ----------
+   Rules: entrances play once per element; data changes morph from the old value to the new one and never replay
+   from zero; nothing moves on its own after load; only transform and opacity are animated; everything that slides
+   follows reading direction (--eh-dir is -1 in Arabic, so a slide from the start edge mirrors automatically). */
 @media (prefers-reduced-motion:no-preference){
-  html:not([data-eh-motion="off"]) .eh-fade-in{animation:ehFadeUp var(--eh-motion) ease-out both}
-  html:not([data-eh-motion="off"]) .eh-stagger>*{animation:ehFadeUp var(--eh-motion) ease-out both}
-  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(1){animation-delay:0ms}
-  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(2){animation-delay:40ms}
-  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(3){animation-delay:80ms}
-  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(4){animation-delay:120ms}
-  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(5){animation-delay:160ms}
-  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(6){animation-delay:200ms}
-  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(7){animation-delay:240ms}
-  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(8){animation-delay:280ms}
-  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(n+9){animation-delay:320ms}
-  html:not([data-eh-motion="off"]) .eh-pulse{animation:ehPulse var(--eh-motion-slow) ease-out 1}
-  html:not([data-eh-motion="off"]) .eh-xfade{transition:opacity var(--eh-motion-fast) ease-out}
- html:not([data-eh-motion="off"]) .eh-expand{animation:ehExpand var(--eh-motion) ease-out both;overflow:hidden}
-  html:not([data-eh-motion="off"]) .eh-grow{animation:ehGrow 480ms cubic-bezier(.2,.7,.2,1) both;transform-origin:0 50%}
-  [dir=rtl] html:not([data-eh-motion="off"]) .eh-grow,html[dir=rtl]:not([data-eh-motion="off"]) .eh-grow{transform-origin:100% 50%}
+  /* section and card reveal as they enter the viewport (eh-shared.js adds .eh-rv, then .eh-in) */
+  html:not([data-eh-motion="off"]) .eh-rv{opacity:0;transform:translate3d(0,var(--eh-rise),0)}
+  html:not([data-eh-motion="off"]) .eh-rv.eh-in{opacity:1;transform:none;transition:opacity var(--eh-dur-2) var(--eh-ease),transform var(--eh-dur-2) var(--eh-ease);transition-delay:var(--eh-d,0ms)}
+  /* table rows: first load only, capped at the first rows (eh-shared.js sets --eh-d) */
+  html:not([data-eh-motion="off"]) .eh-row-in{animation:ehRowIn var(--eh-dur-2) var(--eh-ease) both;animation-delay:var(--eh-d,0ms)}
+  /* tab / view change: the incoming panel slides in from the reading-start edge */
+  html:not([data-eh-motion="off"]) .eh-view-in{animation:ehViewIn var(--eh-dur-2) var(--eh-ease) both}
+  /* language change: content cross-fades and settles from the new reading direction */
+  html:not([data-eh-motion="off"]) .eh-lang-in{animation:ehLangIn var(--eh-dur-2) var(--eh-ease) both}
+  /* theme change: colours ease instead of flashing */
+  html:not([data-eh-motion="off"]).eh-theming *,html:not([data-eh-motion="off"]).eh-theming *::before{transition:background-color var(--eh-dur-2) ease,border-color var(--eh-dur-2) ease,color var(--eh-dur-2) ease,fill var(--eh-dur-2) ease !important}
+  /* legacy classes from v1 */
+  html:not([data-eh-motion="off"]) .eh-fade-in{animation:ehFadeUp var(--eh-dur-2) var(--eh-ease) both}
+  html:not([data-eh-motion="off"]) .eh-stagger>*{animation:ehFadeUp var(--eh-dur-2) var(--eh-ease) both}
+  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(2){animation-delay:45ms}
+  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(3){animation-delay:90ms}
+  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(4){animation-delay:135ms}
+  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(5){animation-delay:180ms}
+  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(6){animation-delay:225ms}
+  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(7){animation-delay:270ms}
+  html:not([data-eh-motion="off"]) .eh-stagger>*:nth-child(n+8){animation-delay:315ms}
+  html:not([data-eh-motion="off"]) .eh-pulse{animation:ehPulse var(--eh-dur-3) ease-out 1}
+  html:not([data-eh-motion="off"]) .eh-xfade{transition:opacity var(--eh-dur-1) ease-out}
+  html:not([data-eh-motion="off"]) .eh-expand{animation:ehExpand var(--eh-dur-2) var(--eh-ease) both;overflow:hidden}
+  html:not([data-eh-motion="off"]) .eh-grow{animation:ehGrow 520ms var(--eh-ease) both;transform-origin:0 50%}
+  html[dir=rtl]:not([data-eh-motion="off"]) .eh-grow,[dir=rtl] .eh-grow{transform-origin:100% 50%}
+  /* SVG chart marks drawn by charts.js: bars rise from their baseline once */
+  html:not([data-eh-motion="off"]) .eh-mark-in{animation:ehMarkIn 560ms var(--eh-ease) both;transform-box:fill-box;transform-origin:50% 100%;animation-delay:var(--eh-d,0ms)}
+  html:not([data-eh-motion="off"]) .eh-mark-in.h{transform-origin:0 50%;animation-name:ehMarkInH}
+  html[dir=rtl]:not([data-eh-motion="off"]) .eh-mark-in.h{transform-origin:100% 50%}
+  /* masthead contour lines draw in (stroke dash set by eh-shared.js) */
+  html:not([data-eh-motion="off"]) .eh-contour.eh-draw path{animation:ehDraw var(--eh-dur-3) var(--eh-ease-io) both;animation-delay:var(--eh-d,0ms)}
+  /* interactive feedback only: buttons and rows that do something answer the pointer */
+  html:not([data-eh-motion="off"]) button,html:not([data-eh-motion="off"]) select{transition:background-color var(--eh-dur-1) var(--eh-ease),border-color var(--eh-dur-1) var(--eh-ease),color var(--eh-dur-1) var(--eh-ease),box-shadow var(--eh-dur-1) var(--eh-ease)}
 }
+@keyframes ehRowIn{from{opacity:0;transform:translate3d(calc(var(--eh-dir) * -10px),0,0)}to{opacity:1;transform:none}}
+@keyframes ehViewIn{from{opacity:0;transform:translate3d(calc(var(--eh-dir) * 14px),0,0)}to{opacity:1;transform:none}}
+@keyframes ehLangIn{from{opacity:0;transform:translate3d(calc(var(--eh-dir) * 18px),0,0)}to{opacity:1;transform:none}}
 @keyframes ehExpand{from{opacity:0;transform:translateY(-6px);clip-path:inset(0 0 100% 0)}to{opacity:1;transform:none;clip-path:inset(0 0 0 0)}}
 @keyframes ehGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes ehMarkIn{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes ehMarkInH{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes ehDraw{from{stroke-dashoffset:var(--eh-len,1200)}to{stroke-dashoffset:0}}
 @keyframes ehFadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-@keyframes ehPulse{0%{box-shadow:0 0 0 0 rgba(43,174,104,.55)}100%{box-shadow:0 0 0 12px rgba(43,174,104,0)}}
+@keyframes ehPulse{0%{box-shadow:0 0 0 0 rgba(84,171,93,.55)}100%{box-shadow:0 0 0 12px rgba(84,171,93,0)}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important}}
+html[data-eh-motion="off"] *,html[data-eh-motion="off"] *::before{animation:none !important;transition:none !important}
+
+/* ---------- 5. Print: ink on paper, no motion, no chrome ---------- */
+@media print{html,body{background:#fff !important;color:#15224D !important}.eh-contour,.eh-syncstamp{display:none !important}.eh-rv{opacity:1 !important;transform:none !important}}

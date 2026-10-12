@@ -1,0 +1,227 @@
+{
+ "generated": "2026-10-12 10:35",
+ "title": "Design system v2 — Vision 2030 projects",
+ "failures": [],
+ "changes": [
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "design",
+   "note": "page skin after the shared design system",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<link rel=\"stylesheet\" href=\"eh-shared.css\">",
+   "new": "<link rel=\"stylesheet\" href=\"eh-shared.css\">\n<style id=\"eh-skin\">html body,html body.dark{--bg:var(--eh-mist);--surface:var(--eh-paper);--ink:var(--eh-ink);--ink-soft:var(--eh-ink-2);--ink-faint:var(--eh-ink-3);--line:var(--eh-line);--line-strong:var(--eh-line);--brand:var(--eh-sea);--brand-deep:var(--eh-deep);--green:var(--eh-leaf);--accent:var(--eh-leaf-ink);--shadow:var(--eh-shadow);--shadow-lg"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "design",
+   "note": "masthead contour lines (standalone)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<header class=\"masthead\">",
+   "new": "<header class=\"masthead\" data-eh-contour=\"7\">"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "motion",
+   "note": "Arabic drawer slides on its own: no scroll reveal",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<aside class=\"drawer panel ar-drawer\" id=\"arDrawer\"",
+   "new": "<aside class=\"drawer panel ar-drawer\" id=\"arDrawer\" data-eh-noreveal"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "motion",
+   "note": "drawer slides on its own: no scroll reveal",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<aside class=\"drawer panel\" id=\"drawer\"",
+   "new": "<aside class=\"drawer panel\" id=\"drawer\" data-eh-noreveal"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "motion",
+   "note": "Arabic findings reveal like the other panels",
+   "occurrences": 8,
+   "ok": true,
+   "old": "<div class=\"ar-finding ",
+   "new": "<div class=\"eh-panel ar-finding "
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "motion",
+   "note": "Arabic recommendations reveal like the other panels",
+   "occurrences": 6,
+   "ok": true,
+   "old": "<div class=\"ar-rec-card\">",
+   "new": "<div class=\"eh-panel ar-rec-card\">"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "design",
+   "note": "ownership colours from the brand palette; token reader for charts",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const OWN_HEX    = {\"Government\":\"#055a93\",\"PIF\":\"#4fa85a\",\"Joint Venture\":\"#0aa6a0\",\"Mixed\":\"#6b7385\"};",
+   "new": "/* EH design system v2 (patch_design_v2030.py): brand palette — land → sea, amber, brick for \"on hold\" */\nfunction ehTok(n,f){ try{ var v=getComputedStyle(document.body).getPropertyValue(n).trim(); return v||f; }catch(e){ return f; } }   // shared token, read at draw time\nconst OWN_HEX    = {\"Government\":\"#0072BB\",\"PIF\":\"#54AB5D\",\"Joint Venture\":\"#00A0E0\",\"Mixed\":\"#5E6B80\"};"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "design",
+   "note": "status colours from the brand palette",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const STATUS_HEX = {\"Announced\":\"#7cc0e8\",\"Planning\":\"#e0a23c\",\"Under Construction\":\"#d9c23a\",\"Partially Operational\":\"#8fce6a\",\"Operational\":\"#3f9d57\",\"On Hold\":\"#b5675c\",\"Under Review\":\"#9a6f9c\"};",
+   "new": "const STATUS_HEX = {\"Announced\":\"#5E9FD6\",\"Planning\":\"#C98A1B\",\"Under Construction\":\"#3B57B8\",\"Partially Operational\":\"#7FB685\",\"Operational\":\"#2E7A37\",\"On Hold\":\"#B23F2B\",\"Under Review\":\"#8E6BB8\"};"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "design",
+   "note": "sector colours from the brand palette",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const SECTOR_HEX = [\"#0070b8\",\"#4fa85a\",\"#e08a3c\",\"#0aa6a0\",\"#8e6fc4\",\"#d9b42a\",\"#5b9bd5\",\"#c0653a\",\"#1d8f74\",\"#d45d79\",\"#6b7385\"];",
+   "new": "const SECTOR_HEX = [\"#0072BB\",\"#54AB5D\",\"#3B57B8\",\"#00A0E0\",\"#C98A1B\",\"#8E6BB8\",\"#A6CE39\",\"#B23F2B\",\"#5E9FD6\",\"#7FB685\",\"#5E6B80\"];"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "design",
+   "note": "confidence colours from the brand status set",
+   "occurrences": 1,
+   "ok": true,
+   "old": "hex:\"#3f9d57\", desc:\"Confirmed",
+   "new": "hex:\"#2E7A37\", desc:\"Confirmed"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "design",
+   "note": "confidence colours from the brand status set",
+   "occurrences": 1,
+   "ok": true,
+   "old": "hex:\"#e0a23c\", desc:\"Reported",
+   "new": "hex:\"#C98A1B\", desc:\"Reported"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "design",
+   "note": "confidence colours from the brand status set",
+   "occurrences": 1,
+   "ok": true,
+   "old": "hex:\"#c2705c\", desc:\"Indicative",
+   "new": "hex:\"#B23F2B\", desc:\"Indicative"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "design",
+   "note": "chart text in the brand font; colours from the shared tokens",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const gridColor=\"#ececea\";\n  Chart.defaults.font.family=\"'Plus Jakarta Sans', sans-serif\";\n  Chart.defaults.color=\"#4a5566\";",
+   "new": "const gridColor=ehTok(\"--eh-line\",\"#D9E3DF\");\n  Chart.defaults.font.family=\"'EH Sans','Encode Sans','Segoe UI',Tahoma,Arial,sans-serif\";\n  Chart.defaults.font.size=12.5;\n  Chart.defaults.color=ehTok(\"--eh-ink-2\",\"#46546F\");"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "design",
+   "note": "Arabic charts in the brand font",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const gridColor=\"#ececea\";\n  const arFont=\"'Tajawal',sans-serif\";",
+   "new": "const gridColor=ehTok(\"--eh-line\",\"#D9E3DF\");\n  const arFont=\"'EH Sans','Segoe UI',Tahoma,Arial,sans-serif\";   // brand font carries the Arabic glyphs\n  Chart.defaults.color=ehTok(\"--eh-ink-2\",\"#46546F\");"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "design",
+   "note": "chart tooltips in the brand ink",
+   "occurrences": 6,
+   "ok": true,
+   "old": "backgroundColor:\"#055a93\"",
+   "new": "backgroundColor:\"#15224D\""
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "design",
+   "note": "doughnut rings cut in the panel colour (light and dark)",
+   "occurrences": 4,
+   "ok": true,
+   "old": "borderColor:\"#fff\"",
+   "new": "borderColor:ehTok(\"--eh-paper\",\"#fff\")"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "design",
+   "note": "doughnut legends readable in dark mode",
+   "occurrences": 2,
+   "ok": true,
+   "old": "pointStyle:\"circle\",index:i}",
+   "new": "pointStyle:\"circle\",fontColor:ehTok(\"--eh-ink-2\",\"#46546F\"),index:i}"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "design",
+   "note": "English doughnut legend at a readable size",
+   "occurrences": 1,
+   "ok": true,
+   "old": "font:{size:12,weight:\"500\"},padding:14,",
+   "new": "font:{size:12.5,weight:\"500\"},padding:14,"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "rtl",
+   "note": "Arabic sector chart reads from the right",
+   "occurrences": 1,
+   "ok": true,
+   "old": "scales:{x:{beginAtZero:true,ticks:{precision:0,font:{size:11,family:arFont}},grid:{color:gridColor,drawBorder:false}},\n              y:{ticks:{font:{size:11.5,weight:\"600\",family:arFont}},grid:{display:false,drawBorder:false}}}}});",
+   "new": "scales:{x:{beginAtZero:true,reverse:true,ticks:{precision:0,font:{size:11.5,family:arFont}},grid:{color:gridColor,drawBorder:false}},\n              y:{position:\"right\",ticks:{font:{size:12,weight:\"600\",family:arFont}},grid:{display:false,drawBorder:false}}}}});"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "design",
+   "note": "theme pass uses the brand light/dark chart colours",
+   "occurrences": 1,
+   "ok": true,
+   "old": "var c=dark?'#C9D4DB':'#666', g=dark?'#2C3A43':'#E5E5E5';",
+   "new": "var c=dark?'#B8C4DA':'#46546F', g=dark?'#2A3A6B':'#D9E3DF';   // brand ink and hairline (eh-shared.css v2)"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "design",
+   "note": "doughnut rings keep the panel colour in dark mode",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ds.borderColor=dark?lift(ds.__ehO.b):ds.__ehO.b;",
+   "new": "ds.borderColor=(dark&&ch.config.type!=='doughnut')?lift(ds.__ehO.b):ds.__ehO.b;   // doughnut rings are cut in the panel colour, not lifted"
+  },
+  {
+   "file": "v2030",
+   "kind": "exact",
+   "category": "motion",
+   "note": "chart redraw on theme change; tab change slides in",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<script src=\"eh-shared.js\" defer></script>",
+   "new": "<script>\n/* EH design system v2 (patch_design_v2030.py): charts redraw with the token colours when the theme changes;\n   switching tabs slides the incoming view in from the reading-start edge. */\n(function(){\n  var dark=document.body.classList.contains('dark');\n  function redraw(){ try{ if(typeof renderCharts==='function'&&typeof filtered==='function') renderCharts(filtered()); }catch(e){}\n    try"
+  }
+ ]
+}

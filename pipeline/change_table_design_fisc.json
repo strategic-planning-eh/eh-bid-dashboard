@@ -1,0 +1,157 @@
+{
+ "generated": "2026-10-12 10:19",
+ "title": "Design system v2 — Saudi Government Finances",
+ "failures": [],
+ "changes": [
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "design",
+   "note": "page skin after the shared design system",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<link rel=\"stylesheet\" href=\"eh-shared.css\">",
+   "new": "<link rel=\"stylesheet\" href=\"eh-shared.css\">\n<style id=\"eh-skin\">\n/* EH design system v2 — Saudi Government Finances skin (patch_design_fisc.py). Tokens and fonts come from eh-shared.css.\n   Rules are written as \"html body …\" so they also win over the page's later dark-mode block (#ehDark). */\nhtml body,html body.dark{--navy:var(--eh-deep);--navy2:var(--eh-deep);--blue:var(--eh-sea);--blue-d:var(-"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "design",
+   "note": "contour lines in the opening (standalone only)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<header class=\"hero\" id=\"overview\">",
+   "new": "<header class=\"hero\" id=\"overview\" data-eh-contour=\"7\">"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "design",
+   "note": "brand chart palette",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const C = {\n  blue:'#0572BC', blued:'#045a96', green:'#54AB5D', grey:'#94A3B8', greyd:'#64748b',\n  red:'#D32F2F', amber:'#F9A825', ragGreen:'#388E3C', navy:'#0A2A43'\n};",
+   "new": "/* EH design system v2 (patch_design_fisc.py): brand chart palette — land → sea, amber, brick for loss */\nconst C = {\n  blue:'#0072BB', blued:'#00609E', green:'#54AB5D', grey:'#AEB9CE', greyd:'#5E6B80',\n  red:'#B23F2B', amber:'#C98A1B', ragGreen:'#2E7A37', navy:'#1B2A6E'\n};"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "design",
+   "note": "chart text in the brand font and ink; gridlines in the brand hairline colour",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Chart.defaults.font.family = \"'Plus Jakarta Sans', sans-serif\";\nChart.defaults.font.size = 12;\nChart.defaults.color = '#5A6A7A';\nconst GRID = '#eef2f7';",
+   "new": "Chart.defaults.font.family = \"'EH Sans','Encode Sans','Segoe UI',Tahoma,Arial,sans-serif\";   // brand font (Arabic glyphs come from the same family)\nChart.defaults.font.size = 12.5;\nChart.defaults.color = '#5E6B80';\nChart.defaults.plugins.tooltip.backgroundColor = '#15224D'; Chart.defaults.plugins.tooltip.padding = 10; Chart.defaults.plugins.tooltip.cornerRadius = 8;\nChart.defaults.plugins.tooltip"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "design",
+   "note": "axis titles in the brand footnote ink",
+   "occurrences": 7,
+   "ok": true,
+   "old": "color:'#8a98a8'",
+   "new": "color:'#5E6B80'"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "design",
+   "note": "axis titles at a readable size",
+   "occurrences": 7,
+   "ok": true,
+   "old": "font:{size:11,weight:'600'},color:",
+   "new": "font:{size:12,weight:'600'},color:"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "design",
+   "note": "event markers in the brand font",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ctx.font='700 10px Plus Jakarta Sans';",
+   "new": "ctx.font=\"600 11px 'EH Sans','Encode Sans',sans-serif\";"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "design",
+   "note": "chart D sector labels at a readable size",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ticks:{font:{size:10.5},autoSkip:false}",
+   "new": "ticks:{font:{size:11.5},autoSkip:false}"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "design",
+   "note": "chart C pre-war bars in the brand muted grey",
+   "occurrences": 1,
+   "ok": true,
+   "old": "backgroundColor:['#c7d2dd','#c7d2dd',C.red,C.green]",
+   "new": "backgroundColor:[C.grey,C.grey,C.red,C.green]"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "design",
+   "note": "chart E fill from the brand navy",
+   "occurrences": 1,
+   "ok": true,
+   "old": "backgroundColor:'rgba(10,42,67,.06)'",
+   "new": "backgroundColor:'rgba(27,42,110,.06)'"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "design",
+   "note": "chart G planned bars from the brand blue",
+   "occurrences": 1,
+   "ok": true,
+   "old": "backgroundColor:'rgba(5,114,188,.35)'",
+   "new": "backgroundColor:'rgba(0,114,187,.3)'"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "design",
+   "note": "chart E reference line in the brand muted grey",
+   "occurrences": 1,
+   "ok": true,
+   "old": "borderColor:'#b8c2cf'",
+   "new": "borderColor:'#AEB9CE'"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "design",
+   "note": "chart F 2025 line in the brand muted ink",
+   "occurrences": 1,
+   "ok": true,
+   "old": "borderColor:'#94A3B8', borderWidth:1.6",
+   "new": "borderColor:'#5E6B80', borderWidth:1.6"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "design",
+   "note": "theme pass uses the brand light/dark chart colours",
+   "occurrences": 1,
+   "ok": true,
+   "old": "var c=dark?'#C9D4DB':'#666', g=dark?'#2C3A43':'#E5E5E5';",
+   "new": "var c=dark?'#B8C4DA':'#5E6B80', g=dark?'#2A3A6B':'#D9E3DF';   // brand ink and hairline (eh-shared.css v2)"
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "rtl",
+   "note": "horizontal bar charts mirror in Arabic; minus signs stay in front of negative axis figures",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<script src=\"eh-ar-dashboard.js\" defer></script>",
+   "new": "<script>\n/* EH design system v2 (patch_design_fisc.py): in Arabic the horizontal bar charts (B, D) read from the right —\n   category labels on the right, bars grow leftwards. Time axes are left as they are. */\n(function(){\n  function mirror(){ var rtl=document.documentElement.dir==='rtl';\n    ['chartB','chartD'].forEach(function(id){ var cv=document.getElementById(id), ch=cv&&window.Chart&&Chart.g"
+  }
+ ]
+}

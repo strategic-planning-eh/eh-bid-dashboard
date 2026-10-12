@@ -420,7 +420,7 @@ function tCSV(list){const H=['Ref','Year','Title','Client','Platform','Submissio
 let _tLast=[];
 function tFlagOK(b){switch(TF.flag){case 'needs':return tNeeds(b);case 'ahead':return tAhead(b);case 'accnosub':return tAccNoSub(b);case 'gaps':return tGap(b);case 'stale':return !!b.deadline_stale;default:return true;}}
 function renderTenders(){
- const OC={'Won':'#2E7D46','Lost':'#C0504D','Not awarded':'#E8862E','Cancelled':'#5F7078','Pending':'#3E86C8'};
+ const OC={'Won':'#2E7A37','Lost':'#B23F2B','Not awarded':'#C98A1B','Cancelled':'#5E6B80','Pending':'#0072BB'};   // EH status set (eh-shared.css v2)
  const list=BA.bidlist.filter(b=>
    (TF.year=='all'||b.year==TF.year)&&
    (TF.outcome=='all'||b.outcome==TF.outcome)&&
@@ -552,7 +552,7 @@ function renderAll(){k=BA.kpi;rNtf();rKPI();rOverview();rPipeline();rWinloss();r
 // Everything here is computed from the BA block of the active scope at render time — no stored numbers.
 // Fields added by bid_analytics2.py in Sep 2026 (value_won, open_stale90, won_value …) are used when present and
 // derived from bidlist / competitors when a build predates them, so the tab never shows a blank.
-const EXC={won:'#2E7D46',lost:'#C0504D',pend:'#3E86C8',stale:'#E8862E',grey:'#9AABB5',ink:'#1C2B33'};
+const EXC={won:'#2E7A37',lost:'#B23F2B',pend:'#0072BB',stale:'#C98A1B',grey:'#9DABC5',ink:'#15224D'};   // EH status set (eh-shared.css v2)
 function exAge(b){ if(b.age_days!=null)return b.age_days; if(!b.date)return null; return Math.round((Date.now()-new Date(b.date).getTime())/864e5); }
 function exData(B){
  const bl=B.bidlist||[], k=B.kpi||{}, f=B.funnel||{};
@@ -710,12 +710,21 @@ function rExecutive(){
  ${exDecisions(B,d)}`;
 }
 // ---- PNG export: clone the SVG, inline the stylesheet's text styles, paint on a white canvas at 2.5×
-function exPNG(id,name){
+// brand fonts for exported PNGs: fetched once, embedded as data URIs so the image renders them (12 Oct 2026)
+let EXFONTS=null;
+function exFonts(){ if(EXFONTS!==null)return Promise.resolve(EXFONTS);
+ const F=[['EH Sans','vendor/fonts/encode-sans-latin-var.woff2','100 900'],['EH Sans','vendor/fonts/plex-sans-arabic-400.woff2','100 549'],['EH Sans','vendor/fonts/plex-sans-arabic-600.woff2','550 900'],['EH Display','vendor/fonts/montserrat-latin-var.woff2','100 900'],['EH Display','vendor/fonts/alexandria-arabic-var.woff2','100 900']];
+ return Promise.all(F.map(f=>fetch(f[1]).then(r=>r.ok?r.blob():null).then(b=>b?new Promise(res=>{const fr=new FileReader();fr.onload=()=>res(`@font-face{font-family:'${f[0]}';src:url(${fr.result}) format('woff2');font-weight:${f[2]}}`);fr.readAsDataURL(b);}):'').catch(()=>''))).then(a=>EXFONTS=a.join(''));}
+// on a white PNG, light text (dark theme) is printed in the brand ink instead
+function exInk(c){const m=String(c).match(/(\d+)\D+(\d+)\D+(\d+)/); if(!m)return c; const l=(0.2126*m[1]+0.7152*m[2]+0.0722*m[3])/255; return l>0.62?'#15224D':c;}
+function exPNG(id,name){ exFonts().then(()=>exPNG2(id,name)); }
+function exPNG2(id,name){
  const svg=document.getElementById(id); if(!svg)return;
  const cl=svg.cloneNode(true); const vb=svg.viewBox.baseVal;
  cl.setAttribute('width',vb.width); cl.setAttribute('height',vb.height); cl.setAttribute('xmlns','http://www.w3.org/2000/svg');
  const src=svg.querySelectorAll('*'), dst=cl.querySelectorAll('*');
- src.forEach((el,i)=>{ if(el.tagName==='text'||el.tagName==='tspan'){const cs=getComputedStyle(el); dst[i].setAttribute('style',`font:${cs.fontWeight} ${cs.fontSize} 'Segoe UI',Tahoma,Arial,sans-serif;fill:${cs.fill}`);} dst[i].removeAttribute('onclick'); });
+ src.forEach((el,i)=>{ if(el.tagName==='text'||el.tagName==='tspan'){const cs=getComputedStyle(el); const disp=/EH Display/.test(cs.fontFamily); dst[i].setAttribute('style',`font-family:${disp?"'EH Display'":"'EH Sans'"},'Segoe UI',Tahoma,Arial,sans-serif;font-weight:${cs.fontWeight};font-size:${cs.fontSize};fill:${exInk(cs.fill)}`);} dst[i].removeAttribute('onclick'); });
+ const fst=document.createElementNS('http://www.w3.org/2000/svg','style'); fst.textContent=EXFONTS||''; cl.insertBefore(fst,cl.firstChild);
  const bg=document.createElementNS('http://www.w3.org/2000/svg','rect'); bg.setAttribute('width',vb.width); bg.setAttribute('height',vb.height); bg.setAttribute('fill','#fff'); cl.insertBefore(bg,cl.firstChild);
  const xml=new XMLSerializer().serializeToString(cl); const img=new Image(); const S=2.5;
  img.onload=()=>{const c=document.createElement('canvas');c.width=Math.round(vb.width*S);c.height=Math.round(vb.height*S);const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(img,0,0,c.width,c.height);

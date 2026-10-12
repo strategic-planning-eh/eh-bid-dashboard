@@ -1,0 +1,47 @@
+{
+ "generated": "2026-10-12 09:54",
+ "title": "Design system v2 — hub shell",
+ "failures": [],
+ "changes": [
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "design",
+   "note": "link the shared design system and add the hub skin",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</style>\n</head>",
+   "new": "</style>\n<link rel=\"stylesheet\" href=\"eh-shared.css\">\n<style id=\"eh-skin\">\n/* EH design system v2 — hub shell skin (patch_design_hub.py). Tokens come from eh-shared.css. */\nbody,body.dark{background:var(--eh-mist);color:var(--eh-ink)}\nheader,body.dark header{background:var(--eh-deep);border-bottom:0;padding:12px 22px 0;color:#fff;position:relative;isolation:isolate;align-items:center}\n@media(min-w"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "design",
+   "note": "masthead contour lines",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<header>\n  <img class=\"logo\"",
+   "new": "<header data-eh-contour=\"8\">\n  <img class=\"logo\""
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "design",
+   "note": "title words split for the light/bold pairing (text unchanged)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<h1>Strategic Intelligence Hub</h1>",
+   "new": "<h1>Strategic Intelligence <b>Hub</b></h1>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "design",
+   "note": "load the shared motion layer",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</body>\n</html>",
+   "new": "<script src=\"eh-shared.js\" defer></script>\n</body>\n</html>"
+  }
+ ]
+}

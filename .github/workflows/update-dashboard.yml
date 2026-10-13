@@ -66,6 +66,7 @@ jobs:
           # Environment Fund page: rebuilt each run so "EH's own record with the Fund" follows the live bid tracker (12 Oct 2026)
           python pipeline/build_ef_page.py pipeline/ef_report_2025.json site/environment_fund_2025.html || cp hub/environment_fund_2025.html site/
           cp hub/government_news.html site/ 2>/dev/null || true
+          cp hub/saudi_waste.html site/ 2>/dev/null || true
           cp pipeline/reg_brief.json site/ 2>/dev/null || true
           cp hub/eh-shared.css hub/eh-shared.js hub/eh-ar-dashboard.js site/ 2>/dev/null || true
           cp -r hub/vendor site/vendor 2>/dev/null || true

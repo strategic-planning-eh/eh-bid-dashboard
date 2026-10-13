@@ -352,6 +352,7 @@ html[lang=ar] .conf span[lang=ar]{display:inline}
       <button class="nsub" data-n="pif"><span class="tl" data-en="PIF Intelligence Hub" data-ar="مركز استخبارات صندوق الاستثمارات">PIF Intelligence Hub</span></button>
       <button class="nsub" data-n="strat" title="PIF Strategy 2026–2030 — what changed, and what it means for EH · استراتيجية صندوق الاستثمارات العامة 2026–2030 — ما الذي تغيّر وماذا يعني لآفاق البيئة"><span class="tl" data-en="PIF Strategy 2026–2030" data-ar="استراتيجية صندوق الاستثمارات العامة 2026–2030">PIF Strategy 2026–2030</span><span class="newb tl" data-new-until="2026-10-06" data-en="New" data-ar="جديد">New</span></button>
       <button class="nsub" data-n="ef2025" title="Environment Fund 2025 Annual Report — what it means for EH · التقرير السنوي لصندوق البيئة 2025 — ماذا يعني لآفاق البيئة"><span class="tl" data-en="Environment Fund 2025 Report" data-ar="تقرير صندوق البيئة 2025">Environment Fund 2025 Report</span><span class="newb tl" data-new-until="2026-10-06" data-en="New" data-ar="جديد">New</span></button>
+      <button class="nsub" data-n="waste" title="Saudi waste — where the Kingdom's waste is generated and where it piles up · النفايات في المملكة — أين تتولد وأين تتراكم"><span class="tl" data-en="Saudi waste" data-ar="النفايات في المملكة">Saudi waste</span><span class="newb tl" data-new-until="2026-10-27" data-en="New" data-ar="جديد">New</span></button>
     </div>
     <div style="position:relative;flex:1">
       <div class="skel on" id="sk-v2030"><div class="in"><div class="spin"></div><span class="tl" data-en="Loading Vision 2030…" data-ar="جارٍ تحميل رؤية 2030…">Loading Vision 2030…</span></div></div>
@@ -368,6 +369,8 @@ html[lang=ar] .conf span[lang=ar]{display:inline}
       <iframe id="f-strat" title="PIF Strategy 2026–2030 — what changed, and what it means for EH" data-src="pif_strategy_2026_2030.html" loading="lazy" style="display:none"></iframe>
       <div class="skel" id="sk-ef2025"><div class="in"><div class="spin"></div><span class="tl" data-en="Loading Environment Fund 2025 Report…" data-ar="جارٍ تحميل تقرير صندوق البيئة 2025…">Loading Environment Fund 2025 Report…</span></div></div>
       <iframe id="f-ef2025" title="Environment Fund 2025 Annual Report — what it means for EH" data-src="environment_fund_2025.html" loading="lazy" style="display:none"></iframe>
+      <div class="skel" id="sk-waste"><div class="in"><div class="spin"></div><span class="tl" data-en="Loading Saudi waste…" data-ar="جارٍ تحميل النفايات في المملكة…">Loading Saudi waste…</span></div></div>
+      <iframe id="f-waste" title="Saudi waste — where the Kingdom's waste is generated and where it piles up" data-src="saudi_waste.html" loading="lazy" style="display:none"></iframe>
     </div>
   </div>
 </main>
@@ -567,7 +570,7 @@ var APPS={stake:['Stakeholder & Competitive Map','خريطة أصحاب المص
 var APPTAB={stake:'stake',map:'stake',bids:'bids',tenders:'tenders',clients:'bubbles',news:'news',hub:null};
 APPS.tenders=['Government Tenders','المنافسات الحكومية'];
 // a What's New "view" names a top tab or a News sub-tab by its English label (older names kept as aliases) — audit shell-07
-var VIEWALIAS={'saudi fiscal monitor 2026':'fiscal','fiscal monitor':'fiscal','saudi government finances':'fiscal','government news':'gov','regulatory news':'gov','corporate news':'corp','pif strategy':'strat','pif hub':'pif','environment fund':'ef2025','environment fund 2025 report':'ef2025','etimad':'tenders','government tenders':'tenders','vision 2030':'v2030','client bubble map':'bubbles','clients':'bubbles','stakeholder map':'stake','bid intelligence':'bids'};
+var VIEWALIAS={'saudi fiscal monitor 2026':'fiscal','fiscal monitor':'fiscal','saudi government finances':'fiscal','government news':'gov','regulatory news':'gov','corporate news':'corp','pif strategy':'strat','pif hub':'pif','environment fund':'ef2025','environment fund 2025 report':'ef2025','saudi waste':'waste','waste statistics':'waste','hazardous waste':'waste','النفايات في المملكة':'waste','etimad':'tenders','government tenders':'tenders','vision 2030':'v2030','client bubble map':'bubbles','clients':'bubbles','stakeholder map':'stake','bid intelligence':'bids'};
 function wnView(v){ v=String(v||'').trim().toLowerCase(); if(!v) return null; var hit=null;
   document.querySelectorAll('.nsub,nav[aria-label] .tab').forEach(function(b){ var t=b.querySelector('.tl'); if(!hit&&t&&t.dataset.en.toLowerCase()===v) hit=b; });
   if(!hit){ var k=Object.keys(VIEWALIAS).find(function(a){return v===a||v.indexOf(a)===0;}); if(k) hit=document.querySelector('.nsub[data-n="'+VIEWALIAS[k]+'"]')||document.querySelector('nav[aria-label] .tab[data-f="'+VIEWALIAS[k]+'"]'); }
@@ -673,7 +676,7 @@ function nGo(btn){
   document.querySelectorAll('.nsub').forEach(x=>x.classList.toggle('on',x===btn));
   const id=btn.dataset.n;
   try{history.replaceState(null,'','#news/'+id);localStorage.setItem('ehhub.sub',id);}catch(e){}   // audit shell-13: shareable link, remembered on this device
-  ['v2030','fiscal','corp','gov','pif','strat','ef2025'].forEach(k=>{
+  ['v2030','fiscal','corp','gov','pif','strat','ef2025','waste'].forEach(k=>{
     const f=$('f-'+k);
     const on=k===id;
     const sk=$('sk-'+k); if(sk) sk.style.zIndex=on?4:-1;   // audit shell-12: the loading spinner sits above the blank page

@@ -1,0 +1,57 @@
+{
+ "generated": "2026-10-13 15:07",
+ "title": "Change table — Saudi waste tab",
+ "failures": [],
+ "changes": [
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "waste-tab",
+   "note": "Saudi waste sub-tab button after the Environment Fund report",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<span class=\"tl\" data-en=\"Environment Fund 2025 Report\" data-ar=\"تقرير صندوق البيئة 2025\">Environment Fund 2025 Report</span><span class=\"newb tl\" data-new-until=\"2026-10-06\" data-en=\"New\" data-ar=\"جديد\">New</span></button>",
+   "new": "<span class=\"tl\" data-en=\"Environment Fund 2025 Report\" data-ar=\"تقرير صندوق البيئة 2025\">Environment Fund 2025 Report</span><span class=\"newb tl\" data-new-until=\"2026-10-06\" data-en=\"New\" data-ar=\"جديد\">New</span></button>\n      <button class=\"nsub\" data-n=\"waste\" title=\"Saudi waste — where the Kingdom's waste is generated and where it piles up · النفايات في المملكة — أين تتولد وأين تتراكم\"><span"
+  },
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "waste-tab",
+   "note": "Skeleton + lazy iframe for the tab page",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<iframe id=\"f-ef2025\" title=\"Environment Fund 2025 Annual Report — what it means for EH\" data-src=\"environment_fund_2025.html\" loading=\"lazy\" style=\"display:none\"></iframe>",
+   "new": "<iframe id=\"f-ef2025\" title=\"Environment Fund 2025 Annual Report — what it means for EH\" data-src=\"environment_fund_2025.html\" loading=\"lazy\" style=\"display:none\"></iframe>\n      <div class=\"skel\" id=\"sk-waste\"><div class=\"in\"><div class=\"spin\"></div><span class=\"tl\" data-en=\"Loading Saudi waste…\" data-ar=\"جارٍ تحميل النفايات في المملكة…\">Loading Saudi waste…</span></div></div>\n      <iframe id=\"f"
+  },
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "waste-tab",
+   "note": "Tab switcher knows the new frame",
+   "occurrences": 1,
+   "ok": true,
+   "old": "['v2030','fiscal','corp','gov','pif','strat','ef2025']",
+   "new": "['v2030','fiscal','corp','gov','pif','strat','ef2025','waste']"
+  },
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "waste-tab",
+   "note": "Hub search opens the tab by name",
+   "occurrences": 1,
+   "ok": true,
+   "old": "'environment fund 2025 report':'ef2025',",
+   "new": "'environment fund 2025 report':'ef2025','saudi waste':'waste','waste statistics':'waste','hazardous waste':'waste','النفايات في المملكة':'waste',"
+  },
+  {
+   "file": "update-dashboard.yml",
+   "kind": "exact",
+   "category": "waste-tab",
+   "note": "Tab page is published",
+   "occurrences": 1,
+   "ok": true,
+   "old": "          cp hub/government_news.html site/ 2>/dev/null || true\n",
+   "new": "          cp hub/government_news.html site/ 2>/dev/null || true\n          cp hub/saudi_waste.html site/ 2>/dev/null || true\n"
+  }
+ ]
+}

@@ -11,7 +11,7 @@
 | فرع شركة نافال قروب سابورت | — | Jeddah |  | Low |
 | شركة سي ام ايه سي جي ام العربية السعودية المحدودة | — | Jeddah |  | Medium |
 
-## Merges (67)
+## Merges (69)
 | Removed (duplicate) | Kept record | Basis |
 |---|---|---|
 | شركة ادارة خدمات البيئة العالمية المحدودة (ريفايفا) | GEMS – Global Environmental Management Services Co. (One-Person Co.) (Reviva) | review row 2004 |
@@ -44,6 +44,7 @@
 | شركة وشنه للمقاولات | Washnah Contracting Co. | review row 4162 |
 | شركة السهول الخضراء للاستشارات البيئية | Green Plains Environmental Consulting  (El Suhoor El Khadra) | review row 4165 |
 | شركة إنجينيرينج برنسبلز للاستشارات الهندسية | Fouad Fahad Al-Saleh & Khalid Al-Duwailah Environmental & Engineering Consulting (FKEC) (Engineering Principles) | review row 4171 |
+| Vekr Environmental Services Est | Vekr Environmental Services Est. | review row 4044 |
 | Geotechnical & Environmental Company Ltd | Geotechnical & Environmental Co. Ltd (GECO) | review row 4046 |
 | شركة تيرا درون العربية للطائرات بدون طيار شركة شخص واحد | Terra Drone | review row 4050 |
 | مؤسسة بصمة حبوة للاستشارات البيئية | Basmat Habwah Environmental Consulting Establishment | review row 4056 |
@@ -81,6 +82,7 @@
 | شركة ايدوم كونسولتنج الإدارية | IDOM Architecture Consulting (One-Person Co.) | review row 4158 |
 | شركة فيول للاستشارات المهنية | Fuel Professional Consulting | decided in chat |
 | IDOM Consultancy | IDOM Architecture Consulting (One-Person Co.) | decided in chat |
+| Evara Earth | Evara Co. Ltd (One-Person Co.) | decided in chat |
 
 ## Rejected pairs (29)
 - جامعة الملك عبدالله للعلوم والتقنية ≠ مؤسسة محمد عبدالله الفضل التجارية

@@ -120,7 +120,7 @@ def main():
         if reg: region_set.append({'row': rid, 'name': name, 'region': reg, 'city': str(d.get('Raw City Found') or '').strip(),
                                    'confidence': str(d.get('Confidence') or '').strip() or 'Reviewer', 'source': str(d.get('Source(s)') or '').strip()[:300],
                                    'method': str(d.get('Method') or '').strip()})
-        if twin and norm(twin) != norm(name): merges.append((name, twin, f'review row {rid}'))
+        if twin and twin.strip() != name.strip(): merges.append((name, twin, f'review row {rid}'))
     for em in a.extra_merge:
         l, k = [x.strip() for x in em.split('=>')]; merges.append((l, k, 'decided in chat'))
 
@@ -175,6 +175,10 @@ def main():
         if f"Alias (merged duplicate): {p['loser']}" not in notes: kn['notes'] = (notes + ' ' if notes else '') + f"Alias (merged duplicate): {p['loser']}"
         if ln is not None:
             if ln.get('city') and not kn.get('city'): kn['city'] = ln['city']
+            TR = {'Tier 1': 1, 'GOV': 1, 'Tier 2': 2, 'Tier 3': 3, 'Tier 4': 4}
+            if TR.get(ln.get('tier'), 9) < TR.get(kn.get('tier'), 9):   # the duplicate had earned a higher tier (bid-driven) — the kept record keeps it
+                kn['tier_old'] = kn.get('tier'); kn['tier'] = ln['tier']; p['tier_carried'] = ln['tier']
+                if ln.get('threat') and ln.get('threat') != kn.get('threat'): kn['threat'] = ln['threat']
             if (ln.get('bc') or 0) > (kn.get('bc') or 0):   # until the next sync recomputes it from the rosters
                 kn['bid'] = True; kn['bc'] = ln['bc']; kn['bf'] = ln.get('bf'); kn['h2h'] = ln.get('h2h') or kn.get('h2h')
     nodes[:] = [n for n in nodes if n['n'].strip() not in losers]
@@ -192,6 +196,9 @@ def main():
             lb = ws.cell(lr, wc['Bid Encounters']).value or 0; kb = ws.cell(kr, wc['Bid Encounters']).value or 0
             if isinstance(lb, (int, float)) and isinstance(kb, (int, float)) and lb > kb:
                 ws.cell(kr, wc['Bid Encounters']).value = lb; ws.cell(kr, wc['Bids vs EH']).value = 'Yes'
+            if p.get('tier_carried') and 'Tier' in wc:
+                if 'Tier (prev)' in wc: ws.cell(kr, wc['Tier (prev)']).value = ws.cell(kr, wc['Tier']).value
+                ws.cell(kr, wc['Tier']).value = p['tier_carried']
     del_rows = sorted({p['loser_row'] for p in merge_log if p['loser_row'] and p['loser_row'] != p['kept_row']}, reverse=True)
     if not a.dry_run:
         for r in del_rows: ws.delete_rows(r, 1)
@@ -212,7 +219,7 @@ def main():
                 if str(nm).strip() in losers: br.delete_rows(i, 1); continue
                 if norm(nm) in reg_by and 'Region' in bc: br.cell(i, bc['Region']).value = reg_by[norm(nm)]
         # logs
-        for title, data, cols in (('Merge Log', merge_log, ['loser', 'kept', 'why', 'loser_row', 'kept_row', 'loser_region', 'kept_region', 'loser_bc']),
+        for title, data, cols in (('Merge Log', merge_log, ['loser', 'kept', 'why', 'loser_row', 'kept_row', 'loser_region', 'kept_region', 'loser_bc', 'tier_carried']),
                                   ('Region Log', region_log, ['name', 'from', 'to', 'via', 'confidence', 'method', 'source', 'note'])):
             lg = wb[title] if title in wb.sheetnames else wb.create_sheet(title)
             if lg.max_row == 1 and lg.cell(1, 1).value is None:

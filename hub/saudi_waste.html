@@ -143,7 +143,8 @@ ul.dn{margin:6px 0 0;padding-inline-start:20px;font-size:13.5px}ul.dn li{margin:
   <div class="hd"><h2 id="h-map"></h2><button class="png" onclick="exPNG('map','map')">Export PNG</button></div>
   <div class="chips" id="chips" role="tablist"></div>
   <div class="ctlrow"><span id="lyr">Year</span> <input type="range" id="yslider" min="2017" max="2024" step="1" value="2024" aria-label="Year"> <span class="yr num" id="yr">2024</span>
-   <label><input type="checkbox" id="ptsbox" checked> <span id="lpts"></span></label></div>
+   <label><input type="checkbox" id="ptsbox" checked> <span id="lpts"></span></label>
+   <button class="png" id="mreset" type="button" onclick="resetMap()" style="margin-inline-start:auto"></button></div>
   <div class="note" id="mdesc" style="margin-top:8px"></div>
   <div class="mapgrid"><div><div id="map"></div><div class="legend" id="legend"></div></div><div class="panel" id="panel"></div></div>
   <div class="read" id="mapread"></div>
@@ -347,7 +348,11 @@ function renderTable(){
   $('rtable').querySelectorAll('th').forEach(th=>th.onclick=()=>{SORT=th.dataset.k;renderTable();});
   $('rtable').querySelectorAll('tr[data-c]').forEach(tr=>tr.onclick=()=>{SEL=tr.dataset.c;renderMapAll();$('map').scrollIntoView({behavior:'smooth',block:'nearest'});});
 }
+function resetMap(){METRIC='cumlf';YEAR=2024;SEL=null;PTS=true;SORT=null;$('yslider').value=2024;$('ptsbox').checked=true;
+  $('chips').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.m===METRIC));renderMapAll();}
 function renderMapAll(){drawMap();renderPanel();renderTable();
+  const dflt=METRIC==='cumlf'&&YEAR===2024&&!SEL&&PTS&&!SORT;const rb=$('mreset');rb.textContent='↺ '+L('Reset filters','إعادة ضبط الفلاتر');rb.disabled=dflt;rb.style.opacity=dflt?.45:1;rb.style.cursor=dflt?'default':'pointer';
+  rb.title=L('Back to the default view: landfilled since 2017, year 2024, no region selected','العودة إلى العرض الافتراضي: المدفون منذ 2017، سنة 2024، دون منطقة مختارة');
   const m=METRICS.find(m=>m[0]===METRIC);$('mdesc').innerHTML=esc(L(m[2][0],m[2][1]))+' '+S(m[3]);
   $('yr').textContent=YEAR;}
 
@@ -525,7 +530,7 @@ function notes(){
   $('dnotes').innerHTML=`<div class="note">${L(`${RG.length} problems found by checking every table against itself, against the other tables and against earlier GASTAT editions: ${cnt('critical')} change what the figures can be used for, ${cnt('major')} need care, ${cnt('minor')} are minor. Each says what this page does about it.`,`${RG.length} مشكلة وُجدت بمطابقة كل جدول مع نفسه ومع الجداول الأخرى ومع إصدارات الهيئة السابقة: ${cnt('critical')} تغيّر ما يصح استخدام الأرقام له، و${cnt('major')} تحتاج حذراً، و${cnt('minor')} بسيطة. ولكل منها ما تفعله الصفحة حيالها.`)}</div>`+
    RG.map((r,i)=>{const sv=SEV[r.sev];return `<div class="opp"><div class="n num" style="color:${sv[1]}">${i+1}</div><div><div class="st"><b>${esc(L(r.ten,r.tar))}</b> <span class="eha" style="background:${sv[2]};color:${sv[1]}">${sv[0]}</span></div><div class="st" style="font-size:13.5px;color:var(--eh-ink-2);margin-top:4px">${esc(L(r.en,r.ar))}</div><div class="ac" style="border-inline-start-color:${sv[1]}"><b style="color:${sv[1]}">${L('On this page','في هذه الصفحة')}:</b> ${esc(L(r.hen,r.har))}</div></div></div>`;}).join('');
   document.querySelectorAll('[data-sec]').forEach(el=>{const k=el.dataset.sec.split('|');el.textContent=L(k[0],k[1]);});
-  document.querySelectorAll('.png').forEach(b=>b.textContent=L('Export PNG','تصدير PNG'));
+  document.querySelectorAll('.png:not(#mreset)').forEach(b=>b.textContent=L('Export PNG','تصدير PNG'));
   document.querySelectorAll('[data-t]').forEach(el=>{const k=el.dataset.t.split('|');el.textContent=L(k[0],k[1]);});
 }
 // ---------- PNG export (light-theme colours, EH fonts embedded)

@@ -7,7 +7,7 @@ Every figure on the page is computed here or in the page from those two files �
 What the sources do NOT give (hazardous waste by region, industrial waste outside Jubail–Yanbu) is shown as a stated
 gap; nothing is allocated or estimated.
 Usage: python3 build_saudi_waste_page.py [saudi_waste_data.json] [out.html]"""
-import json, os, sys, datetime as dt
+import json, os, sys, collections, datetime as dt
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, 'saudi_waste_data.json')
@@ -61,6 +61,123 @@ A = {
 # trade flags found by rule: exports above what the accounts say was generated, or the same export figure two years running
 A['trade_flags'] = [t for t in se_u['2024'] if t != 'total' and (se_u['2024'][t]['exports'] or 0) > (se_s['2024'][t]['total'] or 0) > 0]
 A['repeat_exports'] = [t for t in se_u['2024'] if t != 'total' and se_u['2024'][t]['exports'] and se_u['2024'][t]['exports'] == se_u['2023'][t]['exports']]
+
+
+# ---------------------------------------------------------------- data-problem register (all evidence computed from D)
+def f0(v): return f'{v:,.0f}'
+def mt(v): return f'{v/1e6:,.2f} Mt'
+def kt(v): return f'{v/1e3:,.0f} kt'
+S23, S24, U23, U24 = se_s['2023'], se_s['2024'], se_u['2023'], se_u['2024']
+fac = lambda a, b: (b / a) if a else None
+sector_f = {k: collections.Counter(round(fac(S23[t][k], S24[t][k]), 4) for t in S24 if t != 'total' and S23[t].get(k) and S24[t].get(k)).most_common(1)[0]
+            for k in ('agriculture', 'mining', 'manufacturing', 'electricity', 'other_economic', 'households')}
+hz_f = fac(S23['hazardous']['manufacturing'], S24['hazardous']['manufacturing'])
+spec_f = fac(U23['hazardous']['specialised_company'], U24['hazardous']['specialised_company'])
+ratio_n = sum(1 for t in S23 if S23[t].get('mining') and round(S23[t]['manufacturing'] / S23[t]['mining'], 3) == 2.364)
+treat = {y: sum(g(trt, 'KSA', k, y) for k in ('landfill', 'recycling', 'incineration')) for y in YRS}
+mism = [(c, f['y'], f['col'], f['tr']) for c in codes for f in flags[c] if f['k'] == 'mismatch']
+worst = sorted(mism, key=lambda m: -abs(m[3] / m[2] - 1))[:3]
+derived = {y: [c for c in codes if abs(g(trt, c, 'landfill', y) - g(mat, c, 'total', y)) < 1] for y in YRS}
+zero_rec = [(c, y) for c in codes for y in YRS if g(trt, c, 'recycling', y) == 0]
+swings = []
+for c in codes:
+    for k in mat[c]:
+        if k == 'total': continue
+        for a, b in zip(YRS, YRS[1:]):
+            va, vb = g(mat, c, k, a), g(mat, c, k, b)
+            if max(va, vb) > 50000 and min(va, vb) > 0 and max(va, vb) / min(va, vb) >= 3: swings.append((c, k, a, va, b, vb))
+mt_ = D['municipal_total']['v']; g10 = [mt_[str(y + 1)] / mt_[str(y)] - 1 for y in range(2010, 2014)]
+rec15 = [y for y in D['recycled']['v']['municipal'] if abs(D['recycled']['v']['municipal'][y] / mt_[y] - 0.15) < 0.0005]
+rv = D['revisions']; jy = D['jy_total']['v']
+jy24_split = sum(g(jm, 'hazardous', k, '2024') for k in ('incineration', 'burial', 'recycling')) + g(jm, 'nonhazardous', 'burial', '2024')
+jy24_rate_calc = D['recycled']['v']['jy']['2024'] / jy['2024']
+RN = {r['code']: (r['en'], r['ar']) for r in D['meta']['regions']}
+seea_msw = D['seea']['summary']['Percentage of Municipal Waste of the Total Waste Quantity']['2024'] * S24['total']['total']
+REG = [
+ # sev, title EN, title AR, evidence EN, evidence AR, handling EN, handling AR
+ ('critical', 'No regional figures for hazardous or industrial waste', 'لا أرقام إقليمية للنفايات الخطرة أو الصناعية',
+  f"Hazardous waste ({mt(S24['hazardous']['total'])}, 2024) is published only as a national total by producing sector. Industrial waste is published only for Jubail and Yanbu combined (Royal Commission), and nothing for MODON industrial cities. Only {jy_haz['2024']/S24['hazardous']['total']:.0%} of 2024 hazardous waste has a published location.",
+  f"النفايات الخطرة ({mt(S24['hazardous']['total'])} في 2024) منشورة إجمالياً وطنياً فقط حسب القطاع المولِّد، والنفايات الصناعية منشورة للجبيل وينبع مجتمعتين فقط (الهيئة الملكية)، ولا شيء لمدن «مدن» الصناعية. {jy_haz['2024']/S24['hazardous']['total']:.0%} فقط من النفايات الخطرة لعام 2024 لها موقع منشور.",
+  'The map shades municipal waste only; Jubail and Yanbu are shown as points. Nothing is estimated by region. Ask MWAN for regional data.',
+  'تُلوَّن الخريطة بالنفايات البلدية فقط، وتظهر الجبيل وينبع كنقطتين، ولا يُقدَّر شيء حسب المنطقة. يُطلب ذلك من «موان».'),
+ ('critical', "2024 national accounts are mostly 2023 scaled up, not new measurements", 'حسابات 2024 الوطنية في معظمها أرقام 2023 مضروبة في معامل، لا قياسات جديدة',
+  f"In the SEEA tables, almost every 2024 value equals the 2023 value times one growth factor per sector: mining, manufacturing and utilities ×{sector_f['mining'][0]:.4f} (all waste types), agriculture ×{sector_f['agriculture'][0]:.4f}, other activities ×{sector_f['other_economic'][0]:.4f}, households ×{sector_f['households'][0]:.4f}. Hazardous waste in all four industry sectors ×{hz_f:.4f}, and hazardous waste sent to waste companies ×{spec_f:.4f}.",
+  f"في جداول الحسابات البيئية تكاد كل قيمة لعام 2024 تساوي قيمة 2023 مضروبة في معامل نمو واحد لكل قطاع: التعدين والصناعة والمرافق ×{sector_f['mining'][0]:.4f} (لكل أنواع النفايات)، والزراعة ×{sector_f['agriculture'][0]:.4f}، والأنشطة الأخرى ×{sector_f['other_economic'][0]:.4f}، والأسر ×{sector_f['households'][0]:.4f}. والنفايات الخطرة في القطاعات الصناعية الأربعة ×{hz_f:.4f}، وكذلك الخطرة المسلَّمة لشركات النفايات ×{spec_f:.4f}.",
+  'The +21% rises for total, hazardous and waste-company tonnage are shown as GASTAT projections, not measured market growth.',
+  'تُعرض زيادات +21% في الإجمالي والنفايات الخطرة وكميات شركات النفايات على أنها إسقاطات للهيئة، لا نمواً مقيساً في السوق.'),
+ ('critical', 'Sector split is apportioned with fixed ratios', 'التوزيع على القطاعات محسوب بنسب ثابتة',
+  f"For {ratio_n} waste types, manufacturing is exactly 2.364 × mining and utilities exactly 0.052 × mining, in both years. Identical tonnages repeat across types: paper = 'other' = mixed waste in the industry sectors (361,371 / 854,150 / 18,773 t in 2023); slaughterhouse = 'other' in agriculture (1,059,734 t).",
+  f"في {ratio_n} أنواع من النفايات تساوي الصناعةُ 2.364 × التعدين تماماً، والمرافقُ 0.052 × التعدين تماماً، في السنتين. وتتكرر أطنان متطابقة بين الأنواع: الورق = «أخرى» = المختلطة في القطاعات الصناعية (361,371 / 854,150 / 18,773 طن في 2023)، ومخلفات المسالخ = «أخرى» في الزراعة (1,059,734 طن).",
+  'Producing-sector charts are read as GASTAT\'s allocation, not as measured tonnage by industry.',
+  'تُقرأ رسوم القطاعات المولِّدة على أنها توزيع الهيئة، لا أطناناً مقيسة لكل صناعة.'),
+ ('critical', "'Specialised waste company' includes informal operators and unsafe disposal", '«الشركات المتخصصة» تشمل جهات غير رسمية وطرق تخلص غير آمنة',
+  f"GASTAT's footnote defines this column as companies collecting waste for disposal 'whether licensed official companies or informal ones', including selling, open dumping and 'safe and unsafe burial'. The {mt(U24['hazardous']['specialised_company'])} of hazardous waste in this column is not all licensed treatment.",
+  f"تعرّف حاشية الهيئة هذا العمود بأنه شركات تجمع النفايات للتخلص منها «سواء كانت شركات رسمية مرخّصة أو غير رسمية»، ويشمل البيع والإلقاء المكشوف و«الدفن الآمن وغير الآمن». فالـ{mt(U24['hazardous']['specialised_company'])} من النفايات الخطرة في هذا العمود ليست كلها معالجة مرخّصة.",
+  "EH's market figure is presented as an upper bound, not the licensed market.",
+  'يُعرض رقم سوق آفاق البيئة حداً أعلى، لا حجم السوق المرخّص.'),
+ ('critical', 'Municipal waste treated does not match waste collected', 'النفايات البلدية المعالجة لا تطابق المجموعة',
+  f"Kingdom 2021: treated {mt(treat['2021'])} vs collected {mt(g(mat,'KSA','total','2021'))}; 2024: treated {mt(treat['2024'])} vs collected {mt(g(mat,'KSA','total','2024'))}. {len(mism)} region-years differ by more than 10%; the worst are " + '; '.join(f"{RN[c][0]} {y} ({(tr/col-1):+.0%})" for c, y, col, tr in worst) + '.',
+  f"المملكة 2021: المعالَج {mt(treat['2021'])} مقابل المجموع {mt(g(mat,'KSA','total','2021'))}؛ 2024: المعالَج {mt(treat['2024'])} مقابل المجموع {mt(g(mat,'KSA','total','2024'))}. تختلف {len(mism)} حالة (منطقة-سنة) بأكثر من 10%، أسوؤها " + '؛ '.join(f"{RN[c][1]} {y} ({(tr/col-1):+.0%})" for c, y, col, tr in worst) + '.',
+  'Flagged ⚠ per region and year on the map and table; landfill and recycling measures use table 3-10 as published.',
+  'معلَّمة بـ⚠ لكل منطقة وسنة في الخريطة والجدول؛ ومقاييس الدفن والتدوير من جدول 3-10 كما نُشر.'),
+ ('major', 'Early treatment data looks filled in as "all landfilled"', 'بيانات المعالجة المبكرة تبدو معبّأة على أنها «كلها دُفنت»',
+  f"Landfill equals collected exactly, with zero recycling, in {len(derived['2017'])} regions in 2017, {len(derived['2018'])} in 2018 and {len(derived['2019'])} in 2019. Recycling is recorded as 0 in {len(zero_rec)} region-years, e.g. Tabuk 2017–2020, Hail and Al-Jouf 2017–2019, Madinah 2023–2024 — more likely missing than zero.",
+  f"يساوي الدفنُ المجموعَ تماماً مع تدوير صفر في {len(derived['2017'])} مناطق في 2017، و{len(derived['2018'])} في 2018، و{len(derived['2019'])} في 2019. والتدوير مسجّل صفراً في {len(zero_rec)} حالة (منطقة-سنة)، مثل تبوك 2017–2020 وحائل والجوف 2017–2019 والمدينة 2023–2024 — والأرجح أنها بيانات ناقصة لا أصفار.",
+  'Regional recycling rates for those years are shown but should not be compared with later years.',
+  'تُعرض نسب التدوير الإقليمية لتلك السنوات لكن لا تُقارن بالسنوات اللاحقة.'),
+ ('major', 'Copied values', 'قيم منسوخة',
+  f"Madinah 2022 landfill and recycling are identical to 2021 to the gram (925,450.318 t and 41,167 t). Hazardous waste exports are exactly {f0(U24['hazardous']['exports'])} t in both 2023 and 2024.",
+  f"أرقام الدفن والتدوير في المدينة المنورة لعام 2022 مطابقة لعام 2021 حتى الغرام (925,450.318 طن و41,167 طن). وصادرات النفايات الخطرة {f0(U24['hazardous']['exports'])} طن تماماً في 2023 و2024.",
+  'Shown as published; treated as carried-forward values.',
+  'تُعرض كما نُشرت، وتُعامَل على أنها قيم مُرحَّلة.'),
+ ('major', 'Waste composition by region jumps implausibly', 'مكوّنات النفايات حسب المنطقة تقفز بشكل غير معقول',
+  f"{len(swings)} cases where one material in one region changes threefold or more in a single year — e.g. Eastern region 'other' 0.42 → 3.02 Mt (2021→22), Eastern plastic 34 kt → 733 kt (2022→23), Riyadh paper 444 → 111 → 614 kt (2021→23), Madinah organic 883 → 186 kt (2019→20). Madinah is now 91% 'other non-organic'.",
+  f"{len(swings)} حالة تتغير فيها مادة واحدة في منطقة واحدة ثلاثة أضعاف أو أكثر في سنة — مثل «أخرى» في الشرقية 0.42 → 3.02 مليون طن (2021→22)، وبلاستيك الشرقية 34 → 733 ألف طن (2022→23)، وورق الرياض 444 → 111 → 614 ألف طن (2021→23)، والعضوية في المدينة 883 → 186 ألف طن (2019→20). والمدينة الآن 91% «غير عضوية أخرى».",
+  'Composition is shown for 2024 only, with Madinah flagged; no material trends by region are drawn.',
+  'تُعرض المكوّنات لعام 2024 فقط مع تعليم المدينة، ولا تُرسم اتجاهات المواد حسب المنطقة.'),
+ ('major', 'Outlier regional values', 'قيم إقليمية شاذة',
+  f"Al-Baha: {g(mat,'SA-11','total','2024')*1000/365/pop['SA-11']:.1f} kg per person per day (Kingdom {nat_pc['2024']:.1f}); its collection more than doubled 2019→2020. Riyadh recycling: {kt(g(trt,'SA-01','recycling','2020'))} in 2020, {f0(g(trt,'SA-01','recycling','2021'))} t in 2021, {kt(g(trt,'SA-01','recycling','2022'))} in 2022.",
+  f"الباحة: {g(mat,'SA-11','total','2024')*1000/365/pop['SA-11']:.1f} كغ للفرد يومياً (المملكة {nat_pc['2024']:.1f})، وتضاعف ما جُمع فيها بين 2019 و2020. تدوير الرياض: {kt(g(trt,'SA-01','recycling','2020'))} في 2020، و{f0(g(trt,'SA-01','recycling','2021'))} طن فقط في 2021، و{kt(g(trt,'SA-01','recycling','2022'))} في 2022.",
+  'Flagged on the region panel.', 'معلَّمة في لوحة المنطقة.'),
+ ('major', 'Early national series is modelled', 'السلسلة الوطنية المبكرة مُنمذَجة',
+  f"Municipal waste 2010–2014 grows a near-constant {min(g10):.2%}–{max(g10):.2%} a year, then jumps {mt_['2016']/mt_['2015']-1:+.0%} and {mt_['2017']/mt_['2016']-1:+.0%}. Recycled municipal waste is exactly 15.0% of collected in every year {rec15[0]}–{rec15[-1]}.",
+  f"تنمو النفايات البلدية 2010–2014 بمعدل شبه ثابت {min(g10):.2%}–{max(g10):.2%} سنوياً، ثم تقفز {mt_['2016']/mt_['2015']-1:+.0%} و{mt_['2017']/mt_['2016']-1:+.0%}. والمُدوَّر يساوي 15.0% من المجموع تماماً في كل سنة من {rec15[0]} إلى {rec15[-1]}.",
+  "The '15% to 3.5%' fall compares an assumed rate with measured ones; the page says so.",
+  'مقارنة «من 15% إلى 3.5%» تقارن نسبة مفترضة بنسب مقيسة، وتذكر الصفحة ذلك.'),
+ ('major', 'GASTAT revised earlier figures between editions', 'راجعت الهيئة أرقاماً سابقة بين الإصدارات',
+  f"Municipal 2023: {mt(rv['municipal_total']['env2023']['2023'])} (2023 edition) → {mt(mt_['2023'])} (2024 edition). Municipal 2017: {mt(rv['municipal_total']['env2021']['2017'])} (2021 edition) → {mt(mt_['2017'])}. Jubail–Yanbu 2018–2021 raised 8–11% between the 2022 and 2023 editions.",
+  f"البلدية 2023: {mt(rv['municipal_total']['env2023']['2023'])} (إصدار 2023) ← {mt(mt_['2023'])} (إصدار 2024). البلدية 2017: {mt(rv['municipal_total']['env2021']['2017'])} (إصدار 2021) ← {mt(mt_['2017'])}. ورُفعت أرقام الجبيل وينبع 2018–2021 بنسبة 8–11% بين إصداري 2022 و2023.",
+  'The 2024 edition is used throughout; older figures quoted elsewhere may differ.',
+  'يُعتمد إصدار 2024 في كل الصفحة، وقد تختلف الأرقام القديمة المقتبسة في أماكن أخرى.'),
+ ('major', 'Jubail–Yanbu 2024 does not add up', 'أرقام الجبيل وينبع 2024 غير متسقة',
+  f"Hazardous + non-hazardous = {f0(jy24_split)} t against a total of {f0(jy['2024'])} t ({f0(jy['2024']-jy24_split)} t unassigned). The published recycling rate is {D['recycling_rate']['v']['jy']['2024']:.1%}, but recycled ÷ total = {jy24_rate_calc:.1%}. Several values end in thirds (e.g. 891,079.9128333 t), suggesting averaged figures.",
+  f"الخطرة + غير الخطرة = {f0(jy24_split)} طن مقابل إجمالي {f0(jy['2024'])} طن ({f0(jy['2024']-jy24_split)} طن غير مصنّفة). ونسبة التدوير المنشورة {D['recycling_rate']['v']['jy']['2024']:.1%} لكن المُدوَّر ÷ الإجمالي = {jy24_rate_calc:.1%}. وتنتهي عدة قيم بأثلاث (مثل 891,079.9128333 طن)، ما يوحي بأرقام متوسطة.",
+  'The published rate is shown; the hazardous share uses the published hazardous rows.',
+  'تُعرض النسبة المنشورة، وتُحسب حصة الخطرة من صفوف الخطرة المنشورة.'),
+ ('major', 'Waste trade figures conflict', 'أرقام تجارة النفايات متضاربة',
+  f"Tables 3-15 and 3-16 carry the same title, 'Waste imports by type'. SEEA trade does not match them (2024 metal waste imports {mt(S24['metal']['imports'])} vs about 0.17 Mt of metal scrap in 3-15; glass {kt(S24['glass']['imports'])} vs 3 kt). Tyre exports {mt(U24['tyres']['exports'])} exceed the {kt(S24['tyres']['total'])} of tyres generated. Hazardous imports went from {kt(S23['hazardous']['imports'])} to {mt(S24['hazardous']['imports'])}.",
+  f"الجدولان 3-15 و3-16 بالعنوان نفسه «واردات النفايات حسب النوع». ولا تطابقهما أرقام الحسابات البيئية (واردات المعادن 2024 {mt(S24['metal']['imports'])} مقابل نحو 0.17 مليون طن خردة معادن في 3-15؛ الزجاج {kt(S24['glass']['imports'])} مقابل 3 آلاف طن). وصادرات الإطارات {mt(U24['tyres']['exports'])} تفوق المتولد منها {kt(S24['tyres']['total'])}. وارتفعت واردات النفايات الخطرة من {kt(S23['hazardous']['imports'])} إلى {mt(S24['hazardous']['imports'])}.",
+  'Trade is quoted from SEEA only, as a watch item, not as a finding.',
+  'تُقتبس التجارة من الحسابات البيئية فقط، كبند متابعة لا كنتيجة.'),
+ ('minor', "Three different 'municipal' totals", 'ثلاثة مجاميع مختلفة لـ«البلدية»',
+  f"Ministry collection {mt(mt_['2024'])}; SEEA 'municipal share' {D['seea']['summary']['Percentage of Municipal Waste of the Total Waste Quantity']['2024']:.1%} of total = {mt(seea_msw)}; SEEA household waste {mt(S24['total']['households'])}.",
+  f"ما جمعته الوزارة {mt(mt_['2024'])}؛ «حصة البلدية» في الحسابات {D['seea']['summary']['Percentage of Municipal Waste of the Total Waste Quantity']['2024']:.1%} من الإجمالي = {mt(seea_msw)}؛ ونفايات الأسر في الحسابات {mt(S24['total']['households'])}.",
+  "The page uses the Ministry's collection figure for municipal waste.", 'تعتمد الصفحة رقم الوزارة للنفايات البلدية.'),
+ ('minor', 'Per-person rates use 2022 population', 'معدل الفرد على سكان 2022',
+  f"The files carry regional population only for the 2022 census. GASTAT's own 2024 national figure is {D['seea']['summary']['municipal solid waste per Capita']['2024']:.2f} kg/day; ours is {nat_pc['2024']:.2f}.",
+  f"لا تتضمن الملفات سكان المناطق إلا لتعداد 2022. ورقم الهيئة الوطني لعام 2024 {D['seea']['summary']['municipal solid waste per Capita']['2024']:.2f} كغ/يوم، ورقمنا {nat_pc['2024']:.2f}.",
+  'Labelled on the map; used for comparing regions, not as an absolute rate.', 'معلَّم على الخريطة؛ للمقارنة بين المناطق لا كمعدل مطلق.'),
+ ('minor', 'Labels, spellings and blanks', 'التسميات والإملاء والخانات الفارغة',
+  "Typos and inconsistent terms ('Incineration mothed', 'cycling method', 'Backfilling' for landfill; 'Healthy burial' in 2022 vs 'Sanitary landfilling'); region names vary across editions (Tabouk, Najarn, Al Bahah, Northern Border); the SEEA contents sheet is headed 'SEEA Waste 2023'; the household column of the use table is empty and some cells are blank where others are 0; SEEA 2023 supply and use totals differ by 6 t.",
+  "أخطاء وتسميات غير متسقة («Incineration mothed» و«cycling method» و«Backfilling» للدفن؛ «Healthy burial» في 2022 مقابل «Sanitary landfilling»)؛ وأسماء المناطق تختلف بين الإصدارات (Tabouk وNajarn وAl Bahah وNorthern Border)؛ وصفحة محتويات الحسابات معنونة «SEEA Waste 2023»؛ وعمود الأسر في جدول الاستخدام فارغ وبعض الخانات فارغة حيث غيرها صفر؛ ويختلف إجمالي العرض والاستخدام لعام 2023 بـ6 أطنان.",
+  'Handled in extraction (names matched to region codes, cells read by position).', 'عولجت عند الاستخراج (مطابقة الأسماء برموز المناطق وقراءة الخلايا حسب الموقع).'),
+ ('minor', 'Out of scope', 'خارج النطاق',
+  "Wastewater tables 3-1 to 3-7 are excluded (liquid effluent); 3-1 in the 2024 edition still only gives 2021.",
+  "استُبعدت جداول مياه الصرف 3-1 إلى 3-7 (سوائل)؛ والجدول 3-1 في إصدار 2024 لا يزال يعطي 2021 فقط.",
+  'Sewage sludge is kept, as GASTAT counts it as waste.', 'أُبقيت حمأة الصرف لأن الهيئة تحتسبها نفايات.'),
+]
+A['register'] = [dict(zip(('sev', 'ten', 'tar', 'en', 'ar', 'hen', 'har'), r)) for r in REG]
+A['proj'] = {'hz_f': hz_f, 'spec_f': spec_f, 'sector_f': {k: v[0] for k, v in sector_f.items()}}
 
 payload = json.dumps({'D': D, 'A': A, 'G': G, 'built': dt.date.today().isoformat()}, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
 
@@ -339,17 +456,20 @@ function renderMapAll(){drawMap();renderPanel();renderTable();
   $('yr').textContent=YEAR;}
 
 // ---------- generic charts (plain SVG; Arabic mirrors horizontal bars, time axes stay left to right)
-function hbars(id,items,o={}){ // items: {label, v, v0?, cls, tip}
-  const W=640,lw=o.lw||190,rh=o.rh||30,H=items.length*rh+8,max=o.max||Math.max(...items.map(i=>Math.max(i.v,i.v0||0)));const bw=W-lw-110,r=RTL();
-  const X=v=>r?W-lw-bw*v/max:lw+0, BW=v=>bw*v/max;
+function hbars(id,items,o={}){ // items: {label, v, v0?, cls, tip}; v0 draws a second (grey) bar for the earlier year
+  const pair=items.some(i=>i.v0!=null);const W=640,lw=o.lw||190,rh=o.rh||(pair?40:30),H=items.length*rh+8,max=o.max||Math.max(...items.map(i=>Math.max(i.v,i.v0||0)));const bw=W-lw-130,r=RTL();
+  const BW=v=>bw*v/max;
   let s=`<svg class="ch" id="svg-${id}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(o.aria||'')}" style="direction:ltr">`;
   items.forEach((it,i)=>{const y=i*rh+4, w=Math.max(1,BW(it.v)), x=r?W-lw-w:lw;
-    s+=`<text class="lab" x="${r?W-lw+10:lw-10}" y="${y+rh/2+1}" text-anchor="end" direction="${r?'rtl':'ltr'}" dominant-baseline="middle">${esc(it.label)}</text>`;
-    if(it.v0!=null){const w0=Math.max(1,BW(it.v0));s+=`<rect class="ghost" x="${r?W-lw-w0:lw}" y="${y+5}" width="${w0}" height="${rh-12}" rx="3"></rect>`;}
-    s+=`<rect class="${it.cls||'s1'}" x="${x}" y="${y+8}" width="${w}" height="${rh-18}" rx="3"></rect>`;
-    s+=`<text class="val" x="${r?x-8:x+w+8}" y="${y+rh/2+1}" text-anchor="start" direction="${r?'rtl':'ltr'}" dominant-baseline="middle">${esc(it.vl||TP(it.v))}</text>`;
+    const by=pair?y+5:y+8, bh=pair?14:rh-18;
+    s+=`<text class="lab" x="${r?W-lw+10:lw-10}" y="${pair?y+rh/2-1:y+rh/2+1}" text-anchor="end" direction="${r?'rtl':'ltr'}" dominant-baseline="middle">${esc(it.label)}</text>`;
+    s+=`<rect class="${it.cls||'s1'}" x="${x}" y="${by}" width="${w}" height="${bh}" rx="3"></rect>`;
+    s+=`<text class="val" x="${r?x-8:x+w+8}" y="${by+bh/2+1}" text-anchor="start" direction="${r?'rtl':'ltr'}" dominant-baseline="middle">${esc(it.vl||TP(it.v))}</text>`;
+    if(it.v0!=null){const w0=Math.max(1,BW(it.v0)),x0=r?W-lw-w0:lw,y0=by+bh+3;
+      s+=`<rect class="s0" x="${x0}" y="${y0}" width="${w0}" height="9" rx="2"></rect>`;
+      s+=`<text x="${r?x0-8:x0+w0+8}" y="${y0+5}" text-anchor="start" direction="${r?'rtl':'ltr'}" dominant-baseline="middle" style="font-size:11px">${esc(TP(it.v0))}</text>`;}
     s+=`<rect class="hit" x="0" y="${y}" width="${W}" height="${rh}" data-tip="${at(it.tip||'')}"></rect>`;});
-  $(id).innerHTML=s+'</svg>';bindTips($(id));}
+  $(id).innerHTML=s+'</svg>'+(pair?`<div class="lg"><span><i style="background:var(--${(items[0].cls||'s1')==='s4'?'c4':'c1'})"></i>2024</span><span><i style="background:var(--c0)"></i>2023</span></div>`:'');bindTips($(id));}
 function stack100(id,rows,cats,o={}){ // rows:{label, parts:{k:v}}; cats:[k,label,cls]
   const W=o.w||640,lw=o.lw||70,rh=o.rh||40,H=rows.length*rh+4,bw=W-lw-10,r=RTL();let s=`<svg class="ch" id="svg-${id}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(o.aria||'')}" style="direction:ltr">`;
   rows.forEach((row,i)=>{const y=i*rh+4,tot=cats.reduce((a,[k])=>a+(row.parts[k]||0),0);let acc=0;
@@ -397,16 +517,16 @@ function render(){
   $('sub').textContent=L('Where the Kingdom\'s waste is generated, where it piles up, and what is — and is not — known about hazardous and industrial waste. Official statistics to 2024.','أين تتولد نفايات المملكة وأين تتراكم، وما المعروف — وغير المعروف — عن النفايات الخطرة والصناعية. إحصاءات رسمية حتى 2024.');
   $('stamp').innerHTML=`<span>${L('Sources','المصادر')}: <b>${L('General Authority for Statistics (GASTAT) — Environment Statistics 2021–2024 and SEEA Waste accounts 2024','الهيئة العامة للإحصاء — إحصاءات البيئة 2021–2024 وحسابات النفايات البيئية الاقتصادية 2024')}</b></span><span>·</span><span>${L('latest year','آخر سنة')} <b class="num">2024</b></span><span>·</span><span>${L('page built','تاريخ البناء')} <b class="num" dir="ltr">${P.built}</b></span>`;
   $('names').innerHTML=L('<b>Names used on this page:</b> GASTAT — General Authority for Statistics · MWAN — National Center for Waste Management · RCJY — Royal Commission for Jubail and Yanbu · MoMAH — Ministry of Municipalities and Housing · SEEA — the UN System of Environmental-Economic Accounting, the framework GASTAT uses for its national waste accounts','<b>الأسماء المستخدمة في هذه الصفحة:</b> الهيئة العامة للإحصاء · المركز الوطني لإدارة النفايات (موان) · الهيئة الملكية للجبيل وينبع · وزارة البلديات والإسكان · نظام المحاسبة البيئية الاقتصادية للأمم المتحدة (SEEA)، الإطار الذي تعتمده الهيئة العامة للإحصاء في حسابات النفايات الوطنية');
-  $('gap').innerHTML=`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 21h20L12 3z"/><path d="M12 10v5M12 18v.01"/></svg><div><b>${L('Read this first.','اقرأ هذا أولاً.')}</b> ${L('GASTAT publishes municipal waste by region, but <b>hazardous waste only as a national total</b> (split by the industry that produced it) and <b>industrial waste only for Jubail and Yanbu</b>. So the map shades regions by municipal waste, and shows hazardous and industrial waste where — and only where — a location is published. In 2024 that covers','تنشر الهيئة العامة للإحصاء النفايات البلدية حسب المنطقة، لكنها تنشر <b>النفايات الخطرة إجمالياً وطنياً فقط</b> (موزعة حسب النشاط المولِّد لها) و<b>النفايات الصناعية للجبيل وينبع فقط</b>. لذلك تُلوَّن المناطق في الخريطة بحسب النفايات البلدية، وتظهر النفايات الخطرة والصناعية حيث يُنشر موقعها — وحيث فقط. وفي 2024 يغطي ذلك')} ${PCT(A.jy_haz['2024']/S24.hazardous.total,0)} ${L('of hazardous waste; the other','من النفايات الخطرة؛ أما الـ')} ${PCT(1-A.jy_haz['2024']/S24.hazardous.total,0)} ${L('has no published location. Nothing on this page spreads national figures across regions by estimate.','الباقية فلا موقع منشور لها. لا توزّع هذه الصفحة أي رقم وطني على المناطق بالتقدير.')}</div>`;
+  $('gap').innerHTML=`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 21h20L12 3z"/><path d="M12 10v5M12 18v.01"/></svg><div><b>${L('Read this first.','اقرأ هذا أولاً.')}</b> ${L('GASTAT publishes municipal waste by region, but <b>hazardous waste only as a national total</b> (split by the industry that produced it) and <b>industrial waste only for Jubail and Yanbu</b>. So the map shades regions by municipal waste, and shows hazardous and industrial waste where — and only where — a location is published. In 2024 that covers','تنشر الهيئة العامة للإحصاء النفايات البلدية حسب المنطقة، لكنها تنشر <b>النفايات الخطرة إجمالياً وطنياً فقط</b> (موزعة حسب النشاط المولِّد لها) و<b>النفايات الصناعية للجبيل وينبع فقط</b>. لذلك تُلوَّن المناطق في الخريطة بحسب النفايات البلدية، وتظهر النفايات الخطرة والصناعية حيث يُنشر موقعها — وحيث فقط. وفي 2024 يغطي ذلك')} ${PCT(A.jy_haz['2024']/S24.hazardous.total,0)} ${L('of hazardous waste; the other','من النفايات الخطرة؛ أما الـ')} ${PCT(1-A.jy_haz['2024']/S24.hazardous.total,0)} ${L('has no published location. Nothing on this page spreads national figures across regions by estimate. The source tables also have','الباقية فلا موقع منشور لها. لا توزّع هذه الصفحة أي رقم وطني على المناطق بالتقدير. وفي الجداول المصدر أيضاً')} <a href="#h-notes" style="color:inherit;font-weight:600">${A.register.length} ${L('data problems, listed at the end','مشكلة بيانات مدرجة في آخر الصفحة')}</a>${L(' — including that most 2024 national figures are 2023 scaled up.',' — منها أن معظم الأرقام الوطنية لعام 2024 هي أرقام 2023 مضروبة في معامل.')}</div>`;
   // KPIs
   const K=[
-   [T(S24.total.total,1),CH(S24.total.total,S23.total.total),L('All waste generated in 2024 — every sector and households','إجمالي النفايات المتولدة في 2024 — كل القطاعات والأسر')+' '+S('seea:2-1'),'var(--eh-sea)'],
-   [T(S24.hazardous.total,1),CH(S24.hazardous.total,S23.hazardous.total),L('Hazardous waste in 2024','النفايات الخطرة في 2024')+' '+S('seea:2-1'),'var(--c4)'],
-   [T(d24.specialised,1),CH(d24.specialised,d23.specialised),L('Hazardous waste handed to specialised waste companies — EH\'s market','نفايات خطرة سُلّمت لشركات متخصصة — سوق آفاق البيئة')+' ('+PCT(d24.specialised/d24.total,0)+') '+S('seea:2-2'),'var(--eh-leaf)'],
+   [T(S24.total.total,1),CH(S24.total.total,S23.total.total),L('All waste generated in 2024 — every sector and households','إجمالي النفايات المتولدة في 2024 — كل القطاعات والأسر')+' '+S('seea:2-1'),'var(--eh-sea)',1],
+   [T(S24.hazardous.total,1),CH(S24.hazardous.total,S23.hazardous.total),L('Hazardous waste in 2024','النفايات الخطرة في 2024')+' '+S('seea:2-1'),'var(--c4)',1],
+   [T(d24.specialised,1),CH(d24.specialised,d23.specialised),L('Hazardous waste handed to waste companies, licensed or informal — the upper bound of EH\'s market','نفايات خطرة سُلّمت لشركات نفايات مرخّصة أو غير رسمية — الحد الأعلى لسوق آفاق البيئة')+' ('+PCT(d24.specialised/d24.total,0)+') '+S('seea:2-2'),'var(--eh-leaf)',1],
    [T(D.municipal_total.v['2024'],1),CH(D.municipal_total.v['2024'],D.municipal_total.v['2023']),L('Municipal waste collected in 2024','النفايات البلدية المجموعة في 2024')+' '+S('env2024:3-8'),'var(--eh-sea)'],
-   [PCT(D.recycling_rate.v.municipal['2024'],1),null,L('of municipal waste recycled in 2024 — it was 15% in 2010–2015','من النفايات البلدية أُعيد تدويرها في 2024 — وكانت 15% في 2010–2015')+' '+S('env2024:3-14'),'var(--eh-bad)'],
+   [PCT(D.recycling_rate.v.municipal['2024'],1),null,L('of municipal waste recycled in 2024. GASTAT gives a flat 15% for 2010–2015, which looks assumed','من النفايات البلدية أُعيد تدويرها في 2024. وتعطي الهيئة 15% ثابتة لـ2010–2015، وتبدو مفترضة')+' '+S('env2024:3-14'),'var(--eh-bad)'],
    [T(D.jy_total.v['2024'],1),CH(D.jy_total.v['2024'],D.jy_total.v['2023']),L('Industrial waste in Jubail and Yanbu, of which','النفايات الصناعية في الجبيل وينبع، أُعيد تدوير')+' '+PCT(D.recycling_rate.v.jy['2024'],0)+' '+L('recycled','منها')+' '+S('env2024:3-11'),'var(--c4)']];
-  $('kstrip').innerHTML=K.map(([v,d,l,c])=>`<div class="kc" style="--k:${c}"><div class="v">${v}</div>${d==null?'':`<div class="d ${d>0?'up':'dn'}"><span class="num" dir="ltr">${SG(d)}</span> ${L('on 2023','عن 2023')}</div>`}<div class="l">${l}</div></div>`).join('');
+  $('kstrip').innerHTML=K.map(([v,d,l,c,pj])=>`<div class="kc" style="--k:${c}"><div class="v">${v}</div>${d==null?'':`<div class="d ${d>0?'up':'dn'}"><span class="num" dir="ltr">${SG(d)}</span> ${L('on 2023','عن 2023')}${pj?` · <span title="${esc(L('GASTAT built most 2024 account figures by scaling 2023 — see Data problems','بنت الهيئة معظم أرقام حسابات 2024 بضرب أرقام 2023 في معامل — انظر مشكلات البيانات'))}" style="border-bottom:1px dotted currentColor;cursor:help">${L('projected','إسقاط')}</span>`:''}</div>`}<div class="l">${l}</div></div>`).join('');
   // map section
   $('h-map').textContent=L('Where municipal waste is collected and where it piles up','أين تُجمع النفايات البلدية وأين تتراكم');
   $('chips').innerHTML=METRICS.map(([k,l])=>`<button class="${k===METRIC?'on':''}" data-m="${k}">${L(l[0],l[1])}</button>`).join('');
@@ -426,16 +546,16 @@ function render(){
 function hazard(){
   const S24=D.seea.supply['2024'],S23=D.seea.supply['2023'],h24=S24.hazardous,h23=S23.hazardous,d24=A.dest['2024'].hazardous,d23=A.dest['2023'].hazardous;
   $('h-haz').textContent=L('Hazardous waste — who produces it and where it goes','النفايات الخطرة — من يولّدها وإلى أين تذهب');
-  $('haz-note').innerHTML=`${T(h24.total,1)} ${L('in 2024, up','في 2024، بزيادة')} <span class="num" dir="ltr">${SG(CH(h24.total,h23.total))}</span> ${L('on','عن')} ${T(h23.total,1)} ${L('in 2023. Medical hazardous waste is counted separately:','في 2023. وتُحسب النفايات الطبية الخطرة منفصلة:')} ${T(S24.hazardous_medical.total,1)}; ${L('electronic waste:','والنفايات الإلكترونية:')} ${T(S24.ewaste.total,1)}. ${S('seea:2-1')}`;
+  $('haz-note').innerHTML=`${T(h24.total,1)} ${L('in 2024 against','في 2024 مقابل')} ${T(h23.total,1)} ${L('in 2023 — the 2024 figure is GASTAT\'s projection from 2023. Medical hazardous waste is counted separately:','في 2023 — ورقم 2024 إسقاط من الهيئة بناءً على 2023. وتُحسب النفايات الطبية الخطرة منفصلة:')} ${T(S24.hazardous_medical.total,1)}; ${L('electronic waste:','والنفايات الإلكترونية:')} ${T(S24.ewaste.total,1)}. ${S('seea:2-1')}`;
   const SEC=[['manufacturing',L('Manufacturing','الصناعة التحويلية')],['construction',L('Construction','التشييد')],['electricity',L('Power, gas & water utilities','الكهرباء والغاز والمرافق')],['mining',L('Mining & quarrying','التعدين واستغلال المحاجر')],['households',L('Households','الأسر')],['other_economic',L('Other activities','أنشطة أخرى')]];
   hbars('c-hzsrc',SEC.map(([k,l])=>({label:l,v:h24[k],v0:h23[k],vl:TP(h24[k])+'  ·  '+PCTp(h24[k]/h24.total),tip:`<b>${l}</b><br>2024: <span class='tn'>${TP(h24[k])}</span> (${PCTp(h24[k]/h24.total,1)})<br>2023: <span class='tn'>${TP(h23[k])}</span>`})),{lw:200,aria:L('Hazardous waste by producing sector, 2024','النفايات الخطرة حسب القطاع المولِّد 2024')});
-  const CATS=[['specialised',L('Specialised waste companies','شركات متخصصة'),'s1'],['recycled',L('Recycled or reused in industry','أُعيد تدويرها أو استخدامها'),'s2'],['landfill',L('Landfill','الدفن'),'s3'],['other',L('Other disposal, incl. open dumping','طرق أخرى منها الإلقاء المكشوف'),'s4']];
+  const CATS=[['specialised',L('Waste companies (licensed or informal)','شركات نفايات (مرخّصة أو غير رسمية)'),'s1'],['recycled',L('Recycled or reused in industry','أُعيد تدويرها أو استخدامها'),'s2'],['landfill',L('Landfill','الدفن'),'s3'],['other',L('Other disposal, incl. open dumping','طرق أخرى منها الإلقاء المكشوف'),'s4']];
   stack100('c-hzdst',[{label:'2023',parts:d23},{label:'2024',parts:d24}],CATS,{aria:L('Where hazardous waste goes','أين تذهب النفايات الخطرة')});
   $('hzdst-lg').innerHTML=lgd(CATS);
   const unk=h24.total-A.jy_haz['2024'];
   stack100('c-hzloc',['2021','2022','2023','2024'].map(y=>({label:y,parts:{jy:A.jy_haz[y],none:g(D.seea.supply,y,'hazardous','total')!=null?g(D.seea.supply,y,'hazardous','total')-A.jy_haz[y]:null}})).filter(r=>r.parts.none!=null),[['jy',L('Jubail & Yanbu','الجبيل وينبع'),'s4'],['none',L('No published location','بلا موقع منشور'),'s0']],{aria:L('Share of hazardous waste with a published location','حصة النفايات الخطرة ذات الموقع المنشور')});
   $('hzloc-lg').innerHTML=lgd([['jy',L('Jubail & Yanbu (RCJY)','الجبيل وينبع (الهيئة الملكية)'),'s4'],['none',L('No published location','بلا موقع منشور'),'s0']]);
-  $('hzread').innerHTML=`<b>${L('Reading','القراءة')}:</b> ${L('four industries produce','أربعة قطاعات تولّد')} ${PCT((h24.manufacturing+h24.construction+h24.electricity+h24.mining)/h24.total,0)} ${L('of hazardous waste; manufacturing alone is','من النفايات الخطرة؛ والصناعة التحويلية وحدها')} ${PCT(h24.manufacturing/h24.total,0)}. ${L('Specialised waste companies — EH\'s line of business — received','واستلمت الشركات المتخصصة — مجال عمل آفاق البيئة —')} ${T(d24.specialised,1)} (${PCT(d24.specialised/d24.total,0)}), ${L('up','بزيادة')} ${T(d24.specialised-d23.specialised,1)} ${L('in a year. Another','خلال عام. وذهب')} ${T(d24.landfill+d24.other,1)} (${PCT((d24.landfill+d24.other)/d24.total,0)}) ${L('went to landfill or "other disposal", which GASTAT says includes open dumping and unsafe burial. Only','إلى الدفن أو «طرق أخرى» تشمل بحسب الهيئة الإلقاء المكشوف والدفن غير الآمن. ولا يُعرف موقع إلا')} ${T(A.jy_haz['2024'],1)} ${L('of the total has a known location (Jubail and Yanbu).','من الإجمالي (الجبيل وينبع).')} ${L('Hazardous waste imports rose from','وارتفعت واردات النفايات الخطرة من')} ${T(S23.hazardous.imports,1)} ${L('to','إلى')} ${T(S24.hazardous.imports,1)}; ${L('GASTAT counts imports inside the sector totals, so part of 2024\'s rise may be imported material.','وتحتسب الهيئة الواردات ضمن مجاميع القطاعات، فقد يكون جزء من ارتفاع 2024 مواد مستوردة.')}`;
+  $('hzread').innerHTML=`<b>${L('Reading','القراءة')}:</b> ${L('four industries produce','أربعة قطاعات تولّد')} ${PCT((h24.manufacturing+h24.construction+h24.electricity+h24.mining)/h24.total,0)} ${L('of hazardous waste; manufacturing alone is','من النفايات الخطرة؛ والصناعة التحويلية وحدها')} ${PCT(h24.manufacturing/h24.total,0)}. ${L('Waste companies — licensed or informal, by GASTAT\'s definition — received','واستلمت شركات النفايات — المرخّصة وغير الرسمية بحسب تعريف الهيئة —')} ${T(d24.specialised,1)} (${PCT(d24.specialised/d24.total,0)}). ${L('The rise on 2023 is GASTAT scaling its 2023 figures by','والارتفاع عن 2023 ناتج عن ضرب الهيئة أرقام 2023 في')} <span class="num" dir="ltr">×${NF(A.proj.spec_f,3)}</span>${L(', not a measured change. Another','، لا تغيّر مقيس. وذهب')} ${T(d24.landfill+d24.other,1)} (${PCT((d24.landfill+d24.other)/d24.total,0)}) ${L('went to landfill or "other disposal", which GASTAT says includes open dumping and unsafe burial. Only','إلى الدفن أو «طرق أخرى» تشمل بحسب الهيئة الإلقاء المكشوف والدفن غير الآمن. ولا يُعرف موقع إلا')} ${T(A.jy_haz['2024'],1)} ${L('of the total has a known location (Jubail and Yanbu).','من الإجمالي (الجبيل وينبع).')} ${L('Hazardous waste imports rose from','وارتفعت واردات النفايات الخطرة من')} ${T(S23.hazardous.imports,1)} ${L('to','إلى')} ${T(S24.hazardous.imports,1)}; ${L('GASTAT counts imports inside the sector totals, so part of 2024\'s rise may be imported material.','وتحتسب الهيئة الواردات ضمن مجاميع القطاعات، فقد يكون جزء من ارتفاع 2024 مواد مستوردة.')}`;
 }
 function industrial(){
   const yrs=Object.keys(D.jy_total.v),jm=D.jy_methods.v,J=D.jy_total.v;const cagr=Math.pow(J['2024']/J['2010'],1/14)-1;
@@ -461,13 +581,13 @@ function national(){
   $('h-nat').textContent=L('The whole picture — all waste, 2024','الصورة الكاملة — كل النفايات 2024');
   $('nat-note').innerHTML=`${L('GASTAT\'s national waste accounts: every tonne generated by every sector and by households.','حسابات النفايات الوطنية: كل طن تولّده القطاعات والأسر.')} ${S('seea:2-1')} ${S('seea:2-2')}`;
   const TY=[['organic',L('Organic (farm, food, garden)','عضوية (زراعية وغذائية وحدائق)')],['construction',L('Construction & demolition','مخلفات البناء والهدم')],['plastic',L('Plastic','بلاستيك')],['hazardous',L('Hazardous','خطرة')],['metal',L('Metal','معادن')],['paper',L('Paper & cardboard','ورق وكرتون')],['misc',L('Mixed (burnable & not)','مختلطة')],['other',L('Other','أخرى')],['slaughter',L('Slaughterhouse','مخلفات المسالخ')],['fines',L('Fines & fluids','دقائق وسوائل')],['sludge',L('Sewage sludge','حمأة الصرف')],['glass',L('Glass','زجاج')],['wood',L('Wood','خشب')],['textiles',L('Textiles, leather, rubber','منسوجات وجلود ومطاط')],['ewaste',L('Electronic','إلكترونية')],['tyres',L('Tyres','إطارات')],['hazardous_medical',L('Medical hazardous','طبية خطرة')]];
-  hbars('c-type',TY.map(([k,l])=>({label:l,v:S24[k].total,v0:S23[k].total,cls:k==='hazardous'||k==='hazardous_medical'?'s4':'s1',vl:TP(S24[k].total),tip:`<b>${l}</b><br>2024: <span class='tn'>${TP(S24[k].total)}</span> (${PCTp(S24[k].total/S24.total.total,1)})<br>2023: <span class='tn'>${TP(S23[k].total)}</span>`})),{lw:210,rh:26,aria:L('Waste by type','النفايات حسب النوع')});
+  hbars('c-type',TY.map(([k,l])=>({label:l,v:S24[k].total,v0:S23[k].total,cls:k==='hazardous'||k==='hazardous_medical'?'s4':'s1',vl:TP(S24[k].total),tip:`<b>${l}</b><br>2024: <span class='tn'>${TP(S24[k].total)}</span> (${PCTp(S24[k].total/S24.total.total,1)})<br>2023: <span class='tn'>${TP(S23[k].total)}</span>`})),{lw:210,rh:34,aria:L('Waste by type','النفايات حسب النوع')});
   const SEC=[['agriculture',L('Agriculture & fishing','الزراعة والصيد')],['construction',L('Construction','التشييد')],['households',L('Households','الأسر')],['manufacturing',L('Manufacturing','الصناعة التحويلية')],['other_economic',L('Other activities','أنشطة أخرى')],['mining',L('Mining & quarrying','التعدين')],['waste_sector',L('Waste & water treatment (sludge)','معالجة النفايات والمياه (حمأة)')],['electricity',L('Power, gas & water utilities','الكهرباء والغاز والمرافق')]];
-  hbars('c-sec',SEC.map(([k,l])=>({label:l,v:S24.total[k],v0:S23.total[k],vl:TP(S24.total[k]),tip:`<b>${l}</b><br>2024: <span class='tn'>${TP(S24.total[k])}</span> (${PCTp(S24.total[k]/S24.total.total,1)})<br>2023: <span class='tn'>${TP(S23.total[k])}</span>`})),{lw:210,rh:28,aria:L('Waste by producing sector','النفايات حسب القطاع')});
-  const CATS=[['specialised',L('Specialised waste companies','شركات متخصصة'),'s1'],['recycled',L('Recycled or reused','أُعيد تدويرها أو استخدامها'),'s2'],['landfill',L('Landfill','الدفن'),'s3'],['other',L('Other disposal, incl. open dumping','طرق أخرى منها الإلقاء المكشوف'),'s4']];
+  hbars('c-sec',SEC.map(([k,l])=>({label:l,v:S24.total[k],v0:S23.total[k],vl:TP(S24.total[k]),tip:`<b>${l}</b><br>2024: <span class='tn'>${TP(S24.total[k])}</span> (${PCTp(S24.total[k]/S24.total.total,1)})<br>2023: <span class='tn'>${TP(S23.total[k])}</span>`})),{lw:210,aria:L('Waste by producing sector','النفايات حسب القطاع')});
+  const CATS=[['specialised',L('Waste companies (licensed or informal)','شركات نفايات (مرخّصة أو غير رسمية)'),'s1'],['recycled',L('Recycled or reused','أُعيد تدويرها أو استخدامها'),'s2'],['landfill',L('Landfill','الدفن'),'s3'],['other',L('Other disposal, incl. open dumping','طرق أخرى منها الإلقاء المكشوف'),'s4']];
   stack100('c-natdst',[{label:'2023',parts:A.dest['2023'].total},{label:'2024',parts:A.dest['2024'].total}],CATS,{aria:L('Where all waste goes','أين تذهب كل النفايات')});
   $('natdst-lg').innerHTML=lgd(CATS);
-  $('natread').innerHTML=`<b>${L('Reading','القراءة')}:</b> ${L('total waste rose','ارتفع إجمالي النفايات')} <span class="num" dir="ltr">${SG(CH(S24.total.total,S23.total.total))}</span> ${L('in a year, to','خلال عام إلى')} ${T(S24.total.total,1)}. ${L('Farming and construction produce over half of it, and households','وتولّد الزراعة والتشييد أكثر من نصفه، والأسر')} ${PCT(S24.total.households/S24.total.total,0)}. ${L('Only','ولا تصل إلى الشركات المتخصصة إلا')} ${PCT(A.dest['2024'].total.specialised/A.dest['2024'].total.total,0)} ${L('reaches specialised waste companies;','؛')} ${PCT((A.dest['2024'].total.landfill+A.dest['2024'].total.other)/A.dest['2024'].total.total,0)} ${L('is landfilled or goes to "other disposal".','تُدفن أو تذهب إلى «طرق أخرى».')}`;
+  $('natread').innerHTML=`<b>${L('Reading','القراءة')}:</b> ${L('total waste is','إجمالي النفايات')} ${T(S24.total.total,1)} ${L('in 2024 — the','في 2024 — والزيادة')} <span class="num" dir="ltr">${SG(CH(S24.total.total,S23.total.total))}</span> ${L('rise is mostly GASTAT scaling 2023 by sector, and the split by producing sector is an allocation (see Data problems).','على 2023 ناتجة في معظمها عن ضرب الهيئة أرقام 2023 بمعاملات قطاعية، وتوزيع القطاعات المولِّدة تقديري (انظر مشكلات البيانات).')} ${L('Farming and construction produce over half of it, and households','وتولّد الزراعة والتشييد أكثر من نصفه، والأسر')} ${PCT(S24.total.households/S24.total.total,0)}. ${L('Only','ولا تصل إلى الشركات المتخصصة إلا')} ${PCT(A.dest['2024'].total.specialised/A.dest['2024'].total.total,0)} ${L('reaches specialised waste companies;','؛')} ${PCT((A.dest['2024'].total.landfill+A.dest['2024'].total.other)/A.dest['2024'].total.total,0)} ${L('is landfilled or goes to "other disposal".','تُدفن أو تذهب إلى «طرق أخرى».')}`;
 }
 function municipal(){
   const yrs=Object.keys(D.municipal_total.v);
@@ -481,18 +601,18 @@ function municipal(){
   stack100('c-comp',['KSA',...order].map(c=>({label:c==='KSA'?L('Kingdom','المملكة'):RN(c),parts:{organic:g(M,c,'organic','2024'),plastic:g(M,c,'plastic','2024'),paper:g(M,c,'paper','2024'),mgf:['metal','glass','fabric'].reduce((s,x)=>s+g(M,c,x,'2024'),0),other:g(M,c,'other','2024')}})),comp,{w:1100,rh:32,lw:150,aria:L('Municipal waste by material and region','النفايات البلدية حسب المادة والمنطقة')});
   $('comp-lg').innerHTML=lgd(comp);
   const R=D.recycling_rate.v.municipal;
-  $('munread').innerHTML=`<b>${L('Reading','القراءة')}:</b> ${L('municipal waste has more than doubled since 2010 (','تضاعفت النفايات البلدية منذ 2010 (')}${T(D.municipal_total.v['2010'],1)} → ${T(D.municipal_total.v['2024'],1)}${L('), while the recycling rate fell from 15% to',')، بينما تراجعت نسبة التدوير من 15% إلى')} ${PCT(R['2024'],1)}. ${L('Almost everything collected ends in sanitary landfill:','ويكاد كل ما يُجمع ينتهي بالدفن الصحي:')} ${PCT(g(TR,'KSA','landfill','2024')/g(TR,'KSA','total','2024'),0)} ${L('of treated municipal waste in 2024.','من النفايات البلدية المعالجة في 2024.')} ${L('About','ونحو')} ${PCT(g(M,'KSA','organic','2024')/g(M,'KSA','total','2024'),0)} ${L('of it is organic, and plastic is the next largest stream.','منها عضوية، ويليها البلاستيك.')}`;
+  $('munread').innerHTML=`<b>${L('Reading','القراءة')}:</b> ${L('municipal waste has more than doubled since 2010 (','تضاعفت النفايات البلدية منذ 2010 (')}${T(D.municipal_total.v['2010'],1)} → ${T(D.municipal_total.v['2024'],1)}${L('). Measured recycling was 7% in 2017 and',')، وكان التدوير المقيس 7% في 2017 و')} ${PCT(R['2024'],1)} ${L('in 2024; the 15% GASTAT shows for 2010–2015 is identical every year and looks assumed.','في 2024؛ أما نسبة 15% التي تظهرها الهيئة لـ2010–2015 فثابتة كل عام وتبدو مفترضة.')} ${L('Almost everything collected ends in sanitary landfill:','ويكاد كل ما يُجمع ينتهي بالدفن الصحي:')} ${PCT(g(TR,'KSA','landfill','2024')/g(TR,'KSA','total','2024'),0)} ${L('of treated municipal waste in 2024.','من النفايات البلدية المعالجة في 2024.')} ${L('About','ونحو')} ${PCT(g(M,'KSA','organic','2024')/g(M,'KSA','total','2024'),0)} ${L('of it is organic, and plastic is the next largest stream.','منها عضوية، ويليها البلاستيك.')}`;
 }
 function forEH(){
   const S24=D.seea.supply['2024'],S23=D.seea.supply['2023'],d24=A.dest['2024'].hazardous,d23=A.dest['2023'].hazardous;
   const mk=g(M,'SA-02','total','2024'),mkr=CODES.map(c=>[c,A.cum_landfill[c]]).sort((a,b)=>b[1]-a[1]).findIndex(r=>r[0]==='SA-02')+1;
   $('h-eh').innerHTML=L('What it means for EH','ماذا يعني لآفاق البيئة')+`<span class="eha">${L('EH analysis','تحليل آفاق البيئة')}</span>`;
   const O=[
-   [L(`<b>The market EH serves grew by a fifth in 2024.</b> Hazardous waste handed to specialised companies rose from ${TP(d23.specialised)} to ${TP(d24.specialised)} in 2024 (${SG(CH(d24.specialised,d23.specialised))}). That is ${PCTp(d24.specialised/d24.total)} of all hazardous waste.`,`<b>السوق الذي تخدمه آفاق البيئة نما بنحو الخُمس في 2024.</b> ارتفعت النفايات الخطرة المسلَّمة لشركات متخصصة من ${TP(d23.specialised)} إلى ${TP(d24.specialised)} في 2024 (${SG(CH(d24.specialised,d23.specialised))})، أي ${PCTp(d24.specialised/d24.total)} من مجمل النفايات الخطرة.`),
-    L('Use these tonnages as the market-size baseline in bids and planning; refresh when GASTAT publishes 2025.','اعتماد هذه الأطنان أساساً لحجم السوق في العطاءات والتخطيط، وتحديثها عند نشر بيانات 2025.')],
+   [L(`<b>EH's market is at most ${TP(d24.specialised)} of hazardous waste a year (${PCTp(d24.specialised/d24.total)} of the total).</b> That is the tonnage GASTAT puts with waste companies, and its definition includes informal operators and unsafe burial, so licensed treatment is only part of it. The ${SG(CH(d24.specialised,d23.specialised))} rise on 2023 is GASTAT scaling its 2023 figures, not observed growth.`,`<b>سوق آفاق البيئة لا يتجاوز ${TP(d24.specialised)} من النفايات الخطرة سنوياً (${PCTp(d24.specialised/d24.total)} من الإجمالي).</b> وهي الكمية التي تنسبها الهيئة لشركات النفايات، وتعريفها يشمل جهات غير رسمية والدفن غير الآمن، فالمعالجة المرخّصة جزء منها فقط. والزيادة ${SG(CH(d24.specialised,d23.specialised))} عن 2023 ناتجة عن ضرب الهيئة أرقام 2023، لا نمو ملاحَظ.`),
+    L('Quote this as an upper-bound market size, not a growth rate. Ask MWAN for tonnage received by licensed facilities to get the real market.','يُستخدم حداً أعلى لحجم السوق لا معدل نمو، ويُطلب من «موان» ما تستلمه المنشآت المرخّصة لمعرفة السوق الفعلي.')],
    [L(`<b>${TP(d24.landfill+d24.other)} of hazardous waste (${PCTp((d24.landfill+d24.other)/d24.total)}) still goes to landfill or "other disposal"</b>, which GASTAT says includes open dumping and unsafe burial. If enforcement tightens, this is the volume most likely to move to licensed treatment.`,`<b>لا يزال ${TP(d24.landfill+d24.other)} من النفايات الخطرة (${PCTp((d24.landfill+d24.other)/d24.total)}) يذهب إلى الدفن أو «طرق أخرى»</b> تشمل بحسب الهيئة الإلقاء المكشوف والدفن غير الآمن. وإذا شُدّدت الرقابة فهذه هي الكمية الأرجح انتقالها إلى المعالجة المرخّصة.`),
     L('Target the producers behind it — manufacturing, construction, utilities and mining — with compliance-led offers.','استهداف القطاعات المولِّدة لها — الصناعة والتشييد والمرافق والتعدين — بعروض قائمة على الامتثال.')],
-   [L(`<b>Four industries produce ${PCTp((S24.hazardous.manufacturing+S24.hazardous.construction+S24.hazardous.electricity+S24.hazardous.mining)/S24.hazardous.total)} of hazardous waste.</b> Construction alone produced ${TP(S24.hazardous.construction)}. That is where giga-project and infrastructure sites sit, although the data does not name them.`,`<b>أربعة قطاعات تولّد ${PCTp((S24.hazardous.manufacturing+S24.hazardous.construction+S24.hazardous.electricity+S24.hazardous.mining)/S24.hazardous.total)} من النفايات الخطرة.</b> والتشييد وحده ولّد ${TP(S24.hazardous.construction)}، وفيه تقع مواقع المشاريع الكبرى والبنية التحتية، وإن لم تسمّها البيانات.`),
+   [L(`<b>Four industries produce ${PCTp((S24.hazardous.manufacturing+S24.hazardous.construction+S24.hazardous.electricity+S24.hazardous.mining)/S24.hazardous.total)} of hazardous waste</b> by GASTAT's allocation (fixed ratios, not plant-level data). Construction alone produced ${TP(S24.hazardous.construction)}. That is where giga-project and infrastructure sites sit, although the data does not name them.`,`<b>أربعة قطاعات تولّد ${PCTp((S24.hazardous.manufacturing+S24.hazardous.construction+S24.hazardous.electricity+S24.hazardous.mining)/S24.hazardous.total)} من النفايات الخطرة</b> بحسب توزيع الهيئة (نسب ثابتة لا بيانات منشآت). والتشييد وحده ولّد ${TP(S24.hazardous.construction)}، وفيه تقع مواقع المشاريع الكبرى والبنية التحتية، وإن لم تسمّها البيانات.`),
     L('Cross-check the stakeholder map: tier the contractors and utilities by these volumes.','مطابقة ذلك مع خريطة أصحاب المصلحة وترتيب المقاولين والمرافق وفق هذه الكميات.')],
    [L(`<b>${PCTp(1-A.jy_haz['2024']/S24.hazardous.total)} of hazardous waste has no published location.</b> None of GASTAT's tables say which regions generate it. EH cannot size its catchment around Al-Juhfah from public data.`,`<b>${PCTp(1-A.jy_haz['2024']/S24.hazardous.total)} من النفايات الخطرة بلا موقع منشور.</b> لا تبيّن جداول الهيئة المناطق المولِّدة لها، فلا تستطيع آفاق البيئة تقدير نطاق خدمتها حول الجحفة من البيانات العامة.`),
     L('Add a request to the MWAN data-request letter: hazardous waste generated by region and waste type, and tonnage received by each licensed facility, 2021–2024.','إضافة طلب إلى خطاب طلب البيانات الموجّه إلى «موان»: النفايات الخطرة المتولدة حسب المنطقة ونوع النفاية، والكميات المستلمة في كل منشأة مرخّصة، 2021–2024.')],
@@ -503,20 +623,11 @@ function forEH(){
   $('opps').innerHTML=O.map(([s,a],i)=>`<div class="opp"><div class="n num">${i+1}</div><div><div class="st">${s}</div><div class="ac"><b>${L('Action','الإجراء')}:</b> ${a}</div></div></div>`).join('');
 }
 function notes(){
-  const R=D.revisions.municipal_total, S24=D.seea.supply['2024'], U24=D.seea.use['2024'];
-  const tn={tyres:L('tyres','الإطارات'),metal:L('metal','المعادن'),hazardous:L('hazardous','الخطرة')};
-  const items=[
-   L('<b>Hazardous waste by region is not published</b> in any of these files. Neither is industrial waste outside Jubail and Yanbu, or for MODON industrial cities. The page shows this gap and does not fill it.','<b>لا تُنشر النفايات الخطرة حسب المنطقة</b> في أي من هذه الملفات، ولا النفايات الصناعية خارج الجبيل وينبع أو في مدن «مدن» الصناعية. تُظهر الصفحة هذه الفجوة ولا تملؤها.'),
-   L(`<b>Municipal totals disagree.</b> Waste treated (table 3-10) and waste collected (3-9) do not match in several region-years. The worst cases are flagged ⚠ in the region table. Makkah 2024: treated ${TP(g(TR,'SA-02','total','2024'))}, collected ${TP(g(M,'SA-02','total','2024'))}.`,`<b>مجاميع النفايات البلدية غير متطابقة.</b> المعالَج (جدول 3-10) والمجموع (3-9) يختلفان في عدة مناطق وسنوات، وأوضح الحالات معلّمة بـ⚠ في جدول المناطق. مكة 2024: المعالَج ${TP(g(TR,'SA-02','total','2024'))} والمجموع ${TP(g(M,'SA-02','total','2024'))}.`),
-   L(`<b>GASTAT revised its figures.</b> Municipal waste for 2023 was ${TP(R.env2023['2023'])} in the 2023 edition and is ${TP(D.municipal_total.v['2023'])} in the 2024 edition. Jubail–Yanbu 2018–2021 were revised up 8–11% (table above). This page always uses the 2024 edition.`,`<b>راجعت الهيئة أرقامها.</b> كانت النفايات البلدية لعام 2023 ${TP(R.env2023['2023'])} في إصدار 2023، وأصبحت ${TP(D.municipal_total.v['2023'])} في إصدار 2024. ورُفعت أرقام الجبيل وينبع 2018–2021 بنسبة 8–11% (الجدول أعلاه). تعتمد هذه الصفحة دائماً إصدار 2024.`),
-   L('<b>Two tables share one title.</b> Tables 3-15 and 3-16 are both titled "Waste imports by type" in the 2024 edition, so one is probably exports. Trade figures here come from the SEEA accounts instead, where imports and exports are labelled.','<b>جدولان بعنوان واحد.</b> الجدولان 3-15 و3-16 في إصدار 2024 كلاهما بعنوان «واردات النفايات حسب النوع»، والأرجح أن أحدهما للصادرات. لذلك تؤخذ أرقام التجارة هنا من الحسابات البيئية الاقتصادية حيث الواردات والصادرات معنونة.'),
-   ...(A.trade_flags.length?[L(`<b>Exports above generation:</b> 2024 exports of ${A.trade_flags.map(t=>tn[t]||t).join(', ')} are larger than the tonnage the accounts say was generated (tyres: ${TP(U24.tyres.exports)} exported vs ${TP(S24.tyres.total)} generated).`,`<b>صادرات تفوق المتولد:</b> صادرات 2024 من ${A.trade_flags.map(t=>tn[t]||t).join('، ')} أكبر من الكمية المتولدة بحسب الحسابات (الإطارات: صادرات ${TP(U24.tyres.exports)} مقابل ${TP(S24.tyres.total)} متولدة).`)]:[]),
-   ...(A.repeat_exports.length?[L(`<b>Repeated figure:</b> hazardous waste exports are exactly ${TP(U24.hazardous.exports)} in both 2023 and 2024. This may be a carried-forward value.`,`<b>رقم مكرر:</b> صادرات النفايات الخطرة ${TP(U24.hazardous.exports)} تماماً في 2023 و2024، وقد تكون قيمة مُرحَّلة.`)]:[]),
-   L(`<b>Per person</b> uses the 2022 census population, the latest regional count in these files. GASTAT's own national figure for 2024 is ${NF(D.seea.summary['municipal solid waste per Capita']['2024'],2)} kg per person per day, which uses a later population.`,`<b>معدل الفرد</b> محسوب على سكان تعداد 2022، أحدث عدّ إقليمي في هذه الملفات. ويبلغ رقم الهيئة الوطني لعام 2024 ${NF(D.seea.summary['municipal solid waste per Capita']['2024'],2)} كغ للفرد يومياً، وهو مبني على سكان أحدث.`),
-   L('<b>Out of scope:</b> wastewater tables 3-1 to 3-7 (liquid effluent). Sewage sludge is included because GASTAT counts it as waste.','<b>خارج النطاق:</b> جداول مياه الصرف 3-1 إلى 3-7 (سوائل). أما حمأة الصرف فمشمولة لأن الهيئة تحتسبها ضمن النفايات.')];
-  $('h-notes').textContent=L('Data notes and gaps','ملاحظات البيانات والفجوات');
-  $('dnotes').innerHTML=`<ul class="dn">${items.map(i=>`<li>${i}</li>`).join('')}</ul>`;
-  // section labels + export buttons
+  const RG=A.register, SEV={critical:[L('Changes conclusions','يغيّر الاستنتاجات'),'var(--eh-bad)','var(--eh-bad-bg)'],major:[L('Use with care','يُستخدم بحذر'),'var(--eh-warn)','var(--eh-warn-bg)'],minor:[L('Minor','بسيط'),'var(--eh-ink-3)','var(--eh-muted-bg)']};
+  $('h-notes').textContent=L('Data problems and gaps','مشكلات البيانات والفجوات');
+  const cnt=k=>RG.filter(r=>r.sev===k).length;
+  $('dnotes').innerHTML=`<div class="note">${L(`${RG.length} problems found by checking every table against itself, against the other tables and against earlier GASTAT editions: ${cnt('critical')} change what the figures can be used for, ${cnt('major')} need care, ${cnt('minor')} are minor. Each says what this page does about it.`,`${RG.length} مشكلة وُجدت بمطابقة كل جدول مع نفسه ومع الجداول الأخرى ومع إصدارات الهيئة السابقة: ${cnt('critical')} تغيّر ما يصح استخدام الأرقام له، و${cnt('major')} تحتاج حذراً، و${cnt('minor')} بسيطة. ولكل منها ما تفعله الصفحة حيالها.`)}</div>`+
+   RG.map((r,i)=>{const sv=SEV[r.sev];return `<div class="opp"><div class="n num" style="color:${sv[1]}">${i+1}</div><div><div class="st"><b>${esc(L(r.ten,r.tar))}</b> <span class="eha" style="background:${sv[2]};color:${sv[1]}">${sv[0]}</span></div><div class="st" style="font-size:13.5px;color:var(--eh-ink-2);margin-top:4px">${esc(L(r.en,r.ar))}</div><div class="ac" style="border-inline-start-color:${sv[1]}"><b style="color:${sv[1]}">${L('On this page','في هذه الصفحة')}:</b> ${esc(L(r.hen,r.har))}</div></div></div>`;}).join('');
   document.querySelectorAll('[data-sec]').forEach(el=>{const k=el.dataset.sec.split('|');el.textContent=L(k[0],k[1]);});
   document.querySelectorAll('.png').forEach(b=>b.textContent=L('Export PNG','تصدير PNG'));
   document.querySelectorAll('[data-t]').forEach(el=>{const k=el.dataset.t.split('|');el.textContent=L(k[0],k[1]);});
@@ -583,7 +694,7 @@ HTML = f"""<!DOCTYPE html>
  <div class="card">
   <h2 id="h-haz"></h2><div class="note" id="haz-note"></div>
   <div class="g2" style="gap:24px">
-   <div><div class="hd"><h3 data-t="Who produces it — 2024 (grey: 2023)|من يولّدها — 2024 (الرمادي: 2023)"></h3><button class="png" onclick="exPNG('c-hzsrc','hazardous_by_sector')">Export PNG</button></div><div id="c-hzsrc"></div></div>
+   <div><div class="hd"><h3 data-t="Who produces it — 2024 and 2023|من يولّدها — 2024 و2023"></h3><button class="png" onclick="exPNG('c-hzsrc','hazardous_by_sector')">Export PNG</button></div><div id="c-hzsrc"></div></div>
    <div><div class="hd"><h3 data-t="Where it goes|إلى أين تذهب"></h3><button class="png" onclick="exPNG('c-hzdst','hazardous_destination')">Export PNG</button></div><div id="hzdst-lg"></div><div id="c-hzdst"></div>
     <div class="hd" style="margin-top:10px"><h3 data-t="How much has a published location|كم منها له موقع منشور"></h3><button class="png" onclick="exPNG('c-hzloc','hazardous_location')">Export PNG</button></div><div id="hzloc-lg"></div><div id="c-hzloc"></div></div>
   </div>
@@ -606,8 +717,8 @@ HTML = f"""<!DOCTYPE html>
  <div class="card">
   <h2 id="h-nat"></h2><div class="note" id="nat-note"></div>
   <div class="g2" style="gap:24px">
-   <div><div class="hd"><h3 data-t="By type — 2024 (grey: 2023)|حسب النوع — 2024 (الرمادي: 2023)"></h3><button class="png" onclick="exPNG('c-type','waste_by_type')">Export PNG</button></div><div id="c-type"></div></div>
-   <div><div class="hd"><h3 data-t="By producing sector — 2024 (grey: 2023)|حسب القطاع المولِّد — 2024 (الرمادي: 2023)"></h3><button class="png" onclick="exPNG('c-sec','waste_by_sector')">Export PNG</button></div><div id="c-sec"></div>
+   <div><div class="hd"><h3 data-t="By type — 2024 and 2023|حسب النوع — 2024 و2023"></h3><button class="png" onclick="exPNG('c-type','waste_by_type')">Export PNG</button></div><div id="c-type"></div></div>
+   <div><div class="hd"><h3 data-t="By producing sector — 2024 and 2023|حسب القطاع المولِّد — 2024 و2023"></h3><button class="png" onclick="exPNG('c-sec','waste_by_sector')">Export PNG</button></div><div id="c-sec"></div>
     <div class="hd" style="margin-top:10px"><h3 data-t="Where it goes|إلى أين تذهب"></h3><button class="png" onclick="exPNG('c-natdst','waste_destination')">Export PNG</button></div><div id="natdst-lg"></div><div id="c-natdst"></div></div>
   </div>
   <div class="read" id="natread"></div>
@@ -621,7 +732,7 @@ HTML = f"""<!DOCTYPE html>
   <div class="read" id="munread"></div>
  </div>
 
- <div class="sec" data-sec="6 · For EH|٦ · لآفاق البيئة"></div>
+ <div class="sec" data-sec="6 · For EH and data problems|٦ · لآفاق البيئة ومشكلات البيانات"></div>
  <div class="card"><h2 id="h-eh"></h2><div id="opps"></div></div>
  <div class="card"><h2 id="h-notes"></h2><div id="dnotes"></div></div>
  <div class="foot" id="foot"></div>

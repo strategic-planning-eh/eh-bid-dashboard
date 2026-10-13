@@ -1,118 +1,150 @@
 # Region review — applied 2026-10-13
 
-## Regions set (7)
+## Regions set (111)
 | Record | From | To | Via duplicate | Confidence |
 |---|---|---|---|---|
-| شركة العالمية للخدمات البيئية | — | Riyadh |  | Reviewer |
-| شركة اعمار للاستشارات الهندسية مهنية | — | Riyadh |  | Reviewer |
-| شركة العربية للخدمات البيئية | — | Riyadh |  | Reviewer |
-| United Specialized Chemicals Factory | Other Makkah Region | Rabigh | المصنع المتحد للكيماويات المتخصصة | High |
-| شركه انفيجن انيرجي المحدوده شركه شحص واحد | — | Riyadh |  | Reviewer |
-| فرع شركة نافال قروب سابورت | — | Jeddah |  | Low |
-| شركة سي ام ايه سي جي ام العربية السعودية المحدودة | — | Jeddah |  | Medium |
+| شركة ألاء السماء المحدودة شركة شخص واحد | — | Qassim Region |  | High |
+| مؤسسة النهر الجاري للتأجير | — | Al Jawf Region |  | High |
+| مؤسسة ثقة الطرق للنقل البري | — | Riyadh |  | High |
+| شركة المنافع المتميزة للتجارة | — | Qassim Region |  | High |
+| مؤسسة عبدالله احمد الشهاب التجارية | — | Eastern Province |  | High |
+| شركة سدر الشمال المحدودة | — | Al Jawf Region |  | High |
+| مؤسسة اشارات واعدة للمقاولات | — | Al Jawf Region |  | High |
+| مؤسسة خالد صلاح صالح الحربي للصيانة والنظافة | — | Other Makkah Region |  | High |
+| مؤسسة الأميال الشرقية لنقل النفايات | — | Eastern Province |  | High |
+| مؤسسة زوايا الخير للخردة والسكراب | — | Qassim Region |  | High |
+| شركة قلعة الصناعة المحدودة | — | Qassim Region |  | High |
+| محل عبدالهادي وديان فالح الشراري للخردة والسكراب | — | Al Jawf Region |  | High |
+| مؤسسة مجد ليلى للتجارة | — | Riyadh |  | High |
+| محل صالحه ضيف الله محمد الشراري للخردة والسكراب | — | Al Jawf Region |  | High |
+| مؤسسة بوح الشمال التجارية | — | Al Jawf Region |  | High |
+| شركة ماء الغيوم للتجارة شخص واحد | — | Other Makkah Region |  | High |
+| شركة مشارق للمقاولات | — | Tabuk Region |  | High |
+| الداعم البيئي للخدمات البيئية | — | Southern Region |  | High |
+| شركة فدك العالميه للمقاولات العامة | — | Eastern Province |  | High |
+| مؤسسة نفايات لنقل النفايات | — | Southern Region |  | High |
+| شركة زبرجد للنقليات | — | Riyadh |  | High |
+| شركة ابتكار المتقدمة للخدمات البيئية شخص واحد | — | Riyadh |  | High |
+| فرع شركة إدارة خدمات البيئة العالمية المحدودة-الجحفة 12 | — | Rabigh |  | High |
+| مؤسسة فرح المواتر لقطع الغيار المستعملة | — | Riyadh |  | High |
+| مؤسسة وزن الجود للخردة والسكراب | — | Riyadh |  | High |
+| مصنع شركة تقنية العالم للزيوت | — | Riyadh |  | High |
+| مؤسسة وادي حلي للخردة والسكراب | — | Southern Region |  | High |
+| شركة الدور المتقدمة للخدمات البيئية | — | Madinah Region |  | High |
+| مؤسسة علي محمد محمد شريفي للخردة والسكراب | — | Southern Region |  | High |
+| شركة الشرق العربي للصيانة والنظافة | — | Southern Region |  | High |
+| مصنع انسبت للعوازل والكيماويات | — | Eastern Province |  | High |
+| مؤسسة نظافة البيئة للتشغيل والصيانة | — | Southern Region |  | High |
+| شركة ويست سولوشنز فور إنفايرونمنت | — | Qassim Region |  | High |
+| شركة منظومة الحلول للخدمات اللوجستية | — | Riyadh |  | High |
+| محمد بن حمد بن عبدالله بن دخيل | — | Riyadh |  | High |
+| مؤسسة العقد الثاني للخدمات البيئية | — | Other Makkah Region |  | High |
+| مؤسسة محمد فهد محمد السريحي للصيانة والنظافة | — | Madinah Region |  | High |
+| شركة ابراهيم بن محمد بن علي عطيف للمقاولات العامة شركة شخص واحد | — | Southern Region |  | High |
+| مؤسسة سدر الشمال لتأجير الحاويات | — | Al Jawf Region |  | High |
+| شركة أفق التنمية للتجارة والمقاولات | — | Riyadh |  | High |
+| شركة الانجاز النوعي للمقاولات | — | Qassim Region |  | High |
+| مؤسسة روائع الشمول التجارية | — | Qassim Region |  | High |
+| مصنع موبل للمنتجات البترولية | — | Riyadh |  | High |
+| مؤسسة عروق الجزيرة للخدمات البيئية | — | Madinah Region |  | High |
+| مؤسسة سعيد عبدالله الشهراني التجارية | — | Southern Region |  | High |
+| مؤسسة محمد صالح علي ال جبير للخردة والسكراب | — | Southern Region |  | High |
+| شركة صلب نجد للنقليات | — | Riyadh |  | High |
+| شركة سدير الاولى للمقاولات | — | Riyadh |  | High |
+| مؤسسة عايض علي عايض الدوسري للتجارة | — | Eastern Province |  | High |
+| شركة السديس اللوجستية | — | Riyadh |  | High |
+| مؤسسة البيادر الفنية للمقاولات العامة | — | Eastern Province |  | High |
+| محل حي الزتون للخردة والسكراب | — | Al Jawf Region |  | High |
+| محل اسهم الخليج للتجارة | — | Riyadh |  | High |
+| موسسة نباتات الشرق للخدمات البيئية | — | Eastern Province |  | High |
+| مصنع الشركة السعودية الهندية لإعادة تكرير زيوت التشحيم من شخص واحد | — | Riyadh |  | High |
+| مؤسسة جزل نجد للتأجير | — | Qassim Region |  | High |
+| مؤسسة الزاوية النموذجية للخدمات اللوجستية | — | Al Jawf Region |  | High |
+| شركة موبل للمواد الكيميائية | — | Riyadh |  | High |
+| مؤسسة جابر بن خلف بن ثروي العنزي للنقليات | — | Riyadh |  | High |
+| مؤسسة نقاوة لخدمات البيئية | — | Qassim Region |  | High |
+| مؤسسة انجاز وثقة الدولية | — | Southern Region |  | High |
+| موسسه ماجد ايراهيم محمد لتجاره الحديد والخرده | — | Southern Region |  | High |
+| مؤسسة منال منور مبارك العنزي للتجارة | — | Hail Region |  | High |
+| مصنع فتون الشارقة للبلاستيك | — | Riyadh |  | High |
+| مؤسسة رواد السرعة الممیز للخردة والسكراب | — | Southern Region |  | High |
+| مؤسسة حنان حماد محمد البلوي للخردة والسكراب | — | Tabuk Region |  | High |
+| مؤسسة محل جودة المستقبل للخردة و السكراب | — | Riyadh |  | High |
+| مؤسسة عبدالعزيز عمر محمد برناوي للتجارة | — | Southern Region |  | High |
+| مؤسسة القيادة الماهرة للنقليات | — | Other Makkah Region |  | High |
+| مؤسسة حزم الشرقية للتجارة | — | Riyadh |  | High |
+| شركة أفاق الجزيرة للخدمات البيئية | — | Al Jawf Region |  | High |
+| مؤسسة شبكة الخليج للنقليات | — | Riyadh |  | High |
+| مؤسسه عماد الخدمات الاولي | — | Southern Region |  | High |
+| مؤسسة شريف عبدالرحمن الزغيبي للخردة والسكراب | — | Qassim Region |  | High |
+| مؤسسة عبد الله حامد سلامة الحازمي للمقاولات العامة | — | Other Makkah Region |  | High |
+| مؤسسة أبيار الشرقيه للتجارة | — | Eastern Province |  | High |
+| شركة العباقرة للتجارة والمقاولات المحدودة | — | Qassim Region |  | High |
+| شركة رؤية المستقبل | — | Southern Region |  | High |
+| شركة بوان المعمار للخدمات | — | Qassim Region |  | High |
+| شركة يريق السراة | — | Southern Region |  | High |
+| مؤسسة أجواء الخير | — | Riyadh |  | High |
+| شركة وفاء القمة للخردة والسكراب | — | Southern Region |  | High |
+| شركة السنافي العاوي | — | Qassim Region |  | High |
+| مؤسسة محمد حسين بن محمد آل تحيفة التجارية | — | Eastern Province |  | High |
+| مؤسسة أسهم الخليج للتجارة | — | Riyadh |  | High |
+| شركة مرافق البحر الاحمر المشتركة للطاقة | — | Tabuk Region |  | High |
+| شركة فرهد العربية للخدمات البيئية | — | Eastern Province |  | High |
+| شركة إمداد البيئة للخدمات البيئية | — | Riyadh |  | High |
+| مؤسسة ساس الوشم للخردة والسكراب | — | Riyadh |  | High |
+| شركة خالد الادهم متعب العنزي وشركائه للتجارة والمقاولات العامة | — | Tabuk Region |  | High |
+| EFSIM Facilities Management Company | — | Tabuk Region |  | High |
+| شركة فنر الشمال للمقاولات شركة شخص واحد | — | Tabuk Region |  | High |
+| مؤسسة فاطمه محمد علي المقبعي للخردة والسكراب | — | Southern Region |  | High |
+| مؤسسة مشاعل محمد بن مسفر آل عاطف للخردة والسكراب | — | Riyadh |  | High |
+| شركة لوقة المحدودة شركة شخص واحد | — | Eastern Province |  | High |
+| مؤسسة السهم الذهبي للصناعة | — | Riyadh |  | High |
+| مؤسسة السكب الذهبي للتأجير | — | Riyadh |  | High |
+| مؤسسة منصور عبدالله مبارك المحمادي لنقل النفايات | — | Other Makkah Region |  | High |
+| مؤسسة متعب بن ضيف الله بن متعب المطيري لتجارة الجملة و التجزئة | — | Riyadh |  | High |
+| مؤسسة التوفيق العمومية للتجارة | — | Tabuk Region |  | High |
+| شركة أصول المتقدمة للمقاولات | — | Eastern Province |  | High |
+| مؤسسة ارقى المدن للصيانة والنظافة | — | Southern Region |  | High |
+| مؤسسة لطيفه بنت زيد بن عبدالله العلي للتجارة | — | Riyadh |  | High |
+| شركة الساحل النظيف للمقاولات | — | Riyadh |  | High |
+| شركة أيبل العربية للمقاولات شركة شخص واحد | — | Riyadh |  | High |
+| مؤسسة حنين فهد نصير اللاحم لقطع غيار السيارات | — | Al Jawf Region |  | High |
+| شركة بترو ساس للصناعة | — | Riyadh |  | High |
+| شركة اوتاد نجد للتجارة | — | Riyadh |  | High |
+| مؤسسة عزيز بن محمد بن محمد هزازي للنقل | — | Qassim Region |  | High |
+| محل مشعل فهد بن مشعل المطيري للخردة والسكراب | — | Riyadh |  | High |
+| مؤسسسة جني الخير للنقليات | — | Eastern Province |  | High |
 
-## Merges (69)
+## Merges (26)
 | Removed (duplicate) | Kept record | Basis |
 |---|---|---|
-| شركة ادارة خدمات البيئة العالمية المحدودة (ريفايفا) | GEMS – Global Environmental Management Services Co. (One-Person Co.) (Reviva) | review row 2004 |
-| شركة د علي صالح الدهيمان للاستشارات البيئية | Dr. Ali Saleh Al-Duhaiman Environmental Consulting Co. (ADECO) | review row 4020 |
-| شركة إسكو للاستشارات البيئية | ESCO Environmental Consulting Co. (One-Person Co.) | review row 4021 |
-| شركة العماد العربي للاستشارات البيئية | Al Emad El Arabi for Environmental Services | review row 4026 |
-| شركة إستدامة خضراء للخدمات البيئية | Green Sustainability Environmental Services Co. (GSCES) (Estedama el Khadra) | review row 4022 |
-| شركة ايفارا المحدودة | Evara Co. Ltd (One-Person Co.) | review row 4023 |
-| شركة خبراء البيئة للمقاولات | Environmental Experts Contracting Co. | review row 4024 |
-| شركة السامر العربية للخدمات البيئية | Al Samer Environmental Services (SAES) | review row 4027 |
-| مكتب التكامل البيئي للاستشارات البيئية | Environmental Integration Consulting Office | review row 4030 |
-| شركة الكيان الأمثل للتجارة | Kayan Al Amthal | review row 4177 |
-| شركة واحة التميز للاستشارات الهندسية شخص واحد | Oasis of Excellence Engineering Consulting Office (OEC) | review row 4025 |
-| مؤسسة مختبر قطرة الحياة للخدمات البيئية | Life Drop Environmental Services Laboratory (Qatret Al Hayah) | review row 4032 |
-| شركة أبعاد الرؤية للاستشارات الهندسية | Vision Dimensions | review row 4178 |
-| شركة نقش للاستشارات البيئية | Naqsh Environmental Consulting Co. | review row 4029 |
-| شركة فيردي للخدمات البيئية | Verde Environmental Services Co. | review row 4035 |
-| شركة لاسكو السعودية للاستشارات الهندسية شركة الشخص الواحد | LASCO Saudi Engineering Consulting Co. (One Person Co.) | review row 4036 |
-| شركة إمتثال للاستشارات البيئية | Imtithal Al-Beeah Environmental Consulting Office | review row 4038 |
-| مكتب فرسان الاستدامة للاستشارات البيئية | Fursan Istedemah Environmental Consultation Office (FIECO) | review row 4043 |
-| شركة البيئه المتجدده للاستشارات البيئية | Renewable Environment Environmental Consulting Co. (One-Person Co.) | review row 4054 |
-| المصنع المتحد للكيماويات المتخصصة | United Specialized Chemicals Factory | review row 2525 |
-| مكتب نقاء البيئة للاستشارات البيئية | Naqaa Environmental (GETES KSA) | review row 4041 |
-| شركة المختبر الخليجي للخدمات الفنية | GCC Lab for Technical Services (One-Person Co.) | review row 4053 |
-| شركة الفا ديم المحدودة | Alpha Deem Co. Ltd | review row 4064 |
-| شركة كيان المتخصصة للخدمات البيئية | Kayan Al-Mukhtassa Environmental Services Est. | review row 4098 |
-| شركة الاندلس للاستشارات الهندسية | Al-Andalus Engineering Consulting Co. | review row 4103 |
-| شركة أركان البيئة للخدمات البيئية | Arkan Al-Beeah Environmental Services Co. (One-Person Co.) | review row 4114 |
-| شركة مكتب اصول البيئة للاستشارات البيئية | Osoul Al-Beeah Environmental Consulting Office (EASC) | review row 4159 |
-| شركة وشنه للمقاولات | Washnah Contracting Co. | review row 4162 |
-| شركة السهول الخضراء للاستشارات البيئية | Green Plains Environmental Consulting  (El Suhoor El Khadra) | review row 4165 |
-| شركة إنجينيرينج برنسبلز للاستشارات الهندسية | Fouad Fahad Al-Saleh & Khalid Al-Duwailah Environmental & Engineering Consulting (FKEC) (Engineering Principles) | review row 4171 |
-| Vekr Environmental Services Est | Vekr Environmental Services Est. | review row 4044 |
-| Geotechnical & Environmental Company Ltd | Geotechnical & Environmental Co. Ltd (GECO) | review row 4046 |
-| شركة تيرا درون العربية للطائرات بدون طيار شركة شخص واحد | Terra Drone | review row 4050 |
-| مؤسسة بصمة حبوة للاستشارات البيئية | Basmat Habwah Environmental Consulting Establishment | review row 4056 |
-| مؤسسة مكتب صديق البيئه للاستشارات البيئية | Environmental Friend Environmental Consulting Office | review row 4057 |
-| رمز للاستشارات المهنية | Ramz Professional Consulting Group | review row 4059 |
-| جامعة القصيم الدراسات والخدمات الإستشارية | Qassim University | review row 4060 |
-| شركة الحلول المستدامة للخدمات البيئية | شركة الحلول المتفردة للخدمات البيئية | review row 4061 |
-| شركة مكتب فيريتاس | Bureau Veritas Office Co. | review row 4065 |
-| شركة وسم الاستدامة للتجارة شركة شخص واحد | Wasm | review row 4067 |
-| شركة تيرا بالس | TerraPulse Co. | review row 4068 |
-| مكتب الدكتور عيسى رمضان الحرتاني للاستشارات البيئية | Dr Eisa Alhartany Environmental Consultancy | review row 4071 |
-| شركة دوم العربية للاستشارات البيئية | Dome Arabia Environmental Consulting Co. | review row 4072 |
-| شركة سيتيك تي بي آي مهندسون استشاريون | Setec TPI Consulting Engineers Co. | review row 4073 |
-| GREEN EAST ENVIRONMENT INTERNATIONA | Green East Environmental Contracting Est. | review row 4077 |
-| شركة حلول عذيب المتكاملة للتقنيات | حلول التخطيط للنقليات | review row 4081 |
-| شركة ماستر وركس | Master Works | review row 4082 |
-| شركة خدمات الحلول المتقدمة للاتصالات | شركة الحلول المتفردة للخدمات البيئية | review row 4086 |
-| شركة ايكوركس المحدودة | Ecoryx Co. Ltd | review row 4093 |
-| شركة أي إل إف مهندسون استشاريون للاستشارات الهندسية | ILF Consulting Services | review row 4094 |
-| شركة مكتب الطاقة الخليجيه للاستشارات البيئية | Gulf Energy Environmental Services/ Gulf Energy for Environmental Measurements | review row 4095 |
-| مكتب سما البيئة للاستشارات البيئية | Samaa Environment Environmental Consulting Office | review row 4096 |
-| مكتب باب مدينة العلم للبحوث والدراسات | City of Science Gate for Research & Studies Office | review row 4099 |
-| شركة امرون العربية للخدمات البيئية | Amron Arabia Environmental Services Co. | review row 4106 |
-| شركة ارثردلتل العربية السعودية | Arthur D Little | review row 4110 |
-| شركة علم شركة مساهمة سعودية | Elm Joint Stock Company | review row 4111 |
-| شركة إمداد الخبرات المحدودة شركة شخص واحد | شركة امداد الشرق للنقليات | review row 4119 |
-| شركة ديلويت آند توش السعودية للاستشارات المحدودة | Deloitte & Touche & Co | review row 4120 |
-| معهد الدراسات والخدمات الاستشارية بجامعة الباحة | Research & Studies Al Baha University | review row 4125 |
-| شركة بلاك ستون العربية لتقنية المعلومات شركة شخص واحد | Blackstone Eit | review row 4133 |
-| جامعة الملك سعود***** | King Saud University | review row 4136 |
-| شركة ريناد المجد لتقنية المعلومات | Renad El Magd (RMG) | review row 4143 |
-| شركة تي يو في راينلاند العربية المحدودة | TUV Rheinland | review row 4144 |
-| ENVIRONMENTAL TESTING AND LABORATORIES C | Environmental Testing & Laboratories Co. | review row 4147 |
-| GREEN EAST ENVIRONMENT CONTRACTING | Green East Environmental Contracting Est. | review row 4150 |
-| شركة ايدوم كونسولتنج الإدارية | IDOM Architecture Consulting (One-Person Co.) | review row 4158 |
-| شركة فيول للاستشارات المهنية | Fuel Professional Consulting | decided in chat |
-| IDOM Consultancy | IDOM Architecture Consulting (One-Person Co.) | decided in chat |
-| Evara Earth | Evara Co. Ltd (One-Person Co.) | decided in chat |
+| LINXON SAUDI ARABIA CO LIMITED | Linxon | review row 2048 |
+| شركة مصنع الشروق الدولية للإسفنج المحدودة | شركة مصنع الشروق للاسفنج المحدودة | review row 2121 |
+| الشركة العالمية للصناعات الحديثة | الشركة الوطنية المتقدمة للاستشارات الهندسية | review row 2203 |
+| شركة صدف الكهرباء الصناعية | شركة صدف الكهرباء الصناعية شركة شخص واحد | review row 2251 |
+| شركة الجزيرة للصناعات البلاستيكية | Al-Jazeera Environmental Consulting Office | review row 2262 |
+| مصنع الحصان الشرقي للمنتجات البلاستيكية | فرع شركة الحصان الشرقي للمنتجات البلاستيكية | review row 2286 |
+| شركه بحر الاحمر للصناعات المحدوده | شركة بحر الأحمر للصناعة المحدودة | review row 2320 |
+| شركة تدوير العربية للخدمات البيئة شركة شخص واحد | شركة تدوير الحديثة للتجارة | review row 2385 |
+| GE Enviro | GE Enviro Company Limited | review row 2546 |
+| شركة ارتال الحديثه المحدودة | شركة ارتال العربية للمقاولات شخص واحد | review row 2555 |
+| شركة أسكاب للخدمات العامة | مؤسسة أسكاب للخدمات البيئية | review row 2610 |
+| شركة العربية للأنابيب والخدمات المحدودة أنابيب | الشركة العربية للأنابيب والخدمات المحدودة أنابيب | review row 2617 |
+| شركة محمد سعد محمد الغريري الدوسري واخوانه | مؤسسة سعد محمد الدوسري التجارية | review row 2662 |
+| شركة فيصل فهد حسين الكري للنقليات شركة شخص واحد | شركة فيصل فهد حسين الكري للنقليات | review row 2675 |
+| شركة عبدالله بن عبدالوهاب البراك واولاده | شركة عبدالله عبدالوهاب البراك للمنتجات البلاستيكية | review row 2681 |
+| شركة إنجاز المدنية للخدمات المحدودة | مؤسسة انجاز المدنية للنقل البري | review row 2684 |
+| مؤسسة اوزون للخدمات البيئية | مؤسسة أوزون البيئية للخدمات البيئية | review row 2769 |
+| مصنع البيئة النقيه للصناعة | مؤسسة البيئة النقية | review row 3120 |
+| مؤسسة راشد بن خالد بن محمد الخاطر للخردة والسكراب | شركة محمد بن عيد بن راشد الخاطر للصناعة | review row 3226 |
+| مؤسسة حبيب معتوق البلادي للمقاولات عامة | شركة أبناء معتوق حبيب البلادي للمقاولات | review row 3305 |
+| مؤسسة مصطفي معيلي المحمادي للنقليات | مؤسسة مصطفي معيلي المحمادي للمقاولات | review row 3394 |
+| مؤسسة حاويات قوى للتأجير | قوى البيئة | review row 3512 |
+| شركة ساس للاستشارات الهندسية شركة شخص واحد | مؤسسة ساس المتقدمة للنقليات | review row 4022 |
+| Green Impact of Environment | Green Impact Environmental Consulting Office | review row 4087 |
+| شركة أرض خضراء للخدمات البيئية شركة شخص واحد | مؤسسة أرض خضراء لنقل النفايات | review row 4109 |
+| مكتب الجزيرة للاستشارات البيئية | Al-Jazeera Environmental Consulting Office | review row 4124 |
 
-## Rejected pairs (29)
-- جامعة الملك عبدالله للعلوم والتقنية ≠ مؤسسة محمد عبدالله الفضل التجارية
-- جامعة الملك عبدالله للعلوم والتقنية ≠ مؤسسة فاطمة عبدالله سعيد التجارية
-- شركة حلول تلاد المتكاملة ≠ الاعلاف المتكاملة
-- شركة حلول تلاد المتكاملة ≠ شركة حلول واتقان المتطورة للبيئة
-- Environmnetal Support Office For Environ ≠ Environmental Support Consulting Office
-- شركة الابنية للاستشارات الهندسية شركة مهنية ذات مسؤولية محدودة من شخص واحد ≠ شركة ابداع المدينة للتجارة شركة شخص واحد ذات مسؤولية محدودة
-- شركة الابنية للاستشارات الهندسية شركة مهنية ذات مسؤولية محدودة من شخص واحد ≠ شركة درع المعادن للخردة والسكراب شركة شخص واحد ذات مسئولية محدودة
-- مكتب تقنيات نظافة البيئة للاستشارات البيئية ≠ مؤسسة نظافة البيئة للخدمات البيئية
-- مؤسسة مكتب الاهتمام البيئي للاستشارات البيئية ≠ مؤسسة الغلاف البيئي للاستشارات البيئية
-- مؤسسة مكتب الاهتمام البيئي للاستشارات البيئية ≠ مؤسسة المدار البيئي للخدمات البيئية
-- شركة مدار الجزيرة للاستشارات الهندسية شركة مهنية شخص واحد ذات مسؤولية محدودة ≠ شركة ابداع المدينة للتجارة شركة شخص واحد ذات مسؤولية محدودة
-- شركة مدار الجزيرة للاستشارات الهندسية شركة مهنية شخص واحد ذات مسؤولية محدودة ≠ شركة مصنع وصائف الجنوب للحديد ذات مسؤلية محدودة
-- شركة الكود الذكي للخدمات التجارية ≠ شركة مواكب الخير للخدمات التجارية
-- شركة الكود الذكي للخدمات التجارية ≠ شركة فراس رائد المغربي للخدمات التجارية
-- شركة تلاد البيئة التجارية ≠ شركة ركن البيئة التجارية
-- شركة تلاد البيئة التجارية ≠ مؤسسة معادن البيئة التجارية
-- شركة ايادي المستقبل التجارية ≠ شركة المدني المعادن سكراب التجارية
-- شركة ايادي المستقبل التجارية ≠ شركة مستقبل النجوم التجارية شركة شخص واحد
-- شركة زمام القوة للتشغيل والصيانة شركة شخص واحد ≠ شركة سما الخليج للتشغيل والصيانة
-- شركة زمام القوة للتشغيل والصيانة شركة شخص واحد ≠ شركة اجراس الشرقية للتشغيل والصيانة
-- شركة المدينة الاولى الاستشارية ≠ شركة المعادن الاولى الصناعية
-- شركة المدينة الاولى الاستشارية ≠ شركة سحاب المدينة التجارية
-- Green Impact of Environment ≠ Green Wave Environmental Co.
-- Green Impact of Environment ≠ Green Path Environmental Consulting Co.
-- SAUDI GEOPHYSICAL CONSULTING OFFICE ≠ Saudi Environmental Consulting Office (Saudi Geophysical)
-- شركة مصادر الجودة البيئية ≠ مؤسسة نبع الجودة للخدمات البيئية
-- شركة خبراء التقنيه الدوليه للتجاره والمقاولات ≠ شركة المهارة العربية للتجارة والمقاولات
-- شركة خبراء التقنيه الدوليه للتجاره والمقاولات ≠ شركة برايت للتجارة والمقاولات المحدودة شركة شخص واحد
-- شركة كيو إنترناشيونال كونسلتنتس ≠ شركة انترناشيونال بروتين الصناعية
+## Rejected pairs (0)
 
-## Held for confirmation: [4078]
+## Held for confirmation: []

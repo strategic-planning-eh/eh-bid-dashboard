@@ -1,0 +1,1025 @@
+{
+ "date": "2026-10-13",
+ "regions_set": [
+  {
+   "row": 4028,
+   "name": "شركة العالمية للخدمات البيئية",
+   "region": "Riyadh",
+   "city": "Riyadh",
+   "confidence": "Reviewer",
+   "source": "Searched: web (AR/EN), bid tracker rosters (bids 18, 25, 65, 68, 82 — no address), workbook twins (Global Environmental Control Co. [597, Jeddah, Low] and Leaf Global [792, Jeddah] share only generic words — not a match)",
+   "method": "Registry/Web",
+   "from": "—",
+   "to": "Riyadh",
+   "via": "",
+   "note": ""
+  },
+  {
+   "row": 4039,
+   "name": "شركة اعمار للاستشارات الهندسية مهنية",
+   "region": "Riyadh",
+   "city": "Riyadh",
+   "confidence": "Reviewer",
+   "source": "Searched: web (AR exact name — only unrelated engineering firms), bid tracker rosters (bids 8, 18, 72 — no address), workbook (Emaar Jassar / Emaar Jeddah / Emaar Al-Manar are different businesses)",
+   "method": "Registry/Web",
+   "from": "—",
+   "to": "Riyadh",
+   "via": "",
+   "note": ""
+  },
+  {
+   "row": 4062,
+   "name": "شركة العربية للخدمات البيئية",
+   "region": "Riyadh",
+   "city": "Riyadh",
+   "confidence": "Reviewer",
+   "source": "Searched: web (AR exact name — hits are Al Samer or unrelated), bid tracker rosters (bids 8, 19, 65, 72, 82 — no address). Not the same as شركة السامر العربية للخدمات البيئية (both appear separately in bids 65 and 82)",
+   "method": "Registry/Web",
+   "from": "—",
+   "to": "Riyadh",
+   "via": "",
+   "note": ""
+  },
+  {
+   "row": 2525,
+   "name": "United Specialized Chemicals Factory",
+   "region": "Rabigh",
+   "city": "Al Juhfah (الجحفة – منطقة المرادم)",
+   "confidence": "High",
+   "source": "Workbook: City cell = الجحفة – منطقة المرادم (MWAN licence register snapshot, Jul 2026); twin row 1722 United Specialized Chemicals Factory (Al Juhfa) is recorded as “Other Makkah Region”, Low",
+   "method": "Workbook clue",
+   "from": "Other Makkah Region",
+   "to": "Rabigh",
+   "via": "المصنع المتحد للكيماويات المتخصصة",
+   "note": "kept record re-regioned to the reviewer's decision"
+  },
+  {
+   "row": 2000,
+   "name": "شركه انفيجن انيرجي المحدوده شركه شحص واحد",
+   "region": "Riyadh",
+   "city": "Riyadh",
+   "confidence": "Reviewer",
+   "source": "Searched: Envision Energy–PIF–Vision Industries JV press releases (Riyadh dateline only; no Saudi office named); naval/press pages; no CR evidence",
+   "method": "Web",
+   "from": "—",
+   "to": "Riyadh",
+   "via": "",
+   "note": ""
+  },
+  {
+   "row": 2003,
+   "name": "فرع شركة نافال قروب سابورت",
+   "region": "Jeddah",
+   "city": "Jeddah (18 staff) / Riyadh (4)",
+   "confidence": "Low",
+   "source": "naval-group.com: “A team of eighteen employees in Djeddah and four in Riyadh” (Naval Group Arabia localisation page); Naval Group Saudi Arabia page names subsidiaries Naval Group Support and Naval Group Arabia but no city",
+   "method": "Web",
+   "from": "—",
+   "to": "Jeddah",
+   "via": "",
+   "note": ""
+  },
+  {
+   "row": 2349,
+   "name": "شركة سي ام ايه سي جي ام العربية السعودية المحدودة",
+   "region": "Jeddah",
+   "city": "Jeddah (HQ, Zahran Business Center); Riyadh regional HQ; Dammam office",
+   "confidence": "Medium",
+   "source": "cma-cgm.com/local/saudi-arabia/offices-contacts — Jeddah office marked “HQ” for CMA CGM Saudi Arabia Ltd",
+   "method": "Web",
+   "from": "—",
+   "to": "Jeddah",
+   "via": "",
+   "note": ""
+  }
+ ],
+ "merges": [
+  {
+   "loser": "شركة ادارة خدمات البيئة العالمية المحدودة (ريفايفا)",
+   "kept": "GEMS – Global Environmental Management Services Co. (One-Person Co.) (Reviva)",
+   "why": "review row 2004",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Jeddah",
+   "loser_region": "—",
+   "loser_bc": 0,
+   "kept_row": 585,
+   "loser_row": 2004
+  },
+  {
+   "loser": "شركة د علي صالح الدهيمان للاستشارات البيئية",
+   "kept": "Dr. Ali Saleh Al-Duhaiman Environmental Consulting Co. (ADECO)",
+   "why": "review row 4020",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 9,
+   "kept_row": 426,
+   "loser_row": 4020
+  },
+  {
+   "loser": "شركة إسكو للاستشارات البيئية",
+   "kept": "ESCO Environmental Consulting Co. (One-Person Co.)",
+   "why": "review row 4021",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Jeddah",
+   "loser_region": "—",
+   "loser_bc": 9,
+   "kept_row": 519,
+   "loser_row": 4021
+  },
+  {
+   "loser": "شركة العماد العربي للاستشارات البيئية",
+   "kept": "Al Emad El Arabi for Environmental Services",
+   "why": "review row 4026",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 8,
+   "kept_row": 1934,
+   "loser_row": 4026
+  },
+  {
+   "loser": "شركة إستدامة خضراء للخدمات البيئية",
+   "kept": "Green Sustainability Environmental Services Co. (GSCES) (Estedama el Khadra)",
+   "why": "review row 4022",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 6,
+   "kept_row": 635,
+   "loser_row": 4022
+  },
+  {
+   "loser": "شركة ايفارا المحدودة",
+   "kept": "Evara Co. Ltd (One-Person Co.)",
+   "why": "review row 4023",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 6,
+   "kept_row": 528,
+   "loser_row": 4023
+  },
+  {
+   "loser": "شركة خبراء البيئة للمقاولات",
+   "kept": "Environmental Experts Contracting Co.",
+   "why": "review row 4024",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 6,
+   "kept_row": 491,
+   "loser_row": 4024
+  },
+  {
+   "loser": "شركة السامر العربية للخدمات البيئية",
+   "kept": "Al Samer Environmental Services (SAES)",
+   "why": "review row 4027",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Jeddah",
+   "loser_region": "—",
+   "loser_bc": 6,
+   "kept_row": 125,
+   "loser_row": 4027
+  },
+  {
+   "loser": "مكتب التكامل البيئي للاستشارات البيئية",
+   "kept": "Environmental Integration Consulting Office",
+   "why": "review row 4030",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Southern Region",
+   "loser_region": "—",
+   "loser_bc": 6,
+   "kept_row": 497,
+   "loser_row": 4030
+  },
+  {
+   "loser": "شركة الكيان الأمثل للتجارة",
+   "kept": "Kayan Al Amthal",
+   "why": "review row 4177",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Jeddah",
+   "loser_region": "—",
+   "loser_bc": 6,
+   "kept_row": 758,
+   "loser_row": 4177
+  },
+  {
+   "loser": "شركة واحة التميز للاستشارات الهندسية شخص واحد",
+   "kept": "Oasis of Excellence Engineering Consulting Office (OEC)",
+   "why": "review row 4025",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 5,
+   "kept_row": 976,
+   "loser_row": 4025
+  },
+  {
+   "loser": "مؤسسة مختبر قطرة الحياة للخدمات البيئية",
+   "kept": "Life Drop Environmental Services Laboratory (Qatret Al Hayah)",
+   "why": "review row 4032",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Eastern Province",
+   "loser_region": "—",
+   "loser_bc": 5,
+   "kept_row": 794,
+   "loser_row": 4032
+  },
+  {
+   "loser": "شركة أبعاد الرؤية للاستشارات الهندسية",
+   "kept": "Vision Dimensions",
+   "why": "review row 4178",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Jeddah",
+   "loser_region": "—",
+   "loser_bc": 5,
+   "kept_row": 1451,
+   "loser_row": 4178
+  },
+  {
+   "loser": "شركة نقش للاستشارات البيئية",
+   "kept": "Naqsh Environmental Consulting Co.",
+   "why": "review row 4029",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 4,
+   "kept_row": 934,
+   "loser_row": 4029
+  },
+  {
+   "loser": "شركة فيردي للخدمات البيئية",
+   "kept": "Verde Environmental Services Co.",
+   "why": "review row 4035",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 4,
+   "kept_row": 1325,
+   "loser_row": 4035
+  },
+  {
+   "loser": "شركة لاسكو السعودية للاستشارات الهندسية شركة الشخص الواحد",
+   "kept": "LASCO Saudi Engineering Consulting Co. (One Person Co.)",
+   "why": "review row 4036",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 4,
+   "kept_row": 1942,
+   "loser_row": 4036
+  },
+  {
+   "loser": "شركة إمتثال للاستشارات البيئية",
+   "kept": "Imtithal Al-Beeah Environmental Consulting Office",
+   "why": "review row 4038",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 4,
+   "kept_row": 720,
+   "loser_row": 4038
+  },
+  {
+   "loser": "مكتب فرسان الاستدامة للاستشارات البيئية",
+   "kept": "Fursan Istedemah Environmental Consultation Office (FIECO)",
+   "why": "review row 4043",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Jeddah",
+   "loser_region": "—",
+   "loser_bc": 4,
+   "kept_row": 1450,
+   "loser_row": 4043
+  },
+  {
+   "loser": "شركة البيئه المتجدده للاستشارات البيئية",
+   "kept": "Renewable Environment Environmental Consulting Co. (One-Person Co.)",
+   "why": "review row 4054",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Jeddah",
+   "loser_region": "—",
+   "loser_bc": 4,
+   "kept_row": 1067,
+   "loser_row": 4054
+  },
+  {
+   "loser": "المصنع المتحد للكيماويات المتخصصة",
+   "kept": "United Specialized Chemicals Factory",
+   "why": "review row 2525",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Other Makkah Region",
+   "loser_region": "—",
+   "loser_bc": 2,
+   "kept_row": 1722,
+   "loser_row": 2525
+  },
+  {
+   "loser": "مكتب نقاء البيئة للاستشارات البيئية",
+   "kept": "Naqaa Environmental (GETES KSA)",
+   "why": "review row 4041",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 3,
+   "kept_row": 590,
+   "loser_row": 4041
+  },
+  {
+   "loser": "شركة المختبر الخليجي للخدمات الفنية",
+   "kept": "GCC Lab for Technical Services (One-Person Co.)",
+   "why": "review row 4053",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Eastern Province",
+   "loser_region": "—",
+   "loser_bc": 3,
+   "kept_row": 584,
+   "loser_row": 4053
+  },
+  {
+   "loser": "شركة الفا ديم المحدودة",
+   "kept": "Alpha Deem Co. Ltd",
+   "why": "review row 4064",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 3,
+   "kept_row": 212,
+   "loser_row": 4064
+  },
+  {
+   "loser": "شركة كيان المتخصصة للخدمات البيئية",
+   "kept": "Kayan Al-Mukhtassa Environmental Services Est.",
+   "why": "review row 4098",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Makkah City",
+   "loser_region": "—",
+   "loser_bc": 3,
+   "kept_row": 759,
+   "loser_row": 4098
+  },
+  {
+   "loser": "شركة الاندلس للاستشارات الهندسية",
+   "kept": "Al-Andalus Engineering Consulting Co.",
+   "why": "review row 4103",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Jeddah",
+   "loser_region": "—",
+   "loser_bc": 3,
+   "kept_row": 146,
+   "loser_row": 4103
+  },
+  {
+   "loser": "شركة أركان البيئة للخدمات البيئية",
+   "kept": "Arkan Al-Beeah Environmental Services Co. (One-Person Co.)",
+   "why": "review row 4114",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 3,
+   "kept_row": 282,
+   "loser_row": 4114
+  },
+  {
+   "loser": "شركة مكتب اصول البيئة للاستشارات البيئية",
+   "kept": "Osoul Al-Beeah Environmental Consulting Office (EASC)",
+   "why": "review row 4159",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Jeddah",
+   "loser_region": "—",
+   "loser_bc": 3,
+   "kept_row": 988,
+   "loser_row": 4159
+  },
+  {
+   "loser": "شركة وشنه للمقاولات",
+   "kept": "Washnah Contracting Co.",
+   "why": "review row 4162",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Jeddah",
+   "loser_region": "—",
+   "loser_bc": 3,
+   "kept_row": 1346,
+   "loser_row": 4162
+  },
+  {
+   "loser": "شركة السهول الخضراء للاستشارات البيئية",
+   "kept": "Green Plains Environmental Consulting  (El Suhoor El Khadra)",
+   "why": "review row 4165",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Eastern Province",
+   "loser_region": "—",
+   "loser_bc": 3,
+   "kept_row": 631,
+   "loser_row": 4165
+  },
+  {
+   "loser": "شركة إنجينيرينج برنسبلز للاستشارات الهندسية",
+   "kept": "Fouad Fahad Al-Saleh & Khalid Al-Duwailah Environmental & Engineering Consulting (FKEC) (Engineering Principles)",
+   "why": "review row 4171",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 3,
+   "kept_row": 573,
+   "loser_row": 4171
+  },
+  {
+   "loser": "Geotechnical & Environmental Company Ltd",
+   "kept": "Geotechnical & Environmental Co. Ltd (GECO)",
+   "why": "review row 4046",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 2,
+   "kept_row": 588,
+   "loser_row": 4046
+  },
+  {
+   "loser": "شركة تيرا درون العربية للطائرات بدون طيار شركة شخص واحد",
+   "kept": "Terra Drone",
+   "why": "review row 4050",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 2,
+   "kept_row": 1485,
+   "loser_row": 4050
+  },
+  {
+   "loser": "مؤسسة بصمة حبوة للاستشارات البيئية",
+   "kept": "Basmat Habwah Environmental Consulting Establishment",
+   "why": "review row 4056",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Tabuk Region",
+   "loser_region": "—",
+   "loser_bc": 2,
+   "kept_row": 349,
+   "loser_row": 4056
+  },
+  {
+   "loser": "مؤسسة مكتب صديق البيئه للاستشارات البيئية",
+   "kept": "Environmental Friend Environmental Consulting Office",
+   "why": "review row 4057",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Jeddah",
+   "loser_region": "—",
+   "loser_bc": 2,
+   "kept_row": 494,
+   "loser_row": 4057
+  },
+  {
+   "loser": "رمز للاستشارات المهنية",
+   "kept": "Ramz Professional Consulting Group",
+   "why": "review row 4059",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 2,
+   "kept_row": 1046,
+   "loser_row": 4059
+  },
+  {
+   "loser": "جامعة القصيم الدراسات والخدمات الإستشارية",
+   "kept": "Qassim University",
+   "why": "review row 4060",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Qassim Region",
+   "loser_region": "—",
+   "loser_bc": 2,
+   "kept_row": 1689,
+   "loser_row": 4060
+  },
+  {
+   "loser": "شركة الحلول المستدامة للخدمات البيئية",
+   "kept": "شركة الحلول المتفردة للخدمات البيئية",
+   "why": "review row 4061",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Eastern Province",
+   "loser_region": "—",
+   "loser_bc": 2,
+   "kept_row": 3604,
+   "loser_row": 4061
+  },
+  {
+   "loser": "شركة مكتب فيريتاس",
+   "kept": "Bureau Veritas Office Co.",
+   "why": "review row 4065",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 2,
+   "kept_row": 372,
+   "loser_row": 4065
+  },
+  {
+   "loser": "شركة وسم الاستدامة للتجارة شركة شخص واحد",
+   "kept": "Wasm",
+   "why": "review row 4067",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 2,
+   "kept_row": 1465,
+   "loser_row": 4067
+  },
+  {
+   "loser": "شركة تيرا بالس",
+   "kept": "TerraPulse Co.",
+   "why": "review row 4068",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Eastern Province",
+   "loser_region": "—",
+   "loser_bc": 2,
+   "kept_row": 1293,
+   "loser_row": 4068
+  },
+  {
+   "loser": "مكتب الدكتور عيسى رمضان الحرتاني للاستشارات البيئية",
+   "kept": "Dr Eisa Alhartany Environmental Consultancy",
+   "why": "review row 4071",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Eastern Province",
+   "loser_region": "—",
+   "loser_bc": 2,
+   "kept_row": 1407,
+   "loser_row": 4071
+  },
+  {
+   "loser": "شركة دوم العربية للاستشارات البيئية",
+   "kept": "Dome Arabia Environmental Consulting Co.",
+   "why": "review row 4072",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 2,
+   "kept_row": 425,
+   "loser_row": 4072
+  },
+  {
+   "loser": "شركة سيتيك تي بي آي مهندسون استشاريون",
+   "kept": "Setec TPI Consulting Engineers Co.",
+   "why": "review row 4073",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 2,
+   "kept_row": 1188,
+   "loser_row": 4073
+  },
+  {
+   "loser": "GREEN EAST ENVIRONMENT INTERNATIONA",
+   "kept": "Green East Environmental Contracting Est.",
+   "why": "review row 4077",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Eastern Province",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 615,
+   "loser_row": 4077
+  },
+  {
+   "loser": "شركة حلول عذيب المتكاملة للتقنيات",
+   "kept": "حلول التخطيط للنقليات",
+   "why": "review row 4081",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Eastern Province",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 2989,
+   "loser_row": 4081
+  },
+  {
+   "loser": "شركة ماستر وركس",
+   "kept": "Master Works",
+   "why": "review row 4082",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 1421,
+   "loser_row": 4082
+  },
+  {
+   "loser": "شركة خدمات الحلول المتقدمة للاتصالات",
+   "kept": "شركة الحلول المتفردة للخدمات البيئية",
+   "why": "review row 4086",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Eastern Province",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 3604,
+   "loser_row": 4086
+  },
+  {
+   "loser": "شركة ايكوركس المحدودة",
+   "kept": "Ecoryx Co. Ltd",
+   "why": "review row 4093",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Eastern Province",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 455,
+   "loser_row": 4093
+  },
+  {
+   "loser": "شركة أي إل إف مهندسون استشاريون للاستشارات الهندسية",
+   "kept": "ILF Consulting Services",
+   "why": "review row 4094",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 1552,
+   "loser_row": 4094
+  },
+  {
+   "loser": "شركة مكتب الطاقة الخليجيه للاستشارات البيئية",
+   "kept": "Gulf Energy Environmental Services/ Gulf Energy for Environmental Measurements",
+   "why": "review row 4095",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Hail Region",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 644,
+   "loser_row": 4095
+  },
+  {
+   "loser": "مكتب سما البيئة للاستشارات البيئية",
+   "kept": "Samaa Environment Environmental Consulting Office",
+   "why": "review row 4096",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Madinah Region",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 1141,
+   "loser_row": 4096
+  },
+  {
+   "loser": "مكتب باب مدينة العلم للبحوث والدراسات",
+   "kept": "City of Science Gate for Research & Studies Office",
+   "why": "review row 4099",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Eastern Province",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 384,
+   "loser_row": 4099
+  },
+  {
+   "loser": "شركة امرون العربية للخدمات البيئية",
+   "kept": "Amron Arabia Environmental Services Co.",
+   "why": "review row 4106",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 251,
+   "loser_row": 4106
+  },
+  {
+   "loser": "شركة ارثردلتل العربية السعودية",
+   "kept": "Arthur D Little",
+   "why": "review row 4110",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 1454,
+   "loser_row": 4110
+  },
+  {
+   "loser": "شركة علم شركة مساهمة سعودية",
+   "kept": "Elm Joint Stock Company",
+   "why": "review row 4111",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 1455,
+   "loser_row": 4111
+  },
+  {
+   "loser": "شركة إمداد الخبرات المحدودة شركة شخص واحد",
+   "kept": "شركة امداد الشرق للنقليات",
+   "why": "review row 4119",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Eastern Province",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 3767,
+   "loser_row": 4119
+  },
+  {
+   "loser": "شركة ديلويت آند توش السعودية للاستشارات المحدودة",
+   "kept": "Deloitte & Touche & Co",
+   "why": "review row 4120",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 1459,
+   "loser_row": 4120
+  },
+  {
+   "loser": "معهد الدراسات والخدمات الاستشارية بجامعة الباحة",
+   "kept": "Research & Studies Al Baha University",
+   "why": "review row 4125",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Southern Region",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 1464,
+   "loser_row": 4125
+  },
+  {
+   "loser": "شركة بلاك ستون العربية لتقنية المعلومات شركة شخص واحد",
+   "kept": "Blackstone Eit",
+   "why": "review row 4133",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "GCC / International",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 1472,
+   "loser_row": 4133
+  },
+  {
+   "loser": "جامعة الملك سعود*****",
+   "kept": "King Saud University",
+   "why": "review row 4136",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 1479,
+   "loser_row": 4136
+  },
+  {
+   "loser": "شركة ريناد المجد لتقنية المعلومات",
+   "kept": "Renad El Magd (RMG)",
+   "why": "review row 4143",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 1482,
+   "loser_row": 4143
+  },
+  {
+   "loser": "شركة تي يو في راينلاند العربية المحدودة",
+   "kept": "TUV Rheinland",
+   "why": "review row 4144",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 1948,
+   "loser_row": 4144
+  },
+  {
+   "loser": "ENVIRONMENTAL TESTING AND LABORATORIES C",
+   "kept": "Environmental Testing & Laboratories Co.",
+   "why": "review row 4147",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Eastern Province",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 516,
+   "loser_row": 4147
+  },
+  {
+   "loser": "GREEN EAST ENVIRONMENT CONTRACTING",
+   "kept": "Green East Environmental Contracting Est.",
+   "why": "review row 4150",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Eastern Province",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 615,
+   "loser_row": 4150
+  },
+  {
+   "loser": "شركة ايدوم كونسولتنج الإدارية",
+   "kept": "IDOM Architecture Consulting (One-Person Co.)",
+   "why": "review row 4158",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "—",
+   "loser_bc": 1,
+   "kept_row": 711,
+   "loser_row": 4158
+  },
+  {
+   "loser": "شركة فيول للاستشارات المهنية",
+   "kept": "Fuel Professional Consulting",
+   "why": "decided in chat",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Southern Region",
+   "loser_region": "—",
+   "loser_bc": 5,
+   "kept_row": 576,
+   "loser_row": 2148
+  },
+  {
+   "loser": "IDOM Consultancy",
+   "kept": "IDOM Architecture Consulting (One-Person Co.)",
+   "why": "decided in chat",
+   "loser_on_map": true,
+   "loser_in_workbook": true,
+   "kept_region": "Riyadh",
+   "loser_region": "Riyadh",
+   "loser_bc": 1,
+   "kept_row": 711,
+   "loser_row": 1943
+  }
+ ],
+ "rejected_pairs": [
+  [
+   "جامعة الملك عبدالله للعلوم والتقنية",
+   "مؤسسة محمد عبدالله الفضل التجارية"
+  ],
+  [
+   "جامعة الملك عبدالله للعلوم والتقنية",
+   "مؤسسة فاطمة عبدالله سعيد التجارية"
+  ],
+  [
+   "شركة حلول تلاد المتكاملة",
+   "الاعلاف المتكاملة"
+  ],
+  [
+   "شركة حلول تلاد المتكاملة",
+   "شركة حلول واتقان المتطورة للبيئة"
+  ],
+  [
+   "Environmnetal Support Office For Environ",
+   "Environmental Support Consulting Office"
+  ],
+  [
+   "شركة الابنية للاستشارات الهندسية شركة مهنية ذات مسؤولية محدودة من شخص واحد",
+   "شركة ابداع المدينة للتجارة شركة شخص واحد ذات مسؤولية محدودة"
+  ],
+  [
+   "شركة الابنية للاستشارات الهندسية شركة مهنية ذات مسؤولية محدودة من شخص واحد",
+   "شركة درع المعادن للخردة والسكراب شركة شخص واحد ذات مسئولية محدودة"
+  ],
+  [
+   "مكتب تقنيات نظافة البيئة للاستشارات البيئية",
+   "مؤسسة نظافة البيئة للخدمات البيئية"
+  ],
+  [
+   "مؤسسة مكتب الاهتمام البيئي للاستشارات البيئية",
+   "مؤسسة الغلاف البيئي للاستشارات البيئية"
+  ],
+  [
+   "مؤسسة مكتب الاهتمام البيئي للاستشارات البيئية",
+   "مؤسسة المدار البيئي للخدمات البيئية"
+  ],
+  [
+   "شركة مدار الجزيرة للاستشارات الهندسية شركة مهنية شخص واحد ذات مسؤولية محدودة",
+   "شركة ابداع المدينة للتجارة شركة شخص واحد ذات مسؤولية محدودة"
+  ],
+  [
+   "شركة مدار الجزيرة للاستشارات الهندسية شركة مهنية شخص واحد ذات مسؤولية محدودة",
+   "شركة مصنع وصائف الجنوب للحديد ذات مسؤلية محدودة"
+  ],
+  [
+   "شركة الكود الذكي للخدمات التجارية",
+   "شركة مواكب الخير للخدمات التجارية"
+  ],
+  [
+   "شركة الكود الذكي للخدمات التجارية",
+   "شركة فراس رائد المغربي للخدمات التجارية"
+  ],
+  [
+   "شركة تلاد البيئة التجارية",
+   "شركة ركن البيئة التجارية"
+  ],
+  [
+   "شركة تلاد البيئة التجارية",
+   "مؤسسة معادن البيئة التجارية"
+  ],
+  [
+   "شركة ايادي المستقبل التجارية",
+   "شركة المدني المعادن سكراب التجارية"
+  ],
+  [
+   "شركة ايادي المستقبل التجارية",
+   "شركة مستقبل النجوم التجارية شركة شخص واحد"
+  ],
+  [
+   "شركة زمام القوة للتشغيل والصيانة شركة شخص واحد",
+   "شركة سما الخليج للتشغيل والصيانة"
+  ],
+  [
+   "شركة زمام القوة للتشغيل والصيانة شركة شخص واحد",
+   "شركة اجراس الشرقية للتشغيل والصيانة"
+  ],
+  [
+   "شركة المدينة الاولى الاستشارية",
+   "شركة المعادن الاولى الصناعية"
+  ],
+  [
+   "شركة المدينة الاولى الاستشارية",
+   "شركة سحاب المدينة التجارية"
+  ],
+  [
+   "Green Impact of Environment",
+   "Green Wave Environmental Co."
+  ],
+  [
+   "Green Impact of Environment",
+   "Green Path Environmental Consulting Co."
+  ],
+  [
+   "SAUDI GEOPHYSICAL CONSULTING OFFICE",
+   "Saudi Environmental Consulting Office (Saudi Geophysical)"
+  ],
+  [
+   "شركة مصادر الجودة البيئية",
+   "مؤسسة نبع الجودة للخدمات البيئية"
+  ],
+  [
+   "شركة خبراء التقنيه الدوليه للتجاره والمقاولات",
+   "شركة المهارة العربية للتجارة والمقاولات"
+  ],
+  [
+   "شركة خبراء التقنيه الدوليه للتجاره والمقاولات",
+   "شركة برايت للتجارة والمقاولات المحدودة شركة شخص واحد"
+  ],
+  [
+   "شركة كيو إنترناشيونال كونسلتنتس",
+   "شركة انترناشيونال بروتين الصناعية"
+  ]
+ ],
+ "held_rows": [
+  4078
+ ],
+ "workbook_rows_deleted": 67,
+ "map_records_removed": 67
+}

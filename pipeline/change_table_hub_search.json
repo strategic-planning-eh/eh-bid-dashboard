@@ -1,0 +1,47 @@
+{
+ "generated": "2026-10-13 10:15",
+ "title": "Change table — hub: company search shows up to 20 results and matches every typed word",
+ "failures": [],
+ "changes": [
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "search",
+   "note": "Index normalised name, subtitle (tier · region) and a normalised blob incl. region bucket",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    QN=mw.EHX.N.map(function(n){\n      return {n:n.n, b:(n.n+' '+(n.typ||'')+' '+(n.sec||'')+' '+(n.reg||'')+' '+(n.city||'')+' '+(n.notes||'')).toLowerCase()};\n    });",
+   "new": "    QN=mw.EHX.N.map(function(n){\n      var k=qNorm(n.n), b=qNorm(n.n+' '+(n.typ||'')+' '+(n.sec||'')+' '+(n.reg||'')+' '+(n.rg||'')+' '+(n.city||'')+' '+(n.notes||''));\n      return {n:n.n, k:k, kc:qCollapse(k+' '+qRoman(k)), s:[n.tier,n.rg].filter(function(x){return x&&x!=='—';}).join(' · '),\n              b:b, bc:qCollapse(b+' '+qRoman(b))};\n    });"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "search",
+   "note": "All-words matching, Arabic/Latin normalisation, Arabic names searchable in Latin letters, 20 results ranked starts-with › in name › elsewhere, subtitle per row",
+   "occurrences": 1,
+   "ok": true,
+   "old": "qEl.addEventListener('input',function(){\n  var v=qEl.value.trim().toLowerCase();\n  if(!v||!QN){ qHide(); return; }\n  var hits=[], rest=[], i;\n  for(i=0;i<QN.length;i++){\n    if(QN[i].n.toLowerCase().indexOf(v)>-1){ if(hits.length<8) hits.push(QN[i].n); }\n    else if(QN[i].b.indexOf(v)>-1){ if(rest.length<8) rest.push(QN[i].n); }\n    if(hits.length>=8) break;\n  }\n  hits=hits.concat(rest).slice(0,8)",
+   "new": "// Same normalisation as the pipeline: NFKC, Arabic alef/taa/yaa variants unified, tatweel and diacritics dropped, case folded.\nfunction qNorm(s){ s=String(s||''); try{ s=s.normalize('NFKC'); }catch(e){}\n  return s.toLowerCase().replace(/[\\u0640\\u200b-\\u200f\\u064b-\\u0652]/g,'').replace(/[\\u0622\\u0623\\u0625]/g,'\\u0627').replace(/\\u0629/g,'\\u0647').replace(/\\u0649/g,'\\u064a').replace(/\\u0624/g,'\\u06"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "search",
+   "note": "Enter opens the selected row by its data-n (row now carries a subtitle)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  else if(e.key==='Enter'&&open&&qIdx>-1){ qGo(qD.querySelectorAll('.qh')[qIdx].textContent); e.preventDefault(); }",
+   "new": "  else if(e.key==='Enter'&&open&&qIdx>-1){ qGo(qD.querySelectorAll('.qh')[qIdx].getAttribute('data-n')); e.preventDefault(); }"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "search",
+   "note": "Taller, slightly wider list so 20 rows are usable; never wider than the phone screen",
+   "occurrences": 1,
+   "ok": true,
+   "old": "id=\"qdrop\" role=\"listbox\" aria-label=\"Companies\" style=\"display:none;position:absolute;top:36px;left:0;width:320px;max-height:300px;",
+   "new": "id=\"qdrop\" role=\"listbox\" aria-label=\"Companies\" style=\"display:none;position:absolute;top:36px;left:0;width:360px;max-width:92vw;max-height:min(60vh,520px);"
+  }
+ ]
+}

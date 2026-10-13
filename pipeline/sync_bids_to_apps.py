@@ -24,6 +24,8 @@ What this does, in order (all idempotent, all on the published copy in site/):
      run. A company the rosters do not name gets bid=False, bc=0. If the workbook had flagged it as a bidder, the flag is kept
      as `claimed=True` (+ a "Claimed bidder (unverified) …" note) so the research is visible but never counted. Confirmations
      from earlier runs do not persist: a company matched last month but absent from today's rosters is reset the same way.
+  g. Regions: pipeline/region_overrides.csv (reviewer decisions, Oct 2026) gives any record whose region is '—' — including
+     one this run just added — the reviewed region, so a region fixed once is never lost to a later sync.
   e. Name bridging lives in pipeline/aliases.csv (tracker_name, map_name, method, status). Rows with status approved/reviewer/
      auto are applied before any fuzzy matching. Every match this run finds by a non-exact method is appended as status=auto
      for a one-time look; reviewer merges from twin_decisions.xlsx are written there too, so the CSV is the durable store.
@@ -323,6 +325,23 @@ def main():
                                f"region and company type unverified. " + roster_sentence(c, stamp),
                       'bid_synced': stamp, 'auto_added': stamp})
 
+    # ---- g. reviewed regions (pipeline/region_overrides.csv, written by apply_region_review.py): a record whose region is
+    #         '—' — including one this run just added from the rosters — takes the region the reviewer decided for that name
+    ov_path = os.path.join(HERE, 'region_overrides.csv'); regions_applied = []
+    if os.path.exists(ov_path):
+        with open(ov_path, encoding='utf-8-sig', newline='') as f: ov = {norm(r['map_name']): r for r in csv.DictReader(f) if r.get('map_name') and r.get('region')}
+        for n in nodes:
+            if n.get('rg') not in ('—', '', None): continue
+            r = ov.get(norm(n['n']))
+            if r is None:
+                for al in re.findall(r'Alias \(merged duplicate\):\s*([^·\n]+)', n.get('notes') or ''):
+                    r = next((ov[norm(x)] for x in re.split(r'\s*[;,/]\s*|\s+\|\s+', al) if norm(x) in ov), None)
+                    if r: break
+            if r is None: continue
+            n['rg'] = r['region']
+            if r.get('city') and not n.get('city'): n['city'] = r['city']
+            n['region_src'] = 'reviewed ' + (r.get('decided') or '')
+            regions_applied.append((n['n'], r['region']))
     # ---- map records that are not companies (a tender title, a rejection reason) stop counting, whatever the rosters say
     for n in nodes:
         if not n.get('merged_into') and n.get('bid') and not looks_like_company(n['n']):
@@ -387,7 +406,7 @@ def main():
               'roster_competitors': len(comps), 'matched': len(matched), 'counts_changed': len(changed), 'added': [c['name'] for c in added],
               'claimed_unverified': len(claimed), 'claimed_names': claimed, 'stale_tracker_confirmations_reset': stale_cleared,
               'aliases_added': new_alias_rows, 'stamp': feed['stamp'], 'reviewer_merges_applied': merges,
-              'not_company_roster_names': not_company_roster_pre + not_company_roster, 'not_company_map_records': not_company_nodes, 'merge_side_chosen_automatically': auto_sides, 'reviewer_flags_cleared': cleared, 'twin_matched_instead_of_added': twin_matched, 'banalytics': ban,
+              'not_company_roster_names': not_company_roster_pre + not_company_roster, 'not_company_map_records': not_company_nodes, 'merge_side_chosen_automatically': auto_sides, 'reviewer_flags_cleared': cleared, 'twin_matched_instead_of_added': twin_matched, 'regions_from_overrides': regions_applied, 'banalytics': ban,
               'possible_twins': [{'a': p['a']['n'], 'b': p['b']['n'], 'score': round(p['score'], 2), 'reason': p['reason']} for p in twin_list],
               'matches': [{'roster': r, 'map': m, 'how': h} for r, m, h in matched], 'changes': [{'map': m, 'from': f, 'to': t} for m, f, t in changed]}
     json.dump(report, open(os.path.join(os.path.dirname(os.path.abspath(a.map)), 'bid_sync_report.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

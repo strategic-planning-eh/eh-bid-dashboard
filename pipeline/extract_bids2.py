@@ -236,6 +236,21 @@ if _os.path.exists(_cp):
         if _k not in _byk: allbids.append(_row); _byk[_k]=_row; _na+=1
     print(f'corrections.json applied: {_nu} rows updated, {_na} rows added')
 
+# ---- client_canon.json: one company = one client name (14 Oct 2026: SEC → Saudi Energy). Exact match after normalising. ----
+_ccp=_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),'client_canon.json')
+def _cnorm(t):
+    t=unicodedata.normalize('NFKC',str(t or '')); t=re.sub(r'[\u0640\u200b-\u200f\u064b-\u0652]','',t)
+    t=re.sub(r'[إأآ]','ا',t).replace('ة','ه').replace('ى','ي'); return re.sub(r'\s+',' ',t).strip().casefold()
+if _os.path.exists(_ccp):
+    _cc={}
+    for _canon,_v in json.load(open(_ccp,encoding='utf-8')).get('clients',{}).items():
+        for _var in [_canon]+_v.get('variants',[]): _cc[_cnorm(_var)]=_canon
+    _nc=0
+    for _b in allbids:
+        _k=_cnorm(_b.get('client'))
+        if _k in _cc and _b.get('client')!=_cc[_k]: _b['client_raw']=_b['client']; _b['client']=_cc[_k]; _nc+=1
+    print(f'client_canon.json applied: {_nc} client names unified')
+
 # offer with VAT: the tracker's own figure where it is a number, else the pre-VAT offer × 1.15 (12 Oct 2026, audit bids-03)
 for _b in allbids:
     if not _b.get('offer'): _b['offer_vat']=None

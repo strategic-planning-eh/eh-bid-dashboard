@@ -1978,13 +1978,12 @@
   },
   {
    "key": "SEC",
-   "en": "Saudi Electricity Co. (SEC / \"Saudi Energy\")",
-   "ar": "الشركة السعودية للكهرباء",
+   "en": "Saudi Energy (formerly Saudi Electricity Company, SEC)",
+   "ar": "الشركة السعودية للطاقة (الشركة السعودية للكهرباء سابقاً)",
    "link_en": "PIF owns about 74%",
    "link_ar": "الصندوق نحو 74%",
    "map_names": [
-    "Saudi Electricity Company (SEC)",
-    "Saudi Energy",
+    "Saudi Energy (formerly SEC)",
     "Saudi Electricity Project Development Co. (One-Person Co.)"
    ],
    "client_pattern": "الشركة السعودية للكهرباء|Saudi Electricity|^Saudi Energy|^SE$|الشركة السعودية للطاقة|Project Development Company \\(PDC\\)",

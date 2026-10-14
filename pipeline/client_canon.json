@@ -1,0 +1,9 @@
+{
+ "_note": "One company = one client name everywhere in the hub. extract_bids2.py replaces any listed spelling in the tracker's client column with the canonical Arabic name (the raw text is kept as client_raw); client_aliases.json gives its English name, which must equal the Stakeholder Map record so the apps link. Match is exact after trimming and normalising Arabic letters — a cell naming a subsidiary (e.g. Project Development Company) is NOT folded. Added 14 Oct 2026: Saudi Electricity Company rebranded as Saudi Energy (Feb 2026).",
+ "clients": {
+  "الشركة السعودية للطاقة": {
+   "en": "Saudi Energy (formerly SEC)",
+   "variants": ["الشركة السعودية للطاقة", "الشركة السعودية للكهرباء", "الشركة السعودية للكهرباء (SE)", "السعودية للطاقة", "السعودية للكهرباء", "Saudi Energy", "Saudi Energy Company", "Saudi Electricity", "Saudi Electricity Company", "Saudi Electricity Company (SEC)", "Saudi Electricity Co.", "SEC", "SE"]
+  }
+ }
+}

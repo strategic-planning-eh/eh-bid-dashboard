@@ -176,7 +176,10 @@ REG = [
   "استُبعدت جداول مياه الصرف 3-1 إلى 3-7 (سوائل)؛ والجدول 3-1 في إصدار 2024 لا يزال يعطي 2021 فقط.",
   'Sewage sludge is kept, as GASTAT counts it as waste.', 'أُبقيت حمأة الصرف لأن الهيئة تحتسبها نفايات.'),
 ]
-A['register'] = [dict(zip(('sev', 'ten', 'tar', 'en', 'ar', 'hen', 'har'), r)) for r in REG]
+import re as _re
+def _uen(x): return _re.sub(r'(\d) t\b', r'\1 tonnes', _re.sub(r'(\d) kt\b', r'\1 thousand tonnes', _re.sub(r'(\d) Mt\b', r'\1 million tonnes', x)))
+def _uar(x): return _re.sub(r'(\d) kt\b', r'\1 ألف طن', _re.sub(r'(\d) Mt\b', r'\1 مليون طن', x))
+A['register'] = [dict(zip(('sev', 'ten', 'tar', 'en', 'ar', 'hen', 'har'), (r[0], r[1], r[2], _uen(r[3]), _uar(r[4]), r[5], r[6]))) for r in REG]
 A['proj'] = {'hz_f': hz_f, 'spec_f': spec_f, 'sector_f': {k: v[0] for k, v in sector_f.items()},
   'con_f': fac(S23['construction']['construction'], S24['construction']['construction']),
   'tot_f': fac(S23['total']['total'], S24['total']['total']),
@@ -320,9 +323,9 @@ const NF=(v,d=0)=>v==null||isNaN(v)?'—':Number(v).toLocaleString('en-US',{mini
 const N=(v,d=0)=>`<span class="num" dir="ltr">${NF(v,d)}</span>`;
 // tonnes, readable: 6.9 Mt / 694 thousand t
 function T(v,short){ if(v==null||isNaN(v))return '—'; const a=Math.abs(v);
-  if(a>=1e6){const d=a>=1e7?1:2;return `<span class="num" dir="ltr">${NF(v/1e6,d)}</span> ${L(short?'Mt':'million t','مليون طن')}`;}
-  if(a>=1e3) return `<span class="num" dir="ltr">${NF(v/1e3,0)}</span> ${L(short?'kt':'thousand t','ألف طن')}`;
-  return `<span class="num" dir="ltr">${NF(v,0)}</span> ${L('t','طن')}`;}
+  if(a>=1e6){const d=a>=1e7?1:2;return `<span class="num" dir="ltr">${NF(v/1e6,d)}</span> ${L('million tonnes','مليون طن')}`;}
+  if(a>=1e3) return `<span class="num" dir="ltr">${NF(v/1e3,0)}</span> ${L('thousand tonnes','ألف طن')}`;
+  return `<span class="num" dir="ltr">${NF(v,0)}</span> ${L('tonnes','طن')}`;}
 const TP=v=>T(v,true).replace(/<[^>]+>/g,'');                       // plain text for SVG
 const PCT=(v,d=1)=>v==null||isNaN(v)?'—':`<span class="num" dir="ltr">${NF(v*100,d)}%</span>`;
 const PCTp=(v,d=0)=>NF(v*100,d)+'%';
@@ -380,7 +383,8 @@ function scaleFor(metric,vals){const dark=document.body.classList.contains('dark
   const r=(metric==='recrate'?RAMPG:RAMP)[dark];const q=vals.filter(v=>v!=null).sort((a,b)=>a-b);
   const br=[0.2,0.4,0.6,0.8].map(p=>q[Math.min(q.length-1,Math.floor(p*q.length))]);
   const lo=q[0],hi=q[q.length-1];const edges=[lo,...br,hi];
-  return {col:v=>v==null?null:r[br.filter(b=>v>=b).length],bins:r.map((c,i)=>[c,fmtM(metric,edges[i],1)+' – '+fmtM(metric,edges[i+1],1)])};}
+  const rng=(x,y)=>{const A1=fmtM(metric,x,1),B1=fmtM(metric,y,1),m1=A1.match(/^([^ ]+) (.+)$/),m2=B1.match(/^([^ ]+) (.+)$/);return m1&&m2&&m1[2]===m2[2]?m1[1]+' – '+B1:A1+' – '+B1;};
+  return {col:v=>v==null?null:r[br.filter(b=>v>=b).length],bins:r.map((c,i)=>[c,rng(edges[i],edges[i+1])])};}
 
 // ---------- map
 const PTSDATA=[
@@ -471,7 +475,7 @@ function pdefs(id){return `<defs>${['s0','s1','s2','s3','s4'].map(c=>`<pattern i
 const PF=(id,c)=>`fill="url(#${id}-p${c})"`;
 function badge(k){return k==='proj'?`<span class="bdg proj" title="${esc(L('GASTAT\'s national waste accounts: 2023 split across industries with fixed ratios, and 2024 built by multiplying 2023 by one factor per sector','حسابات النفايات الوطنية: توزيع 2023 على القطاعات بنسب ثابتة، و2024 مبنية بضرب 2023 في معامل لكل قطاع'))}">${L('Model · 2024 projected','نموذج · 2024 إسقاط')}</span>`:`<span class="bdg rep" title="${esc(L('Figures reported by the agency that collects them (Ministry of Municipalities and Housing, Royal Commission)','أرقام تبلّغ عنها الجهة التي تجمعها (وزارة البلديات والإسكان، الهيئة الملكية)'))}">${L('Reported','مُبلَّغ عنه')}</span>`;}
 function hbars(id,items,o={}){ // items: {label, v, v0?, cls, tip}; v0 draws a second (grey) bar for the earlier year
-  const pair=items.some(i=>i.v0!=null);const W=640,lw=o.lw||190,rh=o.rh||(pair?40:30),H=items.length*rh+8,max=o.max||Math.max(...items.map(i=>Math.max(i.v,i.v0||0)));const bw=W-lw-130,r=RTL();
+  const pair=items.some(i=>i.v0!=null);const W=640,lw=o.lw||190,rh=o.rh||(pair?40:30),H=items.length*rh+8,max=o.max||Math.max(...items.map(i=>Math.max(i.v,i.v0||0)));const bw=W-lw-170,r=RTL();
   const BW=v=>bw*v/max;
   let s=`<svg class="ch" id="svg-${id}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(o.aria||'')}" style="direction:ltr">`+(o.proj?pdefs(id):'');
   items.forEach((it,i)=>{const y=i*rh+4, w=Math.max(1,BW(it.v)), x=r?W-lw-w:lw;
@@ -493,7 +497,7 @@ function stack100(id,rows,cats,o={}){ // rows:{label, parts:{k:v}}; cats:[k,labe
       if(w>44)s+=`<text x="${x+w/2}" y="${y+rh/2-2}" text-anchor="middle" dominant-baseline="middle" style="fill:#fff;font-weight:600;pointer-events:none" direction="ltr">${PCTp(v/tot)}</text>`;acc+=w;});});
   $(id).innerHTML=s+'</svg>';bindTips($(id));}
 function vstack(id,years,series,o={}){ // series:[{k,label,cls,vals[]}] ; unknown=null drawn hatched
-  const W=o.w||640,H=o.h||260,pl=56,pr=10,pt=10,pb=26;const tot=years.map((_,i)=>series.reduce((a,s)=>a+(s.vals[i]||0),0));const max=niceMax(Math.max(...tot,o.total?Math.max(...o.total.filter(v=>v!=null)):0));
+  const W=o.w||640,H=o.h||260,pl=92,pr=10,pt=10,pb=26;const tot=years.map((_,i)=>series.reduce((a,s)=>a+(s.vals[i]||0),0));const max=niceMax(Math.max(...tot,o.total?Math.max(...o.total.filter(v=>v!=null)):0));
   const bw=(W-pl-pr)/years.length, Yp=v=>pt+(H-pt-pb)*(1-v/max);let s=`<svg class="ch" id="svg-${id}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(o.aria||'')}" style="direction:ltr">`;
   s+=`<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="var(--eh-muted-bg)"/><line x1="0" y1="0" x2="0" y2="6" stroke="var(--eh-ink-3)" stroke-width="1.2"/></pattern></defs>`;
   ticks(max).forEach(t=>{s+=`<line class="grid" x1="${pl}" x2="${W-pr}" y1="${Yp(t)}" y2="${Yp(t)}"></line><text x="${pl-6}" y="${Yp(t)}" text-anchor="end" dominant-baseline="middle">${axisT(t)}</text>`;});
@@ -506,7 +510,7 @@ function vstack(id,years,series,o={}){ // series:[{k,label,cls,vals[]}] ; unknow
   s+=`<line class="axis" x1="${pl}" x2="${W-pr}" y1="${Yp(0)}" y2="${Yp(0)}"></line>`;
   $(id).innerHTML=s+'</svg>';bindTips($(id));}
 function lineChart(id,years,series,o={}){ // up to 2 series; o.pct for shares
-  const W=o.mini?300:640,H=o.h||220,pl=o.mini?40:56,pr=12,pt=10,pb=24;const all=series.flatMap(s=>s.v).filter(v=>v!=null);const max=o.max||niceMax(Math.max(...all));
+  const W=o.mini?300:640,H=o.h||220,pl=o.mini?70:92,pr=12,pt=10,pb=24;const all=series.flatMap(s=>s.v).filter(v=>v!=null);const max=o.max||niceMax(Math.max(...all));
   const X=i=>pl+(W-pl-pr)*i/(years.length-1),Yp=v=>pt+(H-pt-pb)*(1-v/max);let s=`<svg class="ch" id="svg-${id}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(o.aria||'')}" style="direction:ltr">`;
   ticks(max,o.mini?3:5).forEach(t=>{s+=`<line class="grid" x1="${pl}" x2="${W-pr}" y1="${Yp(t)}" y2="${Yp(t)}"></line><text x="${pl-6}" y="${Yp(t)}" text-anchor="end" dominant-baseline="middle">${o.pct?NF(t*100)+'%':axisT(t)}</text>`;});
   series.forEach((sr,j)=>{const pts=sr.v.map((v,i)=>v==null?null:[X(i),Yp(v)]);let d='';pts.forEach((p,i)=>{if(!p)return;d+=(i&&pts[i-1]?'L':'M')+p[0]+','+p[1];});
@@ -535,7 +539,7 @@ function factorChart(id){
   $(id).innerHTML=s+'</svg>'+`<div class="lg"><span><i class="h" style="background:var(--c1)"></i>${L('Projected — the multiplier GASTAT applied to 2023','إسقاط — المعامل الذي طبّقته الهيئة على 2023')}</span><span><i style="background:var(--c2)"></i>${L('Reported — real change in the collecting agency\'s figures','مُبلَّغ عنه — تغيّر فعلي في أرقام الجهة الجامعة')}</span></div>`;bindTips($(id));}
 function niceMax(v){if(!(v>0))return 1;const p=Math.pow(10,Math.floor(Math.log10(v)));const n=v/p;return ([1,1.2,1.5,2,2.5,3,4,5,6,8,10].find(x=>n<=x))*p;}
 function ticks(max,n=4){const out=[];for(let i=0;i<=n;i++)out.push(max*i/n);return out;}
-function axisT(v){return v>=1e6?NF(v/1e6,v%1e6?1:0)+'M':v>=1e3?NF(v/1e3)+'k':NF(v);}
+function axisT(v){return v>=1e6?NF(v/1e6,v%1e6?1:0)+(LANG==='ar'?' مليون':' million'):v>=1e3?NF(v/1e3)+(LANG==='ar'?' ألف':' thousand'):NF(v);}
 function lgd(cats){return `<div class="lg">${cats.map(([k,l,cls])=>`<span><i style="background:var(--c${cls.slice(1)})"></i>${l}</span>`).join('')}</div>`;}
 
 // ---------- sections
@@ -739,7 +743,7 @@ HTML = f"""<!DOCTYPE html>
  <div class="sec" data-sec="3 · Industrial waste|٣ · النفايات الصناعية"></div>
  <div class="card">
   <div class="hd"><h2 id="h-ind" data-b="rep"></h2><button class="png" onclick="exPNG('c-ind','industrial_jubail_yanbu')">Export PNG</button></div><div class="note" id="ind-note"></div>
-  <div id="ind-lg"></div><div class="note" data-t="Tonnes (k = thousand, M = million)|بالطن (k = ألف، M = مليون)" style="margin:0"></div><div id="c-ind"></div>
+  <div id="ind-lg"></div><div class="note" data-t="Tonnes|بالطن" style="margin:0"></div><div id="c-ind"></div>
   <div class="g2" style="gap:24px;margin-top:14px">
    <div><div class="hd"><h3 data-t="Hazardous share, by method (2021–2024)|النفايات الخطرة حسب الطريقة (2021–2024)" data-b="rep"></h3><button class="png" onclick="exPNG('c-indhz','industrial_hazardous_methods')">Export PNG</button></div><div id="indhz-lg"></div><div id="c-indhz"></div></div>
    <div><div class="hd"><h3 data-t="Recycling rate — industrial vs municipal|نسبة التدوير — صناعية مقابل بلدية" data-b="rep"></h3><button class="png" onclick="exPNG('c-indrr','recycling_rates')">Export PNG</button></div><div id="c-indrr"></div></div>
@@ -764,7 +768,7 @@ HTML = f"""<!DOCTYPE html>
  <div class="sec" data-sec="5 · Municipal waste|٥ · النفايات البلدية"></div>
  <div class="card">
   <div class="hd"><h2 id="h-mun" data-b="rep"></h2><button class="png" onclick="exPNG('c-mun','municipal_trend')">Export PNG</button></div><div class="note" id="mun-note"></div>
-  <div id="mun-lg"></div><div class="note" data-t="Tonnes (k = thousand, M = million)|بالطن (k = ألف، M = مليون)" style="margin:0"></div><div id="c-mun"></div>
+  <div id="mun-lg"></div><div class="note" data-t="Tonnes|بالطن" style="margin:0"></div><div id="c-mun"></div>
   <div class="hd" style="margin-top:14px"><h3 data-t="What it is made of, by region — 2024|مكوّناتها حسب المنطقة — 2024" data-b="rep"></h3><button class="png" onclick="exPNG('c-comp','municipal_composition')">Export PNG</button></div><div id="comp-lg"></div><div id="c-comp"></div>
   <div class="read" id="munread"></div>
  </div>

@@ -177,7 +177,11 @@ REG = [
   'Sewage sludge is kept, as GASTAT counts it as waste.', 'أُبقيت حمأة الصرف لأن الهيئة تحتسبها نفايات.'),
 ]
 A['register'] = [dict(zip(('sev', 'ten', 'tar', 'en', 'ar', 'hen', 'har'), r)) for r in REG]
-A['proj'] = {'hz_f': hz_f, 'spec_f': spec_f, 'sector_f': {k: v[0] for k, v in sector_f.items()}}
+A['proj'] = {'hz_f': hz_f, 'spec_f': spec_f, 'sector_f': {k: v[0] for k, v in sector_f.items()},
+  'con_f': fac(S23['construction']['construction'], S24['construction']['construction']),
+  'tot_f': fac(S23['total']['total'], S24['total']['total']),
+  'mun_f': fac(D['municipal_total']['v']['2023'], D['municipal_total']['v']['2024']),
+  'jy_f': fac(D['jy_total']['v']['2023'], D['jy_total']['v']['2024'])}
 
 payload = json.dumps({'D': D, 'A': A, 'G': G, 'built': dt.date.today().isoformat()}, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
 
@@ -228,6 +232,9 @@ main{padding:18px 22px 44px;max-width:1400px;margin:0 auto}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.g2>.card{margin-bottom:0}
 .g2+.card,.g2+.g2{margin-top:16px}
 @media(max-width:980px){.g2{grid-template-columns:1fr}}
+.bdg{display:inline-block;font:600 11px/1.6 var(--eh-font);border-radius:999px;padding:0 8px;margin-inline-start:8px;vertical-align:middle;white-space:nowrap}
+.bdg.rep{background:var(--eh-good-bg);color:var(--eh-good)}.bdg.proj{background:var(--eh-warn-bg);color:var(--eh-warn)}
+.lg i.h{background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.55) 0 2px,transparent 2px 5px)!important}
 .src{display:inline-block;font:600 11.5px/1.6 var(--eh-font);color:var(--eh-ink-3);background:var(--eh-tint);border-radius:999px;padding:0 8px;unicode-bidi:isolate;white-space:nowrap;cursor:help}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
 .chips button{font:600 12.5px var(--eh-font);background:var(--eh-paper);border:1px solid var(--eh-line);color:var(--eh-ink-2);border-radius:999px;padding:6px 13px;cursor:pointer}
@@ -460,26 +467,29 @@ function renderMapAll(){drawMap();renderPanel();renderTable();
   $('yr').textContent=YEAR;}
 
 // ---------- generic charts (plain SVG; Arabic mirrors horizontal bars, time axes stay left to right)
+function pdefs(id){return `<defs>${['s0','s1','s2','s3','s4'].map(c=>`<pattern id="${id}-p${c}" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" class="${c}"></rect><rect width="2.4" height="6" fill="#fff" fill-opacity=".5"></rect></pattern>`).join('')}</defs>`;}
+const PF=(id,c)=>`fill="url(#${id}-p${c})"`;
+function badge(k){return k==='proj'?`<span class="bdg proj" title="${esc(L('GASTAT\'s national waste accounts: 2023 split across industries with fixed ratios, and 2024 built by multiplying 2023 by one factor per sector','حسابات النفايات الوطنية: توزيع 2023 على القطاعات بنسب ثابتة، و2024 مبنية بضرب 2023 في معامل لكل قطاع'))}">${L('Model · 2024 projected','نموذج · 2024 إسقاط')}</span>`:`<span class="bdg rep" title="${esc(L('Figures reported by the agency that collects them (Ministry of Municipalities and Housing, Royal Commission)','أرقام تبلّغ عنها الجهة التي تجمعها (وزارة البلديات والإسكان، الهيئة الملكية)'))}">${L('Reported','مُبلَّغ عنه')}</span>`;}
 function hbars(id,items,o={}){ // items: {label, v, v0?, cls, tip}; v0 draws a second (grey) bar for the earlier year
   const pair=items.some(i=>i.v0!=null);const W=640,lw=o.lw||190,rh=o.rh||(pair?40:30),H=items.length*rh+8,max=o.max||Math.max(...items.map(i=>Math.max(i.v,i.v0||0)));const bw=W-lw-130,r=RTL();
   const BW=v=>bw*v/max;
-  let s=`<svg class="ch" id="svg-${id}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(o.aria||'')}" style="direction:ltr">`;
+  let s=`<svg class="ch" id="svg-${id}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(o.aria||'')}" style="direction:ltr">`+(o.proj?pdefs(id):'');
   items.forEach((it,i)=>{const y=i*rh+4, w=Math.max(1,BW(it.v)), x=r?W-lw-w:lw;
     const by=pair?y+5:y+8, bh=pair?14:rh-18;
     s+=`<text class="lab" x="${r?W-lw+10:lw-10}" y="${pair?y+rh/2-1:y+rh/2+1}" text-anchor="end" direction="${r?'rtl':'ltr'}" dominant-baseline="middle">${esc(it.label)}</text>`;
-    s+=`<rect class="${it.cls||'s1'}" x="${x}" y="${by}" width="${w}" height="${bh}" rx="3"></rect>`;
+    s+=`<rect class="${o.proj?'pj':(it.cls||'s1')}" ${o.proj?PF(id,it.cls||'s1'):''} x="${x}" y="${by}" width="${w}" height="${bh}" rx="3"></rect>`;
     s+=`<text class="val" x="${r?x-8:x+w+8}" y="${by+bh/2+1}" text-anchor="start" direction="${r?'rtl':'ltr'}" dominant-baseline="middle">${esc(it.vl||TP(it.v))}</text>`;
     if(it.v0!=null){const w0=Math.max(1,BW(it.v0)),x0=r?W-lw-w0:lw,y0=by+bh+3;
       s+=`<rect class="s0" x="${x0}" y="${y0}" width="${w0}" height="9" rx="2"></rect>`;
       s+=`<text x="${r?x0-8:x0+w0+8}" y="${y0+5}" text-anchor="start" direction="${r?'rtl':'ltr'}" dominant-baseline="middle" style="font-size:11px">${esc(TP(it.v0))}</text>`;}
     s+=`<rect class="hit" x="0" y="${y}" width="${W}" height="${rh}" data-tip="${at(it.tip||'')}"></rect>`;});
-  $(id).innerHTML=s+'</svg>'+(pair?`<div class="lg"><span><i style="background:var(--${(items[0].cls||'s1')==='s4'?'c4':'c1'})"></i>2024</span><span><i style="background:var(--c0)"></i>2023</span></div>`:'');bindTips($(id));}
+  $(id).innerHTML=s+'</svg>'+(pair?`<div class="lg"><span><i class="${o.proj?'h':''}" style="background:var(--${(items[0].cls||'s1')==='s4'?'c4':'c1'})"></i>2024${o.proj?' — '+L('projected (2023 × sector factor)','إسقاط (2023 × معامل القطاع)'):''}</span><span><i style="background:var(--c0)"></i>2023${o.proj?' — '+L('GASTAT model','نموذج الهيئة'):''}</span></div>`:'');bindTips($(id));}
 function stack100(id,rows,cats,o={}){ // rows:{label, parts:{k:v}}; cats:[k,label,cls]
-  const W=o.w||640,lw=o.lw||70,rh=o.rh||40,H=rows.length*rh+4,bw=W-lw-10,r=RTL();let s=`<svg class="ch" id="svg-${id}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(o.aria||'')}" style="direction:ltr">`;
+  const W=o.w||640,lw=o.lw||70,rh=o.rh||40,H=rows.length*rh+4,bw=W-lw-10,r=RTL();let s=`<svg class="ch" id="svg-${id}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(o.aria||'')}" style="direction:ltr">`+(rows.some(x=>x.proj)?pdefs(id):'');
   rows.forEach((row,i)=>{const y=i*rh+4,tot=cats.reduce((a,[k])=>a+(row.parts[k]||0),0);let acc=0;
-    s+=`<text class="lab" x="${r?W-lw+10:lw-10}" y="${y+rh/2-2}" text-anchor="end" direction="${r?'rtl':'ltr'}" dominant-baseline="middle">${esc(row.label)}</text>`;
+    s+=`<text class="lab" x="${r?W-lw+10:lw-10}" y="${y+rh/2-2}" text-anchor="end" direction="${r?'rtl':'ltr'}" dominant-baseline="middle">${esc(row.label)}${row.proj?' *':''}</text>`;
     cats.forEach(([k,l,cls])=>{const v=row.parts[k]||0,w=bw*v/tot;if(w<=0)return;const x=r?W-lw-acc-w:lw+acc;
-      s+=`<rect class="${cls}" x="${x+1}" y="${y+4}" width="${Math.max(0,w-2)}" height="${rh-14}" rx="3" data-tip="${at(`<b>${row.label} · ${l}</b><br><span class='tn'>${TP(v)}</span> · ${PCTp(v/tot,1)}`)}"></rect>`;
+      s+=`<rect class="${row.proj?'pj':cls}" ${row.proj?PF(id,cls):''} x="${x+1}" y="${y+4}" width="${Math.max(0,w-2)}" height="${rh-14}" rx="3" data-tip="${at(`<b>${row.label} · ${l}</b><br><span class='tn'>${TP(v)}</span> · ${PCTp(v/tot,1)}`)}"></rect>`;
       if(w>44)s+=`<text x="${x+w/2}" y="${y+rh/2-2}" text-anchor="middle" dominant-baseline="middle" style="fill:#fff;font-weight:600;pointer-events:none" direction="ltr">${PCTp(v/tot)}</text>`;acc+=w;});});
   $(id).innerHTML=s+'</svg>';bindTips($(id));}
 function vstack(id,years,series,o={}){ // series:[{k,label,cls,vals[]}] ; unknown=null drawn hatched
@@ -506,6 +516,23 @@ function lineChart(id,years,series,o={}){ // up to 2 series; o.pct for shares
     s+=`<rect class="hit" x="${X(i)-(W-pl-pr)/(years.length-1)/2}" y="${pt}" width="${(W-pl-pr)/(years.length-1)}" height="${H-pt-pb}" data-tip="${at(tp)}"></rect>`;});
   s+=`<line class="axis" x1="${pl}" x2="${W-pr}" y1="${Yp(0)}" y2="${Yp(0)}"></line>`;
   $(id).innerHTML=s+'</svg>'+(series.length>1?`<div class="lg">${series.map((sr,j)=>`<span><i class="l" style="background:var(--c${j?4:1})"></i>${sr.k}</span>`).join('')}</div>`:'');bindTips($(id));}
+function factorChart(id){
+  const P=A.proj,F=P.sector_f,W=1100,lw=330,rh=30,x0=lw+190,sc=12;
+  const items=[
+   [L('Agriculture','الزراعة'),F.agriculture,'proj'],[L('Mining, manufacturing, utilities','التعدين والصناعة والمرافق'),F.mining,'proj'],
+   [L('Hazardous waste, four industries','النفايات الخطرة، القطاعات الأربعة'),P.hz_f,'proj'],[L('Construction','التشييد'),P.con_f,'proj'],
+   [L('Households','الأسر'),F.households,'proj'],[L('Other activities','أنشطة أخرى'),F.other_economic,'proj'],
+   [L('All waste (the result)','كل النفايات (الناتج)'),P.tot_f,'proj'],
+   [L('Municipal waste collected','النفايات البلدية المجموعة'),P.mun_f,'rep'],[L('Jubail & Yanbu industrial waste','نفايات الجبيل وينبع الصناعية'),P.jy_f,'rep']];
+  const H=items.length*rh+42,r=RTL();let s=`<svg class="ch" id="svg-${id}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(L('2024 change on 2023: projected versus reported','تغير 2024 عن 2023: الإسقاط مقابل المبلَّغ عنه'))}" style="direction:ltr">`+pdefs(id);
+  [-20,-10,0,10,20,30].forEach(t=>{const x=x0+t*sc;s+=`<line class="${t?'grid':'axis'}" x1="${x}" x2="${x}" y1="4" y2="${H-24}"></line><text x="${x}" y="${H-8}" text-anchor="middle">${t>0?'+':t<0?'−':''}${Math.abs(t)}%</text>`;});
+  items.forEach(([lab,f,k],i)=>{const y=i*rh+6+(i>=7?8:0),g=(f-1)*100,w=Math.abs(g)*sc,x=g>=0?x0:x0-w,cls=k==='proj'?'s1':'s2';
+    if(i===7)s+=`<line class="grid" x1="0" x2="${W}" y1="${y-5}" y2="${y-5}" style="stroke-dasharray:3 3"></line>`;
+    s+=`<text class="lab" x="${lw-10}" y="${y+rh/2-2}" text-anchor="end" direction="${r?'rtl':'ltr'}" dominant-baseline="middle">${esc(lab)}</text>`;
+    s+=`<rect class="${k==='proj'?'pj':cls}" ${k==='proj'?PF(id,cls):''} x="${x}" y="${y+5}" width="${Math.max(1,w)}" height="${rh-16}" rx="3"></rect>`;
+    s+=`<text class="val" x="${g>=0?x+w+8:x0+8}" y="${y+rh/2-2}" text-anchor="start" dominant-baseline="middle">×${NF(f,3)}  (${g>=0?'+':'−'}${NF(Math.abs(g),0)}%)</text>`;
+    s+=`<rect class="hit" x="0" y="${y}" width="${W}" height="${rh}" data-tip="${at(`<b>${lab}</b><br>2024 = 2023 × <span class='tn'>${NF(f,4)}</span><br>${k==='proj'?L('GASTAT national waste accounts (SEEA): the same factor is applied to every cell of this sector','حسابات النفايات الوطنية: المعامل نفسه مطبَّق على كل خانات هذا القطاع'):L('Reported figure from the collecting agency','رقم مبلَّغ عنه من الجهة الجامعة')}`)}"></rect>`;});
+  $(id).innerHTML=s+'</svg>'+`<div class="lg"><span><i class="h" style="background:var(--c1)"></i>${L('Projected — the multiplier GASTAT applied to 2023','إسقاط — المعامل الذي طبّقته الهيئة على 2023')}</span><span><i style="background:var(--c2)"></i>${L('Reported — real change in the collecting agency\'s figures','مُبلَّغ عنه — تغيّر فعلي في أرقام الجهة الجامعة')}</span></div>`;bindTips($(id));}
 function niceMax(v){if(!(v>0))return 1;const p=Math.pow(10,Math.floor(Math.log10(v)));const n=v/p;return ([1,1.2,1.5,2,2.5,3,4,5,6,8,10].find(x=>n<=x))*p;}
 function ticks(max,n=4){const out=[];for(let i=0;i<=n;i++)out.push(max*i/n);return out;}
 function axisT(v){return v>=1e6?NF(v/1e6,v%1e6?1:0)+'M':v>=1e3?NF(v/1e3)+'k':NF(v);}
@@ -552,10 +579,10 @@ function hazard(){
   $('h-haz').textContent=L('Hazardous waste — who produces it and where it goes','النفايات الخطرة — من يولّدها وإلى أين تذهب');
   $('haz-note').innerHTML=`${T(h24.total,1)} ${L('in 2024 against','في 2024 مقابل')} ${T(h23.total,1)} ${L('in 2023 — the 2024 figure is GASTAT\'s projection from 2023. Medical hazardous waste is counted separately:','في 2023 — ورقم 2024 إسقاط من الهيئة بناءً على 2023. وتُحسب النفايات الطبية الخطرة منفصلة:')} ${T(S24.hazardous_medical.total,1)}; ${L('electronic waste:','والنفايات الإلكترونية:')} ${T(S24.ewaste.total,1)}. ${S('seea:2-1')}`;
   const SEC=[['manufacturing',L('Manufacturing','الصناعة التحويلية')],['construction',L('Construction','التشييد')],['electricity',L('Power, gas & water utilities','الكهرباء والغاز والمرافق')],['mining',L('Mining & quarrying','التعدين واستغلال المحاجر')],['households',L('Households','الأسر')],['other_economic',L('Other activities','أنشطة أخرى')]];
-  hbars('c-hzsrc',SEC.map(([k,l])=>({label:l,v:h24[k],v0:h23[k],vl:TP(h24[k])+'  ·  '+PCTp(h24[k]/h24.total),tip:`<b>${l}</b><br>2024: <span class='tn'>${TP(h24[k])}</span> (${PCTp(h24[k]/h24.total,1)})<br>2023: <span class='tn'>${TP(h23[k])}</span>`})),{lw:200,aria:L('Hazardous waste by producing sector, 2024','النفايات الخطرة حسب القطاع المولِّد 2024')});
+  hbars('c-hzsrc',SEC.map(([k,l])=>({label:l,v:h24[k],v0:h23[k],vl:TP(h24[k])+'  ·  '+PCTp(h24[k]/h24.total),tip:`<b>${l}</b><br>2024: <span class='tn'>${TP(h24[k])}</span> (${PCTp(h24[k]/h24.total,1)})<br>2023: <span class='tn'>${TP(h23[k])}</span>`})),{lw:200,proj:1,aria:L('Hazardous waste by producing sector, 2024','النفايات الخطرة حسب القطاع المولِّد 2024')});
   const CATS=[['specialised',L('Waste companies (licensed or informal)','شركات نفايات (مرخّصة أو غير رسمية)'),'s1'],['recycled',L('Recycled or reused in industry','أُعيد تدويرها أو استخدامها'),'s2'],['landfill',L('Landfill','الدفن'),'s3'],['other',L('Other disposal, incl. open dumping','طرق أخرى منها الإلقاء المكشوف'),'s4']];
-  stack100('c-hzdst',[{label:'2023',parts:d23},{label:'2024',parts:d24}],CATS,{aria:L('Where hazardous waste goes','أين تذهب النفايات الخطرة')});
-  $('hzdst-lg').innerHTML=lgd(CATS);
+  stack100('c-hzdst',[{label:'2023',parts:d23},{label:'2024',parts:d24,proj:1}],CATS,{aria:L('Where hazardous waste goes','أين تذهب النفايات الخطرة')});
+  $('hzdst-lg').innerHTML=lgd(CATS)+`<div class="note" style="margin:0">* ${L('2024 hatched: projected from 2023','2024 مخطط: إسقاط من 2023')}</div>`;
   const unk=h24.total-A.jy_haz['2024'];
   stack100('c-hzloc',['2021','2022','2023','2024'].map(y=>({label:y,parts:{jy:A.jy_haz[y],none:g(D.seea.supply,y,'hazardous','total')!=null?g(D.seea.supply,y,'hazardous','total')-A.jy_haz[y]:null}})).filter(r=>r.parts.none!=null),[['jy',L('Jubail & Yanbu','الجبيل وينبع'),'s4'],['none',L('No published location','بلا موقع منشور'),'s0']],{aria:L('Share of hazardous waste with a published location','حصة النفايات الخطرة ذات الموقع المنشور')});
   $('hzloc-lg').innerHTML=lgd([['jy',L('Jubail & Yanbu (RCJY)','الجبيل وينبع (الهيئة الملكية)'),'s4'],['none',L('No published location','بلا موقع منشور'),'s0']]);
@@ -585,13 +612,15 @@ function national(){
   $('h-nat').textContent=L('The whole picture — all waste, 2024','الصورة الكاملة — كل النفايات 2024');
   $('nat-note').innerHTML=`${L('GASTAT\'s national waste accounts: every tonne generated by every sector and by households.','حسابات النفايات الوطنية: كل طن تولّده القطاعات والأسر.')} ${S('seea:2-1')} ${S('seea:2-2')}`;
   const TY=[['organic',L('Organic (farm, food, garden)','عضوية (زراعية وغذائية وحدائق)')],['construction',L('Construction & demolition','مخلفات البناء والهدم')],['plastic',L('Plastic','بلاستيك')],['hazardous',L('Hazardous','خطرة')],['metal',L('Metal','معادن')],['paper',L('Paper & cardboard','ورق وكرتون')],['misc',L('Mixed (burnable & not)','مختلطة')],['other',L('Other','أخرى')],['slaughter',L('Slaughterhouse','مخلفات المسالخ')],['fines',L('Fines & fluids','دقائق وسوائل')],['sludge',L('Sewage sludge','حمأة الصرف')],['glass',L('Glass','زجاج')],['wood',L('Wood','خشب')],['textiles',L('Textiles, leather, rubber','منسوجات وجلود ومطاط')],['ewaste',L('Electronic','إلكترونية')],['tyres',L('Tyres','إطارات')],['hazardous_medical',L('Medical hazardous','طبية خطرة')]];
-  hbars('c-type',TY.map(([k,l])=>({label:l,v:S24[k].total,v0:S23[k].total,cls:k==='hazardous'||k==='hazardous_medical'?'s4':'s1',vl:TP(S24[k].total),tip:`<b>${l}</b><br>2024: <span class='tn'>${TP(S24[k].total)}</span> (${PCTp(S24[k].total/S24.total.total,1)})<br>2023: <span class='tn'>${TP(S23[k].total)}</span>`})),{lw:210,rh:34,aria:L('Waste by type','النفايات حسب النوع')});
+  hbars('c-type',TY.map(([k,l])=>({label:l,v:S24[k].total,v0:S23[k].total,cls:k==='hazardous'||k==='hazardous_medical'?'s4':'s1',vl:TP(S24[k].total),tip:`<b>${l}</b><br>2024: <span class='tn'>${TP(S24[k].total)}</span> (${PCTp(S24[k].total/S24.total.total,1)})<br>2023: <span class='tn'>${TP(S23[k].total)}</span>`})),{lw:210,rh:34,proj:1,aria:L('Waste by type','النفايات حسب النوع')});
   const SEC=[['agriculture',L('Agriculture & fishing','الزراعة والصيد')],['construction',L('Construction','التشييد')],['households',L('Households','الأسر')],['manufacturing',L('Manufacturing','الصناعة التحويلية')],['other_economic',L('Other activities','أنشطة أخرى')],['mining',L('Mining & quarrying','التعدين')],['waste_sector',L('Waste & water treatment (sludge)','معالجة النفايات والمياه (حمأة)')],['electricity',L('Power, gas & water utilities','الكهرباء والغاز والمرافق')]];
-  hbars('c-sec',SEC.map(([k,l])=>({label:l,v:S24.total[k],v0:S23.total[k],vl:TP(S24.total[k]),tip:`<b>${l}</b><br>2024: <span class='tn'>${TP(S24.total[k])}</span> (${PCTp(S24.total[k]/S24.total.total,1)})<br>2023: <span class='tn'>${TP(S23.total[k])}</span>`})),{lw:210,aria:L('Waste by producing sector','النفايات حسب القطاع')});
+  hbars('c-sec',SEC.map(([k,l])=>({label:l,v:S24.total[k],v0:S23.total[k],vl:TP(S24.total[k]),tip:`<b>${l}</b><br>2024: <span class='tn'>${TP(S24.total[k])}</span> (${PCTp(S24.total[k]/S24.total.total,1)})<br>2023: <span class='tn'>${TP(S23.total[k])}</span>`})),{lw:210,proj:1,aria:L('Waste by producing sector','النفايات حسب القطاع')});
   const CATS=[['specialised',L('Waste companies (licensed or informal)','شركات نفايات (مرخّصة أو غير رسمية)'),'s1'],['recycled',L('Recycled or reused','أُعيد تدويرها أو استخدامها'),'s2'],['landfill',L('Landfill','الدفن'),'s3'],['other',L('Other disposal, incl. open dumping','طرق أخرى منها الإلقاء المكشوف'),'s4']];
-  stack100('c-natdst',[{label:'2023',parts:A.dest['2023'].total},{label:'2024',parts:A.dest['2024'].total}],CATS,{aria:L('Where all waste goes','أين تذهب كل النفايات')});
-  $('natdst-lg').innerHTML=lgd(CATS);
-  $('natread').innerHTML=`<b>${L('Reading','القراءة')}:</b> ${L('total waste is','إجمالي النفايات')} ${T(S24.total.total,1)} ${L('in 2024 — the','في 2024 — والزيادة')} <span class="num" dir="ltr">${SG(CH(S24.total.total,S23.total.total))}</span> ${L('rise is mostly GASTAT scaling 2023 by sector, and the split by producing sector is an allocation (see Data problems).','على 2023 ناتجة في معظمها عن ضرب الهيئة أرقام 2023 بمعاملات قطاعية، وتوزيع القطاعات المولِّدة تقديري (انظر مشكلات البيانات).')} ${L('Farming and construction produce over half of it, and households','وتولّد الزراعة والتشييد أكثر من نصفه، والأسر')} ${PCT(S24.total.households/S24.total.total,0)}. ${L('Only','ولا تصل إلى الشركات المتخصصة إلا')} ${PCT(A.dest['2024'].total.specialised/A.dest['2024'].total.total,0)} ${L('reaches specialised waste companies;','؛')} ${PCT((A.dest['2024'].total.landfill+A.dest['2024'].total.other)/A.dest['2024'].total.total,0)} ${L('is landfilled or goes to "other disposal".','تُدفن أو تذهب إلى «طرق أخرى».')}`;
+  stack100('c-natdst',[{label:'2023',parts:A.dest['2023'].total},{label:'2024',parts:A.dest['2024'].total,proj:1}],CATS,{aria:L('Where all waste goes','أين تذهب كل النفايات')});
+  $('natdst-lg').innerHTML=lgd(CATS)+`<div class="note" style="margin:0">* ${L('2024 hatched: projected from 2023','2024 مخطط: إسقاط من 2023')}</div>`;
+  factorChart('c-fac');
+  $('fac-note').innerHTML=L(`Each hatched bar is the single multiplier GASTAT applied to a sector's 2023 figures to get 2024 — the same factor for every waste type in that sector. The green bars are real year-on-year changes reported by the agencies that collect the waste. The 2023 split between industries is itself a fixed allocation: for most waste types manufacturing is exactly 2.364 × mining.`,`كل عمود مخطط هو المعامل الواحد الذي ضربت به الهيئة أرقام القطاع لعام 2023 لتحصل على 2024 — المعامل نفسه لكل أنواع النفايات في القطاع. والأعمدة الخضراء تغيّرات سنوية فعلية تبلّغ عنها الجهات التي تجمع النفايات. وتوزيع 2023 بين القطاعات نفسه تقديري بنسب ثابتة: في معظم أنواع النفايات تساوي الصناعة 2.364 × التعدين تماماً.`)+' '+S('seea:1-1')+' '+S('seea:2-1');
+  $('natread').innerHTML=`<b>${L('Reading','القراءة')}:</b> ${L('total waste is','إجمالي النفايات')} ${T(S24.total.total,1)} ${L('in 2024 — the','في 2024 — والزيادة')} <span class="num" dir="ltr">${SG(CH(S24.total.total,S23.total.total))}</span> ${L('rise is mostly GASTAT scaling 2023 by sector, and the split by producing sector is an allocation (see Data problems).','على 2023 ناتجة في معظمها عن ضرب الهيئة أرقام 2023 بمعاملات قطاعية، وتوزيع القطاعات المولِّدة تقديري (انظر مشكلات البيانات).')} ${L('Farming and construction produce over half of it, and households','وتولّد الزراعة والتشييد أكثر من نصفه، والأسر')} ${PCT(S24.total.households/S24.total.total,0)}. ${L('Only','ولا تصل إلى شركات النفايات (المرخّصة وغير الرسمية) إلا')} ${PCT(A.dest['2024'].total.specialised/A.dest['2024'].total.total,0)} ${L('reaches waste companies (licensed or informal);','؛')} ${PCT((A.dest['2024'].total.landfill+A.dest['2024'].total.other)/A.dest['2024'].total.total,0)} ${L('is landfilled or goes to "other disposal".','تُدفن أو تذهب إلى «طرق أخرى».')}`;
 }
 function municipal(){
   const yrs=Object.keys(D.municipal_total.v);
@@ -635,6 +664,7 @@ function notes(){
   document.querySelectorAll('[data-sec]').forEach(el=>{const k=el.dataset.sec.split('|');el.textContent=L(k[0],k[1]);});
   document.querySelectorAll('.png:not(#mreset)').forEach(b=>b.textContent=L('Export PNG','تصدير PNG'));
   document.querySelectorAll('[data-t]').forEach(el=>{const k=el.dataset.t.split('|');el.textContent=L(k[0],k[1]);});
+  document.querySelectorAll('[data-b]').forEach(el=>{el.querySelectorAll('.bdg').forEach(b=>b.remove());el.insertAdjacentHTML('beforeend',badge(el.dataset.b));});
 }
 // ---------- PNG export (light-theme colours, EH fonts embedded)
 let EXFONTS=null;
@@ -684,7 +714,7 @@ HTML = f"""<!DOCTYPE html>
 
  <div class="sec" data-sec="1 · Regions|١ · المناطق"></div>
  <div class="card">
-  <div class="hd"><h2 id="h-map"></h2><button class="png" onclick="exPNG('map','map')">Export PNG</button></div>
+  <div class="hd"><h2 id="h-map" data-b="rep"></h2><button class="png" onclick="exPNG('map','map')">Export PNG</button></div>
   <div class="chips" id="chips" role="tablist"></div>
   <div class="ctlrow"><span id="lyr">Year</span> <input type="range" id="yslider" min="2017" max="2024" step="1" value="2024" aria-label="Year"> <span class="yr num" id="yr">2024</span>
    <label><input type="checkbox" id="ptsbox" checked> <span id="lpts"></span></label>
@@ -699,20 +729,20 @@ HTML = f"""<!DOCTYPE html>
  <div class="card">
   <h2 id="h-haz"></h2><div class="note" id="haz-note"></div>
   <div class="g2" style="gap:24px">
-   <div><div class="hd"><h3 data-t="Who produces it — 2024 and 2023|من يولّدها — 2024 و2023"></h3><button class="png" onclick="exPNG('c-hzsrc','hazardous_by_sector')">Export PNG</button></div><div id="c-hzsrc"></div></div>
-   <div><div class="hd"><h3 data-t="Where it goes|إلى أين تذهب"></h3><button class="png" onclick="exPNG('c-hzdst','hazardous_destination')">Export PNG</button></div><div id="hzdst-lg"></div><div id="c-hzdst"></div>
-    <div class="hd" style="margin-top:10px"><h3 data-t="How much has a published location|كم منها له موقع منشور"></h3><button class="png" onclick="exPNG('c-hzloc','hazardous_location')">Export PNG</button></div><div id="hzloc-lg"></div><div id="c-hzloc"></div></div>
+   <div><div class="hd"><h3 data-t="Who produces it — 2024 and 2023|من يولّدها — 2024 و2023" data-b="proj"></h3><button class="png" onclick="exPNG('c-hzsrc','hazardous_by_sector')">Export PNG</button></div><div id="c-hzsrc"></div></div>
+   <div><div class="hd"><h3 data-t="Where it goes|إلى أين تذهب" data-b="proj"></h3><button class="png" onclick="exPNG('c-hzdst','hazardous_destination')">Export PNG</button></div><div id="hzdst-lg"></div><div id="c-hzdst"></div>
+    <div class="hd" style="margin-top:10px"><h3 data-t="How much has a published location|كم منها له موقع منشور" data-b="proj"></h3><button class="png" onclick="exPNG('c-hzloc','hazardous_location')">Export PNG</button></div><div id="hzloc-lg"></div><div id="c-hzloc"></div></div>
   </div>
   <div class="read" id="hzread"></div>
  </div>
 
  <div class="sec" data-sec="3 · Industrial waste|٣ · النفايات الصناعية"></div>
  <div class="card">
-  <div class="hd"><h2 id="h-ind"></h2><button class="png" onclick="exPNG('c-ind','industrial_jubail_yanbu')">Export PNG</button></div><div class="note" id="ind-note"></div>
+  <div class="hd"><h2 id="h-ind" data-b="rep"></h2><button class="png" onclick="exPNG('c-ind','industrial_jubail_yanbu')">Export PNG</button></div><div class="note" id="ind-note"></div>
   <div id="ind-lg"></div><div class="note" data-t="Tonnes (k = thousand, M = million)|بالطن (k = ألف، M = مليون)" style="margin:0"></div><div id="c-ind"></div>
   <div class="g2" style="gap:24px;margin-top:14px">
-   <div><div class="hd"><h3 data-t="Hazardous share, by method (2021–2024)|النفايات الخطرة حسب الطريقة (2021–2024)"></h3><button class="png" onclick="exPNG('c-indhz','industrial_hazardous_methods')">Export PNG</button></div><div id="indhz-lg"></div><div id="c-indhz"></div></div>
-   <div><div class="hd"><h3 data-t="Recycling rate — industrial vs municipal|نسبة التدوير — صناعية مقابل بلدية"></h3><button class="png" onclick="exPNG('c-indrr','recycling_rates')">Export PNG</button></div><div id="c-indrr"></div></div>
+   <div><div class="hd"><h3 data-t="Hazardous share, by method (2021–2024)|النفايات الخطرة حسب الطريقة (2021–2024)" data-b="rep"></h3><button class="png" onclick="exPNG('c-indhz','industrial_hazardous_methods')">Export PNG</button></div><div id="indhz-lg"></div><div id="c-indhz"></div></div>
+   <div><div class="hd"><h3 data-t="Recycling rate — industrial vs municipal|نسبة التدوير — صناعية مقابل بلدية" data-b="rep"></h3><button class="png" onclick="exPNG('c-indrr','recycling_rates')">Export PNG</button></div><div id="c-indrr"></div></div>
   </div>
   <div class="read" id="indread"></div>
   <h3 data-t="Revisions between GASTAT editions (tonnes)|المراجعات بين إصدارات الهيئة (طن)"></h3><div class="tw" id="rev"></div>
@@ -722,18 +752,20 @@ HTML = f"""<!DOCTYPE html>
  <div class="card">
   <h2 id="h-nat"></h2><div class="note" id="nat-note"></div>
   <div class="g2" style="gap:24px">
-   <div><div class="hd"><h3 data-t="By type — 2024 and 2023|حسب النوع — 2024 و2023"></h3><button class="png" onclick="exPNG('c-type','waste_by_type')">Export PNG</button></div><div id="c-type"></div></div>
-   <div><div class="hd"><h3 data-t="By producing sector — 2024 and 2023|حسب القطاع المولِّد — 2024 و2023"></h3><button class="png" onclick="exPNG('c-sec','waste_by_sector')">Export PNG</button></div><div id="c-sec"></div>
-    <div class="hd" style="margin-top:10px"><h3 data-t="Where it goes|إلى أين تذهب"></h3><button class="png" onclick="exPNG('c-natdst','waste_destination')">Export PNG</button></div><div id="natdst-lg"></div><div id="c-natdst"></div></div>
+   <div><div class="hd"><h3 data-t="By type — 2024 and 2023|حسب النوع — 2024 و2023" data-b="proj"></h3><button class="png" onclick="exPNG('c-type','waste_by_type')">Export PNG</button></div><div id="c-type"></div></div>
+   <div><div class="hd"><h3 data-t="By producing sector — 2024 and 2023|حسب القطاع المولِّد — 2024 و2023" data-b="proj"></h3><button class="png" onclick="exPNG('c-sec','waste_by_sector')">Export PNG</button></div><div id="c-sec"></div>
+    <div class="hd" style="margin-top:10px"><h3 data-t="Where it goes|إلى أين تذهب" data-b="proj"></h3><button class="png" onclick="exPNG('c-natdst','waste_destination')">Export PNG</button></div><div id="natdst-lg"></div><div id="c-natdst"></div></div>
   </div>
+  <div class="hd" style="margin-top:16px"><h3 data-t="How the 2024 figures were made — projected multipliers vs reported change|كيف صُنعت أرقام 2024 — معاملات الإسقاط مقابل التغير المبلَّغ عنه"></h3><button class="png" onclick="exPNG('c-fac','projection_factors')">Export PNG</button></div>
+  <div class="note" id="fac-note"></div><div id="c-fac"></div>
   <div class="read" id="natread"></div>
  </div>
 
  <div class="sec" data-sec="5 · Municipal waste|٥ · النفايات البلدية"></div>
  <div class="card">
-  <div class="hd"><h2 id="h-mun"></h2><button class="png" onclick="exPNG('c-mun','municipal_trend')">Export PNG</button></div><div class="note" id="mun-note"></div>
+  <div class="hd"><h2 id="h-mun" data-b="rep"></h2><button class="png" onclick="exPNG('c-mun','municipal_trend')">Export PNG</button></div><div class="note" id="mun-note"></div>
   <div id="mun-lg"></div><div class="note" data-t="Tonnes (k = thousand, M = million)|بالطن (k = ألف، M = مليون)" style="margin:0"></div><div id="c-mun"></div>
-  <div class="hd" style="margin-top:14px"><h3 data-t="What it is made of, by region — 2024|مكوّناتها حسب المنطقة — 2024"></h3><button class="png" onclick="exPNG('c-comp','municipal_composition')">Export PNG</button></div><div id="comp-lg"></div><div id="c-comp"></div>
+  <div class="hd" style="margin-top:14px"><h3 data-t="What it is made of, by region — 2024|مكوّناتها حسب المنطقة — 2024" data-b="rep"></h3><button class="png" onclick="exPNG('c-comp','municipal_composition')">Export PNG</button></div><div id="comp-lg"></div><div id="c-comp"></div>
   <div class="read" id="munread"></div>
  </div>
 

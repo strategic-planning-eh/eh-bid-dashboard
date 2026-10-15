@@ -281,7 +281,8 @@ def load_map_html(path):
                'Client Value (SAR)': cl.get('value')}
         keys = {norm(n['n'])}
         for al in re.findall(r'Alias \(merged duplicate\):\s*([^.(]+)', n.get('notes') or ''):
-            keys.add(norm(al))
+            for part in al.split(';'):   # several aliases may share one "Alias (merged duplicate):" label
+                keys.add(norm(part))
         for k in keys:
             if k and k not in recs:
                 recs[k] = rec
@@ -460,6 +461,41 @@ def match_agency(agency, recs, bridge):
             return r, 'bridge'
     return None, 'unmatched'
 
+def annotate_map(path, out):
+    """Published map only (CI): each buyer's relevant Etimad tenders are written into its record's note, so the Stakeholder
+    Map shows what the agency is buying. Done at publish time from the private sheet — Etimad data never enters the repo.
+    Added 15 Oct 2026."""
+    SL = {s['id']: s for s in out.get('service_lines', [])}
+    by = {}
+    for t in out.get('tenders', []):
+        if t.get('relevance') == 'Not EH' or not isinstance(t.get('map'), dict): continue
+        by.setdefault(t['map']['Name'], []).append(t)
+    if not by: return 0
+    h = open(path, encoding='utf-8').read()
+    m = re.search(r'(<script id="DATA" type="application/json">)(.*?)(</script>)', h, re.S)
+    if not m: return 0
+    D = json.loads(m.group(2)); done = 0
+    for n in D['nodes']:
+        ts = by.get(n['n'])
+        if not ts: continue
+        ts = sorted(ts, key=lambda t: (t.get('sub') or ''), reverse=True)
+        def one(t):
+            lines = ', '.join(SL.get(i, {}).get('en', str(i)) for i in (t.get('service_lines') or []))
+            kind = 'core service' if t['relevance'] == 'Core' else 'related'
+            st = t.get('eh_status') or 'Not studied'
+            return (f"«{t['title'].strip()}» (ref {t['ref']}, {kind}{': ' + lines if lines else ''}, published {t.get('pub')}, "
+                    f"submission {str(t.get('sub') or '')[:10]}; EH: {st.lower()})")
+        shown = ts[:6]
+        txt = (f"Etimad, relevant tenders captured to {out.get('last_capture')}: {len(ts)} — " + '; '.join(one(t) for t in shown)
+               + (f"; and {len(ts) - len(shown)} more in the Government Tenders tab" if len(ts) > len(shown) else '') + '.')
+        n['notes'] = re.sub(r'\s*Etimad, relevant tenders captured to [^—]*—.*?\.(?=\s|$)', '', n.get('notes') or '').strip()
+        n['notes'] = (n['notes'] + ' ' + txt).strip()
+        n['etimad'] = {'tenders': len(ts), 'open': sum(1 for t in ts if t.get('is_open')), 'last_capture': out.get('last_capture')}
+        done += 1
+    payload = json.dumps(D, ensure_ascii=False).replace('</', '<\\/')
+    open(path, 'w', encoding='utf-8').write(h[:m.start(2)] + payload + h[m.end(2):])
+    return done
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--sheet', help='etimad_data.xlsx downloaded from the private Google Sheet (CI mode)')
@@ -469,6 +505,7 @@ def main():
     ap.add_argument('--tracker', nargs='*', default=[], help='bid tracker workbooks (bids2025.xlsx bids2026.xlsx)')
     ap.add_argument('--bidraw', help='bidraw2.json from extract_bids2.py')
     ap.add_argument('--out', required=True)
+    ap.add_argument('--annotate-map', action='store_true', help='write relevant tenders into the map notes (automatic in CI)')
     a = ap.parse_args()
     tax = json.load(open(a.taxonomy, encoding='utf-8'))
     if a.sheet and os.path.exists(a.sheet):
@@ -485,6 +522,9 @@ def main():
     from etimad_analyst import analyst
     out['analyst'] = analyst(market, out['tenders'], a.map, note_rows, bidraw=a.bidraw)
     json.dump(out, open(a.out, 'w', encoding='utf-8'), ensure_ascii=False, default=str)
+    # the published map (site/ copy, CI) gets each buyer's relevant tenders in its note; never the committed hub/ copy
+    if os.environ.get('GITHUB_ACTIONS') == 'true' or a.annotate_map:
+        print(f"Stakeholder Map: Etimad tenders noted on {annotate_map(a.map, out)} records")
     rel = sum(1 for t in out['tenders'] if t['relevance'] != 'Not EH')
     print(f"Etimad: {out['count']} tenders ({rel} relevant), last capture {out['last_capture']} → {a.out}")
     an = out.get('analyst') or {}

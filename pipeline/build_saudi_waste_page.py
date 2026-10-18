@@ -538,6 +538,51 @@ function factorChart(id){
     s+=`<text class="val" x="${g>=0?x+w+8:x0+8}" y="${y+rh/2-2}" text-anchor="start" dominant-baseline="middle">×${NF(f,3)}  (${g>=0?'+':'−'}${NF(Math.abs(g),0)}%)</text>`;
     s+=`<rect class="hit" x="0" y="${y}" width="${W}" height="${rh}" data-tip="${at(`<b>${lab}</b><br>2024 = 2023 × <span class='tn'>${NF(f,4)}</span><br>${k==='proj'?L('GASTAT national waste accounts (SEEA): the same factor is applied to every cell of this sector','حسابات النفايات الوطنية: المعامل نفسه مطبَّق على كل خانات هذا القطاع'):L('Reported figure from the collecting agency','رقم مبلَّغ عنه من الجهة الجامعة')}`)}"></rect>`;});
   $(id).innerHTML=s+'</svg>'+`<div class="lg"><span><i class="h" style="background:var(--c1)"></i>${L('Projected — the multiplier GASTAT applied to 2023','إسقاط — المعامل الذي طبّقته الهيئة على 2023')}</span><span><i style="background:var(--c2)"></i>${L('Reported — real change in the collecting agency\'s figures','مُبلَّغ عنه — تغيّر فعلي في أرقام الجهة الجامعة')}</span></div>`;bindTips($(id));}
+let COMPY='2024';
+function compChart(id){
+  const comp=[['organic',L('Organic','عضوية'),'s1'],['plastic',L('Plastic','بلاستيك'),'s2'],['paper',L('Paper','ورق'),'s3'],['mgf',L('Metal, glass, fabric','معادن وزجاج ونسيج'),'s4'],['other',L('Other non-organic','غير عضوية أخرى'),'s0']];
+  const y=COMPY, order=['KSA',...CODES.slice().sort((a,b)=>g(M,b,'total','2024')-g(M,a,'total','2024'))];
+  const val=(c,k)=>k==='mgf'?['metal','glass','fabric'].reduce((s,x)=>s+(g(M,c,x,y)||0),0):(g(M,c,k,y)||0);
+  const bad=c=>c!=='KSA'&&val(c,'other')/g(M,c,'total',y)>0.6;   // rule: >60% "other non-organic" = classification broken
+  const W=1100,lw=170,rh=32,bw=W-lw-10,H=order.length*rh+6,r=RTL();
+  let svg=d3.select('#'+id).select('svg');
+  if(svg.empty()||svg.attr('data-lang')!==LANG){d3.select('#'+id).html('');
+    svg=d3.select('#'+id).append('svg').attr('class','ch').attr('id','svg-'+id).attr('viewBox',`0 0 ${W} ${H}`).attr('role','img').attr('style','direction:ltr').attr('data-lang',LANG)
+      .attr('aria-label',L('Municipal waste by material and region','النفايات البلدية حسب المادة والمنطقة'));
+    svg.append('g').attr('class','rows');}
+  const rows=svg.select('g.rows').selectAll('g.row').data(order,d=>d).join(en=>{const gg=en.append('g').attr('class','row');
+      gg.append('rect').attr('class','flagbox').attr('fill','none').attr('rx',5);
+      gg.append('text').attr('class','lab').attr('text-anchor','end').attr('dominant-baseline','middle');
+      return gg;}).attr('transform',(d,i)=>`translate(0,${i*rh+4})`);
+  rows.select('text.lab').attr('x',r?W-lw+10:lw-10).attr('y',rh/2-2).attr('direction',r?'rtl':'ltr')
+     .style('fill',d=>bad(d)?'var(--eh-bad)':null).style('font-weight',d=>bad(d)?700:null)
+     .text(d=>(bad(d)?'⚠ ':'')+(d==='KSA'?L('Kingdom','المملكة'):RN(d)));
+  rows.select('rect.flagbox').attr('x',r?8:lw-4).attr('y',0).attr('width',bw+8).attr('height',rh-6)
+     .attr('stroke','var(--eh-bad)').attr('stroke-width',2).attr('stroke-dasharray','5 4')
+     .transition().duration(400).attr('opacity',d=>bad(d)?1:0);
+  const T=d3.transition().duration(matchMedia('(prefers-reduced-motion: reduce)').matches?0:750).ease(d3.easeCubicInOut);
+  rows.each(function(c){const tot=comp.reduce((a,[k])=>a+val(c,k),0);let acc=0;
+    const segs=comp.map(([k,l,cls])=>{const w=bw*val(c,k)/tot,x=r?W-lw-acc-w:lw+acc;acc+=w;return {k,l,cls,w,x,v:val(c,k),sh:val(c,k)/tot,c};});
+    const gRow=d3.select(this);
+    gRow.selectAll('rect.seg').data(segs,d=>d.k).join(en=>en.append('rect').attr('class',d=>'seg '+d.cls).attr('rx',3).attr('y',4).attr('height',rh-14).attr('x',d=>d.x+1).attr('width',0))
+      .attr('data-tip',d=>at(`<b>${d.c==='KSA'?L('Kingdom','المملكة'):RN(d.c)} · ${d.l} · ${y}</b><br><span class='tn'>${TP(d.v)}</span> · ${PCTp(d.sh,1)}`+(bad(d.c)?`<br>⚠ ${L('Classification broken — not usable','التصنيف معطوب — غير صالح للاستخدام')}`:'')))
+      .transition(T).attr('x',d=>d.x+1).attr('width',d=>Math.max(0,d.w-2)).style('opacity',bad(c)?0.45:1);
+    gRow.selectAll('text.pct').data(segs,d=>d.k).join(en=>en.append('text').attr('class','pct').attr('text-anchor','middle').attr('dominant-baseline','middle').attr('y',rh/2-2)
+        .style('fill','#fff').style('font-weight',600).style('pointer-events','none').attr('direction','ltr').attr('x',d=>d.x+d.w/2))
+      .transition(T).attr('x',d=>d.x+d.w/2).style('opacity',d=>d.w>44?1:0).text(d=>PCTp(d.sh));
+  });
+  bindTips($(id));
+  // flag note under the chart
+  const fl=order.filter(bad);
+  $('comp-flag').innerHTML=fl.map(c=>{const sh=(k,yy)=>g(M,c,k,yy)/g(M,c,'total',yy),oth=sh('other',y),org=sh('organic',y),o17=sh('organic','2017');
+    let from=+y;while(from>2017&&sh('other',String(from-1))>0.6)from--;
+    const nxt=String(+y+1), after=Y.includes(nxt)?sh('other',nxt):null;
+    const how=from<+y?L(`The split broke in ${from} (${PCTp(sh('other',String(from)))} "other") and has stayed broken: the waste is being recorded under the wrong category, not changing.`,`انكسر التصنيف في ${from} (${PCTp(sh('other',String(from)))} «أخرى») وبقي كذلك: النفايات تُسجَّل في الفئة الخطأ، لا أنها تغيّرت.`)
+      :after!=null&&after<=0.6?L(`A one-year break: in ${nxt} "other" is back to ${PCTp(after)}.`,`انكسار لسنة واحدة: في ${nxt} عادت «أخرى» إلى ${PCTp(after)}.`)
+      :L('The waste is being recorded under the wrong category.','النفايات تُسجَّل في الفئة الخطأ.');
+    return `<div class="flag" style="background:var(--eh-bad-bg);border-inline-start-color:var(--eh-bad)"><b style="color:var(--eh-bad)">⚠ ${esc(RN(c))} ${y}: ${L('data is wrong — do not use','البيانات خاطئة — لا تُستخدم')}.</b> ${L(`${PCTp(oth)} of its waste is filed as "other non-organic" and only ${PCTp(org)} as organic — against ${PCTp(o17)} organic in 2017 and ${PCTp(g(M,'KSA','organic',y)/g(M,'KSA','total',y))} for the Kingdom.`,`${PCTp(oth)} من نفاياتها مسجّلة «غير عضوية أخرى» و${PCTp(org)} فقط عضوية — مقابل ${PCTp(o17)} عضوية في 2017 و${PCTp(g(M,'KSA','organic',y)/g(M,'KSA','total',y))} للمملكة.`)} ${how}</div>`;}).join('');
+  document.querySelectorAll('#comp-yr button').forEach(b=>b.classList.toggle('on',b.dataset.y===y));
+}
 function niceMax(v){if(!(v>0))return 1;const p=Math.pow(10,Math.floor(Math.log10(v)));const n=v/p;return ([1,1.2,1.5,2,2.5,3,4,5,6,8,10].find(x=>n<=x))*p;}
 function ticks(max,n=4){const out=[];for(let i=0;i<=n;i++)out.push(max*i/n);return out;}
 function axisT(v){return v>=1e6?NF(v/1e6,v%1e6?1:0)+(LANG==='ar'?' مليون':' million'):v>=1e3?NF(v/1e3)+(LANG==='ar'?' ألف':' thousand'):NF(v);}
@@ -636,7 +681,7 @@ function municipal(){
   // composition by region 2024
   const comp=[['organic',L('Organic','عضوية'),'s1'],['plastic',L('Plastic','بلاستيك'),'s2'],['paper',L('Paper','ورق'),'s3'],['mgf',L('Metal, glass, fabric','معادن وزجاج ونسيج'),'s4'],['other',L('Other non-organic','غير عضوية أخرى'),'s0']];
   const order=CODES.slice().sort((a,b)=>g(M,b,'total','2024')-g(M,a,'total','2024'));
-  stack100('c-comp',['KSA',...order].map(c=>({label:c==='KSA'?L('Kingdom','المملكة'):RN(c),parts:{organic:g(M,c,'organic','2024'),plastic:g(M,c,'plastic','2024'),paper:g(M,c,'paper','2024'),mgf:['metal','glass','fabric'].reduce((s,x)=>s+g(M,c,x,'2024'),0),other:g(M,c,'other','2024')}})),comp,{w:1100,rh:32,lw:150,aria:L('Municipal waste by material and region','النفايات البلدية حسب المادة والمنطقة')});
+  compChart('c-comp');
   $('comp-lg').innerHTML=lgd(comp);
   const R=D.recycling_rate.v.municipal;
   $('munread').innerHTML=`<b>${L('Reading','القراءة')}:</b> ${L('municipal waste has more than doubled since 2010 (','تضاعفت النفايات البلدية منذ 2010 (')}${T(D.municipal_total.v['2010'],1)} → ${T(D.municipal_total.v['2024'],1)}${L('). Measured recycling was 7% in 2017 and',')، وكان التدوير المقيس 7% في 2017 و')} ${PCT(R['2024'],1)} ${L('in 2024; the 15% GASTAT shows for 2010–2015 is identical every year and looks assumed.','في 2024؛ أما نسبة 15% التي تظهرها الهيئة لـ2010–2015 فثابتة كل عام وتبدو مفترضة.')} ${L('Almost everything collected ends in sanitary landfill:','ويكاد كل ما يُجمع ينتهي بالدفن الصحي:')} ${PCT(g(TR,'KSA','landfill','2024')/g(TR,'KSA','total','2024'),0)} ${L('of treated municipal waste in 2024.','من النفايات البلدية المعالجة في 2024.')} ${L('About','ونحو')} ${PCT(g(M,'KSA','organic','2024')/g(M,'KSA','total','2024'),0)} ${L('of it is organic, and plastic is the next largest stream.','منها عضوية، ويليها البلاستيك.')}`;
@@ -770,7 +815,8 @@ HTML = f"""<!DOCTYPE html>
  <div class="card">
   <div class="hd"><h2 id="h-mun" data-b="rep"></h2><button class="png" onclick="exPNG('c-mun','municipal_trend')">Export PNG</button></div><div class="note" id="mun-note"></div>
   <div id="mun-lg"></div><div class="note" data-t="Tonnes|بالطن" style="margin:0"></div><div id="c-mun"></div>
-  <div class="hd" style="margin-top:14px"><h3 data-t="What it is made of, by region — 2024|مكوّناتها حسب المنطقة — 2024" data-b="rep"></h3><button class="png" onclick="exPNG('c-comp','municipal_composition')">Export PNG</button></div><div id="comp-lg"></div><div id="c-comp"></div>
+  <div class="hd" style="margin-top:14px"><h3 data-t="What it is made of, by region|مكوّناتها حسب المنطقة" data-b="rep"></h3><button class="png" onclick="exPNG('c-comp','municipal_composition')">Export PNG</button></div><div class="ctlrow" style="margin:6px 0 4px"><span data-t="Year|السنة"></span><div class="chips" id="comp-yr" style="margin:0"><button data-y="2023" onclick="COMPY='2023';compChart('c-comp')">2023</button><button data-y="2024" class="on" onclick="COMPY='2024';compChart('c-comp')">2024</button></div></div>
+  <div id="comp-lg"></div><div id="c-comp"></div><div id="comp-flag"></div>
   <div class="read" id="munread"></div>
  </div>
 

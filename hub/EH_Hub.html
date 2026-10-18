@@ -290,6 +290,7 @@ nav.mtabs,body.dark .mtabs{background:var(--eh-paper);border-top-color:var(--eh-
 .wnweek.on,body.dark .wnweek.on{background:var(--eh-sea);border-color:var(--eh-sea);color:#fff}
 .wnweek .n{background:var(--eh-good-bg);color:var(--eh-good)}
 .wntab{color:var(--eh-ink-2)}.wntab[aria-selected="true"]{color:var(--eh-ink);box-shadow:inset 0 -3px 0 var(--eh-sea)}
+.wnc{display:inline-block;min-width:18px;height:18px;line-height:18px;padding:0 5px;border-radius:9px;background:var(--eh-good-bg);color:var(--eh-good);font-size:10.5px;font-weight:800;text-align:center;margin-inline-start:6px;vertical-align:1px;box-sizing:border-box}.wnc[hidden]{display:none}.wntab[aria-selected="true"] .wnc{background:var(--eh-sea);color:#fff}body.dark .wnc{background:rgba(43,174,104,.22);color:#8FE0B4}body.dark .wntab[aria-selected="true"] .wnc{background:var(--eh-sea);color:#fff}.wntab{flex:1 1 auto;white-space:nowrap;padding-inline:8px}.wntabs{overflow-x:auto;scrollbar-width:none}.wnweek .n{padding:0 5px;box-sizing:border-box;min-width:18px;height:18px;line-height:18px}.wnh .wnc{vertical-align:0}.wnh.wnsub{font-size:11.5px;margin:8px 0 2px;font-weight:700}
 .wnmonth{color:var(--eh-ink-2);text-transform:none;letter-spacing:0}
 #wnov{background:rgba(13,23,54,.5)}
 @media(max-width:640px){nav.mtabs{grid-template-columns:repeat(5,1fr)}.mtab{font-size:11.5px}.brand h1,body.dark .brand h1{font-size:15px;display:block}header{padding:8px 10px}header>img.logo{height:30px;margin:0;padding:3px 4px;border-radius:8px}.brand{margin:0}.brand h1{font-size:15px}header button,header #q{margin-bottom:0}.tab{border-radius:9px}}
@@ -383,10 +384,10 @@ html[lang=ar] .conf span[lang=ar]{display:inline}
   <div class="wnmonths" id="wnmonths" aria-label="Months"></div>
   <div class="wnweeks" id="wnweeks" role="tablist" aria-label="Weeks"></div>
   <div class="wntabs" role="tablist" aria-label="Sections">
-    <button class="wntab" role="tab" data-k="fixes" aria-selected="true" onclick="wnTab('fixes')"><span class="tl" data-en="Fixes &amp; features" data-ar="الإصلاحات والميزات">Fixes &amp; features</span></button>
-    <button class="wntab" role="tab" data-k="companies" aria-selected="false" onclick="wnTab('companies')"><span class="tl" data-en="Companies" data-ar="الشركات">Companies</span></button>
-    <button class="wntab" role="tab" data-k="bids" aria-selected="false" onclick="wnTab('bids')"><span class="tl" data-en="Bids &amp; Clients" data-ar="المنافسات والعملاء">Bids &amp; Clients</span></button>
-    <button class="wntab" role="tab" data-k="sources" aria-selected="false" onclick="wnTab('sources')"><span class="tl" data-en="Sources" data-ar="المصادر">Sources</span></button>
+    <button class="wntab" role="tab" data-k="fixes" aria-selected="true" onclick="wnTab('fixes')"><span class="tl" data-en="Fixes &amp; features" data-ar="الإصلاحات والميزات">Fixes &amp; features</span><span class="wnc" data-c="fixes" dir="ltr" hidden></span></button>
+    <button class="wntab" role="tab" data-k="companies" aria-selected="false" onclick="wnTab('companies')"><span class="tl" data-en="Companies" data-ar="الشركات">Companies</span><span class="wnc" data-c="companies" dir="ltr" hidden></span></button>
+    <button class="wntab" role="tab" data-k="bids" aria-selected="false" onclick="wnTab('bids')"><span class="tl" data-en="Bids &amp; Clients" data-ar="المنافسات والعملاء">Bids &amp; Clients</span><span class="wnc" data-c="bids" dir="ltr" hidden></span></button>
+    <button class="wntab" role="tab" data-k="sources" aria-selected="false" onclick="wnTab('sources')"><span class="tl" data-en="Sources" data-ar="المصادر">Sources</span><span class="wnc" data-c="sources" dir="ltr" hidden></span></button>
   </div>
   <div class="wnbody" id="wnbody" role="tabpanel"></div>
 </aside>
@@ -591,7 +592,13 @@ fetch('changelog.json',{cache:'no-store'}).then(function(r){return r.json();}).t
   if(WN.weeks.length&&WN.weeks[0].built) setFresh(WN.weeks[0].built); wnBadge();
 }).catch(function(){ WN={weeks:[],offline:true}; wnBadge(); });
 fetch('build_info.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){ if(!FRESH_ISO) setFresh(j.built_iso||j.built); }).catch(function(){});
-function wnCount(w){var d=w.data||{};return (w.fixes||[]).length+(d.added||[]).length+(d.removed||[]).length+(d.merged||[]).length+(d.confidence_up||[]).length+(d.tier_moves||[]).length+((d.bids||{}).won||[]).length+((d.bids||{}).lost||[]).length;}
+function wnCounts(w){var d=w.data||{},b=d.bids||{},c=d.clients||{},num=function(x){return typeof x==='number'?x:(x&&x.length)||0;};
+  var src=(w.sources||[]).filter(function(s){var r=String(s.refreshed||'').slice(0,10);return r&&r>=w.from&&r<=w.to;}).length;
+  return {fixes:(w.fixes||[]).length, companies:(d.added||[]).length+(d.removed||[]).filter(function(x){return !(x.reason==='merged');}).length+(d.merged||[]).length+(d.confidence_up||[]).length+(d.tier_moves||[]).length,
+          bids:num(b.new)+num(c.new)+num(c.lost)+(b.won||[]).length+(b.lost||[]).length, sources:src};}
+function wnCount(w){var c=wnCounts(w);return c.fixes+c.companies+c.bids;}
+function wnTabCounts(){var w=WN&&WN.weeks[wnWeek],c=w?wnCounts(w):{};document.querySelectorAll('.wnc[data-c]').forEach(function(s){var n=c[s.dataset.c]||0;s.textContent=n;s.hidden=!n;});}
+function wnBdg(n){return n?' <span class="wnc" dir="ltr">'+n+'</span>':'';}
 function wnBadge(){ if(!WN)return; var seen=''; try{seen=localStorage.getItem('ehhub.wn.seen')||'';}catch(e){}
   var n=0; WN.weeks.forEach(function(w){ if(!seen||(w.built||w.to)>seen) n+=wnCount(w); });
   var b=$('wnbadge'); b.textContent=n>99?'99+':n; b.hidden=!n; $('wnbtn').setAttribute('aria-label',L("What's New",'ما الجديد')+(n?' \u2014 '+n+' '+L('unread','غير مقروء'):'')); }
@@ -615,7 +622,7 @@ function wnRender(){ wnRenderFresh();
   var vis=WN.weeks.map(function(w,i){return {w:w,i:i};}).filter(function(x){return !wnMonth||x.w.from.slice(0,7)===wnMonth;});
   $('wnweeks').innerHTML=vis.map(function(x){ var w=x.w,i=x.i,n=wnCount(w); return '<button class="wnweek'+(i===wnWeek?' on':'')+'" role="tab" aria-selected="'+(i===wnWeek)+'" onclick="wnWeek='+i+';wnRender()"><span>'+wnEsc(wkName(w.week))+'</span> \u00b7 <span>'+wnEsc(fmtD(w.from))+' \u2013 '+wnEsc(fmtD(w.to))+'</span>'+(n?'<span class="n" dir="ltr">'+n+'</span>':'')+'</button>'; }).join('');
   var on=$('wnweeks').querySelector('.wnweek.on'); if(on&&on.scrollIntoView)on.scrollIntoView({block:'nearest',inline:'center'});
-  wnRenderBody(); }
+  wnTabCounts(); wnRenderBody(); }
 function coLink(n){return '<button class="lnk" onclick="wnGoCo(this.textContent)">'+wnEsc(n)+'</button>';}
 function wnGoCo(name){ wnClose(); go(document.querySelector('.tab[data-f="stake"]')); try{ $('f-stake').contentWindow.selByName(name); }catch(e){} }
 function wnGoApp(a,i){ wnClose(); var f=(i!=null&&WN&&WN.weeks[wnWeek])?(WN.weeks[wnWeek].fixes||[])[i]:null, b=f&&f.view?wnView(f.view):null;
@@ -624,26 +631,37 @@ function wnGoApp(a,i){ wnClose(); var f=(i!=null&&WN&&WN.weeks[wnWeek])?(WN.week
   var t=APPTAB[a]; if(t) go(document.querySelector('.tab[data-f="'+t+'"]')); }
 function wnRenderBody(){ var w=WN.weeks[wnWeek]; if(!w){$('wnbody').innerHTML='';return;} var d=w.data||{}, h='';
   if(wnKind==='fixes'){
-    h=(w.fixes||[]).map(function(f,i){return '<div class="wnitem '+wnEsc(f.severity||'')+'"><button class="lnk app" onclick="wnGoApp(\''+wnEsc(f.app)+'\','+i+')">'+wnEsc(appName(f.app))+(f.view&&f.view!==f.severity?' \u203a '+wnEsc(viewName(f.view)):'')+'</button><br>'+wnEsc(hubL==='ar'?(f.ar||f.en):(f.en||f.ar))+'</div>';}).join('')
+    var fx=(w.fixes||[]).map(function(f,i){return {f:f,i:i};}), order=['hub','stake','bids','clients','news'], grp={};
+    fx.forEach(function(x){var a=APPS[x.f.app]?x.f.app:'hub';(grp[a]=grp[a]||[]).push(x);});
+    Object.keys(grp).forEach(function(a){if(order.indexOf(a)<0)order.push(a);});
+    h=order.filter(function(a){return grp[a];}).map(function(a){return '<div class="wnh">'+wnEsc(appName(a))+wnBdg(grp[a].length)+'</div>'+grp[a].map(function(x){var f=x.f,i=x.i;return '<div class="wnitem '+wnEsc(f.severity||'')+'"><button class="lnk app" onclick="wnGoApp(\''+wnEsc(f.app)+'\','+i+')">'+wnEsc(appName(f.app))+(f.view&&f.view!==f.severity?' \u203a '+wnEsc(viewName(f.view)):'')+'</button><br>'+wnEsc(hubL==='ar'?(f.ar||f.en):(f.en||f.ar))+'</div>';}).join('');}).join('')
       ||'<div class="wnempty">'+L('No fixes or features recorded for this week.','لا إصلاحات أو ميزات مسجّلة لهذا الأسبوع.')+'</div>';
   } else if(wnKind==='companies'){
     var t=d.totals||{};
     h+='<div class="wntot">'+(t.orgs!=null?'<span><b dir="ltr">'+Number(t.orgs).toLocaleString()+'</b> '+L('organizations','منظمة')+'</span>':'')+'</div>';
-    function sec(title,items,fn){ if(!items||!items.length)return ''; return '<div class="wnh">'+title+' \u00b7 <span dir="ltr">'+items.length+'</span></div>'+items.map(fn).join(''); }
-    h+=sec(L('Added','أُضيفت'),d.added,function(x){return '<div class="wnitem data">'+coLink(x.n)+(x.typ?' \u00b7 '+wnEsc(x.typ):'')+(x.cat?' \u00b7 '+wnEsc(x.cat):'')+'</div>';});
+    function sec(title,items,fn,cls){ if(!items||!items.length)return ''; return '<div class="wnh'+(cls?' '+cls:'')+'">'+title+wnBdg(items.length)+'</div>'+items.map(fn).join(''); }
+    var CATAR={'Active Competitors':'منافسون نشطون','Direct Competitors':'منافسون مباشرون','Indirect / Adjacent Competitors':'منافسون غير مباشرون / مجاورون','EH Clients':'عملاء آفاق البيئة','Clients / Potential Clients':'عملاء / عملاء محتملون','Government Clients & Institutions':'جهات وعملاء حكوميون','Regulators & Compliance Bodies':'الجهات التنظيمية والرقابية','Potential Collaborators':'شركاء محتملون','Suppliers / Subcontractors':'موردون / مقاولون من الباطن','EH Partners':'شركاء آفاق البيئة','Industry Associations & Academia':'جمعيات صناعية وجهات أكاديمية'};
+    var catName=function(k){return hubL==='ar'?(CATAR[k]||k):k;};
+    var addRow=function(x){return '<div class="wnitem data">'+coLink(x.n)+(x.typ?' \u00b7 '+wnEsc(x.typ):'')+'</div>';};
+    if((d.added||[]).length){ var byCat={}; d.added.forEach(function(x){var k=x.cat||L('Other','أخرى');(byCat[k]=byCat[k]||[]).push(x);});
+      h+='<div class="wnh">'+L('Added','أُضيفت')+wnBdg(d.added.length)+'</div>';
+      Object.keys(byCat).sort(function(a,b){var ca=/compet/i.test(a)?0:1,cb=/compet/i.test(b)?0:1;return ca-cb||byCat[b].length-byCat[a].length;}).forEach(function(k){h+=sec(wnEsc(catName(k)),byCat[k],addRow,'wnsub');}); }
     h+=sec(L('Merged (duplicate names combined)','مُدمجة (أسماء مكررة جُمعت)'),d.merged,function(x){return '<div class="wnitem data">'+coLink(x.kept)+' \u2190 <span dir="auto">'+wnEsc(x.alias)+'</span></div>';});
-    h+=sec(L('Removed','أُزيلت'),d.removed,function(x){return '<div class="wnitem data"><span dir="auto">'+wnEsc(x.n)+'</span>'+(x.alias?' \u00b7 '+L('now shown as','تظهر الآن باسم')+' '+coLink(x.alias):'')+(x.reason?' \u00b7 '+wnEsc(x.reason):'')+'</div>';});
+    var rmFn=function(x){return '<div class="wnitem data"><span dir="auto">'+wnEsc(x.n)+'</span>'+(x.alias?' \u00b7 '+L('now shown as','تظهر الآن باسم')+' '+coLink(x.alias):'')+(x.reason&&x.reason!=='merged'?' \u00b7 '+wnEsc(x.reason):'')+'</div>';};
+    var rmM=(d.removed||[]).filter(function(x){return x.reason==='merged'||x.alias;}), rmO=(d.removed||[]).filter(function(x){return !(x.reason==='merged'||x.alias);});
+    h+=sec(L('Removed from the map','حُذفت من الخريطة'),rmO,rmFn);
+    if(!(d.merged||[]).length) h+=sec(L('Merged into another record','دُمجت في سجل آخر'),rmM,rmFn);
     h+=sec(L('Data confidence raised','رُفعت موثوقية البيانات'),d.confidence_up,function(x){return '<div class="wnitem data">'+coLink(x.n)+' \u00b7 <span dir="ltr">'+wnEsc(x.from)+' \u2192 '+wnEsc(x.to)+'</span>'+(x.basis?' \u00b7 '+wnEsc(x.basis):'')+'</div>';});
     h+=sec(L('Tier changes','تغيّرات الفئة'),d.tier_moves,function(x){return '<div class="wnitem data">'+coLink(x.n)+' \u00b7 <span dir="ltr">'+wnEsc(x.from)+' \u2192 '+wnEsc(x.to)+'</span>'+(x.driver?' \u00b7 '+wnEsc(x.driver):'')+'</div>';});
     if(h.indexOf('wnitem')<0) h+='<div class="wnempty">'+L('No company changes this week.','لا تغييرات في الشركات هذا الأسبوع.')+'</div>';
   } else if(wnKind==='bids'){
     var b=d.bids||{}, c=d.clients||{}, t2=d.totals||{};
     h+='<div class="wntot">'+(b.new!=null?'<span><b dir="ltr">'+b.new+'</b> '+L('new tenders','منافسة جديدة')+'</span>':'')+(t2.tenders!=null?'<span><b dir="ltr">'+t2.tenders+'</b> '+L('tenders tracked','منافسة متتبَّعة')+'</span>':'')+(c.new!=null?'<span><b dir="ltr">'+c.new+'</b> '+L('new clients','عميل جديد')+'</span>':'')+(c.lost!=null?'<span><b dir="ltr">'+c.lost+'</b> '+L('lapsed clients','عميل متوقّف')+'</span>':'')+(t2.clients!=null?'<span><b dir="ltr">'+t2.clients+'</b> '+L('clients','عميل')+'</span>':'')+'</div>';
-    if((b.won||[]).length) h+='<div class="wnh">'+L('Won','فاز EH')+'</div>'+b.won.map(function(x){return '<div class="wnitem minor"><button class="lnk app" onclick="wnGoApp(\'bids\')">'+appName('bids')+'</button><br><span dir="auto">'+wnEsc(x.title||x)+'</span>'+(x.client?' \u00b7 '+wnEsc(x.client):'')+(x.value?' \u00b7 SAR <span dir="ltr">'+Number(x.value).toLocaleString()+'</span>':'')+'</div>';}).join('');
-    if((b.lost||[]).length) h+='<div class="wnh">'+L('Lost','خسارة')+'</div>'+b.lost.map(function(x){return '<div class="wnitem major"><button class="lnk app" onclick="wnGoApp(\'bids\')">'+appName('bids')+'</button><br><span dir="auto">'+wnEsc(x.title||x)+'</span>'+(x.winner?' \u00b7 '+L('won by','فاز بها')+' <span dir="auto">'+wnEsc(x.winner)+'</span>':'')+'</div>';}).join('');
+    if((b.won||[]).length) h+='<div class="wnh">'+L('Won','فاز EH')+wnBdg(b.won.length)+'</div>'+b.won.map(function(x){return '<div class="wnitem minor"><button class="lnk app" onclick="wnGoApp(\'bids\')">'+appName('bids')+'</button><br><span dir="auto">'+wnEsc(x.title||x)+'</span>'+(x.client?' \u00b7 '+wnEsc(x.client):'')+(x.value?' \u00b7 SAR <span dir="ltr">'+Number(x.value).toLocaleString()+'</span>':'')+'</div>';}).join('');
+    if((b.lost||[]).length) h+='<div class="wnh">'+L('Lost','خسارة')+wnBdg(b.lost.length)+'</div>'+b.lost.map(function(x){return '<div class="wnitem major"><button class="lnk app" onclick="wnGoApp(\'bids\')">'+appName('bids')+'</button><br><span dir="auto">'+wnEsc(x.title||x)+'</span>'+(x.winner?' \u00b7 '+L('won by','فاز بها')+' <span dir="auto">'+wnEsc(x.winner)+'</span>':'')+'</div>';}).join('');
     if(h.indexOf('wnitem')<0) h+='<div class="wnempty">'+L('No award decisions recorded this week.','لا قرارات ترسية مسجّلة هذا الأسبوع.')+'</div>';
   } else {
-    h=(w.sources||[]).map(function(x){var nt=L(x.note,x.note_ar||x.note);return '<div class="wnitem"><b>'+wnEsc(L(x.name,x.name_ar||x.name))+'</b><br>'+(x.refreshed?L('Refreshed','آخر تحديث')+' <span>'+wnEsc(/^\d{4}-\d{2}-\d{2}$/.test(x.refreshed)?fmtD(x.refreshed):fmtFresh(x.refreshed))+'</span>':'')+(nt?(x.refreshed?' \u00b7 ':'')+wnEsc(nt):'')+'</div>';}).join('')
+    var srcN=wnCounts(w).sources; h=((w.sources||[]).length?'<div class="wnh">'+L('Refreshed this week','حُدّثت هذا الأسبوع')+wnBdg(srcN)+' \u00b7 '+L('of','من')+' <span dir="ltr">'+w.sources.length+'</span> '+L('sources','مصادر')+'</div>':'')+(w.sources||[]).map(function(x){var nt=L(x.note,x.note_ar||x.note);return '<div class="wnitem"><b>'+wnEsc(L(x.name,x.name_ar||x.name))+'</b><br>'+(x.refreshed?L('Refreshed','آخر تحديث')+' <span>'+wnEsc(/^\d{4}-\d{2}-\d{2}$/.test(x.refreshed)?fmtD(x.refreshed):fmtFresh(x.refreshed))+'</span>':'')+(nt?(x.refreshed?' \u00b7 ':'')+wnEsc(nt):'')+'</div>';}).join('')
       ||'<div class="wnempty">'+L('No source information for this week.','لا معلومات مصادر لهذا الأسبوع.')+'</div>';
     h+='<div class="wnempty" style="font-size:11.5px">'+L('Built','بُني')+' <span>'+wnEsc(w.built?fmtFresh(w.built):'')+'</span></div>';
   }

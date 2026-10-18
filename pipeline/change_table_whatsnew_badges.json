@@ -1,0 +1,147 @@
+{
+ "generated": "2026-10-18 09:19",
+ "title": "Change table — hub: What's New count badges per tab and heading",
+ "failures": [],
+ "changes": [
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "tabs",
+   "note": "Count badge on the fixes tab",
+   "occurrences": 1,
+   "ok": true,
+   "old": "onclick=\"wnTab('fixes')\"><span class=\"tl\" data-en=\"Fixes &amp; features\" data-ar=\"الإصلاحات والميزات\">Fixes &amp; features</span></button>",
+   "new": "onclick=\"wnTab('fixes')\"><span class=\"tl\" data-en=\"Fixes &amp; features\" data-ar=\"الإصلاحات والميزات\">Fixes &amp; features</span><span class=\"wnc\" data-c=\"fixes\" dir=\"ltr\" hidden></span></button>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "tabs",
+   "note": "Count badge on the companies tab",
+   "occurrences": 1,
+   "ok": true,
+   "old": "onclick=\"wnTab('companies')\"><span class=\"tl\" data-en=\"Companies\" data-ar=\"الشركات\">Companies</span></button>",
+   "new": "onclick=\"wnTab('companies')\"><span class=\"tl\" data-en=\"Companies\" data-ar=\"الشركات\">Companies</span><span class=\"wnc\" data-c=\"companies\" dir=\"ltr\" hidden></span></button>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "tabs",
+   "note": "Count badge on the bids tab",
+   "occurrences": 1,
+   "ok": true,
+   "old": "onclick=\"wnTab('bids')\"><span class=\"tl\" data-en=\"Bids &amp; Clients\" data-ar=\"المنافسات والعملاء\">Bids &amp; Clients</span></button>",
+   "new": "onclick=\"wnTab('bids')\"><span class=\"tl\" data-en=\"Bids &amp; Clients\" data-ar=\"المنافسات والعملاء\">Bids &amp; Clients</span><span class=\"wnc\" data-c=\"bids\" dir=\"ltr\" hidden></span></button>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "tabs",
+   "note": "Count badge on the sources tab",
+   "occurrences": 1,
+   "ok": true,
+   "old": "onclick=\"wnTab('sources')\"><span class=\"tl\" data-en=\"Sources\" data-ar=\"المصادر\">Sources</span></button>",
+   "new": "onclick=\"wnTab('sources')\"><span class=\"tl\" data-en=\"Sources\" data-ar=\"المصادر\">Sources</span><span class=\"wnc\" data-c=\"sources\" dir=\"ltr\" hidden></span></button>"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "style",
+   "note": "Badge style (light and dark), sub-heading style",
+   "occurrences": 1,
+   "ok": true,
+   "old": ".wntab{color:var(--eh-ink-2)}.wntab[aria-selected=\"true\"]{color:var(--eh-ink);box-shadow:inset 0 -3px 0 var(--eh-sea)}",
+   "new": ".wntab{color:var(--eh-ink-2)}.wntab[aria-selected=\"true\"]{color:var(--eh-ink);box-shadow:inset 0 -3px 0 var(--eh-sea)}\n.wnc{display:inline-block;min-width:18px;height:18px;line-height:18px;padding:0 5px;border-radius:9px;background:var(--eh-good-bg);color:var(--eh-good);font-size:10.5px;font-weight:800;text-align:center;margin-inline-start:6px;vertical-align:1px;box-sizing:border-box}.wnc[hidden]{"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "counts",
+   "note": "One count per tab; the week chip totals the three update tabs",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function wnCount(w){var d=w.data||{};return (w.fixes||[]).length+(d.added||[]).length+(d.removed||[]).length+(d.merged||[]).length+(d.confidence_up||[]).length+(d.tier_moves||[]).length+((d.bids||{}).won||[]).length+((d.bids||{}).lost||[]).length;}",
+   "new": "function wnCounts(w){var d=w.data||{},b=d.bids||{},c=d.clients||{},num=function(x){return typeof x==='number'?x:(x&&x.length)||0;};\n  var src=(w.sources||[]).filter(function(s){var r=String(s.refreshed||'').slice(0,10);return r&&r>=w.from&&r<=w.to;}).length;\n  return {fixes:(w.fixes||[]).length, companies:(d.added||[]).length+(d.removed||[]).filter(function(x){return !(x.reason==='merged');}).leng"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "counts",
+   "note": "Refresh tab badges whenever the week changes",
+   "occurrences": 1,
+   "ok": true,
+   "old": "\n  wnRenderBody(); }\n",
+   "new": "\n  wnTabCounts(); wnRenderBody(); }\n"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "fixes",
+   "note": "Fixes grouped by part of the hub, each heading with a count",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    h=(w.fixes||[]).map(function(f,i){return '<div class=\"wnitem '+wnEsc(f.severity||'')+'\"><button class=\"lnk app\" onclick=\"wnGoApp(\\''+wnEsc(f.app)+'\\','+i+')\">'+wnEsc(appName(f.app))+(f.view&&f.view!==f.severity?' \\u203a '+wnEsc(viewName(f.view)):'')+'</button><br>'+wnEsc(hubL==='ar'?(f.ar||f.en):(f.en||f.ar))+'</div>';}).join('')",
+   "new": "    var fx=(w.fixes||[]).map(function(f,i){return {f:f,i:i};}), order=['hub','stake','bids','clients','news'], grp={};\n    fx.forEach(function(x){var a=APPS[x.f.app]?x.f.app:'hub';(grp[a]=grp[a]||[]).push(x);});\n    Object.keys(grp).forEach(function(a){if(order.indexOf(a)<0)order.push(a);});\n    h=order.filter(function(a){return grp[a];}).map(function(a){return '<div class=\"wnh\">'+wnEsc(appName(a)"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "companies",
+   "note": "Added split by category (competitors first), each with a count",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    function sec(title,items,fn){ if(!items||!items.length)return ''; return '<div class=\"wnh\">'+title+' \\u00b7 <span dir=\"ltr\">'+items.length+'</span></div>'+items.map(fn).join(''); }\n    h+=sec(L('Added','أُضيفت'),d.added,function(x){return '<div class=\"wnitem data\">'+coLink(x.n)+(x.typ?' \\u00b7 '+wnEsc(x.typ):'')+(x.cat?' \\u00b7 '+wnEsc(x.cat):'')+'</div>';});",
+   "new": "    function sec(title,items,fn,cls){ if(!items||!items.length)return ''; return '<div class=\"wnh'+(cls?' '+cls:'')+'\">'+title+wnBdg(items.length)+'</div>'+items.map(fn).join(''); }\n    var CATAR={'Active Competitors':'منافسون نشطون','Direct Competitors':'منافسون مباشرون','Indirect / Adjacent Competitors':'منافسون غير مباشرون / مجاورون','EH Clients':'عملاء آفاق البيئة','Clients / Potential Clients"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "companies",
+   "note": "Removed rows rendered by a shared function",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    h+=sec(L('Removed','أُزيلت'),d.removed,function(x){",
+   "new": "    var rmFn=function(x){"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "companies",
+   "note": "Removed split into merged vs removed, each with a count",
+   "occurrences": 1,
+   "ok": true,
+   "old": "(x.reason?' \\u00b7 '+wnEsc(x.reason):'')+'</div>';});\n    h+=sec(L('Data confidence raised'",
+   "new": "(x.reason&&x.reason!=='merged'?' \\u00b7 '+wnEsc(x.reason):'')+'</div>';};\n    var rmM=(d.removed||[]).filter(function(x){return x.reason==='merged'||x.alias;}), rmO=(d.removed||[]).filter(function(x){return !(x.reason==='merged'||x.alias);});\n    h+=sec(L('Removed from the map','حُذفت من الخريطة'),rmO,rmFn);\n    if(!(d.merged||[]).length) h+=sec(L('Merged into another record','دُمجت في سجل آخر'),r"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "bids",
+   "note": "Won heading count",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    if((b.won||[]).length) h+='<div class=\"wnh\">'+L('Won','فاز EH')+'</div>'",
+   "new": "    if((b.won||[]).length) h+='<div class=\"wnh\">'+L('Won','فاز EH')+wnBdg(b.won.length)+'</div>'"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "bids",
+   "note": "Lost heading count",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    if((b.lost||[]).length) h+='<div class=\"wnh\">'+L('Lost','خسارة')+'</div>'",
+   "new": "    if((b.lost||[]).length) h+='<div class=\"wnh\">'+L('Lost','خسارة')+wnBdg(b.lost.length)+'</div>'"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "sources",
+   "note": "Sources heading: how many were refreshed this week",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    h=(w.sources||[]).map(function(x){var nt",
+   "new": "    var srcN=wnCounts(w).sources; h=((w.sources||[]).length?'<div class=\"wnh\">'+L('Refreshed this week','حُدّثت هذا الأسبوع')+wnBdg(srcN)+' \\u00b7 '+L('of','من')+' <span dir=\"ltr\">'+w.sources.length+'</span> '+L('sources','مصادر')+'</div>':'')+(w.sources||[]).map(function(x){var nt"
+  }
+ ]
+}

@@ -36,6 +36,12 @@ def extract(hub):
     if d:
         out['stakeholders'] = {n['n']: {'typ': n.get('typ'), 'cat': n.get('cat'), 'tier': n.get('tier'), 'cf': n.get('cf'),
                                         'bid': bool(n.get('bid')), 'bc': n.get('bc') or 0, 'drv': n.get('drv')} for n in d['nodes']}
+        # names recorded on a kept record as "Alias (merged duplicate): X" (18 Oct 2026): a removed name found here was merged
+        out['aliases'] = {}
+        for n in d['nodes']:
+            for al in re.findall(r'Alias \(merged duplicate\):\s*([^·\n]+?)(?=\.\s|\.$|\s+Alias \(|·|$)', n.get('notes') or ''):
+                for part in re.split(r'\s*;\s*', al):
+                    if part.strip(): out['aliases'].setdefault(_norm(part), n['n'])
     p = os.path.join(hub, 'EH_Bid_Analysis_CURRENT.html')
     b = _grab(open(p, encoding='utf-8').read(), 'BA') if os.path.exists(p) else None
     if b:
@@ -127,7 +133,9 @@ def diff(prev, cur):
     # a removed name whose normalised form is a prefix/suffix twin of a kept name → alias of a merge
     for r in list(removed):
         rn = _norm(r)
-        twin = next((cn[k] for k in cn if k != rn and (rn in k or k in rn) and len(min(rn, k, key=len)) >= 8), None)
+        twin = (cur.get('aliases') or {}).get(rn)
+        if twin and _norm(twin) == rn: twin = None
+        twin = twin or next((cn[k] for k in cn if k != rn and (rn in k or k in rn) and len(min(rn, k, key=len)) >= 8), None)
         if twin:
             # Display-name rule (approved 06/09/2026): the KEPT row is the English registry name, the ALIAS is the
             # Arabic or short name. The build cannot rename rows; it flags a pair that breaks the rule for the analyst.

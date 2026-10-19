@@ -194,13 +194,14 @@ function pxNote(){const s=BA.pricing.summary, v=pxVerdict(s);
 let pxExpand={};
 function togglePx(id){pxExpand[id]=!pxExpand[id];renderPricing();const el=document.querySelector('[onclick="togglePx('+id+')"]');if(el)el.focus();}   // keyboard focus stays on the card (#28)
 function pxAll(v){BA.pricing.rows.forEach((r,i)=>pxExpand[i]=v);renderPricing();}
+function pxSubmitted(r){const b=BA.bidlist.find(x=>x.year==r.year&&x.sn==r.sn);return b?tSub(b):r.bidders.some(b=>b.eh&&b.price);}   // 19 Oct 2026: tracker submission state (tSub) decides; a priced EH roster row is the fallback
 function renderPricing(){
  const p=BA.pricing, s=p.summary, rows=p.rows;
  const cards=rows.map((r,i)=>{
    const open=!!pxExpand[i];
    const maxp=Math.max(...r.bidders.filter(b=>b.price).map(b=>b.price),1);
    const gapcls=r.gap>50?'vt-bad':r.gap>5?'vt-warn':'vt-good';
-   const oc=r.status=='Cancelled'?'<span class="tag" style="background:#8A99A3;color:#10171C">'+t('CANCELLED','ملغاة')+'</span>':(r.won==null?'<span style="color:#5F7078;font-weight:700">'+t('PENDING','قيد الدراسة')+'</span>':(r.won?'<span class="tag" style="background:#2E7D46">'+t('EH WON','فاز EH')+'</span>':'<span class="tag" style="background:#C0504D">'+t('LOST','خسارة')+'</span>'));
+   const oc=r.status=='Cancelled'?'<span class="tag" style="background:#8A99A3;color:#10171C">'+t('CANCELLED','ملغاة')+'</span>':(r.won==null?(pxSubmitted(r)?'<span class="tag" style="background:#E3EEFA;color:#1A5FAB;border:1px solid #1A5FAB">'+t('SUBMITTED','تم التقديم')+'</span>':'<span style="color:#5F7078;font-weight:700">'+t('PENDING','قيد الدراسة')+'</span>'):(r.won?'<span class="tag" style="background:#2E7D46">'+t('EH WON','فاز EH')+'</span>':'<span class="tag" style="background:#C0504D">'+t('LOST','خسارة')+'</span>'));
    // full bidder bars (shown when open)
    const tch=b=>b.tech!=null?` <span title="${esc(t('Technical score','الدرجة الفنية'))}" style="font-size:10.5px;font-weight:600;color:${b.tech>=(r.tech_best||101)?'#2E7D46':'#5F7078'};white-space:nowrap">${t('tech ','فني ')}<span dir="ltr">${b.tech}%</span></span>`:'';
    const bars=r.bidders.map(b=>{

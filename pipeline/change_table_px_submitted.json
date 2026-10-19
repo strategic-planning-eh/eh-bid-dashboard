@@ -1,0 +1,27 @@
+{
+ "generated": "2026-10-19 13:54",
+ "title": "Change table — pricing cards SUBMITTED badge",
+ "failures": [],
+ "changes": [
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "px-submitted",
+   "note": "Pricing cards: pending tenders EH submitted are badged SUBMITTED (blue), not PENDING",
+   "occurrences": 1,
+   "ok": true,
+   "old": "(r.won==null?'<span style=\"color:#5F7078;font-weight:700\">'+t('PENDING','قيد الدراسة')+'</span>':",
+   "new": "(r.won==null?(pxSubmitted(r)?'<span class=\"tag\" style=\"background:#E3EEFA;color:#1A5FAB;border:1px solid #1A5FAB\">'+t('SUBMITTED','تم التقديم')+'</span>':'<span style=\"color:#5F7078;font-weight:700\">'+t('PENDING','قيد الدراسة')+'</span>'):"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "px-submitted",
+   "note": "Pricing cards: pxSubmitted() helper — tracker submission state per tender",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function renderPricing(){",
+   "new": "function pxSubmitted(r){const b=BA.bidlist.find(x=>x.year==r.year&&x.sn==r.sn);return b?tSub(b):r.bidders.some(b=>b.eh&&b.price);}   // 19 Oct 2026: tracker submission state (tSub) decides; a priced EH roster row is the fallback\nfunction renderPricing(){"
+  }
+ ]
+}

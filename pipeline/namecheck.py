@@ -50,13 +50,17 @@ def is_tender_title(s):
 # Etimad award-report labels and roster headings that sit in the bidder-name column (12 Oct 2026, audit bids-06 / data-15)
 LABEL_PHRASES = ['حالة الترسية', 'مستبعد من الترسية', 'سبب الاستبعاد', 'سبب عدم الترسية', 'تقرير الترسية', 'تقرير الموردين', 'تقرير فتح العروض',
                  'قائمة الموردين', 'عدد الموردين', 'اسم المورد', 'قيمة الترسية', 'نوع الترسية', 'ترسية كاملة', 'ترسية جزئية',
-                 'الاعلى سعرا', 'الادنى سعرا', 'العرض الاول', 'العرض الثاني', 'العرض الثالث', 'رقم المنافسة', 'تاريخ فتح العروض']
+                 'الاعلى سعرا', 'الادنى سعرا', 'العرض الاول', 'العرض الثاني', 'العرض الثالث', 'رقم المنافسة', 'تاريخ فتح العروض',
+                 # 19 Oct 2026 (bid 87/26): column headers and technical-score notes were read as bidders
+                 'ملاحظات', 'الملاحظات', 'رقم العرض', 'قيمة العرض', 'رقم العطاء', 'قيمة العطاء', 'رقم المرجع', 'النتيجة الفنية', 'التقييم الفني',
+                 'حاصل على نسبة', 'حاصل علي نسبة', 'حاصلة على نسبة', 'نسبة التقييم', 'remarks', 'notes', 'offer no', 'offer value', 'technical score']
 _LAB = [_n(p) for p in LABEL_PHRASES]
 _TITLE_ALWAYS = [_n(w) for w in ['منافسة', 'مشروع']]   # «منافسة مكتب استشارات…» is a tender title even though it names an office type
 
 def is_label_text(s):
     """True when the cell is a roster label (award status, exclusion reason, list heading) or a sheet title, not a bidder."""
     t = _n(s); w = t.split()
+    if re.search(r'\d{1,3}(?:[.,]\d+)?\s*[%٪]', t): return True   # «حاصل على نسبة (87%)» — a technical result, never a bidder (19 Oct 2026)
     return bool(w) and (any(p in t for p in _LAB) or w[0] in _TITLE_ALWAYS)
 
 def looks_like_company(s):

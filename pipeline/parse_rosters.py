@@ -11,6 +11,7 @@ def is_eh(s):
     t=norm_ar(s)
     if 'environmental horizon' in t or 'afaq' in t: return True
     return ('افاق' in t and 'بيئ' in t)
+HDR_ROWS=60   # 19 Oct 2026 (bid 87/26): headers below row 12 were missed, so the notes column became the name column
 def is_amt(v): return isinstance(v,(int,float)) and 1000<=v<1e11
 DQ=['غير مطابق','مستبعد','لم يجتاز','غير متطابق','مستبعده','غير ﻣﻄﺎﺑﻖ']
 def is_dq(v): return isinstance(v,str) and any(d in norm_ar(v) or d in str(v) for d in DQ)
@@ -55,7 +56,7 @@ def parse(rs):
     # applicant list; the column with the most company names is the roster.
     nc=None; hcols=[]
     for c in range(maxc):
-        for r in range(min(12,maxr)):
+        for r in range(min(HDR_ROWS,maxr)):
             h=norm_ar(grid[r][c])
             if any(k in h for k in ['bidder name','اسم المورد','اسم الشركه','supplier','اسم العارض','المورد']) and not any(d in h for d in DESC):
                 hcols.append(c); break
@@ -63,16 +64,21 @@ def parse(rs):
         nc=max(hcols, key=lambda c:(sum(1 for row in grid if is_name(row[c])), -c))
     if nc is None:
         nscore={c:sum(1 for row in grid if is_name(row[c]) and not any(b in norm_ar(row[c]) for b in ['قيمه','total amount']+DESC)) for c in range(maxc)}
+        NOTNAME=['ملاحظات','remarks','notes','رقم العرض','رقم العطاء','رقم المرجع','قيمه العرض','قيمه العطاء','النتيجه الفنيه','التقييم الفني']
+        for c in list(nscore):
+            for r in range(min(HDR_ROWS,maxr)):
+                h=norm_ar(grid[r][c]).strip()
+                if h and any(h==k or h.startswith(k) for k in NOTNAME): nscore[c]=0; break   # 19 Oct 2026
         # exclude columns whose header marks them as description
         for c in list(nscore):
-            for r in range(min(12,maxr)):
+            for r in range(min(HDR_ROWS,maxr)):
                 if any(d in norm_ar(grid[r][c]) for d in DESC): nscore[c]=0; break
         if not nscore or max(nscore.values())<2: return None
         nc=max(nscore,key=nscore.get)
     # price column = header/spread heuristic (optional)
     cands=[]
     for c in range(maxc):
-        hdr=' '.join(norm_ar(grid[r][c]) for r in range(min(12,maxr)))
+        hdr=' '.join(norm_ar(grid[r][c]) for r in range(min(HDR_ROWS,maxr)))
         if any(k in hdr for k in ['رقم العرض','رقم العطاء','رقم المرجع']): continue  # offer ID — never a price
         vals=[row[c] for row in grid if is_amt(row[c])]
         if len(vals)>=2:
@@ -80,7 +86,7 @@ def parse(rs):
     pc=None
     if cands:
         def hscore(c):
-            for r in range(min(12,maxr)):
+            for r in range(min(HDR_ROWS,maxr)):
                 h=norm_ar(grid[r][c])
                 if any(k in h for k in ['قيمه العرض','قيمه الترسيه','total amount','اجمالي','القيمه الماليه','amount','قيمه العطاء']): return 2
                 if any(k in h for k in ['رقم','reference','no.','الرقم']): return -3
@@ -105,7 +111,7 @@ def tech_scores(rs):
     maxr=min(rs.max_row,500); maxc=rs.max_column
     grid=[[rs.cell(r+1,c+1).value for c in range(maxc)] for r in range(maxr)]
     nc=tc=None
-    for r in range(min(15,maxr)):
+    for r in range(min(HDR_ROWS,maxr)):
         for c in range(maxc):
             h=norm_ar(grid[r][c]).strip()
             if nc is None and any(k in h for k in ['bidder name','اسم المورد','اسم الشركه','supplier','اسم العارض']): nc=c
@@ -132,6 +138,19 @@ if __name__=='__main__':
             if r: allr[f'{yr}-{sn}']=r
             ts=tech_scores(wb[sh])
             if ts: tech[f'{yr}-{sn}']=ts
+    # corrections.json "rosters": bidder lists confirmed by the bid team, replacing what the Bid# sheet yields
+    # (19 Oct 2026, bid 87/26). Rows: [name, value or null, note]. Enter the same table in the Drive sheet and it becomes a no-op.
+    import os
+    _cp=os.path.join(os.path.dirname(os.path.abspath(__file__)),'corrections.json')
+    if os.path.exists(_cp):
+        for key,rows in (json.load(open(_cp,encoding='utf-8')).get('rosters') or {}).items():
+            allr[key]=[[clip_name(n), (float(v) if is_amt(v) else None), is_dq(nt), is_eh(n)] for n,v,nt in rows]
+            _t={}
+            for n,v,nt in rows:
+                m=re.search(r'(\d{1,3}(?:[.,]\d+)?)\s*[%٪]',str(nt or ''))
+                if m: _t[clip_name(n)]=float(m.group(1).replace(',','.'))
+            if _t: tech[key]=_t
+            print('corrections.json roster applied:',key,len(rows),'bidders')
     json.dump(allr, open('rosters_all.json','w'), ensure_ascii=False)
     json.dump(tech, open('techscores.json','w'), ensure_ascii=False)   # 12 Oct 2026: technical scores by tender and bidder
     print('Technical scores:', {k: len(v) for k, v in tech.items()} or 'none recorded')

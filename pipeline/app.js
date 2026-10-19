@@ -11,7 +11,8 @@ const RCAT={'Out of scope of EH':'#E8862E','Service not offered':'#7B6BA8','Miss
 // ---------- i18n ----------
 let L='en',curTab='overview';
 const t=(en,ar)=>L==='ar'?ar:en;
-const DOUT={'Won':'فوز','Lost':'خسارة','Not awarded':'لم تتم الترسية','Cancelled':'ملغاة','Pending':'قيد الدراسة'};
+const DOUT={'Won':'فوز','Lost':'خسارة','Not awarded':'لم تتم الترسية','Cancelled':'ملغاة','Pending':'قيد الدراسة','Submitted':'تم التقديم'};
+function tOut(b){return (b.outcome=='Pending'&&tSub(b))?'Submitted':b.outcome;}   // 19 Oct 2026: shown outcome — a pending tender EH submitted reads Submitted
 const DCAT={'Out of scope of EH':'خارج نطاق عمل EH','Service not offered':'خدمة غير مقدَّمة','Missing licence / qualification':'نقص ترخيص / تأهيل','Vendor / partner risk':'مخاطر مورّد / شريك','Other / not specified':'أخرى / غير محددة'};
 const DSVC={'Environmental Studies / EIA (impact assessment)':'دراسات بيئية / تقييم الأثر البيئي','Environmental Studies / EIA':'دراسات بيئية / تقييم الأثر البيئي','Unclassified':'غير مصنّف','Environmental Services':'خدمات بيئية','Training':'تدريب','Env. Services':'خدمات بيئية','Env. Studies / EIA':'دراسات بيئية / تقييم الأثر'};
 const DPLAT={'Etimad':'اعتماد','SEC-SAP / SAP Ariba':'SEC-SAP / ساب أريبا','SAP Ariba':'ساب أريبا','SEC-SAP':'SEC-SAP','Email / direct':'بريد / مباشر','Other / client portal':'أخرى / بوابة العميل','Email':'بريد','Other':'أخرى'};
@@ -73,7 +74,7 @@ function rNtf(){
  }
  NTF.dec.forEach(k=>{
    const b=BA.bidlist.find(x=>x.year+'-'+x.sn===k);
-   if(b) parts.push('<a style="'+lk+'" onclick="jumpTo(\'tenders\',\''+k+'\')">'+lbl(k)+' \u2192 '+t(b.outcome,(typeof DOUT!=='undefined'&&DOUT[b.outcome])||b.outcome)+'</a>');
+   if(b) parts.push('<a style="'+lk+'" onclick="jumpTo(\'tenders\',\''+k+'\')">'+lbl(k)+' \u2192 '+t(tOut(b),(typeof DOUT!=='undefined'&&DOUT[tOut(b)])||tOut(b))+'</a>');
  });
  if(NTF.px.size) parts.push('<a style="'+lk+'" onclick="jumpTo(\'pricing\',\'px\')">'+NTF.px.size+t(' pricing update(s)',' تحديث/تحديثات تسعير')+'</a>');
  if(NTF.upd.size) parts.push('<a style="'+lk+'" onclick="jumpTo(\'tenders\',\'upd\')">'+NTF.upd.size+t(' row update(s)',' تحديث/تحديثات صفوف')+'</a>');
@@ -201,7 +202,7 @@ function renderPricing(){
    const open=!!pxExpand[i];
    const maxp=Math.max(...r.bidders.filter(b=>b.price).map(b=>b.price),1);
    const gapcls=r.gap>50?'vt-bad':r.gap>5?'vt-warn':'vt-good';
-   const oc=r.status=='Cancelled'?'<span class="tag" style="background:#8A99A3;color:#10171C">'+t('CANCELLED','ملغاة')+'</span>':(r.won==null?(pxSubmitted(r)?'<span class="tag" style="background:#E3EEFA;color:#1A5FAB;border:1px solid #1A5FAB">'+t('SUBMITTED','تم التقديم')+'</span>':'<span style="color:#5F7078;font-weight:700">'+t('PENDING','قيد الدراسة')+'</span>'):(r.won?'<span class="tag" style="background:#2E7D46">'+t('EH WON','فاز EH')+'</span>':'<span class="tag" style="background:#C0504D">'+t('LOST','خسارة')+'</span>'));
+   const oc=r.status=='Cancelled'?'<span class="tag" style="background:#8A99A3;color:#10171C">'+t('CANCELLED','ملغاة')+'</span>':(r.won==null?(pxSubmitted(r)?'<span class="tag" style="background:#0B7F76">'+t('SUBMITTED','تم التقديم')+'</span>':'<span style="color:#5F7078;font-weight:700">'+t('PENDING','قيد الدراسة')+'</span>'):(r.won?'<span class="tag" style="background:#2E7D46">'+t('EH WON','فاز EH')+'</span>':'<span class="tag" style="background:#C0504D">'+t('LOST','خسارة')+'</span>'));
    // full bidder bars (shown when open)
    const tch=b=>b.tech!=null?` <span title="${esc(t('Technical score','الدرجة الفنية'))}" style="font-size:10.5px;font-weight:600;color:${b.tech>=(r.tech_best||101)?'#2E7D46':'#5F7078'};white-space:nowrap">${t('tech ','فني ')}<span dir="ltr">${b.tech}%</span></span>`:'';
    const bars=r.bidders.map(b=>{
@@ -441,17 +442,17 @@ function dlCell(b){if(!b.deadline)return `<span style="color:#77868F;font-size:1
  return s;}
 function tCSV(list){const H=['Ref','Year','Title','Client','Platform','Submission deadline','EH submitted','Days past deadline, no result','Outcome','Value (SAR, indicative)','Value note','Checks'];
  const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""').replace(/\s+/g,' ').trim()+'"';
- const rows=list.map(b=>[b.year+'-'+b.sn,b.year,b.title,b.client,platN(b.platform),b.deadline||'',b.subdate||(tSub(b)?'submitted, no date':''),tNeeds(b)?tDaysPast(b):'',b.outcome,b.value||'',tWinPrice(b)?"winner's price, not EH's offer":'',tBadges(b).map(x=>x.en).join('; ')].map(q).join(','));
+ const rows=list.map(b=>[b.year+'-'+b.sn,b.year,b.title,b.client,platN(b.platform),b.deadline||'',b.subdate||(tSub(b)?'submitted, no date':''),tNeeds(b)?tDaysPast(b):'',tOut(b),b.value||'',tWinPrice(b)?"winner's price, not EH's offer":'',tBadges(b).map(x=>x.en).join('; ')].map(q).join(','));
  const blob=new Blob(['﻿'+[H.map(q).join(',')].concat(rows).join('\r\n')],{type:'text/csv;charset=utf-8'});
  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='EH_tenders_'+(TF.flag=='all'?'list':TF.flag)+'_'+TODAY+'.csv';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},500);}
 let _tLast=[];
 function tFlagOK(b){switch(TF.flag){case 'needs':return tNeeds(b);case 'ahead':return tAhead(b);case 'accnosub':return tAccNoSub(b);case 'gaps':return tGap(b);case 'stale':return !!b.deadline_stale;default:return true;}}
 function renderTenders(){
  const _q=(document.activeElement&&document.activeElement.id==='tq')?[document.activeElement.selectionStart,document.activeElement.selectionEnd]:null;   // keep typing in the search box (audit bids-05)
- const OC={'Won':'#2E7A37','Lost':'#B23F2B','Not awarded':'#C98A1B','Cancelled':'#5E6B80','Pending':'#0072BB'};   // EH status set (eh-shared.css v2)
+ const OC={'Won':'#2E7A37','Lost':'#B23F2B','Not awarded':'#C98A1B','Cancelled':'#5E6B80','Pending':'#0072BB','Submitted':'#0B7F76'};   // EH status set (eh-shared.css v2)
  const list=BA.bidlist.filter(b=>
    (TF.year=='all'||b.year==TF.year)&&
-   (TF.outcome=='all'||b.outcome==TF.outcome)&&
+   (TF.outcome=='all'||tOut(b)==TF.outcome)&&
    (TF.platform=='all'||platN(b.platform)==TF.platform)&&
    (TF.svc=='all'||b.svc==TF.svc)&&
    (!TF.q||((b.title+' '+b.client+' #'+b.sn).toLowerCase().includes(TF.q.toLowerCase())))&&
@@ -460,7 +461,7 @@ function renderTenders(){
  _tLast=list;
  const ss='padding:7px 10px;border:1px solid #CBD6DC;border-radius:7px;font-size:12px;color:#3A4A52;background:#fff;cursor:pointer';
  const sel=(kk,opts,lab,disp)=>`<div style="display:flex;flex-direction:column;gap:3px"><label style="font-size:10px;color:#8A99A3;text-transform:uppercase;letter-spacing:.4px;font-weight:600">${lab}</label><select onchange="setTF('${kk}',this.value)" style="${ss}">${['all',...opts].map(o=>`<option value="${o}" ${TF[kk]==o?'selected':''}>${o=='all'?t('All','الكل'):(disp?disp(o):o)}</option>`).join('')}</select></div>`;
- const outcomes=['Won','Lost','Not awarded','Cancelled','Pending'].filter(o=>BA.bidlist.some(b=>b.outcome==o));
+ const outcomes=['Won','Lost','Not awarded','Cancelled','Submitted','Pending'].filter(o=>BA.bidlist.some(b=>tOut(b)==o));
  const FL={needs:[t('Needs a result','بانتظار نتيجة'),BA.bidlist.filter(tNeeds).length],ahead:[t('Deadline still open','الموعد ما زال مفتوحاً'),BA.bidlist.filter(tAhead).length],accnosub:[t('Accepted, no submission recorded','مقبولة دون تقديم مسجّل'),BA.bidlist.filter(tAccNoSub).length],gaps:[t('Data gaps to fix','ثغرات بيانات للتصحيح'),BA.bidlist.filter(tGap).length],stale:[t('Deadline probably extended','الموعد مُدّد على الأرجح'),BA.bidlist.filter(b=>b.deadline_stale).length]};
  const years=[...new Set(BA.bidlist.map(b=>String(b.year)))].sort();
  const ctrls=`<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-bottom:14px;background:#fff;border:1px solid #E3EAE5;border-radius:11px;padding:13px 15px" class="tctl">
@@ -509,7 +510,7 @@ const ls=tLossSplit(list), tc=tTopClient(list), lag=tAwardLag(list);
    <td style="font-size:10.5px;color:#6B7C86">${b.svc?dv(DSVC,b.svc):'—'}</td>
    <td style="text-align:right;font-size:11px;white-space:nowrap">${b.value?(tWinPrice(b)?`<span style="color:#8A99A3">${fmtSAR(b.value)}</span><div class="tnote">${t('winner\'s price','سعر الفائز')}</div>`:fmtSAR(b.value)+(V.big.has(b.year+'-'+b.sn)?`<div class="tnote" style="color:#8A5A12;font-weight:700">${t('very large','كبيرة جداً')}</div>`:'')):'—'}</td>
    <td style="text-align:center">${b.nbid!=null?b.nbid:'—'}</td>
-   <td><span class="tag" style="background:${OC[b.outcome]}">${t(b.outcome.toUpperCase(),DOUT[b.outcome]||b.outcome)}</span>${b.lossreason&&b.outcome!='Won'?`<div dir="auto" style="font-size:9.5px;color:${b.outcome=='Cancelled'?'#77868F':'#A03A36'};margin-top:3px;max-width:175px;line-height:1.35">${esc(b.lossreason)}</div>`:''}</td>
+   <td><span class="tag" style="background:${OC[tOut(b)]}">${t(tOut(b).toUpperCase(),DOUT[tOut(b)]||tOut(b))}</span>${b.lossreason&&b.outcome!='Won'?`<div dir="auto" style="font-size:9.5px;color:${b.outcome=='Cancelled'?'#77868F':'#A03A36'};margin-top:3px;max-width:175px;line-height:1.35">${esc(b.lossreason)}</div>`:''}</td>
    <td style="max-width:130px"><div dir="auto" style="font-size:10.5px;color:#6B7C86">${b.winner=='EH'?'<b style="color:#2E7D46">EH</b>':(esc(b.winner)||'—')}</div></td>
  </tr>`).join('');
  $('s-tenders').innerHTML=

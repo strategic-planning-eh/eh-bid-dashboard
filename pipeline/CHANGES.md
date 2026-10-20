@@ -173,3 +173,7 @@ hub | major | iOS | Fixed: on iPhone and iPad the dashboards did not fill the sc
 hub | minor | Dark mode | Fixed: remaining light-coloured panels and unreadable text in dark mode across all views. | إصلاح: بقايا اللوحات الفاتحة والنصوص غير المقروءة في الوضع الداكن عبر كل اللوحات.
 bids | minor | Executive | New: year toggle (2025 / 2026 / Both) and animated quadrant chart in the executive view. | جديد: مبدّل السنة (2025 / 2026 / الكل) ورسم رباعي متحرك في العرض التنفيذي.
 hub | minor | Header | CONFIDENTIAL notice added to the hub header on every device. | أُضيف تنبيه «سرّي» إلى ترويسة المنصة على كل الأجهزة.
+
+## 2026-W43
+map | minor | Stakeholder Map | Two ghost companies removed (Environmental Performance Indicator Co., Green East Environmental Contracting) — no commercial register, licence or web presence, and not in any bid-tracker roster | حذف شركتين وهميتين من خريطة أصحاب المصلحة — بلا سجل تجاري أو ترخيص أو حضور على الإنترنت ولا تظهر في أي قائمة متنافسين
+map | minor | Stakeholder Map | 33 name bridges approved so bid-tracker spellings of existing companies and clients are counted as one record (ADECO, AH Enviro, FKEC, GECO, Atkins, KPMG, Holy Makkah, Hail, KACST…) | اعتماد 33 جسر أسماء لربط تهجئات جدول المنافسات بالسجلات الموجودة في الخريطة

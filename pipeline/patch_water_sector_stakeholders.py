@@ -4,15 +4,15 @@ Source: "The water sector in the Kingdom of Saudi Arabia — who governs, who re
 compiled from the Saudi Water Authority's register of licensed facilities and public announcements. Every organisation
 the chart names is checked against the map:
 
-  • 24 new records — SWPC and the Saudi Irrigation Organization (Government Clients & Institutions, tier GOV); the SWA-group
-    operators WTTCO and Water Solutions Co.; Marafiq's Tawreed and JWAP; the eleven IWPP/IWP producers selling to SWPC
+  • 22 new records — the Saudi Irrigation Organization (Government Clients & Institutions, tier GOV); Water Solutions Co.; Marafiq's Tawreed and JWAP; the eleven IWPP/IWP producers selling to SWPC
     (Shuaibah ×4, Rabigh ×2, Shuqaiq, Jazlah, Jubail International, Yanbu International, Taif); and the seven ISTP
     developers (Metito, Mowah, Orascom, Gulf Amwal, Acciona, Tawzea, Tamasuk). Potential clients: desalination and
     sewage plants generate brine, sludge, spent membranes and treatment-chemical waste — EH service lines.
     Confidence Medium (official register via a secondary compilation; CR/LEI not yet checked).
   • Existing records get a dated sector-role note and the chart's name as an alias: MEWA, SWA, NWC, Neom, Marafiq (Arabic
     record), Shuqaiq Third Water Co. (Arabic client record, region filled: Southern Region / Al Shuqaiq), Kindasa, SAWACO,
-    Red Sea Utilities (Consortium), Veolia Middle East.
+    Red Sea Utilities (Consortium), Veolia Middle East, and SWPC and WTTCO (both added earlier the same day from the
+    bid-tracker / news cross-check; SWPC's confidence rises to Medium with the second source).
   • Nothing is merged here. Two possible twins are left for Youssef's review workbook: "Red Sea Utilities Consortium" ↔
     "شركة مرافق البحر الاحمر المشتركة للطاقة" and "Veolia Middle East Environmental Services" ↔ "فيوليا ميديل ايست للخدمات البيئية".
 
@@ -35,15 +35,9 @@ def al(*names): return ' '.join(f'Alias (merged duplicate): {x}.' for x in names
 # ---------------------------------------------------------------- new records
 NEW = [
  # name, cat, tier, typ, sec, region, city, note, aliases
- ('Saudi Water Partnership Company (SWPC)', GOVC, 'GOV', 'GOV-ENTITY', UW, 'Riyadh', 'Riyadh',
-  f'{SRC}: owned by the Ministry of Finance; the principal offtaker buying water and wastewater services from producers, and the body that tenders IWPP, IWP, independent-reservoir and ISTP contracts. EH angle: SWPC project companies are the plant owners EH would serve; SWPC tender documents set the environmental obligations of each plant.',
-  ['الشركة السعودية لشراكات المياه', 'SWPC']),
  ('Saudi Irrigation Organization (SIO)', GOVC, 'GOV', 'GOV-ENTITY', UW, 'Riyadh', 'Riyadh',
   f'{SRC}: transports, distributes and sells treated water for reuse (regulated by MEWA and SWA). EH angle: reuse networks and irrigation reservoirs generate sludge and monitoring work.',
   ['المؤسسة العامة للري', 'SIO']),
- ('Water Transmission & Technologies Co. (WTTCO)', CLI, 'Tier 2', 'Other', UW, 'Riyadh', 'Riyadh',
-  f'{SRC}: operates the Kingdom\'s main water transmission lines and strategic storage (SWA group), regulated by SWA with SWPC as offtaker. EH angle: pipeline and reservoir maintenance waste, tank cleaning sludge, Kingdom-wide sites.',
-  ['الشركة السعودية لنقل وتقنيات المياه', 'WTTCO']),
  ('Water Solutions Co. (WSM)', CLI, 'Tier 2', 'Other', UW, 'Riyadh', 'Riyadh',
   f'{SRC}: PIF-owned; manages desalination and purification plants. {EHA}',
   ['شركة حلول المياه', 'WSM']),
@@ -85,6 +79,8 @@ NEW = [
 
 # ---------------------------------------------------------------- notes on existing records (exact map names) → (note, aliases, field updates)
 UPD = {
+ 'Saudi Water Partnership Company (SWPC)': (f'{SRC}: owned by the Ministry of Finance; the principal offtaker buying water and wastewater services from producers, and the body that tenders IWPP, IWP, independent-reservoir and ISTP contracts. EH angle: SWPC project companies are the plant owners EH would serve; SWPC tender documents set the environmental obligations of each plant.', ['الشركة السعودية لشراكات المياه', 'SWPC'], {'cf': 'Medium', 'cf_basis': 'News & Intelligence pages + SWA water-sector structure chart (two sources)'}),
+ 'Water Transmission & Technologies Co. (WTTCO)': (f'{SRC}: operates the Kingdom\'s main water transmission lines and strategic storage (SWA group), regulated by SWA with SWPC as offtaker. EH angle: pipeline and reservoir maintenance waste, tank cleaning sludge, Kingdom-wide sites.', ['الشركة السعودية لنقل وتقنيات المياه'], {}),
  'Ministry of Environment, Water and Agricultural': (f'{SRC}: umbrella ministry of the water sector — policy, strategy and legislation; the Minister chairs the boards of the Saudi Water Authority and the National Water Company.', ['MEWA'], {}),
  'Saudi Water Authority': (f'{SRC}: the sector regulator (formerly the Saline Water Conversion Corporation) — licensing, standards and planning for every stage from production to reuse; its Production Arm operates the government desalination plants. EH angle: SWA licensing conditions drive the environmental obligations of every plant on the map.', ['SWA', 'المؤسسة العامة لتحلية المياه المالحة'], {}),
  'National Water Company': (f'{SRC}: PIF-owned; distributes urban water through six regional clusters, runs the Kingdom\'s sewer networks and treatment plants, holds a strategic-storage licence in its regions, sells treated water from its plants, and is the offtaker of the ISTP contracts.', ['NWC', 'شركة المياه الوطنية'], {}),
@@ -121,7 +117,7 @@ for name, (base, aliases, fields) in UPD.items():
     changed = new != (n.get('notes') or '')
     if changed: n['notes'] = new
     for k, v in fields.items():
-        if (n.get(k) or '') in ('', '—'): n[k] = v; changed = True
+        if k in ('cf', 'cf_basis') or (n.get(k) or '') in ('', '—'): n[k] = v; changed = True
     if changed: log.append(('noted', name, 'sector role' + (' + region' if fields else '')))
 added = 0
 for name, cat, tier, typ, sec, rg, city, note, aliases in NEW:

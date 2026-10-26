@@ -226,37 +226,41 @@ def main():
         bidders = []; dropped = []
         for b in pr.get('bidders', []):
             if not b.get('eh') and not is_eh(b['name']) and not looks_like_company(b['name']): dropped.append(b['name']); continue   # a tender title or a reason in the roster is never a bidder
-            bidders.append(dict(name=b['name'], price=b.get('price'), dq=b.get('dq'), eh=b.get('eh') or is_eh(b['name']), rank=b.get('rank'), won=b.get('won'), undisclosed=b.get('undisclosed')))
+            bidders.append(dict(name=b['name'], price=b.get('price'), dq=b.get('dq'), eh=b.get('eh') or is_eh(b['name']), rank=b.get('rank'), won=b.get('won'), undisclosed=b.get('undisclosed'), pid=None))
         if dropped: roster_dropped.append(dict(ref=f"{t['year']}/{t['sn']}", names=dropped))
         # EH submitted = tracker says so, or EH has a price / a submission date / a result (Youssef, Oct 2026: match across columns)
         submitted = bool(t.get('submitted')) or t.get('sub') == 'Yes' or bool(t.get('subdate')) or pr.get('eh') is not None or t.get('outcome') in ('Won', 'Lost') or rb.get('substatus') == 'Yes' or bool(rb.get('subdate'))
         eh_price = pr.get('eh')
         if eh_price is None and t.get('per_unit') and rb.get('offer_vat'): eh_price = rb['offer_vat']   # per-unit rate: the roster has no lump sums to rank, show EH's own rate
         wname = t.get('winner') or ''
+        if not wname or wname in ('EH', '__EH__'):
+            rw = [b for b in bidders if b['won'] and not b['eh']]
+            if rw and not wname: wname = rw[0]['name']          # winner typed only in the roster sheet
+        winner_pid = None
         tender = dict(year=t['year'], sn=t['sn'], ref=f"{t['year']}/{t['sn']}", date=t.get('date'), title=t.get('title'), platform=t.get('platform'),
             svc=t.get('svc'), dur=t.get('dur'), value=t.get('value'), eh_price=eh_price, per_unit=bool(t.get('per_unit')), eh_offer_exvat=rb.get('offer'),
             nbid=t.get('nbid'), n_priced=pr.get('n_priced'), low=pr.get('low'), gap=pr.get('gap'), rank=pr.get('rank'),
             winner=wname, win_price=pr.get('win_price') if pr.get('has_winner') else None, outcome=t.get('outcome'), status=t.get('status'),
             committee=t.get('committee'), submitted=submitted,
             subdate=t.get('subdate') or rb.get('subdate'), deadline=t.get('deadline') or rb.get('submit'), lossreason=t.get('lossreason'),
-            reason=t.get('reason'), bidders=bidders, how=how)
+            reason=t.get('reason'), bidders=bidders, how=how, winner_pid=None)
         p['tenders'].append(tender)
         if 'client' not in p['roles']: p['roles'].append('client')
         # ---- bidders (competitors) on this tender
         for b in bidders:
             if b['eh'] or is_eh(b['name']) or not looks_like_company(b['name']): continue
             n2, how2 = M.find(b['name'])
-            q = prof_for(n2, b['name'], 'bidders')
+            q = prof_for(n2, b['name'], 'bidders'); b['pid'] = q['id']
             if not n2: unresolved['bidders'][b['name']]['n'] += 1
             add_name(q, b['name'])
-            q['encounters'].append(dict(year=t['year'], sn=t['sn'], ref=tender['ref'], date=t.get('date'), title=t.get('title'), client=cname,
-                client_id=p['id'], their_price=b['price'], eh_price=pr.get('eh'), dq=b['dq'], rank=b['rank'], won=b['won'],
+            q['encounters'].append(dict(year=t['year'], sn=t['sn'], ref=tender['ref'], date=t.get('date'), title=t.get('title'), client=p['name'],
+                client_id=p['id'], winner=('EH' if wname in ('EH', '__EH__') else wname), their_price=b['price'], eh_price=pr.get('eh'), dq=b['dq'], rank=b['rank'], won=b['won'],
                 undercut=(b['price'] is not None and pr.get('eh') is not None and b['price'] < pr['eh']), outcome=t.get('outcome'), how=how2))
             if 'competitor' not in q['roles']: q['roles'].append('competitor')
         # ---- winner
         if wname and wname not in ('EH', '__EH__') and not is_eh(wname) and looks_like_company(wname):
             n3, how3 = M.find(wname)
-            w = prof_for(n3, wname, 'winners')
+            w = prof_for(n3, wname, 'winners'); tender['winner_pid'] = w['id']
             if not n3: unresolved['winners'][wname]['n'] += 1; unresolved['winners'][wname]['value'] += (pr.get('win_price') or t.get('value') or 0)
             add_name(w, wname)
             w['wins'].append(dict(year=t['year'], sn=t['sn'], ref=tender['ref'], title=t.get('title'), client=cname, client_id=p['id'], win_price=pr.get('win_price'), eh_price=pr.get('eh'), how=how3))

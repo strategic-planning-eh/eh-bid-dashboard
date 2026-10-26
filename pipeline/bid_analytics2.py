@@ -407,7 +407,7 @@ def compute(bids, rfull, comp, wcanon=None):
             submitted=substate(b) in ('date','yes'),
             deadline_stale=bool(b.get('submit') and (b.get('ehsubdate') or b.get('subdate')) and (b.get('ehsubdate') or b.get('subdate'))>b['submit']),
             sub_conflict=bool(b.get('substatus')=='No' and (b.get('decided') or b.get('eh_won'))),
-            value=round(b['value']) if b['value'] else None, nbid=int(b['nbid']) if b['nbid'] else None,
+            value=round(b['value']) if b['value'] else None, nbid=int(b['nbid']) if b['nbid'] else None, per_unit=bool(b.get('per_unit')),
             svc=SVCN2.get(b['svcdept'],''), dur=round(b['dur'],1) if b['dur'] else None,
             winner=win, outcome=outcome(b), status=(b['status'] or ''),
             committee=b['committee'], reason=b['comments'], lossreason=(b.get('reason') or None),

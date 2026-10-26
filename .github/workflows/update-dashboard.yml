@@ -90,6 +90,13 @@ jobs:
           python pipeline/build_etimad_page.py pipeline/etimad_tenders.json site/etimad_tenders.html
           rm -f pipeline/etimad_data.xlsx pipeline/etimad_tenders.json
 
+      # ---------- Organisations view: one profile per client / bidder / winner, built after the sync and the Etimad step so the map carries the live bid and Etimad fields (26 Oct 2026) ----------
+      - name: Build the Organisations view
+        run: |
+          python pipeline/build_org_profiles.py --map site/EH_Stakeholder_Map_CURRENT.html --ba pipeline/bidanalysis2.json --bidraw pipeline/bidraw2.json \
+            --aliases pipeline/aliases.csv --out pipeline/org_profiles.json --unresolved pipeline/org_unresolved_names.xlsx --stamp "$(TZ='Asia/Riyadh' date +'%-d %b %Y')"
+          python pipeline/build_org_page.py pipeline/org_profiles.json site/organisations.html
+
       - name: Keep the bid-sync report, twin review workbook, aliases and feed (Actions → this run → Artifacts)
         uses: actions/upload-artifact@v4
         with:
@@ -99,6 +106,7 @@ jobs:
             pipeline/possible_twins_review.xlsx
             pipeline/aliases.csv
             pipeline/roster_duplicates.json
+            pipeline/org_unresolved_names.xlsx
             site/competitors_feed.json
           retention-days: 90
           overwrite: true

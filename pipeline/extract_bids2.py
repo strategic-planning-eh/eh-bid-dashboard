@@ -175,9 +175,10 @@ for f,yr in [('bids2025.xlsx',2025),('bids2026.xlsx',2026)]:
             reason=(str(g('reason') or '').strip() or (winner_reason or '')),
             appr=dict(ceo=acc(g('ceo')),fin=acc(g('fin')),tech=acc(g('tech')),bd=acc(g('bd')),pm=acc(g('pm')),admin=acc(g('admin')),legal=acc(g('legal'))),
         )
-        if b['offer'] is not None and b['offer']<100: b['offer']=None   # sub-100 SAR = data-entry error, not a real bid
-        if b['winval'] is not None and b['winval']<100: b['winval']=None
-        b['value']=b['winval'] if b['winval'] else b['offer']
+        # Sub-100 SAR is a per-unit rate, not a lump sum (26 Oct 2026, bid 88/26 — ZATCA framework priced per unit, Youssef):
+        # keep it so the submission and the pricing comparison count, flag it, and leave it out of the value totals.
+        b['per_unit']=bool((b['offer'] is not None and b['offer']<100) or (b['winval'] is not None and b['winval']<100))
+        b['value']=(b['winval'] if (b['winval'] and b['winval']>=100) else (b['offer'] if (b['offer'] and b['offer']>=100) else None))
         # EH submission date: the tracker's own date first, else the earlier proposal date (11 Oct 2026)
         _pd=sorted(x for x in (b['techdate'],b['findate']) if x)
         b['ehsubdate']=b['subdate'] or (_pd[0] if _pd else None)

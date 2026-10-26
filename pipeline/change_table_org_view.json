@@ -1,0 +1,167 @@
+{
+ "generated": "2026-10-26 15:21",
+ "title": "Change table — Organisations view",
+ "failures": [],
+ "changes": [
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "org-view",
+   "note": "Sixth top-level tab after News & Intelligence",
+   "occurrences": 1,
+   "ok": true,
+   "old": "data-ar=\"الأخبار والمستجدات\">News &amp; Intelligence</span></button>\n  </div></nav>",
+   "new": "data-ar=\"الأخبار والمستجدات\">News &amp; Intelligence</span></button>\n    <button class=\"tab\" role=\"tab\" data-f=\"orgs\" data-t=\"Organisations\" aria-pressed=\"false\" onclick=\"go(this)\" title=\"One profile per organisation — every tender it asked for, every bid against EH, what EH sells it · ملف لكل منظمة — كل منافسة طرحتها، كل عرض ضد آفاق البيئة، وما تبيعه لها آفاق البيئة\"><svg class=\"ic\" aria-hidden=\""
+  },
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "org-view",
+   "note": "Loading skeleton",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"skel\" id=\"sk-bubbles\">",
+   "new": "<div class=\"skel\" id=\"sk-orgs\"><div class=\"in\"><div class=\"spin\"></div><span class=\"tl\" data-en=\"Loading organisations…\" data-ar=\"جارٍ تحميل المنظمات…\">Loading organisations…</span></div></div>\n  <div class=\"skel\" id=\"sk-bubbles\">"
+  },
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "org-view",
+   "note": "Lazy iframe for the page",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<iframe id=\"f-bubbles\" title=\"Client portfolio bubble chart\" data-src=\"EH_Client_Bubble_Map_CURRENT.html\" loading=\"lazy\"></iframe>",
+   "new": "<iframe id=\"f-bubbles\" title=\"Client portfolio bubble chart\" data-src=\"EH_Client_Bubble_Map_CURRENT.html\" loading=\"lazy\"></iframe>\n  <iframe id=\"f-orgs\" title=\"Organisations — one profile per client, bidder and competitor\" data-src=\"organisations.html\" loading=\"lazy\"></iframe>"
+  },
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "org-view",
+   "note": "Mobile tab bar button",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<span class=\"tl\" data-en=\"News\" data-ar=\"الأخبار\">News</span></button>\n</nav>",
+   "new": "<span class=\"tl\" data-en=\"News\" data-ar=\"الأخبار\">News</span></button>\n  <button class=\"mtab\" data-f=\"orgs\" role=\"tab\" onclick=\"go(document.querySelector('.tab[data-f=orgs]'))\"><svg aria-hidden=\"true\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"2\"/><circle cx=\"9\" cy=\"10\" r=\"2\"/><p"
+  },
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "org-view",
+   "note": "Mobile bar grid: five buttons",
+   "occurrences": 1,
+   "ok": true,
+   "old": "nav.mtabs{position:sticky;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);",
+   "new": "nav.mtabs{position:sticky;bottom:0;display:grid;grid-template-columns:repeat(5,1fr);"
+  },
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "org-view",
+   "note": "Phone bar grid: six buttons",
+   "occurrences": 1,
+   "ok": true,
+   "old": "@media(max-width:640px){nav.mtabs{grid-template-columns:repeat(5,1fr)}",
+   "new": "@media(max-width:640px){nav.mtabs{grid-template-columns:repeat(6,1fr)}"
+  },
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "org-view",
+   "note": "Footer count (EN)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "data-en=\"Five live views · bids refresh hourly",
+   "new": "data-en=\"Six live views · bids refresh hourly"
+  },
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "org-view",
+   "note": "Footer count (AR)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "data-ar=\"خمس لوحات حيّة · تُحدَّث العطاءات",
+   "new": "data-ar=\"ست لوحات حيّة · تُحدَّث العطاءات"
+  },
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "org-view",
+   "note": "What's New app label",
+   "occurrences": 1,
+   "ok": true,
+   "old": "hub:['Hub','المنصة']};",
+   "new": "hub:['Hub','المنصة'],orgs:['Organisations','المنظمات']};"
+  },
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "org-view",
+   "note": "What's New app → tab",
+   "occurrences": 1,
+   "ok": true,
+   "old": "clients:'bubbles',news:'news',hub:null};",
+   "new": "clients:'bubbles',news:'news',orgs:'orgs',hub:null};"
+  },
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "org-view",
+   "note": "View aliases for deep links",
+   "occurrences": 1,
+   "ok": true,
+   "old": "'environment fund 2025 report':'ef2025',",
+   "new": "'environment fund 2025 report':'ef2025','organisations':'orgs','organisation profiles':'orgs','profiles':'orgs','المنظمات':'orgs',"
+  },
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "org-view",
+   "note": "Search hits carry an \"Open profile\" action",
+   "occurrences": 1,
+   "ok": true,
+   "old": "onclick=\"qGo(this.getAttribute(\\'data-n\\'))\">'+esc(r.n)+(r.s?'<div style=\"font-size:10.5px;opacity:.65;margin-top:1px\">'+esc(r.s)+'</div>':'')+'</div>';}).join('');",
+   "new": "onclick=\"qGo(this.getAttribute(\\'data-n\\'))\">'+esc(r.n)+'<span class=\"qp\" data-n=\"'+esc(r.n)+'\" onclick=\"event.stopPropagation();qOrg(this.getAttribute(\\'data-n\\'))\" title=\"'+L('Open the organisation profile','افتح ملف المنظمة')+'\" style=\"float:'+(hubL==='ar'?'left':'right')+';font-size:10.5px;font-weight:600;color:var(--eh-sea,#0072BB);border:1px solid currentColor;border-radius:999px;padding:1px"
+  },
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "org-view",
+   "note": "qOrg(): open the Organisations view on a name",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function qGo(name){\n  qHide(); qEl.value=name;",
+   "new": "function qOrg(name){\n  qHide(); qEl.value=name;\n  go(document.querySelector('.tab[data-f=\"orgs\"]'));\n  var f=document.getElementById('f-orgs'), send=function(){ try{ f.contentWindow.postMessage({ehhub:'open-org',name:name},'*'); }catch(e){} };\n  if(f&&f.contentWindow&&f.dataset.ready){ send(); } else if(f){ f.addEventListener('load',function(){ f.dataset.ready='1'; setTimeout(send,250); },{once:tr"
+  },
+  {
+   "file": "update-dashboard.yml",
+   "kind": "exact",
+   "category": "org-view",
+   "note": "Pipeline builds and publishes organisations.html",
+   "occurrences": 1,
+   "ok": true,
+   "old": "          rm -f pipeline/etimad_data.xlsx pipeline/etimad_tenders.json\n",
+   "new": "          rm -f pipeline/etimad_data.xlsx pipeline/etimad_tenders.json\n\n      # ---------- Organisations view: one profile per client / bidder / winner, built after the sync and the Etimad step so the map carries the live bid and Etimad fields (26 Oct 2026) ----------\n      - name: Build the Organisations view\n        run: |\n          python pipeline/build_org_profiles.py --map site/EH_Stakeholder"
+  },
+  {
+   "file": "update-dashboard.yml",
+   "kind": "exact",
+   "category": "org-view",
+   "note": "Unresolved-names workbook kept with the bid-sync-review artifact",
+   "occurrences": 1,
+   "ok": true,
+   "old": "            pipeline/roster_duplicates.json\n",
+   "new": "            pipeline/roster_duplicates.json\n            pipeline/org_unresolved_names.xlsx\n"
+  },
+  {
+   "file": "CHANGES.md",
+   "kind": "exact",
+   "category": "org-view",
+   "note": "What's New entries for W44",
+   "occurrences": 1,
+   "ok": true,
+   "old": "## 2026-W43\n",
+   "new": "## 2026-W44\nhub | major | Organisations | New: an Organisations view — one profile per client, bidder and competitor: every tender it asked for (with the full bidder roster and prices), every bid against EH, wins against EH, what EH sells it, licence and Etimad tenders. Search in English or Arabic; the hub search now offers \"Profile\" on every hit. | جديد: لوحة «المنظمات» — ملف لكل عميل ومتقدم ومنا"
+  }
+ ]
+}

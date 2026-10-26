@@ -232,7 +232,7 @@ def main():
         submitted = bool(t.get('submitted')) or t.get('sub') == 'Yes' or bool(t.get('subdate')) or pr.get('eh') is not None or t.get('outcome') in ('Won', 'Lost') or rb.get('substatus') == 'Yes' or bool(rb.get('subdate'))
         wname = t.get('winner') or ''
         tender = dict(year=t['year'], sn=t['sn'], ref=f"{t['year']}/{t['sn']}", date=t.get('date'), title=t.get('title'), platform=t.get('platform'),
-            svc=t.get('svc'), dur=t.get('dur'), value=t.get('value'), eh_price=pr.get('eh'), eh_offer_exvat=rb.get('offer'),
+            svc=t.get('svc'), dur=t.get('dur'), value=t.get('value'), eh_price=pr.get('eh'), per_unit=bool(t.get('per_unit')), eh_offer_exvat=rb.get('offer'),
             nbid=t.get('nbid'), n_priced=pr.get('n_priced'), low=pr.get('low'), gap=pr.get('gap'), rank=pr.get('rank'),
             winner=wname, win_price=pr.get('win_price') if pr.get('has_winner') else None, outcome=t.get('outcome'), status=t.get('status'),
             committee=t.get('committee'), submitted=submitted,

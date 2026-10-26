@@ -222,6 +222,7 @@ for _b in allbids:
     if _o:
         _b.update(_o)
         if 'offer' in _o and 'offer_vat' not in _o: _b['offer_vat']=None   # re-derived below
+        if _o.get('offer') and _o['offer']>=100: _b['per_unit']=False      # a confirmed lump sum replaces a per-unit cell (2026-16)
 # ---- corrections.json: field updates and added rows confirmed by the bid team (see the file's _note) ----
 import os as _os
 _cp=_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),'corrections.json')

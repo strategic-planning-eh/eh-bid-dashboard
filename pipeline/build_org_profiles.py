@@ -8,7 +8,7 @@ won, what EH sells X, X's licence, and X's map standing (category, tier, region,
 
 Inputs
   --map        hub/EH_Stakeholder_Map_CURRENT.html   (the <script id="DATA"> block — map records + aliases in notes)
-  --ba         pipeline/bidanalysis2.json  OR  a built bid-app HTML (its <script id="BA"> block is read)
+  --ba         pipeline/bidanalytics2.json OR  a built bid-app HTML (its <script id="BA"> block is read)
   --aliases    pipeline/aliases.csv        (roster spelling → map name; approved / reviewer / auto honoured, rejected blocked)
   --client-aliases pipeline/client_aliases.json (tracker Arabic client → map English name)
   --bidraw     pipeline/bidraw2.json       (optional; adds EH's ex-VAT offer, submission date, deadline, bid bond)
@@ -230,9 +230,11 @@ def main():
         if dropped: roster_dropped.append(dict(ref=f"{t['year']}/{t['sn']}", names=dropped))
         # EH submitted = tracker says so, or EH has a price / a submission date / a result (Youssef, Oct 2026: match across columns)
         submitted = bool(t.get('submitted')) or t.get('sub') == 'Yes' or bool(t.get('subdate')) or pr.get('eh') is not None or t.get('outcome') in ('Won', 'Lost') or rb.get('substatus') == 'Yes' or bool(rb.get('subdate'))
+        eh_price = pr.get('eh')
+        if eh_price is None and t.get('per_unit') and rb.get('offer_vat'): eh_price = rb['offer_vat']   # per-unit rate: the roster has no lump sums to rank, show EH's own rate
         wname = t.get('winner') or ''
         tender = dict(year=t['year'], sn=t['sn'], ref=f"{t['year']}/{t['sn']}", date=t.get('date'), title=t.get('title'), platform=t.get('platform'),
-            svc=t.get('svc'), dur=t.get('dur'), value=t.get('value'), eh_price=pr.get('eh'), per_unit=bool(t.get('per_unit')), eh_offer_exvat=rb.get('offer'),
+            svc=t.get('svc'), dur=t.get('dur'), value=t.get('value'), eh_price=eh_price, per_unit=bool(t.get('per_unit')), eh_offer_exvat=rb.get('offer'),
             nbid=t.get('nbid'), n_priced=pr.get('n_priced'), low=pr.get('low'), gap=pr.get('gap'), rank=pr.get('rank'),
             winner=wname, win_price=pr.get('win_price') if pr.get('has_winner') else None, outcome=t.get('outcome'), status=t.get('status'),
             committee=t.get('committee'), submitted=submitted,

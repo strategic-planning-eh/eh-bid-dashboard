@@ -138,7 +138,7 @@ ET = "          rm -f pipeline/etimad_data.xlsx pipeline/etimad_tenders.json\n"
 rep('update-dashboard.yml', ET, ET +
     "\n      # ---------- Organisations view: one profile per client / bidder / winner, built after the sync and the Etimad step so the map carries the live bid and Etimad fields (26 Oct 2026) ----------\n"
     "      - name: Build the Organisations view\n        run: |\n"
-    "          python pipeline/build_org_profiles.py --map site/EH_Stakeholder_Map_CURRENT.html --ba pipeline/bidanalysis2.json --bidraw pipeline/bidraw2.json \\\n"
+    "          python pipeline/build_org_profiles.py --map site/EH_Stakeholder_Map_CURRENT.html --ba pipeline/bidanalytics2.json --bidraw pipeline/bidraw2.json \\\n"
     "            --aliases pipeline/aliases.csv --out pipeline/org_profiles.json --unresolved pipeline/org_unresolved_names.xlsx --stamp \"$(TZ='Asia/Riyadh' date +'%-d %b %Y')\"\n"
     "          python pipeline/build_org_page.py pipeline/org_profiles.json site/organisations.html\n",
     'org-view', 'Pipeline builds and publishes organisations.html')

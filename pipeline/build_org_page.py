@@ -48,6 +48,11 @@ html.dark .chip.on{background:var(--eh-sea);border-color:var(--eh-sea);color:#0D
 .row .mt{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:3px;font-size:12px;color:var(--eh-ink-2)}
 .row .mt b{color:var(--eh-ink);font-weight:600}
 .prof{min-width:0}
+.trail{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.trail .crumbs{font-size:13px;color:var(--eh-ink-2);display:flex;flex-wrap:wrap;align-items:center;gap:4px}
+.trail .crumbs a{color:var(--eh-sea);text-decoration:none;border-bottom:1px dotted currentColor}.trail .crumbs a:hover{border-bottom-style:solid}
+.trail .crumbs b{color:var(--eh-ink)}.trail .sep{color:var(--eh-ink-3);margin:0 2px}
+@media print{.trail{display:none}}
 .card{background:var(--eh-paper);border:1px solid var(--eh-line);border-radius:var(--eh-r-panel);box-shadow:var(--eh-shadow);padding:16px 18px;margin-bottom:var(--eh-gap)}
 .card h2{margin:0 0 10px;font-size:var(--eh-fs-h3);color:var(--eh-deep);display:flex;align-items:center;gap:8px}
 .card h2 .n{font-size:12px;color:var(--eh-ink-3);font-weight:500;font-family:var(--eh-font)!important}
@@ -124,7 +129,7 @@ var T={
  'Tenders where this organisation was the client':'المنافسات التي طرحتها هذه المنظمة','Tenders where this organisation bid against EH':'المنافسات التي نافست فيها آفاق البيئة','Tenders this organisation won against EH':'المنافسات التي فازت بها على آفاق البيئة',
  'What EH sells this client':'ما تبيعه آفاق البيئة لهذا العميل','Licence':'الترخيص','Government tenders (Etimad)':'منافسات حكومية (اعتماد)','Notes and evidence':'ملاحظات وأدلة',
  'Ref':'المرجع','Date':'التاريخ','Title':'العنوان','Platform':'المنصة','EH price':'سعر آفاق البيئة','Bidders':'المتقدمون','Winner':'الفائز','Winning price':'سعر الفائز','Gap to lowest':'الفرق عن الأقل','Result':'النتيجة','Reason':'السبب',
- 'Client':'العميل','Their price':'سعرهم','Won — EH lost':'فاز — وخسرت آفاق البيئة','EH won':'فازت آفاق البيئة','not recorded in tracker':'غير مسجّل في جدول التتبع','not recorded':'غير مسجّل','Lost to':'خسر أمام','EH lost — winner not recorded':'خسرت آفاق البيئة — الفائز غير مسجّل','Open profile':'افتح الملف','per unit':'سعر الوحدة','Price vs EH':'السعر مقابل آفاق البيئة','Lost to EH':'خسر أمام آفاق البيئة','Lost to another bidder':'خسر أمام متقدم آخر','of':'من','Rank':'الترتيب','Outcome':'النتيجة',
+ 'Client':'العميل','Their price':'سعرهم','Back':'رجوع','Won — EH lost':'فاز — وخسرت آفاق البيئة','EH won':'فازت آفاق البيئة','not recorded in tracker':'غير مسجّل في جدول التتبع','not recorded':'غير مسجّل','Lost to':'خسر أمام','EH lost — winner not recorded':'خسرت آفاق البيئة — الفائز غير مسجّل','Open profile':'افتح الملف','per unit':'سعر الوحدة','Price vs EH':'السعر مقابل آفاق البيئة','Lost to EH':'خسر أمام آفاق البيئة','Lost to another bidder':'خسر أمام متقدم آخر','of':'من','Rank':'الترتيب','Outcome':'النتيجة',
  'SUBMITTED':'تم التقديم','PENDING':'بانتظار التقديم','CANCELLED':'ملغاة','WON':'فوز','LOST':'خسارة','NOT AWARDED':'لم تتم الترسية',
  'none on record':'لا يوجد في السجل','No tenders on record':'لا توجد منافسات في السجل','No head-to-heads on record':'لا توجد مواجهات في السجل','No wins against EH on record':'لا يوجد فوز على آفاق البيئة في السجل',
  'No EH contracts on record':'لا توجد عقود لآفاق البيئة في السجل','No licence on record':'لا يوجد ترخيص في السجل','No Etimad tenders on record':'لا توجد منافسات اعتماد في السجل','No notes on record':'لا توجد ملاحظات في السجل',
@@ -150,11 +155,16 @@ function filtered(){var q=normq(Q).split(' ').filter(Boolean);return ORGS.filter
   else if(ROLE!=='all'&&!hasRole(p,ROLE))return false;
   return q.every(function(w){return p._k.indexOf(w)>=0})})}
 function renderChips(){document.getElementById('chips').innerHTML=ROLES.map(function(r){return'<button class="chip'+(ROLE===r[0]?' on':'')+'" onclick="ROLE=\''+r[0]+'\';renderChips();renderList()">'+t(r[1])+'</button>'}).join('')}
-function renderList(){var L=filtered();document.getElementById('cnt').textContent=L.length+' '+t('organisations');
+function renderList(){var L=filtered();if(SEL&&!L.some(function(p){return p.id===SEL.id}))L=[SEL].concat(L);   // the open profile always stays visible in the listdocument.getElementById('cnt').textContent=L.length+' '+t('organisations');
   document.getElementById('rows').innerHTML=L.slice(0,400).map(function(p){var k=p.kpi,m=[];
     if(k.tenders)m.push('<b>'+k.tenders+'</b> '+t('tenders'));if(k.encounters)m.push('<b>'+k.encounters+'</b> '+t('encounters'));if(k.wins_total)m.push('<b>'+k.wins_total+'</b> '+t('vs EH'));if(k.client_value)m.push('<b>'+Math.round(k.client_value/1e6*10)/10+'M</b> '+t('client value'));
     return'<button class="row'+(SEL&&SEL.id===p.id?' on':'')+'" onclick="pick(\''+esc(p.id).replace(/'/g,"\\'")+'\')"><div class="nm">'+esc(p.name)+(p.resolved?'':' <span class="eh-chip" style="background:var(--eh-warn-bg);color:var(--eh-warn)">'+t('Not on the map yet')+'</span>')+'</div><div class="mt">'+(p.tier&&p.tier!=='—'?'<span>'+esc(p.tier)+'</span>':'')+m.map(function(x){return'<span>'+x+'</span>'}).join('')+'</div></button>'}).join('')}
-function pick(id){SEL=ORGS.filter(function(p){return p.id===id})[0]||null;try{location.hash='#org='+encodeURIComponent(id)}catch(e){}renderList();renderProf();if(window.innerWidth<900){document.getElementById('prof').scrollIntoView({behavior:'smooth',block:'start'})}else{window.scrollTo({top:0,behavior:'smooth'})}}
+var HIST=[];   // profiles visited in this session, oldest first (the breadcrumb trail)
+function pick(id,fromHist){var nx=ORGS.filter(function(p){return p.id===id})[0]||null;if(SEL&&nx&&SEL.id!==nx.id&&!fromHist){HIST.push(SEL.id);if(HIST.length>12)HIST.shift()}SEL=nx;try{location.hash='#org='+encodeURIComponent(id)}catch(e){}renderList();renderProf();if(window.innerWidth<900){document.getElementById('prof').scrollIntoView({behavior:'smooth',block:'start'})}else{window.scrollTo({top:0,behavior:'smooth'})}}
+function back(){if(!HIST.length)return;var id=HIST.pop();pick(id,true)}
+function trailTo(i){var id=HIST[i];HIST=HIST.slice(0,i);pick(id,true)}
+function trail(){if(!HIST.length)return'';var items=HIST.map(function(id,i){var o=ORGS.filter(function(p){return p.id===id})[0];return o?'<a href="#" onclick="trailTo('+i+');return false">'+esc(o.name)+'</a>':''}).filter(Boolean);
+  return'<div class="trail"><button class="eh-btn solid" onclick="back()">'+(LANG==='ar'?'&rarr;':'&larr;')+' '+t('Back')+'</button><span class="crumbs">'+items.join('<span class="sep">›</span>')+'<span class="sep">›</span><b>'+esc(SEL.name)+'</b></span></div>'}
 function kc(l,v,cls,s){return'<div class="kc'+(cls?' '+cls:'')+'"><div class="l">'+t(l)+'</div><div class="v">'+v+'</div>'+(s?'<div class="s">'+s+'</div>':'')+'</div>'}
 function bidders(tn){if(!tn.bidders||!tn.bidders.length)return'<span class="eh-none">'+t('none on record')+'</span>';return'<div class="bd">'+tn.bidders.map(function(b){var c=b.eh?' eh':'';if(b.won)c+=' w';if(b.dq)c+=' dq';var lk=(!b.eh&&b.pid);return'<span class="'+c+(lk?' lk':'')+'"'+(lk?' role="link" tabindex="0" title="'+t('Open profile')+'" onclick="event.stopPropagation();pick(\''+esc(b.pid).replace(/'/g,"\\'")+'\')" onkeydown="if(event.key===\'Enter\'){event.stopPropagation();pick(\''+esc(b.pid).replace(/'/g,"\\'")+'\')}"':'')+'>'+(b.eh?t('EH'):esc(b.name))+(b.price!=null?'<b>'+money(b.price)+'</b>':'<b>'+t('undisclosed')+'</b>')+(b.dq?' · '+t('DQ'):'')+'</span>'}).join('')+'</div>'}
 function gap(tn){if(tn.gap==null||tn.eh_price==null)return'—';if(tn.gap===0)return'<span class="eh-chip green">'+t('lowest')+'</span>';return'<bdi class="eh-ltr">+'+tn.gap+'%</bdi>'}
@@ -180,7 +190,7 @@ function etimadBlock(p){var e=p.etimad;if(!e)return'<span class="none">'+t('No E
 function renderProf(){var p=SEL,el=document.getElementById('prof');
   if(!p){el.innerHTML='<div class="card empty"><div><h2>'+t('Pick an organisation')+'</h2><div>'+t('Search by name, alias or any spelling the bid tracker uses. Every organisation with a tender, a bid against EH, a win, or an EH contract is here.')+'</div></div></div>';return}
   var k=p.kpi,aka=p.aliases.concat(p.tracker_names.filter(function(x){return p.aliases.indexOf(x)<0}));
-  var h='<div class="card"><div class="ph"><div style="flex:1;min-width:240px"><h1>'+esc(p.name)+'</h1>'+(aka.length?'<div class="als">'+t('Also known as')+': '+aka.map(esc).join(' · ')+'</div>':'')+
+  var h=trail()+'<div class="card"><div class="ph"><div style="flex:1;min-width:240px"><h1>'+esc(p.name)+'</h1>'+(aka.length?'<div class="als">'+t('Also known as')+': '+aka.map(esc).join(' · ')+'</div>':'')+
     '<div class="tags">'+tierChip(p)+p.roles.map(function(r){return'<span class="eh-chip blue">'+t({client:'Clients',competitor:'Competitors',winner:'Beat EH','eh-client':'EH clients'}[r]||r)+'</span>'}).join('')+'</div>'+
     (p.resolved?'':'<div class="warn">⚠ '+t('Not on the Stakeholder Map yet — this name comes from the bid tracker and waits for a decision (link to an existing record or add a new one). Nothing here is counted into any map record.')+'</div>')+'</div></div>';
   if(p.resolved)h+='<div class="facts"><div><div class="k">'+t('Category')+'</div><div class="v">'+esc(p.cat||'—')+'</div></div><div><div class="k">'+t('Region')+'</div><div class="v">'+esc(p.region||'—')+(p.city&&p.city!==p.region?' · '+esc(p.city):'')+'</div></div><div><div class="k">'+t('Confidence')+'</div><div class="v">'+esc(p.cf||'—')+'</div></div>'+(p.threat?'<div><div class="k">'+t('Threat')+'</div><div class="v">'+esc(p.threat)+'</div></div>':'')+(p.score!=null?'<div><div class="k">'+t('Map score')+'</div><div class="v"><bdi class="eh-ltr">'+Math.round(p.score)+'/100</bdi></div></div>':'')+(p.typ?'<div><div class="k">Type</div><div class="v">'+esc(p.typ)+(p.sec?' · '+esc(p.sec):'')+'</div></div>':'')+'</div>';
@@ -205,6 +215,7 @@ window.addEventListener('message',function(e){var m=e.data||{};if(m.ehhub==='lan
   if(m.ehhub==='open-org'&&m.name){var p=ORGS.filter(function(x){return normq(x.name)===normq(m.name)||x._k.indexOf(normq(m.name))>=0})[0];if(p)pick(p.id)}});
 try{if(localStorage.getItem('ehhub.theme')==='dark')toggleDark();var hl=localStorage.getItem('ehhub.lang');if(hl==='ar')LANG='ar'}catch(e){}
 document.getElementById('q').addEventListener('input',function(){Q=this.value;renderList()});
+document.addEventListener('keydown',function(e){var tag=(e.target.tagName||'').toLowerCase();if(tag==='input'||tag==='textarea')return;if((e.altKey&&e.key==='ArrowLeft')||e.key==='Backspace'){e.preventDefault();back()}});
 setLang(LANG);
 (function(){var m=/org=([^&]+)/.exec(location.hash||'');if(m){var id=decodeURIComponent(m[1]);if(ORGS.some(function(p){return p.id===id}))pick(id)}})();
 </script>

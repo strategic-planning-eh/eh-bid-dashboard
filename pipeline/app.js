@@ -272,9 +272,12 @@ function renderCompetitors(){
 }
 
 // ===================== CLIENTS =====================
+let clientValMode='all';
+function setClientVal(m){clientValMode=m;rClients();}
 function rClients(){
  const cl=BA.clients;
- const byVal=cl.filter(c=>c.value>0).slice(0,12);
+ const wonMode=clientValMode==='won';
+ const byVal=cl.filter(c=>(wonMode?c.won_value:c.value)>0).sort((x,y)=>(wonMode?y.won_value-x.won_value:y.value-x.value)).slice(0,12);
  const totVal=cl.reduce((a,c)=>a+c.value,0);
  const top3=cl.slice(0,3).reduce((a,c)=>a+c.value,0);
  const lapsed=cl.filter(c=>c.lapsed).length, fresh=cl.filter(c=>c.isnew).length;
@@ -286,8 +289,12 @@ function rClients(){
    ${kc(lapsed,t('Lapsed clients','عملاء متوقّفون'),t('2025 only, no 2026','2025 فقط، بلا 2026'),'r')}
    ${kc(fresh,t('New in 2026','جدد في 2026'),t('first appeared','ظهروا حديثاً'),'g')}
  </div>
- <div class="card"><h3>${t('Top clients by tracked value','أبرز العملاء حسب القيمة المتتبَّعة')}</h3><div class="note">${t('Sum of EH offer values per client (partial where the tracker is not filled). '+(k.biggest_client?k.biggest_client+' is the largest client by value.':'')+'','مجموع قيم عروض EH لكل عميل (جزئي حيث لم يُملأ الجدول). '+(k.biggest_client?k.biggest_client+' أكبر عميل من حيث القيمة.':''))}</div>
-   ${hbar(byVal,{val:d=>d.value,lab:d=>d.name,fmt:v=>'SAR '+fmtM(v),color:d=>C.pal[byVal.indexOf(d)%C.pal.length],maxlab:38,rh:24})}</div>
+ <div class="card"><div class="cardhd"><div><h3>${wonMode?t('Top clients by value won by EH','أبرز العملاء حسب القيمة التي فاز بها EH'):t('Top clients by tracked value','أبرز العملاء حسب القيمة المتتبَّعة')}</h3></div>
+   <div class="vtog" role="group" aria-label="${t('Value shown','القيمة المعروضة')}"><button class="vtb ${wonMode?'':'on'}" aria-pressed="${!wonMode}" onclick="setClientVal('all')">${t('All tracked offers','جميع العروض المتتبَّعة')}</button><button class="vtb ${wonMode?'on':''}" aria-pressed="${wonMode}" onclick="setClientVal('won')">${t('Won by EH','ما فاز به EH')}</button></div></div>
+   <div class="note">${wonMode
+     ?t('Sum of EH offer values on tenders EH won, per client. Clients where EH has not won a tender yet are not shown.'+(byVal.length?' '+byVal[0].name+' is the largest client by value won.':''),'مجموع قيم عروض EH في المنافسات التي فاز بها EH لكل عميل. لا تظهر العملاء الذين لم يفز EH بأي منافسة لديهم بعد.'+(byVal.length?' '+byVal[0].name+' أكبر عميل من حيث القيمة المكتسبة.':''))
+     :t('Sum of EH offer values per client (partial where the tracker is not filled). '+(k.biggest_client?k.biggest_client+' is the largest client by value.':'')+'','مجموع قيم عروض EH لكل عميل (جزئي حيث لم يُملأ الجدول). '+(k.biggest_client?k.biggest_client+' أكبر عميل من حيث القيمة.':''))}</div>
+   ${byVal.length?hbar(byVal,{val:d=>wonMode?d.won_value:d.value,lab:d=>d.name,fmt:v=>'SAR '+fmtM(v),color:d=>C.pal[byVal.indexOf(d)%C.pal.length],maxlab:38,rh:24}):'<div class="note">'+t('No won tenders with a recorded value in this period.','لا توجد منافسات مكتسبة بقيمة مسجّلة في هذه الفترة.')+'</div>'}</div>
  <div class="card"><h3>${t('Client value tiering — 2025 vs 2026','تدرّج قيمة العملاء — 2025 مقابل 2026')}</h3><div class="note">${t('Per-client split by year, with status. \"Lapsed\" = active in 2025 but silent in 2026 (re-engagement targets).','تقسيم كل عميل حسب السنة مع الحالة. «متوقّف» = نشط في 2025 وصامت في 2026 (أهداف إعادة تفعيل).')}</div>
  <table class="t"><thead><tr><th>${t('Client','العميل')}</th><th>${t('\'25 tenders','منافسات 25')}</th><th>${t('\'25 value','قيمة 25')}</th><th>${t('\'26 tenders','منافسات 26')}</th><th>${t('\'26 value','قيمة 26')}</th><th>${t('EH win','فوز EH')}</th><th>${t('Status','الحالة')}</th></tr></thead><tbody>
  ${cl.slice(0,20).map(c=>`<tr><td><b dir="auto">${esc(c.name)}</b></td><td>${c.bids25||'—'}</td><td>${c.value25?fmtSAR(c.value25):'—'}</td><td>${c.bids26||'—'}</td><td>${c.value26?fmtSAR(c.value26):'—'}</td><td class="${wrCls(c.win_rate)}" style="font-weight:700">${c.win_rate==null?'—':c.win_rate+'%'}</td><td>${c.lapsed?'<span style="color:#C0504D">'+t('Lapsed','متوقّف')+'</span>':(c.isnew?'<span style="color:#2E7D46">'+t('New 2026','جديد 2026')+'</span>':t('Active','نشط'))}</td></tr>`).join('')}

@@ -21,6 +21,14 @@ header{background:linear-gradient(120deg,#0F3D2E,#1A5FAB);color:#fff;padding:18p
 .langtog{display:flex;border:1px solid rgba(255,255,255,.45);border-radius:8px;overflow:hidden;flex:none}
 .langbtn{background:transparent;color:rgba(255,255,255,.9);border:none;padding:6px 14px;font-size:12.5px;font-weight:800;cursor:pointer;font-family:inherit;transition:.12s}
 .langbtn.on{background:#fff;color:#1A5FAB}
+.cardhd{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.vtog{display:inline-flex;border:1px solid #C9D6DD;border-radius:8px;overflow:hidden;flex:none;background:#fff}
+.vtog button{background:transparent;color:#3A4A52;border:none;padding:6px 13px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:.12s}
+.vtog button+button{border-inline-start:1px solid #C9D6DD}
+.vtog button.on{background:#1A5FAB;color:#fff}
+body.dark .vtog{background:#1A242B;border-color:#3A4B55}
+body.dark .vtog button{background:transparent;color:#C9D6DD}
+body.dark .vtog button.on{background:#4A8FD6;color:#fff}
 html[dir=rtl] body,html[dir=rtl] .note,html[dir=rtl] .secsub,html[dir=rtl] .sech,html[dir=rtl] h3,html[dir=rtl] .foot{text-align:right}
 html[dir=rtl] .foot{text-align:center}
 html[dir=rtl] .kc,html[dir=rtl] .metric{text-align:center}
@@ -150,7 +158,7 @@ body.dark #nav a.on{{color:#E6EDF1;border-color:#2BAE68}}
 body.dark table th{{background:#1A242B;color:#CBD8DF}}
 body.dark table td{{border-color:#2C3A43}}
 body.dark tr:hover td{{background:#1B252C}}
-body.dark input,body.dark select,body.dark button:not(.langbtn):not(.png){{background:#1A242B;border-color:#3A4B55;color:#E6EDF1}}
+body.dark input,body.dark select,body.dark button:not(.langbtn):not(.png):not(.vtb){{background:#1A242B;border-color:#3A4B55;color:#E6EDF1}}
 body.dark svg text{{fill:#C9D4DB}}
 body.dark svg .domain,body.dark svg g.tick line{{stroke:#3A4B55}}
 body.dark #ntfbar{{background:#2A2416 !important;border-color:#4A4023 !important;color:#D8C68A !important}}

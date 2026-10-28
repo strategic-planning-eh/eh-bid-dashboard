@@ -301,7 +301,7 @@ def compute(bids, rfull, comp, wcanon=None):
     import os as _os
     client_aliases=json.load(open('client_aliases.json')) if _os.path.exists('client_aliases.json') else {}
     def cl_name(raw): return client_aliases.get(raw.strip(), raw.strip())
-    cacc=collections.defaultdict(lambda:{'b25':0,'v25':0.0,'b26':0,'v26':0.0,'won':0,'aw':0})
+    cacc=collections.defaultdict(lambda:{'b25':0,'v25':0.0,'b26':0,'v26':0.0,'won':0,'aw':0,'wv':0.0})
     for b in bids:
         if not b['client']: continue
         c=cacc[cl_name(b['client'])]
@@ -310,7 +310,7 @@ def compute(bids, rfull, comp, wcanon=None):
         else: c['b26']+=1; c['v26']+=b['offer'] or 0
         if b['decided']:
             c['aw']+=1
-            if b['eh_won']: c['won']+=1
+            if b['eh_won']: c['won']+=1; c['wv']+=b['offer'] or 0   # value EH won = its own offer on tenders it won (Oct 2026, clients chart toggle)
     # new / lapsed are judged across every tracking year, whatever the scope (12 Oct 2026, audit bids-10)
     _cyrs=collections.defaultdict(set)
     for b in _ALLBIDS:
@@ -320,7 +320,7 @@ def compute(bids, rfull, comp, wcanon=None):
     for nm,c in cacc.items():
         clients.append(dict(name=nm, bids=c['b25']+c['b26'], value=round(c['v25']+c['v26']),
             bids25=c['b25'], value25=round(c['v25']), bids26=c['b26'], value26=round(c['v26']),
-            win_rate=(round(100*c['won']/c['aw']) if c['aw'] else None), eh_won=c['won'], awarded=c['aw'],
+            win_rate=(round(100*c['won']/c['aw']) if c['aw'] else None), eh_won=c['won'], awarded=c['aw'], won_value=round(c['wv']),
             lapsed=((_ylast-1) in _cyrs[nm] and _ylast not in _cyrs[nm]), isnew=(_cyrs[nm]=={_ylast})))
     clients.sort(key=lambda x:-x['value'])
 

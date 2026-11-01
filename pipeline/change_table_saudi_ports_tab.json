@@ -1,0 +1,57 @@
+{
+ "generated": "2026-11-01 10:06",
+ "title": "Change table — Saudi ports tab",
+ "failures": [],
+ "changes": [
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "ports-tab",
+   "note": "Saudi ports sub-tab button after Saudi waste",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<span class=\"newb tl\" data-new-until=\"2026-10-27\" data-en=\"New\" data-ar=\"جديد\">New</span></button>",
+   "new": "<span class=\"newb tl\" data-new-until=\"2026-10-27\" data-en=\"New\" data-ar=\"جديد\">New</span></button>\n      <button class=\"nsub\" data-n=\"ports\" title=\"Saudi ports — operators, capacities, waste reception and EH's position at each port · الموانئ السعودية — المشغّلون والطاقات واستقبال النفايات وموقع آفاق البيئة في كل ميناء\"><span class=\"tl\" data-en=\"Saudi ports\" data-ar=\"الموانئ السعودية\">Saudi ports</"
+  },
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "ports-tab",
+   "note": "Skeleton + lazy iframe for the tab page",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<iframe id=\"f-waste\" title=\"Saudi waste — where the Kingdom's waste is generated and where it piles up\" data-src=\"saudi_waste.html\" loading=\"lazy\" style=\"display:none\"></iframe>",
+   "new": "<iframe id=\"f-waste\" title=\"Saudi waste — where the Kingdom's waste is generated and where it piles up\" data-src=\"saudi_waste.html\" loading=\"lazy\" style=\"display:none\"></iframe>\n      <div class=\"skel\" id=\"sk-ports\"><div class=\"in\"><div class=\"spin\"></div><span class=\"tl\" data-en=\"Loading Saudi ports…\" data-ar=\"جارٍ تحميل الموانئ السعودية…\">Loading Saudi ports…</span></div></div>\n      <iframe id="
+  },
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "ports-tab",
+   "note": "Tab switcher knows the new frame",
+   "occurrences": 1,
+   "ok": true,
+   "old": "['v2030','fiscal','corp','gov','pif','strat','ef2025','waste']",
+   "new": "['v2030','fiscal','corp','gov','pif','strat','ef2025','waste','ports']"
+  },
+  {
+   "file": "EH_Hub.html",
+   "kind": "exact",
+   "category": "ports-tab",
+   "note": "Hub search opens the tab by name",
+   "occurrences": 1,
+   "ok": true,
+   "old": "'saudi waste':'waste',",
+   "new": "'saudi waste':'waste','saudi ports':'ports','ports map':'ports','saudi ports intelligence map':'ports','الموانئ السعودية':'ports',"
+  },
+  {
+   "file": "update-dashboard.yml",
+   "kind": "exact",
+   "category": "ports-tab",
+   "note": "Tab page is published",
+   "occurrences": 1,
+   "ok": true,
+   "old": "          cp hub/saudi_waste.html site/ 2>/dev/null || true\n",
+   "new": "          cp hub/saudi_waste.html site/ 2>/dev/null || true\n          cp hub/saudi_ports_map.html site/ 2>/dev/null || true\n"
+  }
+ ]
+}

@@ -1,0 +1,2004 @@
+{
+ "bridge": {
+  "bid_competitors": 219,
+  "matched": 215,
+  "unmatched": 4,
+  "unmatched_names": [
+   "مختبر قطرة الحياة للخدمات البيئية",
+   "GREEN EAST ENVIRONMENT INTERNATIONA",
+   "شركة الوطنية للخدمات الجيومكانية",
+   "GREEN EAST ENVIRONMENT CONTRACTING"
+  ]
+ },
+ "overrides": [
+  "Al Emad El Arabi for Environmental Services",
+  "Al-Jazeera Environmental Consulting Office",
+  "Atwar Environmental Consulting Establishment",
+  "Environmental Integration Consulting Office",
+  "Evara Co. Ltd (One-Person Co.)",
+  "FEAL Arabia Industrial Co. Ltd.",
+  "Green Sustainability Environmental Services Co. (GSCES) (Estedama el Khadra)",
+  "Imtithal Al-Beeah Environmental Consulting Office",
+  "United Specialized Chemicals Factory",
+  "شركة الحلول المتفردة للخدمات البيئية",
+  "مؤسسة أرض خضراء لنقل النفايات",
+  "مؤسسة ساس المتقدمة للنقليات"
+ ],
+ "B1_tier_x_bid": {
+  "Tier 1": {
+   "n": 24,
+   "bid_active": 23,
+   "encounters": 93,
+   "priced_vs": 21,
+   "undercut": 14,
+   "has_undercut": 9,
+   "beaten_eh": 3,
+   "low_cf": 0,
+   "floored": 0
+  },
+  "Tier 2": {
+   "n": 49,
+   "bid_active": 47,
+   "encounters": 148,
+   "priced_vs": 37,
+   "undercut": 20,
+   "has_undercut": 14,
+   "beaten_eh": 1,
+   "low_cf": 3,
+   "floored": 3
+  },
+  "Tier 3": {
+   "n": 87,
+   "bid_active": 86,
+   "encounters": 122,
+   "priced_vs": 21,
+   "undercut": 15,
+   "has_undercut": 12,
+   "beaten_eh": 1,
+   "low_cf": 9,
+   "floored": 9
+  },
+  "Tier 4": {
+   "n": 2938,
+   "bid_active": 196,
+   "encounters": 212,
+   "priced_vs": 26,
+   "undercut": 14,
+   "has_undercut": 14,
+   "beaten_eh": 0,
+   "low_cf": 1092,
+   "floored": 1038
+  }
+ },
+ "B1_tier1_never_bid": [
+  "Marine Operations Environmental Services Co. (SAIL)"
+ ],
+ "B1_tier34_beat_or_undercut": [
+  [
+   "Kafaat Training",
+   "Tier 4",
+   1,
+   1,
+   1,
+   1,
+   null
+  ],
+  [
+   "شركة نواقل الدولية للخدمات المساندة",
+   "Tier 3",
+   1,
+   0,
+   0,
+   1,
+   "High"
+  ],
+  [
+   "Rakaez Al-Ma’mar Professional Consulting Co. (One-Person Professional Co.)",
+   "Tier 3",
+   2,
+   2,
+   2,
+   0,
+   "Medium"
+  ],
+  [
+   "مؤسسة مكتب الاهتمام البيئي للاستشارات البيئية",
+   "Tier 3",
+   2,
+   2,
+   2,
+   0,
+   ""
+  ],
+  [
+   "Ramz Professional Consulting Group",
+   "Tier 3",
+   2,
+   2,
+   2,
+   0,
+   "Low"
+  ],
+  [
+   "Fuel Professional Consulting",
+   "Tier 4",
+   5,
+   1,
+   2,
+   0,
+   "Low"
+  ],
+  [
+   "Taqat El Injaz Environmental Consulting",
+   "Tier 3",
+   3,
+   1,
+   1,
+   0,
+   null
+  ],
+  [
+   "Alpha Deem Co. Ltd",
+   "Tier 3",
+   3,
+   1,
+   1,
+   0,
+   "Low"
+  ],
+  [
+   "شركة مؤشر الاداء البيئي المحدودة",
+   "Tier 3",
+   3,
+   1,
+   1,
+   0,
+   ""
+  ],
+  [
+   "Environmental Friend Environmental Consulting Office",
+   "Tier 3",
+   2,
+   1,
+   1,
+   0,
+   "Low"
+  ],
+  [
+   "شركة الحلول المتفردة للخدمات البيئية",
+   "Tier 3",
+   3,
+   1,
+   1,
+   0,
+   "High"
+  ],
+  [
+   "مكتب حصن البيئة للاستشارات البيئية",
+   "Tier 3",
+   2,
+   1,
+   1,
+   0,
+   ""
+  ],
+  [
+   "شركة أفق الماسية للاستشارات البيئية",
+   "Tier 3",
+   2,
+   1,
+   1,
+   0,
+   ""
+  ],
+  [
+   "شركة وادي العقول لخدمات الأعمال شركة شخص واحد",
+   "Tier 3",
+   2,
+   1,
+   1,
+   0,
+   ""
+  ],
+  [
+   "Wasm",
+   "Tier 3",
+   2,
+   1,
+   1,
+   0,
+   "Low"
+  ],
+  [
+   "مؤسسة عناصر الاستدامة",
+   "Tier 3",
+   2,
+   1,
+   1,
+   0,
+   ""
+  ],
+  [
+   "شركة الابداع الرقمية للاتصالات و تقنية المعلومات",
+   "Tier 4",
+   1,
+   1,
+   1,
+   0,
+   ""
+  ],
+  [
+   "Gulf Energy Environmental Services/ Gulf Energy for Environmental Measurements",
+   "Tier 3",
+   1,
+   1,
+   1,
+   0,
+   "Low"
+  ],
+  [
+   "Samaa Environment Environmental Consulting Office",
+   "Tier 3",
+   1,
+   1,
+   1,
+   0,
+   "Low"
+  ],
+  [
+   "Namthaja for Trading",
+   "Tier 4",
+   1,
+   1,
+   1,
+   0,
+   "Low"
+  ],
+  [
+   "شركة تلاد للطب البيطري",
+   "Tier 4",
+   1,
+   1,
+   1,
+   0,
+   ""
+  ],
+  [
+   "مكتب قامات للاستشارات الهندسية",
+   "Tier 4",
+   1,
+   1,
+   1,
+   0,
+   ""
+  ],
+  [
+   "شركة ايبلس العربية للاعمال الجيوتقنية و البيئية المحدودة شخص واحد",
+   "Tier 3",
+   1,
+   1,
+   1,
+   0,
+   ""
+  ],
+  [
+   "شركة عين خبير للاستشارات الإدارية شخص واحد مهنية",
+   "Tier 4",
+   1,
+   1,
+   1,
+   0,
+   ""
+  ],
+  [
+   "شركة مواردكم لحلول الاعمال",
+   "Tier 4",
+   1,
+   1,
+   1,
+   0,
+   ""
+  ],
+  [
+   "شركة ايفوري للتدريب",
+   "Tier 4",
+   1,
+   1,
+   1,
+   0,
+   ""
+  ],
+  [
+   "شركة جدارة الأعمال للاستشارات الادارية",
+   "Tier 4",
+   1,
+   1,
+   1,
+   0,
+   ""
+  ],
+  [
+   "شركة امداد الشرق للنقليات",
+   "Tier 4",
+   1,
+   1,
+   1,
+   0,
+   "High"
+  ],
+  [
+   "شركة الإتمام الاستشارية",
+   "Tier 4",
+   1,
+   1,
+   1,
+   0,
+   ""
+  ],
+  [
+   "شركة العقول المخططة للاستشارات الادارية",
+   "Tier 4",
+   1,
+   1,
+   1,
+   0,
+   ""
+  ],
+  [
+   "TUV Rheinland",
+   "Tier 4",
+   1,
+   1,
+   1,
+   0,
+   "Low"
+  ],
+  [
+   "شركة قبولك",
+   "Tier 4",
+   1,
+   1,
+   1,
+   0,
+   ""
+  ],
+  [
+   "ﻣﻜﺘﺐ رﻛﺎﺋﺰ الانشاء للاستشارات الهندسية",
+   "Tier 4",
+   1,
+   1,
+   1,
+   0,
+   ""
+  ],
+  [
+   "شرﻛﺔ زواﻳﺎ البناء للاستشارات الهندسية",
+   "Tier 4",
+   1,
+   1,
+   1,
+   0,
+   ""
+  ]
+ ],
+ "B1_undercut_by_tier_rate": {
+  "Tier 1": 0.67,
+  "Tier 2": 0.54,
+  "Tier 3": 0.71,
+  "Tier 4": 0.54
+ },
+ "B2_priced_tenders": 21,
+ "B2_top_undercutters": [
+  [
+   "شركة البيئة والتنمية للاستشارات البيئية",
+   3,
+   4,
+   {
+    "Env. Studies / EIA": 3
+   },
+   {
+    "government": 2,
+    "company": 1
+   },
+   "Tier 1",
+   "High"
+  ],
+  [
+   "Ali Khudair Al-Harbi Environmental Consulting Co. (AH ENVIRO)",
+   3,
+   3,
+   {
+    "Env. Studies / EIA": 3
+   },
+   {
+    "company": 3
+   },
+   "Tier 2",
+   "Medium"
+  ],
+  [
+   "Al Emad El Arabi for Environmental Services",
+   3,
+   3,
+   {
+    "Env. Studies / EIA": 2,
+    "Training": 1
+   },
+   {
+    "government": 3
+   },
+   "Tier 1",
+   null
+  ],
+  [
+   "Green Sustainability Environmental Services Co. (GSCES) (Estedama el Khadra)",
+   3,
+   3,
+   {
+    "Env. Studies / EIA": 3
+   },
+   {
+    "government": 2,
+    "company": 1
+   },
+   "Tier 1",
+   null
+  ],
+  [
+   "Evara Co. Ltd (One-Person Co.)",
+   3,
+   3,
+   {
+    "Env. Studies / EIA": 2,
+    "Training": 1
+   },
+   {
+    "government": 3
+   },
+   "Tier 1",
+   "Medium"
+  ],
+  [
+   "Imtithal Al-Beeah Environmental Consulting Office",
+   3,
+   3,
+   {
+    "Env. Studies / EIA": 3
+   },
+   {
+    "government": 2,
+    "company": 1
+   },
+   "Tier 2",
+   "Low"
+  ],
+  [
+   "Environmental Integration Consulting Office",
+   2,
+   4,
+   {
+    "Env. Studies / EIA": 2
+   },
+   {
+    "government": 2
+   },
+   "Tier 1",
+   "Medium"
+  ],
+  [
+   "Dr. Ali Saleh Al-Duhaiman Environmental Consulting Co. (ADECO)",
+   2,
+   4,
+   {
+    "Env. Studies / EIA": 2
+   },
+   {
+    "government": 1,
+    "company": 1
+   },
+   "Tier 1",
+   "Medium"
+  ],
+  [
+   "Al Mandariyah Environmental Services",
+   2,
+   3,
+   {
+    "Env. Studies / EIA": 2
+   },
+   {
+    "government": 2
+   },
+   "Tier 1",
+   "High"
+  ],
+  [
+   "Geotechnical & Environmental Co. Ltd (GECO)",
+   2,
+   2,
+   {
+    "Env. Studies / EIA": 2
+   },
+   {
+    "company": 2
+   },
+   "Tier 1",
+   "High"
+  ],
+  [
+   "Environmnetal Support Office For Environ",
+   2,
+   2,
+   {
+    "Env. Studies / EIA": 2
+   },
+   {
+    "company": 2
+   },
+   "Tier 2",
+   ""
+  ],
+  [
+   "Environmental Consultant Office",
+   2,
+   2,
+   {
+    "Env. Studies / EIA": 2
+   },
+   {
+    "company": 2
+   },
+   "Tier 2",
+   "High"
+  ],
+  [
+   "شركة العمليات المتزامنة للاستشارات المهنية",
+   2,
+   2,
+   {
+    "Env. Studies / EIA": 2
+   },
+   {
+    "government": 2
+   },
+   "Tier 2",
+   ""
+  ],
+  [
+   "Rakaez Al-Ma’mar Professional Consulting Co. (One-Person Professional Co.)",
+   2,
+   2,
+   {
+    "Env. Studies / EIA": 2
+   },
+   {
+    "government": 2
+   },
+   "Tier 3",
+   "Medium"
+  ],
+  [
+   "Ramz Professional Consulting Group",
+   2,
+   2,
+   {
+    "Env. Studies / EIA": 2
+   },
+   {
+    "government": 2
+   },
+   "Tier 3",
+   "Low"
+  ]
+ ],
+ "B2_svc_of_losses": {
+  "Env. Studies / EIA": 85,
+  "Env. Services": 4,
+  "(unset)": 1,
+  "Training": 5
+ },
+ "B2_ctype_of_losses": {
+  "company": 30,
+  "government": 65
+ },
+ "B2_undercutters_tier": {
+  "Tier 1": 15,
+  "Tier 2": 17,
+  "Tier 4": 18,
+  "Tier 3": 16,
+  "GOV": 1,
+  "not in map": 4
+ },
+ "B2_undercutters_cf": {
+  "High": 13,
+  "Medium": 9,
+  "blank/not in map": 36,
+  "Low": 13
+ },
+ "B3_map_bc": {
+  "total": 745,
+  "rivals": 459,
+  "once": 330,
+  "top10": 0.105,
+  "top20": 0.18,
+  "top50": 0.319,
+  "rivals_for_50pct": 108
+ },
+ "B3_bidext": {
+  "total": 442,
+  "rivals": 219,
+  "once": 122,
+  "top10": 0.163,
+  "top20": 0.274,
+  "top50": 0.5,
+  "rivals_for_50pct": 50
+ },
+ "B3_map_rows_vs_rivals": {
+  "map_rows": 4211,
+  "competitor_rows": 3110,
+  "bid_active": 459,
+  "bid_active_3plus": 69
+ },
+ "B4_gap_all": {
+  "n": 21,
+  "median": 77.9,
+  "mean": 282.5,
+  "p25": 21.8,
+  "p75": 451.5,
+  "max": 1475.6,
+  "zero_or_lowest": 5
+ },
+ "B4_gap_by_year": {
+  "2025": {
+   "n": 11,
+   "median": 451.5,
+   "mean": 452.0,
+   "p25": 21.8,
+   "p75": 828.5,
+   "max": 1475.6,
+   "zero_or_lowest": 2
+  },
+  "2026": {
+   "n": 10,
+   "median": 62.2,
+   "mean": 96.1,
+   "p25": 0.0,
+   "p75": 147.8,
+   "max": 309.1,
+   "zero_or_lowest": 3
+  }
+ },
+ "B4_gap_by_svc": {
+  "(unset)": {
+   "n": 2,
+   "median": 414.2,
+   "mean": 414.2,
+   "p25": 0.0,
+   "p75": 828.5,
+   "max": 828.5,
+   "zero_or_lowest": 1
+  },
+  "Env. Studies / EIA": {
+   "n": 14,
+   "median": 75.9,
+   "mean": 290.4,
+   "p25": 21.8,
+   "p75": 451.5,
+   "max": 1475.6,
+   "zero_or_lowest": 3
+  },
+  "Env. Services": {
+   "n": 4,
+   "median": 97.0,
+   "mean": 125.8,
+   "p25": 64.1,
+   "p75": 309.1,
+   "max": 309.1,
+   "zero_or_lowest": 1
+  },
+  "Training": {
+   "n": 1,
+   "median": 535.9,
+   "mean": 535.9,
+   "p25": 535.9,
+   "p75": 535.9,
+   "max": 535.9,
+   "zero_or_lowest": 0
+  }
+ },
+ "B4_gap_by_ctype": {
+  "company": {
+   "n": 6,
+   "median": 75.9,
+   "mean": 188.0,
+   "p25": 0.0,
+   "p75": 147.8,
+   "max": 828.6,
+   "zero_or_lowest": 2
+  },
+  "government": {
+   "n": 15,
+   "median": 130.0,
+   "mean": 320.3,
+   "p25": 21.8,
+   "p75": 535.9,
+   "max": 1475.6,
+   "zero_or_lowest": 3
+  }
+ },
+ "B4_gap_by_band": {
+  "20M+": {
+   "n": 3,
+   "median": 73.9,
+   "mean": 50.6,
+   "p25": 0.0,
+   "p75": 77.9,
+   "max": 77.9,
+   "zero_or_lowest": 1
+  },
+  "<1M": {
+   "n": 10,
+   "median": 138.9,
+   "mean": 240.4,
+   "p25": 30.4,
+   "p75": 309.1,
+   "max": 828.5,
+   "zero_or_lowest": 2
+  },
+  "5–20M": {
+   "n": 3,
+   "median": 451.5,
+   "mean": 426.7,
+   "p25": 0.0,
+   "p75": 828.6,
+   "max": 828.6,
+   "zero_or_lowest": 1
+  },
+  "1–5M": {
+   "n": 5,
+   "median": 64.1,
+   "mean": 419.5,
+   "p25": 21.8,
+   "p75": 535.9,
+   "max": 1475.6,
+   "zero_or_lowest": 1
+  }
+ },
+ "B4_rank_dist": {
+  "1": 5,
+  "5": 2,
+  "2": 8,
+  "16": 1,
+  "31": 1,
+  "22": 1,
+  "6": 1,
+  "7": 1,
+  "3": 1
+ },
+ "B4_won_when_lowest": {
+  "lowest": 5,
+  "won": 2,
+  "lowest_lost": []
+ },
+ "B4_lost_not_lowest": [
+  [
+   "2025-37",
+   828.5,
+   2,
+   2,
+   ""
+  ],
+  [
+   "2025-61",
+   535.9,
+   6,
+   8,
+   ""
+  ],
+  [
+   "2026-2",
+   309.1,
+   2,
+   2,
+   "العرض المقدم من شركة السامر العربية للخد"
+  ],
+  [
+   "2026-13",
+   147.8,
+   2,
+   2,
+   "غير مطابق فنيا"
+  ],
+  [
+   "2026-15",
+   130.0,
+   2,
+   2,
+   "وجود عرض سعر أقل من العرض المقدم"
+  ],
+  [
+   "2026-25",
+   219.7,
+   2,
+   2,
+   "غير مقبول ماليا"
+  ],
+  [
+   "2026-27",
+   30.4,
+   2,
+   2,
+   "غير مقبول ماليا"
+  ]
+ ],
+ "B4_tenders_with_outcome_and_price": 10,
+ "B5_issuers_that_are_eh_clients": [
+  [
+   "Aramco e-Marketplace",
+   "ARAMCO",
+   3,
+   0,
+   0
+  ],
+  [
+   "Saudi Energy",
+   "Saudi Energy (formerly SEC)",
+   3,
+   0,
+   0
+  ],
+  [
+   "Petrorabigh",
+   "Petrorabigh",
+   2,
+   0,
+   0
+  ],
+  [
+   "LINXON",
+   "Linxon",
+   2,
+   0,
+   0
+  ],
+  [
+   "الشركة السعودية للطاقة",
+   "Saudi Energy (formerly SEC)",
+   2,
+   0,
+   0
+  ],
+  [
+   "NEOM",
+   "Neom",
+   1,
+   0,
+   0
+  ],
+  [
+   "SAL Saudi Logistics Services",
+   "شركة سال السعودية للخدمات اللوجستية (SAL)",
+   1,
+   0,
+   0
+  ],
+  [
+   "Ceer National Automotive Company",
+   "CEER",
+   1,
+   0,
+   0
+  ],
+  [
+   "CEER\nceermotors",
+   "CEER",
+   1,
+   0,
+   0
+  ],
+  [
+   "العالمية للصناعات البحرية",
+   "شركة الخدمات البحرية العالمية",
+   1,
+   0,
+   0
+  ],
+  [
+   "SE",
+   "Saudi Energy (formerly SEC)",
+   1,
+   0,
+   0
+  ],
+  [
+   "اسمنت العربية",
+   "شركه أسمنت العربية",
+   1,
+   0,
+   0
+  ],
+  [
+   "Saudi Electricity Company (SEC)",
+   "Saudi Energy (formerly SEC)",
+   0,
+   0,
+   0
+  ],
+  [
+   "Zakat, Tax & Customs (ZATCA)",
+   "Zakat, Tax and Customs Authorities",
+   0,
+   0,
+   0
+  ],
+  [
+   "Saline Water Conversion Corp (SWCC)",
+   "Saudi Water Authority",
+   0,
+   0,
+   0
+  ],
+  [
+   "Nat. Center for Vegetation Cover (NCVC)",
+   "National Center for Vegetation Cover Development & Combating Desertification (NCVC)",
+   0,
+   0,
+   0
+  ],
+  [
+   "Saudi Water Authority",
+   "Saudi Water Authority",
+   0,
+   0,
+   0
+  ]
+ ],
+ "B5_issuers_matched_to_map": 87,
+ "B5_issuers_total": 96,
+ "B5_competitors_that_are_clients": [
+  [
+   "شركة المنافع المتميزة للتجارة",
+   "Direct Competitors",
+   "Tier 4",
+   3109,
+   0
+  ],
+  [
+   "شركة شبه الجزيرة للمقاولات",
+   "Direct Competitors",
+   "Tier 4",
+   4600,
+   0
+  ],
+  [
+   "شركة حلول معالجة النفايات الإلكترونية المحدودة",
+   "Direct Competitors",
+   "Tier 4",
+   60099,
+   0
+  ],
+  [
+   "مصنع احمد محمد عبدالله الغامدي للمنتجات المعدنيه",
+   "Indirect / Adjacent Competitors",
+   "Tier 4",
+   56796,
+   0
+  ],
+  [
+   "شركة مسار التميز للصناعة",
+   "Indirect / Adjacent Competitors",
+   "Tier 4",
+   4600,
+   0
+  ],
+  [
+   "شركة عيد للصناعات المعدنية",
+   "Indirect / Adjacent Competitors",
+   "Tier 4",
+   4600,
+   0
+  ],
+  [
+   "شركة المصنع السعودي القبرصي لسبك وتشكيل المعادن المحدودة",
+   "Indirect / Adjacent Competitors",
+   "Tier 4",
+   66700,
+   0
+  ],
+  [
+   "شركة أسمنت المدينة",
+   "Direct Competitors",
+   "Tier 4",
+   175000,
+   0
+  ]
+ ],
+ "B6_tenders_by_client_region": {
+  "Riyadh": 123,
+  "unknown": 18,
+  "Jeddah": 6,
+  "Madinah Region": 5,
+  "Eastern Province": 5,
+  "Makkah City": 4,
+  "Makkah Region": 4,
+  "Asir Region": 3,
+  "Rabigh": 3,
+  "Northern Borders Region": 2,
+  "Hail Region": 2,
+  "Jazan Region": 2,
+  "Tabuk Region": 2,
+  "Other Makkah Region": 1,
+  "Najran Region": 1,
+  "Southern Region": 1
+ },
+ "B6_lost_by_client_region": {
+  "Riyadh": 12,
+  "Jeddah": 1,
+  "unknown": 2,
+  "Makkah City": 1
+ },
+ "B6_won_by_client_region": {
+  "Riyadh": 12,
+  "unknown": 1
+ },
+ "B6_rivals_by_region_tier12": {
+  "Riyadh": 36,
+  "Jeddah": 16,
+  "Eastern Province": 12,
+  "Southern Region": 3,
+  "Rabigh": 2,
+  "Makkah City": 2,
+  "GCC / International": 1,
+  "Other Makkah Region": 1
+ },
+ "B6_bidactive_rivals_by_region": {
+  "Riyadh": 259,
+  "Eastern Province": 59,
+  "Jeddah": 59,
+  "Makkah City": 20,
+  "Southern Region": 17,
+  "GCC / International": 10,
+  "Other Makkah Region": 8,
+  "Madinah Region": 8,
+  "Qassim Region": 6,
+  "Tabuk Region": 6,
+  "Rabigh": 3,
+  "—": 3,
+  "Hail Region": 1
+ },
+ "B6_undercutters_by_region": {
+  "Riyadh": 34,
+  "Eastern Province": 10,
+  "Jeddah": 15,
+  "Southern Region": 3,
+  "Hail Region": 1,
+  "Other Makkah Region": 2,
+  "Qassim Region": 1,
+  "unknown": 3,
+  "Tabuk Region": 1,
+  "Madinah Region": 1
+ },
+ "B6_ncec_permits": {
+  "national": {
+   "ytd_2026_min": 17000,
+   "q3_2026_min": 6600,
+   "q3_growth_vs_q3_2025": 0.42,
+   "factories_with_permit_2026_approx": 2000,
+   "mawani_logistics_permits_min": 75,
+   "mawani_ports_covered": 8
+  },
+  "regions": {
+   "SA-01": 2600,
+   "SA-04": 1600,
+   "SA-02": 1200
+  }
+ },
+ "B7": {
+  "expiring_180": 329,
+  "expiring_180_bidactive": [
+   [
+    "شركة الاداء المتوازن للمقاولات",
+    "Tier 2",
+    1,
+    "2026-07-31"
+   ],
+   [
+    "شركة نواقل الدولية للخدمات المساندة",
+    "Tier 3",
+    1,
+    "2026-08-02"
+   ],
+   [
+    "شركة وصل المحدودة",
+    "Tier 1",
+    6,
+    "2026-08-29"
+   ],
+   [
+    "شركة النخبة الخليجية للخدمات البيئية",
+    "Tier 1",
+    3,
+    "2026-08-11"
+   ]
+  ],
+  "expiring_365_tier123": [
+   [
+    "ESCO Environmental Consulting Co. (One-Person Co.)",
+    "Tier 1",
+    "2027-04-12"
+   ],
+   [
+    "FEAL Arabia Industrial Co. Ltd.",
+    "Tier 1",
+    "2027-07-16"
+   ],
+   [
+    "GESCO — Namaa Advanced Environmental Services (شركة نماء المتقدمة للخدمات البيئية)",
+    "Tier 1",
+    "2027-04-20"
+   ],
+   [
+    "شركة الاداء المتوازن للمقاولات",
+    "Tier 2",
+    "2026-07-31"
+   ],
+   [
+    "شركة البيئة المستدامة للصناعة",
+    "Tier 3",
+    "2027-07-07"
+   ],
+   [
+    "مؤسسة أرض خضراء لنقل النفايات",
+    "Tier 3",
+    "2027-04-08"
+   ],
+   [
+    "شركة نواقل الدولية للخدمات المساندة",
+    "Tier 3",
+    "2026-08-02"
+   ],
+   [
+    "شركة وصل المحدودة",
+    "Tier 1",
+    "2026-08-29"
+   ],
+   [
+    "شركة البيئة والتنمية للاستشارات البيئية",
+    "Tier 1",
+    "2027-03-04"
+   ],
+   [
+    "شركة النخبة الخليجية للخدمات البيئية",
+    "Tier 1",
+    "2026-08-11"
+   ],
+   [
+    "شركة رواد الاستدامة للخدمات البيئية",
+    "Tier 1",
+    "2027-03-06"
+   ],
+   [
+    "مؤسسة ساس المتقدمة للنقليات",
+    "Tier 2",
+    "2027-07-08"
+   ]
+  ],
+  "expired": [
+   [
+    "مؤسسة الخدمات الاولى المتميزه للخدمات البيئية",
+    "Tier 4",
+    "2026-07-24"
+   ],
+   [
+    "شركة نبني المحدودة",
+    "Tier 4",
+    "2026-07-24"
+   ],
+   [
+    "مصنع تاج الدانة للصناعة",
+    "Tier 4",
+    "2026-07-24"
+   ]
+  ],
+  "haz_expiring_180": [
+   [
+    "شركة مبتكري حلول النفايات الحيوية",
+    "Tier 4",
+    "2027-01-07"
+   ],
+   [
+    "شركة فرز واعادة للخدمات البيئية",
+    "Tier 4",
+    "2027-01-16"
+   ],
+   [
+    "مؤسسة رواد النهضة العمرانية",
+    "Tier 4",
+    "2026-08-31"
+   ],
+   [
+    "شركة عبدالله هادي بالحارث وشركاه",
+    "Tier 4",
+    "2026-08-13"
+   ],
+   [
+    "شركة ازميل المتحدة للمقاولات شركة شخص واحد",
+    "Tier 4",
+    "2026-11-18"
+   ],
+   [
+    "شركة نواقل الدولية للخدمات المساندة",
+    "Tier 3",
+    "2026-08-02"
+   ],
+   [
+    "شركة وصل المحدودة",
+    "Tier 1",
+    "2026-08-29"
+   ],
+   [
+    "الشركة السعودية الخليجية لحماية البيئة مساهمة مقفلة",
+    "Tier 4",
+    "2026-12-31"
+   ],
+   [
+    "شركة الاعمال البيئية المستدامة التجارية",
+    "Tier 4",
+    "2026-12-16"
+   ],
+   [
+    "شركه هاني الحوطي وشريكه المحدودة",
+    "Tier 4",
+    "2026-10-28"
+   ],
+   [
+    "شركة الإستدامة البيئية للخدمات البيئية",
+    "Tier 4",
+    "2026-09-24"
+   ],
+   [
+    "شركة النخبة الخليجية للخدمات البيئية",
+    "Tier 1",
+    "2026-08-11"
+   ]
+  ]
+ },
+ "B8": {
+  "direct": 1063,
+  "direct_bidactive": 19,
+  "direct_mwan": 973,
+  "direct_haz": 68,
+  "direct_no_evidence": 89,
+  "direct_tier": {
+   "Tier 4": 1044,
+   "Tier 1": 7,
+   "Tier 2": 5,
+   "Tier 3": 7
+  },
+  "active": 173,
+  "active_bidactive": 171,
+  "active_tier": {
+   "Tier 1": 11,
+   "Tier 2": 28,
+   "Tier 4": 85,
+   "Tier 3": 49
+  },
+  "indirect_bidactive": 173,
+  "indirect_beat_or_undercut": 24
+ },
+ "B9": {
+  "changed": 223,
+  "up": 62,
+  "down": 161,
+  "up_driver": {
+   "rescoring": 2,
+   "research (confidence upgrade)": 23,
+   "bid activity": 25,
+   "floor rule": 12
+  },
+  "down_driver": {
+   "rescoring": 119,
+   "bid activity": 41,
+   "research (confidence upgrade)": 1
+  },
+  "up_list": [
+   [
+    "Akam Materials Recycling Environmental Services Co. (One-Person Co.)",
+    "Tier 3",
+    "Tier 2",
+    "rescoring"
+   ],
+   [
+    "Al Mandariyah Environmental Services",
+    "Tier 4",
+    "Tier 1",
+    "research (confidence upgrade)"
+   ],
+   [
+    "Al Samer Environmental Services (SAES)",
+    "Tier 3",
+    "Tier 1",
+    "bid activity"
+   ],
+   [
+    "Al-Andalus Engineering Consulting Co.",
+    "Tier 4",
+    "Tier 2",
+    "floor rule"
+   ],
+   [
+    "Al-Arabi Environmental Consulting Office (AECON)",
+    "Tier 4",
+    "Tier 2",
+    "research (confidence upgrade)"
+   ],
+   [
+    "Ali Khudair Al-Harbi Environmental Consulting Co. (AH ENVIRO)",
+    "Tier 3",
+    "Tier 2",
+    "bid activity"
+   ],
+   [
+    "Al-Kaf Environmental Consulting Office",
+    "Tier 3",
+    "Tier 2",
+    "bid activity"
+   ],
+   [
+    "Amron Arabia Environmental Services Co.",
+    "Tier 4",
+    "Tier 3",
+    "floor rule"
+   ],
+   [
+    "Arkan Al-Beeah Environmental Services Co. (One-Person Co.)",
+    "Tier 3",
+    "Tier 2",
+    "bid activity"
+   ],
+   [
+    "Al Adaa El Motawazen Contracting Co",
+    "Tier 3",
+    "Tier 2",
+    "bid activity"
+   ],
+   [
+    "Basmat Habwah Environmental Consulting Establishment",
+    "Tier 4",
+    "Tier 3",
+    "floor rule"
+   ],
+   [
+    "DAM Environmental Consulting Office",
+    "Tier 4",
+    "Tier 3",
+    "research (confidence upgrade)"
+   ],
+   [
+    "Dome Arabia Environmental Consulting Co.",
+    "Tier 4",
+    "Tier 1",
+    "research (confidence upgrade)"
+   ],
+   [
+    "Dr. Ali Saleh Al-Duhaiman Environmental Consulting Co. (ADECO)",
+    "Tier 2",
+    "Tier 1",
+    "bid activity"
+   ],
+   [
+    "Ecoryx Co. Ltd",
+    "Tier 4",
+    "Tier 3",
+    "research (confidence upgrade)"
+   ],
+   [
+    "Enviro Fort office for Environmental Consulting",
+    "Tier 4",
+    "Tier 3",
+    "research (confidence upgrade)"
+   ],
+   [
+    "Environment & Development Environmental Consulting Co. (One-Person Co.) (EDCO)",
+    "Tier 3",
+    "Tier 2",
+    "bid activity"
+   ],
+   [
+    "Environmental Consultant Office",
+    "Tier 3",
+    "Tier 2",
+    "bid activity"
+   ],
+   [
+    "Environmental Experts Contracting Co.",
+    "Tier 3",
+    "Tier 1",
+    "bid activity"
+   ],
+   [
+    "Environmental Friend Environmental Consulting Office",
+    "Tier 4",
+    "Tier 3",
+    "floor rule"
+   ],
+   [
+    "ESCO Environmental Consulting Co. (One-Person Co.)",
+    "Tier 3",
+    "Tier 1",
+    "bid activity"
+   ],
+   [
+    "Fouad Fahad Al-Saleh & Khalid Al-Duwailah Environmental & Engineering Consulting (FKEC) (Engineering Principles)",
+    "Tier 4",
+    "Tier 2",
+    "research (confidence upgrade)"
+   ],
+   [
+    "Geotechnical & Environmental Co. Ltd (GECO)",
+    "Tier 4",
+    "Tier 1",
+    "research (confidence upgrade)"
+   ],
+   [
+    "GESCO — Namaa Advanced Environmental Services (شركة نماء المتقدمة للخدمات البيئية)",
+    "Tier 3",
+    "Tier 1",
+    "research (confidence upgrade)"
+   ],
+   [
+    "Golden Engineering Consulting (One-Person Co.)",
+    "Tier 4",
+    "Tier 3",
+    "bid activity"
+   ]
+  ]
+ },
+ "B10_top_issuers": [
+  {
+   "client": "Saudi Electricity Company (SEC)",
+   "map": "Saudi Energy (formerly SEC)",
+   "cat": "EH Clients",
+   "tier": "Tier 1",
+   "bids": 23,
+   "value": 458106968,
+   "won": 6,
+   "awarded": 10,
+   "lost": 0
+  },
+  {
+   "client": "Nat. Center for Vegetation Cover (NCVC)",
+   "map": "National Center for Vegetation Cover Development & Combating Desertification (NCVC)",
+   "cat": "Government Clients & Institutions",
+   "tier": "GOV",
+   "bids": 17,
+   "value": 11658600,
+   "won": 0,
+   "awarded": 0,
+   "lost": 0
+  },
+  {
+   "client": "Saudi Water Authority",
+   "map": "Saudi Water Authority",
+   "cat": "EH Clients",
+   "tier": "GOV",
+   "bids": 13,
+   "value": 6795879,
+   "won": 4,
+   "awarded": 5,
+   "lost": 0
+  },
+  {
+   "client": "Nat. Center for Environmental Compliance (NCEC)",
+   "map": "National Center for Environmental Compliance Monitoring (NCEC Monitoring)",
+   "cat": "Regulators & Compliance Bodies",
+   "tier": "GOV",
+   "bids": 9,
+   "value": 16905000,
+   "won": 0,
+   "awarded": 0,
+   "lost": 0
+  },
+  {
+   "client": "Saline Water Conversion Corp (SWCC)",
+   "map": "Saudi Water Authority",
+   "cat": "EH Clients",
+   "tier": "GOV",
+   "bids": 4,
+   "value": 17008775,
+   "won": 0,
+   "awarded": 1,
+   "lost": 0
+  },
+  {
+   "client": "Zakat, Tax & Customs (ZATCA)",
+   "map": "Zakat, Tax and Customs Authorities",
+   "cat": "EH Clients",
+   "tier": "Tier 1",
+   "bids": 3,
+   "value": 20075000,
+   "won": 1,
+   "awarded": 1,
+   "lost": 0
+  },
+  {
+   "client": "Military Industries Corp",
+   "map": "Military Industries Corporation",
+   "cat": "Government Clients & Institutions",
+   "tier": "GOV",
+   "bids": 3,
+   "value": 935219,
+   "won": 0,
+   "awarded": 1,
+   "lost": 0
+  },
+  {
+   "client": "Aramco e-Marketplace",
+   "map": "ARAMCO",
+   "cat": "EH Clients",
+   "tier": "Tier 1",
+   "bids": 3,
+   "value": 0,
+   "won": 0,
+   "awarded": 0,
+   "lost": 0
+  },
+  {
+   "client": "Saudi Energy",
+   "map": "Saudi Energy (formerly SEC)",
+   "cat": "EH Clients",
+   "tier": "Tier 1",
+   "bids": 3,
+   "value": 0,
+   "won": 0,
+   "awarded": 0,
+   "lost": 0
+  },
+  {
+   "client": "General Irrigation Corp",
+   "map": "Saudi Irrigation Organization (SIO)",
+   "cat": "Government Clients & Institutions",
+   "tier": "GOV",
+   "bids": 2,
+   "value": 22400000,
+   "won": 0,
+   "awarded": 0,
+   "lost": 0
+  },
+  {
+   "client": "Armed Forces Medical Services",
+   "map": null,
+   "cat": null,
+   "tier": null,
+   "bids": 2,
+   "value": 4871390,
+   "won": 0,
+   "awarded": 1,
+   "lost": 0
+  },
+  {
+   "client": "Petrorabigh",
+   "map": "Petrorabigh",
+   "cat": "Clients / Potential Clients",
+   "tier": "Tier 1",
+   "bids": 2,
+   "value": 910000,
+   "won": 0,
+   "awarded": 0,
+   "lost": 0
+  },
+  {
+   "client": "Al-Mithnab Municipality",
+   "map": "Al Mithnab Municipality Office",
+   "cat": "Government Clients & Institutions",
+   "tier": "GOV",
+   "bids": 2,
+   "value": 560000,
+   "won": 0,
+   "awarded": 1,
+   "lost": 0
+  },
+  {
+   "client": "LINXON",
+   "map": "Linxon",
+   "cat": "Clients / Potential Clients",
+   "tier": "Tier 1",
+   "bids": 2,
+   "value": 220000,
+   "won": 0,
+   "awarded": 0,
+   "lost": 0
+  },
+  {
+   "client": "Ministry of Islamic Affairs",
+   "map": "Ministry of Islamic Affairs",
+   "cat": "Government Clients & Institutions",
+   "tier": "GOV",
+   "bids": 2,
+   "value": 154400,
+   "won": 0,
+   "awarded": 1,
+   "lost": 0
+  }
+ ],
+ "B10_issuer_tier": {
+  "Tier 1": 20,
+  "GOV": 54,
+  "not in map": 9,
+  "Tier 2": 10,
+  "Tier 4": 2,
+  "Tier 3": 1
+ },
+ "B10_issuer_cat": {
+  "EH Clients": 11,
+  "Government Clients & Institutions": 45,
+  "Regulators & Compliance Bodies": 7,
+  "not in map": 9,
+  "Clients / Potential Clients": 23,
+  "Direct Competitors": 1
+ },
+ "B10_never_won_3plus": [
+  [
+   "Nat. Center for Vegetation Cover (NCVC)",
+   17,
+   0,
+   "GOV"
+  ],
+  [
+   "Nat. Center for Environmental Compliance (NCEC)",
+   9,
+   0,
+   "GOV"
+  ],
+  [
+   "Saline Water Conversion Corp (SWCC)",
+   4,
+   0,
+   "GOV"
+  ],
+  [
+   "Military Industries Corp",
+   3,
+   0,
+   "GOV"
+  ],
+  [
+   "Aramco e-Marketplace",
+   3,
+   0,
+   "Tier 1"
+  ],
+  [
+   "Saudi Energy",
+   3,
+   0,
+   "Tier 1"
+  ]
+ ],
+ "B10_issuers_not_in_map": [
+  "Armed Forces Medical Services",
+  "Royal Saudi Naval Forces",
+  "Transport General Authority",
+  "Royal Saudi Air Force",
+  "الشؤون الصحیة بوزارة الحرس الوطني",
+  "Gen. Authority for Military Industries (GAMI)",
+  "كلية الملك خالد العـسكرية",
+  "Tech. & Vocational Training Corp (TVTC)",
+  "Northern Border University"
+ ],
+ "B12_ef_stakeholders": {
+  "n": 20,
+  "in_map": 10,
+  "missing": [
+   "Eng. Abdulrahman bin Abdulmohsen Al-Fadhli",
+   "Dr. Osama bin Ibrahim Faqeeha",
+   "Munir bin Fahd Al-Sahli",
+   "Haitham bin Abdulrahman Al-Turaif",
+   "Hajar bint Ibrahim Al-Qusayyir",
+   "Abdulrahman bin Mohammed Ramzi Addas",
+   "Dr. Mohammed bin Faraj Al-Zahrani",
+   "Fund grant recipient — battery recycler (name not in report)",
+   "Fund grant recipient — animal-waste plant, Al-Kharj (name not in report)",
+   "Fund grant recipient — smart recycling stations, Riyadh (name not in report)"
+  ]
+ },
+ "B12_added_from": {
+  "Environment Fund annual report 2025": 13,
+  "Etimad (government tenders platform)": 12,
+  "SWA water-sector structure chart (Oct 2026)": 22,
+  "bid tracker — Organisations view review (26 Oct 2026)": 10
+ },
+ "B12_reg_briefs": 2,
+ "B12_ncec_permits_in_map": "permits-by-region figures exist in ncec_permits_2026.json; no map or tracker field references them",
+ "D_component_vs_outcome": {
+  "services (cap)": {
+   "rho_bid_active": 0.452,
+   "rho_undercut": 0.195
+  },
+  "backing (bk)": {
+   "rho_bid_active": 0.069,
+   "rho_undercut": -0.011
+  },
+  "mega flag": {
+   "rho_bid_active": 0.133,
+   "rho_undercut": 0.017
+  },
+  "sites": {
+   "rho_bid_active": 0.114,
+   "rho_undercut": 0.036
+  },
+  "score ex-bids": {
+   "rho_bid_active": 0.466,
+   "rho_undercut": 0.192
+  },
+  "score v2": {
+   "rho_bid_active": 0.524,
+   "rho_undercut": 0.214
+  }
+ },
+ "D_lift_top_quartile": {
+  "services (cap)": 2.09,
+  "backing (bk)": null,
+  "mega flag": null,
+  "sites": null,
+  "score ex-bids": 2.08,
+  "score v2": 2.09
+ },
+ "D_bids_component_flat": "bids component = 15 for any bc ≥ 1 (152/170 rows with bc=1 … 3/3 with bc=9); encounters do not scale the score",
+ "D_floor": {
+  "low_cf_bidactive": 107,
+  "floored": 55,
+  "in_tier4": 95,
+  "undercut_eh": 6,
+  "beat_eh": 0,
+  "encounters": 140,
+  "bc3plus": 9
+ },
+ "D_sensitivity": {
+  "v2": {
+   "Tier 3": 238,
+   "Tier 4": 2796,
+   "Tier 1": 23,
+   "Tier 2": 41
+  },
+  "scaled": {
+   "Tier 3": 200,
+   "Tier 4": 2790,
+   "Tier 2": 51,
+   "Tier 1": 57
+  },
+  "floor_exempt_bc2": {
+   "Tier 3": 230,
+   "Tier 4": 2790,
+   "Tier 2": 55,
+   "Tier 1": 23
+  }
+ },
+ "D_sensitivity_moves_up": {
+  "scaled": [
+   [
+    "Al-Arabi Environmental Consulting Office (AECON)",
+    "Tier 2",
+    "Tier 1",
+    3,
+    0
+   ],
+   [
+    "Al-Arabia Al-Ulya Environmental Services Est.",
+    "Tier 4",
+    "Tier 2",
+    3,
+    0
+   ],
+   [
+    "Ali Khudair Al-Harbi Environmental Consulting Co. (AH ENVIRO)",
+    "Tier 2",
+    "Tier 1",
+    6,
+    0
+   ],
+   [
+    "Al-Kaf Environmental Consulting Office",
+    "Tier 2",
+    "Tier 1",
+    3,
+    0
+   ],
+   [
+    "Environment & Development Environmental Consulting Co. (One-Person Co.) (EDCO)",
+    "Tier 2",
+    "Tier 1",
+    3,
+    0
+   ],
+   [
+    "Environmental Consultant Office",
+    "Tier 2",
+    "Tier 1",
+    4,
+    0
+   ],
+   [
+    "Environmental Support Consulting Office",
+    "Tier 2",
+    "Tier 1",
+    3,
+    0
+   ],
+   [
+    "Fouad Fahad Al-Saleh & Khalid Al-Duwailah Environmental & Engineering Consulting (FKEC) (Engineering Principles)",
+    "Tier 2",
+    "Tier 1",
+    3,
+    0
+   ],
+   [
+    "Fuel Professional Consulting",
+    "Tier 4",
+    "Tier 1",
+    5,
+    0
+   ],
+   [
+    "Gulf Elite Environmental Services",
+    "Tier 2",
+    "Tier 1",
+    4,
+    0
+   ],
+   [
+    "IDOM Architecture Consulting (One-Person Co.)",
+    "Tier 2",
+    "Tier 1",
+    3,
+    0
+   ],
+   [
+    "Imar Engineering Consulting Co. (One-Person Co.)",
+    "Tier 2",
+    "Tier 1",
+    3,
+    0
+   ],
+   [
+    "Kayan Al Amthal",
+    "Tier 2",
+    "Tier 1",
+    6,
+    1
+   ],
+   [
+    "Naqsh Environmental Consulting Co.",
+    "Tier 2",
+    "Tier 1",
+    4,
+    0
+   ],
+   [
+    "Oasis of Excellence Engineering Consulting Office (OEC)",
+    "Tier 2",
+    "Tier 1",
+    6,
+    0
+   ],
+   [
+    "Quality Tech Certification Co. (One-Person Co.)",
+    "Tier 2",
+    "Tier 1",
+    3,
+    0
+   ],
+   [
+    "Renewable Environment Environmental Consulting Co. (One-Person Co.)",
+    "Tier 2",
+    "Tier 1",
+    4,
+    0
+   ],
+   [
+    "Rowad Al-Istidama Environmental Services",
+    "Tier 2",
+    "Tier 1",
+    3,
+    0
+   ],
+   [
+    "Verde Environmental Services Co.",
+    "Tier 2",
+    "Tier 1",
+    4,
+    0
+   ],
+   [
+    "Vision Dimensions",
+    "Tier 2",
+    "Tier 1",
+    6,
+    0
+   ],
+   [
+    "Taqat Environment",
+    "Tier 4",
+    "Tier 2",
+    3,
+    0
+   ],
+   [
+    "Renad El Magd (RMG)",
+    "Tier 4",
+    "Tier 2",
+    3,
+    0
+   ],
+   [
+    "Telad Consulting Solutions",
+    "Tier 4",
+    "Tier 2",
+    3,
+    0
+   ],
+   [
+    "LASCO Saudi Engineering Consulting Co. (One Person Co.)",
+    "Tier 2",
+    "Tier 1",
+    4,
+    0
+   ],
+   [
+    "مكتب الكاف للاستشارات البيئية",
+    "Tier 2",
+    "Tier 1",
+    4,
+    0
+   ]
+  ],
+  "floor_exempt_bc2": [
+   [
+    "Al-Arabia Al-Ulya Environmental Services Est.",
+    "Tier 4",
+    "Tier 3",
+    3,
+    0
+   ],
+   [
+    "Fuel Professional Consulting",
+    "Tier 4",
+    "Tier 2",
+    5,
+    0
+   ],
+   [
+    "Gulf Elite Environmental Services",
+    "Tier 2",
+    "Tier 1",
+    4,
+    0
+   ],
+   [
+    "Taqat Environment",
+    "Tier 4",
+    "Tier 3",
+    3,
+    0
+   ],
+   [
+    "Renad El Magd (RMG)",
+    "Tier 4",
+    "Tier 3",
+    3,
+    0
+   ],
+   [
+    "Telad Consulting Solutions",
+    "Tier 4",
+    "Tier 3",
+    3,
+    0
+   ]
+  ]
+ },
+ "D_sensitivity_n_up_bc3": {
+  "scaled": 38,
+  "floor_exempt_bc2": 6
+ }
+}

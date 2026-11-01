@@ -1,0 +1,2229 @@
+{
+ "profile": {
+  "n": {
+   "label": "Name",
+   "kind": "id",
+   "filled": 4211,
+   "fill_rate": 1.0,
+   "distinct": 4211,
+   "top": [
+    [
+     "A’mal Adeem Contracting Est.",
+     1
+    ],
+    [
+     "A’mal Muthraa Environmental Services Est.",
+     1
+    ],
+    [
+     "A’mal Radma Rental Est.",
+     1
+    ],
+    [
+     "Aabirat Al-Najah Transport Est.",
+     1
+    ],
+    [
+     "Aabr Al-Wadi Maintenance (Single Owner)",
+     1
+    ],
+    [
+     "Aalam Al-Bi’ah Waste Recycling Est.",
+     1
+    ],
+    [
+     "Aalam Al-Tadweer Environmental Services",
+     1
+    ],
+    [
+     "Ab’aad Al-Ru’ya Environmental Consulting Office",
+     1
+    ]
+   ],
+   "dupes": []
+  },
+  "cat": {
+   "label": "Category",
+   "kind": "dim",
+   "filled": 4211,
+   "fill_rate": 1.0,
+   "distinct": 12,
+   "top": [
+    [
+     "Indirect / Adjacent Competitors",
+     1874
+    ],
+    [
+     "Direct Competitors",
+     1063
+    ],
+    [
+     "EH Clients",
+     406
+    ],
+    [
+     "Clients / Potential Clients",
+     364
+    ],
+    [
+     "Active Competitors",
+     173
+    ],
+    [
+     "Potential Collaborators",
+     136
+    ],
+    [
+     "Government Clients & Institutions",
+     124
+    ],
+    [
+     "Suppliers / Subcontractors",
+     25
+    ]
+   ]
+  },
+  "tier": {
+   "label": "Tier",
+   "kind": "dim",
+   "filled": 3895,
+   "fill_rate": 0.925,
+   "distinct": 6,
+   "top": [
+    [
+     "Tier 4",
+     3103
+    ],
+    [
+     "Tier 1",
+     239
+    ],
+    [
+     "Tier 3",
+     229
+    ],
+    [
+     "Tier 2",
+     191
+    ],
+    [
+     "GOV",
+     132
+    ],
+    [
+     "EH",
+     1
+    ]
+   ]
+  },
+  "tier_old": {
+   "label": "Tier (prev)",
+   "kind": "dim",
+   "filled": 1379,
+   "fill_rate": 0.327,
+   "distinct": 4,
+   "top": [
+    [
+     "Tier 4",
+     1170
+    ],
+    [
+     "Tier 3",
+     114
+    ],
+    [
+     "Tier 2",
+     60
+    ],
+    [
+     "Tier 1",
+     35
+    ]
+   ]
+  },
+  "typ": {
+   "label": "Company Type",
+   "kind": "dim",
+   "filled": 4211,
+   "fill_rate": 1.0,
+   "distinct": 12,
+   "top": [
+    [
+     "Waste Management Company",
+     1679
+    ],
+    [
+     "Other",
+     1551
+    ],
+    [
+     "Environmental Services",
+     375
+    ],
+    [
+     "Consulting Company",
+     238
+    ],
+    [
+     "GOV-ENTITY",
+     137
+    ],
+    [
+     "Transport",
+     124
+    ],
+    [
+     "Recycling Company",
+     39
+    ],
+    [
+     "LAB",
+     35
+    ]
+   ]
+  },
+  "rg": {
+   "label": "Region",
+   "kind": "dim",
+   "filled": 3803,
+   "fill_rate": 0.903,
+   "distinct": 18,
+   "top": [
+    [
+     "Riyadh",
+     1292
+    ],
+    [
+     "Eastern Province",
+     775
+    ],
+    [
+     "Jeddah",
+     688
+    ],
+    [
+     "Southern Region",
+     227
+    ],
+    [
+     "Makkah City",
+     165
+    ],
+    [
+     "Madinah Region",
+     130
+    ],
+    [
+     "Qassim Region",
+     105
+    ],
+    [
+     "Other Makkah Region",
+     83
+    ]
+   ]
+  },
+  "reg": {
+   "label": "Province",
+   "kind": "dim",
+   "filled": 1723,
+   "fill_rate": 0.409,
+   "distinct": 35,
+   "top": [
+    [
+     "Riyadh",
+     564
+    ],
+    [
+     "Makkah",
+     410
+    ],
+    [
+     "Eastern Province",
+     373
+    ],
+    [
+     "Qassim",
+     56
+    ],
+    [
+     "Madinah",
+     55
+    ],
+    [
+     "Asir",
+     46
+    ],
+    [
+     "Al Jawf",
+     31
+    ],
+    [
+     "Jazan",
+     31
+    ]
+   ]
+  },
+  "city": {
+   "label": "City",
+   "kind": "dim",
+   "filled": 3344,
+   "fill_rate": 0.794,
+   "distinct": 327,
+   "top": [
+    [
+     "Riyadh",
+     679
+    ],
+    [
+     "Jeddah",
+     433
+    ],
+    [
+     "الرياض",
+     213
+    ],
+    [
+     "Dammam",
+     186
+    ],
+    [
+     "جدة",
+     180
+    ],
+    [
+     "الدمام",
+     148
+    ],
+    [
+     "Makkah",
+     99
+    ],
+    [
+     "Jubail",
+     79
+    ]
+   ]
+  },
+  "region_basis": {
+   "label": "Region basis",
+   "kind": "dim",
+   "filled": 613,
+   "fill_rate": 0.146,
+   "distinct": 411,
+   "top": [
+    [
+     "Reviewer (Youssef) 2026-10-20",
+     144
+    ],
+    [
+     "Reviewer (Youssef) 2026-10-22",
+     37
+    ],
+    [
+     "region_overrides.csv (reviewed 2026-10-13)",
+     21
+    ],
+    [
+     "Google Places «Arabian Fiberglass Insulation Co. (AFICO)» (M",
+     2
+    ],
+    [
+     "Google Places «شركة مواقع النجوم للمقاولات العامة» (High) 20",
+     2
+    ],
+    [
+     "Google Places «Tilad for Environmental Consultancy (تلاد للا",
+     2
+    ],
+    [
+     "Google Places «VEKR GROUP» (Medium) 2026-10-21",
+     1
+    ],
+    [
+     "Google Places «White Rocks Mining Company - شركة الصخور البي",
+     1
+    ]
+   ]
+  },
+  "threat": {
+   "label": "Threat",
+   "kind": "dim",
+   "filled": 1602,
+   "fill_rate": 0.38,
+   "distinct": 3,
+   "top": [
+    [
+     "Low",
+     1473
+    ],
+    [
+     "Medium",
+     120
+    ],
+    [
+     "High",
+     9
+    ]
+   ]
+  },
+  "sc": {
+   "label": "Score (v2)",
+   "kind": "num",
+   "filled": 4053,
+   "fill_rate": 0.962,
+   "min": 0.0,
+   "p25": 0.0,
+   "median": 6.0,
+   "p75": 7.0,
+   "p95": 32.0,
+   "max": 100.0,
+   "mean": 7.78,
+   "zeros": 1614,
+   "distinct": 107,
+   "top": [
+    [
+     0.0,
+     1614
+    ],
+    [
+     7.0,
+     799
+    ],
+    [
+     6.0,
+     496
+    ],
+    [
+     23.0,
+     168
+    ],
+    [
+     32.0,
+     95
+    ],
+    [
+     12.8,
+     68
+    ]
+   ]
+  },
+  "sc_old": {
+   "label": "Score (prev)",
+   "kind": "num",
+   "filled": 1557,
+   "fill_rate": 0.37,
+   "min": 5.0,
+   "p25": 21.6,
+   "median": 24.3,
+   "p75": 32.9,
+   "p95": 49.4,
+   "max": 130.0,
+   "mean": 28.64,
+   "zeros": 0,
+   "distinct": 136,
+   "top": [
+    [
+     24.3,
+     523
+    ],
+    [
+     20.0,
+     322
+    ],
+    [
+     28.6,
+     141
+    ],
+    [
+     43.0,
+     71
+    ],
+    [
+     32.9,
+     47
+    ],
+    [
+     35.0,
+     43
+    ]
+   ]
+  },
+  "cap": {
+   "label": "Capability",
+   "kind": "num",
+   "filled": 3989,
+   "fill_rate": 0.947,
+   "min": 0.0,
+   "p25": 0.0,
+   "median": 6.0,
+   "p75": 7.0,
+   "p95": 14.8,
+   "max": 62.7,
+   "mean": 5.18,
+   "zeros": 1614,
+   "distinct": 69,
+   "top": [
+    [
+     0.0,
+     1614
+    ],
+    [
+     7.0,
+     799
+    ],
+    [
+     6.0,
+     496
+    ],
+    [
+     8.0,
+     180
+    ],
+    [
+     12.0,
+     125
+    ],
+    [
+     10.0,
+     85
+    ]
+   ]
+  },
+  "cap_old": {
+   "label": "Capability (prev)",
+   "kind": "num",
+   "filled": 1548,
+   "fill_rate": 0.368,
+   "min": 5.0,
+   "p25": 20.0,
+   "median": 24.3,
+   "p75": 28.6,
+   "p95": 43.0,
+   "max": 90.0,
+   "mean": 26.28,
+   "zeros": 0,
+   "distinct": 113,
+   "top": [
+    [
+     24.3,
+     536
+    ],
+    [
+     20.0,
+     363
+    ],
+    [
+     28.6,
+     141
+    ],
+    [
+     28.0,
+     93
+    ],
+    [
+     32.9,
+     49
+    ],
+    [
+     13.0,
+     25
+    ]
+   ]
+  },
+  "drv": {
+   "label": "Score driver",
+   "kind": "dim",
+   "filled": 4090,
+   "fill_rate": 0.971,
+   "distinct": 6,
+   "top": [
+    [
+     "services",
+     3450
+    ],
+    [
+     "bids",
+     426
+    ],
+    [
+     "backing",
+     105
+    ],
+    [
+     "footprint",
+     57
+    ],
+    [
+     "multi",
+     31
+    ],
+    [
+     "mega",
+     21
+    ]
+   ]
+  },
+  "fl": {
+   "label": "Score floor flag",
+   "kind": "dim",
+   "filled": 3989,
+   "fill_rate": 0.947,
+   "distinct": 2,
+   "top": [
+    [
+     "0",
+     2761
+    ],
+    [
+     "1",
+     1228
+    ]
+   ]
+  },
+  "pend": {
+   "label": "Analyst score retained (pending)",
+   "kind": "dim",
+   "filled": 225,
+   "fill_rate": 0.053,
+   "distinct": 1,
+   "top": [
+    [
+     "1",
+     225
+    ]
+   ]
+  },
+  "cf": {
+   "label": "Confidence",
+   "kind": "dim",
+   "filled": 3364,
+   "fill_rate": 0.799,
+   "distinct": 3,
+   "top": [
+    [
+     "High",
+     1726
+    ],
+    [
+     "Low",
+     1322
+    ],
+    [
+     "Medium",
+     316
+    ]
+   ]
+  },
+  "cf_basis": {
+   "label": "Confidence basis",
+   "kind": "text",
+   "filled": 187,
+   "fill_rate": 0.044,
+   "distinct": 38,
+   "top": [
+    [
+     "EH bid tracker roster (auto-add rule of sync_bids_to_apps)",
+     52
+    ],
+    [
+     "EH bid tracker (client/proponent)",
+     24
+    ],
+    [
+     "News & Intelligence pages (personal analysis)",
+     22
+    ],
+    [
+     "SWA water-sector structure chart (Oct 2026)",
+     22
+    ],
+    [
+     "Environment Fund annual report 2025",
+     13
+    ],
+    [
+     "Etimad (government tenders platform)",
+     12
+    ],
+    [
+     "bid tracker client / bidder",
+     10
+    ],
+    [
+     "EH bid tracker (client/proponent); reviewer identification",
+     2
+    ]
+   ]
+  },
+  "services_confirmed": {
+   "label": "Services confirmed",
+   "kind": "text",
+   "filled": 25,
+   "fill_rate": 0.006,
+   "distinct": 17,
+   "top": [
+    [
+     "environmental consulting & permits & EIA studies",
+     6
+    ],
+    [
+     "environmental monitoring; environmental consulting & permits",
+     3
+    ],
+    [
+     "environmental consulting & permits & EIA studies; environmen",
+     2
+    ],
+    [
+     "environmental monitoring; laboratory testing; environmental ",
+     1
+    ],
+    [
+     "environmental consulting & permits & EIA studies; other (HSE",
+     1
+    ],
+    [
+     "other (ESG/carbon/sustainability consulting)",
+     1
+    ],
+    [
+     "water & wastewater; environmental consulting & permits & EIA",
+     1
+    ],
+    [
+     "laboratory testing; environmental monitoring",
+     1
+    ]
+   ]
+  },
+  "evidence": {
+   "label": "Evidence/Source",
+   "kind": "text",
+   "filled": 23,
+   "fill_rate": 0.005,
+   "distinct": 23,
+   "top": [
+    [
+     "aecon-sa.com",
+     1
+    ],
+    [
+     "domeint.com",
+     1
+    ],
+    [
+     "ecoryx.com",
+     1
+    ],
+    [
+     "enviro-fort.com",
+     1
+    ],
+    [
+     "en-in.net",
+     1
+    ],
+    [
+     "fkec.com.sa",
+     1
+    ],
+    [
+     "geco-ksa.com",
+     1
+    ],
+    [
+     "ies.sa",
+     1
+    ]
+   ]
+  },
+  "last_verified": {
+   "label": "Last verified",
+   "kind": "date",
+   "filled": 24,
+   "fill_rate": 0.006,
+   "distinct": 1,
+   "top": [
+    [
+     "2026-09-03",
+     24
+    ]
+   ]
+  },
+  "bid": {
+   "label": "Bids vs EH",
+   "kind": "bool",
+   "filled": 4211,
+   "true": 459,
+   "true_rate": 0.109
+  },
+  "bc": {
+   "label": "Bid encounters",
+   "kind": "num",
+   "filled": 4211,
+   "fill_rate": 1.0,
+   "min": 0.0,
+   "p25": 0.0,
+   "median": 0.0,
+   "p75": 0.0,
+   "p95": 1.0,
+   "max": 10.0,
+   "mean": 0.18,
+   "zeros": 3752,
+   "distinct": 11,
+   "top": [
+    [
+     0.0,
+     3752
+    ],
+    [
+     1.0,
+     330
+    ],
+    [
+     2.0,
+     60
+    ],
+    [
+     3.0,
+     36
+    ],
+    [
+     4.0,
+     12
+    ],
+    [
+     6.0,
+     9
+    ]
+   ]
+  },
+  "bf": {
+   "label": "Bid flag basis",
+   "kind": "dim",
+   "filled": 404,
+   "fill_rate": 0.096,
+   "distinct": 3,
+   "top": [
+    [
+     "Low",
+     335
+    ],
+    [
+     "Medium",
+     48
+    ],
+    [
+     "High",
+     21
+    ]
+   ]
+  },
+  "h2h": {
+   "label": "Head-to-head record",
+   "kind": "struct",
+   "filled": 14,
+   "fill_rate": 0.003,
+   "distinct": 10,
+   "sample": {
+    "app": 1,
+    "wins": 0,
+    "dq": 0,
+    "undercut": 0
+   }
+  },
+  "cl": {
+   "label": "EH client (value SAR)",
+   "kind": "num",
+   "filled": 419,
+   "fill_rate": 0.1
+  },
+  "clsc": {
+   "label": "Client score",
+   "kind": "num",
+   "filled": 65,
+   "fill_rate": 0.015,
+   "min": 20.0,
+   "p25": 32.0,
+   "median": 41.0,
+   "p75": 51.0,
+   "p95": 78.0,
+   "max": 100.0,
+   "mean": 44.46,
+   "zeros": 0,
+   "distinct": 34,
+   "top": [
+    [
+     32.0,
+     4
+    ],
+    [
+     34.0,
+     4
+    ],
+    [
+     22.0,
+     3
+    ],
+    [
+     29.0,
+     3
+    ],
+    [
+     31.0,
+     3
+    ],
+    [
+     48.0,
+     3
+    ]
+   ]
+  },
+  "cltier": {
+   "label": "Client tier",
+   "kind": "dim",
+   "filled": 65,
+   "fill_rate": 0.015,
+   "distinct": 4,
+   "top": [
+    [
+     "Tier 4",
+     30
+    ],
+    [
+     "Tier 3",
+     22
+    ],
+    [
+     "Tier 2",
+     8
+    ],
+    [
+     "Tier 1",
+     5
+    ]
+   ]
+  },
+  "ctier": {
+   "label": "C-tier",
+   "kind": "dim",
+   "filled": 73,
+   "fill_rate": 0.017,
+   "distinct": 1,
+   "top": [
+    [
+     "True",
+     73
+    ]
+   ]
+  },
+  "act": {
+   "label": "Licence activities",
+   "kind": "text",
+   "filled": 1427,
+   "fill_rate": 0.339,
+   "distinct": 275,
+   "top": [
+    [
+     "NH-COLL, NH-COLL-C&D",
+     141
+    ],
+    [
+     "ENV-CON(TYPEA)",
+     126
+    ],
+    [
+     "REC-SORT, REC-TRADE",
+     115
+    ],
+    [
+     "NH-COLL, NH-COLL-COMM, NH-COLL-C&D",
+     87
+    ],
+    [
+     "ENV-CON(TYPEB)",
+     85
+    ],
+    [
+     "NH-COLL, NH-COLL-COMM",
+     83
+    ],
+    [
+     "ENV-CON(TYPEC)",
+     82
+    ],
+    [
+     "REC-SORT",
+     65
+    ]
+   ]
+  },
+  "mw": {
+   "label": "MWAN licence block",
+   "kind": "struct",
+   "filled": 1593,
+   "fill_rate": 0.378,
+   "distinct": 1593,
+   "sample": {
+    "days": 610,
+    "exp": "2028-03-27",
+    "cities": [
+     "الدمام"
+    ],
+    "lic": [
+     "Collection and Transportation of Non-Hazardous Waste — جمع ونقل النفايات التجارية والإداري",
+     "Collection and Transportation of Hazardous Waste — جمع ونقل النفايات الكيميائية"
+    ],
+    "tech": [
+     "جمع ونقل النفايات",
+     "نقل النقايات الخطرة"
+    ],
+    "cap": [],
+    "veh": 15
+   }
+  },
+  "sites": {
+   "label": "Sites",
+   "kind": "num",
+   "filled": 171,
+   "fill_rate": 0.041,
+   "min": 1.0,
+   "p25": 1.0,
+   "median": 2.0,
+   "p75": 3.0,
+   "p95": 10.0,
+   "max": 24.0,
+   "mean": 2.95,
+   "zeros": 0,
+   "distinct": 14,
+   "top": [
+    [
+     1.0,
+     52
+    ],
+    [
+     2.0,
+     51
+    ],
+    [
+     3.0,
+     34
+    ],
+    [
+     4.0,
+     11
+    ],
+    [
+     5.0,
+     5
+    ],
+    [
+     6.0,
+     4
+    ]
+   ]
+  },
+  "mn": {
+   "label": "MWAN licensed",
+   "kind": "bool",
+   "filled": 4211,
+   "true": 78,
+   "true_rate": 0.019
+  },
+  "mp": {
+   "label": "Mega-project flag",
+   "kind": "bool",
+   "filled": 4211,
+   "true": 52,
+   "true_rate": 0.012
+  },
+  "collab": {
+   "label": "Collaborator flag",
+   "kind": "bool",
+   "filled": 4211,
+   "true": 32,
+   "true_rate": 0.008
+  },
+  "bk": {
+   "label": "Backing score",
+   "kind": "num",
+   "filled": 3797,
+   "fill_rate": 0.902,
+   "min": 0.0,
+   "p25": 0.0,
+   "median": 0.0,
+   "p75": 0.0,
+   "p95": 0.0,
+   "max": 25.0,
+   "mean": 0.15,
+   "zeros": 3768,
+   "distinct": 5,
+   "top": [
+    [
+     0.0,
+     3768
+    ],
+    [
+     20.0,
+     17
+    ],
+    [
+     15.0,
+     6
+    ],
+    [
+     25.0,
+     5
+    ],
+    [
+     10.0,
+     1
+    ]
+   ]
+  },
+  "sec": {
+   "label": "Sector",
+   "kind": "dim",
+   "filled": 680,
+   "fill_rate": 0.161,
+   "distinct": 75,
+   "top": [
+    [
+     "Construction",
+     130
+    ],
+    [
+     "Manufacturing",
+     78
+    ],
+    [
+     "Industrial",
+     47
+    ],
+    [
+     "Utilities & Water",
+     43
+    ],
+    [
+     "Energy & Power",
+     39
+    ],
+    [
+     "Municipalities",
+     23
+    ],
+    [
+     "Oil & Gas",
+     20
+    ],
+    [
+     "Food",
+     18
+    ]
+   ]
+  },
+  "own": {
+   "label": "Ownership",
+   "kind": "dim",
+   "filled": 37,
+   "fill_rate": 0.009,
+   "distinct": 33,
+   "top": [
+    [
+     "Unresolved after Pass 3 — closed at Low confidence",
+     3
+    ],
+    [
+     "Element Materials Technology (UK) subsidiary",
+     3
+    ],
+    [
+     "ACTS — regional testing/geotechnical group (Lebanon-origin, ",
+     1
+    ],
+    [
+     "International consultancy; Qiddiya Six Flags sustainability ",
+     1
+    ],
+    [
+     "SIRC (PIF) subsidiary",
+     1
+    ],
+    [
+     "Arab Recycling Company — Saudi group affiliate",
+     1
+    ],
+    [
+     "AFZCO — active in Eastern Province industrial/megaproject wa",
+     1
+    ],
+    [
+     "Majority acquired by SIRC (PIF) in 2023",
+     1
+    ]
+   ]
+  },
+  "added": {
+   "label": "Added (sync)",
+   "kind": "dim",
+   "filled": 101,
+   "fill_rate": 0.024,
+   "distinct": 1,
+   "top": [
+    [
+     "2026-10-20",
+     101
+    ]
+   ]
+  },
+  "added_from": {
+   "label": "Added from",
+   "kind": "dim",
+   "filled": 57,
+   "fill_rate": 0.014,
+   "distinct": 4,
+   "top": [
+    [
+     "SWA water-sector structure chart (Oct 2026)",
+     22
+    ],
+    [
+     "Environment Fund annual report 2025",
+     13
+    ],
+    [
+     "Etimad (government tenders platform)",
+     12
+    ],
+    [
+     "bid tracker — Organisations view review (26 Oct 2026)",
+     10
+    ]
+   ]
+  },
+  "added_on": {
+   "label": "Added on",
+   "kind": "date",
+   "filled": 57,
+   "fill_rate": 0.014,
+   "distinct": 3,
+   "top": [
+    [
+     "2026-10-15",
+     25
+    ],
+    [
+     "2026-10-20",
+     22
+    ],
+    [
+     "Oct 2026",
+     10
+    ]
+   ]
+  },
+  "notes": {
+   "label": "Notes",
+   "kind": "text",
+   "filled": 3530,
+   "fill_rate": 0.838,
+   "distinct": 547,
+   "top": [
+    [
+     "MWAN licence register entry (Jul 2026 snapshot).",
+     1539
+    ],
+    [
+     "Type: Contractor",
+     288
+    ],
+    [
+     "Type: Manufacturer",
+     278
+    ],
+    [
+     "Type: Trader",
+     231
+    ],
+    [
+     "Type: Scrap Shop",
+     68
+    ],
+    [
+     "Added from the EH bid tracker rosters (tracker as of 20 Oct ",
+     52
+    ],
+    [
+     "Type: Trader · Type auto-classified (fallback: no sector tok",
+     51
+    ],
+    [
+     "Type: Manufacturer · Restored: recognized major company, HQ ",
+     50
+    ]
+   ]
+  }
+ },
+ "checks": {
+  "N": 4211,
+  "cat": {
+   "Indirect / Adjacent Competitors": 1874,
+   "Direct Competitors": 1063,
+   "Clients / Potential Clients": 364,
+   "Potential Collaborators": 136,
+   "Suppliers / Subcontractors": 25,
+   "Active Competitors": 173,
+   "Government Clients & Institutions": 124,
+   "Industry Associations & Academia": 13,
+   "EH Clients": 406,
+   "Regulators & Compliance Bodies": 9,
+   "EH Partners": 23,
+   "EH (Reference)": 1
+  },
+  "tier": {
+   "Tier 4": 3103,
+   "Tier 2": 191,
+   "Tier 3": 229,
+   "Tier 1": 239,
+   "GOV": 132,
+   "EH": 1,
+   "": 316
+  },
+  "tier_x_bid": {
+   "('Tier 4', True)": 244,
+   "('Tier 4', False)": 2859,
+   "('Tier 2', False)": 136,
+   "('Tier 3', False)": 125,
+   "('Tier 3', True)": 104,
+   "('Tier 1', True)": 48,
+   "('Tier 1', False)": 191,
+   "('Tier 2', True)": 55,
+   "('GOV', False)": 125,
+   "('GOV', True)": 7,
+   "('EH', False)": 1,
+   "('', False)": 315,
+   "('', True)": 1
+  },
+  "tier_x_bc_gt0": {
+   "('Tier 4', True)": 244,
+   "('Tier 4', False)": 2859,
+   "('Tier 2', False)": 136,
+   "('Tier 3', False)": 125,
+   "('Tier 3', True)": 104,
+   "('Tier 1', True)": 48,
+   "('Tier 1', False)": 191,
+   "('Tier 2', True)": 55,
+   "('GOV', False)": 125,
+   "('GOV', True)": 7,
+   "('EH', False)": 1,
+   "('', False)": 315,
+   "('', True)": 1
+  },
+  "cf": {
+   "Medium": 316,
+   "Low": 1322,
+   "High": 1726,
+   "None": 414,
+   "": 433
+  },
+  "high_cf": {
+   "n": 1726,
+   "with_mw": 1592,
+   "with_mn": 21,
+   "with_cf_basis": 11,
+   "with_evidence": 6,
+   "with_services_confirmed": 7,
+   "neither_mw_nor_basis": 108
+  },
+  "high_cf_basis_top": [
+   [
+    "MWAN licence register (merged AR twin)",
+    1
+   ],
+   [
+    "MWAN licence register (8 licences, read from scree",
+    1
+   ],
+   [
+    "Acquired by Applus+ Spain (SAFCO acquisition Dec 2",
+    1
+   ],
+   [
+    "MWAN licence register (merged AR twin) + brand ide",
+    1
+   ],
+   [
+    "NCEC Category A licence confirmed (easc.com.sa)",
+    1
+   ],
+   [
+    "MWAN licence register (merged record)",
+    1
+   ],
+   [
+    "Founded 1965, oldest Saudi engineering firm, 2800+",
+    1
+   ],
+   [
+    "Major Saudi engineering group, 50+ year history — ",
+    1
+   ],
+   [
+    "SIRC subsidiary (ELECTA brand, 60% EADA acquisitio",
+    1
+   ],
+   [
+    "Registered KSA arm; NEOM Green Hydrogen >2GW elect",
+    1
+   ]
+  ],
+  "high_no_mwan_by_cat": {
+   "Indirect / Adjacent Competitors": 27,
+   "Clients / Potential Clients": 5,
+   "Potential Collaborators": 14,
+   "Direct Competitors": 5,
+   "Active Competitors": 10,
+   "EH Clients": 53
+  },
+  "high_no_mwan_notes_top": [
+   [
+    "",
+    26
+   ],
+   [
+    "Type: Contractor",
+    3
+   ],
+   [
+    "Type: Poultry & Farming · EH Relationship Sco",
+    3
+   ],
+   [
+    "Type: Manufacturer · EH Relationship Score: 4",
+    3
+   ],
+   [
+    "Type: Manufacturer",
+    2
+   ],
+   [
+    "Type: Chemicals Distribution · EH Relationshi",
+    2
+   ],
+   [
+    "Type: Cables & Electrical Manufacturing · EH ",
+    2
+   ],
+   [
+    "Type: Logistics & Ports · EH Relationship Sco",
+    2
+   ]
+  ],
+  "low_cf": {
+   "n": 1322,
+   "bid_active": 177,
+   "floored": 1228,
+   "tier": {
+    "Tier 4": 1206,
+    "Tier 2": 30,
+    "Tier 3": 54,
+    "Tier 1": 18,
+    "GOV": 14
+   }
+  },
+  "threat": {
+   "Low": 1473,
+   "Medium": 120,
+   "(blank)": 2609,
+   "High": 9
+  },
+  "threat_x_tier": {
+   "('Tier 4', 'Low')": 1279,
+   "('Tier 4', 'Medium')": 93,
+   "('Tier 2', '(blank)')": 122,
+   "('Tier 3', '(blank)')": 124,
+   "('Tier 4', '(blank)')": 1731,
+   "('Tier 2', 'Low')": 53,
+   "('Tier 1', 'Medium')": 12,
+   "('Tier 1', 'High')": 7,
+   "('Tier 1', '(blank)')": 201,
+   "('Tier 2', 'Medium')": 14,
+   "('GOV', '(blank)')": 115,
+   "('Tier 3', 'Low')": 104,
+   "('Tier 1', 'Low')": 19,
+   "('Tier 2', 'High')": 2,
+   "('EH', '(blank)')": 1,
+   "('', '(blank)')": 315,
+   "('', 'Low')": 1,
+   "('Tier 3', 'Medium')": 1,
+   "('GOV', 'Low')": 17
+  },
+  "threat_blank_bidactive": 88,
+  "sc_zero": 1772,
+  "sc_zero_x_tier": {
+   "Tier 4": 1157,
+   "Tier 2": 85,
+   "Tier 3": 72,
+   "Tier 1": 140,
+   "GOV": 43,
+   "": 275
+  },
+  "floor": 1228,
+  "pend": 225,
+  "pend_x_tier": {
+   "Tier 4": 171,
+   "Tier 2": 16,
+   "Tier 3": 25,
+   "Tier 1": 10,
+   "GOV": 3
+  },
+  "drv": {
+   "bids": 426,
+   "services": 3450,
+   "footprint": 57,
+   "backing": 105,
+   "multi": 31,
+   "(blank)": 121,
+   "mega": 21
+  },
+  "drv_x_tier": {
+   "('Tier 4', 'bids')": 240,
+   "('Tier 4', 'services')": 2802,
+   "('Tier 4', 'footprint')": 24,
+   "('Tier 2', 'footprint')": 12,
+   "('Tier 3', 'services')": 95,
+   "('Tier 2', 'services')": 85,
+   "('Tier 2', 'backing')": 4,
+   "('Tier 4', 'multi')": 7,
+   "('Tier 3', 'bids')": 99,
+   "('Tier 1', 'bids')": 32,
+   "('Tier 1', 'services')": 158,
+   "('Tier 2', 'bids')": 50,
+   "('GOV', 'backing')": 85,
+   "('Tier 1', 'backing')": 15,
+   "('GOV', 'services')": 20,
+   "('Tier 1', '(blank)')": 9,
+   "('Tier 4', 'mega')": 4,
+   "('Tier 1', 'footprint')": 14,
+   "('Tier 1', 'multi')": 5,
+   "('GOV', 'bids')": 4,
+   "('Tier 3', 'footprint')": 7,
+   "('Tier 1', 'mega')": 6,
+   "('Tier 2', 'multi')": 3,
+   "('EH', 'services')": 1,
+   "('Tier 4', '(blank)')": 26,
+   "('', 'services')": 289,
+   "('Tier 2', '(blank)')": 37,
+   "('Tier 3', '(blank)')": 26,
+   "('', 'mega')": 10,
+   "('Tier 3', 'mega')": 1,
+   "('', 'bids')": 1,
+   "('', 'multi')": 16,
+   "('Tier 3', 'backing')": 1,
+   "('GOV', '(blank)')": 23
+  },
+  "unscored_share": 0.492,
+  "score_range_by_tier": {
+   "Tier 4": [
+    0.0,
+    6,
+    39.0,
+    3103
+   ],
+   "Tier 2": [
+    0.0,
+    4,
+    73.0,
+    191
+   ],
+   "Tier 3": [
+    0.0,
+    23.0,
+    53.0,
+    229
+   ],
+   "Tier 1": [
+    0.0,
+    0.0,
+    100.0,
+    239
+   ]
+  },
+  "client_value": {
+   "n": 0,
+   "total": 0,
+   "top_values": [],
+   "eq4600": 0,
+   "under10k": 0,
+   "share_under10k": 0.0,
+   "top5_share": 0.0
+  },
+  "eh_clients_total": 406,
+  "eh_clients_with_value": 0,
+  "region_blank": 408,
+  "region_blank_x_tier": {
+   "": 71,
+   "Tier 4": 327,
+   "Tier 3": 2,
+   "GOV": 5,
+   "Tier 2": 3
+  },
+  "region_blank_x_cat": {
+   "EH Clients": 74,
+   "Direct Competitors": 148,
+   "Indirect / Adjacent Competitors": 173,
+   "Active Competitors": 5,
+   "Government Clients & Institutions": 5,
+   "Clients / Potential Clients": 3
+  },
+  "region_blank_bidactive": 3,
+  "region_top": [
+   [
+    "Riyadh",
+    1292
+   ],
+   [
+    "Eastern Province",
+    775
+   ],
+   [
+    "Jeddah",
+    688
+   ],
+   [
+    "—",
+    408
+   ],
+   [
+    "Southern Region",
+    227
+   ],
+   [
+    "Makkah City",
+    165
+   ],
+   [
+    "Madinah Region",
+    130
+   ],
+   [
+    "Qassim Region",
+    105
+   ],
+   [
+    "Other Makkah Region",
+    83
+   ],
+   [
+    "GCC / International",
+    80
+   ],
+   [
+    "Al Jawf Region",
+    70
+   ],
+   [
+    "Tabuk Region",
+    70
+   ],
+   [
+    "Hail Region",
+    42
+   ],
+   [
+    "Rabigh",
+    37
+   ],
+   [
+    "Northern Borders Region",
+    24
+   ],
+   [
+    "Makkah Region",
+    9
+   ]
+  ],
+  "mwan_block": 1593,
+  "mwan_x_cat": {
+   "Active Competitors": 3,
+   "Indirect / Adjacent Competitors": 618,
+   "Direct Competitors": 971,
+   "EH (Reference)": 1
+  },
+  "mwan_x_tier": {
+   "Tier 1": 11,
+   "Tier 4": 1566,
+   "EH": 1,
+   "Tier 2": 7,
+   "Tier 3": 8
+  },
+  "mwan_sample": {
+   "days": 610,
+   "exp": "2028-03-27",
+   "cities": [
+    "الدمام"
+   ],
+   "lic": [
+    "Collection and Transportation of Non-Hazardous Waste — جمع ونقل النفايات التجارية والإداري",
+    "Collection and Transportation of Hazardous Waste — جمع ونقل النفايات الكيميائية"
+   ],
+   "tech": [
+    "جمع ونقل النفايات",
+    "نقل النقايات الخطرة"
+   ],
+   "cap": [],
+   "veh": 15
+  },
+  "mwan_expiry_dates_found": 1593,
+  "bid_true": 459,
+  "bc_gt0": 459,
+  "bid_true_bc0": 0,
+  "bf": {
+   "Low": 335,
+   "(blank)": 3807,
+   "High": 21,
+   "Medium": 48
+  },
+  "bc_dist": {
+   "1": 330,
+   "9": 3,
+   "6": 9,
+   "3": 36,
+   "2": 60,
+   "4": 12,
+   "7": 1,
+   "10": 1,
+   "5": 5,
+   "8": 2
+  },
+  "bc_pareto": {
+   "total_encounters": 745,
+   "rivals": 459,
+   "top10_share": 0.105,
+   "top20_share": 0.18,
+   "top50_share": 0.319
+  },
+  "h2h_present": 14,
+  "h2h_sample": {
+   "app": 1,
+   "wins": 0,
+   "dq": 0,
+   "undercut": 0
+  },
+  "direct": {
+   "n": 1063,
+   "bid_active": 19,
+   "with_mwan": 973,
+   "with_services_confirmed": 1,
+   "no_mwan_no_bid_no_services": 89,
+   "tier": {
+    "Tier 4": 1044,
+    "Tier 1": 7,
+    "Tier 2": 5,
+    "Tier 3": 7
+   }
+  },
+  "active": {
+   "n": 173,
+   "bid_active": 171,
+   "tier": {
+    "Tier 1": 11,
+    "Tier 2": 28,
+    "Tier 4": 85,
+    "Tier 3": 49
+   }
+  },
+  "exact_dupes": [],
+  "norm_dupes": [
+   [
+    "efsim facilities management",
+    2
+   ],
+   [
+    "وادي رم لتدوير المعادن",
+    2
+   ],
+   [
+    "مصفاه سار العربيه للتصنيع",
+    2
+   ],
+   [
+    "عذبه العربيه للصناعه",
+    2
+   ],
+   [
+    "بيت المصباح للتجاره",
+    2
+   ],
+   [
+    "الشركه السعوديه العربيه للزجاج",
+    2
+   ],
+   [
+    "مصنع سندان الحديث للمنتجات النفطيه",
+    2
+   ],
+   [
+    "اريكي للخدمات البيئيه",
+    2
+   ],
+   [
+    "امداد المتقدمه للخدمات البيئيه",
+    2
+   ],
+   [
+    "اداره خدمات البيئه العالميه",
+    2
+   ],
+   [
+    "مجموعه لجين التجاريه",
+    2
+   ],
+   [
+    "اساس الاعمال للخدمات البيئيه",
+    2
+   ],
+   [
+    "موارد مكه للتجاره",
+    2
+   ],
+   [
+    "مواقع النجوم للمقاولات",
+    2
+   ],
+   [
+    "مجموعه القريان للتجاره والصناعه والمقاولات",
+    2
+   ]
+  ],
+  "norm_dupes_n": 15,
+  "added": {
+   "": 4110,
+   "2026-10-20": 101
+  },
+  "added_from": {
+   "": 4154,
+   "Environment Fund annual report 2025": 13,
+   "Etimad (government tenders platform)": 12,
+   "SWA water-sector structure chart (Oct 2026)": 22,
+   "bid tracker — Organisations view review (26 Oct 2026)": 10
+  },
+  "region_basis": {
+   "": 3598,
+   "Google Places «VEKR GROUP» (Medium) 2026-10-21": 1,
+   "Google Places «White Rocks Mining Company - شركة الصخور البيضاء للتعدين» (Medium) 2026-10-21": 1,
+   "Google Places «شركه ثمار الغربيه للتجاره» (Medium) 2026-10-21": 1,
+   "Google Places «Mahmoud Atta Factory for Metal Fabrication Co. Ltd.» (Medium) 2026-10-21": 1,
+   "Reviewer (Youssef) 2026-10-20": 144,
+   "Google Places «مصنع بيت الجرانيت السعودي» (Medium) 2026-10-21": 1,
+   "Google Places «مصنع ارتلينك للصناعة» (High) 2026-10-21": 1,
+   "Google Places «شركة مصنع حسين عمر العطاس» (High) 2026-10-21": 1,
+   "Google Places «Middle East Paints Co.» (Medium) 2026-10-21": 1,
+   "Google Places «اللؤلؤ الساطع بلاستيك وادوات نظافة وادوات تجميل بالجملة» (High) 2026-10-21": 1,
+   "Google Places «شركة صالح محمد صالح الحقباني للتجارة و الصناعه» (High) 2026-10-21": 1,
+   "Google Places «Pioneers PCB Factory» (Medium) 2026-10-21": 1,
+   "Google Places «Al Rabeh Company for Packaging شركة الرابح للتغليف» (High) 2026-10-21": 1,
+   "Google Places «Rosa Perfumes factory», 486G+9W5, Jeddah 22766, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «شركة المعتمدون المتحدة للتجارة و الصناعة المحدودة» (High) 2026-10-21": 1,
+   "Web research 2026-10-20: Prospeo lists Aljabr Laundries Co. Ltd HQ in Al-Ahsa; a Riyadh outlet also exists, so the branch city is unconfirmed. https://prospeo.io/c/aljabr-laundries-company-limited": 1,
+   "Web research 2026-10-20: Single search surfaced an Eye of Riyadh directory listing for Sadr Logistics Services; snippet does not state the city explicitly. https://www.eyeofriyadh.com/ar/directory/details/10248_sadr-logistics-services": 1,
+   "Google Places «Mahmood Saeed Snacks Company» (Medium) 2026-10-21": 1,
+   "Google Places «Fulath Factory», Sadafco Khumra Warehouse, King Faisal Road, Al Wadi, Khumrah 22523 — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «شركة رسن المتحدة للاستثمار» (High) 2026-10-21": 1,
+   "Google Places «شركة بذور الربيع للتجارة» (High) 2026-10-21": 1,
+   "Google Places «شركة الدورق الأول» (High) 2026-10-21": 1,
+   "Google Places «تسالي مرسى مطروح - الرياض - حي الروابي», 7251 الطريق الدائري الشرقي، حي الروابي، الرياض 14215, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «مصنع النساج العربي» (High) 2026-10-21": 1,
+   "Google Places «شركة مصنع وقف أقوم للمياه» (High) 2026-10-21": 1,
+   "Google Places «شركة الملحم للرخام» (High) 2026-10-21": 1,
+   "Google Places «المصنع السعودي للايسكريم كوالتي» (High) 2026-10-21": 1,
+   "Google Places «شركة نمو المتقدمة للصناعة» (High) 2026-10-21": 1,
+   "Google Places «Universal Shelves Industrial Compant Ltd (ARCOMA) الشركة الصناعية للارفف العالمية (اركوما)» (High) 2026-10-21": 1,
+   "Google Places «SD Middle East LLC», Umm Hurair Rd - Oud Metha - Dubai - United Arab Emirates — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «مصنع عبدالصمد القرشي للعطور» (High) 2026-10-21": 1,
+   "Google Places «الجيلاني للبلاستيك» (High) 2026-10-21": 1,
+   "Google Places «Saudi Modern Packaging Factory Co.Ltd.(Printopack)» (Medium) 2026-10-21": 1,
+   "Google Places «شركة مياه الدار للمياه والعصائر والبلاستيك» (High) 2026-10-21": 1,
+   "Google Places «الشركة السعودية لصناعة الصفيح المحدودة» (High) 2026-10-21": 1,
+   "Google Places «Ktaykit Fast Food Factory» (Medium) 2026-10-21": 1,
+   "Google Places «شركة الصفيح السعودية للأغطية Saudi Can Closures Co» (High) 2026-10-21": 1,
+   "Google Places «شركة مصنع أنظمة الأنابيب السعودي المحدودة Saudi Pipes Systems company» (High) 2026-10-21": 1,
+   "Google Places «مصنع الوسام الماسي للخرسانه الجاهزه» (High) 2026-10-21": 1,
+   "Google Places «مصنع السنوسي للبلاستيك», الصناعية الثالثة، Jeddah 22772, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «شركة مسافات للخرسانة الجاهزة» (High) 2026-10-21": 1,
+   "Google Places «مصنع مصاغ» (Medium) 2026-10-21": 1,
+   "Google Places «شركة عبدالله فرج البهز» (High) 2026-10-21": 1,
+   "Google Places «Daily Food Trading Company» (Medium) 2026-10-21": 1,
+   "Google Places «Al Jazera Steel Factory - JASCO (مصنع الجزيرة للحديد)» (Medium) 2026-10-21": 1,
+   "Google Places «Banafa for Oud factory» (Medium) 2026-10-21": 1,
+   "Google Places «شركة الرك للمقاولات» (High) 2026-10-21": 1,
+   "Google Places «مصنع سمو البركة» (High) 2026-10-21": 1,
+   "Google Places «Mitwalli Steel Products Factory Company» (Medium) 2026-10-21": 1,
+   "Web research 2026-10-20: Trade press says ReefCap has its production plant and commercial office in Jeddah. https://metalpackager.com/2024/09/tecnocap-acquires-reefcap/": 1,
+   "Web research 2026-10-20: Sabbar company listing shows location Khamis Mushayt, but its two open jobs are in Rabigh; conflicting, needs verification. https://sabbar.com/en/jobs/companies/msna-shrka-thwyl-almtkamla": 1,
+   "Google Places «Southern Can Making Company Ltd.» (Medium) 2026-10-21": 1,
+   "Google Places «Azbah water factory», 4205, 7961, Madinah 42524, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Web research 2026-10-20: Tecnia GmbH (Tecnia Steel) page says production began in Rabigh in 2007; name match is approximate. https://sabbar.com/en/jobs/companies/tecnia-gmbh": 1,
+   "Google Places «مصنع براك للزجاج - شركة البلور للصناعة» (High) 2026-10-21": 1,
+   "Google Places «TRIPLE SEVEN PAINTS FACTORY COMPANY FOR INDUSTRY» (Medium) 2026-10-21": 1,
+   "Google Places «Mohamed H.Al-Athalh Co Factory» (Medium) 2026-10-21": 1,
+   "Google Places «شركة القناعة المتميزة» (High) 2026-10-21": 1,
+   "Google Places «شركة الصباح للصناعة» (High) 2026-10-21": 1,
+   "Google Places «Vogu Sea | شركة فوج البحر للتجارة» (High) 2026-10-21": 1,
+   "Google Places «مؤسسة وادي النور الحديثة للكهرباء», 6234 Bamehrez, Historic Jeddah, Jeddah 22233, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «شركة الوكالات الفنية | كوهلر | Technical Agencies Co. | KOHLER» (High) 2026-10-21": 1,
+   "Google Places «Qurban Perfumes & Cosmetics (Factory)» (Medium) 2026-10-21": 1,
+   "Google Places «مصنع الأخوه الرباعي للصناعة» (High) 2026-10-21": 1,
+   "Google Places «مغاسل الثلج الناصع SBL Healthcare Laundry» (High) 2026-10-21": 1,
+   "Google Places «Joody Pack - مصنع جودي الدولية للتصنيع والتغليف» (High) 2026-10-21": 1,
+   "Google Places «Environmental Technology Co. Ltd. - شركة تكنولوجيا البيئة المحدودة», 6847 Al Ulaya St, Al Olaya, Riyadh 12244, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «مصنع الإمتياز الذهبية للصناعة» (High) 2026-10-21": 1,
+   "Google Places «جملة بيت المصباح للكهرباء والسباكة» (Medium) 2026-10-21": 1,
+   "Google Places «بيت المصباح التجارية», Zou Al Nourain, Al Sharafeyah, Jeddah 21511 — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «Manna Glass Company» (Medium) 2026-10-21": 1,
+   "Google Places «مصنع شركة معدات القمة» (High) 2026-10-21": 1,
+   "Google Places «شركة الطباعة العالمية المحدودة» (High) 2026-10-21": 1,
+   "Google Places «مصنع دهانات الريم alreempaints», الشارع العام، الثانيه 24529, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «مصنع تقانة للهندسة الدقيقة» (High) 2026-10-21": 1,
+   "Google Places «شركة صلب تهامة» (High) 2026-10-21": 1,
+   "Google Places «Eastern Petrochemical Company - Sharq», 3H7J+C38, Rd 218, Industrial Area, Al Jubayl 31961, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «United Modern Trading Co» (Medium) 2026-10-21": 1,
+   "Google Places «مصنع الرحاب للعطور- ALREHAB PERFUMES FACTORY» (Medium) 2026-10-21": 1,
+   "Google Places «شركة نجوم الايثار للتجارة» (High) 2026-10-21": 1,
+   "Google Places «مصنع لمسة ابداع للمستحضرات التجميلية» (High) 2026-10-21": 1,
+   "Google Places «Al Hada Water Co. Ltd. Factory مصنع مياه الهدا المحدودة», 4710, هدى الشام 25398, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «مصنع العالمية للأثاث» (High) 2026-10-21": 1,
+   "Google Places «ALMAS PERFUMES FACTORY» (Medium) 2026-10-21": 1,
+   "Google Places «Al Wefag Trading & Manufacturing Co. Ltd.» (Medium) 2026-10-21": 1,
+   "Web research 2026-10-20: Eye of Riyadh directory lists the company in Riyadh with +966 11 phone numbers. https://www.eyeofriyadh.com/ar/directory/details/1213_aldakheel-for-oud": 1,
+   "Google Places «Universal coils and heat exchangers industries» (Medium) 2026-10-21": 1,
+   "Google Places «مصنع الفواصل البلاستيكية (FAWASEL MODERN PLASTIC FACTORY)» (High) 2026-10-21": 1,
+   "Google Places «AL MANAR CHEMICAL LIQUID PLANT» (Medium) 2026-10-21": 1,
+   "Google Places «Sahari Refrigeration co.» (Medium) 2026-10-21": 1,
+   "Google Places «Al Nafie Steel» (Medium) 2026-10-21": 1,
+   "Google Places «Naseej International Trading Company» (Medium) 2026-10-21": 1,
+   "Google Places «خط الفخامة», 2512 6879 King Abdul Aziz Branch Rd, Almasiaf, Riyadh 12467, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «شركة عروة للصناعة» (High) 2026-10-21": 1,
+   "Google Places «Arabian Fiberglass Insulation Co. (AFICO)» (Medium) 2026-10-21": 2,
+   "Google Places «Khereiji Showrooms Co.Ltd KSC», Al Baladeah, Aziziyah, Jeddah 23334, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «جيتكس للدهانات - GITEX PAINTS» (Medium) 2026-10-21": 1,
+   "Google Places «AlMakhilah Manufacturing Company» (Medium) 2026-10-21": 1,
+   "Google Places «الشركة السعودية لصناعة المكيفات المحدودة» (High) 2026-10-21": 1,
+   "Google Places «شركة الشرقية الدولية التجارية - الادارة العامة» (High) 2026-10-21": 1,
+   "Google Places «مصنع الحجاز للبلاستك Alhejaz Plastic Factory» (High) 2026-10-21": 1,
+   "Google Places «Golden Line Industry» (Medium) 2026-10-21": 1,
+   "Google Places «مصنع العبيري لخراطيم البلاستيك alabeeri p.v.c hose factory» (High) 2026-10-21": 1,
+   "Google Places «Al Faisalya Al Masiya Plastic Factory» (Medium) 2026-10-21": 1,
+   "Google Places «SNF Al Sandan Scaffolding & Formwork مصنع السندان للسقالات والقوالب», Industrial City 2, Jeddah 22756 — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «TAMKEEN MODERN PIPES» (Medium) 2026-10-21": 1,
+   "Google Places «شركة الميال للمقاولات والتجارة» (High) 2026-10-21": 1,
+   "Google Places «MBL - Modern Building Leaders Company» (Medium) 2026-10-21": 1,
+   "Google Places «United Compounding Industrial Company (W.L.L)», 21°06'49.3\"N 39°14'33.9\"E 19211, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «شركة المصنع السعودي للصناعات الخشبية» (High) 2026-10-21": 1,
+   "Google Places «Al Faisal Plastic (1) الفيصل للبلاستيك» (High) 2026-10-21": 1,
+   "Google Places «Arabian Glory Factory for Plastic Material» (Medium) 2026-10-21": 1,
+   "Google Places «Power Rack Factory» (Medium) 2026-10-21": 1,
+   "Google Places «مؤسسة اقرأ الإنسانية بجدة» (High) 2026-10-21": 1,
+   "Google Places «مصنع التقدم لتشكيل الصخور» (High) 2026-10-21": 1,
+   "Web research 2026-10-20: Job posting by the company seeks a sales engineer to work in Jeddah. https://www.wdeftksa.com/sa/jobs/4504": 1,
+   "Google Places «MS Glass Industry Company» (Medium) 2026-10-21": 1,
+   "Google Places «شركة جملة بن شيهون» (High) 2026-10-21": 1,
+   "Google Places «تميز المنتجات الحديثة للتجارة» (High) 2026-10-21": 1,
+   "Google Places «كسارة شركة سانس الدولية» (Medium) 2026-10-21": 1,
+   "Google Places «شركة نوافل العربية للزيوت» (High) 2026-10-21": 1,
+   "Google Places «Alam Al-Wisam» (Medium) 2026-10-21": 1,
+   "Google Places «مؤسسة اواني الريادة للتجارة» (High) 2026-10-21": 1,
+   "Google Places «Alhelal Perfumes Factory . مصنع عطور الهلال» (High) 2026-10-21": 1,
+   "Google Places «Subhathi For Jewelry and Prayer Beads (Albaity Trading Est, مؤسسة البيتي للتجارة)» (Medium) 2026-10-21": 1,
+   "Google Places «شركة بنية التطوير للمقاولات» (High) 2026-10-21": 1,
+   "Google Places «شركة باسم حسين مؤمنه الدولية» (High) 2026-10-21": 1,
+   "Google Places «شركة ماكسون للمقاولات - Maxon Contracting Company» (High) 2026-10-21": 1,
+   "Google Places «Cigalah Group» (Medium) 2026-10-21": 1,
+   "Google Places «Delta Modern Food Factory مصنع دلتا الحديث للاغذية», 2892, 7069, الدمام 34334, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «Al Ghandoura plastic company» (Medium) 2026-10-21": 1,
+   "Web research 2026-10-20: Jobs directory lists the company under Riyadh region (job listing location, not confirmed HQ). https://www.jobzaty.com/company/binzagr-co-ro-1594": 1,
+   "Google Places «Mahmood Saeed Cans and Ends. Industry» (Medium) 2026-10-21": 1,
+   "Web research 2026-10-20: Directory lists Masdar Building Materials in Riyadh; the specific branch city is not confirmed. https://www.eyeofriyadh.com/ar/directory/details/4997_masdar-building-materials": 1,
+   "Google Places «مصنع مبارك البركاتي للبلك» (High) 2026-10-21": 1,
+   "Google Places «AL-HARAMAIN INDUSTRIAL GROUP - شركة مجموعة الحرمين الصناعية» (High) 2026-10-21": 1,
+   "Google Places «Arabian Establishment For Trading & Shipping Est. (AET)» (Medium) 2026-10-21": 1,
+   "Web research 2026-10-20: Magicpin lists an Oscar Paints (دهانات اوسكار) store in Al Arid, Riyadh; a retail listing, not confirmed as the factory. https://magicpin.com/saudi-arabia/Riyadh/Al-Arid/Home-Improvement//store/22869bb": 1,
+   "Google Places «Al Qaryan Group Head Office مجموعة القريان المكتب الرئيسي» (High) 2026-10-21": 1,
+   "Web research 2026-10-20: Eye of Riyadh directory lists Shobokshi Development and Trading Company (parent) in Jeddah. https://www.eyeofriyadh.com/ar/directory/details/6655_shobokshi-development-and-trading-company": 1,
+   "Google Places «القمة للأثاث» (Medium) 2026-10-21": 1,
+   "Google Places «شركة سيكلي السعودية للمعدات الطبية» (High) 2026-10-21": 1,
+   "Google Places «A.M.A.Bukhari», RNSA3328، 3328 حنظلة التميمي, المدينة الصناعية الثانية, الرياض 14335, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «شركة مصنع وصائف الجنوب للحديد» (High) 2026-10-21": 1,
+   "Google Places «شركة سعود الصاعدي وشركاه للمقاولات» (Medium) 2026-10-21": 1,
+   "Google Places «Aldoraq Water Bottling Plant (Factory) مصنع الدورق لتعبئة المياه» (High) 2026-10-21": 1,
+   "Google Places «Empower Air Technologies» (Medium) 2026-10-21": 1,
+   "Google Places «مدينة الزمرد», 7778، التقوى، مكة 24233, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «مصنع هتون للمياه» (High) 2026-10-21": 1,
+   "Google Places «مصنع مياه وطني» (High) 2026-10-21": 1,
+   "Google Places «شركة تنقية لخدمات السيارات» (High) 2026-10-21": 1,
+   "Google Places «شركة العناصر الكهربائية للتجارة Electrical Elements» (High) 2026-10-21": 1,
+   "Google Places «مستودعات شركة فؤاد عبد الجليل الفضلي وأولاده للتجارة» (Medium) 2026-10-21": 1,
+   "Google Places «شركة التقدم الراقي التجارية» (High) 2026-10-21": 1,
+   "Google Places «Factory Sons Company Abdul Mohsen Al Ghanim» (Medium) 2026-10-21": 1,
+   "Google Places «شركة الفجر للمقاولات العامة» (Medium) 2026-10-21": 1,
+   "Google Places «مصنع الاعمار للخرسانة والبلوك» (Medium) 2026-10-21": 1,
+   "Google Places «شركة الجولة المحدودة» (High) 2026-10-21": 1,
+   "Google Places «ركن المستورد لقطع الغيار الالمانية مرسيدس بي ام اودي» (Medium) 2026-10-21": 1,
+   "Google Places «شركة الفلاح المتميزة للتجارة» (High) 2026-10-21": 1,
+   "Google Places «ورشة الفرسان الاولى» (High) 2026-10-21": 1,
+   "Google Places «Modern Foam Products (High Foam) هاي فوم» (Medium) 2026-10-21": 1,
+   "Google Places «Arabian Waterproofing Industries Company ( AWAZEL )» (Medium) 2026-10-21": 1,
+   "Google Places «عالم المساندة لخدمات الشحن», Al Malaz, Riyadh 12629, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «شركة البيئة المستدامة للصناعة» (High) 2026-10-21": 1,
+   "Google Places «الحمارس للمقاولات» (High) 2026-10-21": 1,
+   "Google Places «Company Saleh Bin Rashid sons Sergeant of prefabricated houses» (Medium) 2026-10-21": 1,
+   "probable twin Holoul Al Nzafah Waste Transport (Single Owner) (review)": 1,
+   "Google Places «مثلث التدوير للخدمات البيئية» (High) 2026-10-21": 1,
+   "Google Places «Tameer Steel Factory Co. Ltd.» (Medium) 2026-10-21": 1,
+   "Google Places «شركة كنوز الاتحاد للخدمات اللوجستية والبيئية» (Medium) 2026-10-21": 1,
+   "Google Places «موقع شركة نماء البركة عرفات», Al Mashair, Makkah 24255 — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «سكراب وميزان سعود حمود الحربي» (High) 2026-10-21": 1,
+   "Google Places «شركة مصنع نعمان منير للبلاستيك» (High) 2026-10-21": 1,
+   "Google Places «مصنع شركة معمار لتدوير المطاط» (High) 2026-10-21": 1,
+   "Google Places «معرض راية العز للسيارات», وادي الدواسر، القادسية، Riyadh 13261 — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «fawazalrajhicompany», 3996 الأمير محمد بن عبدالعزيز الفرعي, Al Faisaliyyah, Jeddah 23441, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «مؤسسه شموخ الوسن» (High) 2026-10-21": 1,
+   "Google Places «Taaheel Environmental Company» (Medium) 2026-10-21": 1,
+   "Google Places «مؤسسة صلد الشمال» (High) 2026-10-21": 1,
+   "Google Places «مؤسسة اصول الابتكار للمقاولات العامة» (High) 2026-10-21": 1,
+   "Google Places «شركة تدوير الاصيلة لتأجير الحاويات» (Medium) 2026-10-21": 1,
+   "Google Places «شركة شوامخ الشرق للسكراب» (High) 2026-10-21": 1,
+   "Google Places «مدار البيئة | Madar Environment» (High) 2026-10-21": 1,
+   "Google Places «شركة ابراهيم سليمان الحناكي للاستثمار», An Narjis, Riyadh 13327 — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «اركان العربية للنقل TRANSPORT CUSTOMS CLEARANCE» (Medium) 2026-10-21": 1,
+   "Google Places «شركة كابر لتأجير الحاويات» (High) 2026-10-21": 1,
+   "Google Places «مؤسسة منافع المتحدة للخردة والسكراب» (High) 2026-10-21": 1,
+   "Google Places «شركة مشاتل العاصمة الحديثة» (High) 2026-10-21": 1,
+   "Google Places «شركة هجال للخدمات البيئية» (High) 2026-10-21": 1,
+   "Google Places «مؤسسة السهم الساطي سكراب» (High) 2026-10-21": 1,
+   "Google Places «Work - SNS Offices (Saudi Naval Support)», 3613 Muhammad Ibn Dakhil, Al Aqiq, Riyadh 13515, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «سكراب سامي العبادي» (Medium) 2026-10-21": 1,
+   "Google Places «شركة المندرة العربية» (High) 2026-10-21": 1,
+   "Google Places «شركة الخطى السريعة للمقاولات» (High) 2026-10-21": 1,
+   "Google Places «Nasir & Awad Al-Yami Co.» (Medium) 2026-10-21": 1,
+   "Google Places «مستقبل العمران للتطوير العقاري», 8C3J+974, Jubrah, Taif 26523, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «SOUTH EASTERN TRADING EST» (Medium) 2026-10-21": 1,
+   "Google Places «شركة رمز الصدارة الخليجية للصناعة» (High) 2026-10-21": 1,
+   "Google Places «شركة الابرقي للمقاولات», MPCM+FMG, Al Malaz, Riyadh 12836, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «Arabian Environmental Science Ltd. Company (Arensco)» (Medium) 2026-10-21": 1,
+   "Google Places «مصنع لدائن اليمامة للبلاستيك» (High) 2026-10-21": 1,
+   "Google Places «شركة الحاوية الخضراء» (High) 2026-10-21": 1,
+   "Google Places «مصنع الحبيبات النقيه» (High) 2026-10-21": 1,
+   "Google Places «شركة الحياة البيئية لتدوير النفايات البلاستيكية» (High) 2026-10-21": 1,
+   "Google Places «مؤسسة رديم للخدمات البيئية» (High) 2026-10-21": 1,
+   "Google Places «شركة راحة الحديثة للخدمات اللوجستية» (High) 2026-10-21": 1,
+   "Google Places «مصنح التبيان للإسفنج - Al Tebyan Foam Factory» (High) 2026-10-21": 1,
+   "Google Places «مؤسسة بيان التدوير» (High) 2026-10-21": 1,
+   "Google Places «شركة خطوط الإنشاء الذكية للمعادن», JV88+PJW, Al Mashael, Riyadh 14327, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «Sama Mohammediya Trading Co. شركة سما المحمدية العالمية للتجارة» (High) 2026-10-21": 1,
+   "Google Places «Majalat steel company» (Medium) 2026-10-21": 1,
+   "Google Places «شركة بلو للمقاولات» (High) 2026-10-21": 1,
+   "Google Places «الكيان الأمثل للتجارة» (High) 2026-10-21": 1,
+   "Google Places «مصنع البساتين الفضيه» (Medium) 2026-10-21": 1,
+   "Google Places «مصنع الموردون للبلاستيك» (High) 2026-10-21": 1,
+   "Google Places «Road corner» (Medium) 2026-10-21": 1,
+   "Google Places «Gulf Industrial Services Company» (Medium) 2026-10-21": 1,
+   "Google Places «شركة البدر العالمية للتشغيل والصيانة» (High) 2026-10-21": 1,
+   "Google Places «مؤسسة تحكم البناء للمقاولات العامة» (High) 2026-10-21": 1,
+   "Google Places «مؤسسة درع الجنوب للخردة والسكراب» (High) 2026-10-21": 1,
+   "Google Places «شركة نص القمر للمقاولات العامة» (High) 2026-10-21": 1,
+   "Google Places «شركة عصرالاعمال للتدوير» (High) 2026-10-21": 1,
+   "Google Places «شركة القناعة للخدمات البيئية» (High) 2026-10-21": 1,
+   "Google Places «مؤسسة سهول الشهباء للحاويات» (Medium) 2026-10-21": 1,
+   "Google Places «Fuel Plastic Industries Co. Ltd.» (Medium) 2026-10-21": 1,
+   "Google Places «مطابع المهره للطباعة & مصنع المهره للمنتجات الورقية» (High) 2026-10-21": 1,
+   "Google Places «Gulf Excellent Group», GEG building, King Faisal W, Road, Al Jubayl 35712, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «شركة الطارف الجديده الصناعيه» (High) 2026-10-21": 1,
+   "Google Places «Almabani General Contractors - Head Office», G56G+73V, Hael, Al-Ruwais, Jeddah 23213, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «مصنع شركة لدينة العربية للصناعات المحدودة» (High) 2026-10-21": 1,
+   "Google Places «مصنع قمة الجودة للصناعة» (High) 2026-10-21": 1,
+   "Google Places «شركة الاء الرائدة للتجارة شركة شخص واحد» (High) 2026-10-21": 1,
+   "probable twin Al Ma’adan Ath-Thameen Industry Co. (review)": 1,
+   "Google Places «شركة إسناد الغربية المحدودة» (High) 2026-10-21": 1,
+   "Google Places «شركة الأبراج للمقاولات المحدودة» (High) 2026-10-21": 1,
+   "Google Places «الشركة الخليجية الأولى للتعهدات والمقاولات» (High) 2026-10-21": 1,
+   "Google Places «شركة فضلون للتجارة والخدمات» (High) 2026-10-21": 1,
+   "Google Places «شركة اتجاه للأخضر» (High) 2026-10-21": 1,
+   "Google Places «Al Taj Al Arabi Co For Industry» (Medium) 2026-10-21": 1,
+   "Google Places «AlSharq Polystyrene Factory» (Medium) 2026-10-21": 1,
+   "Google Places «Modern Arak Environmental services company» (Medium) 2026-10-21": 1,
+   "Google Places «مؤسسة الابراج الرائدة للمقاولات» (Medium) 2026-10-21": 1,
+   "Google Places «مجموعة افلاء الريس» (Medium) 2026-10-21": 1,
+   "Google Places «Green Stream» (Medium) 2026-10-21": 1,
+   "Google Places «شركة ريف التعمير القابضة» (High) 2026-10-21": 1,
+   "probable twin Maqtoorah Transport Est. (review)": 1,
+   "Google Places «مؤسسة اصول الذهبية للمقاولات العامة» (High) 2026-10-21": 1,
+   "Google Places «مؤسسة رمال الشرقية لتأجير المعدات» (High) 2026-10-21": 1,
+   "Google Places «شركة سرايا الجزيرة للمقاولات المكتب الرئيسي» (High) 2026-10-21": 1,
+   "Google Places «Musanadah» (Medium) 2026-10-21": 1,
+   "Google Places «National Lead Smelting Co. Ltd. (Rasass)» (Medium) 2026-10-21": 1,
+   "Google Places «مؤسسة سارا الخليج للتجارة» (High) 2026-10-21": 1,
+   "Google Places «مؤسسة الحاويات الذكية للتاجير» (High) 2026-10-21": 1,
+   "Google Places «شركة الفا لينك ستار» (High) 2026-10-21": 1,
+   "Google Places «سكراب ركن الاماكن بالرس» (High) 2026-10-21": 1,
+   "Google Places «TAWAZUN ENVIRONMENTAL CO.» (Medium) 2026-10-21": 1,
+   "Google Places «سحائب الاعمار للمقاولات العامة», Al Manakh, Tarout 32617 — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «شركة ركام البيئة» (High) 2026-10-21": 1,
+   "probable twin Afrah Rajallah Al-Sherari Scrap Est. (review)": 1,
+   "Google Places «شركة جودة الورق لصناعة الورق», Al Abbasia St, Al Mashael, Riyadh 14328, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «شركة عبد الله الصيخان وأولاده للتجارة والمقاولات» (High) 2026-10-21": 1,
+   "Google Places «APTC READYMIX CONRETE COMPANY to rastanura2nd INDUSTRIAL AREA مصنع شركة ابتك للخرسانة الجاهزة» (High) 2026-10-21": 1,
+   "Google Places «شركة مصنع مقاييس الدقة للمعدات» (Medium) 2026-10-21": 1,
+   "Google Places «مصنع بريق الازد للمنتجات البلاستيكية» (High) 2026-10-21": 1,
+   "Google Places «Saudi Union Facility Management» (Medium) 2026-10-21": 1,
+   "Google Places «شركة نبع الطاقة للمقاولات Nabee Altaqa Contracting Co.» (High) 2026-10-21": 1,
+   "Google Places «مصنع البيئة العربية للمنتجات الورقية» (High) 2026-10-21": 1,
+   "Google Places «شركة بيت الحديد والصلب المحدودة IRON AND STEEL HOUSE CO LTD» (High) 2026-10-21": 1,
+   "Google Places «Abuljadayel Contracting & Maintenance Co.» (Medium) 2026-10-21": 1,
+   "Google Places «شركة راضي احمد المنهالي واولادة للتجارة والمقاولات» (High) 2026-10-21": 1,
+   "region_overrides.csv (reviewed 2026-10-13)": 21,
+   "Google Places «شركة شواهين العربية للخدمات البيئيه» (High) 2026-10-21": 1,
+   "Google Places «سكراب درة الجوري», المنطقة الصناعية طريق وادي بن هشبل، Khamis Mushait 62489 — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «Hasaniah Foam Factory» (Medium) 2026-10-21": 1,
+   "Google Places «مؤسسة أضواء طويق للحاويات» (Medium) 2026-10-21": 1,
+   "Google Places «شركة مقبول لخدمات التدوير» (High) 2026-10-21": 1,
+   "Google Places «شركة وشم للنقليات» (High) 2026-10-21": 1,
+   "Google Places «مؤسسة اسمهان محمد علي سالم للخردة والسكراب» (High) 2026-10-21": 1,
+   "Google Places «مؤسسة هجر الساريات» (High) 2026-10-21": 1,
+   "Google Places «Almohimeed Foam Factory», C2P8+PJ3, Fulaij, Hafar Al Batin 39922, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «شركة فجر سورية» (High) 2026-10-21": 1,
+   "Google Places «Brooq Al Khalij General Contracting Company / شركة بروق الخليج للمقاولات» (Medium) 2026-10-21": 1,
+   "Google Places «مصنع السواحل الوطنية للبيوت الجاهزة» (Medium) 2026-10-21": 1,
+   "Google Places «شركة ظل النخيل للمقاولات» (High) 2026-10-21": 1,
+   "Google Places «واحة الشرق للصيانة و النظافة» (High) 2026-10-21": 1,
+   "Google Places «شركه مها الصناعيه» (High) 2026-10-21": 1,
+   "Google Places «Passing Road Company» (Medium) 2026-10-21": 1,
+   "Google Places «Sana Al Sharqiya Contracting Co.» (Medium) 2026-10-21": 1,
+   "Google Places «شركة مواقع النجوم للمقاولات العامة» (Medium) 2026-10-21": 1,
+   "Google Places «شركة المفهوم الأول للمقاولات» (High) 2026-10-21": 1,
+   "Google Places «مصنع لدائن المحمل للبلاستيك.» (High) 2026-10-21": 1,
+   "Google Places «Projects Supply Co.», C23M+GFX, Al Kharj Rd, Riyadh 14574 — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «مؤسسة نطوان الدوليه للمقاولات– تأجير حاويات بالرياض» (High) 2026-10-21": 1,
+   "Google Places «شركة مواقع النجوم للمقاولات العامة» (High) 2026-10-21": 2,
+   "Google Places «المركز الهندسي للصيانه», 9753، Al Sinaiyah, Bisha 67631, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «شركة حجر الدار للتجارة ( حجر الرياض - العمودي سابقاً )» (Medium) 2026-10-21": 1,
+   "Google Places «شركة مصنع البنجر للبلاستيك المحدودة» (High) 2026-10-21": 1,
+   "Google Places «WAJD LIFE MEDICAL COMPANY», الزهرة،، Az Zahrah, Riyadh 12984, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «حديقة ركن صمام الامان», 4734 احمد شوقي, Albuhayrah, Hail 55421 — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «Tuwaiq Casting and Forging», Ras Al Khair 37261 — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «شركة ميزان الساحل للخردة والسكراب» (High) 2026-10-21": 1,
+   "Google Places «مؤسسة وزن الشروق للخردة والسكراب» (Medium) 2026-10-21": 1,
+   "Google Places «شركة خطوط الإسناد للمقاولات العامة» (High) 2026-10-21": 1,
+   "Google Places «Establishment - Network Construction Contracting», Khamis Mushait 62486 — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «شركة الوسيط لتأجير الحاويات» (Medium) 2026-10-21": 1,
+   "Web research 2026-10-20: KAUST is a well-known university campus located in Thuwal, Makkah Region. https://www.kaust.edu.sa": 1,
+   "Google Places «مكتب الدعم البيئي للاستشارات البيئية» (Medium) 2026-10-21": 1,
+   "Google Places «Golden Company for consultant engineering» (Medium) 2026-10-21": 1,
+   "Google Places «Tilad for Environmental Consultancy (تلاد للاستشارات البيئية)», Ar Rabwah District, Riyadh 12821, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «مكتب رمز للاستشارات الهندسية والسلامة والبيئة», Al Taoubah, Jeddah 23216 — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «Vision Intelligence (ذكاء الرؤية لتقنية المعلومات)» (High) 2026-10-21": 1,
+   "Google Places «Alqotr Company» (Medium) 2026-10-21": 1,
+   "Google Places «ALDAWAL Systems For Information's Technology» (Medium) 2026-10-21": 1,
+   "Google Places «Abnia Consulting Engineers | شركة الابنية للاستشارات الهندسية» (High) 2026-10-21": 1,
+   "Google Places «Clean Environment Technologies» (Medium) 2026-10-21": 1,
+   "Google Places «SIMOPS | شركة العمليات المتزامنة» (Medium) 2026-10-21": 1,
+   "Google Places «مكتب الاهتمام البيئي للاستشارات البيئية» (High) 2026-10-21": 1,
+   "Google Places «أفق الماسية للاستشارات البيئية» (High) 2026-10-21": 1,
+   "Google Places «شركة برينز فالي - Brains Valley Co (وادي العقول)» (Medium) 2026-10-21": 1,
+   "Google Places «شركة نسج الإبداع للاستشارات البيئية» (High) 2026-10-21": 1,
+   "Google Places «IDOM | Consulting, Engineering, Architecture» (Medium) 2026-10-21": 1,
+   "Web research 2026-10-20: Protenders lists head office in Riyadh (Salahuddin Al-Ayoubi St). https://www.protenders.com/en/companies/saudi-arabian-engineering-company-limited": 1,
+   "Reviewer (Youssef) 2026-10-22": 37,
+   "Web research 2026-10-20: Sabbar jobs directory lists the company's location as Jeddah. https://sabbar.com/en/jobs/companies/shrka-dyar-alshrq-alawst-ltknwlwjya-almalwmat": 1,
+   "Google Places «مؤسسة الابداع الرقمي», Ash Shifa, Riyadh 14712 — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Web research 2026-10-20: Snippet confirms a listed Saudi company (Tadawul 7200, MIS) but does not name the city; Riyadh HQ is from general knowledge, unverified in snippet. https://saudipedia.com/شركة-المعمر-لأنظمة-المعلومات": 1,
+   "Google Places «شركة الكان العربية للاتصالات» (High) 2026-10-21": 1,
+   "Google Places «شركة مدار الجزيرة للاستشارات الهندسية» (High) 2026-10-21": 1,
+   "Google Places «Geotech Overseas» (Medium) 2026-10-21": 1,
+   "Google Places «شركة الكود الذكي للخدمات التجارية Smart Code Company» (High) 2026-10-21": 1,
+   "Google Places «Tilad for Environmental Consultancy (تلاد للاستشارات البيئية)» (Medium) 2026-10-21": 1,
+   "Google Places «مكتب حصن البيئة للاستشارات البيئية» (High) 2026-10-21": 1,
+   "Google Places «مختبر تلاد للطب البيطري (Tilad Veterinary Center)» (High) 2026-10-21": 1,
+   "Google Places «مكتب قامات للاستشارات الهندسيه» (High) 2026-10-21": 1,
+   "Google Places «شركة ايبلس العربية للاعمال الجيوتقنية والبيئية المحدودة» (High) 2026-10-21": 1,
+   "Google Places «EXPERT EYE Consulting Company شركة عين خبير للاستشارات البيئية» (Medium) 2026-10-21": 1,
+   "Google Places «شركة أيادي المستقبل للاستشارات البيئية» (Medium) 2026-10-21": 1,
+   "Google Places «أسس التميز للإستشارات الهندسية», شارع الأمير ماجد، Mishrifah, Jeddah 23341, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Web research 2026-10-20: Strategy& is PwC's consulting arm; PwC Saudi HQ is in Riyadh. https://www.consultancy-me.com/news/12391/pwc-moves-saudi-headquarters-into-new-office-in-riyadhs-laysen-valley": 1,
+   "Google Places «Palladium LLC ( KSA )» (Medium) 2026-10-21": 1,
+   "Google Places «شركة زمام القوة» (High) 2026-10-21": 1,
+   "Google Places «Business Crafters» (Medium) 2026-10-21": 1,
+   "Google Places «ايفوري للتدريب والاستشارات IVORY For Training & Consulting» (High) 2026-10-21": 1,
+   "Google Places «Jadarah Consulting Company», Al Malqa, Riyadh 13523 — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «شركة الإتمام الاستشارية - ITMAM Consultancy» (High) 2026-10-21": 1,
+   "Google Places «BDO Dr. Mohamed Al-Amri & Co» (High) 2026-10-21": 1,
+   "Google Places «Syad ICT Co.» (Medium) 2026-10-21": 1,
+   "Google Places «GO Telecom Company» (Medium) 2026-10-21": 1,
+   "Google Places «Tamkeen Technologies» (Medium) 2026-10-21": 1,
+   "Google Places «SZ Headquarters المقر الرئيسي لمجموعة المهندس صلاح الزغيبي» (Medium) 2026-10-21": 1,
+   "Google Places «شركة وفير للاتصالات وتقنية المعلومات Wafeer Communications and information Technology Company» (High) 2026-10-21": 1,
+   "Google Places «مركز العين الثامنة للتدريب الصحي», Alkhuzama, Bisha 67711 — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Web research 2026-10-20: Geospatial World company profile lists it in Al-Khobar. https://resource.geospatialworld.net/company/saudi-geophysical-consulting-office": 1,
+   "Google Places «شركة راديان للإستشارات الهندسية (فرع القصيم)» (Medium) 2026-10-21": 1,
+   "Google Places «Pillars Engineering Consultancy Office», Omar Ibn Al Khattab St, Uhud, Dammam 32264, Saudi Arabia — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «ZACO Consult (زوايا البناء)» (Medium) 2026-10-21": 1,
+   "Google Places «شركة شريان الشمال العالمية» (High) 2026-10-21": 1,
+   "Google Places «مؤسسة هامة المدن للمقاولات العامة» (High) 2026-10-21": 1,
+   "Google Places «QTC Quality techno certification» (Medium) 2026-10-21": 1,
+   "Google Places «مكتب المكيال السعودي للهندسة» (High) 2026-10-21": 1,
+   "Google Places «Hexa Line Consulting Engineers» (Medium) 2026-10-21": 1,
+   "Google Places «مكتب شركة خبراء التقنية بالخبر», King Abdulaziz Rd, Al Khobar Al Shamalia, Al Khobar 34426 — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «ERI - Engineering And Research International» (Medium) 2026-10-21": 1,
+   "Google Places «Cubic art Pixels [CAP]» (Medium) 2026-10-21": 1,
+   "Google Places «شركة ياسر العقبي للإستشارات المهنية» (High) 2026-10-21": 1,
+   "Google Places «مكتب مجد الخزامي للاستشارات البيئية» (High) 2026-10-21": 1,
+   "Google Places «Environmental testing and laboratories company» (Medium) 2026-10-21": 1,
+   "Google Places «شركة مؤشر الاداء البيئي المحدودة» (High) 2026-10-21": 1,
+   "Google Places «مكتب محمد ناصر الحجوري للاستشارات الهندسية والدراسات البيئية» (High) 2026-10-21": 1,
+   "Google Places «مكتب محمد سعيد الاكلبي للاستشارات البيئية» (High) 2026-10-21": 1,
+   "Google Places «مكتب الميزان الاخضر للأستشارات البيئية» (High) 2026-10-21": 1,
+   "Google Places «Enviro path» (High) 2026-10-21": 1,
+   "Google Places «مؤسسة جرين اون للخدمات البيئية» (High) 2026-10-21": 1,
+   "Google Places «Nabet & Khalifa for Mining and Environmental Consulting Company» (Medium) 2026-10-21": 1,
+   "Google Places «شركة النخبة البيئية» (High) 2026-10-21": 1,
+   "Google Places «شركة وجا» (High) 2026-10-21": 1,
+   "Web research 2026-10-20: Eye of Riyadh directory lists the Saudi Aquaculture Society in Riyadh. https://www.eyeofriyadh.com/ar/directory/details/6914_the-saudi-aquaculture-society-sas": 1,
+   "Google Places «بيئة واعدة للاستشارات البيئية» (High) 2026-10-21": 1,
+   "Google Places «Al Enjaz Trading and Contracting Company» (Medium) 2026-10-21": 1,
+   "Google Places «Tondro Group» (Medium) 2026-10-21": 1,
+   "Google Places «شركة دروب الاتحاد للمقاولات المحدودة» (High) 2026-10-21": 1,
+   "Google Places «Saad Said Assa'edi Contracting Company, operation and maintenance» (Medium) 2026-10-21": 1,
+   "Google Places «شركة سفر للتجارة والمقاولات المحدودة» (High) 2026-10-21": 1,
+   "Google Places «شركة صرح الحديثة للمقاولات» (High) 2026-10-21": 1,
+   "Google Places «Rawasi Summit Contracting Co. (Qemmet Al Rawasi Contracting)» (Medium) 2026-10-21": 1,
+   "Google Places «Abdullah Ahmed Albriki Est Co.» (Medium) 2026-10-21": 1,
+   "Google Places «Saad Ali Al-Essa Group for Contracting» (Medium) 2026-10-21": 1,
+   "Google Places «ALMJAL ALARBI GROUP-ICT» (Medium) 2026-10-21": 1,
+   "Google Places «Front End Limited Company» (Medium) 2026-10-21": 1,
+   "Google Places «iot squared», Wadi Al Amariyah, Umm Al Hamam Al Gharbi, Riyadh 12329 — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «Takamol Holding» (Medium) 2026-10-21": 1,
+   "Google Places «شركة نبراس المحدودة» (High) 2026-10-21": 1,
+   "Google Places «شركة المعالي للمحاماة والاستشارات القانونية», Al Olaya, Riyadh 12212 — low-confidence match accepted by reviewer 2026-10-22": 1,
+   "Google Places «شركة طال للمقاولات العامة» (High) 2026-10-21": 1,
+   "Google Places «أنظمة البيئة للاستشارات البيئية» (High) 2026-10-21": 1,
+   "Google Places «شركة أروقة الريادة - Arweqah» (Medium) 2026-10-21": 1,
+   "Google Places «Rasi Consulting» (Medium) 2026-10-21": 1,
+   "Google Places «شركة فكرة التطوير للاستشارات المهنية» (High) 2026-10-21": 1,
+   "Google Places «مركز مران القادة للتدريب» (High) 2026-10-21": 1,
+   "Google Places «مسارات الجودة للاستشارات الإدارية» (High) 2026-10-21": 1,
+   "Google Places «Mushar Consulting» (Medium) 2026-10-21": 1,
+   "Google Places «Maven Insights Gulf Business Services Company» (Medium) 2026-10-21": 1,
+   "Google Places «ايبرو للخدمات البيئية» (High) 2026-10-21": 1,
+   "Google Places «JAB Constructions Co. (JABCO) شركة جاب التعمير للمقاولات (جابكو)» (High) 2026-10-21": 1,
+   "Google Places «شركة جبال فاران للإستشارات الهندسية» (Medium) 2026-10-21": 1,
+   "Google Places «مكتب دار البيئة النقية للإستشارات البيئية» (High) 2026-10-21": 1,
+   "Google Places «مكتب رموز الاستدامة الإدارية» (High) 2026-10-21": 1,
+   "Google Places «شركة وثب للإستشارات البيئية» (High) 2026-10-21": 1,
+   "Google Places «مكتب دارة الجميرة للاستشارات البيئية» (High) 2026-10-21": 1,
+   "Google Places «مكتب منارات الافق للاستشارات البيئية» (High) 2026-10-21": 1,
+   "Google Places «Esnad - Saudi Mining Services Company» (Medium) 2026-10-21": 1
+  },
+  "eh_rows": 3
+ }
+}

@@ -15,6 +15,7 @@ OUT = sys.argv[2] if len(sys.argv) > 2 else os.path.join(HERE, '..', 'hub', 'sau
 GEO = os.path.join(HERE, 'sources', 'ne_sau_adm1_simplified.geojson')
 D = json.load(open(SRC, encoding='utf-8'))
 G = json.load(open(GEO, encoding='utf-8'))
+NCP = json.load(open(os.path.join(HERE, 'ncec_permits_2026.json'), encoding='utf-8'))   # NCEC permit figures (one source, shared with other pages)
 YRS = [str(y) for y in range(2017, 2025)]
 
 # ---------------------------------------------------------------- analysis (all from D)
@@ -186,7 +187,7 @@ A['proj'] = {'hz_f': hz_f, 'spec_f': spec_f, 'sector_f': {k: v[0] for k, v in se
   'mun_f': fac(D['municipal_total']['v']['2023'], D['municipal_total']['v']['2024']),
   'jy_f': fac(D['jy_total']['v']['2023'], D['jy_total']['v']['2024'])}
 
-payload = json.dumps({'D': D, 'A': A, 'G': G, 'built': dt.date.today().isoformat()}, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
+payload = json.dumps({'D': D, 'A': A, 'G': G, 'NC': NCP, 'built': dt.date.today().isoformat()}, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
 
 CSS = r"""
 *{box-sizing:border-box}html,body{margin:0;padding:0}
@@ -315,7 +316,7 @@ ul.dn{margin:6px 0 0;padding-inline-start:20px;font-size:13.5px}ul.dn li{margin:
 """
 
 JS = r"""
-const P=JSON.parse(document.getElementById('DATA').textContent), D=P.D, A=P.A, G=P.G;
+const P=JSON.parse(document.getElementById('DATA').textContent), D=P.D, A=P.A, G=P.G, NC=P.NC;
 let LANG='en'; try{LANG=localStorage.getItem('ehhub.lang')||localStorage.getItem('sw.lang')||'en'}catch(e){}
 let METRIC='cumlf', YEAR=2024, SEL=null, PTS=true, SORT=null;
 const $=id=>document.getElementById(id), L=(en,ar)=>LANG==='ar'?ar:en, RTL=()=>LANG==='ar';
@@ -621,7 +622,7 @@ function render(){
   const pc=CODES.map(c=>[c,regionVal(c,'percap',2024)]).sort((a,b)=>b[1]-a[1]);
   const rr=CODES.map(c=>[c,regionVal(c,'recrate',2024)]).sort((a,b)=>b[1]-a[1]);
   $('mapread').innerHTML=`<b>${L('What the map says','ما تقوله الخريطة')}:</b> ${L('from 2017 to 2024','من 2017 إلى 2024 دُفن')} ${T(A.cum_landfill.KSA,1)} ${L('of municipal waste went to landfill; three regions —','من النفايات البلدية؛ ثلاث مناطق —')} ${top3.map(([c,v])=>`${esc(RN(c))} (${T(v,1)})`).join(L(', ','، '))} ${L('— hold','— تضم')} ${PCT(top3s,0)} ${L('of it. Riyadh and the Eastern region are also growing fastest among the large regions. Recycling is highest in','منها. والرياض والمنطقة الشرقية هما الأسرع نمواً بين المناطق الكبيرة. وأعلى نسبة تدوير في')} ${esc(RN(rr[0][0]))} (${PCT(rr[0][1],0)}) ${L('and','و')} ${esc(RN(rr[1][0]))} (${PCT(rr[1][1],0)}); ${L('in','وفي')} ${N(rr.filter(r=>r[1]<0.04).length)} ${L('of the 13 regions it is under 4%. Per person, the highest reading is','من 13 منطقة تقل عن 4%. وأعلى معدل للفرد في')} ${esc(RN(pc[0][0]))} (${N(pc[0][1],1)} ${L('kg/day','كغ/يوم')}) ${L('— flagged as unusual — followed by','— وهو معلَّم كقيمة غير معتادة — تليها')} ${esc(RN(pc[1][0]))} ${L('and','و')} ${esc(RN(pc[2][0]))}.`;
-  hazard(); industrial(); national(); municipal(); forEH(); notes();
+  permits(); hazard(); industrial(); national(); municipal(); forEH(); notes();
   $('foot').innerHTML=L('Built by Environmental Horizons Business Development from GASTAT\'s public releases. Region boundaries: Natural Earth (public domain). Arabic text is EH\'s translation. Figures are GASTAT\'s; lines marked "EH analysis" are EH\'s reading.','أعدّته إدارة تطوير الأعمال في آفاق البيئة من إصدارات الهيئة العامة للإحصاء المنشورة. حدود المناطق: Natural Earth (ملك عام). النص العربي ترجمة آفاق البيئة. الأرقام من الهيئة العامة للإحصاء؛ وما عُلِّم «تحليل آفاق البيئة» هو قراءة الشركة.');
 }
 function hazard(){
@@ -686,6 +687,15 @@ function municipal(){
   const R=D.recycling_rate.v.municipal;
   $('munread').innerHTML=`<b>${L('Reading','القراءة')}:</b> ${L('municipal waste has more than doubled since 2010 (','تضاعفت النفايات البلدية منذ 2010 (')}${T(D.municipal_total.v['2010'],1)} → ${T(D.municipal_total.v['2024'],1)}${L('). Measured recycling was 7% in 2017 and',')، وكان التدوير المقيس 7% في 2017 و')} ${PCT(R['2024'],1)} ${L('in 2024; the 15% GASTAT shows for 2010–2015 is identical every year and looks assumed.','في 2024؛ أما نسبة 15% التي تظهرها الهيئة لـ2010–2015 فثابتة كل عام وتبدو مفترضة.')} ${L('Almost everything collected ends in sanitary landfill:','ويكاد كل ما يُجمع ينتهي بالدفن الصحي:')} ${PCT(g(TR,'KSA','landfill','2024')/g(TR,'KSA','total','2024'),0)} ${L('of treated municipal waste in 2024.','من النفايات البلدية المعالجة في 2024.')} ${L('About','ونحو')} ${PCT(g(M,'KSA','organic','2024')/g(M,'KSA','total','2024'),0)} ${L('of it is organic, and plastic is the next largest stream.','منها عضوية، ويليها البلاستيك.')}`;
 }
+function permits(){
+  const Pm=NC.regions_ytd_2026_min, N0=NC.national, tot=N0.ytd_2026_min;
+  const rows=Object.entries(Pm).sort((a,b)=>b[1]-a[1]);
+  const named=rows.reduce((s,r)=>s+r[1],0), mx=rows[0][1];
+  $('h-pm').textContent=L('Environmental permits by region, 2026 so far','التصاريح البيئية حسب المنطقة، 2026 حتى الآن');
+  $('pm-note').innerHTML=L(`Permits issued to establishments with environmental impacts, as reported by the National Center for Environmental Compliance (NCEC) on 15 October 2026. This measures where <b>regulated activity</b> is growing — not how much waste is produced. All figures are "more than" floors.`,`تصاريح صادرة لمنشآت ذات أثر بيئي، بحسب ما أعلنه المركز الوطني للرقابة على الالتزام البيئي (NCEC) في 15 أكتوبر 2026. يقيس هذا الجدول أين ينمو <b>النشاط الخاضع للتنظيم</b> لا كمية النفايات المتولّدة. وجميع الأرقام حدود دنيا («أكثر من»).`);
+  $('pm-table').innerHTML=`<table class="t"><thead><tr><th>${L('Region','المنطقة')}</th><th class="n">${L('Permits issued in 2026 (more than)','التصاريح الصادرة في 2026 (أكثر من)')}</th></tr></thead><tbody>${rows.map(([c,v])=>`<tr><td>${esc(RN(c))}${c==='SA-02'?` <span class="src">${L('EH home region','منطقة آفاق البيئة')}</span>`:''}</td><td class="n"><span class="bar" style="width:${Math.round(120*v/mx)}px"></span><span class="num" dir="ltr">${NF(v,0)}+</span></td></tr>`).join('')}<tr><td>${L('Other regions','المناطق الأخرى')}</td><td class="n">${L('no figures published','لا أرقام منشورة')}</td></tr><tr><td><b>${L('Kingdom, 2026 so far','المملكة، 2026 حتى الآن')}</b></td><td class="n"><b class="num" dir="ltr">${NF(tot,0)}+</b></td></tr></tbody></table>`;
+  $('pm-read').innerHTML=`<b>${L('Reading','القراءة')}:</b> ${L(`the three named regions account for about ${PCTp(named/tot)} of the year's permits; the release gives no figures for the other ten. Permits rose ${PCTp(N0.q3_growth_vs_q3_2025)} in the third quarter against the same quarter of 2025, with more than ${NF(N0.q3_2026_min,0)} issued in the quarter, driven by productive factories (about ${NF(N0.factories_with_permit_2026_approx,0)} licensed factories hold permits this year). Source: ${esc(NC.source_en)}, 15 Oct 2026.`,`تمثّل المناطق الثلاث المذكورة نحو ${PCTp(named/tot)} من تصاريح العام، ولم يذكر الإعلان أرقام المناطق العشر الأخرى. وارتفعت التصاريح ${PCTp(N0.q3_growth_vs_q3_2025)} في الربع الثالث مقارنةً بالربع نفسه من 2025، بأكثر من ${NF(N0.q3_2026_min,0)} تصريح في الربع، بدفع من المصانع الإنتاجية (نحو ${NF(N0.factories_with_permit_2026_approx,0)} مصنع مرخّص يحمل تصريحاً هذا العام). المصدر: ${esc(NC.source_ar)}، 15 أكتوبر 2026.`)}`;
+}
 function forEH(){
   const S24=D.seea.supply['2024'],S23=D.seea.supply['2023'],d24=A.dest['2024'].hazardous,d23=A.dest['2023'].hazardous;
   const mk=g(M,'SA-02','total','2024'),mkr=CODES.map(c=>[c,A.cum_landfill[c]]).sort((a,b)=>b[1]-a[1]).findIndex(r=>r[0]==='SA-02')+1;
@@ -702,7 +712,9 @@ function forEH(){
    [L(`<b>Makkah region, EH's home, collected ${TP(mk)} of municipal waste in 2024 and ranks ${['','first','second','third','fourth','fifth'][mkr]||'#'+mkr} for waste landfilled since 2017.</b> But GASTAT's own tables show more landfilled there than collected, so the regional figures are unreliable.`,`<b>منطقة مكة المكرمة، مقر آفاق البيئة، جمعت ${TP(mk)} من النفايات البلدية في 2024، وترتيبها ${['','الأول','الثاني','الثالث','الرابع','الخامس'][mkr]||mkr} في المدفون منذ 2017.</b> لكن جداول الهيئة نفسها تُظهر مدفوناً أكبر من المجموع فيها، فأرقامها الإقليمية غير موثوقة.`),
     L('Treat Makkah\'s municipal numbers with care, and do not quote them without the caveat.','التعامل مع أرقام مكة البلدية بحذر وعدم الاستشهاد بها دون التحفّظ.')],
    [L(`<b>Hazardous waste imports rose from ${TP(S23.hazardous.imports)} to ${TP(S24.hazardous.imports)}.</b> The figure is not broken down. It could mean more material arriving for treatment or recovery in the Kingdom.`,`<b>ارتفعت واردات النفايات الخطرة من ${TP(S23.hazardous.imports)} إلى ${TP(S24.hazardous.imports)}.</b> ولا يتوفر تفصيل لها، وقد تعني مواد أكثر تصل للمعالجة أو الاستخلاص داخل المملكة.`),
-    L('Watch item: ask MWAN or GASTAT what the imports are and who receives them.','بند متابعة: سؤال «موان» أو الهيئة عن طبيعة هذه الواردات والجهات المستلمة.')]];
+    L('Watch item: ask MWAN or GASTAT what the imports are and who receives them.','بند متابعة: سؤال «موان» أو الهيئة عن طبيعة هذه الواردات والجهات المستلمة.')],
+   [L(`<b>Environmental permits rose ${PCTp(NC.national.q3_growth_vs_q3_2025)} in the third quarter of 2026, with more than ${NF(NC.national.ytd_2026_min,0)} issued so far this year.</b> Makkah, EH's home region, is third with more than ${NF(NC.regions_ytd_2026_min['SA-02'],0)}, behind Riyadh and the Eastern Region. Each permit is a regulated site that must manage its waste, but the count says nothing about hazardous tonnage.`,`<b>ارتفعت التصاريح البيئية ${PCTp(NC.national.q3_growth_vs_q3_2025)} في الربع الثالث من 2026، وصدر منها أكثر من ${NF(NC.national.ytd_2026_min,0)} منذ بداية العام.</b> وتأتي مكة المكرمة، منطقة آفاق البيئة، ثالثةً بأكثر من ${NF(NC.regions_ytd_2026_min['SA-02'],0)} بعد الرياض والمنطقة الشرقية. كل تصريح يعني منشأة خاضعة للتنظيم عليها إدارة نفاياتها، لكن العدد لا يقول شيئاً عن أطنان النفايات الخطرة.`),
+    L('Use as a lead-generation signal: match new permit holders by region against the stakeholder map. Do not use the permit count as a tonnage estimate.','يُستخدم مؤشراً لتوليد الفرص: مطابقة الجهات الحاصلة على تصاريح جديدة بحسب المنطقة مع خريطة أصحاب المصلحة، ولا يُستخدم عدد التصاريح تقديراً للأطنان.')]];
   $('opps').innerHTML=O.map(([s,a],i)=>`<div class="opp"><div class="n num">${i+1}</div><div><div class="st">${s}</div><div class="ac"><b>${L('Action','الإجراء')}:</b> ${a}</div></div></div>`).join('');
 }
 function notes(){
@@ -774,6 +786,7 @@ HTML = f"""<!DOCTYPE html>
   <div class="read" id="mapread"></div>
  </div>
  <div class="card"><h2 id="h-rt"></h2><div class="note" id="rt-note"></div><div class="tw" id="rtable"></div></div>
+ <div class="card"><h2 id="h-pm"></h2><div class="note" id="pm-note"></div><div class="tw" id="pm-table"></div><div class="read" id="pm-read"></div></div>
 
  <div class="sec" data-sec="2 · Hazardous waste|٢ · النفايات الخطرة"></div>
  <div class="card">

@@ -1,0 +1,26 @@
+{
+ "_howto": "NCEC environmental-permit figures reported via SPA. One source for every page that shows them (Saudi waste page now; ports map overlay when built). Figures are floors ('more than'); do not turn them into exact numbers. Edit here, re-run build_saudi_waste_page.py.",
+ "source_en": "National Center for Environmental Compliance (NCEC), via Saudi Press Agency",
+ "source_ar": "المركز الوطني للرقابة على الالتزام البيئي، عبر وكالة الأنباء السعودية",
+ "url": "https://spa.gov.sa/en/N2702145",
+ "story_id": "0181a3682769",
+ "published": "2026-10-15",
+ "captured": "2026-11-01",
+ "speaker_en": "Eng. Abdullah Kaabi, Director General of Environmental Permits and Licenses",
+ "speaker_ar": "م. عبدالله الكعبي، مدير عام التصاريح والتراخيص البيئية",
+ "national": {
+  "ytd_2026_min": 17000,
+  "q3_2026_min": 6600,
+  "q3_growth_vs_q3_2025": 0.42,
+  "factories_with_permit_2026_approx": 2000,
+  "mawani_logistics_permits_min": 75,
+  "mawani_ports_covered": 8
+ },
+ "regions_ytd_2026_min": {
+  "SA-01": 2600,
+  "SA-04": 1600,
+  "SA-02": 1200
+ },
+ "notes_en": "Permit counts measure regulated activity, not waste volume. The three regions named are the only ones the release gives; the rest are described only as 'distributed across the other regions'. The Mawani figure covers companies licensed by the Saudi Ports Authority to provide logistics services within eight ports; the ports are not named in the text EH holds.",
+ "notes_ar": "أعداد التصاريح تقيس النشاط الخاضع للتنظيم لا حجم النفايات. المناطق الثلاث المذكورة هي الوحيدة التي ذكرها الخبر، وتوزعت البقية على باقي المناطق دون أرقام. ويشمل رقم «موانئ» الشركات المرخّصة من الهيئة العامة للموانئ لتقديم الخدمات اللوجستية داخل ثمانية موانئ، ولم تُذكر أسماء الموانئ في النص المتوافر لدى آفاق البيئة."
+}

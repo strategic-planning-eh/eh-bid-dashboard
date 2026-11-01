@@ -2,6 +2,52 @@
  "_howto": "Monthly brief for the Regulatory news tab. Written by Business Development (with Claude) on the first Sunday of each month from that month's gov_news.json; one object per month, newest first. Every point must cite story ids from gov_news.json in `refs` — a point without a source is not published. Upload to pipeline/reg_brief.json; the hourly publisher copies it to the site (sealed like everything else).",
  "briefs": [
   {
+   "month": "2026-10",
+   "written": "2026-11-01",
+   "author_en": "EH Business Development",
+   "author_ar": "إدارة تطوير الأعمال — آفاق البيئة",
+   "coverage_en": "Covers one story only so far: the NCEC permits release of 15 Oct 2026. To be extended from the October collection before the brief is shared.",
+   "coverage_ar": "يغطي خبراً واحداً حتى الآن: إعلان المركز الوطني للرقابة على الالتزام البيئي عن التصاريح بتاريخ 15 أكتوبر 2026. يُستكمل من جمع أكتوبر قبل تعميم الموجز.",
+   "summary_en": "October's headline was demand for environmental permits. NCEC reported a 42% rise in permits in the third quarter of 2026 against the same quarter of 2025, with more than 6,600 issued in the quarter and more than 17,000 so far this year. Riyadh leads (more than 2,600), then the Eastern Region (more than 1,600) and Makkah (more than 1,200). About 2,000 licensed factories and more than 75 Mawani-licensed logistics companies, covering eight ports, took permits this year.",
+   "summary_ar": "كان عنوان أكتوبر الطلب على التصاريح البيئية. أعلن المركز الوطني للرقابة على الالتزام البيئي ارتفاع التصاريح 42% في الربع الثالث من 2026 مقارنةً بالربع نفسه من 2025، بأكثر من 6,600 تصريح في الربع وأكثر من 17,000 منذ بداية العام. وتتصدر الرياض (أكثر من 2,600) تليها المنطقة الشرقية (أكثر من 1,600) ثم مكة المكرمة (أكثر من 1,200). وحصل نحو 2,000 مصنع مرخّص وأكثر من 75 شركة خدمات لوجستية مرخّصة من «موانئ»، في ثمانية موانئ، على تصاريح هذا العام.",
+   "by_body": [
+    {
+     "body": "ncec",
+     "en": "Third-quarter 2026 permits up 42% on the same quarter of 2025, driven by permits to productive factories; more than 6,600 issued in the quarter (15 Oct). About 2,000 factories licensed by the Ministry of Industry and Mineral Resources hold permits this year, plus more than 75 permits to Mawani-licensed logistics companies within eight ports. More than 17,000 permits issued so far this year: Riyadh more than 2,600, Eastern Region more than 1,600, Makkah more than 1,200.",
+     "ar": "ارتفعت تصاريح الربع الثالث 2026 بنسبة 42% عن الربع نفسه من 2025، بدفع من تصاريح المصانع الإنتاجية، وبأكثر من 6,600 تصريح في الربع (15 أكتوبر). ويحمل نحو 2,000 مصنع مرخّص من وزارة الصناعة والثروة المعدنية تصاريح هذا العام، إضافةً إلى أكثر من 75 تصريحاً لشركات لوجستية مرخّصة من «موانئ» داخل ثمانية موانئ. وصدر منذ بداية العام أكثر من 17,000 تصريح: الرياض أكثر من 2,600، والمنطقة الشرقية أكثر من 1,600، ومكة المكرمة أكثر من 1,200.",
+     "refs": [
+      "0181a3682769"
+     ]
+    }
+   ],
+   "for_eh": [
+    {
+     "kind": "opportunity",
+     "en": "Every permit is a regulated site that has to manage its waste to a standard. A 42% quarterly rise, led by factories, widens the pool of manufacturers that need licensed hazardous-waste collection, treatment and disposal. The permit count shows where regulated activity is growing; it does not say how much hazardous waste those sites produce, so treat it as a lead-generation signal, not a tonnage forecast.",
+     "ar": "كل تصريح يعني منشأة خاضعة للتنظيم عليها إدارة نفاياتها وفق معيار. وارتفاع ربعي بنسبة 42% تقوده المصانع يوسّع قاعدة المصنّعين المحتاجين إلى جمع النفايات الخطرة ومعالجتها والتخلص منها عبر جهات مرخّصة. يبيّن عدد التصاريح أين يتنامى النشاط الخاضع للتنظيم، ولا يبيّن كمية النفايات الخطرة التي تولّدها هذه المنشآت؛ فهو مؤشر لتوليد الفرص لا توقّع للأطنان.",
+     "refs": [
+      "0181a3682769"
+     ]
+    },
+    {
+     "kind": "watch",
+     "en": "Makkah, EH's home region and the site of Al-Juhfah, comes third with more than 1,200 permits, behind Riyadh and the Eastern Region. The three named regions together account for roughly a third of the year's permits; the release gives no figures for the rest. Check where EH's Tier 1 clients and rivals sit against the Riyadh and Eastern totals before deciding whether to extend collection or sales coverage there.",
+     "ar": "تأتي مكة المكرمة، منطقة آفاق البيئة ومقر مجمع الجحفة، ثالثةً بأكثر من 1,200 تصريح بعد الرياض والمنطقة الشرقية. وتمثّل المناطق الثلاث المذكورة معاً نحو ثلث تصاريح العام، ولم يذكر الإعلان أرقاماً لبقية المناطق. يُقارن موقع عملاء الشريحة الأولى والمنافسين لدى آفاق البيئة بإجماليات الرياض والشرقية قبل البتّ في توسيع نطاق الجمع أو التغطية البيعية هناك.",
+     "refs": [
+      "0181a3682769"
+     ]
+    },
+    {
+     "kind": "opportunity",
+     "en": "More than 75 permits went to Mawani-licensed logistics companies working inside eight ports. Port logistics operators handle bunkering residues, packaging and container waste, which fits EH's service line. Add the figure to the ports map as an overlay; the ports themselves are not named in the text EH holds, so ask NCEC or read the Arabic release before assigning permits to specific ports.",
+     "ar": "حصلت أكثر من 75 شركة خدمات لوجستية مرخّصة من «موانئ» على تصاريح للعمل داخل ثمانية موانئ. وتتعامل هذه الشركات مع مخلفات التزوّد بالوقود والتغليف ونفايات الحاويات، وهو ما يلتقي مع خط خدمات آفاق البيئة. يُضاف الرقم إلى خريطة الموانئ طبقةً مساندة؛ ولم تُذكر أسماء الموانئ في النص المتوافر لدى آفاق البيئة، فيُرجع إلى المركز أو إلى النص العربي للإعلان قبل نسب التصاريح إلى موانئ بعينها.",
+     "refs": [
+      "0181a3682769"
+     ]
+    }
+   ]
+  },
+  {
    "month": "2026-09",
    "written": "2026-09-27",
    "author_en": "EH Business Development",

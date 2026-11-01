@@ -20,7 +20,7 @@ if 'exUnknown' in FILES['app']: sys.exit('Already applied.')
 # ---- 1. bid_analytics2.py: buyer type on every bidlist row
 ok1 = rep('ana', "    bidlist=[]\n    for b in sorted(bids, key=lambda x:(x['year'], x['sn'])):",
 """    import re as _re
-    _GOV=_re.compile(r'هيئة|وزارة|أمانة|أمانه|المركز الوطني|مؤسسة عامة|المؤسسة العامة|بلدية|جامعة|كلية|الحرس|القوات|المديرية|Authority|Ministry|Nat\\. Center|National Center|Municipality|University|College|Military|Forces|Corp\\b|Organization|Reserve|GAMI|SWCC|NCVC|NCEC|TVTC|ZATCA|Zakat', _re.I)
+    _GOV=_re.compile(r'هيئة|وزارة|أمانة|أمانه|المركز الوطني|مؤسسة عامة|المؤسسة العام|بلدية|جامعة|كلية|حرس|قوات|المديرية|تجمع|مستشف|مدينة الملك|محمية|صندوق البيئة|Authority|Ministry|Nat\\. Center|National Center|Municipality|University|College|Military|Forces|Organization|Reserve|GAMI|SWCC|NCVC|NCEC|TVTC|ZATCA|Zakat|Environment Fund', _re.I)   # 1 Nov 2026, Youssef: state-owned companies (SEC, SIRC, NWC, ACWA…) are companies; ministries, authorities, universities, أمانات, هيئات, national centres, public corporations, hospitals and health clusters are government
     def _buyer(name): return 'government' if _GOV.search(str(name or '')) else 'company'
     bidlist=[]
     for b in sorted(bids, key=lambda x:(x['year'], x['sn'])):""", 'exec-analyst', 'bid_analytics2: buyer type (government / company) tagged on each tender by issuer name')

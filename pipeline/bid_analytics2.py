@@ -397,6 +397,9 @@ def compute(bids, rfull, comp, wcanon=None):
         if no: return 'no'
         if b.get('submit') and b['submit']>=_today.isoformat(): return 'open'
         return 'none' if b.get('subcol') else 'unrecorded'
+    import re as _re
+    _GOV=_re.compile(r'هيئة|وزارة|أمانة|أمانه|المركز الوطني|مؤسسة عامة|المؤسسة العامة|بلدية|جامعة|كلية|الحرس|القوات|المديرية|Authority|Ministry|Nat\. Center|National Center|Municipality|University|College|Military|Forces|Corp\b|Organization|Reserve|GAMI|SWCC|NCVC|NCEC|TVTC|ZATCA|Zakat', _re.I)
+    def _buyer(name): return 'government' if _GOV.search(str(name or '')) else 'company'
     bidlist=[]
     for b in sorted(bids, key=lambda x:(x['year'], x['sn'])):
         win='EH' if b['eh_won'] else (b['winner'] if b['winner'] else '')
@@ -408,7 +411,7 @@ def compute(bids, rfull, comp, wcanon=None):
             deadline_stale=bool(b.get('submit') and (b.get('ehsubdate') or b.get('subdate')) and (b.get('ehsubdate') or b.get('subdate'))>b['submit']),
             sub_conflict=bool(b.get('substatus')=='No' and (b.get('decided') or b.get('eh_won'))),
             value=round(b['value']) if b['value'] else None, nbid=int(b['nbid']) if b['nbid'] else None, per_unit=bool(b.get('per_unit')),
-            svc=SVCN2.get(b['svcdept'],''), dur=round(b['dur'],1) if b['dur'] else None,
+            svc=SVCN2.get(b['svcdept'],''), buyer=_buyer(b['client']), dur=round(b['dur'],1) if b['dur'] else None,
             winner=win, outcome=outcome(b), status=(b['status'] or ''),
             committee=b['committee'], reason=b['comments'], lossreason=(b.get('reason') or None),
             window=_days(b['launch'],b['submit']) if (b['launch'] and b['submit']) else None,

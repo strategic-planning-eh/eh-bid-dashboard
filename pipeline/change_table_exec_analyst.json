@@ -1,0 +1,67 @@
+{
+ "generated": "2026-11-01 14:08",
+ "title": "Change table — Executive Summary analyst cards (1 Nov 2026)",
+ "failures": [],
+ "changes": [
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "exec-analyst",
+   "note": "bid_analytics2: buyer type (government / company) tagged on each tender by issuer name",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    bidlist=[]\n    for b in sorted(bids, key=lambda x:(x['year'], x['sn'])):",
+   "new": "    import re as _re\n    _GOV=_re.compile(r'هيئة|وزارة|أمانة|أمانه|المركز الوطني|مؤسسة عامة|المؤسسة العامة|بلدية|جامعة|كلية|الحرس|القوات|المديرية|Authority|Ministry|Nat\\. Center|National Center|Municipality|University|College|Military|Forces|Corp\\b|Organization|Reserve|GAMI|SWCC|NCVC|NCEC|TVTC|ZATCA|Zakat', _re.I)\n    def _buyer(name): return 'government' if _GOV.search(str(name or '')) else 'comp"
+  },
+  {
+   "file": "ana",
+   "kind": "exact",
+   "category": "exec-analyst",
+   "note": "bid_analytics2: buyer field written to bidlist",
+   "occurrences": 1,
+   "ok": true,
+   "old": "            svc=SVCN2.get(b['svcdept'],''), dur=round(b['dur'],1) if b['dur'] else None,",
+   "new": "            svc=SVCN2.get(b['svcdept'],''), buyer=_buyer(b['client']), dur=round(b['dur'],1) if b['dur'] else None,"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "exec-analyst",
+   "note": "app.js: analyst review cards — exUnknown, exLosePrice, exGapYear, exBuyers, exField, exOpening",
+   "occurrences": 1,
+   "ok": true,
+   "old": "// ---- PNG export: clone the SVG",
+   "new": "// ---- analyst review cards (1 Nov 2026): E-12, opening lines, E-1, E-5, E-10, E-2 — see pipeline/analysis/out/map_analyst_report_2026-11.md\nfunction exMedian(a){const s=a.slice().sort((x,y)=>x-y);return s.length?(s.length%2?s[s.length>>1]:(s[s.length/2-1]+s[s.length/2])/2):null;}\nfunction exPct(v){return v==null?'—':Math.round(v)+'%';}\nfunction exBuyer(b){return (b&&b.buyer)||'company';}\nfunctio"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "exec-analyst",
+   "note": "Executive Summary: opening lines + \"Results still unknown\" first in the KPI strip",
+   "occurrences": 1,
+   "ok": true,
+   "old": " <div class=\"kstrip exk\">\n  ${kc(d.winRate==null?'—':d.winRate+'%',t('Win rate on decided tenders','نسبة الفوز في المنافسات المحسومة')",
+   "new": " ${exOpening(B,d)}\n <div class=\"kstrip exk\">\n  ${exUnknown(d)}\n  ${kc(d.winRate==null?'—':d.winRate+'%',t('Win rate on decided tenders','نسبة الفوز في المنافسات المحسومة')"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "exec-analyst",
+   "note": "Executive Summary: card order per the analyst report (price loss → gap → buyers → funnel → where we win → field width → threat → price position → decisions)",
+   "occurrences": 1,
+   "ok": true,
+   "old": " ${exFunnel(d)}\n ${exWhere(B)}\n ${exThreat(B,d)}\n ${exPrice(B,d)}\n ${exDecisions(B,d)}`;",
+   "new": " <div class=\"grid g2\">${exLosePrice(B)}${exGapYear()}</div>\n ${exBuyers(B)}\n ${exFunnel(d)}\n ${exWhere(B)}\n ${exField(B)}\n ${exThreat(B,d)}\n ${exPrice(B,d)}\n ${exDecisions(B,d)}`;"
+  },
+  {
+   "file": "app",
+   "kind": "exact",
+   "category": "exec-analyst",
+   "note": "Executive Summary subtitle no longer promises exactly five questions",
+   "occurrences": 1,
+   "ok": true,
+   "old": "t('Five questions a director needs answered before the Sunday meeting — computed from the bid tracker on every rebuild','خمسة أسئلة يحتاج المدير إجابتها قبل اجتماع الأحد — تُحسب من جدول العطاءات عند كل إعادة بناء')",
+   "new": "t('What a director needs to know before the Sunday meeting — computed from the bid tracker on every rebuild','ما يحتاج المدير معرفته قبل اجتماع الأحد — يُحسب من جدول العطاءات عند كل إعادة بناء')"
+  }
+ ]
+}

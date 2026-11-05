@@ -235,5 +235,1355 @@
     "after": "Tier 2"
    }
   ]
+ },
+ {
+  "applied": "2026-11-05 10:56",
+  "source": "active-competitor audit (rule: tracker bids = Active; clients, government bodies, partners and SIRC kept)",
+  "edits": [
+   {
+    "name": "A’mal Adeem Contracting Est.",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Al Samer Environmental Services (SAES)",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 6 encounters"
+   },
+   {
+    "name": "Al-Amyaal Al-Sharqiya Waste Transport Est.",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Al-Andalus Engineering Consulting Co.",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 3 encounters"
+   },
+   {
+    "name": "Ali Abdullah Mohammed Al-Amri Environmental Services Est.",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Al-Jazeera Environmental Consulting Office",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "Amron Arabia Environmental Services Co.",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "ASPEC Contracting & Environmental Consulting",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Atwar Environmental Consulting Establishment",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "Basmet Naqia Environmental Services",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "City of Science Gate for Research & Studies Office",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "Clean Environment Technologies Consulting Office",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "DAM Environmental Consulting Office",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Eada Recycling Services Co.",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Ecoryx Co. Ltd",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "Enviro Fort office for Environmental Consulting",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Estidama Environmental Services",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Evara Co. Ltd (One-Person Co.)",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 6 encounters"
+   },
+   {
+    "name": "Fuel Professional Consulting",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 5 encounters"
+   },
+   {
+    "name": "Geotechnical & Environmental Co. Ltd (GECO)",
+    "field": "cat",
+    "map_before": "Direct Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 2 encounters"
+   },
+   {
+    "name": "Green Plains Environmental Consulting  (El Suhoor El Khadra)",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 3 encounters"
+   },
+   {
+    "name": "Hamat Al-Mudun General Contracting Establishment",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Imtithal Al-Beeah Environmental Consulting Office",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 4 encounters"
+   },
+   {
+    "name": "Kayan Al Amthal",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "Kayan Al-Mukhtassa Environmental Services Est.",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 3 encounters"
+   },
+   {
+    "name": "Qamaat Engineering Consulting Office",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Ramz Professional Consulting Group",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 2 encounters"
+   },
+   {
+    "name": "Samq Environmental Consulting Co. (One-Person Co.)",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "Sustainable Environment Co. (SECO)",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Sustainable Resources Environmental Consulting Office (SREC)",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "TerraPulse Co.",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 2 encounters"
+   },
+   {
+    "name": "Tondro Consultancy Arabia (One-Person Co.)",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Saudi Consulting Services (Saudconsult)",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Geotech Overseas",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "China Harbour Engineering Company (CHEC)",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Parsons Corporation",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "ALEC",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Dr Eisa Alhartany Environmental Consultancy",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 2 encounters"
+   },
+   {
+    "name": "Euro Group Engineering Consultancy",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "Saudi Arabian Engineering Co. (SAECO)",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Dar Al Riyadh",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Alqotr Consulting",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Dawal",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Nebras Habwa Engineering Consultancy",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Environmental Importance Consulting Office",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Estedama Green for Environmental Services",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Arabian Contracting Company (ACC)",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Naqaa Environmental Consulting Office",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Fursan Istedemah Environmental Consultation Office (FIECO)",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 4 encounters"
+   },
+   {
+    "name": "Vision Dimensions",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 5 encounters"
+   },
+   {
+    "name": "Taqat Environment",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Strategy& Middle East",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Business Crafters",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Jadarah Business Consulting Company",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Deloitte & Touche & Co",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "ITMAM Consultancy",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "SIGAL Arabia Engineering & Consultancy",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "Strategic Minds",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Experts Vision Consulting",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Radian Engineering Consultancy",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Renad El Magd (RMG)",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "Telad Consulting Solutions",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Zawaya Albina Engineering Consultancy",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Metal Recycling Company for Environmental Services",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Saudi Daz Electronic and Solid Waste Recycling Factory",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "SAMA Environmental Services",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "ILF Consulting Services",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "Rasi Consulting",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Sarh Al Haditha Co",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Thyssenkrupp Nucera Arabia for Contracting",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "dss+",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "United Specialized Chemicals Factory",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Taqat El Injaz Environmental Consulting",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 3 encounters"
+   },
+   {
+    "name": "Al Makyal Al Saudi",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Nasg For Engineering Consultations",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Hexa Line Engineering Consultancy",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Technology Experts Company",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Saad Saeed El Saadi and Sons Company",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Mus'ad Maqby Ayed Matery Ltd.",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Saad Ali Aliessa Group",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Tahakom Contracting Company",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Arabian Building Support & Rehabilitation CO LTD (ABSAR)",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "More Safe Co",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Saudi Benaa' For General Contracting",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Droub Al Ataihd",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "KMA Advanced Company LTD",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "MTC",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Qemmet El Rawasi Contracting",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "SAN United",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Azmeel Contracting",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Ramz El Omran",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Al Masarat for Construction Co Ltd",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Abdullah Bin Burayk Contracting",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "ERI Saudi Arabia",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Nebras Limited",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Front End Ltd",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "DesignTech Engineering Consultants",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "KPMG",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Maven Insights",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Al Mobidoon",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Mushar Consulting",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Tharwah Group",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Fakrah Developer",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Arweqah Al reyadah",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Al Emad El Arabi for Environmental Services",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 8 encounters"
+   },
+   {
+    "name": "Al Kayan Al Amthal Environmental Services",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Arkan Environment Services Co. (One-Person Co.)",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Basma Habwa Environmental Services",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Emtithaal Environmental Consulting Co.",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Kayan Al-Beeah Environmental Consulting Office",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Mohamed Naser El Hogori Environmental",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "QAMAAT Engineering Consultancy",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "LASCO Saudi Engineering Consulting Co. (One Person Co.)",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 4 encounters"
+   },
+   {
+    "name": "Dr Mohamed Al Amri & Co",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Simopseng",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "Zimam El Qowa",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Not in the repo bid extract (Aug 2026) — counted by the Oct tracker sync only"
+   },
+   {
+    "name": "شركة الاداء المتوازن للمقاولات",
+    "field": "cat",
+    "map_before": "Direct Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة البيئة المستدامة للصناعة",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "مؤسسة أرض خضراء لنقل النفايات",
+    "field": "cat",
+    "map_before": "Direct Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة نواقل الدولية للخدمات المساندة",
+    "field": "cat",
+    "map_before": "Direct Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة وصل المحدودة",
+    "field": "cat",
+    "map_before": "Direct Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 6 encounters"
+   },
+   {
+    "name": "شركة لانا الطبية",
+    "field": "cat",
+    "map_before": "Direct Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة البيئة والتنمية للاستشارات البيئية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 8 encounters"
+   },
+   {
+    "name": "حلول التخطيط للنقليات",
+    "field": "cat",
+    "map_before": "Direct Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "مكتب الكاف للاستشارات البيئية",
+    "field": "cat",
+    "map_before": "Direct Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 4 encounters"
+   },
+   {
+    "name": "مؤسسة الغلاف البيئي للاستشارات البيئية",
+    "field": "cat",
+    "map_before": "Direct Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 3 encounters"
+   },
+   {
+    "name": "شركة ميثان للخدمات البيئية",
+    "field": "cat",
+    "map_before": "Direct Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة كراكر للمقاولات",
+    "field": "cat",
+    "map_before": "Direct Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة الحلول المتفردة للخدمات البيئية",
+    "field": "cat",
+    "map_before": "Direct Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 2 encounters"
+   },
+   {
+    "name": "شركة النخبة الخليجية للخدمات البيئية",
+    "field": "cat",
+    "map_before": "Direct Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 3 encounters"
+   },
+   {
+    "name": "شركة رواد الاستدامة للخدمات البيئية",
+    "field": "cat",
+    "map_before": "Direct Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 2 encounters"
+   },
+   {
+    "name": "مؤسسة ساس المتقدمة للنقليات",
+    "field": "cat",
+    "map_before": "Direct Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 3 encounters"
+   },
+   {
+    "name": "شركة امداد الشرق للنقليات",
+    "field": "cat",
+    "map_before": "Direct Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة الهلب للتجارة والمقاولات",
+    "field": "cat",
+    "map_before": "Direct Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 2 encounters"
+   },
+   {
+    "name": "شركة خدمات البيئة المتحدة لنقل النفايات",
+    "field": "cat",
+    "map_before": "Direct Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة الرأي للخدمات البيئية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 2 encounters"
+   },
+   {
+    "name": "شركة ادارة خدمات البيئة العالمية المحدودة شركة شخص واحد",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 3 encounters"
+   },
+   {
+    "name": "شركة الدعم للخدمات البيئية",
+    "field": "cat",
+    "map_before": "Direct Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "جامعة الملك عبدالله للعلوم والتقنية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 4 encounters"
+   },
+   {
+    "name": "شركة دار الرياض للاستشارات الهندسية شركة شخص واحد",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 3 encounters"
+   },
+   {
+    "name": "شركة الذهبي للاستشارات الهندسية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 3 encounters"
+   },
+   {
+    "name": "شركة اعمار للاستشارات الهندسية مهنية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 4 encounters"
+   },
+   {
+    "name": "RAMZ ENGINEERING CONSULTANTS",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 2 encounters"
+   },
+   {
+    "name": "مؤسسة ذكاء الرؤية لتقنية المعلومات",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 2 encounters"
+   },
+   {
+    "name": "شركة القطر للاستشارات المهنية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 2 encounters"
+   },
+   {
+    "name": "شركة نظم الدوال لتقنية المعلومات",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 2 encounters"
+   },
+   {
+    "name": "شركة الابنية للاستشارات الهندسية شركة مهنية ذات مسؤولية محدودة من شخص واحد",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 2 encounters"
+   },
+   {
+    "name": "شركة العمليات المتزامنة للاستشارات المهنية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 3 encounters"
+   },
+   {
+    "name": "شركة أيدوم للاستشارات الهندسية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 3 encounters"
+   },
+   {
+    "name": "BRANCH OF ARABIAN CONTRACTING EST.",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة ديار الشرق الاوسط لتكنولوجيا المعلومات",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة الابداع الرقمية للاتصالات و تقنية المعلومات",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة المعمر لانظمة المعلومات",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة الكان العربية للاتصالات",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة مدار الجزيرة للاستشارات الهندسية شركة مهنية شخص واحد ذات مسؤولية محدودة",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة اختراع الحلول لتقنية المعلومات المحدوده",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة الكود الذكي للخدمات التجارية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "مكتب قامات للاستشارات الهندسية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة عين خبير للاستشارات الإدارية شخص واحد مهنية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة ايادي المستقبل التجارية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة ايفوري للتدريب",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة جدارة الأعمال للاستشارات الادارية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة الإتمام الاستشارية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة العقول المخططة للاستشارات الادارية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة واكب البيانات للاتصالات و تقنية المعلومات",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة سياد للاتصالات و تقنية المعلومات",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة عزم الرقمية للاتصالات و تقنية المعلومات",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة إتحاد قو للاتصالات",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة تمكين للتقنيات شركة مساهمة غير مدرجة",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة الخطوط الرقمية لتقنية المعلومات",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة رؤية الخبراء الاستشارية شركة ذات المسؤولية محدودة",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة صلاح محمد الزغيبي للاستشارات الهندسية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة اثنان و اربعون لتقنية المعلومات شركة شخص واحد",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة انتيجريتد تيليكوم سولوشز انك السعودية لتقنية نظم المعلومات شركة شخص واحد",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة تقني الاولى للاتصالات و تقنية المعلومات شركة شخص واحد",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة المدينة الاولى الاستشارية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة وفير للاتصالات و تقنية المعلومات",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة العين الثامنه للتدريب",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "SAUDI GEOPHYSICAL CONSULTING OFFICE",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شرﻛﺔ راديان للاستشارات الهندسية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "ﻣﻜﺘﺐ رﻛﺎﺋﺰ الانشاء للاستشارات الهندسية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شرﻛﺔ زواﻳﺎ البناء للاستشارات الهندسية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "مؤسسة هامة المدن للمقاولات العامة",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة المكيال السعودي للاستشارات الهندسية شركة مهنية شخص واحد",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة نظم المعرفة للاستشارات والابحاث شركة شخص واحد",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة الخط السادس للاستشارات الهندسية شخص واحد مهنية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة خبراء التقنيه الدوليه للتجاره والمقاولات",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة الهندسة والأبحاث العالمية للاستشارات الهندسية شركة مهنية شخص واحد",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 2 encounters"
+   },
+   {
+    "name": "شركة ياسر احمد العقبي للاستشارات المهنية",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة إم.دبليو.إف سولوشنز لحلول الاعمال",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "شركة ارابتك جردانة وشركائةللاستشارات",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   },
+   {
+    "name": "الجمعية السعودية للإستزراع المائي",
+    "field": "cat",
+    "map_before": "Indirect / Adjacent Competitors",
+    "after": "Active Competitors",
+    "check": "Bid & Tender extract: 1 encounters"
+   }
+  ]
  }
 ]

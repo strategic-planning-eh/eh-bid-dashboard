@@ -1,0 +1,239 @@
+[
+ {
+  "applied": "2026-11-05 10:08",
+  "source": "25e2c47e-EH_Stakeholder_Competitive_Map_v10_2026-11-05.xlsx",
+  "edits": [
+   {
+    "name": "Abdullatif Industrial Investment",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Advanced BioCatalytics Industries",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Advanced Electronics Company",
+    "field": "sec",
+    "map_before": "Construction",
+    "workbook_before": "Construction",
+    "after": "Manufacturing"
+   },
+   {
+    "name": "Advanced Electronics Company",
+    "field": "notes",
+    "map_before": "Type: Manufacturer",
+    "workbook_before": "Type: Manufacturer",
+    "after": "Type: Manufacturer, supported by PIF and Vision 2030 projects"
+   },
+   {
+    "name": "Advanced Petrochemical",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Advanced Triad Turbine Services (ATTS)",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Aeron Systems Pvt Ltd",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Ajlan & Bros Mining",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Al Babtain Power & Telecom",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Al Moammar Information Systems(MIS)",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Al Obeikan Company",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Al Qahtani Pipe Coating Industries",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Alat",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Bawan",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Bridge Saudi Ltd.",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Milling Company 3",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Modern Mills",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Neom",
+    "field": "n",
+    "map_before": "Neom",
+    "workbook_before": "Neom",
+    "after": "NEOM"
+   },
+   {
+    "name": "Saudi Cable Co",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Saudi Cast",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Saudi Cement",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Saudi Ceramics",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Saudi Daz Electronic and Solid Waste Recycling Factory",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Saudi Delta Co.",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Saudi Diesel Equipment (Abduljawad Group Subsidary)",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Saudi Leather Industries Company (SLIC)",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Saudi Mechanical Industries Co.",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Saudi Paper Manufacturing",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Saudi Plastic Products Co",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Saudi Printing & Packaging",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Saudi Steel Pipe",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Saudi Vitrified Clay Pipes",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   },
+   {
+    "name": "Saudi Water Partnership Company (SWPC)",
+    "field": "tier",
+    "map_before": "Tier 1",
+    "workbook_before": "Tier 1",
+    "after": "Tier 2"
+   }
+  ]
+ }
+]

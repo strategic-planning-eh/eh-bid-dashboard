@@ -11,7 +11,7 @@ from openpyxl.utils import get_column_letter
 HERE = os.path.dirname(os.path.abspath(__file__)); OUT = os.path.join(HERE, 'out')
 raw = json.load(open(os.path.join(OUT, 'map_data_raw.json'), encoding='utf-8'))
 nodes = raw['nodes']
-BUILT = '2026-11-01'; SYNCED = 'tracker as of 20 Oct 2026 (per map stamp)'
+BUILT = '2026-11-05'; SYNCED = 'tracker as of 20 Oct 2026 (per map stamp)'
 
 HDR = Font(name='Arial', bold=True, color='FFFFFF'); BODY = Font(name='Arial', size=10)
 FILL = PatternFill('solid', fgColor='1F4E5F'); NOTE = Font(name='Arial', size=9, italic=True, color='555555')

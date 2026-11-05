@@ -1,0 +1,137 @@
+{
+ "generated": "2026-11-05 09:52",
+ "title": "Change table — Stakeholder Map list/filters/EMCO (5 Nov 2026)",
+ "failures": [],
+ "changes": [
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "list-filters",
+   "note": "CSS: list mode hides the empty detail column; clear-all button block",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</head>",
+   "new": "<style id=\"eh-list-filters\">@media(min-width:1101px){.wrap.listmode:has(#detail:not(.has)){grid-template-columns:268px minmax(0,1fr)}.wrap.listmode:has(#detail:not(.has)) #detail{display:none}.wrap.listmode #detail.has .dclose{display:flex;position:sticky;top:0;margin-inline-start:auto;width:36px;height:36px;align-items:center;justify-content:center;border:0;border-radius:18px;background:var(--eh-"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "list-filters",
+   "note": "switchTab: .wrap gets .listmode while the List View is open",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  if(t==='map')resize();\n  if(t==='list')buildList();",
+   "new": "  try{document.querySelector('.wrap').classList.toggle('listmode',t==='list');}catch(e){}\n  if(t==='map')resize();\n  if(t==='list')buildList();"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "list-filters",
+   "note": "Side panel: \"Clear all filters\" button at the top",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  <div class=\"panel side\" id=\"sidePanel\">\n    <h3>Search company</h3>",
+   "new": "  <div class=\"panel side\" id=\"sidePanel\">\n    <div id=\"clearAllWrap\"><button class=\"btn\" id=\"clearAllBtn\" type=\"button\" onclick=\"resetFilters()\">Clear all filters</button></div>\n    <h3>Search company</h3>"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "list-filters",
+   "note": "Side panel: \"Stakeholder category\" chip group (Active Competitors, Direct Competitors, EH Clients …)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    <h3>Company type</h3>\n    <section id=\"catFilters\"></section>",
+   "new": "    <h3>Stakeholder category</h3>\n    <section><div class=\"chips\" id=\"catgChips\"></div></section>\n    <h3>Company type</h3>\n    <section id=\"catFilters\"></section>"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "list-filters",
+   "note": "STATIC_TR: Arabic for the two new labels",
+   "occurrences": 1,
+   "ok": true,
+   "old": " ['Company type','\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0634\\u0631\\u0643\\u0629'],",
+   "new": " ['Company type','\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0634\\u0631\\u0643\\u0629'],\n ['Stakeholder category','فئة الطرف'],\n ['Clear all filters','مسح كل الفلاتر'],"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "list-filters",
+   "note": "state.catg (selected stakeholder categories)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const state = {cats:new Set(), regs:new Set(), tiers:new Set(), freqs:new Set(),",
+   "new": "const state = {cats:new Set(), catg:new Set(), regs:new Set(), tiers:new Set(), freqs:new Set(),"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "list-filters",
+   "note": "visible(): category filter",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  if(!state.cats.has(n.typ||'Other'))return false;\n  if(state.regs.size && !state.regs.has(n.rg))return false;",
+   "new": "  if(!state.cats.has(n.typ||'Other'))return false;\n  if(state.catg.size && !state.catg.has(n.cat))return false;\n  if(state.regs.size && !state.regs.has(n.rg))return false;"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "list-filters",
+   "note": "chipGroup: category chips labelled in the current language",
+   "occurrences": 1,
+   "ok": true,
+   "old": "ch.textContent=(elId==='regChips'?regL(v):elId==='tierChips'?tierL(v):elId==='freqChips'?freqL(v):v);",
+   "new": "ch.textContent=(elId==='regChips'?regL(v):elId==='tierChips'?tierL(v):elId==='freqChips'?freqL(v):elId==='catgChips'?catS(v):v);"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "list-filters",
+   "note": "build the category chips (ring order: regulators → competitors → partners → clients → suppliers)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "chipGroup('tierChips',TIERS,state.tiers);",
+   "new": "chipGroup('tierChips',TIERS,state.tiers);\nconst CATG_LIST=Object.keys(CAT_RING).filter(c=>c!=='EH (Reference)'&&NODES.some(n=>n.cat===c)).sort((a,b)=>CAT_RING[a]-CAT_RING[b]||a.localeCompare(b));\nchipGroup('catgChips',CATG_LIST,state.catg);"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "list-filters",
+   "note": "applyLang: category chips re-labelled on language switch",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    ch.textContent=(box==='regChips'?regL(v):box==='tierChips'?tierL(v):box==='freqChips'?freqL(v):v);",
+   "new": "    ch.textContent=(box==='regChips'?regL(v):box==='tierChips'?tierL(v):box==='freqChips'?freqL(v):box==='catgChips'?catS(v):v);"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "list-filters",
+   "note": "mobile filter badge counts the category filter",
+   "occurrences": 1,
+   "ok": true,
+   "old": "var n=(state.cats?state.cats.size:0)+(state.regs?state.regs.size:0)",
+   "new": "var n=(state.cats?state.cats.size:0)+(state.catg?state.catg.size:0)+(state.regs?state.regs.size:0)"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "list-filters",
+   "note": "resetFilters / Clear all filters clears the category filter too",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  state.regs.clear();state.tiers.clear();state.type='';state.sector='';state.lic='';",
+   "new": "  state.regs.clear();state.catg.clear();state.tiers.clear();state.type='';state.sector='';state.lic='';"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "list-filters",
+   "note": "EMCO (شركة قياس البيئة المحدودة): note — sister company of EH",
+   "occurrences": 1,
+   "ok": true,
+   "old": "\"notes\": \"EH Relationship Score: 47/100, Tier 3 (verified — EMCO environmental lab).",
+   "new": "\"notes\": \"Sister company of Environmental Horizons (EH) — EMCO, Environmental Measurement Co. (شركة قياس البيئة المحدودة). EH Relationship Score: 47/100, Tier 3 (verified — EMCO environmental lab)."
+  }
+ ]
+}

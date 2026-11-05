@@ -1,0 +1,17 @@
+{
+ "generated": "2026-11-05 10:10",
+ "title": "Change table — Licence Map white-space section removed (5 Nov 2026)",
+ "failures": [],
+ "changes": [
+  {
+   "file": "map",
+   "kind": "regex",
+   "category": "licence-map",
+   "note": "Licence Map: white-space heading, table and closing sentence removed",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  h\\+='<div class=\\\"biz-sec\\\">'\\+t\\('White space — licences almost no one holds \\(opportunity\\)'.*?\\n(  document\\.getElementById\\('licView'\\)\\.innerHTML=h;)",
+   "new": "  /* 5 Nov 2026: 'White space — licences almost no one holds' section removed at Youssef's request (data kept in BA.licenses.white_space) */\\n\\1"
+  }
+ ]
+}

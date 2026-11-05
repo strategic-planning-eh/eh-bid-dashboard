@@ -1368,13 +1368,7 @@ function buildLicenceMap(){
   L.most_crowded.forEach(([c,n,m])=>{
     h+='<div class="sat-row"><span class="sat-lbl">'+c+'</span>'+bar(n,'#B23A3A')+'<span class="sat-txt" style="font-size:11.5px"><b>'+n+'</b> &nbsp;<span style="color:var(--ink-soft)">'+esc(m)+'</span></span></div>';
   });
-  h+='<div class="biz-sec">'+t('White space — licences almost no one holds (opportunity)','فرص غير مستغلة — تراخيص لا يكاد يحملها أحد (فرصة)')+'</div>';
-  h+='<table class="btab"><thead><tr><th>'+t('Licence','الترخيص')+'</th><th>'+t('Competitors holding','عدد المنافسين الحاملين')+'</th><th>'+t('Meaning','المعنى')+'</th></tr></thead><tbody>';
-  L.white_space.forEach(([c,n,m])=>{ h+='<tr><td style="font-family:monospace;font-weight:700;color:#2E7D46">'+c+'</td><td><b>'+n+'</b></td><td>'+esc(m)+'</td></tr>'; });
-  const port=L.eh_portfolio.slice().sort((a,b)=>a[1]-b[1]), moat=port[0], ex=port.slice(-2).reverse();
-  const exEn=ex.map(r=>r[0]+' ('+r[1]+' competitors)').join(' and '), exAr=ex.map(r=>r[0]+' ('+r[1]+' منافس)').join(' و');
-  h+='</tbody></table><div class="geo-legend">'+(moat?t('EH\u2019s clearest moat is '+moat[0]+' ('+esc(moat[2])+'), held by only '+moat[1]+' competitor'+(moat[1]===1?'':'s')+'. EH\u2019s most exposed lines are '+exEn+'. White-space licences may warrant pursuit if client demand exists.',
-     'أوضح ميزة تنافسية لـ EH هي '+moat[0]+'، إذ لا يحمله سوى '+moat[1]+' منافس. وأكثر خطوط EH عرضة للمنافسة: '+exAr+'. وقد تستحق تراخيص الفرص غير المستغلة السعي إليها إذا وُجد طلب من العملاء.'):'')+'</div>';
+  /* 5 Nov 2026: 'White space — licences almost no one holds' section removed at Youssef's request (data kept in BA.licenses.white_space) */
   document.getElementById('licView').innerHTML=h;
 }
 

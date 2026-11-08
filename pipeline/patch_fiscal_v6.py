@@ -375,6 +375,12 @@ for en, ar in [
 OLD_HIS = 'Spending ended 8–10% above plan in 2024, 2025 and (estimate) 2026; debt SAR 990 billion (2022) → 1,685 billion (June 2026).'
 if OLD_HIS in D: D.pop(OLD_HIS)
 
+# ================================================================ footer (the hub's Sources panel reads "figures as of" from here)
+R("Version 5 prepared on 01/10/2026 · replaces version 4 (26/08/2026), version 3 (19/07/2026), version 2 (07/07/2026) and version 1 (28/06/2026) · Environmental Horizons — Strategic Planning, Business Development.<br>Official budget figures are from the Ministry of Finance (April–June report of 30/07 and 2027 pre-budget statement of 30/09); oil and shipping figures as of 30/09/2026. The next update comes with the Ministry's July–September report (around the end of October), the 2027 budget in December, a Hormuz or Red Sea agreement, or another major attack on Saudi export routes — whichever comes first.",
+  "Version 6 prepared on 08/11/2026 · replaces version 5.1 (01/10/2026), version 4 (26/08/2026), version 3 (19/07/2026), version 2 (07/07/2026) and version 1 (28/06/2026) · Environmental Horizons — Strategic Planning, Business Development.<br>Official budget figures are from the Ministry of Finance (July–September report of 03/11 and 2027 pre-budget statement of 30/09); oil, export and shipping figures as of 08/11/2026. The next update comes with the 2027 budget in December, the Ministry's year-end report, a Hormuz or Red Sea agreement, or another major attack on Saudi export routes — whichever comes first.",
+  'footer version line',
+  "أُعدّ الإصدار السادس في 08/11/2026 · ويحلّ محل الإصدار 5.1 (01/10/2026) والرابع (26/08/2026) والثالث (19/07/2026) والثاني (07/07/2026) والأول (28/06/2026) · آفاق البيئة — التخطيط الاستراتيجي، إدارة تطوير الأعمال.<br>أرقام الميزانية الرسمية من وزارة المالية (تقرير يوليو–سبتمبر بتاريخ 03/11 والبيان التمهيدي لميزانية 2027 بتاريخ 30/09)؛ وأرقام النفط والصادرات والشحن حتى 08/11/2026. يأتي التحديث التالي مع ميزانية 2027 في ديسمبر، أو التقرير الختامي للوزارة، أو اتفاق في هرمز أو البحر الأحمر، أو هجوم كبير آخر على طرق التصدير السعودية — أيها أسبق.")
+
 # ================================================================ Arabic legacy view (hidden in full mode): version line only
 R('<div class="avnote">آفاق البيئة · التخطيط الاستراتيجي — الإصدار 5.1 · 01/10/2026 · مع مقارنة 2022–2029</div>',
   '<div class="avnote">آفاق البيئة · التخطيط الاستراتيجي — الإصدار 6 · 08/11/2026 · بعد تقرير يوليو–سبتمبر (النص الكامل بالعربية يُعرض من القاموس المدمج)</div>', 'AR legacy view version line')

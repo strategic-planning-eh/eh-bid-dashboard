@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-08 14:26",
+ "generated": "2026-11-08 14:39",
  "title": "Change table — Saudi Government Finances 2026, version 6",
  "failures": [],
  "changes": [
@@ -1642,6 +1642,26 @@
    "ok": true,
    "old": "Spending ended 8–10% above plan in 2024, 2025 and (estimate) 2026; debt SAR 990 billion (2022) → 1,774 billion (September 2026).",
    "new": "انتهى الإنفاق أعلى من الخطة بـ8–10% في 2024 و2025 و(تقديرًا) 2026؛ الدين 990 مليار ريال (2022) ← 1,774 مليارًا (سبتمبر 2026)."
+  },
+  {
+   "file": "fisc",
+   "kind": "exact",
+   "category": "v6",
+   "note": "footer version line",
+   "occurrences": 2,
+   "ok": true,
+   "old": "Version 5 prepared on 01/10/2026 · replaces version 4 (26/08/2026), version 3 (19/07/2026), version 2 (07/07/2026) and version 1 (28/06/2026) · Environmental Horizons — Strategic Planning, Business Development.<br>Official budget figures are from the Ministry of Finance (April–June report of 30/07 and 2027 pre-budget statement of 30/09); oil and shipping figures as of 30/09/2026. The next update c",
+   "new": "Version 6 prepared on 08/11/2026 · replaces version 5.1 (01/10/2026), version 4 (26/08/2026), version 3 (19/07/2026), version 2 (07/07/2026) and version 1 (28/06/2026) · Environmental Horizons — Strategic Planning, Business Development.<br>Official budget figures are from the Ministry of Finance (July–September report of 03/11 and 2027 pre-budget statement of 30/09); oil, export and shipping figur"
+  },
+  {
+   "file": "fisc",
+   "kind": "dict",
+   "category": "ar",
+   "note": "AR: footer version line",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Version 5 prepared on 01/10/2026 · replaces version 4 (26/08/2026), version 3 (19/07/2026), version 2 (07/07/2026) and version 1 (28/06/2026) · Environmental Horizons — Strategic Planning, Business Development.<br>Official budget figures are from the Ministry of Finance (April–June report of 30/07 and 2027 pre-budget statement of 30/09); oil and shipping figures as of 30/09/2026. The next update c",
+   "new": "Version 6 prepared on 08/11/2026 · replaces version 5.1 (01/10/2026), version 4 (26/08/2026), version 3 (19/07/2026), version 2 (07/07/2026) and version 1 (28/06/2026) · Environmental Horizons — Strategic Planning, Business Development.<br>Official budget figures are from the Ministry of Finance (July–September report of 03/11 and 2027 pre-budget statement of 30/09); oil, export and shipping figur"
   },
   {
    "file": "fisc",

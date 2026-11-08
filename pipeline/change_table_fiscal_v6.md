@@ -1,6 +1,6 @@
 # Change table — Saudi Government Finances 2026, version 6
 
-Generated 2026-11-08 14:26 · 166 edits · 0 failures
+Generated 2026-11-08 14:39 · 168 edits · 0 failures
 
 | # | File | Kind | Category | Note | Occurrences | OK |
 |---|---|---|---|---|---|---|
@@ -168,8 +168,10 @@ Generated 2026-11-08 14:26 · 166 edits · 0 failures
 | 162 | fisc | dict | ar | AR source cards | 1 | ✓ |
 | 163 | fisc | dict | ar | AR source cards | 1 | ✓ |
 | 164 | fisc | dict | ar | AR source cards | 1 | ✓ |
-| 165 | fisc | exact | v6 | AR legacy view version line | 1 | ✓ |
-| 166 | arjs | exact | v6 | AR js section 03 heading | 1 | ✓ |
+| 165 | fisc | exact | v6 | footer version line | 2 | ✓ |
+| 166 | fisc | dict | ar | AR: footer version line | 1 | ✓ |
+| 167 | fisc | exact | v6 | AR legacy view version line | 1 | ✓ |
+| 168 | arjs | exact | v6 | AR js section 03 heading | 1 | ✓ |
 
 ## Edit detail
 
@@ -2015,7 +2017,29 @@ Spending ended 8–10% above plan in 2024, 2025 and (estimate) 2026; debt SAR 99
 انتهى الإنفاق أعلى من الخطة بـ8–10% في 2024 و2025 و(تقديرًا) 2026؛ الدين 990 مليار ريال (2022) ← 1,774 مليارًا (سبتمبر 2026).
 ```
 
-### 165. fisc — AR legacy view version line
+### 165. fisc — footer version line
+
+**Old**
+```
+Version 5 prepared on 01/10/2026 · replaces version 4 (26/08/2026), version 3 (19/07/2026), version 2 (07/07/2026) and version 1 (28/06/2026) · Environmental Horizons — Strategic Planning, Business Development.<br>Official budget figures are from the Ministry of Finance (April–June report of 30/07 and 2027 pre-budget statement of 30/09); oil and shipping figures as of 30/09/2026. The next update c
+```
+**New**
+```
+Version 6 prepared on 08/11/2026 · replaces version 5.1 (01/10/2026), version 4 (26/08/2026), version 3 (19/07/2026), version 2 (07/07/2026) and version 1 (28/06/2026) · Environmental Horizons — Strategic Planning, Business Development.<br>Official budget figures are from the Ministry of Finance (July–September report of 03/11 and 2027 pre-budget statement of 30/09); oil, export and shipping figur
+```
+
+### 166. fisc — AR: footer version line
+
+**Old**
+```
+Version 5 prepared on 01/10/2026 · replaces version 4 (26/08/2026), version 3 (19/07/2026), version 2 (07/07/2026) and version 1 (28/06/2026) · Environmental Horizons — Strategic Planning, Business Development.<br>Official budget figures are from the Ministry of Finance (April–June report of 30/07 and 2027 pre-budget statement of 30/09); oil and shipping figures as of 30/09/2026. The next update c
+```
+**New**
+```
+Version 6 prepared on 08/11/2026 · replaces version 5.1 (01/10/2026), version 4 (26/08/2026), version 3 (19/07/2026), version 2 (07/07/2026) and version 1 (28/06/2026) · Environmental Horizons — Strategic Planning, Business Development.<br>Official budget figures are from the Ministry of Finance (July–September report of 03/11 and 2027 pre-budget statement of 30/09); oil, export and shipping figur
+```
+
+### 167. fisc — AR legacy view version line
 
 **Old**
 ```
@@ -2026,7 +2050,7 @@ Spending ended 8–10% above plan in 2024, 2025 and (estimate) 2026; debt SAR 99
 <div class="avnote">آفاق البيئة · التخطيط الاستراتيجي — الإصدار 6 · 08/11/2026 · بعد تقرير يوليو–سبتمبر (النص الكامل بالعربية يُعرض من القاموس المدمج)</div>
 ```
 
-### 166. arjs — AR js section 03 heading
+### 168. arjs — AR js section 03 heading
 
 **Old**
 ```

@@ -1,0 +1,57 @@
+{
+ "generated": "2026-11-08 13:58",
+ "title": "Regulatory news — blocked status (8 Nov 2026)",
+ "failures": [],
+ "changes": [
+  {
+   "file": "gov",
+   "kind": "exact",
+   "category": "status",
+   "note": "label for the new blocked status",
+   "occurrences": 1,
+   "ok": true,
+   "old": "error:['Fetch failed','فشل الجلب'],",
+   "new": "error:['Fetch failed','فشل الجلب'],blocked:['Refused by the site (access wall) — not a result','رفضه الموقع (حاجز وصول) — ليست نتيجة'],"
+  },
+  {
+   "file": "gov",
+   "kind": "exact",
+   "category": "status",
+   "note": "red dot for blocked (base CSS)",
+   "occurrences": 1,
+   "ok": true,
+   "old": ".dot.st-error{background:var(--red)}.dot.st-skipped",
+   "new": ".dot.st-error,.dot.st-blocked{background:var(--red)}.dot.st-skipped"
+  },
+  {
+   "file": "gov",
+   "kind": "exact",
+   "category": "status",
+   "note": "red dot for blocked (EH skin)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "body .dot.st-error{background:var(--eh-bad);border-radius:1px;transform:rotate(45deg)}",
+   "new": "body .dot.st-error{background:var(--eh-bad);border-radius:1px;transform:rotate(45deg)}body .dot.st-blocked{background:var(--eh-bad);border-radius:1px}"
+  },
+  {
+   "file": "gov",
+   "kind": "exact",
+   "category": "status",
+   "note": "body state: blocked when its sources were refused",
+   "occurrences": 1,
+   "ok": true,
+   "old": " if(b.robots_disallow&&ss.every(s=>s.type==='spa'&&s.status!=='ok'))return ss.some(s=>s.status==='error')?'error':'empty';\n if(ss.some(s=>s.status==='empty'))return 'empty';",
+   "new": " if(ss.every(s=>s.status==='blocked'))return 'blocked';\n if(b.robots_disallow&&ss.every(s=>s.type==='spa'&&s.status!=='ok'))return ss.some(s=>s.status==='error')?'error':ss.some(s=>s.status==='blocked')?'blocked':'empty';\n if(ss.some(s=>s.status==='empty'))return 'empty';"
+  },
+  {
+   "file": "gov",
+   "kind": "exact",
+   "category": "status",
+   "note": "problem count includes blocked sources",
+   "occurrences": 1,
+   "ok": true,
+   "old": "problems=bodies.reduce((n,b)=>n+(b.sources||[]).filter(s=>s.status==='error').length,0);",
+   "new": "problems=bodies.reduce((n,b)=>n+(b.sources||[]).filter(s=>s.status==='error'||s.status==='blocked').length,0);"
+  }
+ ]
+}

@@ -257,6 +257,9 @@ def fetch_sharepoint(src, dbg):
         dbg['sample'] = [(o['url'], o['title'][:60]) for o in out[:8]]
     return out
 
+class BlockedError(Exception):
+    """The source answered, but with an access wall (Cloudflare / verification) rather than content."""
+
 def fetch_spa(src, cfg, dbg):
     spa = cfg['spa']; rx = re.compile(spa['link_pattern'])
     tried = []
@@ -270,6 +273,12 @@ def fetch_spa(src, cfg, dbg):
             dbg.setdefault('errors', []).append(f'{url}: {e}')
             continue
         soup = BeautifulSoup(html_text, 'html.parser')
+        ttl = clean(soup.title.get_text(' ')) if soup.title else ''
+        if re.search(r'Attention Required|Just a moment|Access denied|cloudflare\.com/5xx-error-landing', ttl + ' ' + html_text[:6000], re.I):
+            # SPA answered with a Cloudflare wall instead of the search page (first seen 8 Nov 2026). We never try to get
+            # past a verification page: record the refusal as its own status so the tab does not call it "nothing found".
+            dbg['url'] = url; dbg['blocked_title'] = ttl
+            raise BlockedError(f"Saudi Press Agency refused the request (Cloudflare page: {ttl[:60] or 'no title'})")
         out, seen = [], set()
         for a in soup.find_all('a', href=True):
             href = urljoin(url, a['href'].strip()).split('?')[0]
@@ -359,6 +368,8 @@ def main():
                     else: found = fetch_spa(src, cfg, dbg)
                 else:
                     found = []; st['status'] = 'error'; st['note'] = 'unknown source type'
+            except BlockedError as e:
+                found = []; st['status'] = 'blocked'; st['note'] = str(e)[:200]
             except Exception as e:
                 found = []; st['status'] = 'error'; st['note'] = f'{type(e).__name__}: {str(e)[:200]}'
                 dbg['trace'] = traceback.format_exc()[-1500:]

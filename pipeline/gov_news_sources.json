@@ -11,7 +11,9 @@
     "وزارة البيئة والمياه والزراعة",
     "وزارة البيئة",
     "MEWA",
-    "Ministry of Environment"
+    "Ministry of Environment",
+    "\"البيئة\"",
+    "البيئة والمياه والزراعة"
    ],
    "sources": [
     {
@@ -100,7 +102,9 @@
     "الهيئة الملكية للجبيل وينبع",
     "الهيئة الملكية",
     "RCJY",
-    "Royal Commission for Jubail"
+    "Royal Commission for Jubail",
+    "الهيئة الملكية بالجبيل",
+    "مرافق"
    ],
    "sources": [
     {
@@ -188,7 +192,8 @@
     "وزارة البلديات والإسكان",
     "وزارة الشؤون البلدية",
     "MOMAH",
-    "Ministry of Municipalities"
+    "Ministry of Municipalities",
+    "البلديات والإسكان"
    ],
    "map_note": "The map lists this ministry twice (old and new names); the feed treats it as one body.",
    "sources": [
@@ -242,7 +247,8 @@
     "الحياة الفطرية",
     "NCW",
     "National Center for Wildlife",
-    "Wildlife"
+    "Wildlife",
+    "مركز الحياة الفطرية"
    ],
    "sources": [
     {
@@ -318,7 +324,9 @@
     "وزارة التجارة",
     "وزير التجارة",
     "Ministry of Commerce",
-    "Minister of Commerce"
+    "Minister of Commerce",
+    "«التجارة»",
+    "\"التجارة\""
    ],
    "sources": [
     {

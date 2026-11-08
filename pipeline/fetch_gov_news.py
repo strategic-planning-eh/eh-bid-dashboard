@@ -102,7 +102,7 @@ def trim_headline(text):
     t = re.split(r'\s+\S+\s+[0-9٠-٩]{1,2}\s+' + AR_HIJRI + r'\s+[0-9٠-٩]{4}\s*ه', t)[0]
     t = re.split(r'\s+\S+\s+[0-9٠-٩]{1,2}\s+\S+\s+[0-9٠-٩]{4}\s*ه', t)[0]
     t = re.split(r'\s+(?:[A-Z][A-Za-z-]+),\s+(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d', t)[0]
-    t = re.sub(r'^[\u0600-\u06FF]{2,12}\s*/\s*', '', t)
+    t = re.sub(r'^[\u0600-\u06FF]{2,12}(?:\s+[\u0600-\u06FF]{1,12}){0,2}\s*/\s*', '', t)   # «بيئي /», «علوم وتقنيات /», «سياحة وترفيه /»
     return t.strip()
 
 def card_date(a, link_rx):
@@ -395,6 +395,35 @@ def main():
             statuses.append(st); debug['sources'].append(dbg)
             print(f"{body['id']:6s} {src['type']:10s} {st['status']:7s} found={st['count']:3d} new={st['new']:3d} {st['seconds']}s {st['note']}")
         bodies_out.append({k: body[k] for k in ('id', 'en', 'ar', 'short', 'site') if k in body} | {'robots_disallow': body.get('robots_disallow', False), 'map_note': body.get('map_note', ''), 'sources': statuses})
+
+    # ---- stories read by hand in Chrome (pipeline/gov_news_manual.json): the SPA route since SPA started refusing the
+    #      collector (8 Nov 2026). Same keep rule as the automated search: the body must be named in the headline.
+    man_path = os.path.join(HERE, 'gov_news_manual.json')
+    if os.path.exists(man_path):
+        body_by_id = {b['id']: b for b in cfg['bodies']}
+        caps = [c for c in json.load(open(man_path, encoding='utf-8')).get('captures', []) if c.get('date', '') >= cutoff]
+        for cap in sorted(caps, key=lambda c: c['date']):
+            for bid, rows in (cap.get('bodies') or {}).items():
+                body = body_by_id.get(bid)
+                if not body or (only and bid not in only): continue
+                kept = new = 0
+                for r in rows:
+                    url = f"https://spa.gov.sa/N{str(r.get('n', '')).strip()}"; title = trim_headline(r.get('title') or '')
+                    if not re.search(r'/N\d{5,}$', url) or not title: continue
+                    if not matches_body(title, body): continue
+                    kept += 1; iid = item_id(url, title)
+                    d = sane(parse_date(r.get('date_ar') or '')) if r.get('date_ar') else None
+                    if iid in items:
+                        if d and not items[iid].get('date'): items[iid]['date'], items[iid]['date_src'] = d, 'dateline'
+                        continue
+                    items[iid] = dict(id=iid, body=bid, title=title, lang=lang_of(title), date=d, date_src='dateline' if d else 'unknown', url=url,
+                                      source='spa', tags=tag(title, cfg['tags']), first_seen=cap['date'])
+                    new += 1
+                bo = next((b for b in bodies_out if b['id'] == bid), None)
+                if bo is not None:
+                    bo['sources'].append({'type': 'chrome', 'lang': 'ar', 'url': f"spa.gov.sa/search?q=<{body.get('short', bid)}>&exact_search=1&by_latest=1", 'status': 'ok' if kept else 'empty',
+                                          'count': kept, 'new': new, 'seconds': 0, 'note': f"read by hand in Chrome on {cap['date']} ({len(rows)} newest SPA results; {kept} name the body)"})
+                print(f"{bid:6s} chrome     {'ok' if kept else 'empty':7s} found={kept:3d} new={new:3d} 0.0s read in Chrome on {cap['date']}")
 
     # ---- pinned stories (pipeline/gov_news_pins.json): kept even when the weekly search misses them
     pinned_ids = set(); pin_log = []

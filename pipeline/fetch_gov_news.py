@@ -296,6 +296,13 @@ def fetch_spa(src, cfg, dbg):
             dbg['url'] = url; dbg['sample'] = [(o['url'], o['title'][:60]) for o in out[:8]]
             return out
         dbg.setdefault('sample_any', []).extend([(urljoin(url, a['href']), clean(a.get_text(' '))[:50]) for a in soup.find_all('a', href=True)[:20]])
+        # Diagnostics in the Actions log: what the search page actually was (title, size, anchors), so a site change
+        # can be read from the run log without downloading the artefact (added 8 Nov 2026 when every SPA query came back empty)
+        anchors = soup.find_all('a', href=True)
+        ttl = clean(soup.title.get_text(' ')) if soup.title else '(no <title>)'
+        print(f"    spa-empty {url} → title={ttl[:80]!r} html={len(html_text)} anchors={len(anchors)} N-links={sum(1 for a in anchors if re.search(r'/N\d{5,}', a['href']))}")
+        for a in anchors[:12]:
+            print(f"      {urljoin(url, a['href'])[:100]}  {clean(a.get_text(' '))[:50]!r}")
     dbg['tried'] = tried
     return []
 

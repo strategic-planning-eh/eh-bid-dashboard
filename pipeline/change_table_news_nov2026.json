@@ -1,0 +1,327 @@
+{
+ "generated": "2026-11-08 14:38",
+ "title": "Corporate & Government News — 8 November 2026 update",
+ "failures": [],
+ "changes": [
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "edition",
+   "note": "title",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<title>Environmental Horizons — Saudi Arabia Intelligence Dashboard · April–September 2026 · 26 August Update</title>",
+   "new": "<title>Environmental Horizons — Saudi Arabia Intelligence Dashboard · April–November 2026 · 8 November Update</title>"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "edition",
+   "note": "META dates",
+   "occurrences": 1,
+   "ok": true,
+   "old": "\"generated\":\"26/08/2026\",\"window\":\"01/04/2026 – 26/08/2026\"}",
+   "new": "\"generated\":\"08/11/2026\",\"window\":\"01/04/2026 – 08/11/2026\"}"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "correction",
+   "note": "C03 financials",
+   "occurrences": 1,
+   "ok": true,
+   "old": "net loss SAR 0.38 billion; volumes down 34% while prices rose 42%.",
+   "new": "reported net loss SAR 833 million (SAR 0.38 billion after adjustments — corrected 08/11); volumes down 34% while prices rose 42%."
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "correction",
+   "note": "C03 detail",
+   "occurrences": 1,
+   "ok": true,
+   "old": "and a net loss of SAR 0.38 billion. The reason:",
+   "new": "and a reported net loss of SAR 833 million (SAR 0.38 billion on an adjusted basis — our 26 August card gave only the adjusted figure). The reason:"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "correction",
+   "note": "G01 financials",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Construction promises cut from $71 billion to $30 billion — the biggest pull-back in the fund's history.",
+   "new": "Construction promises reported cut from $71 billion to $30 billion (press figures — PIF's published strategy of 13/08 gives no construction-commitment number)."
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "correction",
+   "note": "G01 detail",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Construction commitments were cut from $71 billion to $30 billion, on top of an earlier round of cuts.",
+   "new": "Press reports put the cut in construction commitments at $71 billion to $30 billion, on top of an earlier round; the strategy PIF published on 13 August gives no such figure, so these numbers remain press reporting (corrected 08/11)."
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "correction",
+   "note": "C05 financials",
+   "occurrences": 1,
+   "ok": true,
+   "old": "January–March profit SAR 12.2m — back from a loss; more than SAR 1.1 billion already invested in the new plant.",
+   "new": "January–March profit SAR 12.2m; six-month profit SAR 104 million (published 02/08 — added 08/11, the figure was already out when our last edition appeared); more than SAR 1.1 billion already invested in the new plant."
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "edition",
+   "note": "DATA: 24 new stories",
+   "occurrences": 1,
+   "ok": true,
+   "old": "DATA ]",
+   "new": "24 new records"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "edition",
+   "note": "period filter",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<option value=\"Q3-2026\">July – August (war restart)</option>",
+   "new": "<option value=\"Q3-2026\">July – August (war restart)</option>\n        <option value=\"Q4-2026\">September – early November</option>"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "edition",
+   "note": "DEAL_FLOW",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const DEAL_FLOW = 6.5; // USD bn, in-window new awards / reported frameworks (see chart foot)",
+   "new": "const DEAL_FLOW = 5.1; // USD bn, 26 Aug–8 Nov: Aramco–HUMAIN stake 2.6, SPPC batteries 1.16, MWAN opportunities ≈0.56 (SAR 2.1bn), Qiddiya arena + stadium package ≈0.77 (see chart foot)"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "edition",
+   "note": "KPI money note",
+   "occurrences": 1,
+   "ok": true,
+   "old": "note:'New deals this period (one $5.3 billion item unconfirmed) · cancellations not counted', noteAr:'صفقات جديدة في هذه الفترة (منها بند بقيمة 5.3 مليارات دولار غير مؤكد) · لا تُحتسب الإلغاءات'",
+   "new": "note:'New deals 26 Aug–8 Nov: HUMAIN stake, batteries, MWAN opportunities, Qiddiya and Expo awards · cancellations not counted', noteAr:'صفقات جديدة 26 أغسطس–8 نوفمبر: حصة هيومين، البطاريات، فرص موان، ترسيات القدية وإكسبو · لا تُحتسب الإلغاءات'"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "edition",
+   "note": "KPI oil card",
+   "occurrences": 1,
+   "ok": true,
+   "old": "{accent:'#dc2626', num:'~$87', lab:'Oil price (Brent), close on 25/08', note:'About $92 on 24/08 as talks failed · ~$80 in early Aug when peace looked close', noteAr:'نحو 92 دولارًا في 24/08 مع فشل المحادثات · ونحو 80 دولارًا مطلع أغسطس حين بدا السلام قريبًا'}",
+   "new": "{accent:'#dc2626', num:'~$102', lab:'Oil price (Brent), close on 06/11', note:'October average about $108 · peak $117.6 on 30/10 after a mine strike in Hormuz · easing on US–Iran talks', noteAr:'متوسط أكتوبر نحو 108 دولارات · الذروة 117.6 في 30/10 بعد انفجار لغم في هرمز · تراجع مع المحادثات الأمريكية–الإيرانية'}"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "edition",
+   "note": "capData",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const capData=[\n  {t:'AI & Data Centres (reported)', v:5.3},\n  {t:'Water & Desalination', v:0.69},\n  {t:'Tourism & Culture', v:0.49},\n];",
+   "new": "const capData=[\n  {t:'AI & Data Centres (Aramco–HUMAIN stake)', v:2.6},\n  {t:'Battery storage (SPPC group 1)', v:1.16},\n  {t:'Sport & Expo construction (Qiddiya, Riyadh)', v:0.77},\n  {t:'Waste facilities (MWAN opportunities)', v:0.56},\n];"
+  },
+  {
+   "file": "n",
+   "kind": "regex",
+   "category": "edition",
+   "note": "chart foot",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"chart-foot\" data-eh-ar=\"[^\"]*\">Note: the \\$5\\.3 billion HUMAIN figure comes from a single news report and is unconfirmed\\. This chart counts only new deals announced in the period — not cancelled contracts, long-running programmes or company results\\.</div>",
+   "new": "<div class=\"chart-foot\" data-eh-ar=\"ملاحظة: الرسم يحتسب الصفقات الجديدة المعلنة بين 26 أغسطس و8 نوفمبر فقط — لا العقود الملغاة ولا البرامج الممتدة ولا نتائج الشركات. قيمة صالة القدية تقدير صحفي (500–600 مليون دولار)، وفرص موان محوّلة من 2.1 مليار ريال.\">Note: this chart counts only new deals announced between 26 August and 8 November — not cancelled contracts, long-running programmes or company re"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "edition",
+   "note": "audit sub",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<span class=\"sh-sub\">We re-checked every major claim from our 19 July report against sources — here are the verdicts, corrections and honest gaps</span>",
+   "new": "<span class=\"sh-sub\">We re-checked all 24 claims from our 26 August report against sources — here are the verdicts, corrections, resolved gaps and the gaps we declare</span>"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "edition",
+   "note": "AUDIT",
+   "occurrences": 1,
+   "ok": true,
+   "old": "AUDIT",
+   "new": "24 verdicts"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "edition",
+   "note": "CORRECTIONS",
+   "occurrences": 1,
+   "ok": true,
+   "old": "CORRECTIONS",
+   "new": "9 rows"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "edition",
+   "note": "verdict classes",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const VERDICT_CLASS = {'CONFIRMED':'v-conf','UPDATED':'v-upd','CLARIFIED':'v-clar'};\nconst VERDICT_LABEL = {'CONFIRMED':'CONFIRMED','UPDATED':'CONFIRMED · UPDATED','CLARIFIED':'CLARIFIED'};",
+   "new": "const VERDICT_CLASS = {'CONFIRMED':'v-conf','UPDATED':'v-upd','CLARIFIED':'v-clar','CONTRADICTED':'v-corr'};\nconst VERDICT_LABEL = {'CONFIRMED':'CONFIRMED','UPDATED':'CONFIRMED · UPDATED','CLARIFIED':'CLARIFIED','CONTRADICTED':'CONTRADICTED'};"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "edition",
+   "note": "audit banner count",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  const counts = {CONFIRMED:0, UPDATED:0, CLARIFIED:0};\n  AUDIT.forEach(a=>counts[a.v]++);\n  document.getElementById('audit-banner').innerHTML =\n    `<span class=\"big\">${AUDIT.length} / ${AUDIT.length} claims checked out</span>",
+   "new": "  const counts = {CONFIRMED:0, UPDATED:0, CLARIFIED:0, CONTRADICTED:0};\n  AUDIT.forEach(a=>counts[a.v]++);\n  document.getElementById('audit-banner').innerHTML =\n    `<span class=\"big\">${AUDIT.length - counts.CONTRADICTED} / ${AUDIT.length} claims checked out</span>"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "edition",
+   "note": "audit banner text",
+   "occurrences": 1,
+   "ok": true,
+   "old": "     <span><span class=\"verdict v-clar\" style=\"justify-self:start\">${counts.CLARIFIED} CLARIFIED</span></span>\n     <span style=\"font-weight:600\">Nothing withdrawn · every major claim from our last report re-checked on 26 August</span>`;",
+   "new": "     <span><span class=\"verdict v-clar\" style=\"justify-self:start\">${counts.CLARIFIED} CLARIFIED</span></span>\n     <span><span class=\"verdict v-corr\" style=\"justify-self:start\">${counts.CONTRADICTED} CONTRADICTED</span></span>\n     <span style=\"font-weight:600\">One claim contradicted by events (Hormuz traffic) · all 24 claims re-checked on 8 November</span>`;"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "edition",
+   "note": "corr banner date",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<span style=\"font-weight:600\">Verified against primary sources as of 26/08/2026</span>`;",
+   "new": "<span style=\"font-weight:600\">Verified against primary sources as of 08/11/2026</span>`;"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "edition",
+   "note": "Big Picture",
+   "occurrences": 1,
+   "ok": true,
+   "old": "Big Picture (26 Aug)",
+   "new": "Big Picture (8 Nov)"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "edition",
+   "note": "big picture sub",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<span class=\"sh-sub\">What it all adds up to — in six short reads</span>",
+   "new": "<span class=\"sh-sub\">What it all adds up to — in eight short reads, including what to watch next</span>"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "ar",
+   "note": "AR header",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"avnote\">Environmental Horizons · الاستخبارات الاستراتيجية — نافذة الرصد 01/04/2026 – 26/08/2026 · أُصدر 26/08/2026 · سري — للاستخدام الاستراتيجي الداخلي</div>",
+   "new": "<div class=\"avnote\">Environmental Horizons · الاستخبارات الاستراتيجية — نافذة الرصد 01/04/2026 – 08/11/2026 · أُصدر 08/11/2026 (يحلّ محل إصدار 26/08/2026) · سري — للاستخدام الاستراتيجي الداخلي</div>"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "ar",
+   "note": "AR KPI line",
+   "occurrences": 1,
+   "ok": true,
+   "old": "AR KPI line",
+   "new": "v8 Nov"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "ar",
+   "note": "AR audit paragraph",
+   "occurrences": 1,
+   "ok": true,
+   "old": "AR audit paragraph",
+   "new": "v8 Nov"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "ar",
+   "note": "AR corp heading",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<h2>أخبار الشركات <span class=\"avnote\">(9 قصص موثّقة — بالنص الكامل)</span></h2>",
+   "new": "<h2>أخبار الشركات <span class=\"avnote\">(19 قصة موثّقة — 9 بالنص الكامل من الدورات السابقة، و10 جديدة بصيغة موجزة)</span></h2>"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "ar",
+   "note": "AR: new company stories + gov heading",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<h2>أخبار الحكومة والمشاريع العملاقة <span class=\"avnote\">(15 قصة موثّقة — بالنص الكامل)</span></h2>",
+   "new": "<div class=\"avc\"><b>أرامكو السعودية — ارتفع ربح أرامكو في الربع الثالث 9% إلى 31.2 مليار دولار — وللمرة الأولى هذا العام غطّى النقد الفائض التوزيعات كاملةً</b> <span class=\"avnote\">· 03/11/2026 (نتائج يوليو–سبتمبر)</span><p style=\"margin:8px 0 0\">نشرت أرامكو نتائج يوليو–سبتمبر في 3 نوفمبر: ربح معدَّل 31.2 مليار دولار (28.6 مليارًا قبل عام) بدعم هوامش التكرير التي رفعت أرباح قطاع التكرير أكثر من ثل"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "ar",
+   "note": "AR: new government stories",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<p class=\"avnote\">«بنود المراقبة» 🔴 — القصص الكبرى مجموعةً في جدول واحد",
+   "new": "<div class=\"avc\"><b>وزارة المالية — يخطط البيان التمهيدي لإنفاق 1,392 مليار ريال ودخل 1,202 مليارًا في 2027 — فجوة نحو 191 مليار ريال (3.6% من الاقتصاد) تُغطّى بالاقتراض</b> <span class=\"avnote\">· 30/09/2026 (البيان التمهيدي)</span><p style=\"margin:8px 0 0\">نشرت وزارة المالية في 30 سبتمبر بيانها التمهيدي لميزانية 2027: إنفاق مقدّر 1,392 مليار ريال ودخل 1,202 مليارًا، أي فجوة نحو 191 مليار ريال تعا"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "ar",
+   "note": "AR big picture",
+   "occurrences": 1,
+   "ok": true,
+   "old": "AR big picture",
+   "new": "v8 Nov"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "ar",
+   "note": "AR methodology",
+   "occurrences": 1,
+   "ok": true,
+   "old": "AR methodology",
+   "new": "v8 Nov"
+  },
+  {
+   "file": "n",
+   "kind": "exact",
+   "category": "ar",
+   "note": "AR footer note",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<b>اكتمل التعريب:</b> جميع القصص الأربع والعشرين مترجمة بنصّها الكامل أعلاه؛ وتبقى البطاقات التفاعلية والرسوم في النسخة الإنجليزية مرجعًا للأرقام.",
+   "new": "<b>التعريب:</b> قصص الدورات السابقة (24) مترجمة بنصّها الكامل أعلاه، والقصص الأربع والعشرون الجديدة بصيغة موجزة؛ وتبقى البطاقات التفاعلية والرسوم والمصادر في النسخة الإنجليزية مرجعًا للأرقام."
+  }
+ ]
+}

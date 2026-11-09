@@ -1,0 +1,77 @@
+{
+ "generated": "2026-11-09 16:00",
+ "title": "Change table — Stakeholder Map Export to Excel (9 Nov 2026)",
+ "failures": [],
+ "changes": [
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "map-export",
+   "note": "CSS: export buttons",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</head>",
+   "new": "<style id=\"eh-map-export\">#xlsBtn svg,.lxls svg{width:14px;height:14px;vertical-align:-2px;margin-inline-end:5px}.lcount .lxls{margin-inline-start:12px;padding:3px 10px;font-size:12px;vertical-align:middle}#xlsBtn[disabled],.lxls[disabled]{opacity:.55;cursor:progress}</style></head>"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "map-export",
+   "note": "Header: Export to Excel button",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    <button class=\"btn\" onclick=\"resetFilters()\">Reset filters</button>\n    <button class=\"btn\" id=\"langBtn\"",
+   "new": "    <button class=\"btn\" onclick=\"resetFilters()\">Reset filters</button>\n    <button class=\"btn\" id=\"xlsBtn\" type=\"button\" onclick=\"exportXlsx('list')\" title=\"Download the companies currently shown as an Excel workbook\"><svg aria-hidden=\"true\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3v12m0 0l-4-4m4 4l4-4M4 17"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "map-export",
+   "note": "STATIC_TR: Export to Excel",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const STATIC_TR=[",
+   "new": "const STATIC_TR=[['Export to Excel','\\u062a\\u0635\\u062f\\u064a\\u0631 \\u0625\\u0644\\u0649 Excel'],"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "map-export",
+   "note": "anchor check",
+   "occurrences": 1,
+   "ok": true,
+   "old": "click any row for detail · click a column to re-sort','<b>'+rows.length.toLocaleString()+'</b> شركة معروضة — ",
+   "new": "click any row for detail · click a column to re-sort','<b>'+rows.length.toLocaleString()+'</b> شركة معروضة — "
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "map-export",
+   "note": "List View: Export to Excel button on the count line",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  const lv=document.getElementById('listView'); lv.innerHTML=h;",
+   "new": "  h=h.replace('</div><table class=\"ltbl\">','<button type=\"button\" class=\"btn lxls\" onclick=\"exportXlsx(\\'list\\')\"><svg aria-hidden=\\\"true\\\" viewBox=\\\"0 0 24 24\\\" fill=\\\"none\\\" stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\" stroke-linecap=\\\"round\\\" stroke-linejoin=\\\"round\\\"><path d=\\\"M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2\\\"/></svg>'+t('Export to Excel','تصدير إلى Excel')+'</butt"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "map-export",
+   "note": "JS: exportXlsx, xlsCols, xlsFilters, xlsWrite, CSV fallback",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function leafExport(kind){",
+   "new": "// ---- Export to Excel (9 Nov 2026): the rows passing the current filters, in whatever tab ----\nvar XLSX_URL='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';\nfunction ldXlsx(ok,bad){ if(window.XLSX)return ok(); var s=document.createElement('script'); s.src=XLSX_URL; s.onload=ok; s.onerror=bad; document.head.appendChild(s); }\nfunction xlsFilters(){\n  var f=[]; var S=state;\n  "
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "map-export",
+   "note": "Saudi Map bar: Excel export of the geo-filtered set",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<button class=\"leafbtn\" onclick=\"leafExport(\\'geojson\\')\">\\u2b07 GeoJSON</button>",
+   "new": "<button class=\"leafbtn\" onclick=\"exportXlsx(\\'leaf\\')\">\\u2b07 Excel</button><button class=\"leafbtn\" onclick=\"leafExport(\\'geojson\\')\">\\u2b07 GeoJSON</button>"
+  }
+ ]
+}

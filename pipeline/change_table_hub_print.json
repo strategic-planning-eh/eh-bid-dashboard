@@ -1,0 +1,77 @@
+{
+ "generated": "2026-11-09 16:05",
+ "title": "Change table — Print / save as PDF (9 Nov 2026)",
+ "failures": [],
+ "changes": [
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "hub-print",
+   "note": "Hub toolbar: Print / save as PDF button before Presentation mode",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  <button onclick=\"hubFS()\" title=\"Presentation mode (fullscreen)\"",
+   "new": "  <button onclick=\"hubPrint()\" title=\"Print or save this view as PDF\" aria-label=\"Print or save the current view as PDF\" data-tt-en=\"Print or save this view as PDF\" data-tt-ar=\"طباعة هذه اللوحة أو حفظها PDF\" data-al-en=\"Print or save the current view as PDF\" data-al-ar=\"طباعة اللوحة الحالية أو حفظها PDF\" style=\"padding:7px 11px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:"
+  },
+  {
+   "file": "hub",
+   "kind": "exact",
+   "category": "hub-print",
+   "note": "hubPrint(): posts {ehhub:print} to the frame on screen; Ctrl/Cmd+P routed to it",
+   "occurrences": 1,
+   "ok": true,
+   "old": "// ---- presentation mode ----\nfunction hubFS(){",
+   "new": "// ---- print / save as PDF: the frame on screen, prepared for paper by eh-shared.js (9 Nov 2026) ----\nfunction hubCurFrame(){\n  var f=document.querySelector('iframe.on');\n  if(!f){var w=$('newswrap');if(w&&w.style.display!=='none'){f=Array.prototype.find.call(w.querySelectorAll('iframe'),function(x){return x.style.display!=='none'&&x.src;});}}\n  return f;\n}\nfunction hubPrint(){\n  var f=hubCurFram"
+  },
+  {
+   "file": "js",
+   "kind": "exact",
+   "category": "hub-print",
+   "note": "eh-shared.js: ehPrint — open scrollers, hide floating chrome, header, print, restore; Ctrl/Cmd+P",
+   "occurrences": 1,
+   "ok": true,
+   "old": "    if(d.ehhub==='theme'&&(d.theme==='dark'||d.theme==='light')){ var g=THEME[PAGE]; try{ if(g)g(d.theme); }catch(err){} }\n  });",
+   "new": "    if(d.ehhub==='theme'&&(d.theme==='dark'||d.theme==='light')){ var g=THEME[PAGE]; try{ if(g)g(d.theme); }catch(err){} }\n    if(d.ehhub==='print'){ ehPrint(); }\n  });\n\n  /* 2b. Print / save as PDF (9 Nov 2026): open every scrolling panel, hide floating chrome, add a header, print, restore. */\n  var PRINT_UNDO=[];\n  function ehPrintPrepare(){\n    if(html.classList.contains('eh-printing'))return;\n"
+  },
+  {
+   "file": "js",
+   "kind": "exact",
+   "category": "hub-print",
+   "note": "version",
+   "occurrences": 1,
+   "ok": true,
+   "old": "/* eh-shared.js — EH Hub shared behaviour layer · v2.0.0 · 2026-10-12 (v1.1.0 2026-09-08)",
+   "new": "/* eh-shared.js — EH Hub shared behaviour layer · v2.1.0 · 2026-11-09 (v2.0.0 2026-10-12; v1.1.0 2026-09-08)\n   v2.1.0: print / save as PDF of the whole page on {ehhub:'print'}, window.ehPrint() or Ctrl/Cmd+P."
+  },
+  {
+   "file": "js",
+   "kind": "exact",
+   "category": "hub-print",
+   "note": "EH_SHARED exposes print",
+   "occurrences": 1,
+   "ok": true,
+   "old": "window.EH_SHARED={version:'2.0.0',",
+   "new": "window.EH_SHARED={version:'2.1.0',print:ehPrint,"
+  },
+  {
+   "file": "css",
+   "kind": "exact",
+   "category": "hub-print",
+   "note": "eh-shared.css: print page setup, break hints, floating chrome hidden, print header styles",
+   "occurrences": 1,
+   "ok": true,
+   "old": "@media print{html,body{background:#fff !important;color:#15224D !important}.eh-contour,.eh-syncstamp{display:none !important}.eh-rv{opacity:1 !important;transform:none !important}}",
+   "new": "@media print{html,body{background:#fff !important;color:#15224D !important}.eh-contour,.eh-syncstamp{display:none !important}.eh-rv{opacity:1 !important;transform:none !important}\n  @page{size:A4 landscape;margin:12mm}\n  html.eh-printing *,html.eh-printing *::before,html.eh-printing *::after{animation:none !important;transition:none !important;box-shadow:none !important;text-shadow:none !important"
+  },
+  {
+   "file": "css",
+   "kind": "exact",
+   "category": "hub-print",
+   "note": "version",
+   "occurrences": 1,
+   "ok": true,
+   "old": "/* eh-shared.css — EH Hub design system · v2.0.0 · 2026-10-12",
+   "new": "/* eh-shared.css — EH Hub design system · v2.1.0 · 2026-11-09 (print rules) · v2.0.0 · 2026-10-12"
+  }
+ ]
+}

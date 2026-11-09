@@ -1,4 +1,5 @@
-/* eh-shared.js — EH Hub shared behaviour layer · v2.0.0 · 2026-10-12 (v1.1.0 2026-09-08)
+/* eh-shared.js — EH Hub shared behaviour layer · v2.1.0 · 2026-11-09 (v2.0.0 2026-10-12; v1.1.0 2026-09-08)
+   v2.1.0: print / save as PDF of the whole page on {ehhub:'print'}, window.ehPrint() or Ctrl/Cmd+P.
    Include with <script src="eh-shared.js" defer></script> after the page's own scripts.
    1. Embedded mode: adds html.eh-embedded (+ html.eh-page-<id>) when the page is inside the hub.
    2. Hub bridge: one listener for {ehhub:'lang'|'theme'} that calls whatever the page exposes,
@@ -38,7 +39,44 @@
     var d=e.data||{}; if(!d.ehhub)return;
     if(d.ehhub==='lang'&&(d.lang==='ar'||d.lang==='en')){ var f=LANG[PAGE]; try{ if(f)f(d.lang); }catch(err){} applyLangDir(d.lang); setTimeout(floorText,50); }
     if(d.ehhub==='theme'&&(d.theme==='dark'||d.theme==='light')){ var g=THEME[PAGE]; try{ if(g)g(d.theme); }catch(err){} }
+    if(d.ehhub==='print'){ ehPrint(); }
   });
+
+  /* 2b. Print / save as PDF (9 Nov 2026): open every scrolling panel, hide floating chrome, add a header, print, restore. */
+  var PRINT_UNDO=[];
+  function ehPrintPrepare(){
+    if(html.classList.contains('eh-printing'))return;
+    html.classList.add('eh-printing');
+    var all=document.body.querySelectorAll('*'), vw=window.innerWidth;
+    for(var i=0;i<all.length;i++){ var el=all[i]; if(el.tagName==='SVG'||el.tagName==='CANVAS'||el.closest('svg'))continue; var cs; try{cs=getComputedStyle(el);}catch(e){continue;}
+      var scroller=(/(auto|scroll)/.test(cs.overflowY)||/(auto|scroll)/.test(cs.overflow))&&el.scrollHeight>el.clientHeight+4;
+      var fixed=cs.position==='fixed'&&el.offsetWidth<vw*0.9&&el.id!=='ehPrintHead';
+      var sticky=cs.position==='sticky';
+      if(scroller||fixed||sticky){ PRINT_UNDO.push([el,el.getAttribute('style')]);
+        if(scroller){ el.style.setProperty('height','auto','important'); el.style.setProperty('max-height','none','important'); el.style.setProperty('overflow','visible','important'); el.style.setProperty('flex','none','important'); }
+        if(fixed){ el.style.setProperty('display','none','important'); }
+        if(sticky){ el.style.setProperty('position','static','important'); } } }
+    /* page-level scroll containers that size to the viewport */
+    [document.documentElement,document.body].forEach(function(el){ PRINT_UNDO.push([el,el.getAttribute('style')]); el.style.setProperty('height','auto','important'); el.style.setProperty('overflow','visible','important'); });
+    var ar=/^ar/i.test(html.lang||'')||html.dir==='rtl';
+    var h=document.createElement('div'); h.id='ehPrintHead'; h.dir=ar?'rtl':'ltr';
+    var title=(document.querySelector('header h1, h1')||{}).textContent||document.title;
+    var d=new Date(), ds=new Intl.DateTimeFormat(ar?'ar-SA-u-nu-latn':'en-GB',{timeZone:'Asia/Riyadh',day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'}).format(d);
+    h.innerHTML='<div class="ehph-t">'+String(title).replace(/[<>]/g,'')+'</div><div class="ehph-s">'+(ar?'آفاق البيئة — منصة الاستخبارات الاستراتيجية · طُبعت ':'Environmental Horizons — Strategic Intelligence Hub · printed ')+ds+(ar?' (بتوقيت السعودية) · سرّي':' (KSA) · Confidential')+'</div>';
+    document.body.insertBefore(h,document.body.firstChild);
+    try{ window.dispatchEvent(new Event('resize')); }catch(e){}
+  }
+  function ehPrintRestore(){
+    if(!html.classList.contains('eh-printing'))return;
+    html.classList.remove('eh-printing');
+    PRINT_UNDO.forEach(function(p){ if(p[1]==null)p[0].removeAttribute('style'); else p[0].setAttribute('style',p[1]); }); PRINT_UNDO=[];
+    var h=document.getElementById('ehPrintHead'); if(h)h.parentNode.removeChild(h);
+    try{ window.dispatchEvent(new Event('resize')); }catch(e){}
+  }
+  function ehPrint(){ ehPrintPrepare(); setTimeout(function(){ try{ window.focus(); window.print(); }catch(e){ ehPrintRestore(); } },350); }
+  window.addEventListener('afterprint',function(){ setTimeout(ehPrintRestore,100); });
+  window.ehPrint=ehPrint; window.ehPrintPrepare=ehPrintPrepare; window.ehPrintRestore=ehPrintRestore;
+  document.addEventListener('keydown',function(e){ if((e.ctrlKey||e.metaKey)&&!e.shiftKey&&!e.altKey&&(e.key==='p'||e.key==='P')){ e.preventDefault(); ehPrint(); } });
   /* when embedded, adopt the hub's current language and theme on load without waiting for a click */
   if(embedded){ try{ var hl=localStorage.getItem('ehhub.lang'), ht=localStorage.getItem('ehhub.theme');
     if(hl){ setTimeout(function(){ window.postMessage({ehhub:'lang',lang:hl},'*'); },300); }
@@ -232,5 +270,5 @@
     });
   }
   ready(syncStamp);
-  window.EH_SHARED={version:'2.0.0',page:PAGE,embedded:embedded,motion:motion,floorText:floorText,viewIn:viewIn,contour:contour,markChartsIn:markChartsIn};
+  window.EH_SHARED={version:'2.1.0',print:ehPrint,page:PAGE,embedded:embedded,motion:motion,floorText:floorText,viewIn:viewIn,contour:contour,markChartsIn:markChartsIn};
 })();

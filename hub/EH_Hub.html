@@ -325,6 +325,7 @@ html[lang=ar] .conf span[lang=ar]{display:inline}
   <button id="wnbtn" class="hbtn" onclick="wnOpen()" aria-haspopup="dialog" aria-controls="wnpanel" aria-expanded="false" title="What's New" data-tt-en="What's New" data-tt-ar="ما الجديد" style="position:relative"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-inline-end:0"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="tl wnlbl" data-en="What&#39;s New" data-ar="ما الجديد">What's New</span><span id="wnbadge" class="wnbadge" hidden></span></button>
   <button id="themebtn" class="hbtn" onclick="hubTheme()" title="Toggle dark theme across all views" aria-label="Toggle dark theme" data-tt-en="Switch every view between light and dark" data-tt-ar="التبديل بين الوضع الفاتح والداكن في كل اللوحات" data-al-en="Switch light or dark theme" data-al-ar="تبديل الوضع الفاتح أو الداكن">🌙</button>
   <button id="langbtn" onclick="hubLang()" title="Switch language across all views" data-tt-en="Switch every view to Arabic" data-tt-ar="تحويل كل اللوحات إلى الإنجليزية" style="padding:7px 13px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:12.5px;font-weight:700">عربي</button>
+  <button onclick="hubPrint()" title="Print or save this view as PDF" aria-label="Print or save the current view as PDF" data-tt-en="Print or save this view as PDF" data-tt-ar="طباعة هذه اللوحة أو حفظها PDF" data-al-en="Print or save the current view as PDF" data-al-ar="طباعة اللوحة الحالية أو حفظها PDF" style="padding:7px 11px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:13px;line-height:1"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;vertical-align:-3px"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v7H6z"/></svg></button>
   <button onclick="hubFS()" title="Presentation mode (fullscreen)" aria-label="Fullscreen current view" data-tt-en="Presentation mode (full screen)" data-tt-ar="وضع العرض (ملء الشاشة)" data-al-en="Show the current view full screen" data-al-ar="عرض اللوحة الحالية بملء الشاشة" style="padding:7px 11px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-size:13px"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button>
   <nav aria-label="Hub sections — أقسام المنصة"><div class="tabs" role="tablist">
     <button class="tab on" role="tab" data-f="stake" data-t="Stakeholder Map" aria-pressed="true" onclick="go(this)"><svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3z"/><path d="M9 3v15M15 6v15"/></svg><span class="tl" data-en="Stakeholder &amp; Competitive Map" data-ar="خريطة أصحاب المصلحة والمنافسة">Stakeholder &amp; Competitive Map</span></button>
@@ -564,6 +565,19 @@ function qGo(name){
   go(document.querySelector('.tab[data-f="stake"]'));
   try{ document.getElementById('f-stake').contentWindow.selByName(name); }catch(e){}
 }
+// ---- print / save as PDF: the frame on screen, prepared for paper by eh-shared.js (9 Nov 2026) ----
+function hubCurFrame(){
+  var f=document.querySelector('iframe.on');
+  if(!f){var w=$('newswrap');if(w&&w.style.display!=='none'){f=Array.prototype.find.call(w.querySelectorAll('iframe'),function(x){return x.style.display!=='none'&&x.src;});}}
+  return f;
+}
+function hubPrint(){
+  var f=hubCurFrame(); if(!f||!f.contentWindow)return;
+  var w=f.contentWindow, shared=false; try{ shared=!!(w.EH_SHARED&&w.ehPrint); }catch(e){}
+  if(shared){ try{ w.postMessage({ehhub:'print',lang:hubL},'*'); return; }catch(e){} }
+  try{ w.focus(); w.print(); }catch(e){ window.print(); }
+}
+document.addEventListener('keydown',function(e){ if((e.ctrlKey||e.metaKey)&&!e.shiftKey&&!e.altKey&&(e.key==='p'||e.key==='P')){ e.preventDefault(); hubPrint(); } });
 // ---- presentation mode ----
 function hubFS(){
   var f=document.querySelector('iframe.on');

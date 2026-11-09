@@ -1,4 +1,4 @@
-/* eh-shared.css — EH Hub design system · v2.0.0 · 2026-10-12
+/* eh-shared.css — EH Hub design system · v2.1.0 · 2026-11-09 (print rules) · v2.0.0 · 2026-10-12
    Loaded by every page in hub/ (and the generated bid, Environment Fund and Government Tenders pages).
    One source of truth for: brand fonts, colour and type tokens, Arabic tuning, shared components, the motion
    system, and embedded-mode header collapse. Page-specific styling lives in each page's <style id="eh-skin">.
@@ -219,4 +219,17 @@ body.ar-mode .kpi .kdelta,body.ar-mode .kpi .ksrc,body.ar-mode .kpi .k-note{dire
 html[data-eh-motion="off"] *,html[data-eh-motion="off"] *::before{animation:none !important;transition:none !important}
 
 /* ---------- 5. Print: ink on paper, no motion, no chrome ---------- */
-@media print{html,body{background:#fff !important;color:#15224D !important}.eh-contour,.eh-syncstamp{display:none !important}.eh-rv{opacity:1 !important;transform:none !important}}
+@media print{html,body{background:#fff !important;color:#15224D !important}.eh-contour,.eh-syncstamp{display:none !important}.eh-rv{opacity:1 !important;transform:none !important}
+  @page{size:A4 landscape;margin:12mm}
+  html.eh-printing *,html.eh-printing *::before,html.eh-printing *::after{animation:none !important;transition:none !important;box-shadow:none !important;text-shadow:none !important}
+  html.eh-printing body{width:auto !important;min-width:0 !important}
+  html.eh-printing .card,html.eh-printing .kc,html.eh-printing .panel,html.eh-printing table,html.eh-printing figure,html.eh-printing .exc{break-inside:avoid;page-break-inside:avoid}
+  html.eh-printing tr,html.eh-printing .kpi{break-inside:avoid}
+  html.eh-printing h2,html.eh-printing h3{break-after:avoid}
+  html.eh-printing [role="dialog"],html.eh-printing .modal,html.eh-printing .overlay,html.eh-printing .tooltip,html.eh-printing #ehcbtn,html.eh-printing #ehLangBar,html.eh-printing .mfilt,html.eh-printing button:not(.tab):not(.nsub){display:none !important}
+  html.eh-printing a{text-decoration:none;color:inherit}
+}
+#ehPrintHead{display:none}
+html.eh-printing #ehPrintHead{display:block;padding:0 0 10px;margin:0 0 14px;border-bottom:2px solid #15224D;font-family:inherit}
+#ehPrintHead .ehph-t{font-size:18px;font-weight:800;color:#15224D}
+#ehPrintHead .ehph-s{font-size:11px;color:#5F7078;margin-top:3px}

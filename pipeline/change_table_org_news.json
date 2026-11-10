@@ -1,0 +1,67 @@
+{
+ "generated": "2026-11-10 11:06",
+ "title": "Change table — Organisations view: News & Vision 2030 section (10 Nov 2026)",
+ "failures": [],
+ "changes": [
+  {
+   "file": "page",
+   "kind": "exact",
+   "category": "org-news",
+   "note": "Styles for the News & Vision 2030 card",
+   "occurrences": 1,
+   "ok": true,
+   "old": ".notes{white-space:pre-wrap;font-size:13px;color:var(--eh-ink-2);line-height:1.6}",
+   "new": ".notes{white-space:pre-wrap;font-size:13px;color:var(--eh-ink-2);line-height:1.6}\n.nw-g{margin-top:18px}.nw-g:first-child{margin-top:0}\n.nw-t{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px;font-weight:700;font-size:13.5px;color:var(--eh-deep)}html.dark .nw-t{color:var(--eh-ink)}\n.nw-t .n{font-weight:600;font-size:12px;color:var(--eh-ink-3)}\n.nw-s{font-size:12.5px;color:var(--eh-ink-"
+  },
+  {
+   "file": "page",
+   "kind": "exact",
+   "category": "org-news",
+   "note": "Arabic labels for the News & Vision 2030 card",
+   "occurrences": 1,
+   "ok": true,
+   "old": " 'Tier':'التصنيف','map':'خريطة','SAR':'ريال',",
+   "new": " 'News & Vision 2030':'الأخبار ورؤية 2030','Named in the news':'ورد اسمها في الأخبار','Sector context':'سياق القطاع',\n 'News, regulatory releases, Vision 2030 projects and PIF strategy lines that name this organisation.':'أخبار وإعلانات تنظيمية ومشاريع رؤية 2030 وبنود من استراتيجية صندوق الاستثمارات العامة ورد فيها اسم هذه المنظمة.',\n 'Not about this organisation by name — news and Vision 2030 pro"
+  },
+  {
+   "file": "page",
+   "kind": "exact",
+   "category": "org-news",
+   "note": "newsRow / newsList / newsBlock: renders mentions and sector context, five rows then \"Show all\"",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function renderProf(){var p=SEL,el=document.getElementById('prof');",
+   "new": "var NIDX={};(ORG.news_items||[]).forEach(function(x){NIDX[x.id]=x});\nvar NSRC={news:['News briefing','blue'],reg:['Regulatory news','green'],v2030:['Vision 2030 project','grey'],pif:['PIF Strategy 2026–2030','grey']};\nfunction newsRow(id,p,i){var x=NIDX[id];if(!x)return'';var ar=LANG==='ar',head=ar?(x.ar||x.en):(x.en||x.ar),why=ar?(x.why_ar||''):(x.why_en||''),who=ar?(x.who_ar||x.who||''):(x.who||"
+  },
+  {
+   "file": "page",
+   "kind": "exact",
+   "category": "org-news",
+   "note": "New card placed after Government tenders (Etimad) and before Notes and evidence",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  h+='<div class=\"card\"><h2>'+t('Notes and evidence')+'</h2>'",
+   "new": "  h+='<div class=\"card\"><h2>'+t('News & Vision 2030')+(p.news?' <span class=\"n\">'+(p.news.mentions.length+p.news.context.length)+'</span>':'')+'</h2>'+newsBlock(p)+'</div>';\n  h+='<div class=\"card\"><h2>'+t('Notes and evidence')+'</h2>'"
+  },
+  {
+   "file": "page",
+   "kind": "exact",
+   "category": "org-news",
+   "note": "Docstring lists the new section",
+   "occurrences": 1,
+   "ok": true,
+   "old": "client ledger, licence, Etimad, notes.",
+   "new": "client ledger, licence, Etimad, news & Vision 2030 (from build_org_news.py), notes."
+  },
+  {
+   "file": "wf",
+   "kind": "exact",
+   "category": "org-news",
+   "note": "Workflow step: build_org_news.py after the gov-news feed, re-render organisations.html, keep the match report",
+   "occurrences": 1,
+   "ok": true,
+   "old": "      # ---------- What's New: previous dataset snapshot (artefact of the last successful run) ----------",
+   "new": "      # ---------- Organisations view: News & Vision 2030 section (10 Nov 2026). Runs here because it needs the Regulatory news feed restored\n      #            just above; the page built earlier stays in place if this step fails (it then shows \"No news on record\"). ----------\n      - name: Add News & Vision 2030 to the Organisations view\n        run: |\n          if python pipeline/build_org_news."
+  }
+ ]
+}

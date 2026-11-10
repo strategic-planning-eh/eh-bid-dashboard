@@ -147,6 +147,23 @@ jobs:
           SITE_URL: https://strategic-planning-eh.github.io/eh-bid-dashboard
           HUB_PASSPHRASE: ${{ secrets.HUB_PASSPHRASE }}
 
+      # ---------- Organisations view: News & Vision 2030 section (10 Nov 2026). Runs here because it needs the Regulatory news feed restored
+      #            just above; the page built earlier stays in place if this step fails (it then shows "No news on record"). ----------
+      - name: Add News & Vision 2030 to the Organisations view
+        run: |
+          if python pipeline/build_org_news.py --profiles pipeline/org_profiles.json --gov site/gov_news.json --report pipeline/org_news_report.json; then
+            python pipeline/build_org_page.py pipeline/org_profiles.json site/organisations.html
+          else echo "::warning::organisation news step failed — the Organisations page is published without the news section"; fi
+
+      - name: Keep the organisation-news match report (which item was linked to which organisation, and why)
+        uses: actions/upload-artifact@v4
+        continue-on-error: true
+        with:
+          name: org-news-report
+          path: pipeline/org_news_report.json
+          retention-days: 30
+          overwrite: true
+
       # ---------- What's New: previous dataset snapshot (artefact of the last successful run) ----------
       - name: Restore previous dataset snapshot
         uses: dawidd6/action-download-artifact@v6

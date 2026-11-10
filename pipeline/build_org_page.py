@@ -6,7 +6,7 @@ build_org_page.py — renders the Organisations view (hub/organisations.html) fr
 
 The page is a standalone bilingual (EN/AR) hub app: a searchable list of every organisation with activity on the
 left, one profile on the right — map standing, bid history as client, head-to-heads as a bidder, wins against EH,
-client ledger, licence, Etimad, notes. It follows the hub's language/theme via the {ehhub:'lang'|'theme'} messages,
+client ledger, licence, Etimad, news & Vision 2030 (from build_org_news.py), notes. It follows the hub's language/theme via the {ehhub:'lang'|'theme'} messages,
 uses eh-shared.css/js, and embeds its data in <script id="ORG" type="application/json">.
 """
 import json, sys, html
@@ -89,6 +89,16 @@ tr.x td{background:var(--eh-mist);padding:10px 14px}
 .none{display:block;padding:14px;text-align:center;color:var(--eh-ink-2);border:1.5px dashed var(--eh-line);border-radius:10px;font-size:13px}
 .svcs{display:flex;flex-wrap:wrap;gap:6px}
 .notes{white-space:pre-wrap;font-size:13px;color:var(--eh-ink-2);line-height:1.6}
+.nw-g{margin-top:18px}.nw-g:first-child{margin-top:0}
+.nw-t{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px;font-weight:700;font-size:13.5px;color:var(--eh-deep)}html.dark .nw-t{color:var(--eh-ink)}
+.nw-t .n{font-weight:600;font-size:12px;color:var(--eh-ink-3)}
+.nw-s{font-size:12.5px;color:var(--eh-ink-2);margin:3px 0 4px;line-height:1.5}
+.nw{list-style:none;margin:0;padding:0}.nw li{padding:10px 0;border-bottom:1px solid var(--eh-line)}.nw li:last-child{border-bottom:0}
+.nw .m{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;font-size:11.5px;color:var(--eh-ink-3)}
+.nw .h{font-weight:600;margin-top:5px;line-height:1.5;font-size:13.5px}.nw .h a{color:inherit;text-decoration:underline;text-decoration-color:var(--eh-line);text-underline-offset:3px}.nw .h a:hover{color:var(--eh-sea)}
+.nw .w{font-size:12.5px;color:var(--eh-ink-2);margin-top:3px;line-height:1.55}
+.nw-btn{margin-top:8px}.nw-cap{font-size:11.5px;color:var(--eh-ink-3);margin-top:14px;padding-top:10px;border-top:1px solid var(--eh-line);line-height:1.5}
+@media print{.nw-more{display:block!important}.nw-btn{display:none!important}}
 .empty{display:flex;align-items:center;justify-content:center;min-height:50vh;color:var(--eh-ink-2);text-align:center;padding:30px}
 .empty h2{color:var(--eh-deep);margin:0 0 8px}
 .warn{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:8px;background:var(--eh-warn-bg);color:var(--eh-warn);font-size:12.5px;font-weight:600;margin-top:10px}
@@ -136,6 +146,16 @@ var T={
  'Not on the Stakeholder Map yet — this name comes from the bid tracker and waits for a decision (link to an existing record or add a new one). Nothing here is counted into any map record.':'ليست على خريطة الأطراف المعنية بعد — هذا الاسم من جدول تتبع المنافسات وينتظر قراراً (ربطه بسجل قائم أو إضافة سجل جديد). لا يُحتسب شيء هنا في أي سجل على الخريطة.',
  'Pick an organisation':'اختر منظمة','Search by name, alias or any spelling the bid tracker uses. Every organisation with a tender, a bid against EH, a win, or an EH contract is here.':'ابحث بالاسم أو الاسم البديل أو أي تسمية يستخدمها جدول التتبع. كل منظمة لها منافسة أو عرض ضد آفاق البيئة أو فوز أو عقد مع آفاق البيئة موجودة هنا.',
  'Services':'الخدمات','Years':'السنوات','Activities':'الأنشطة','Expiry':'الانتهاء','Tenders on Etimad':'منافسات على اعتماد','Open':'مفتوحة','Last capture':'آخر التقاط','undisclosed':'غير معلن','DQ':'مستبعد','EH':'آفاق البيئة',
+ 'News & Vision 2030':'الأخبار ورؤية 2030','Named in the news':'ورد اسمها في الأخبار','Sector context':'سياق القطاع',
+ 'News, regulatory releases, Vision 2030 projects and PIF strategy lines that name this organisation.':'أخبار وإعلانات تنظيمية ومشاريع رؤية 2030 وبنود من استراتيجية صندوق الاستثمارات العامة ورد فيها اسم هذه المنظمة.',
+ 'Not about this organisation by name — news and Vision 2030 projects in its sector:':'ليست عن هذه المنظمة بالاسم — أخبار ومشاريع رؤية 2030 في قطاعها:',
+ 'No item in News & Intelligence names this organisation':'لا يوجد بند في الأخبار والمعلومات يذكر هذه المنظمة بالاسم',
+ 'No sector on record for this organisation, so no sector context is shown':'لا يوجد قطاع مسجّل لهذه المنظمة، لذا لا يُعرض سياق القطاع',
+ 'No news on record for this sector':'لا توجد أخبار مسجّلة لهذا القطاع',
+ 'Sector context is shown for tender clients, EH clients and Tier 1–2 organisations only.':'يُعرض سياق القطاع لعملاء المنافسات وعملاء آفاق البيئة ومنظمات التصنيف الأول والثاني فقط.',
+ 'No news on record':'لا توجد أخبار في السجل','News briefing':'موجز الأخبار','Regulatory news':'الأخبار التنظيمية','Vision 2030 project':'مشروع رؤية 2030','PIF Strategy 2026–2030':'استراتيجية الصندوق 2026–2030',
+ 'Show all':'عرض الكل','Show fewer':'عرض أقل','What it means for EH':'ماذا يعني لآفاق البيئة','named in the detail':'ورد الاسم في التفاصيل','reviewed':'روجع',
+ 'Taken from the News & Intelligence pages as published: the news briefing, Regulatory news, the Vision 2030 dashboard and the PIF Strategy 2026–2030 page. Arabic news headlines are EH translations; regulatory headlines stay in the language of the source.':'مأخوذة من صفحات الأخبار والمعلومات كما نُشرت: موجز الأخبار، والأخبار التنظيمية، ولوحة رؤية 2030، وصفحة استراتيجية الصندوق 2026–2030. عناوين الأخبار بالعربية ترجمة آفاق البيئة؛ وعناوين الأخبار التنظيمية تبقى بلغة المصدر.',
  'Tier':'التصنيف','map':'خريطة','SAR':'ريال','asked':'طُرحت','vs EH':'ضد آفاق البيئة','Beaten by':'خسرت أمام','below':'أقل','above':'أعلى','lowest':'الأقل'
 };
 function t(s){return LANG==='ar'&&T[s]!==undefined?T[s]:s}
@@ -187,6 +207,25 @@ function licBlock(p){var l=p.lic;if(!l||(!l.act&&!l.mw))return'<span class="none
   return'<div class="facts" style="border:0;padding:0;margin:0"><div><div class="k">'+t('Activities')+'</div><div class="v"><bdi class="eh-ltr">'+esc(l.act||'—')+'</bdi></div></div>'+(mw.exp?'<div><div class="k">'+t('Expiry')+'</div><div class="v">'+d(mw.exp)+'</div></div>':'')+(mw.cities?'<div><div class="k">'+t('City')+'</div><div class="v">'+esc(Array.isArray(mw.cities)?mw.cities.join(', '):mw.cities)+'</div></div>':'')+'</div>'}
 function etimadBlock(p){var e=p.etimad;if(!e)return'<span class="none">'+t('No Etimad tenders on record')+'</span>';
   return'<div class="facts" style="border:0;padding:0;margin:0"><div><div class="k">'+t('Tenders on Etimad')+'</div><div class="v">'+(e.tenders!=null?e.tenders:'—')+'</div></div><div><div class="k">'+t('Open')+'</div><div class="v">'+(e.open!=null?e.open:'—')+'</div></div><div><div class="k">'+t('Last capture')+'</div><div class="v">'+d(e.last_capture)+'</div></div></div>'}
+var NIDX={};(ORG.news_items||[]).forEach(function(x){NIDX[x.id]=x});
+var NSRC={news:['News briefing','blue'],reg:['Regulatory news','green'],v2030:['Vision 2030 project','grey'],pif:['PIF Strategy 2026–2030','grey']};
+function newsRow(id,p,i){var x=NIDX[id];if(!x)return'';var ar=LANG==='ar',head=ar?(x.ar||x.en):(x.en||x.ar),why=ar?(x.why_ar||''):(x.why_en||''),who=ar?(x.who_ar||x.who||''):(x.who||''),s=NSRC[x.src]||[x.src,'grey'];
+  var det=(p.news.primary!=null&&i>=p.news.primary&&i>=0)?'<span>· '+t('named in the detail')+'</span>':'';
+  var hd='<bdi dir="auto">'+esc(head)+'</bdi>';if(x.url)hd='<a href="'+esc(x.url)+'" target="_blank" rel="noopener">'+hd+'</a>';
+  return'<li><div class="m"><span class="eh-chip '+s[1]+'">'+t(s[0])+'</span>'+(x.date?'<span>'+(x.src==='v2030'?t('reviewed')+' ':'')+d(x.date)+'</span>':'')+(who?'<span>· <bdi dir="auto">'+esc(who)+'</bdi></span>':'')+det+'</div><div class="h">'+hd+'</div>'+
+    (why?'<div class="w">'+(x.src==='news'?'<b>'+t('What it means for EH')+':</b> ':'')+'<bdi dir="auto">'+esc(why)+'</bdi></div>':'')+'</li>'}
+function newsList(ids,p,key,isM){var N=5,a=ids.slice(0,N).map(function(id,i){return newsRow(id,p,isM?i:-1)}).join(''),b=ids.slice(N).map(function(id,i){return newsRow(id,p,isM?i+N:-1)}).join('');
+  return'<ul class="nw">'+a+'</ul>'+(b?'<ul class="nw nw-more" id="nw-'+key+'" style="display:none;border-top:1px solid var(--eh-line)">'+b+'</ul><button class="eh-btn nw-btn" onclick="var u=document.getElementById(\'nw-'+key+'\'),o=u.style.display===\'none\';u.style.display=o?\'\':\'none\';this.textContent=o?t(\'Show fewer\'):t(\'Show all\')+\' ('+ids.length+')\'">'+t('Show all')+' ('+ids.length+')</button>':'')}
+function newsBlock(p){var n=p.news;if(!n)return'<span class="none">'+t('No news on record')+'</span>';var TH=ORG.news_themes||{},ar=LANG==='ar';
+  var labs=(n.themes||[]).map(function(k){var o=TH[k]||{};return'<span class="eh-chip grey">'+esc(ar?(o.ar||k):(o.en||k))+'</span>'}).join(' ');
+  var h='<div class="nw-g"><div class="nw-t">'+t('Named in the news')+' <span class="n">'+n.mentions.length+'</span></div><div class="nw-s">'+t('News, regulatory releases, Vision 2030 projects and PIF strategy lines that name this organisation.')+'</div>'+
+    (n.mentions.length?newsList(n.mentions,p,'m',true):'<span class="none">'+t('No item in News & Intelligence names this organisation')+'</span>')+'</div>';
+  h+='<div class="nw-g"><div class="nw-t">'+t('Sector context')+' <span class="n">'+n.context.length+'</span></div>';
+  if(!n.eligible)h+='<div class="nw-s">'+t('Sector context is shown for tender clients, EH clients and Tier 1–2 organisations only.')+'</div>';
+  else if(!n.themes.length)h+='<span class="none">'+t('No sector on record for this organisation, so no sector context is shown')+'</span>';
+  else h+='<div class="nw-s">'+t('Not about this organisation by name — news and Vision 2030 projects in its sector:')+' '+labs+'</div>'+(n.context.length?newsList(n.context,p,'c',false):'<span class="none">'+t('No news on record for this sector')+'</span>');
+  h+='</div><div class="nw-cap">'+t('Taken from the News & Intelligence pages as published: the news briefing, Regulatory news, the Vision 2030 dashboard and the PIF Strategy 2026–2030 page. Arabic news headlines are EH translations; regulatory headlines stay in the language of the source.')+'</div>';
+  return h}
 function renderProf(){var p=SEL,el=document.getElementById('prof');
   if(!p){el.innerHTML='<div class="card empty"><div><h2>'+t('Pick an organisation')+'</h2><div>'+t('Search by name, alias or any spelling the bid tracker uses. Every organisation with a tender, a bid against EH, a win, or an EH contract is here.')+'</div></div></div>';return}
   var k=p.kpi,aka=p.aliases.concat(p.tracker_names.filter(function(x){return p.aliases.indexOf(x)<0}));
@@ -206,6 +245,7 @@ function renderProf(){var p=SEL,el=document.getElementById('prof');
   h+='<div class="card"><h2>'+t('What EH sells this client')+'</h2>'+clientBlock(p)+'</div>';
   h+='<div class="card"><h2>'+t('Licence')+'</h2>'+licBlock(p)+'</div>';
   h+='<div class="card"><h2>'+t('Government tenders (Etimad)')+'</h2>'+etimadBlock(p)+'</div>';
+  h+='<div class="card"><h2>'+t('News & Vision 2030')+(p.news?' <span class="n">'+(p.news.mentions.length+p.news.context.length)+'</span>':'')+'</h2>'+newsBlock(p)+'</div>';
   h+='<div class="card"><h2>'+t('Notes and evidence')+'</h2>'+(p.notes?'<div class="notes">'+esc(p.notes)+'</div>':'<span class="none">'+t('No notes on record')+'</span>')+'</div>';
   el.innerHTML=h;if(window.ehMotion&&ehMotion.animateCards)try{ehMotion.animateCards(el)}catch(e){}}
 function relabel(){document.querySelectorAll('[data-en]').forEach(function(e){e.innerHTML=LANG==='ar'?e.getAttribute('data-ar'):e.getAttribute('data-en')});var q=document.getElementById('q');q.placeholder=LANG==='ar'?q.getAttribute('data-ph-ar'):q.getAttribute('data-ph-en');document.getElementById('langBtn').textContent=LANG==='ar'?'English':'عربي'}

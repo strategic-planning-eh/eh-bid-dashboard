@@ -1,0 +1,879 @@
+{
+  "_howto": "Rules behind the 'News & Vision 2030' section of every organisation profile (pipeline/build_org_news.py). Decided by Youssef on 10 Nov 2026: the section sits between 'Government tenders' and 'Notes and evidence'; it has two groups — Mentions (the item names the organisation) and Sector context (the item is about the organisation's sector); sources are the curated news briefing, Regulatory news, the Vision 2030 dashboard and the PIF Strategy page; sector context is given to tender clients, EH clients and Tier 1–2 organisations only. Edit this file to change a sector, add a search name or block a wrong match — no code change needed.",
+  "themes": {
+    "energy": {
+      "en": "Electricity & clean energy",
+      "ar": "الكهرباء والطاقة النظيفة"
+    },
+    "oilgas": {
+      "en": "Oil & gas",
+      "ar": "النفط والغاز"
+    },
+    "petchem": {
+      "en": "Petrochemicals & chemicals",
+      "ar": "البتروكيماويات والكيماويات"
+    },
+    "water": {
+      "en": "Water & desalination",
+      "ar": "المياه والتحلية"
+    },
+    "mining": {
+      "en": "Mining & metals",
+      "ar": "التعدين والمعادن"
+    },
+    "industry": {
+      "en": "Industry & manufacturing",
+      "ar": "الصناعة والتصنيع"
+    },
+    "ports": {
+      "en": "Ports, shipping & logistics",
+      "ar": "الموانئ والملاحة والخدمات اللوجستية"
+    },
+    "giga": {
+      "en": "Giga-projects & construction",
+      "ar": "المشاريع العملاقة والإنشاءات"
+    },
+    "waste": {
+      "en": "Waste management & environmental regulation",
+      "ar": "إدارة النفايات والتنظيم البيئي"
+    },
+    "tech": {
+      "en": "Technology & data centres",
+      "ar": "التقنية ومراكز البيانات"
+    },
+    "public": {
+      "en": "Government budget & procurement",
+      "ar": "الميزانية والمشتريات الحكومية"
+    },
+    "health": {
+      "en": "Healthcare & medical waste",
+      "ar": "الرعاية الصحية والنفايات الطبية"
+    },
+    "municipal": {
+      "en": "Municipalities & city services",
+      "ar": "البلديات وخدمات المدن"
+    },
+    "nature": {
+      "en": "Environment, vegetation & conservation",
+      "ar": "البيئة والغطاء النباتي والمحافظة"
+    }
+  },
+  "_sector_map": "Stakeholder Map 'sector' value → themes. Used for clients and Tier 1–2 organisations that are not competitors.",
+  "sector_map": {
+    "Energy & Power": [
+      "energy"
+    ],
+    "Renewables": [
+      "energy"
+    ],
+    "Utilities & Water": [
+      "water"
+    ],
+    "Oil & Gas": [
+      "oilgas"
+    ],
+    "Base Oils": [
+      "oilgas"
+    ],
+    "Petrochemicals": [
+      "petchem"
+    ],
+    "Industrial Gases": [
+      "petchem"
+    ],
+    "Mining & Metals": [
+      "mining"
+    ],
+    "Iron/Steel": [
+      "industry"
+    ],
+    "Cement": [
+      "industry"
+    ],
+    "Manufacturing": [
+      "industry"
+    ],
+    "Industrial": [
+      "industry"
+    ],
+    "Food": [
+      "industry"
+    ],
+    "Automotive": [
+      "industry"
+    ],
+    "Glass": [
+      "industry"
+    ],
+    "Paper": [
+      "industry"
+    ],
+    "Pipes/Valves": [
+      "industry"
+    ],
+    "Pharmaceuticals": [
+      "industry"
+    ],
+    "Advanced Electronics": [
+      "industry"
+    ],
+    "Aerospace": [
+      "industry"
+    ],
+    "Consumer Plastic": [
+      "industry"
+    ],
+    "Construction": [
+      "giga"
+    ],
+    "Real Estate": [
+      "giga"
+    ],
+    "Hospitality & Tourism": [
+      "giga"
+    ],
+    "Engineering": [
+      "giga"
+    ],
+    "Municipalities": [
+      "municipal",
+      "waste"
+    ],
+    "Marine & Ports": [
+      "ports"
+    ],
+    "Transport": [
+      "ports"
+    ],
+    "Waste Management": [
+      "waste"
+    ],
+    "Recycling": [
+      "waste"
+    ],
+    "Environmental": [
+      "waste"
+    ],
+    "Environmental Services": [
+      "waste"
+    ],
+    "Environmental Consulting": [
+      "waste"
+    ],
+    "Healthcare": [
+      "health"
+    ],
+    "IT": [
+      "tech"
+    ],
+    "Telecommunications": [
+      "tech"
+    ],
+    "Agriculture": [
+      "nature"
+    ],
+    "Afforestation Combat": [
+      "nature"
+    ]
+  },
+  "_name_rules": "Used only when the map has no sector for the organisation: a pattern in its name (English or Arabic, any recorded spelling) → themes. First-match is not applied; every matching rule adds its themes.",
+  "name_rules": [
+    [
+      "Municipalit|بلدية|أمانة|امانة",
+      [
+        "municipal",
+        "waste"
+      ]
+    ],
+    [
+      "Hospital|Health|Medical|مستشفى|مستشفيات|الصحي|الصحة|الطبية",
+      [
+        "health"
+      ]
+    ],
+    [
+      "Desalin|تحلية|Water Authority|Water Compan|Water Plant|Water Services|لخدمات المياه|المياه الوطني|للمياه المالحة|السعودية للمياه|معالجة للمياه|المعالجة للمياه|الكهرباء والمياه|Irrigation|العامة للري",
+      [
+        "water"
+      ]
+    ],
+    [
+      "Electric|كهرباء|الكهرباء|Power|Energy|للطاقة|الطاقة|نظم القوى",
+      [
+        "energy"
+      ]
+    ],
+    [
+      "Refinery|مصفاة|SAMREF|Aramco|ARAMCO|أرامكو|النفطية|زيوت التشحيم|للزيوت",
+      [
+        "oilgas"
+      ]
+    ],
+    [
+      "Petrochem|بتروكيم|Chemical|كيماو|كيمياء|الكيمياء|بوليستايرين",
+      [
+        "petchem"
+      ]
+    ],
+    [
+      "Cement|أسمنت|اسمنت|Factory|مصنع|مصانع|للصناعة|الصناعية|لصناعة|للصناعات|الصناعات|لسبك|الحديد|المعدنية|المعادن|بلاستيك|البلاستيك|كابلات|الكابلات|ألمنيوم|الالمنيوم|الألمنيوم|زجاج|الزجاج|دهانات|Industr|Manufactur|Steel|Alumin|Motors|Automotive",
+      [
+        "industry"
+      ]
+    ],
+    [
+      "\\bPort\\b|Ports|ميناء|موانئ|Marine|البحرية|Navy|للملاحة|Cruise|Logistic|لوجست|Airport|مطارات|Railway|Railways|العامة للنقل|وزارة النقل|Transport",
+      [
+        "ports"
+      ]
+    ],
+    [
+      "NEOM|نيوم|Red Sea Global|AlUla|العلا|Qiddiya|القدية|Diriyah|الدرعية|Downtown|ROSHN|روشن|Royal Commission for Jazan|الملكية بجازان|الملكيه لمدينه الرياض|Royal Commission for Riyadh|مقاولات|للمقاولات|Contracting|Construction|العقارية|للانشاء|للإنشاء|التشييد|للتشييد|Readymix|الخرسانة",
+      [
+        "giga"
+      ]
+    ],
+    [
+      "Vegetation|الغطاء النباتي|Wildlife|الحياة الفطرية|محمية|Royal Reserve|Coral|الشعب المرجانية|Environment Fund|صندوق البيئة|Ministry of Environment|وزارة البيئة|Meteorolog|للأرصاد|للارصاد|Plant Pests|الآفات",
+      [
+        "nature"
+      ]
+    ],
+    [
+      "Recycl|تدوير|Waste|النفايات|MWAN|موان|Environmental Compliance|الالتزام البيئي|الإلتزام البيئي|للخدمات البيئية|قياس البيئة",
+      [
+        "waste"
+      ]
+    ],
+    [
+      "Mining|تعدين|التعدين|Geological|الجيولوجية|Mineral Resources|الثروة المعدنية",
+      [
+        "mining"
+      ]
+    ],
+    [
+      "Cyber|السيبراني|Science and Technology|للعلوم والتقنية",
+      [
+        "tech"
+      ]
+    ]
+  ],
+  "_overrides": "Exact organisation name → themes; wins over the sector map and name rules.",
+  "overrides": {
+    "ARAMCO": [
+      "oilgas"
+    ],
+    "Saudi Energy (formerly SEC)": [
+      "energy"
+    ],
+    "Saudi Investment Recycling Company (SIRC)": [
+      "waste"
+    ],
+    "ACWA Power": [
+      "energy",
+      "water"
+    ],
+    "NEOM": [
+      "giga",
+      "ports",
+      "tech"
+    ],
+    "CEER": [
+      "industry"
+    ],
+    "Ministry of Energy (KSA)": [
+      "energy",
+      "oilgas",
+      "public"
+    ],
+    "Ministry of Industry and Mineral Resources (MIM)": [
+      "industry",
+      "mining",
+      "public"
+    ],
+    "Ministry of Environment, Water and Agricultural": [
+      "nature",
+      "water",
+      "waste",
+      "public"
+    ],
+    "Zakat, Tax and Customs Authorities": [
+      "ports",
+      "public"
+    ],
+    "Royal Commission for AlUla (RCU)": [
+      "giga",
+      "nature",
+      "public"
+    ]
+  },
+  "_extra_names": "Extra names to search for an organisation in the news, beyond the map name, aliases and tracker spellings.",
+  "extra_names": {
+    "ARAMCO": [
+      "Saudi Aramco",
+      "Aramco",
+      "أرامكو"
+    ],
+    "Saudi Energy (formerly SEC)": [
+      "Saudi Electricity Company",
+      "Saudi Energy"
+    ],
+    "Saudi Water Authority": [
+      "Saudi Water Authority",
+      "SWCC"
+    ],
+    "National Waste Management Center (MWAN)": [
+      "MWAN",
+      "National Center for Waste Management",
+      "موان"
+    ],
+    "National Center for Environmental Compliance Monitoring (NCEC Monitoring)": [
+      "NCEC",
+      "National Center for Environmental Compliance"
+    ],
+    "المركز الوطني للرقابه علي الالتزام البيئي": [
+      "NCEC",
+      "National Center for Environmental Compliance",
+      "المركز الوطني للرقابة على الالتزام البيئي"
+    ],
+    "Ministry of Environment, Water and Agricultural": [
+      "MEWA",
+      "Ministry of Environment, Water and Agriculture"
+    ],
+    "National Center for Vegetation Cover Development & Combating Desertification (NCVC)": [
+      "NCVC"
+    ],
+    "المركز الوطني لتنمية الغطاء النباتي ومكافحة التصحر": [
+      "NCVC"
+    ],
+    "شركه المياه الوطنيه": [
+      "National Water Company",
+      "NWC"
+    ],
+    "شركه مرافق الكهرباء والمياه بالجبيل وينبع": [
+      "Marafiq"
+    ],
+    "Royal Commission for AlUla (RCU)": [
+      "Royal Commission for AlUla",
+      "AlUla Development Company"
+    ],
+    "Saudi Investment Recycling Company (SIRC)": [
+      "SIRC"
+    ],
+    "Ministry of Industry and Mineral Resources (MIM)": [
+      "Ministry of Industry & Mineral Resources",
+      "Ministry of Industry and Mineral Resources"
+    ],
+    "Ministry of Energy (KSA)": [
+      "Ministry of Energy"
+    ]
+  },
+  "_never_names": "Short or generic names that must never be used to find an organisation in news text (they collide with ordinary words, currency codes or other bodies).",
+  "never_names": [
+    "SAR",
+    "SE",
+    "EH",
+    "KSA",
+    "IT",
+    "AI",
+    "US",
+    "UK",
+    "PDC",
+    "SAL",
+    "SIO",
+    "NCA",
+    "MIM",
+    "SEC",
+    "GOV",
+    "ESNAD",
+    "SAFE",
+    "Other",
+    "National",
+    "Saudi",
+    "Environment",
+    "Environmental",
+    "Vision",
+    "Green",
+    "Energy",
+    "Water",
+    "Gulf",
+    "Arabia",
+    "Catrion Holding"
+  ],
+  "_block": "Wrong matches to suppress: [organisation name, item id]. The ten below are Youssef's 'Remove — wrong match' decisions in EH_Org_News_Review.xlsx (10 Nov 2026); a blocked item is shown neither as a mention nor as sector context on that profile.",
+  "block": [
+    [
+      "Saudi Energy (formerly SEC)",
+      "news:C16"
+    ],
+    [
+      "ARAMCO",
+      "news:G23"
+    ],
+    [
+      "ARAMCO",
+      "news:C09"
+    ],
+    [
+      "ACWA Power",
+      "v2030:Saudi Water Authority (SWA) Desalination"
+    ],
+    [
+      "Albawani Co.",
+      "news:G07"
+    ],
+    [
+      "CEER",
+      "news:C03"
+    ],
+    [
+      "NEOM",
+      "news:C11"
+    ],
+    [
+      "NEOM",
+      "news:G29"
+    ],
+    [
+      "شركه مرافق الكهرباء والمياه بالجبيل وينبع",
+      "news:C09"
+    ],
+    [
+      "Al Moammar Information Systems(MIS)",
+      "news:C11"
+    ]
+  ],
+  "_news_item_themes": "Curated news briefing: item id → themes (hand-tagged for the items on the page as of 8 Nov 2026). An id that is missing here falls back to news_text_rules.",
+  "news_item_themes": {
+    "C01": [
+      "oilgas"
+    ],
+    "C02": [
+      "oilgas"
+    ],
+    "C03": [
+      "petchem"
+    ],
+    "C04": [
+      "petchem"
+    ],
+    "C05": [
+      "petchem"
+    ],
+    "C06": [
+      "energy",
+      "water"
+    ],
+    "C07": [
+      "mining"
+    ],
+    "C08": [
+      "tech"
+    ],
+    "C09": [
+      "waste",
+      "water"
+    ],
+    "C10": [
+      "oilgas"
+    ],
+    "C11": [
+      "tech",
+      "oilgas"
+    ],
+    "C12": [
+      "oilgas"
+    ],
+    "C13": [
+      "oilgas"
+    ],
+    "C14": [
+      "petchem"
+    ],
+    "C15": [
+      "petchem",
+      "oilgas"
+    ],
+    "C16": [
+      "energy",
+      "water"
+    ],
+    "C17": [
+      "water",
+      "energy"
+    ],
+    "C18": [
+      "waste",
+      "water",
+      "mining"
+    ],
+    "C19": [
+      "giga"
+    ],
+    "G01": [
+      "giga"
+    ],
+    "G02": [
+      "giga",
+      "tech",
+      "ports"
+    ],
+    "G03": [
+      "giga"
+    ],
+    "G04": [
+      "water"
+    ],
+    "G05": [
+      "energy"
+    ],
+    "G06": [
+      "waste",
+      "municipal"
+    ],
+    "G07": [
+      "giga"
+    ],
+    "G08": [
+      "giga",
+      "nature"
+    ],
+    "G09": [
+      "oilgas",
+      "ports"
+    ],
+    "G10": [
+      "oilgas",
+      "ports"
+    ],
+    "G11": [
+      "water"
+    ],
+    "G12": [
+      "ports",
+      "oilgas"
+    ],
+    "G13": [
+      "public"
+    ],
+    "G14": [
+      "mining"
+    ],
+    "G15": [],
+    "G16": [
+      "public"
+    ],
+    "G17": [
+      "public"
+    ],
+    "G18": [
+      "oilgas"
+    ],
+    "G19": [
+      "oilgas",
+      "ports"
+    ],
+    "G20": [
+      "waste",
+      "industry"
+    ],
+    "G21": [
+      "waste",
+      "health",
+      "municipal"
+    ],
+    "G22": [
+      "public"
+    ],
+    "G23": [
+      "tech",
+      "giga"
+    ],
+    "G24": [
+      "giga",
+      "ports"
+    ],
+    "G25": [
+      "water"
+    ],
+    "G26": [
+      "water"
+    ],
+    "G27": [
+      "energy"
+    ],
+    "G28": [],
+    "G29": [
+      "giga",
+      "waste"
+    ]
+  },
+  "news_text_rules": [
+    [
+      "Aramco|\\boil\\b|refiner|pipeline|OPEC|crude",
+      [
+        "oilgas"
+      ]
+    ],
+    [
+      "solar|\\bwind\\b|renewable|electricit|batter|hydrogen|power procurement|Saudi Energy",
+      [
+        "energy"
+      ]
+    ],
+    [
+      "desalin|\\bwater\\b|sewage|wastewater",
+      [
+        "water"
+      ]
+    ],
+    [
+      "petrochem|chemical|SABIC|Sadara",
+      [
+        "petchem"
+      ]
+    ],
+    [
+      "mining|Ma'aden|mineral",
+      [
+        "mining"
+      ]
+    ],
+    [
+      "\\bwaste\\b|recycl|MWAN|NCEC|landfill",
+      [
+        "waste"
+      ]
+    ],
+    [
+      "NEOM|Qiddiya|Diriyah|Red Sea Global|AlUla|giga|ROSHN|Murabba|Expo 2030",
+      [
+        "giga"
+      ]
+    ],
+    [
+      "data cent|\\bAI\\b|HUMAIN",
+      [
+        "tech"
+      ]
+    ],
+    [
+      "budget|Ministry of Finance|procurement law|deficit",
+      [
+        "public"
+      ]
+    ],
+    [
+      "\\bport\\b|\\bports\\b|shipping|tanker|marine|Hormuz",
+      [
+        "ports"
+      ]
+    ],
+    [
+      "medical|hospital|health",
+      [
+        "health"
+      ]
+    ],
+    [
+      "factor|industrial cit|manufactur",
+      [
+        "industry"
+      ]
+    ],
+    [
+      "municipal",
+      [
+        "municipal"
+      ]
+    ]
+  ],
+  "_v2030": "Vision 2030 dashboard: project sector → themes, with per-project overrides.",
+  "v2030_sector_map": {
+    "Energy": [
+      "energy"
+    ],
+    "Logistics": [
+      "ports"
+    ],
+    "Manufacturing": [
+      "industry"
+    ],
+    "Advanced Manufacturing": [
+      "industry"
+    ],
+    "Industrial": [
+      "industry"
+    ],
+    "Technology": [
+      "tech"
+    ],
+    "Mining": [
+      "mining"
+    ],
+    "Desalination": [
+      "water"
+    ],
+    "Environmental": [
+      "nature"
+    ],
+    "Tourism & Leisure": [
+      "giga"
+    ],
+    "Urban Development": [
+      "giga"
+    ]
+  },
+  "v2030_project_themes": {
+    "Saudi Aramco Jafurah Gas Field": [
+      "oilgas"
+    ],
+    "SATORP / Amiral Expansion": [
+      "oilgas",
+      "petchem"
+    ],
+    "SABIC": [
+      "petchem"
+    ],
+    "King Salman Energy Park (SPARK)": [
+      "oilgas",
+      "industry",
+      "ports"
+    ],
+    "NEOM Green Hydrogen Company": [
+      "energy",
+      "giga"
+    ],
+    "Saudi Water Authority (SWA) Desalination": [
+      "water"
+    ],
+    "King Salman Park": [
+      "giga",
+      "nature"
+    ]
+  },
+  "_pif": "PIF Strategy 2026–2030: ecosystem number → themes.",
+  "pif_ecosystem_themes": {
+    "1": [
+      "giga"
+    ],
+    "2": [
+      "giga"
+    ],
+    "3": [
+      "industry",
+      "tech"
+    ],
+    "4": [
+      "mining",
+      "ports",
+      "industry"
+    ],
+    "5": [
+      "energy",
+      "water",
+      "waste"
+    ],
+    "6": [
+      "giga",
+      "ports",
+      "energy"
+    ]
+  },
+  "_gov": "Regulatory news: followed body → the organisation profile(s) it belongs to (its stories are Mentions there) and the themes its stories feed as Sector context. Bodies with no profile in the Organisations tab are listed in the build report.",
+  "gov_bodies": {
+    "mewa": {
+      "orgs": [
+        "Ministry of Environment, Water and Agricultural"
+      ],
+      "themes": [
+        "nature"
+      ]
+    },
+    "mwan": {
+      "orgs": [
+        "National Waste Management Center (MWAN)"
+      ],
+      "themes": [
+        "waste"
+      ]
+    },
+    "ncec": {
+      "orgs": [
+        "National Center for Environmental Compliance Monitoring (NCEC Monitoring)",
+        "المركز الوطني للرقابه علي الالتزام البيئي"
+      ],
+      "themes": [
+        "waste"
+      ]
+    },
+    "rcjy": {
+      "orgs": [
+        "Royal Commission for Jubail & Yanbu (RCJY)",
+        "Royal Commission for Jubail and Yanbu (RCJY)"
+      ],
+      "themes": []
+    },
+    "rcmc": {
+      "orgs": [
+        "Royal Commission for Makkah City & Holy Sites (RCMC)"
+      ],
+      "themes": []
+    },
+    "rcu": {
+      "orgs": [
+        "Royal Commission for AlUla (RCU)"
+      ],
+      "themes": []
+    },
+    "momah": {
+      "orgs": [
+        "Ministry of Municipalities & Housing (MOMAH)",
+        "Ministry of Municipalities and Housing (MOMAH)"
+      ],
+      "themes": [
+        "municipal"
+      ]
+    },
+    "ncvc": {
+      "orgs": [
+        "National Center for Vegetation Cover Development & Combating Desertification (NCVC)",
+        "المركز الوطني لتنمية الغطاء النباتي ومكافحة التصحر"
+      ],
+      "themes": [
+        "nature"
+      ]
+    },
+    "ncw": {
+      "orgs": [
+        "National Center for Wildlife (NCW)"
+      ],
+      "themes": [
+        "nature"
+      ]
+    },
+    "mim": {
+      "orgs": [
+        "Ministry of Industry and Mineral Resources (MIM)"
+      ],
+      "themes": [
+        "mining"
+      ]
+    },
+    "mof": {
+      "orgs": [
+        "Ministry of Finance"
+      ],
+      "themes": [
+        "public"
+      ]
+    },
+    "mc": {
+      "orgs": [
+        "Ministry of Commerce"
+      ],
+      "themes": []
+    }
+  },
+  "gov_context_cap": 8
+}

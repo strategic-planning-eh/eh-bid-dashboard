@@ -400,49 +400,8 @@
     "Arabia",
     "Catrion Holding"
   ],
-  "_block": "Wrong matches to suppress: [organisation name, item id]. The ten below are Youssef's 'Remove — wrong match' decisions in EH_Org_News_Review.xlsx (10 Nov 2026); a blocked item is shown neither as a mention nor as sector context on that profile.",
-  "block": [
-    [
-      "Saudi Energy (formerly SEC)",
-      "news:C16"
-    ],
-    [
-      "ARAMCO",
-      "news:G23"
-    ],
-    [
-      "ARAMCO",
-      "news:C09"
-    ],
-    [
-      "ACWA Power",
-      "v2030:Saudi Water Authority (SWA) Desalination"
-    ],
-    [
-      "Albawani Co.",
-      "news:G07"
-    ],
-    [
-      "CEER",
-      "news:C03"
-    ],
-    [
-      "NEOM",
-      "news:C11"
-    ],
-    [
-      "NEOM",
-      "news:G29"
-    ],
-    [
-      "شركه مرافق الكهرباء والمياه بالجبيل وينبع",
-      "news:C09"
-    ],
-    [
-      "Al Moammar Information Systems(MIS)",
-      "news:C11"
-    ]
-  ],
+  "_block": "Wrong matches to suppress: [organisation name, item id]. Empty: the ten removals from the 10 Nov 2026 review workbook were reversed by Youssef the same day (marked by mistake), so every reviewed link is shown again. A blocked item is shown neither as a mention nor as sector context on that profile.",
+  "block": [],
   "_news_item_themes": "Curated news briefing: item id → themes (hand-tagged for the items on the page as of 8 Nov 2026). An id that is missing here falls back to news_text_rules.",
   "news_item_themes": {
     "C01": [

@@ -1,0 +1,181 @@
+{
+ "applied": "2026-11-12",
+ "merged": [
+  {
+   "duplicate": "شركة البيئة والتنمية للاستشارات البيئية",
+   "kept": "Environment & Development Environmental Consulting Co. (One-Person Co.) (EDCO)",
+   "record": {
+    "n": "شركة البيئة والتنمية للاستشارات البيئية",
+    "cat": "Active Competitors",
+    "rg": "Jeddah",
+    "city": "جدة",
+    "reg": "",
+    "typ": "Waste Management Company",
+    "sec": "",
+    "tier": "Tier 1",
+    "bid": true,
+    "sites": null,
+    "mn": false,
+    "mp": false,
+    "act": "",
+    "notes": "MWAN licence register entry (Jul 2026 snapshot). Tender-roster intelligence (Aug 2026): 8 encounter(s) in EH bid rosters, undercut EH in 2/3 priced head-to-heads, avg offer ≈ SAR 4,953,050.",
+    "bc": 8,
+    "bf": "High",
+    "threat": "Medium",
+    "collab": false,
+    "sc": 47.0,
+    "cap": 32.0,
+    "bk": 0,
+    "cf": "High",
+    "mw": {
+     "days": 221,
+     "exp": "2027-03-04",
+     "cities": [
+      "جدة"
+     ],
+     "lic": [
+      "تقنيات ادارة النفايات -- تجديد — تبطين مرادم النفايات"
+     ],
+     "tech": [
+      "تبطين مرادم النفايات"
+     ],
+     "cap": [
+      "15000 متر مربع/يوم"
+     ],
+     "veh": 0
+    },
+    "sc_old": null,
+    "cap_old": null,
+    "fl": 0,
+    "drv": "bids",
+    "tier_old": "",
+    "cap_old2": 32.0,
+    "sc_old2": 47.0,
+    "cat_old": "Indirect / Adjacent Competitors"
+   },
+   "kept_before": {
+    "n": "Environment & Development Environmental Consulting Co. (One-Person Co.) (EDCO)",
+    "cat": "Active Competitors",
+    "rg": "Jeddah",
+    "city": "Jeddah",
+    "reg": "Makkah",
+    "typ": "Environmental Services",
+    "sec": "Environmental Consulting",
+    "tier": "Tier 2",
+    "bid": true,
+    "sites": null,
+    "mn": false,
+    "mp": false,
+    "act": "WM-TECH, LANDFILL-LINE, ENV-CON(TYPEA)",
+    "notes": "Alias (merged duplicate): شركة البيئة والتنمية للاسشارات",
+    "bc": 3,
+    "bf": "Medium",
+    "threat": "Medium",
+    "collab": false,
+    "sc": 38.0,
+    "cap": 23.0,
+    "bk": 0,
+    "cf": "Medium",
+    "sc_old": 36.6,
+    "cap_old": 21.6,
+    "fl": 0,
+    "drv": "bids",
+    "tier_old": "Tier 3",
+    "cap_old2": 23.0,
+    "sc_old2": 38.0
+   }
+  }
+ ],
+ "regions": [
+  {
+   "name": "Albawani Co.",
+   "before": "Makkah Region",
+   "city": "Jeddah",
+   "region": "Jeddah"
+  },
+  {
+   "name": "Cruise Saudi",
+   "before": "Makkah Region",
+   "city": "Jeddah",
+   "region": "Jeddah"
+  },
+  {
+   "name": "Saudi Binladin Group (SBG)",
+   "before": "Makkah Region",
+   "city": "Jeddah",
+   "region": "Jeddah"
+  },
+  {
+   "name": "Rabigh 3 Independent Water Plant (ACWA Power-led)",
+   "before": "Makkah Region",
+   "city": "Rabigh",
+   "region": "Rabigh"
+  },
+  {
+   "name": "Najran Region Municipality",
+   "before": "Najran Region",
+   "city": "Najran",
+   "region": "Southern Region"
+  },
+  {
+   "name": "Bani Amr Municipality",
+   "before": "Asir Region",
+   "city": "Bani Amr",
+   "region": "Southern Region"
+  },
+  {
+   "name": "Tanomah Municipality",
+   "before": "Asir Region",
+   "city": "Tanomah",
+   "region": "Southern Region"
+  },
+  {
+   "name": "Khamis Mushait Governorate Municipality",
+   "before": "Asir Region",
+   "city": "Khamis Mushait",
+   "region": "Southern Region"
+  },
+  {
+   "name": "Royal Commission for Jazan",
+   "before": "Jazan Region",
+   "city": "Jazan",
+   "region": "Southern Region"
+  },
+  {
+   "name": "Jazan University",
+   "before": "Jazan Region",
+   "city": "Jazan",
+   "region": "Southern Region"
+  },
+  {
+   "name": "Royal Commission for Makkah City & Holy Sites (RCMC)",
+   "before": "Makkah Region",
+   "city": "Makkah",
+   "region": "Makkah City"
+  },
+  {
+   "name": "King Abdullah Economic City (KAEC) / Emaar The Economic City",
+   "before": "Makkah Region",
+   "city": "KAEC",
+   "region": "Rabigh"
+  },
+  {
+   "name": "King Abdullah Port",
+   "before": "Makkah Region",
+   "city": "KAEC",
+   "region": "Rabigh"
+  },
+  {
+   "name": "Jeddah Central Development Company",
+   "before": "Makkah Region",
+   "city": "Jeddah",
+   "region": "Jeddah"
+  },
+  {
+   "name": "Hyundai Motor Manufacturing Middle East (HMMME)",
+   "before": "Makkah Region",
+   "city": "KAEC",
+   "region": "Rabigh"
+  }
+ ]
+}

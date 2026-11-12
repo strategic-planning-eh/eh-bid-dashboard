@@ -26,6 +26,8 @@ What this does, in order (all idempotent, all on the published copy in site/):
      from earlier runs do not persist: a company matched last month but absent from today's rosters is reset the same way.
   g. Regions: pipeline/region_overrides.csv (reviewer decisions, Oct 2026) gives any record whose region is '—' — including
      one this run just added — the reviewed region, so a region fixed once is never lost to a later sync.
+  h. Removals: pipeline/removed_names.csv (reviewer decisions, Nov 2026) lists names taken off the map; a roster name on that
+     list is skipped, so it is neither matched to a record nor added back. The Bid & Tender app still shows it (tracker is law).
   e. Name bridging lives in pipeline/aliases.csv (tracker_name, map_name, method, status). Rows with status approved/reviewer/
      auto are applied before any fuzzy matching. Every match this run finds by a non-exact method is appended as status=auto
      for a one-time look; reviewer merges from twin_decisions.xlsx are written there too, so the CSV is the durable store.
@@ -125,6 +127,13 @@ def main():
     comps = [c for c in comps if c.get('name') and c.get('encounters')]
     not_company_roster_pre = [c['name'] for c in comps if not looks_like_company(c['name'])]
     comps = [c for c in comps if looks_like_company(c['name'])]     # a reason or a tender title in the roster is dropped before anything counts it
+    # ---- h. removed by the reviewer (pipeline/removed_names.csv, 12 Nov 2026): a roster name he took off the map is never added back
+    rm_path = os.path.join(HERE, 'removed_names.csv'); removed_keys = set()
+    if os.path.exists(rm_path):
+        import csv as _csv
+        with open(rm_path, encoding='utf-8-sig', newline='') as f: removed_keys = {norm(r['name']) for r in _csv.DictReader(f) if r.get('name')}
+    removed_roster = [c['name'] for c in comps if norm(c['name']) in removed_keys]
+    comps = [c for c in comps if norm(c['name']) not in removed_keys]
     stamp = dt.datetime.now(dt.timezone(dt.timedelta(hours=3))).strftime('%b %Y')
 
     # ---- index the map: normalised names + aliases recorded in notes
@@ -406,7 +415,7 @@ def main():
               'roster_competitors': len(comps), 'matched': len(matched), 'counts_changed': len(changed), 'added': [c['name'] for c in added],
               'claimed_unverified': len(claimed), 'claimed_names': claimed, 'stale_tracker_confirmations_reset': stale_cleared,
               'aliases_added': new_alias_rows, 'stamp': feed['stamp'], 'reviewer_merges_applied': merges,
-              'not_company_roster_names': not_company_roster_pre + not_company_roster, 'not_company_map_records': not_company_nodes, 'merge_side_chosen_automatically': auto_sides, 'reviewer_flags_cleared': cleared, 'twin_matched_instead_of_added': twin_matched, 'regions_from_overrides': regions_applied, 'banalytics': ban,
+              'not_company_roster_names': not_company_roster_pre + not_company_roster, 'not_company_map_records': not_company_nodes, 'merge_side_chosen_automatically': auto_sides, 'reviewer_flags_cleared': cleared, 'twin_matched_instead_of_added': twin_matched, 'regions_from_overrides': regions_applied, 'removed_by_reviewer_roster_names': removed_roster, 'banalytics': ban,
               'possible_twins': [{'a': p['a']['n'], 'b': p['b']['n'], 'score': round(p['score'], 2), 'reason': p['reason']} for p in twin_list],
               'matches': [{'roster': r, 'map': m, 'how': h} for r, m, h in matched], 'changes': [{'map': m, 'from': f, 'to': t} for m, f, t in changed]}
     json.dump(report, open(os.path.join(os.path.dirname(os.path.abspath(a.map)), 'bid_sync_report.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

@@ -44,7 +44,7 @@ PINNED_PRECISION = ('company at address', 'building', 'street', 'district')
 # EH sites: the two already on the map (own records) + the two confirmed in this review
 EH_SITES = [
     {'key': 'Afaq Al-Biah Co. Ltd (Environmental Horizons)', 'en': 'Environmental Horizons — Jeddah head office', 'ar': 'آفاق البيئة — المقر الرئيسي بجدة',
-     'lat': 21.5772, 'lng': 39.1516, 'addr_en': 'Hira Street, Jeddah', 'addr_ar': 'شارع حراء، جدة', 'precision': 'own records'},
+     'lat': 21.6137111, 'lng': 39.1562528, 'addr_en': 'Madinah Road at the Hira Street intersection, Al Bawadi, Jeddah', 'addr_ar': 'طريق المدينة المنورة مع تقاطع شارع حراء، حي البوادي، جدة', 'precision': 'own records'},
     {'key': 'EH — Al-Juhfah Waste Management Complex (Rabigh)', 'en': 'EH — Al-Juhfah Waste Management Complex (Rabigh)', 'ar': 'آفاق البيئة — مجمع الجحفة لإدارة النفايات (رابغ)',
      'lat': 22.7050, 'lng': 39.1460, 'addr_en': 'Al-Juhfah, Rabigh — hazardous-waste treatment and disposal complex', 'addr_ar': 'الجحفة، رابغ — مجمع معالجة النفايات الخطرة والتخلص منها', 'precision': 'own records'},
 ]

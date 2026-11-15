@@ -1,0 +1,27 @@
+{
+ "generated": "2026-11-15 15:45",
+ "title": "EH Jeddah head office position",
+ "failures": [],
+ "changes": [
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "eh-hq",
+   "note": "GEO_SITES: Jeddah head office position",
+   "occurrences": 1,
+   "ok": true,
+   "old": "'Afaq Al-Biah Co. Ltd (Environmental Horizons)': [21.5772,39.1516,'Hira Street, Jeddah — Head Office','EH (Reference)']",
+   "new": "'Afaq Al-Biah Co. Ltd (Environmental Horizons)': [21.6137111,39.1562528,'Madinah Road at the Hira Street intersection, Al Bawadi, Jeddah — Head Office','EH (Reference)']"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "eh-hq",
+   "note": "Saudi Map (BETA) data: Jeddah head office position",
+   "occurrences": 1,
+   "ok": true,
+   "old": "\"lat\":21.5772,\"lng\":39.1516,\"a_en\":\"Hira Street, Jeddah\",\"a_ar\":\"شارع حراء، جدة\"",
+   "new": "\"lat\":21.6137111,\"lng\":39.1562528,\"a_en\":\"Madinah Road at the Hira Street intersection, Al Bawadi, Jeddah\",\"a_ar\":\"طريق المدينة المنورة مع تقاطع شارع حراء، حي البوادي، جدة\""
+  }
+ ]
+}

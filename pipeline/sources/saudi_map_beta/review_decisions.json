@@ -1,0 +1,452 @@
+{
+ "dups": [
+  [
+   11,
+   "International Environmental Services Co.",
+   19,
+   "شركة العالمية للخدمات البيئية",
+   "Merge"
+  ],
+  [
+   12,
+   "Kayan Al Amthal",
+   112,
+   "Al Kayan Al Amthal Environmental Services",
+   "Merge"
+  ],
+  [
+   17,
+   "Fursan Istedemah Environmental Consultation Office (FIECO)",
+   157,
+   "Forsan Al-Istidadama Environmental Consulting Office",
+   "Merge"
+  ],
+  [
+   22,
+   "Imtithal Al-Beeah Environmental Consulting Office",
+   73,
+   "Emtithaal Environmental Consulting Co.",
+   "Merge"
+  ],
+  [
+   23,
+   "LASCO Saudi Engineering Consulting Co. (One Person Co.)",
+   175,
+   "Laceco Saudi Engineering Consulting Co. (One Person Co.)",
+   "Merge"
+  ],
+  [
+   28,
+   "شركة اعمار للاستشارات الهندسية مهنية",
+   42,
+   "Imar Engineering Consulting Co. (One-Person Co.)",
+   "Merge"
+  ],
+  [
+   31,
+   "مكتب الكاف للاستشارات البيئية",
+   35,
+   "Al-Kaf Environmental Consulting Office",
+   "Merge"
+  ],
+  [
+   36,
+   "Arkan Al-Beeah Environmental Services Co. (One-Person Co.)",
+   125,
+   "Arkan Environment Services Co. (One-Person Co.)",
+   "Merge"
+  ],
+  [
+   37,
+   "Environmental Support Consulting Office",
+   38,
+   "Environmnetal Support Office For Environ",
+   "Merge"
+  ],
+  [
+   41,
+   "IDOM Architecture Consulting (One-Person Co.)",
+   51,
+   "شركة أيدوم للاستشارات الهندسية",
+   "Merge"
+  ],
+  [
+   45,
+   "Quality Tech Certification Co. (One-Person Co.)",
+   97,
+   "شركة تقنية الجودة للإعتماد",
+   "Merge"
+  ],
+  [
+   48,
+   "Taqat Environment",
+   223,
+   "Taqat El Injaz Environmental Consulting",
+   "Merge"
+  ],
+  [
+   49,
+   "Telad Consulting Solutions",
+   299,
+   "شركة تلاد البيئة التجارية",
+   "Merge"
+  ],
+  [
+   53,
+   "شركة الذهبي للاستشارات الهندسية",
+   77,
+   "Golden Engineering Consulting (One-Person Co.)",
+   "Merge"
+  ],
+  [
+   54,
+   "شركة العمليات المتزامنة للاستشارات المهنية",
+   215,
+   "Simopseng",
+   "Merge"
+  ],
+  [
+   57,
+   "شركة دار الرياض للاستشارات الهندسية شركة شخص واحد",
+   68,
+   "Dar Al Riyadh",
+   "Merge"
+  ],
+  [
+   63,
+   "Al Makyal Al Saudi",
+   281,
+   "شركة المكيال السعودي للاستشارات الهندسية شركة مهنية شخص واحد",
+   "Merge"
+  ],
+  [
+   64,
+   "Alqotr Consulting",
+   94,
+   "شركة القطر للاستشارات المهنية",
+   "Merge"
+  ],
+  [
+   71,
+   "ERI Saudi Arabia",
+   96,
+   "شركة الهندسة والأبحاث العالمية للاستشارات الهندسية شركة مهنية شخص واحد",
+   "Merge"
+  ],
+  [
+   90,
+   "شركة أفق الماسية للاستشارات البيئية",
+   229,
+   "Ufuq Al-Masiyah Environmental Consulting Co. (AECO)",
+   "Merge"
+  ],
+  [
+   99,
+   "شركة محمد ناصر ظاهر الحجورى للاستشارات الهندسية و البيئية شركة مهنية شخص واحد",
+   181,
+   "Mohamed Naser El Hogori Environmental",
+   "Merge"
+  ],
+  [
+   105,
+   "مكتب تقنيات نظافة البيئة للاستشارات البيئية",
+   138,
+   "Clean Environment Technologies Consulting Office",
+   "Merge"
+  ],
+  [
+   127,
+   "Arweqah Al reyadah",
+   239,
+   "شركة أروقة الريادة للتجارة شركة شخص واحد",
+   "Merge"
+  ],
+  [
+   135,
+   "Business Crafters",
+   295,
+   "شركة بيزنس كرافتيرز",
+   "Merge"
+  ],
+  [
+   140,
+   "Cubic Art Pixels Environmental Solutions (CAP)",
+   339,
+   "شركة كيوبيك ارت بيكسلز للحلول البيئية",
+   "Merge"
+  ],
+  [
+   145,
+   "Dr Mohamed Al Amri & Co",
+   265,
+   "شركة الدكتور محمد العمري وشركاه محاسبون قانونيون شركة مساهمة مهنية مقفلة",
+   "Merge"
+  ],
+  [
+   146,
+   "Droub Al Ataihd",
+   310,
+   "شركة دروب الاتحاد للمقاولات المحدودة",
+   "Merge"
+  ],
+  [
+   150,
+   "Environmental Testing & Laboratories Co.",
+   269,
+   "شركة الفحوصات والمختبرات البيئية",
+   "Merge"
+  ],
+  [
+   154,
+   "Expert Eye Administrative Consulting Co. (One-Person Professional Co.)",
+   330,
+   "شركة عين خبير للاستشارات الإدارية شخص واحد مهنية",
+   "Merge"
+  ],
+  [
+   155,
+   "Experts Vision Consulting",
+   313,
+   "شركة رؤية الخبراء الاستشارية شركة ذات المسؤولية محدودة",
+   "Merge"
+  ],
+  [
+   156,
+   "Fakrah Developer",
+   333,
+   "شركة فكرة التطوير للاستشارات المهنية",
+   "Merge"
+  ],
+  [
+   158,
+   "Front End Ltd",
+   285,
+   "شركة الواجهة الأمامية المحدودة",
+   "Merge"
+  ],
+  [
+   160,
+   "Geotech Overseas",
+   306,
+   "شركة جيوتك لما وراء البحار لهندسة المشاريع",
+   "Merge"
+  ],
+  [
+   164,
+   "Hamat Al-Mudun General Contracting Establishment",
+   371,
+   "مؤسسة هامة المدن للمقاولات العامة",
+   "Merge"
+  ],
+  [
+   165,
+   "Hexa Line Engineering Consultancy",
+   261,
+   "شركة الخط السادس للاستشارات الهندسية شخص واحد مهنية",
+   "Merge"
+  ],
+  [
+   167,
+   "ITMAM Consultancy",
+   252,
+   "شركة الإتمام الاستشارية",
+   "Merge"
+  ],
+  [
+   168,
+   "Jadarah Business Consulting Company",
+   305,
+   "شركة جدارة الأعمال للاستشارات الادارية",
+   "Merge"
+  ],
+  [
+   180,
+   "Methan Environmental Services Co.",
+   353,
+   "شركة ميثان للخدمات البيئية",
+   "Merge"
+  ],
+  [
+   185,
+   "Mushar Consulting",
+   349,
+   "شركة مشار للاستشارات العليا في الادارة شركة شخص واحد",
+   "Merge"
+  ],
+  [
+   186,
+   "Naqaa Environmental Consulting Office",
+   190,
+   "Niqaa Al-Beeah Environmental Consulting Office",
+   "Merge"
+  ],
+  [
+   187,
+   "Nawaql International Company (NIC)",
+   359,
+   "شركة نواقل الدولية للخدمات المساندة",
+   "Merge"
+  ],
+  [
+   189,
+   "Nebras Limited",
+   356,
+   "شركة نبراس المحدودة شركة شخص واحد",
+   "Merge"
+  ],
+  [
+   192,
+   "QAMAAT Engineering Consultancy",
+   193,
+   "Qamaat Engineering Consulting Office",
+   "Merge"
+  ],
+  [
+   194,
+   "Qemmet El Rawasi Contracting",
+   337,
+   "شركة قمه الرواسي للمقاولات",
+   "Merge"
+  ],
+  [
+   197,
+   "Rasi Consulting",
+   314,
+   "شركة راسي الاستشارية",
+   "Merge"
+  ],
+  [
+   200,
+   "SAUDI GEOPHYSICAL CONSULTING OFFICE",
+   212,
+   "Saudi Environmental Consulting Office (Saudi Geophysical)",
+   "Merge"
+  ],
+  [
+   202,
+   "Saad Ali Aliessa Group",
+   372,
+   "مجموعة سعد علي العيسى للمقاولات شركة شخص واحد",
+   "Merge"
+  ],
+  [
+   203,
+   "Saad Saeed El Saadi and Sons Company",
+   317,
+   "شركة سعد سعيد الصاعدي وأولاده للمقاولات",
+   "Merge"
+  ],
+  [
+   207,
+   "Saudi Arabian Engineering Co Ltd",
+   208,
+   "Saudi Arabian Engineering Co. (SAECO)",
+   "Merge"
+  ],
+  [
+   214,
+   "Sharyan Al-Shamal Global General Contracting Co.",
+   323,
+   "شركة شريان الشمال العالمية",
+   "Merge"
+  ],
+  [
+   217,
+   "Strategy& Middle East",
+   241,
+   "شركة إستراتيجي إند السعودية",
+   "Merge"
+  ],
+  [
+   226,
+   "Tharwah Group",
+   259,
+   "شركة الثروة البشرية شركة مساهمة مدرجة",
+   "Merge"
+  ],
+  [
+   228,
+   "Tondro Consultancy Arabia (One-Person Co.)",
+   302,
+   "شركة توندرو كونسلتنسي العربية الإدارية",
+   "Merge"
+  ],
+  [
+   232,
+   "Zimam El Qowa",
+   316,
+   "شركة زمام القوة للتشغيل والصيانة شركة شخص واحد",
+   "Merge"
+  ],
+  [
+   29,
+   "شركة العربية للخدمات البيئية",
+   121,
+   "Amron Arabia Environmental Services Co.",
+   "Keep separate"
+  ],
+  [
+   37,
+   "Environmental Support Consulting Office",
+   264,
+   "شركة الدعم للخدمات البيئية",
+   "Merge"
+  ],
+  [
+   43,
+   "Kayan Al-Mukhtassa Environmental Services Est.",
+   172,
+   "Kayan Al-Beeah Environmental Consulting Office",
+   "Keep separate"
+  ]
+ ],
+ "merges": [
+  [
+   207,
+   "Saudi Arabian Engineering Co Ltd",
+   1,
+   "MERGE",
+   "Dammam's 2nd Industrial City"
+  ],
+  [
+   208,
+   "Saudi Arabian Engineering Co. (SAECO)",
+   1,
+   "MERGE",
+   "Dammam's 2nd Industrial City"
+  ],
+  [
+   267,
+   "شركة العقول المخططة للاستشارات الادارية",
+   1,
+   "MERGE WITH STRATEGIC MINDS",
+   ""
+  ],
+  [
+   308,
+   "شركة خدمات البيئة المتحدة لنقل النفايات",
+   1,
+   "MERGE WITH UNITED ENVIRONMENTAL SERVICES",
+   ""
+  ]
+ ],
+ "removes": [
+  [
+   378,
+   "مكتب حسين مانع اليامي للاستشارات الهندسية",
+   1
+  ],
+  [
+   381,
+   "مكتب عبدالعزيز سليمان علي الطرباق للاستشارات الهندسية",
+   1
+  ]
+ ],
+ "region_edits": [
+  [
+   186,
+   "Jeddah",
+   "Makkah Region"
+  ]
+ ]
+}

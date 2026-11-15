@@ -1,0 +1,1672 @@
+{
+ "looked_up": "2026-11-15",
+ "rule": "delivery site named in the title if it has coordinates (type region = regional capital); else the buyer's head office when its match is High or Medium; else not pinned and counted",
+ "sites": {
+  "2025-1": {
+   "place": "PP10",
+   "type": "facility",
+   "lat": 24.420142199999997,
+   "lng": 47.0201208,
+   "listing": "محطة التوليد العاشرة",
+   "place_id": "ChIJx_teJs2RLz4RjnrJQq5HI8U",
+   "note": "PP10 = Riyadh Power Plant 10"
+  },
+  "2025-13": {
+   "place": "الشقيق البخارية",
+   "type": "facility",
+   "lat": 17.7073653,
+   "lng": 42.091372,
+   "listing": "محطة الشقيق البخارية لأنتاج الكهرباء",
+   "place_id": "ChIJm0UOPAD74hURcnU4x-d7lOU",
+   "note": ""
+  },
+  "2025-17": {
+   "place": "منطقة الباحة",
+   "type": "region",
+   "lat": 20.012303,
+   "lng": 41.468586599999995,
+   "listing": "Al Bahah",
+   "place_id": "ChIJFQbQdpVF7xURbVKeiwJbLFA",
+   "note": "region only"
+  },
+  "2025-18": {
+   "place": "محمية الملك خالد الملكية",
+   "type": "facility",
+   "lat": 25.2429632,
+   "lng": 46.6332607,
+   "listing": "محمية الملك خالد الملكية",
+   "place_id": "ChIJlVJd-JqfLj4RBOVhJYT5RJk",
+   "note": ""
+  },
+  "2025-22": {
+   "place": "المركز الرئيسي بالرياض",
+   "type": "facility",
+   "lat": 24.734982499999997,
+   "lng": 46.635580399999995,
+   "listing": "Saudi Standards Metrology & Quality Organization",
+   "place_id": "ChIJ31qsyqLjLj4RvuwAy6vUx-k",
+   "note": "SASO head-office labs in Riyadh; title also names Eastern Province and Makkah region branches"
+  },
+  "2025-27": {
+   "place": "محافظة تنومة",
+   "type": "city",
+   "lat": 18.9363759,
+   "lng": 42.186804699999996,
+   "listing": "Tanomah",
+   "place_id": "ChIJF4z143Xh5BURv5a0c18pG7s",
+   "note": ""
+  },
+  "2025-30": {
+   "place": "KAEC plant",
+   "type": "facility",
+   "lat": 22.487569399999998,
+   "lng": 39.154109000000005,
+   "listing": "CEER Automotive Manufacturing Facility",
+   "place_id": "ChIJ2XQr1drlwBURW9APg-z5_eg",
+   "note": "Ceer plant in King Abdullah Economic City"
+  },
+  "2025-43": {
+   "place": "جنوب جدة - بالليث",
+   "type": "city",
+   "lat": 20.1405331,
+   "lng": 40.2782239,
+   "listing": "Al Lith",
+   "place_id": "ChIJY9VPyGEK6BURA-xnT3Yyqmk",
+   "note": "NWC landfill itself not listed; Al Lith locality used"
+  },
+  "2025-44": {
+   "place": "جزيرة أبو علي",
+   "type": "facility",
+   "lat": 27.2245039,
+   "lng": 49.513045299999995,
+   "listing": "جزيرة رأس أبو علي",
+   "place_id": "ChIJr0Y8xncZNT4RquAWovX7esY",
+   "note": "island off Jubail"
+  },
+  "2025-48": {
+   "place": "محطة كهرباء رابغ",
+   "type": "facility",
+   "lat": 22.6835927,
+   "lng": 39.0334636,
+   "listing": "محطة كهرباء رابغ الجديدة",
+   "place_id": "ChIJo_yj-TLrwBURYiaIdOYz6D4",
+   "note": "listing is named New Rabigh power station"
+  },
+  "2025-51": {
+   "place": "Faras PP",
+   "type": "facility",
+   "lat": 25.2098449,
+   "lng": 49.2858853,
+   "listing": "Faras Power Plant",
+   "place_id": "ChIJUVgxQuV3Nz4RRW5oVrJwrjg",
+   "note": ""
+  },
+  "2025-60": {
+   "place": "محطة تحلية رابغ 3",
+   "type": "facility",
+   "lat": 22.7791405,
+   "lng": 38.9627329,
+   "listing": "desalination plant",
+   "place_id": "ChIJV019Nmq-wBURBkntKd-AqFg",
+   "note": "weak match: generic desalination plant listing in Rabigh; not confirmed as Rabigh 3"
+  },
+  "2025-64": {
+   "place": "محافظة المذنب",
+   "type": "city",
+   "lat": 25.8568978,
+   "lng": 44.224210600000006,
+   "listing": "Al Mithnab",
+   "place_id": "ChIJ-509qJm5gRUR3rMuPEEvKPo",
+   "note": ""
+  },
+  "2025-69": {
+   "place": "محافظة خميس مشيط",
+   "type": "city",
+   "lat": 18.3014944,
+   "lng": 42.7300316,
+   "listing": "Khamis Mushait",
+   "place_id": "ChIJd1XhW_VZ-xURh5IPQOm2gfg",
+   "note": "landfill not named; city used"
+  },
+  "2025-71": {
+   "place": "الخبر 4",
+   "type": "facility",
+   "lat": 26.2171906,
+   "lng": 50.1971381,
+   "listing": "Al Khobar",
+   "place_id": "ChIJ2Vjv6DnoST4R0aq22BKId-8",
+   "note": "Khobar desalination plant listing not found; Al Khobar city coordinates"
+  },
+  "2025-72": {
+   "place": "منظومة تحلية مياه البحر بالخبر",
+   "type": "facility",
+   "lat": 26.2171906,
+   "lng": 50.1971381,
+   "listing": "Al Khobar",
+   "place_id": "ChIJ2Vjv6DnoST4R0aq22BKId-8",
+   "note": "Khobar desalination plant listing not found; Al Khobar city coordinates"
+  },
+  "2025-74": {
+   "place": "منطقة القصيم",
+   "type": "region",
+   "lat": 26.3592309,
+   "lng": 43.981812000000005,
+   "listing": "Buraydah",
+   "place_id": "ChIJd3uBg2ZYfxURYYpZ497BU1g",
+   "note": "region only"
+  },
+  "2025-75": {
+   "place": "منطقة الباحة",
+   "type": "region",
+   "lat": 20.012303,
+   "lng": 41.468586599999995,
+   "listing": "Al Bahah",
+   "place_id": "ChIJFQbQdpVF7xURbVKeiwJbLFA",
+   "note": "region only"
+  },
+  "2025-76": {
+   "place": "المرحلة الخامسة بالخبر",
+   "type": "facility",
+   "lat": 26.2171906,
+   "lng": 50.1971381,
+   "listing": "Al Khobar",
+   "place_id": "ChIJ2Vjv6DnoST4R0aq22BKId-8",
+   "note": "Khobar desalination plant listing not found; Al Khobar city coordinates"
+  },
+  "2025-79": {
+   "place": "ينبع والشعيبة",
+   "type": "facility",
+   "lat": 23.872153,
+   "lng": 38.3645032,
+   "listing": "Saline Water Conversion Corporation Yanbu Medina",
+   "place_id": "ChIJ5zcqrsghuRUR8vrt3ogBJNc",
+   "note": "two sites named; Yanbu desalination complex used; Shuaibah not separately plotted"
+  },
+  "2026-1": {
+   "place": "مدينة عرعر",
+   "type": "city",
+   "lat": 30.9599447,
+   "lng": 41.0595636,
+   "listing": "Arar",
+   "place_id": "ChIJXYqwVcQNbBUR40Pa9KBNy0A",
+   "note": "landfill not named; city used"
+  },
+  "2026-2": {
+   "place": "الشعيبة",
+   "type": "facility",
+   "lat": 21.0968291,
+   "lng": 39.1968953,
+   "listing": "Shuaiba Beach",
+   "place_id": "ChIJJfK9IeypwxUR-jVtEk_vgIo",
+   "note": "plant listing not found; Shuaiba Beach listing in Shuaibah locality used"
+  },
+  "2026-3": {
+   "place": "مرمى نفايات أم الركب بأمانة منطقة عسير",
+   "type": "region",
+   "lat": 18.2464685,
+   "lng": 42.5117238,
+   "listing": "Abha",
+   "place_id": "ChIJMQlyFWNU4xURtBmJcYxVd6E",
+   "note": "Umm ar-Rakb landfill not found on Google; region only"
+  },
+  "2026-4": {
+   "place": "CEER Main Plant",
+   "type": "facility",
+   "lat": 22.487569399999998,
+   "lng": 39.154109000000005,
+   "listing": "CEER Automotive Manufacturing Facility",
+   "place_id": "ChIJ2XQr1drlwBURW9APg-z5_eg",
+   "note": "Ceer plant in King Abdullah Economic City; KAEC not stated in title"
+  },
+  "2026-5": {
+   "place": "Shegran",
+   "type": "city",
+   "lat": 25.0205989,
+   "lng": 40.7031814,
+   "listing": "Al Shegran",
+   "place_id": "ChIJbb6jtht-lxUR_3ChXTM2Lbg",
+   "note": "locality matched by name only (Al Shegran, Madinah region); unverified"
+  },
+  "2026-6": {
+   "place": "South Ola",
+   "type": "city",
+   "lat": 26.6031391,
+   "lng": 37.929482,
+   "listing": "AlUla",
+   "place_id": "ChIJGWgTqZarpRUR1oUYaViumwM",
+   "note": "AlUla locality; title says South Ola"
+  },
+  "2026-7": {
+   "place": "القوة البحرية بجازان",
+   "type": "city",
+   "lat": 16.889358599999998,
+   "lng": 42.57056740000001,
+   "listing": "Jazan",
+   "place_id": "ChIJu6ATPZfiBxYR8mx4KW99czU",
+   "note": "naval base not listed; Jazan city used"
+  },
+  "2026-8": {
+   "place": "المدينة المنورة",
+   "type": "city",
+   "lat": 24.4672132,
+   "lng": 39.6024496,
+   "listing": "Madinah",
+   "place_id": "ChIJ1SDSl1G-vRUR2Qg76k9RVC4",
+   "note": ""
+  },
+  "2026-9": {
+   "place": "مكة المكرمة",
+   "type": "city",
+   "lat": 21.4240968,
+   "lng": 39.817336399999995,
+   "listing": "Makkah",
+   "place_id": "ChIJdYeB7UwbwhURzslwz2kkq5g",
+   "note": "waste treatment city site not listed; Makkah city used"
+  },
+  "2026-13": {
+   "place": "كلية الملك خالد العسكرية",
+   "type": "facility",
+   "lat": 24.7412335,
+   "lng": 46.890775,
+   "listing": "King Khalid Military Academy",
+   "place_id": "ChIJ624KnlmpLz4Rn1s83GBECX0",
+   "note": ""
+  },
+  "2026-18": {
+   "place": "بلدية السليل",
+   "type": "city",
+   "lat": 20.466867900000004,
+   "lng": 45.5629394,
+   "listing": "As Sulayyil",
+   "place_id": "ChIJQ1qFnvteHj4RMi2EjKle9r8",
+   "note": ""
+  },
+  "2026-19": {
+   "place": "محافظة المذنب",
+   "type": "city",
+   "lat": 25.8568978,
+   "lng": 44.224210600000006,
+   "listing": "Al Mithnab",
+   "place_id": "ChIJ-509qJm5gRUR3rMuPEEvKPo",
+   "note": ""
+  },
+  "2026-20": {
+   "place": "جامعة الأميرة نورة بنت عبدالرحمن",
+   "type": "facility",
+   "lat": 24.8466526,
+   "lng": 46.7255186,
+   "listing": "Princess Nourah Bint Abdulrahman University -",
+   "place_id": "ChIJyah-dQKPDhQRK6p3ZUcj4Co",
+   "note": ""
+  },
+  "2026-21": {
+   "place": "بلدية بني عمرو",
+   "type": "city",
+   "lat": 19.383440099999998,
+   "lng": 42.05838860000001,
+   "listing": "Bani Amr",
+   "place_id": "ChIJSwAss0ty5RUR7yuFRCmlf_c",
+   "note": ""
+  },
+  "2026-22": {
+   "place": "منطقة الرياض",
+   "type": "region",
+   "lat": 24.7135517,
+   "lng": 46.6752957,
+   "listing": "Riyadh",
+   "place_id": "ChIJmZNIDYkDLz4R1Z_nmBxNl7o",
+   "note": "region only"
+  },
+  "2026-24": {
+   "place": "محافظة بارق",
+   "type": "city",
+   "lat": 18.9305324,
+   "lng": 41.929569,
+   "listing": "Bariq",
+   "place_id": "ChIJkV_heC_45BURZSp8M3aa5ck",
+   "note": ""
+  },
+  "2026-25": {
+   "place": "مستشفى اراده والصحه النفسيه بالخرج",
+   "type": "facility",
+   "lat": 24.1384388,
+   "lng": 47.2432522,
+   "listing": "مستشفى إرادة والصحة النفسية بالخرج",
+   "place_id": "ChIJS7yLcINFJT4RaXxfHRYA95g",
+   "note": ""
+  },
+  "2026-27": {
+   "place": "مدينة الملك عبدالله الطبية",
+   "type": "facility",
+   "lat": 21.381939799999998,
+   "lng": 39.881111,
+   "listing": "King Abdullah Medical City",
+   "place_id": "ChIJFcouHjUEwhUREzE5C1sX3Uk",
+   "note": ""
+  },
+  "2026-31": {
+   "place": "IMI YARD",
+   "type": "facility",
+   "lat": 27.5115722,
+   "lng": 49.2528724,
+   "listing": "International Maritime Industries Co - Head Office",
+   "place_id": "ChIJw6DyRDbTND4RiPnSC83Gn8w",
+   "note": "IMI yard at Ras Al Khair"
+  },
+  "2026-35": {
+   "place": "Jabal Said Zone 2",
+   "type": "facility",
+   "lat": 23.8496837,
+   "lng": 40.94053720000001,
+   "listing": "Jabal Sayid Mine",
+   "place_id": "ChIJpzUB5B6YlhURp8lREr6uN_0",
+   "note": ""
+  },
+  "2026-36": {
+   "place": "منطقة نجران",
+   "type": "region",
+   "lat": 17.5656036,
+   "lng": 44.2289441,
+   "listing": "Najran",
+   "place_id": "ChIJVZGPyAfr_hURhfSUiBJ5p9E",
+   "note": "region only"
+  },
+  "2026-37": {
+   "place": "منطقة القصيم",
+   "type": "region",
+   "lat": 26.3592309,
+   "lng": 43.981812000000005,
+   "listing": "Buraydah",
+   "place_id": "ChIJd3uBg2ZYfxURYYpZ497BU1g",
+   "note": "region only"
+  },
+  "2026-38": {
+   "place": "منطقة عسير",
+   "type": "region",
+   "lat": 18.2464685,
+   "lng": 42.5117238,
+   "listing": "Abha",
+   "place_id": "ChIJMQlyFWNU4xURtBmJcYxVd6E",
+   "note": "region only"
+  },
+  "2026-39": {
+   "place": "منطقة الحدود الشمالية",
+   "type": "region",
+   "lat": 30.9599447,
+   "lng": 41.0595636,
+   "listing": "Arar",
+   "place_id": "ChIJXYqwVcQNbBUR40Pa9KBNy0A",
+   "note": "region only"
+  },
+  "2026-40": {
+   "place": "مجمع الملك فهد بالمدينة المنورة",
+   "type": "facility",
+   "lat": 24.5149461,
+   "lng": 39.5404561,
+   "listing": "مجمع الملك فهد لطباعة المصحف الشريف - King Fahd Glorious Quran Printing Complex",
+   "place_id": "ChIJxesVIG25vRURM36XOymwmXU",
+   "note": ""
+  },
+  "2026-41": {
+   "place": "منطقة المدينة المنورة",
+   "type": "region",
+   "lat": 24.4672132,
+   "lng": 39.6024496,
+   "listing": "Madinah",
+   "place_id": "ChIJ1SDSl1G-vRUR2Qg76k9RVC4",
+   "note": "region only"
+  },
+  "2026-42": {
+   "place": "منطقة مكة المكرمة",
+   "type": "region",
+   "lat": 21.4240968,
+   "lng": 39.817336399999995,
+   "listing": "Makkah",
+   "place_id": "ChIJdYeB7UwbwhURzslwz2kkq5g",
+   "note": "region only"
+  },
+  "2026-43": {
+   "place": "المقر الرئيسي لمدينة الملك عبد العزيز للعلوم والتقنية",
+   "type": "facility",
+   "lat": 24.716986499999997,
+   "lng": 46.643258499999995,
+   "listing": "King Abdulaziz City for Science and Technology (KACST)",
+   "place_id": "ChIJ1TmKVG4dLz4RF2MCsTNPwrE",
+   "note": ""
+  },
+  "2026-44": {
+   "place": "Luberef Jeddah",
+   "type": "facility",
+   "lat": 21.4503546,
+   "lng": 39.1859554,
+   "listing": "Luberef",
+   "place_id": "ChIJJ61Ag8PIwxURRRqAHABzHBs",
+   "note": ""
+  },
+  "2026-45": {
+   "place": "منطقة الشرقية",
+   "type": "region",
+   "lat": 26.420682799999998,
+   "lng": 50.088794299999996,
+   "listing": "Dammam",
+   "place_id": "ChIJAzRrJzIdNj4RdlZeeuwB2e8",
+   "note": "region only"
+  },
+  "2026-46": {
+   "place": "جامعة جازان",
+   "type": "facility",
+   "lat": 16.965809399999998,
+   "lng": 42.541803699999996,
+   "listing": "Jazan University",
+   "place_id": "ChIJPyJxK1wHCBYRM5SsEkvFnVo",
+   "note": ""
+  },
+  "2026-47": {
+   "place": "منطقة تبوك",
+   "type": "region",
+   "lat": 28.383507899999998,
+   "lng": 36.5661908,
+   "listing": "Tabuk",
+   "place_id": "ChIJZSMTlAWtqRURz5oTtsbjQG8",
+   "note": "region only"
+  },
+  "2026-48": {
+   "place": "منطقة الجوف",
+   "type": "region",
+   "lat": 29.965953799999998,
+   "lng": 40.2148713,
+   "listing": "Sakaka",
+   "place_id": "ChIJ-eruY0y5chURWoUiMjsEBh8",
+   "note": "region only"
+  },
+  "2026-49": {
+   "place": "منطقة جازان",
+   "type": "region",
+   "lat": 16.889358599999998,
+   "lng": 42.57056740000001,
+   "listing": "Jazan",
+   "place_id": "ChIJu6ATPZfiBxYR8mx4KW99czU",
+   "note": "region only"
+  },
+  "2026-53": {
+   "place": "منطقة حائل",
+   "type": "region",
+   "lat": 27.5114102,
+   "lng": 41.7208243,
+   "listing": "Hail",
+   "place_id": "ChIJo_rQluZGdhURgIiKJ4aiI6g",
+   "note": "region only"
+  },
+  "2026-54": {
+   "place": "مجمع الملك فهد لطباعة المصحف الشريف بالمدينة المنورة",
+   "type": "facility",
+   "lat": 24.5149461,
+   "lng": 39.5404561,
+   "listing": "مجمع الملك فهد لطباعة المصحف الشريف - King Fahd Glorious Quran Printing Complex",
+   "place_id": "ChIJxesVIG25vRURM36XOymwmXU",
+   "note": ""
+  },
+  "2026-56": {
+   "place": "منظومة إنتاج ينبع",
+   "type": "facility",
+   "lat": 23.872153,
+   "lng": 38.3645032,
+   "listing": "Saline Water Conversion Corporation Yanbu Medina",
+   "place_id": "ChIJ5zcqrsghuRUR8vrt3ogBJNc",
+   "note": ""
+  },
+  "2026-58": {
+   "place": "منطقة الباحة",
+   "type": "region",
+   "lat": 20.012303,
+   "lng": 41.468586599999995,
+   "listing": "Al Bahah",
+   "place_id": "ChIJFQbQdpVF7xURbVKeiwJbLFA",
+   "note": "region only"
+  },
+  "2026-59": {
+   "place": "Hafar Al Batn",
+   "type": "city",
+   "lat": 28.3784149,
+   "lng": 45.962711299999995,
+   "listing": "Hafar Al Batin",
+   "place_id": "ChIJ57z7qc5A1z8Rtlol4A_KI6E",
+   "note": ""
+  },
+  "2026-60": {
+   "place": "Al-Manakh Logistic District",
+   "type": "facility",
+   "lat": 24.619725,
+   "lng": 46.8047689,
+   "listing": "Al-Manakh",
+   "place_id": "ChIJy3k0GkgILz4RUuLceTp-kpA",
+   "note": "Al-Manakh district of Riyadh (sublocality listing)"
+  },
+  "2026-61": {
+   "place": "RUH Unit",
+   "type": "facility",
+   "lat": 24.974265199999998,
+   "lng": 46.6915128,
+   "listing": "CATRION - Riyadh Unit",
+   "place_id": "ChIJKzZSFgfzLj4RiAh7hzs4wDI",
+   "note": "Catrion Riyadh unit at King Khalid Airport"
+  },
+  "2026-64": {
+   "place": "Ghazlan Power Plant",
+   "type": "facility",
+   "lat": 26.85,
+   "lng": 49.9,
+   "listing": "Ghizlan Station",
+   "place_id": "ChIJg4IiXwmNNT4RLuKSED9xgDc",
+   "note": "listing named Ghizlan Station; its coordinates look rounded"
+  },
+  "2026-65": {
+   "place": "منطقة نجران",
+   "type": "region",
+   "lat": 17.5656036,
+   "lng": 44.2289441,
+   "listing": "Najran",
+   "place_id": "ChIJVZGPyAfr_hURhfSUiBJ5p9E",
+   "note": "region only"
+  },
+  "2026-67": {
+   "place": "محافظة بارق",
+   "type": "city",
+   "lat": 18.9305324,
+   "lng": 41.929569,
+   "listing": "Bariq",
+   "place_id": "ChIJkV_heC_45BURZSp8M3aa5ck",
+   "note": ""
+  },
+  "2026-68": {
+   "place": "راس الخير",
+   "type": "facility",
+   "lat": 27.5213841,
+   "lng": 49.136005499999996,
+   "listing": "SWCC Ras Al Khair Main Gate",
+   "place_id": "ChIJNc3Uc20zyz8ROTK6_yF5zb4",
+   "note": ""
+  },
+  "2026-79": {
+   "place": "مدينة حائل",
+   "type": "city",
+   "lat": 27.5114102,
+   "lng": 41.7208243,
+   "listing": "Hail",
+   "place_id": "ChIJo_rQluZGdhURgIiKJ4aiI6g",
+   "note": "landfill not named; city used"
+  },
+  "2026-81": {
+   "place": "فرسان",
+   "type": "city",
+   "lat": 16.7011279,
+   "lng": 42.1186577,
+   "listing": "Governate Farasan Island",
+   "place_id": "ChIJYar-8R9bCBYRG-YmU9YDOkk",
+   "note": "desalination unit not listed; Farasan governorate office listing used"
+  },
+  "2026-83": {
+   "place": "الشعيبة",
+   "type": "facility",
+   "lat": 21.0968291,
+   "lng": 39.1968953,
+   "listing": "Shuaiba Beach",
+   "place_id": "ChIJJfK9IeypwxUR-jVtEk_vgIo",
+   "note": "plant listing not found; Shuaiba Beach listing in Shuaibah locality used"
+  },
+  "2026-84": {
+   "place": "الشعيبة",
+   "type": "facility",
+   "lat": 21.0968291,
+   "lng": 39.1968953,
+   "listing": "Shuaiba Beach",
+   "place_id": "ChIJJfK9IeypwxUR-jVtEk_vgIo",
+   "note": "plant listing not found; Shuaiba Beach listing in Shuaibah locality used"
+  },
+  "2026-85": {
+   "place": "القنفذة",
+   "type": "facility",
+   "lat": 19.0733985,
+   "lng": 41.1678047,
+   "listing": "Al Qunfudah Water Desalination Plant",
+   "place_id": "ChIJVVVVVQab5hUR0SOCwEGbIwg",
+   "note": ""
+  },
+  "2026-87": {
+   "place": "منطقة المدينة المنورة",
+   "type": "region",
+   "lat": 24.4672132,
+   "lng": 39.6024496,
+   "listing": "Madinah",
+   "place_id": "ChIJ1SDSl1G-vRUR2Qg76k9RVC4",
+   "note": "region only"
+  },
+  "2026-92": {
+   "place": "راس الخير",
+   "type": "facility",
+   "lat": 27.5213841,
+   "lng": 49.136005499999996,
+   "listing": "SWCC Ras Al Khair Main Gate",
+   "place_id": "ChIJNc3Uc20zyz8ROTK6_yF5zb4",
+   "note": ""
+  },
+  "2026-94": {
+   "place": "Al Khobar Downtown",
+   "type": "city",
+   "lat": 26.2171906,
+   "lng": 50.1971381,
+   "listing": "Al Khobar",
+   "place_id": "ChIJ2Vjv6DnoST4R0aq22BKId-8",
+   "note": "project site not listed; Al Khobar city used"
+  },
+  "2026-96": {
+   "place": "Shedgum",
+   "type": "facility",
+   "lat": 25.7252461,
+   "lng": 49.4294448,
+   "listing": "Shedqum Power Plant",
+   "place_id": "ChIJ____r5NUNj4R21VLBRb6TEM",
+   "note": "listing spelled Shedqum Power Plant"
+  },
+  "2026-100": {
+   "place": "Green Duba PP",
+   "type": "facility",
+   "lat": 27.7512117,
+   "lng": 35.44297650000001,
+   "listing": "Green Duba Power Plant",
+   "place_id": "ChIJGR2UyVdurBUR_1QR59DOaYw",
+   "note": ""
+  },
+  "2026-101": {
+   "place": "Green Duba Power Plant",
+   "type": "facility",
+   "lat": 27.7512117,
+   "lng": 35.44297650000001,
+   "listing": "Green Duba Power Plant",
+   "place_id": "ChIJGR2UyVdurBUR_1QR59DOaYw",
+   "note": ""
+  }
+ },
+ "buyers": [
+  {
+   "client": "الشركة السعودية للكهرباء",
+   "lat": 24.877160999999997,
+   "lng": 46.5968434,
+   "grade": "High",
+   "listing": "السعودية للطاقة المقر الرئيسي",
+   "address": "الرياض، حي العارض، عند تقاطع شارع العليا، شارع ريحانة بنت زيد, Riyadh 13337",
+   "place_id": "ChIJCc2g3rj9Lj4RGP0NIDsax64",
+   "note": "SEC = Saudi Energy = الشركة السعودية للطاقة (one company per owner rule)"
+  },
+  {
+   "client": "وزارة البيئة والزراعة والمياه",
+   "lat": 24.722256899999998,
+   "lng": 46.756606999999995,
+   "grade": "High",
+   "listing": "وزارة البيئة والمياه والزراعة",
+   "address": "الطريق الدائري الشرقي، بين مخرج ١٢ ومخرج ١٣, King Abdullah Dt., Riyadh 12424",
+   "place_id": "ChIJUxtuBF0ELz4RTInWOGDNCjI",
+   "note": ""
+  },
+  {
+   "client": "المركز الوطني للارصاد",
+   "lat": 21.5232292,
+   "lng": 39.209554499999996,
+   "grade": "High",
+   "listing": "المركز الوطني للأرصاد",
+   "address": "شارع الأمير عبدالمجيد, Al Warood, Jeddah 23225",
+   "place_id": "ChIJXWMY8yTOwxURhnJ36OsBsbs",
+   "note": ""
+  },
+  {
+   "client": "المركز الوطني للرقابة على الإلتزام البيئي",
+   "lat": 24.7854296,
+   "lng": 46.7320542,
+   "grade": "High",
+   "listing": "المركز الوطني للرقابة على الألتزام البيئي (المبنى الرئيسي) NCEC",
+   "address": "RFDA7036, 7036, 3000 رقم 82, حي الشهداء, الرياض 13241",
+   "place_id": "ChIJB-ef76b9Lj4R_uDvfe8CgWI",
+   "note": ""
+  },
+  {
+   "client": "المركز الوطني للأرصاد",
+   "lat": 21.5232292,
+   "lng": 39.209554499999996,
+   "grade": "High",
+   "listing": "المركز الوطني للأرصاد",
+   "address": "شارع الأمير عبدالمجيد, Al Warood, Jeddah 23225",
+   "place_id": "ChIJXWMY8yTOwxURhnJ36OsBsbs",
+   "note": ""
+  },
+  {
+   "client": "المركز الوطني لتنمية الغطاء النباتي ومكافحة التصحر",
+   "lat": 24.773016499999997,
+   "lng": 46.673963,
+   "grade": "High",
+   "listing": "المركز الوطني لتنمية الغطاء النباتي ومكافحة التصحر",
+   "address": "3372 Northern Ring Rd, An Nafal, Riyadh 13312",
+   "place_id": "ChIJB8GXcoL9Lj4RYdrn7MbWFtQ",
+   "note": ""
+  },
+  {
+   "client": "الهيئة العامة للنقل",
+   "lat": 24.78904,
+   "lng": 46.637333,
+   "grade": "High",
+   "listing": "Transport General Authority",
+   "address": "Olaya St, As Sahafah, Riyadh 13315",
+   "place_id": "ChIJIxTZRXPjLj4RWvNPf_h9mz4",
+   "note": ""
+  },
+  {
+   "client": "الهيئة العامة للصناعات العسكرية",
+   "lat": 24.731464499999998,
+   "lng": 46.7522869,
+   "grade": "High",
+   "listing": "General Authority for Military Industries",
+   "address": "8094 Eastern Ring Branch Rd, King Abdullah Dt., Riyadh 12424",
+   "place_id": "ChIJCSCUDGUBLz4RKnC3X0huQqY",
+   "note": ""
+  },
+  {
+   "client": "الهيئة السعودية للمواصفات والمقاييس والجودة",
+   "lat": 24.734982499999997,
+   "lng": 46.635580399999995,
+   "grade": "High",
+   "listing": "Saudi Standards Metrology & Quality Organization",
+   "address": "طريق الإمام سعود بن عبدالعزيز بن محمد, Al Mohammadiyyah, Riyadh 12364",
+   "place_id": "ChIJ31qsyqLjLj4RvuwAy6vUx-k",
+   "note": ""
+  },
+  {
+   "client": "المؤسسة العامة للتدريب التقني والمهني",
+   "lat": 24.6512413,
+   "lng": 46.7041683,
+   "grade": "High",
+   "listing": "Technical and Vocational Training Corporation",
+   "address": "MP23+GC, Al Washm St, Al Murabba, Riyadh 12613",
+   "place_id": "ChIJ4dKBKfcELz4R7lWLDO1WmlU",
+   "note": ""
+  },
+  {
+   "client": "جامعة الحدود الشمالية",
+   "lat": 30.915976599999997,
+   "lng": 41.079305399999996,
+   "grade": "High",
+   "listing": "Northern Border University",
+   "address": "9280, 2802, Alkhalij, Ar Ar 73213",
+   "place_id": "ChIJNYRDzsoRbBURuFGwr2tyUWs",
+   "note": ""
+  },
+  {
+   "client": "بلدية تنومة",
+   "lat": 18.954725399999997,
+   "lng": 42.1667022,
+   "grade": "High",
+   "listing": "Tanumah Municipality",
+   "address": "X538+VMW, 15, Tanomah 62717",
+   "place_id": "ChIJq9qrSYPh5BURBLs_n_giRsg",
+   "note": ""
+  },
+  {
+   "client": "الهيئة السعودية للمياه",
+   "lat": 24.6963745,
+   "lng": 46.6813238,
+   "grade": "High",
+   "listing": "Saudi Water Authority",
+   "address": "طريق الملك فهد الفرعي, Al Olaya, Riyadh 12213",
+   "place_id": "ChIJx5jxiToDLz4RMLBibhVqh-Y",
+   "note": ""
+  },
+  {
+   "client": "الادارة العامة للخدمات الطبية للقوات المسلحة - وزارة الدفاع",
+   "lat": 24.7380246,
+   "lng": 46.748150800000005,
+   "grade": "High",
+   "listing": "Armed Forces Medical Services",
+   "address": "PPQX+672, Eastern Ring Rd, King Abdullah Dt., Riyadh 12426",
+   "place_id": "ChIJdVBusYABLz4RUP4NKYVmlQA",
+   "note": ""
+  },
+  {
+   "client": "المؤسسة العامة للصناعات العسكرية",
+   "lat": 24.1248109,
+   "lng": 47.2923253,
+   "grade": "High",
+   "listing": "Military Industries Corporation MIC",
+   "address": "47FR+WWG, King Khalid Rd, Al-Kharj 16274",
+   "place_id": "ChIJaRi231VPJT4RMpMfraLlnIo",
+   "note": ""
+  },
+  {
+   "client": "المركز الوطني للرقابة على الالتزام البيئي",
+   "lat": 24.7854296,
+   "lng": 46.7320542,
+   "grade": "High",
+   "listing": "المركز الوطني للرقابة على الألتزام البيئي (المبنى الرئيسي) NCEC",
+   "address": "RFDA7036, 7036, 3000 رقم 82, حي الشهداء, الرياض 13241",
+   "place_id": "ChIJB-ef76b9Lj4R_uDvfe8CgWI",
+   "note": ""
+  },
+  {
+   "client": "أمانة منطقة حائل",
+   "lat": 27.505521599999998,
+   "lng": 41.6975784,
+   "grade": "High",
+   "listing": "Secretariat Hail",
+   "address": "8794 King Abdulaziz Rd, Al Matar, Hail 55421",
+   "place_id": "ChIJPb5sJzxHdhURRzRdOp391q0",
+   "note": ""
+  },
+  {
+   "client": "المؤسسة العامة لتحلية المياه المالحة",
+   "lat": 24.6963745,
+   "lng": 46.6813238,
+   "grade": "High",
+   "listing": "Saudi Water Authority",
+   "address": "طريق الملك فهد الفرعي, Al Olaya, Riyadh 12213",
+   "place_id": "ChIJx5jxiToDLz4RMLBibhVqh-Y",
+   "note": "SWCC = Saudi Water Authority (owner rule)"
+  },
+  {
+   "client": "الإدارة العامة للخدمات الطبية للقوات المسلحة",
+   "lat": 24.7380246,
+   "lng": 46.748150800000005,
+   "grade": "High",
+   "listing": "Armed Forces Medical Services",
+   "address": "PPQX+672, Eastern Ring Rd, King Abdullah Dt., Riyadh 12426",
+   "place_id": "ChIJdVBusYABLz4RUP4NKYVmlQA",
+   "note": ""
+  },
+  {
+   "client": "المؤسسة العامة للري",
+   "lat": 25.453427299999998,
+   "lng": 49.567430200000004,
+   "grade": "High",
+   "listing": "المؤسسة العامة للري",
+   "address": "Dhahran Rd, Mahairis, Al Mubarraz 31982",
+   "place_id": "ChIJJWHufAq9Nz4RtIFjLMkK6t0",
+   "note": ""
+  },
+  {
+   "client": "بلدية محافظة المذنب",
+   "lat": 25.883042099999997,
+   "lng": 44.2013831,
+   "grade": "High",
+   "listing": "Al Mithnab Municipality",
+   "address": "6797 King Abdulaziz Rd, Ar Rawdah, Al Mithnab 56643",
+   "place_id": "ChIJHWrS7Q25gRURfTzjNZn0zUg",
+   "note": ""
+  },
+  {
+   "client": "LINXON",
+   "lat": 24.6968115,
+   "lng": 46.6858722,
+   "grade": "High",
+   "listing": "Linxon Saudi Arabia Limited",
+   "address": "2209 طريق الأمير محمد بن عبدالعزيز, Al Olaya, Riyadh 12222",
+   "place_id": "ChIJdzc0rwbjLj4RxvLuNKvaPuk",
+   "note": ""
+  },
+  {
+   "client": "وزارة البيئة والمياه والزراعة",
+   "lat": 24.722256899999998,
+   "lng": 46.756606999999995,
+   "grade": "High",
+   "listing": "وزارة البيئة والمياه والزراعة",
+   "address": "الطريق الدائري الشرقي، بين مخرج ١٢ ومخرج ١٣, King Abdullah Dt., Riyadh 12424",
+   "place_id": "ChIJUxtuBF0ELz4RTInWOGDNCjI",
+   "note": ""
+  },
+  {
+   "client": "هيئة الزكاة والضريبة والجمارك",
+   "lat": 24.772649599999998,
+   "lng": 46.7279207,
+   "grade": "High",
+   "listing": "Zakat, Tax, and Customs Authority - Head Office",
+   "address": "QPCH+XC5, Al Mughrizat, Riyadh 12484",
+   "place_id": "ChIJpbf5WKr9Lj4RNlIa1AwdBog",
+   "note": ""
+  },
+  {
+   "client": "بلدية بارق",
+   "lat": 18.9398733,
+   "lng": 41.9249614,
+   "grade": "High",
+   "listing": "Bareq Municipality",
+   "address": "WWQF+WXW, 211, Bariq 63914",
+   "place_id": "ChIJ73Cj6X345BURF7fKXx0eQHM",
+   "note": ""
+  },
+  {
+   "client": "Saudi Energy / Project Development Company (PDC) / الشركة السعودية للكهرباء",
+   "lat": 24.877160999999997,
+   "lng": 46.5968434,
+   "grade": "Medium",
+   "listing": "السعودية للطاقة المقر الرئيسي",
+   "address": "الرياض، حي العارض، عند تقاطع شارع العليا، شارع ريحانة بنت زيد, Riyadh 13337",
+   "place_id": "ChIJCc2g3rj9Lj4RGP0NIDsax64",
+   "note": "client string lists three labels (Saudi Energy + PDC + SEC); placed at Saudi Energy HQ; PDC is a different company and was not looked up separately"
+  },
+  {
+   "client": "Aramco e-Marketplace",
+   "lat": 26.309272699999998,
+   "lng": 50.1337585,
+   "grade": "Medium",
+   "listing": "Saudi Aramco Bulding 840",
+   "address": "845M+PG2, Gharb Al Dhahran, Dhahran 34465",
+   "place_id": "ChIJZyuJB43mST4RuFKxPQ8ZJmI",
+   "note": "Aramco office building in Dhahran core area; not a listing named head office"
+  },
+  {
+   "client": "Petrorabigh",
+   "lat": 22.740819899999998,
+   "lng": 39.0353505,
+   "grade": "Medium",
+   "listing": "PetroRabigh Security ID Office",
+   "address": "P2RP+84H, Rabigh 25726",
+   "place_id": "ChIJwW_ol1aUwBURruvSc_19_-0",
+   "note": "listing is the security ID office at the Rabigh complex, not a listing named head office"
+  },
+  {
+   "client": "وزارة الشـؤون الاسلامية والدعوة والارشاد",
+   "lat": 24.6929959,
+   "lng": 46.682133,
+   "grade": "High",
+   "listing": "Ministry of Islamic Affairs, Dawah and Guidance",
+   "address": "7523 طريق الملك فهد, Al Olaya, Riyadh 12212",
+   "place_id": "ChIJG03W9fwDLz4RHBgTquQbaQo",
+   "note": ""
+  },
+  {
+   "client": "المركز الوطني للرقابةعلى الالتزام البيئي",
+   "lat": 24.7854296,
+   "lng": 46.7320542,
+   "grade": "High",
+   "listing": "المركز الوطني للرقابة على الألتزام البيئي (المبنى الرئيسي) NCEC",
+   "address": "RFDA7036, 7036, 3000 رقم 82, حي الشهداء, الرياض 13241",
+   "place_id": "ChIJB-ef76b9Lj4R_uDvfe8CgWI",
+   "note": ""
+  },
+  {
+   "client": "Albawani",
+   "lat": 24.669509299999998,
+   "lng": 46.7282131,
+   "grade": "High",
+   "listing": "Albawani",
+   "address": "Abi Al Hajjaj Al Mousili, Al Malaz, Riyadh 12627",
+   "place_id": "ChIJMcYezGoELz4RTKj9tiFp05Y",
+   "note": ""
+  },
+  {
+   "client": "SAR",
+   "lat": 24.8558246,
+   "lng": 46.7669612,
+   "grade": "High",
+   "listing": "Saudi Railway Company HQ Office",
+   "address": "3612 Ath Thumamah Road, King Khalid Airport area, Riyadh 13422",
+   "place_id": "ChIJp6IZGMv-Lj4RiqcTQ519TJw",
+   "note": ""
+  },
+  {
+   "client": "SIRC",
+   "lat": 24.811654299999997,
+   "lng": 46.6211957,
+   "grade": "High",
+   "listing": "الشركة السعودية الاستثمارية لإعادة التدوير - سرك",
+   "address": "King Fahd Branch Rd, Al Malqa, Riyadh 12324",
+   "place_id": "ChIJ86LCF0LhLj4RoZoVTFzbFm8",
+   "note": ""
+  },
+  {
+   "client": "الشركة السعودية للطاقة",
+   "lat": 24.877160999999997,
+   "lng": 46.5968434,
+   "grade": "High",
+   "listing": "السعودية للطاقة المقر الرئيسي",
+   "address": "الرياض، حي العارض، عند تقاطع شارع العليا، شارع ريحانة بنت زيد, Riyadh 13337",
+   "place_id": "ChIJCc2g3rj9Lj4RGP0NIDsax64",
+   "note": "SEC = Saudi Energy = الشركة السعودية للطاقة (one company per owner rule)"
+  },
+  {
+   "client": "SE",
+   "lat": 24.877160999999997,
+   "lng": 46.5968434,
+   "grade": "High",
+   "listing": "السعودية للطاقة المقر الرئيسي",
+   "address": "الرياض، حي العارض، عند تقاطع شارع العليا، شارع ريحانة بنت زيد, Riyadh 13337",
+   "place_id": "ChIJCc2g3rj9Lj4RGP0NIDsax64",
+   "note": "SEC = Saudi Energy = الشركة السعودية للطاقة (one company per owner rule)"
+  },
+  {
+   "client": "Saudi Energy",
+   "lat": 24.877160999999997,
+   "lng": 46.5968434,
+   "grade": "High",
+   "listing": "السعودية للطاقة المقر الرئيسي",
+   "address": "الرياض، حي العارض، عند تقاطع شارع العليا، شارع ريحانة بنت زيد, Riyadh 13337",
+   "place_id": "ChIJCc2g3rj9Lj4RGP0NIDsax64",
+   "note": "SEC = Saudi Energy = الشركة السعودية للطاقة (one company per owner rule)"
+  },
+  {
+   "client": "محمية الإمام عبدالعزيز بن محمد",
+   "lat": null,
+   "lng": null,
+   "grade": "None",
+   "listing": "",
+   "address": "",
+   "place_id": "",
+   "note": "two searches returned only KARNR (King Abdulaziz Royal Reserve authority), a different body"
+  },
+  {
+   "client": "القوات الجوية",
+   "lat": null,
+   "lng": null,
+   "grade": "None",
+   "listing": "",
+   "address": "",
+   "place_id": "",
+   "note": "no RSAF headquarters listing; searches returned an air base in Tabuk and the Land Forces"
+  },
+  {
+   "client": "الهيئة الوطنية للأمن السيبراني",
+   "lat": null,
+   "lng": null,
+   "grade": "None",
+   "listing": "",
+   "address": "",
+   "place_id": "",
+   "note": "two searches returned only the National Cybersecurity Academy, not the Authority"
+  },
+  {
+   "client": "المركز الوطني للوقاية من الآفات والامراض الحيوانية ومكافحتها",
+   "lat": 24.6825537,
+   "lng": 46.740817,
+   "grade": "High",
+   "listing": "Weqaa center",
+   "address": "RERB6439, 6439, 3790 فاطمة الزهراء، حي الربوة, الرياض 12815",
+   "place_id": "ChIJIY6_DQAFLz4RR4x5JAYYd8k",
+   "note": ""
+  },
+  {
+   "client": "CEER / ceermotors",
+   "lat": 24.8286184,
+   "lng": 46.5712109,
+   "grade": "High",
+   "listing": "Ceer Motors Headquarters",
+   "address": "RHHC+CFW, Al Qirawan, Riyadh 13535",
+   "place_id": "ChIJs0CXLwDnLj4R829uiNSRpb0",
+   "note": ""
+  },
+  {
+   "client": "هيئة الصحة العامة",
+   "lat": 24.930876599999998,
+   "lng": 46.5858269,
+   "grade": "High",
+   "listing": "هيئة الصحة العامة(وقايه)",
+   "address": "WHJP+984, King Abdulaziz Rd, Riyadh 13352",
+   "place_id": "ChIJlxprMXbpLj4RUmqUt7XBat0",
+   "note": ""
+  },
+  {
+   "client": "jeddahairports (Jedco)",
+   "lat": 21.651691,
+   "lng": 39.159659,
+   "grade": "High",
+   "listing": "Jeddah Airports Company - JedCo",
+   "address": "4778, مطار الملك عبدالعزيز الدولي، جدة 23631",
+   "place_id": "ChIJZ1nu5hnXwxURCtXVlA8tb2U",
+   "note": ""
+  },
+  {
+   "client": "شركة المياه الوطنية",
+   "lat": 24.6876622,
+   "lng": 46.6838164,
+   "grade": "High",
+   "listing": "National Water Company Headquarter",
+   "address": "King Fahd Rd, Al Olaya, Riyadh 13712",
+   "place_id": "ChIJ40gU4UYDLz4RIx5teZGD_c0",
+   "note": ""
+  },
+  {
+   "client": "وزارة النقل والخدمات اللوجستية - الديوان العام",
+   "lat": 24.757839999999998,
+   "lng": 46.6511119,
+   "grade": "High",
+   "listing": "Ministry of Transport and Logistic Services HQ",
+   "address": "9349 وادي الحياه, Al Muruj, Riyadh 12264",
+   "place_id": "ChIJaatJceriLj4RzVvqq2WDDWg",
+   "note": ""
+  },
+  {
+   "client": "التجمع الصحي بمكة المكرمة",
+   "lat": 21.377583299999998,
+   "lng": 39.8753855,
+   "grade": "High",
+   "listing": "Makkah Health Cluster",
+   "address": "8233 ضرار بن مالك، حي النسيم، Makkah 24245",
+   "place_id": "ChIJzQYiWwAFwhURywtv6bBe0PU",
+   "note": ""
+  },
+  {
+   "client": "SAFE Entreprise",
+   "lat": 24.7429375,
+   "lng": 46.6355625,
+   "grade": "High",
+   "listing": "The National Security Services Company (SAFE) الشركة الوطنية للخدمات الأمنية (سيف)",
+   "address": "An Nakheel, Riyadh 12382",
+   "place_id": "ChIJv10hi-TjLj4RtI0GcDIOKP0",
+   "note": ""
+  },
+  {
+   "client": "هيئة المساحة الجيولوجية",
+   "lat": 21.5568717,
+   "lng": 39.2343227,
+   "grade": "High",
+   "listing": "Saudi Geological Survey هيئة المساحة الجيولوجية السعودية",
+   "address": "طريق الحرمين الشريفين, Al Waha, Jeddah 23352",
+   "place_id": "ChIJ-YjlxinSwxURRu3scZXfoZw",
+   "note": ""
+  },
+  {
+   "client": "القوات البحرية",
+   "lat": null,
+   "lng": null,
+   "grade": "None",
+   "listing": "",
+   "address": "",
+   "place_id": "",
+   "note": "no RSNF headquarters listing; searches returned an unnamed gate and the Land Forces"
+  },
+  {
+   "client": "الهيئة الملكية بجازان",
+   "lat": 17.3760814,
+   "lng": 42.3212486,
+   "grade": "High",
+   "listing": "Royal commission of Jazan",
+   "address": "Jazan City for Primary and Downstream Industries 87343",
+   "place_id": "ChIJx52XvDG54hURFFOm-UQZ7EE",
+   "note": ""
+  },
+  {
+   "client": "محطة تحلية رابغ 3",
+   "lat": 22.7791405,
+   "lng": 38.9627329,
+   "grade": "Low",
+   "listing": "desalination plant",
+   "address": "3120 رابغ 25732، 7259, Rabigh 25732",
+   "place_id": "ChIJV019Nmq-wBURBkntKd-AqFg",
+   "note": "generic listing name in Rabigh; not confirmed as Rabigh 3 IWP; second search returned nothing"
+  },
+  {
+   "client": "Cruise Saudi",
+   "lat": 21.6024006,
+   "lng": 39.108325099999995,
+   "grade": "High",
+   "listing": "Cruise Saudi Headquarters",
+   "address": "Al Kurnaysh Br Rd, Ash Shati, Jeddah 23511",
+   "place_id": "ChIJu1H1dtTbwxURGBKOzkqBwYQ",
+   "note": ""
+  },
+  {
+   "client": "NEOM",
+   "lat": 24.7421181,
+   "lng": 46.634823499999996,
+   "grade": "Medium",
+   "listing": "NEOM",
+   "address": "Digital City 2nd Floor, Building IN-01, النخيل، الرياض 11411",
+   "place_id": "ChIJzwD3lZ7jLj4RRrKsJNJQ0H0",
+   "note": "Riyadh office listing; the NEOM site itself is in Tabuk region"
+  },
+  {
+   "client": "الهيئة الملكية لمحافظة العلا",
+   "lat": null,
+   "lng": null,
+   "grade": "None",
+   "listing": "",
+   "address": "",
+   "place_id": "",
+   "note": "two searches (Arabic and English) returned no listing for RCU"
+  },
+  {
+   "client": "وزارة الطاقة",
+   "lat": 24.741874,
+   "lng": 46.6360077,
+   "grade": "High",
+   "listing": "Ministry of Energy",
+   "address": "PJRP+JR, An Nakheel, Riyadh 12382",
+   "place_id": "ChIJoUKqOVjjLj4R1ircuar6xtg",
+   "note": ""
+  },
+  {
+   "client": "بلدية محافظة خميس مشيط",
+   "lat": 18.3214437,
+   "lng": 42.697462699999996,
+   "grade": "High",
+   "listing": "Khamis Mushait Municipality",
+   "address": "Al Mathnah, 8019, خميس مشيط 62456",
+   "place_id": "ChIJk_r7eIpZ-xURFbKjpUbRmdI",
+   "note": ""
+  },
+  {
+   "client": "مستشفى قوى الأمن بمنطقة مكة المكرمة",
+   "lat": 21.3652664,
+   "lng": 39.8925215,
+   "grade": "High",
+   "listing": "Security Forces Hospital-Makkah",
+   "address": "2576، 6819 طريق الطائف، حي المشاعر، Makkah 24251",
+   "place_id": "ChIJhVAhk9sFwhURG4VvBzIZzfo",
+   "note": ""
+  },
+  {
+   "client": "أمانة منطقة الحدود الشمالية",
+   "lat": 30.950945099999995,
+   "lng": 41.0345709,
+   "grade": "High",
+   "listing": "أمانة منطقة الحدود الشمالية",
+   "address": "X22M+9RG, Alkhalij, Arar 73211",
+   "place_id": "ChIJYfrAUf8NbBURMphJo5GDsoc",
+   "note": ""
+  },
+  {
+   "client": "أمانة منطقة عسير",
+   "lat": 18.2169803,
+   "lng": 42.4989004,
+   "grade": "High",
+   "listing": "Aseer Region Municipality",
+   "address": "7935 King Khalid Rd, Town Center, Abha 62521",
+   "place_id": "ChIJbcHHLXFU4xURu2-bJ2LPOgQ",
+   "note": ""
+  },
+  {
+   "client": "Ceer National Automotive Company",
+   "lat": 24.8286184,
+   "lng": 46.5712109,
+   "grade": "High",
+   "listing": "Ceer Motors Headquarters",
+   "address": "RHHC+CFW, Al Qirawan, Riyadh 13535",
+   "place_id": "ChIJs0CXLwDnLj4R829uiNSRpb0",
+   "note": ""
+  },
+  {
+   "client": "هيئة المساحة الجيولوجية السعودية",
+   "lat": 21.5568717,
+   "lng": 39.2343227,
+   "grade": "High",
+   "listing": "Saudi Geological Survey هيئة المساحة الجيولوجية السعودية",
+   "address": "طريق الحرمين الشريفين, Al Waha, Jeddah 23352",
+   "place_id": "ChIJ-YjlxinSwxURRu3scZXfoZw",
+   "note": ""
+  },
+  {
+   "client": "أمانة العاصمة المقدسة",
+   "lat": 21.440737199999997,
+   "lng": 39.83587790000001,
+   "grade": "High",
+   "listing": "Holy Makkah Municipality",
+   "address": "8073 Al Masjid Al Haram Rd, Al Maabdah, Makkah 24236",
+   "place_id": "ChIJhanR8rMDwhURh-5WrI7dqSw",
+   "note": ""
+  },
+  {
+   "client": "حرس الحدود",
+   "lat": 24.986848,
+   "lng": 46.933310299999995,
+   "grade": "High",
+   "listing": "المديرية العامة لحرس الحدود (الجديدة)",
+   "address": "XWPM+P8M, Ash Sharq, Riyadh 13807",
+   "place_id": "ChIJ5fTzQwBRLj4RJMFrvXLGG4o",
+   "note": ""
+  },
+  {
+   "client": "كلية الملك خالد العـسكرية",
+   "lat": 24.7412335,
+   "lng": 46.890775,
+   "grade": "High",
+   "listing": "King Khalid Military Academy",
+   "address": "PVRR+F8R، السلامة، الحرس الوطني، Riyadh 14625",
+   "place_id": "ChIJ624KnlmpLz4Rn1s83GBECX0",
+   "note": ""
+  },
+  {
+   "client": "صندوق البيئة",
+   "lat": 24.7972134,
+   "lng": 46.7315999,
+   "grade": "High",
+   "listing": "Environment Fund",
+   "address": "6525, 3772 طريق الدمام، قرطبة، الرياض 13244",
+   "place_id": "ChIJweCnAJT9Lj4RItrWqXoNSb4",
+   "note": ""
+  },
+  {
+   "client": "أمانة منطقة الرياض",
+   "lat": 24.6282691,
+   "lng": 46.71043530000001,
+   "grade": "High",
+   "listing": "Riyadh Municipality",
+   "address": "Al Muqaybirah St, Ad Dirah, Riyadh 12634",
+   "place_id": "ChIJYba5uqAFLz4RtJGGcH_hJ0I",
+   "note": ""
+  },
+  {
+   "client": "جامعة الأميرة نورة بنت عبدالرحمن",
+   "lat": 24.8466526,
+   "lng": 46.7255186,
+   "grade": "High",
+   "listing": "Princess Nourah Bint Abdulrahman University -",
+   "address": "King Khalid International Airport, Riyadh 11564",
+   "place_id": "ChIJyah-dQKPDhQRK6p3ZUcj4Co",
+   "note": ""
+  },
+  {
+   "client": "بلدية بني عمرو",
+   "lat": 19.3798904,
+   "lng": 42.050061799999995,
+   "grade": "High",
+   "listing": "بلدية بني عمرو",
+   "address": "6879 - العاسرة 67375 - 4981, Bani Amr 67375",
+   "place_id": "ChIJt_Fp6kVy5RURj4bb2NkIvz8",
+   "note": ""
+  },
+  {
+   "client": "تجمع الرياض الصحي الأول",
+   "lat": 24.798699499999998,
+   "lng": 46.643974899999996,
+   "grade": "High",
+   "listing": "C1 Riyadh Health Cluster",
+   "address": "6th floor, North Wing, Gate D, Al Akaria Plaza, As Sahafah, Riyadh 11622",
+   "place_id": "ChIJa3lAvGUDLz4RkhYduRUrKSE",
+   "note": ""
+  },
+  {
+   "client": "مدينة الملك عبدالله الطبية",
+   "lat": 21.381939799999998,
+   "lng": 39.881111,
+   "grade": "High",
+   "listing": "King Abdullah Medical City",
+   "address": "9VJJ+QCH, Muzdalifah Rd, Al Mashair, Makkah 24246",
+   "place_id": "ChIJFcouHjUEwhUREzE5C1sX3Uk",
+   "note": ""
+  },
+  {
+   "client": "الشركة الوطنية للخدمات الزراعية",
+   "lat": 24.799013799999997,
+   "lng": 46.7358587,
+   "grade": "High",
+   "listing": "AgriServ",
+   "address": "6730 Dammam Rd, Qurtubah, Riyadh 13616",
+   "place_id": "ChIJcf52IHT9Lj4R5ARmVkohpKw",
+   "note": "AgriServ is the trade name of the National Agricultural Services Company"
+  },
+  {
+   "client": "المركز الوطني لإدارة النفايات (موان)",
+   "lat": 24.8193606,
+   "lng": 46.737363200000004,
+   "grade": "High",
+   "listing": "National Center for Waste Management - MWAN",
+   "address": "3186 طريق الامير سعود بن محمد بن مقرن الفرعي, قرطبة، الرياض 13247",
+   "place_id": "ChIJ37oK2EX9Lj4R7YNVuuf9RSc",
+   "note": ""
+  },
+  {
+   "client": "المؤسسة العامه للمحافظة على الشعب",
+   "lat": 21.56175,
+   "lng": 39.124777800000004,
+   "grade": "High",
+   "listing": "المؤسسة العامة للمحافظة على الشعب المرجانية والسلاحف في البحر الأحمر - شمس",
+   "address": "7817, 3677 سعد الأنصاري، Ash Shati District, جدة 23412",
+   "place_id": "ChIJ__nuAADbwxUR7nTRUVFABgI",
+   "note": ""
+  },
+  {
+   "client": "العالمية للصناعات البحرية",
+   "lat": 27.5115722,
+   "lng": 49.2528724,
+   "grade": "High",
+   "listing": "International Maritime Industries Co - Head Office",
+   "address": "G763+PG, Ras Al Khair 37255",
+   "place_id": "ChIJw6DyRDbTND4RiPnSC83Gn8w",
+   "note": ""
+  },
+  {
+   "client": "أمانة منطقة تبوك",
+   "lat": 28.4091167,
+   "lng": 36.5638376,
+   "grade": "High",
+   "listing": "Municipality Of Tabuk",
+   "address": "CH57+JGW, Almuruj-B, Tabuk 47312",
+   "place_id": "ChIJ4QYeeZ6tqRURJY07ZoOa2Tc",
+   "note": ""
+  },
+  {
+   "client": "Jabal Said Company",
+   "lat": 23.8496837,
+   "lng": 40.94053720000001,
+   "grade": "Medium",
+   "listing": "Jabal Sayid Mine",
+   "address": "Al Omaq 44227",
+   "place_id": "ChIJpzUB5B6YlhURp8lREr6uN_0",
+   "note": "listing is the mine site (Ma aden Barrick Copper Co.); no separate head-office listing found"
+  },
+  {
+   "client": "مدينة الملك عبدالعزيز للعلوم والتقنية",
+   "lat": 24.716986499999997,
+   "lng": 46.643258499999995,
+   "grade": "High",
+   "listing": "King Abdulaziz City for Science and Technology (KACST)",
+   "address": "King Abdullah Rd, Al Raed, Riyadh 12354",
+   "place_id": "ChIJ1TmKVG4dLz4RF2MCsTNPwrE",
+   "note": ""
+  },
+  {
+   "client": "Luberef",
+   "lat": 21.4503546,
+   "lng": 39.1859554,
+   "grade": "High",
+   "listing": "Luberef",
+   "address": "Petromin, Jeddah 22411",
+   "place_id": "ChIJJ61Ag8PIwxURRRqAHABzHBs",
+   "note": ""
+  },
+  {
+   "client": "جامعة جازان",
+   "lat": 16.965809399999998,
+   "lng": 42.541803699999996,
+   "grade": "High",
+   "listing": "Jazan University",
+   "address": "Al Maarefah Rd, Jizan",
+   "place_id": "ChIJPyJxK1wHCBYRM5SsEkvFnVo",
+   "note": ""
+  },
+  {
+   "client": "SAL Saudi Logistics Services",
+   "lat": 21.683073099999998,
+   "lng": 39.1187119,
+   "grade": "High",
+   "listing": "SAL - Jeddah Headquarter",
+   "address": "Prince Sultan Rd, Al Basateen, Jeddah 22230",
+   "place_id": "ChIJ94lR19HZwxURchVNx_CUMR4",
+   "note": ""
+  },
+  {
+   "client": "Catrion",
+   "lat": 21.659065899999998,
+   "lng": 39.1217936,
+   "grade": "High",
+   "listing": "CATRION HQ",
+   "address": "Prince Sultan Rd, Al Mohammadiyyah, Jeddah 23617",
+   "place_id": "ChIJ0SP3YQ_ZwxURZui-2X4R008",
+   "note": ""
+  },
+  {
+   "client": "أمانة منطقة نجران",
+   "lat": 17.5756154,
+   "lng": 44.2340114,
+   "grade": "High",
+   "listing": "وزارة البلديات والإسكان - أمانة منطقة نجران",
+   "address": "H6GM+6JR, Najran 66252",
+   "place_id": "ChIJFVnEt3DC_hURNh8vYVQstI8",
+   "note": ""
+  },
+  {
+   "client": "وزارة الصناعة والثروة المعدنية",
+   "lat": 24.652586,
+   "lng": 46.748787799999995,
+   "grade": "High",
+   "listing": "Ministry of Industry and Mineral Resources",
+   "address": "MP3X+2GM, Omar Ibn Al Khattab Rd, Al Sina iyah, Riyadh 12845",
+   "place_id": "ChIJ-RDa5uUHLz4R8qfGTAE4Y68",
+   "note": ""
+  },
+  {
+   "client": "ESNAD",
+   "lat": 24.803182,
+   "lng": 46.672930099999995,
+   "grade": "High",
+   "listing": "Esnad - Saudi Mining Services Company",
+   "address": "Abi Bakr As Siddiq Rd, Ar Rabi, Riyadh 13316",
+   "place_id": "ChIJQRLzQxIdLz4Ru-CPed8IV8s",
+   "note": ""
+  },
+  {
+   "client": "الشؤون الصحیة بوزارة الحرس الوطني",
+   "lat": 24.749765399999998,
+   "lng": 46.856730999999996,
+   "grade": "High",
+   "listing": "Ministry of National Guard - Health Affairs",
+   "address": "Prince Mutib Ibn Abdullah Ibn Abdulaziz Rd, Ar Rimayah, Riyadh 11426",
+   "place_id": "ChIJH-vV2TaqLz4Ripz7qi-rbs0",
+   "note": ""
+  },
+  {
+   "client": "Qiddiya Investment Company",
+   "lat": 24.7412432,
+   "lng": 46.6363074,
+   "grade": "High",
+   "listing": "شركة القدية للاستثمار - Qiddiya Investment Company",
+   "address": "Floor 10, Building MU04, Raidah Digital City, 3889, النخيل، الرياض 12382",
+   "place_id": "ChIJ81sqlVLjLj4ReDN2pW8QdSA",
+   "note": ""
+  },
+  {
+   "client": "مستشفيات الهدا والأمير سلطان والأمير منصور ومركز التأهيل",
+   "lat": 21.3557986,
+   "lng": 40.285885,
+   "grade": "High",
+   "listing": "Alhada Armed Forces Hospital",
+   "address": "3394 Al Hada, Taif 26792",
+   "place_id": "ChIJoWORzRn16RURI7LIJa5pDxo",
+   "note": "buyer is the Taif armed forces hospitals group; placed at its lead hospital (Al Hada)"
+  },
+  {
+   "client": "Aloula",
+   "lat": 24.7085625,
+   "lng": 46.6763078,
+   "grade": "Low",
+   "listing": "Holool Aloula - National Company for Business Solutions",
+   "address": "Al-Mousa Building 5th Floor, Al Olaya, Riyadh 11563",
+   "place_id": "ChIJE0sUZtYCLz4Rg23RbTQhszA",
+   "note": "buyer name Aloula is ambiguous; this listing only shares the word; first search returned nothing"
+  },
+  {
+   "client": "تجمع جازان الصحي",
+   "lat": 16.805796,
+   "lng": 42.6554308,
+   "grade": "High",
+   "listing": "تجمع جازان الصحي",
+   "address": "3608 ابو الخطار، 6856، حي الثريا 1، الوحلة 82513",
+   "place_id": "ChIJQ6gmUQDnBxYRnjw-1uBsHwY",
+   "note": ""
+  },
+  {
+   "client": "مساندة",
+   "lat": 26.377039,
+   "lng": 50.1785973,
+   "grade": "Medium",
+   "listing": "Musanadah Facilities Management",
+   "address": "Battoyor Tower, Level 3, 6729 King Saud Rd, As Safa District, الدمام 34222",
+   "place_id": "ChIJJyselcjpST4RELP3U8KOdyU",
+   "note": "buyer given only as مساندة; assumed Musanadah Facilities Management; listing is its Dammam office"
+  },
+  {
+   "client": "أمانة منطقة المدينة المنورة",
+   "lat": 24.4595215,
+   "lng": 39.600462799999995,
+   "grade": "High",
+   "listing": "Madinah Regional Municipality",
+   "address": "FJ52+R54، عمر بن الخطاب، Al Mughaisilah, Madinah 42315",
+   "place_id": "ChIJ_TBL8Q2_vRURZt-iPR56Irs",
+   "note": ""
+  },
+  {
+   "client": "ACWA",
+   "lat": 24.781626799999998,
+   "lng": 46.5685307,
+   "grade": "Medium",
+   "listing": "ACWA POWER - NEW OFFICE",
+   "address": "QHJ9+MC2, Ar Rihab, Riyadh 13715",
+   "place_id": "ChIJb305HDjhLj4RNih6Xlz6_FU",
+   "note": "listing titled new office; not labelled headquarters"
+  },
+  {
+   "client": "SAMREF",
+   "lat": 23.981529899999998,
+   "lng": 38.240598899999995,
+   "grade": "High",
+   "listing": "SAMREF",
+   "address": "King Saud, Industrial Zone, Yanbu Al Bahr 41912",
+   "place_id": "ChIJ_-Yll1YZuRURvhgAEAdHW24",
+   "note": ""
+  },
+  {
+   "client": "SAUDI DOWNTOWN",
+   "lat": null,
+   "lng": null,
+   "grade": "None",
+   "listing": "",
+   "address": "",
+   "place_id": "",
+   "note": "two searches returned other companies (مجموعة قلب المدينة and Jeddah Central Development Co.)"
+  },
+  {
+   "client": "SAPAC",
+   "lat": 24.8074856,
+   "lng": 46.662660699999996,
+   "grade": "Medium",
+   "listing": "Saudi Pan Kingdom",
+   "address": "RM47+X3V, Al Yasmeen, Riyadh 13322",
+   "place_id": "ChIJTf4OOlDjLj4RHy_eAuwVGSA",
+   "note": "SAPAC taken as Saudi Pan Kingdom Company; acronym not in the listing name"
+  },
+  {
+   "client": "اسمنت العربية",
+   "lat": 21.6140117,
+   "lng": 39.119380899999996,
+   "grade": "High",
+   "listing": "Arabian Cement Co.",
+   "address": "8605 King Abdul Aziz Rd, An Nahdah District, Jeddah 23523",
+   "place_id": "ChIJ06BkdUnawxUR_e9cJ0S5wEI",
+   "note": ""
+  },
+  {
+   "client": "Acwa",
+   "lat": 24.781626799999998,
+   "lng": 46.5685307,
+   "grade": "Medium",
+   "listing": "ACWA POWER - NEW OFFICE",
+   "address": "QHJ9+MC2, Ar Rihab, Riyadh 13715",
+   "place_id": "ChIJb305HDjhLj4RNih6Xlz6_FU",
+   "note": "listing titled new office; not labelled headquarters"
+  },
+  {
+   "client": "المؤسسة العامة لجسر الملك فهد",
+   "lat": 26.1871656,
+   "lng": 50.3173537,
+   "grade": "High",
+   "listing": "King Fahd Causeway Authority",
+   "address": "King Fahd Causeway, Al-Khobar 34619",
+   "place_id": "ChIJRcvPKKbHST4Rk1KIuEpIH_M",
+   "note": ""
+  }
+ ]
+}

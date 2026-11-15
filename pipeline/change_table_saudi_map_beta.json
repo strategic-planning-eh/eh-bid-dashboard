@@ -1,0 +1,127 @@
+{
+ "generated": "2026-11-15 15:26",
+ "title": "Change table — Saudi Map (BETA): bidders, tenders, Vision 2030 projects and EH sites at real locations (15 Nov 2026)",
+ "failures": [],
+ "changes": [
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "saudi-map-beta",
+   "note": "File header comment describes the new tab and where its data lives",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  EH Stakeholder & Competitive Landscape Map - with interactive Leaflet Saudi Map tab\n  SETUP: open this file in any modern browser. No server or build step required.\n  The \"Saudi Map\" tab loads Leaflet 1.9.4 + MarkerCluster from cdnjs and OpenStreetMap tiles,\n  so that tab needs an internet connection; every other tab works fully offline.\n  DEPLOY: upload this single file to GitHub Pages / Netlif",
+   "new": "  EH Stakeholder & Competitive Landscape Map - with the interactive \"Saudi Map (BETA)\" tab\n  SETUP: open this file in any modern browser. No server or build step required.\n  The \"Saudi Map (BETA)\" tab loads Leaflet 1.9.4 + MarkerCluster (cdnjs, then the copy in vendor/) and OpenStreetMap tiles,\n  so its base map needs an internet connection; every other tab works fully offline.\n  DEPLOY: upload th"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "saudi-map-beta",
+   "note": "Tab label: Saudi Map (BETA)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<div class=\"tab\" id=\"tabGeo\" onclick=\"switchTab('geo')\">Saudi Map</div>",
+   "new": "<div class=\"tab\" id=\"tabGeo\" onclick=\"switchTab('geo')\">Saudi Map (BETA)</div>"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "saudi-map-beta",
+   "note": "Tab label in Arabic: خريطة السعودية (تجريبي)",
+   "occurrences": 1,
+   "ok": true,
+   "old": " ['Saudi Map','\\u062e\\u0631\\u064a\\u0637\\u0629 \\u0627\\u0644\\u0633\\u0639\\u0648\\u062f\\u064a\\u0629'],",
+   "new": " ['Saudi Map (BETA)','\\u062e\\u0631\\u064a\\u0637\\u0629 \\u0627\\u0644\\u0633\\u0639\\u0648\\u062f\\u064a\\u0629 (\\u062a\\u062c\\u0631\\u064a\\u0628\\u064a)'],"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "saudi-map-beta",
+   "note": "New data block SMB (filled by embed_saudi_map_data.py)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<script id=\"LIC\" type=\"application/json\">",
+   "new": "<script id=\"SMB\" type=\"application/json\">{}</script>\n<script id=\"LIC\" type=\"application/json\">"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "saudi-map-beta",
+   "note": "CSS: markers, legend, region strip, not-found list, popup (light, dark, RTL, print)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</head>",
+   "new": "<style id=\"eh-saudi-map-beta\">#leafBanner b.smb-beta{display:inline-block;background:var(--eh-sea,#0072BB);color:#fff;border-radius:999px;padding:0 8px;margin-inline-end:6px;font-size:10.5px;letter-spacing:.4px}#smbCount{margin-inline-start:auto;font-size:12px;color:var(--eh-ink-2,#51626D)}#smbCount b{color:var(--eh-sea,#1A5FAB)}#smbShow{font-size:12px;color:var(--eh-ink-2,#51626D);margin:0 0 6px}"
+  },
+  {
+   "file": "map",
+   "kind": "regex",
+   "category": "saudi-map-beta",
+   "note": "Removed: Schematic (offline) mode — buildGeoSchematic and its zoom/pan helpers (geoV, geoApply, geoZoom, geoReset, geoLayers, geoOutside); nothing else called them",
+   "occurrences": 1,
+   "ok": true,
+   "old": "let geoV=\\{k:1,x:0,y:0\\}, geoEl=null, geoDrag=null;\\n.*?\\n\\}\\n\\nfunction buildList\\(\\)\\{",
+   "new": "<fn>"
+  },
+  {
+   "file": "map",
+   "kind": "regex",
+   "category": "saudi-map-beta",
+   "note": "Removed: the old position table (LGEO, LGEO_POS, LGEO_SRC, LGEO_RG), region centres (LREGC), leafBuild/leafFeat and the \"estimated position\" wording. GEO_SITES now holds the four EH sites; SMB data block is read",
+   "occurrences": 1,
+   "ok": true,
+   "old": "/\\* =+ SAUDI MAP TAB: interactive Leaflet app \\+ schematic fallback =+ \\*/\\nlet geoMode='leaf'.*?\\nfunction posL\\(s\\)\\{[^\\n]*\\}\\n\\n",
+   "new": "<fn>"
+  },
+  {
+   "file": "map",
+   "kind": "regex",
+   "category": "saudi-map-beta",
+   "note": "Tab shell rebuilt: BETA banner, bar (fullscreen, exports, About), located / not-located counts, region strip and \"Location not found\" list. Removed: LF filter state, setGeoMode, the Interactive / Schematic buttons, the old About text",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const LF=\\{prov:'all',tiers:null.*?\\n(?=function loadLeaflet\\(ok,fail\\)\\{)",
+   "new": "<fn>"
+  },
+  {
+   "file": "map",
+   "kind": "regex",
+   "category": "saudi-map-beta",
+   "note": "Map rebuilt: layer switches (Bidders, Tenders, Vision 2030 projects, Roads, Region outline), bidder circles sized by tenders shared and coloured by worst outcome with a ring cue, tender diamonds by result, Vision 2030 sites, SIRC as PIF company, EH sites on top; popups; region strip; not-found list. Removed: category / tier / minimum-score / data-confidence filters and the \"Has bid against EH only\" box (leafSidebar, leafPass, leafPopup, leafSel, leafRefresh, leafToggle, leafReset)",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function leafSidebar\\(\\)\\{.*?\\nfunction leafFull\\(\\)\\{[^\\n]*\\}\\n",
+   "new": "<fn>"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "saudi-map-beta",
+   "note": "exportXlsx: the old Saudi Map branch (all pinned companies with the removed filters) is gone",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  if(scope==='leaf'&&typeof LSTAKE!=='undefined'){\n    var names={}; LSTAKE.features.filter(function(f){return leafPass(f.properties);}).forEach(function(f){names[f.properties.n]=1;});\n    rows=NODES.filter(function(n){return names[n.n];});\n    filters=[]; if(LF.prov!=='all')filters.push([t('Province','المنطقة الإدارية'),LF.prov]); var onK=function(o){return o?Object.keys(o).filter(function(k){ret",
+   "new": "  rows=VIS.slice(); filters=xlsFilters(); label=t('Current filters','المرشّحات الحالية');   // the Saudi Map (BETA) has its own export (smbExport)\n"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "saudi-map-beta",
+   "note": "exportXlsx: CSV fallback no longer calls the removed leafExport",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function(){ done(); if(scope==='leaf'){leafExport('csv');} else { xlsCsvFallback(rows); } alert(",
+   "new": "function(){ done(); xlsCsvFallback(rows); alert("
+  },
+  {
+   "file": "map",
+   "kind": "regex",
+   "category": "saudi-map-beta",
+   "note": "Exports rebuilt: Excel (Bidders, Tenders, Vision 2030, EH sites, Location not found, README), GeoJSON and CSV of the layers shown; \"Location not found\" list exports as EH_Bidders_Location_Not_Found.xlsx",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function leafExport\\(kind\\)\\{.*?\\n\\}\\n\\n(?=/\\* =+ ASK THE MAP)",
+   "new": "<fn>"
+  }
+ ]
+}

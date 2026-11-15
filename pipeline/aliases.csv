@@ -125,7 +125,7 @@ Evara Earth,Evara Co. Ltd (One-Person Co.),reviewer merge (region review),approv
 جامعة الملك عبدالله للعلوم والتقنية,مؤسسة فاطمة عبدالله سعيد التجارية,reviewer: different companies,rejected,Oct 2026
 شركة حلول تلاد المتكاملة,الاعلاف المتكاملة,reviewer: different companies,rejected,Oct 2026
 شركة حلول تلاد المتكاملة,شركة حلول واتقان المتطورة للبيئة,reviewer: different companies,rejected,Oct 2026
-Environmnetal Support Office For Environ,Environmental Support Consulting Office,reviewer: different companies,rejected,Oct 2026
+Environmnetal Support Office For Environ,Environmental Support Consulting Office,"reviewer merge (bidder location review) — replaces ""different companies"" of Oct 2026",approved,2026-11-15
 شركة الابنية للاستشارات الهندسية شركة مهنية ذات مسؤولية محدودة من شخص واحد,شركة ابداع المدينة للتجارة شركة شخص واحد ذات مسؤولية محدودة,reviewer: different companies,rejected,Oct 2026
 شركة الابنية للاستشارات الهندسية شركة مهنية ذات مسؤولية محدودة من شخص واحد,شركة درع المعادن للخردة والسكراب شركة شخص واحد ذات مسئولية محدودة,reviewer: different companies,rejected,Oct 2026
 مكتب تقنيات نظافة البيئة للاستشارات البيئية,مؤسسة نظافة البيئة للخدمات البيئية,reviewer: different companies,rejected,Oct 2026
@@ -145,7 +145,7 @@ Environmnetal Support Office For Environ,Environmental Support Consulting Office
 شركة المدينة الاولى الاستشارية,شركة سحاب المدينة التجارية,reviewer: different companies,rejected,Oct 2026
 Green Impact of Environment,Green Wave Environmental Co.,reviewer: different companies,rejected,Oct 2026
 Green Impact of Environment,Green Path Environmental Consulting Co.,reviewer: different companies,rejected,Oct 2026
-SAUDI GEOPHYSICAL CONSULTING OFFICE,Saudi Environmental Consulting Office (Saudi Geophysical),reviewer: different companies,rejected,Oct 2026
+Saudi Environmental Consulting Office (Saudi Geophysical),SAUDI GEOPHYSICAL CONSULTING OFFICE,"reviewer merge (bidder location review) — replaces ""different companies"" of Oct 2026",approved,2026-11-15
 شركة مصادر الجودة البيئية,مؤسسة نبع الجودة للخدمات البيئية,reviewer: different companies,rejected,Oct 2026
 شركة خبراء التقنيه الدوليه للتجاره والمقاولات,شركة المهارة العربية للتجارة والمقاولات,reviewer: different companies,rejected,Oct 2026
 شركة خبراء التقنيه الدوليه للتجاره والمقاولات,شركة برايت للتجارة والمقاولات المحدودة شركة شخص واحد,reviewer: different companies,rejected,Oct 2026
@@ -279,3 +279,60 @@ Engineering Principles,Fouad Fahad Al-Saleh & Khalid Al-Duwailah Environmental &
 شركة أفاق ستيل,شركة أفاق ستيل (AFAQ Steel),reviewer rename (region cleanup),approved,2026-11-12
 شركة مصنع ابتكارات اللدائن للبلاستيك,شركة مصنع ابتكارات اللدائن للبلاستيك (APICO),reviewer rename (region cleanup),approved,2026-11-12
 شركة البيئة والتنمية للاستشارات البيئية,Environment & Development Environmental Consulting Co. (One-Person Co.) (EDCO),reviewer merge (region cleanup),approved,2026-11-12
+شركة العالمية للخدمات البيئية,International Environmental Services Co.,reviewer merge (bidder location review),approved,2026-11-15
+Al-Kaf Environmental Consulting Office,مكتب الكاف للاستشارات البيئية,reviewer merge (bidder location review),approved,2026-11-15
+Imar Engineering Consulting Co. (One-Person Co.),شركة اعمار للاستشارات الهندسية مهنية,reviewer merge (bidder location review),approved,2026-11-15
+شركة أيدوم للاستشارات الهندسية,IDOM Architecture Consulting (One-Person Co.),reviewer merge (bidder location review),approved,2026-11-15
+Dar Al Riyadh,شركة دار الرياض للاستشارات الهندسية شركة شخص واحد,reviewer merge (bidder location review),approved,2026-11-15
+Emtithaal Environmental Consulting Co.,Imtithal Al-Beeah Environmental Consulting Office,reviewer merge (bidder location review),approved,2026-11-15
+Golden Engineering Consulting (One-Person Co.),شركة الذهبي للاستشارات الهندسية,reviewer merge (bidder location review),approved,2026-11-15
+شركة القطر للاستشارات المهنية,Alqotr Consulting,reviewer merge (bidder location review),approved,2026-11-15
+شركة الهندسة والأبحاث العالمية للاستشارات الهندسية شركة مهنية شخص واحد,ERI Saudi Arabia,reviewer merge (bidder location review),approved,2026-11-15
+شركة تقنية الجودة للإعتماد,Quality Tech Certification Co. (One-Person Co.),reviewer merge (bidder location review),approved,2026-11-15
+Arkan Environment Services Co. (One-Person Co.),Arkan Al-Beeah Environmental Services Co. (One-Person Co.),reviewer merge (bidder location review),approved,2026-11-15
+Clean Environment Technologies Consulting Office,مكتب تقنيات نظافة البيئة للاستشارات البيئية,reviewer merge (bidder location review),approved,2026-11-15
+Forsan Al-Istidadama Environmental Consulting Office,Fursan Istedemah Environmental Consultation Office (FIECO),reviewer merge (bidder location review),approved,2026-11-15
+Laceco Saudi Engineering Consulting Co. (One Person Co.),LASCO Saudi Engineering Consulting Co. (One Person Co.),reviewer merge (bidder location review),approved,2026-11-15
+Mohamed Naser El Hogori Environmental,شركة محمد ناصر ظاهر الحجورى للاستشارات الهندسية و البيئية شركة مهنية شخص واحد,reviewer merge (bidder location review),approved,2026-11-15
+Niqaa Al-Beeah Environmental Consulting Office,Naqaa Environmental Consulting Office,reviewer merge (bidder location review),approved,2026-11-15
+Qamaat Engineering Consulting Office,QAMAAT Engineering Consultancy,reviewer merge (bidder location review),approved,2026-11-15
+Saudi Arabian Engineering Co Ltd,Saudi Arabian Engineering Co. (SAECO),reviewer merge (bidder location review),approved,2026-11-15
+Saudi Environmental Consulting Office (Saudi Geophysical),SAUDI GEOPHYSICAL CONSULTING OFFICE,reviewer merge (bidder location review),approved,2026-11-15
+Simopseng,شركة العمليات المتزامنة للاستشارات المهنية,reviewer merge (bidder location review),approved,2026-11-15
+Taqat El Injaz Environmental Consulting,Taqat Environment,reviewer merge (bidder location review),approved,2026-11-15
+شركة طاقات الانجاز للاستشارات البيئية,Taqat Environment,reviewer merge (bidder location review) — re-pointed,approved,2026-11-15
+Ufuq Al-Masiyah Environmental Consulting Co. (AECO),شركة أفق الماسية للاستشارات البيئية,reviewer merge (bidder location review),approved,2026-11-15
+شركة أروقة الريادة للتجارة شركة شخص واحد,Arweqah Al reyadah,reviewer merge (bidder location review),approved,2026-11-15
+شركة إستراتيجي إند السعودية,Strategy& Middle East,reviewer merge (bidder location review),approved,2026-11-15
+شركة الإتمام الاستشارية,ITMAM Consultancy,reviewer merge (bidder location review),approved,2026-11-15
+شركة الثروة البشرية شركة مساهمة مدرجة,Tharwah Group,reviewer merge (bidder location review),approved,2026-11-15
+شركة الخط السادس للاستشارات الهندسية شخص واحد مهنية,Hexa Line Engineering Consultancy,reviewer merge (bidder location review),approved,2026-11-15
+شركة الدعم للخدمات البيئية,Environmental Support Consulting Office,reviewer merge (bidder location review),approved,2026-11-15
+شركة الدكتور محمد العمري وشركاه محاسبون قانونيون شركة مساهمة مهنية مقفلة,Dr Mohamed Al Amri & Co,reviewer merge (bidder location review),approved,2026-11-15
+شركة العقول المخططة للاستشارات الادارية,Strategic Minds,reviewer merge (bidder location review),approved,2026-11-15
+شركة الفحوصات والمختبرات البيئية,Environmental Testing & Laboratories Co.,reviewer merge (bidder location review),approved,2026-11-15
+شركة المكيال السعودي للاستشارات الهندسية شركة مهنية شخص واحد,Al Makyal Al Saudi,reviewer merge (bidder location review),approved,2026-11-15
+شركة الواجهة الأمامية المحدودة,Front End Ltd,reviewer merge (bidder location review),approved,2026-11-15
+شركة بيزنس كرافتيرز,Business Crafters,reviewer merge (bidder location review),approved,2026-11-15
+شركة تلاد البيئة التجارية,Telad Consulting Solutions,reviewer merge (bidder location review),approved,2026-11-15
+شركة توندرو كونسلتنسي العربية الإدارية,Tondro Consultancy Arabia (One-Person Co.),reviewer merge (bidder location review),approved,2026-11-15
+شركة جدارة الأعمال للاستشارات الادارية,Jadarah Business Consulting Company,reviewer merge (bidder location review),approved,2026-11-15
+شركة جيوتك لما وراء البحار لهندسة المشاريع,Geotech Overseas,reviewer merge (bidder location review),approved,2026-11-15
+شركة خدمات البيئة المتحدة لنقل النفايات,United Environmental Services – Waste Transport,reviewer merge (bidder location review),approved,2026-11-15
+شركة خدمات البيئة المتحدة,United Environmental Services – Waste Transport,reviewer merge (bidder location review) — re-pointed,approved,2026-11-15
+شركة دروب الاتحاد للمقاولات المحدودة,Droub Al Ataihd,reviewer merge (bidder location review),approved,2026-11-15
+شركة رؤية الخبراء الاستشارية شركة ذات المسؤولية محدودة,Experts Vision Consulting,reviewer merge (bidder location review),approved,2026-11-15
+شركة راسي الاستشارية,Rasi Consulting,reviewer merge (bidder location review),approved,2026-11-15
+شركة زمام القوة للتشغيل والصيانة شركة شخص واحد,Zimam El Qowa,reviewer merge (bidder location review),approved,2026-11-15
+شركة سعد سعيد الصاعدي وأولاده للمقاولات,Saad Saeed El Saadi and Sons Company,reviewer merge (bidder location review),approved,2026-11-15
+شركة شريان الشمال العالمية,Sharyan Al-Shamal Global General Contracting Co.,reviewer merge (bidder location review),approved,2026-11-15
+شركة عين خبير للاستشارات الإدارية شخص واحد مهنية,Expert Eye Administrative Consulting Co. (One-Person Professional Co.),reviewer merge (bidder location review),approved,2026-11-15
+شركة فكرة التطوير للاستشارات المهنية,Fakrah Developer,reviewer merge (bidder location review),approved,2026-11-15
+شركة قمه الرواسي للمقاولات,Qemmet El Rawasi Contracting,reviewer merge (bidder location review),approved,2026-11-15
+شركة كيوبيك ارت بيكسلز للحلول البيئية,Cubic Art Pixels Environmental Solutions (CAP),reviewer merge (bidder location review),approved,2026-11-15
+شركة مشار للاستشارات العليا في الادارة شركة شخص واحد,Mushar Consulting,reviewer merge (bidder location review),approved,2026-11-15
+شركة ميثان للخدمات البيئية,Methan Environmental Services Co.,reviewer merge (bidder location review),approved,2026-11-15
+شركة نبراس المحدودة شركة شخص واحد,Nebras Limited,reviewer merge (bidder location review),approved,2026-11-15
+شركة نواقل الدولية للخدمات المساندة,Nawaql International Company (NIC),reviewer merge (bidder location review),approved,2026-11-15
+مؤسسة هامة المدن للمقاولات العامة,Hamat Al-Mudun General Contracting Establishment,reviewer merge (bidder location review),approved,2026-11-15
+مجموعة سعد علي العيسى للمقاولات شركة شخص واحد,Saad Ali Aliessa Group,reviewer merge (bidder location review),approved,2026-11-15

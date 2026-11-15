@@ -83,6 +83,13 @@ jobs:
           python pipeline/make_twin_sheet.py --report pipeline/bid_sync_report.json --map site/EH_Stakeholder_Map_CURRENT.html \
             --out pipeline/possible_twins_review.xlsx $( [ -f pipeline/twin_decisions.xlsx ] && echo --previous pipeline/twin_decisions.xlsx )
 
+      # ---------- Saudi Map (BETA): bidder positions (pipeline/bidder_locations.csv), tender sites with their live results and the Vision 2030
+      #            sites are written into the map after the sync, keyed by the company names the sync has just settled (15 Nov 2026) ----------
+      - name: Fill the Saudi Map (BETA) data block
+        run: |
+          python pipeline/embed_saudi_map_data.py --map site/EH_Stakeholder_Map_CURRENT.html --bids site/EH_Bid_Analysis_CURRENT.html \
+            --sync-report site/bid_sync_report.json || echo "::warning::Saudi Map data step failed — the map is published with the data stored in the repository copy"
+
       # ---------- Government Tenders (Etimad): built at publish time from the private sheet; never committed, never an artefact ----------
       - name: Build the Government Tenders page
         run: |

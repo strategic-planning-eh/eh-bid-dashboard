@@ -1,0 +1,37 @@
+{
+ "generated": "2026-11-16 08:51",
+ "title": "Saudi Map (BETA) fullscreen fix",
+ "failures": [],
+ "changes": [
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "smb-fullscreen",
+   "note": "CSS: map and side panel fill the screen in fullscreen",
+   "occurrences": 1,
+   "ok": true,
+   "old": "</head>",
+   "new": "<style id=\"eh-smb-fullscreen\">#leafWrap:fullscreen{width:100vw;height:100vh;box-sizing:border-box;padding:10px;background:#F4F7F9;align-items:stretch}html.dark #leafWrap:fullscreen{background:#0E1418}#leafWrap:fullscreen #leafMap{height:auto !important;min-height:0;align-self:stretch}#leafWrap:fullscreen #leafSide{max-height:none !important;height:auto;overflow-y:auto !important;align-self:stretch"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "smb-fullscreen",
+   "note": "Refit the view on entering/leaving fullscreen",
+   "occurrences": 1,
+   "ok": true,
+   "old": "document.addEventListener('fullscreenchange',function(){if(leafMap)setTimeout(function(){leafMap.invalidateSize();},220);});",
+   "new": "function smbFsFit(){if(!leafMap)return;leafMap.invalidateSize();try{var f=(typeof SF!=='undefined'&&SF.prov!=='all')?LPROV.features.filter(function(x){return x.properties.n===SF.prov;})[0]:null;if(f)leafMap.fitBounds(L.geoJSON(f).getBounds(),{padding:[12,12]});else leafMap.fitBounds([[16.2,34.4],[32.3,55.8]],{padding:[8,8]});}catch(e){}}['fullscreenchange','webkitfullscreenchange'].forEach(functio"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "smb-fullscreen",
+   "note": "Fullscreen button: Safari fallback",
+   "occurrences": 1,
+   "ok": true,
+   "old": "function leafFull(){var w=document.getElementById('leafWrap');if(document.fullscreenElement)document.exitFullscreen();else if(w.requestFullscreen)w.requestFullscreen();}",
+   "new": "function leafFull(){var w=document.getElementById('leafWrap');var cur=document.fullscreenElement||document.webkitFullscreenElement;if(cur){(document.exitFullscreen||document.webkitExitFullscreen).call(document);}else{var rq=w.requestFullscreen||w.webkitRequestFullscreen;if(rq)rq.call(w);}}"
+  }
+ ]
+}

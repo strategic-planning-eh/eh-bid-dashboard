@@ -1,0 +1,47 @@
+{
+ "generated": "2026-11-16 09:19",
+ "title": "Clear all filters shows nothing",
+ "failures": [],
+ "changes": [
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "clear-all",
+   "note": "Side panel button calls the new function",
+   "occurrences": 1,
+   "ok": true,
+   "old": "<button class=\"btn\" id=\"clearAllBtn\" type=\"button\" onclick=\"resetFilters()\">Clear all filters</button>",
+   "new": "<button class=\"btn\" id=\"clearAllBtn\" type=\"button\" onclick=\"clearAllFilters()\">Clear all filters</button>"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "clear-all",
+   "note": "New clearAllFilters(): unticks every company type",
+   "occurrences": 1,
+   "ok": true,
+   "old": "\nfunction resetFilters(){\n",
+   "new": "\nfunction clearAllFilters(){   /* 16 Nov 2026: clear = nothing ticked, nothing shown */\n    resetFilters(); state.cats.clear();\n    document.querySelectorAll('#catFilters input[type=checkbox]').forEach(function(i){i.checked=false;});\n    state.sel=null; recompute();\n}\nfunction resetFilters(){\n"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "clear-all",
+   "note": "Empty-state message matches the new behaviour",
+   "occurrences": 1,
+   "ok": true,
+   "old": "The map opens with <b>no filters selected</b>.<br>Tick company types in the Filters panel to populate it — or<br>",
+   "new": "<p style=\"margin:0;font-weight:700;color:#1C2B33\">No company types are selected.</p><p style=\"margin:4px 0 0\">Tick company types in the Filters panel to show companies — or</p>"
+  },
+  {
+   "file": "map",
+   "kind": "exact",
+   "category": "clear-all",
+   "note": "Arabic for the empty-state message",
+   "occurrences": 1,
+   "ok": true,
+   "old": "const STATIC_TR=[",
+   "new": "const STATIC_TR=[['No company types are selected.','لم يُحدَّد أي نوع من الشركات.'],['Tick company types in the Filters panel to show companies — or','حدّد أنواع الشركات من لوحة الفلاتر لعرض الشركات — أو'],['Show everything','عرض الكل'],"
+  }
+ ]
+}

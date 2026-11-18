@@ -23,17 +23,24 @@ def num(v):
 def dstr(v):
     if isinstance(v,datetime.datetime): return v.strftime('%Y-%m-%d')
     return None
+BAD_SUBDATES=[]
 def subdstr(v):
     """EH's date of submission: a real date, or text like 11.05.2026 / 11/05/2026 / 2026-05-11. '-' or blank = none."""
-    if isinstance(v,(datetime.datetime,datetime.date)): return v.strftime('%Y-%m-%d')
+    # 18 Nov 2026 (Youssef, bid 138/26 typed as 1016-11-01): a submission date whose year is impossible is a typing
+    # error in the tracker. It is ignored (never guessed), so the bid falls back to its proposal dates, and it is logged.
+    def _ok(d):
+        if 2024 <= d.year <= datetime.date.today().year + 1: return d.isoformat()
+        print(f'WARNING: submission date ignored, impossible year: {v!r}'); BAD_SUBDATES.append(str(v)); return None
+    if isinstance(v,datetime.datetime): return _ok(v.date())
+    if isinstance(v,datetime.date): return _ok(v)
     s=str(v or '').strip()
     mm=re.match(r'^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$',s)
     if mm:
-        try: return datetime.date(int(mm.group(3)),int(mm.group(2)),int(mm.group(1))).isoformat()
+        try: return _ok(datetime.date(int(mm.group(3)),int(mm.group(2)),int(mm.group(1))))
         except ValueError: return None
     mm=re.match(r'^(\d{4})-(\d{1,2})-(\d{1,2})',s)
     if mm:
-        try: return datetime.date(int(mm.group(1)),int(mm.group(2)),int(mm.group(3))).isoformat()
+        try: return _ok(datetime.date(int(mm.group(1)),int(mm.group(2)),int(mm.group(3))))
         except ValueError: return None
     return None
 def substat(v):

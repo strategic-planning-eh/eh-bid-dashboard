@@ -44,8 +44,18 @@ const NTF={nw:new Set(),dec:new Set(),upd:new Set(),px:new Set(),seen:new Set(),
       if(!((old.p||{}).hasOwnProperty(k))){ if(!NTF.nw.has(k)) NTF.px.add(k); }
       else if(old.p[k]!==ph[k]) NTF.px.add(k);
     });
+    if(!old.v){ /* old-style snapshot (was overwritten on every load): recover tenders launched in the last 7 days, once */
+      const cut=new Date(Date.now()-7*864e5).toISOString().slice(0,10);
+      const base={t:Object.assign({},old.t||{}),p:Object.assign({},old.p||{}),when:cut,v:2};
+      BA.bidlist.forEach(b=>{const k=key(b);
+        if(String(b.date||'').slice(0,10)>=cut&&base.t.hasOwnProperty(k)){delete base.t[k];delete base.p[k];NTF.nw.add(k);NTF.upd.delete(k);NTF.dec.delete(k);NTF.px.delete(k);}});
+      NTF.when=cut;
+      localStorage.setItem('ehb.snap',JSON.stringify(base));
+    }
+  } else {
+    localStorage.setItem('ehb.snap',JSON.stringify({t:th,p:ph,when:new Date().toISOString().slice(0,10),v:2}));
   }
-  localStorage.setItem('ehb.snap',JSON.stringify({t:th,p:ph,when:new Date().toISOString().slice(0,10)}));
+  NTF.cur={t:th,p:ph};  /* the snapshot only moves forward in ntfAck() — "Mark as seen" */
  }catch(e){}
 })();
 function ntfTab(id){
@@ -89,7 +99,14 @@ function rNtf(){
  if(NTF.upd.size) parts.push('<a style="'+lk+'" onclick="jumpTo(\'tenders\',\'upd\')">'+NTF.upd.size+t(' row update(s)',' تحديث/تحديثات صفوف')+'</a>');
  el.style.cssText='margin:10px 0 2px;background:#FFF8EC;border:1px solid #EAD9B0;border-radius:10px;padding:9px 14px;font-size:12px;color:#5C4A14;display:flex;gap:14px;flex-wrap:wrap;align-items:center';
  el.innerHTML='<b>'+t('Since ','منذ ')+NTF.when+':</b> '+parts.join(' <span style="color:#C9B98A">\u00b7</span> ')+
-  '<button onclick="this.parentElement.style.display=\'none\'" style="border:0;background:none;cursor:pointer;font-weight:800;color:#8A7A44;margin-inline-start:auto">\u2715</button>';
+  '<button onclick="ntfAck()" title="'+t('Clears this strip. Until you press it, these items stay listed every time you open the page.','يمسح هذا الشريط. تبقى هذه العناصر ظاهرة في كل مرة تفتح الصفحة حتى تضغط عليه.')+'" style="border:1px solid #D9C88F;background:#fff;border-radius:7px;padding:3px 10px;cursor:pointer;font-weight:700;color:#5C4A14;margin-inline-start:auto">\u2713 '+t('Mark as seen','تمّت المشاهدة')+'</button>';
+}
+function ntfAck(){
+ /* 18 Nov 2026: the only place the "last visit" snapshot moves forward */
+ try{ if(NTF.cur) localStorage.setItem('ehb.snap',JSON.stringify({t:NTF.cur.t,p:NTF.cur.p,when:new Date().toISOString().slice(0,10),v:2})); }catch(e){}
+ NTF.nw.clear();NTF.dec.clear();NTF.upd.clear();NTF.px.clear();
+ var el=document.getElementById('ntfbar'); if(el) el.style.display='none';
+ try{ rNav(); if(typeof TF!=='undefined'&&TF.only){TF.only=null;} if(typeof renderTenders==='function') renderTenders(); }catch(e){}
 }
 function rNav(){$('nav').innerHTML=TABS.map(([id,en,ar])=>`<a id="t-${id}" class="${curTab==id?'on':''}" onclick="go('${id}')">${t(en,ar)}${ntfTab(id)?`<span class="ntf">${ntfTab(id)}</span>`:''}</a>`).join('');}
 function jumpTo(tab,which){

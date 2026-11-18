@@ -1,0 +1,27 @@
+{
+ "generated": "2026-11-18 08:59",
+ "title": "Notification strip keeps items until marked as seen",
+ "failures": [],
+ "changes": [
+  {
+   "file": "app.js",
+   "kind": "exact",
+   "category": "ntf-keep",
+   "note": "Snapshot no longer overwritten on every load; one-off 7-day recovery",
+   "occurrences": 1,
+   "ok": true,
+   "old": "      else if(old.p[k]!==ph[k]) NTF.px.add(k);\n    });\n  }\n  localStorage.setItem('ehb.snap',JSON.stringify({t:th,p:ph,when:new Date().toISOString().slice(0,10)}));",
+   "new": "      else if(old.p[k]!==ph[k]) NTF.px.add(k);\n    });\n    if(!old.v){ /* old-style snapshot (was overwritten on every load): recover tenders launched in the last 7 days, once */\n      const cut=new Date(Date.now()-7*864e5).toISOString().slice(0,10);\n      const base={t:Object.assign({},old.t||{}),p:Object.assign({},old.p||{}),when:cut,v:2};\n      BA.bidlist.forEach(b=>{const k=key(b);\n        if("
+  },
+  {
+   "file": "app.js",
+   "kind": "exact",
+   "category": "ntf-keep",
+   "note": "\"Mark as seen\" button + ntfAck()",
+   "occurrences": 1,
+   "ok": true,
+   "old": "  '<button onclick=\"this.parentElement.style.display=\\'none\\'\" style=\"border:0;background:none;cursor:pointer;font-weight:800;color:#8A7A44;margin-inline-start:auto\">\\u2715</button>';\n}",
+   "new": "  '<button onclick=\"ntfAck()\" title=\"'+t('Clears this strip. Until you press it, these items stay listed every time you open the page.','يمسح هذا الشريط. تبقى هذه العناصر ظاهرة في كل مرة تفتح الصفحة حتى تضغط عليه.')+'\" style=\"border:1px solid #D9C88F;background:#fff;border-radius:7px;padding:3px 10px;cursor:pointer;font-weight:700;color:#5C4A14;margin-inline-start:auto\">\\u2713 '+t('Mark as seen','"
+  }
+ ]
+}

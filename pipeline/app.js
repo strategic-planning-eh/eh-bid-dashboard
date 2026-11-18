@@ -60,6 +60,16 @@ function ntfChip(k){
  if(NTF.dec.has(k)||NTF.upd.has(k)||NTF.px.has(k))return ' <span class="ntf">'+t('UPDATE','تحديث')+'</span>';
  return '';
 }
+function ntfNewLabel(){
+ /* 18 Nov 2026: say how many of the new tenders the SAR figure covers; a price under SAR 100 is a per-unit rate, not a total */
+ var n=NTF.nw.size, rows=BA.bidlist.filter(function(b){return NTF.nw.has(b.year+'-'+b.sn);});
+ var withV=rows.filter(function(b){return (b.value||0)>=100;}), val=withV.reduce(function(a,b){return a+b.value;},0), k=withV.length, z=n-k;
+ var head=n===1?t('1 new tender','منافسة جديدة واحدة'):n+t(' new tenders',' منافسات جديدة');
+ if(!k) return head+t(' (no value recorded yet)',' (لم تُسجَّل قيمة بعد)');
+ if(n===1) return head+' ('+fmtSAR(val)+')';
+ if(!z) return head+' ('+fmtSAR(val)+t(' in total',' إجمالاً')+')';
+ return head+' ('+k+t(' with a value: ',' بقيمة مسجّلة: ')+fmtSAR(val)+' \u00b7 '+z+t(' with no value yet',' بلا قيمة بعد')+')';
+}
 function rNtf(){
  var el=document.getElementById('ntfbar');
  if(!el){el=document.createElement('div');el.id='ntfbar';var nv=document.getElementById('nav');nv.parentNode.insertBefore(el,nv.nextSibling);}
@@ -69,8 +79,7 @@ function rNtf(){
  const lk='color:#1A5FAB;cursor:pointer;font-weight:700;text-decoration:underline';
  var parts=[];
  if(NTF.nw.size){
-   const val=BA.bidlist.filter(b=>NTF.nw.has(b.year+'-'+b.sn)).reduce((a,b)=>a+(b.value||0),0);
-   parts.push('<a style="'+lk+'" onclick="jumpTo(\'tenders\',\'nw\')">'+NTF.nw.size+t(' new tender(s)',' منافسة/منافسات جديدة')+(val?' ('+fmtSAR(val)+')':'')+'</a>');
+   parts.push('<a style="'+lk+'" onclick="jumpTo(\'tenders\',\'nw\')">'+ntfNewLabel()+'</a>');
  }
  NTF.dec.forEach(k=>{
    const b=BA.bidlist.find(x=>x.year+'-'+x.sn===k);
